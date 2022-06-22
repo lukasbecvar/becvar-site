@@ -1,0 +1,7 @@
+build/
+dump/
+/.idea
+/.vscode
+/vendor
+composer.lock
+GalleryDump.tar.gz

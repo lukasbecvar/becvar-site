@@ -1,0 +1,1 @@
+cd /services/dubinek/ && sudo screen -dmS dubinek java -jar Dubinek.jar

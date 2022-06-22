@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://becvold.xyz/</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+  <url>
+    <loc>https://becvold.xyz/index.php?page=about</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+  <url>
+    <loc>https://becvold.xyz/index.php?page=generator</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+  <url>
+    <loc>https://becvold.xyz/index.php?page=contact</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+  <url>
+    <loc>https://becvold.xyz/index.php?page=imageUploader</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+  <url>
+    <loc>https://becvold.xyz/index.php?process=paste</loc>
+    <lastmod>2022-05-05</lastmod>
+  </url>
+</urlset>

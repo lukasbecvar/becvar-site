@@ -1,0 +1,11 @@
+{
+    "name": "becvar/personal-site",
+    "type": "project",
+    "description": "My personal website.",
+    "keywords": ["site", "Becwork", "becvar", "becvold"],
+    "license": "MIT",
+    "require": {
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "filp/whoops": "^2.14"
+    }
+}
