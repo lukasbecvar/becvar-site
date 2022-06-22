@@ -132,7 +132,7 @@
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-3">
-                        <h5 class="card-title mb-0">Cpu usage[core/avg]</h5>
+                        <h5 class="card-title mb-0">CPU usage[CORE/AVG]</h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-12">
