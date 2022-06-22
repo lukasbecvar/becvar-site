@@ -1,5 +1,6 @@
-<?php
+<?php //Command executor (for admin tasks)
 
+    //Check if command defined
     if (empty($_GET["command"])) {
 
         $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");

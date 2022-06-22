@@ -18,8 +18,8 @@
 			//Get image file
 			$imageFile = file_get_contents($_FILES['userfile']['tmp_name']);
 
-			//Encode image
-			$image = base64_encode($imageFile);
+			//Escape and encode image
+			$image = $mysqlUtils->escapeString(base64_encode($imageFile), true, true);
 
 			//Get current data
 			$date = date('d.m.Y H:i:s');

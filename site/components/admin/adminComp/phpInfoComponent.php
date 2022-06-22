@@ -1,4 +1,3 @@
-
 <style>
     .wrapper {
         color: white;
@@ -6,7 +5,6 @@
     }
 </style>
 <?php //PHP info component form admin site
-
 
     function phpinfo_array() {
         ob_start();
@@ -43,7 +41,6 @@
         echo $my_array;
     }
 
-    
     //Print info
     echo '<div class="table-dark">';
     myprint_r(phpinfo_array());

@@ -72,10 +72,6 @@
 ?>
 <br class="removeFloat">
 </main>
-<script src="assets/js/lg/lightgallery.js"></script>
-<script src="assets/js/lg/lg-zoom.js"></script>
-<script src="assets/js/lg/lg-autoplay.js"></script>
-<script>lightGallery(document.getElementById('lightgallery'));</script>
 <?php //Add footer to site
 	include_once("elements/navigation/FooterElement.php");
 ?>

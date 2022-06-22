@@ -57,6 +57,6 @@
         system("rm -rf ".escapeshellarg("dump/"));
 
     } else {
-        echo "\033[31mError MysqlIP or user or password or decrypt key is empty\033[0m\n";
+        echo "\033[31mError MysqlIP or user or password is empty\033[0m\n";
     }
 ?>

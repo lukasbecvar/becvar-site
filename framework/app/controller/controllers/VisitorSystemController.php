@@ -116,5 +116,7 @@
                 $this->firstVisit();
             }
         }
+
+        
     }
 ?>

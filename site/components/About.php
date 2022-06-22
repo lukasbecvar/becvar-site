@@ -8,9 +8,8 @@
     <div style="color: white;">
         <h2 class="aboutTitle">About me</h2>
     </div>
-
+    
     <?php
-
         //Include main description
         include_once("elements/public/AboutDescElement.php");
 

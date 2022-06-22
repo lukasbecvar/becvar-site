@@ -10,7 +10,7 @@
             //Insert to mysql
             $mysqlUtils->insertQuery("INSERT INTO `todos`(`text`, `status`) VALUES ( '$text', 'open')");    
             
-            //Log action to mysql dsatabase 
+            //Log action to mysql database 
             $mysqlUtils->logToMysql("Todos", "User ".$_SESSION["username"]." added new todo $text");
 
             //Refrsh window aftre add todo
@@ -24,7 +24,7 @@
     
             global $mysqlUtils;
             
-            //Log action to mysql dsatabase 
+            //Log action to mysql database 
             $mysqlUtils->logToMysql("Todos", "User ".$_SESSION["username"]." closed todo $id");
     
             //Update todos for close 

@@ -152,6 +152,14 @@
                 //Show alert with image
                 $alertController->falshEncryptorAlert("Base64 decoded image", '<div id="lightgallery"><span data-src="data:image/png;base64,'.$string.'" data-sub-html="Decoded image"><img class="gallery_images" src="data:image/png;base64,'.$string.'"></span></div>');
    
+                //Print lg functions
+                echo '
+                    <script src="assets/js/lg/lightgallery.js"></script>
+                    <script src="assets/js/lg/lg-zoom.js"></script>
+                    <script src="assets/js/lg/lg-autoplay.js"></script>
+                    <script>lightGallery(document.getElementById("lightgallery"));</script>
+                ';
+
                 //Log to mysql
                 $mysqlUtils->logToMysql("Encryptor", "User decoded image from base64");
 
