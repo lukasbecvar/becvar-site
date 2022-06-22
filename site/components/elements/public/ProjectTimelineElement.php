@@ -7,7 +7,7 @@
                     <h5>My Website</h5>
 					<p>Technology: HTML, CSS, JS, PHP</p>
                     <p>My personal website with basic information about me and projects and custom admin system.</p>
-					<strong><p><a href="https://github.com/lordbecvold/becvar_site" class="green-text" target="_blank">becvar_site github</a></p></strong>
+					<strong><p><a href="https://github.com/lordbecvold/becvar_site/" class="green-text" target="_blank">becvar_site github</a></p></strong>
                     <p class="text-warning">2020 - NOW</p>
                 </div>
             </div>
