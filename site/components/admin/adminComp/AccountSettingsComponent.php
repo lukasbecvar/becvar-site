@@ -17,7 +17,7 @@
                 if (strlen($password) >= 5) {
         
                     //Get username from session
-                    $username = $_SESSION["username"];
+                    $username = $adminController->getCurrentUsername();
                     
                     //Update password
                     $adminController->updatePassword($username, $password);
@@ -50,7 +50,7 @@
             $base64Final = base64_encode($imageFile);
             
             //Get username
-            $username = $_SESSION["username"];
+            $username = $adminController->getCurrentUsername();
 
             //Update user avatar
             $adminController->updateProfileImage($base64Final, $username);

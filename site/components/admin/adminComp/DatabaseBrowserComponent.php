@@ -65,7 +65,7 @@
 					$id = $mysqlUtils->escapeString($_GET["id"]);
 
 					//Log action to mysql dsatabase 
-					$mysqlUtils->logToMysql("Database delete", "User ".$_SESSION["username"]." deleted item $id form table $dbName");
+					$mysqlUtils->logToMysql("Database delete", "User ".$adminController->getCurrentUsername()." deleted item $id form table $dbName");
 
 					//If user delete all form table
 					if ($id == "all") {
@@ -123,7 +123,7 @@
 					} 
 
 					//Log action to mysql dsatabase 
-					$mysqlUtils->logToMysql("Database edit", "User ".$_SESSION["username"]." edited item $idQ in table $dbNameQ");
+					$mysqlUtils->logToMysql("Database edit", "User ".$adminController->getCurrentUsername()." edited item $idQ in table $dbNameQ");
 
 					$alertController->flashSuccess("Row has saved!");
 					
@@ -175,7 +175,7 @@
 			}  else {
 				
 				//Log action to mysql dsatabase 
-				$mysqlUtils->logToMysql("Database list", "User ".$_SESSION["username"]." viewed database list");
+				$mysqlUtils->logToMysql("Database list", "User ".$adminController->getCurrentUsername()." viewed database list");
 
 				//Save tables to objects
 				$tables = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW TABLES");
@@ -217,7 +217,7 @@
 				$result = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW COLUMNS FROM ".$name);
 
 				//Log action to mysql dsatabase 
-				$mysqlUtils->logToMysql("Database", "User ".$_SESSION["username"]." viewed table $name");
+				$mysqlUtils->logToMysql("Database", "User ".$adminController->getCurrentUsername()." viewed table $name");
 
 
 				if ($tableData->num_rows == 0) {
@@ -236,7 +236,7 @@
 					echo "<th cope='col'>X</th>";
 					
 					//Add edit col to table
-					if ($_GET["name"] != "visitors" && $_GET["name"] != "pastes" && $_GET["name"] != "crypted" && $_GET["name"] != "hash_gen") {
+					if ($_GET["name"] != "visitors" && $_GET["name"] != "pastes" && $_GET["name"] != "crypted" && $_GET["name"] != "hash_gen" && $_GET["name"] != "users") {
 						echo "<th cope='col'>Edit</th>";
 					}
 
@@ -330,7 +330,8 @@
 								"username" => $data["username"],
 								"password" => "encrypted_hash",
 								"role" => $data["role"],
-								"image_base64" => "hidden"
+								"image_base64" => "hidden",
+								"token" => $data["token"]
 							];			
 						}
 
@@ -378,7 +379,7 @@
 							echo '<td><a class="deleteLinkTodos" href="index.php?page=admin&process=dbBrowser&delete='.$name.'&id='.$dataOK[0].'">X</a></td>';
 							
 							//Add edit link to row
-							if ($_GET["name"] != "visitors" && $_GET["name"] != "pastes" && $_GET["name"] != "crypted" && $_GET["name"] != "hash_gen") {
+							if ($_GET["name"] != "visitors" && $_GET["name"] != "pastes" && $_GET["name"] != "crypted" && $_GET["name"] != "hash_gen" && $_GET["name"] != "users") {
 								echo '<td><a class="text-warning deleteLinkTodos" href="index.php?page=admin&process=dbBrowser&editor='.$name.'&id='.$dataOK[0].'">Edit</a></td>';
 							}
 						}

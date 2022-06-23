@@ -37,7 +37,7 @@
 			//Save account set true if user send value
 			if (isset($_POST["saveAccount"])) {
 				$saveAccount = true;
-			}
+			} 
 
 			//Check if values not empty
 			if (empty($username) or empty($password)) {
@@ -48,36 +48,50 @@
 				//Check if user can login with our values
 				if ($adminController->canLogin($username, $password)) {
 
-					//Set session login
-					$adminController->setLoginSession($username);
+					//Get user token
+					$token = $mysqlUtils->readFromMysql("SELECT token FROM users WHERE username = '".$username."'", "token");
 
-					//Set role session
-					$sessionUtils->setSession("role", $mysqlUtils->readFromMysql("SELECT role FROM users WHERE username = '".$_SESSION["username"]."'", "role"));
+					//Check if token is seted
+					if (!empty($token)) {
 
-					//Check if user stay logged in
-					if ($saveAccount) {
-						$adminController->setLoginCookies($username);
+						//Set session login
+						$adminController->setLoginSession($token);
+
+						//Set role session
+						$sessionUtils->setSession("role", $mysqlUtils->readFromMysql("SELECT role FROM users WHERE token = '".$token."'", "role"));
+
+						//Check if user stay logged in
+						if ($saveAccount) {
+							$adminController->setLoginCookies($token);
+						} else {
+							$adminController->unSetLoginCookies();
+						}
+
+						//log to mysql
+						$mysqlUtils->logToMysql("Success login", "User $username logged in success");
+
+						//Redirect to admin page
+						$urlUtils->redirect("index.php?page=admin");
+
 					} else {
-						$adminController->unSetLoginCookies($username);
+						if ($pageConfig->getValueByName("dev_mode") == true) {
+							die("<h2 class=pageTitle>[DEV-MODE]:Login, error user token is empty</h2>");
+						} else {
+							include_once("errors/UnknownError.php");
+						}						
 					}
-
-					//log to mysql
-					$mysqlUtils->logToMysql("Login", "User $username logged in success");
-
-					//Redirect to admin page
-					$urlUtils->redirect("index.php?page=admin");
 				} else {
-
-					//log to mysql
-					if (empty($mysqlUtils->escapeString($_POST["password"], true, true)) or empty($username)) {
-						$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
-					} else {
-						$mysqlUtils->logToMysql("Login", "Trying to login with name: $username ", true, true);				
-					}
 
 					//Print error msg
 					$alertController->flashError("Incorrect username or password.");
 				}
+			}
+
+			//log to mysql
+			if (empty($username) or empty($password)) {
+				$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
+			} else {
+				$mysqlUtils->logToMysql("Login", "Trying to login with name: $username ", true, true);				
 			}
 
 		}

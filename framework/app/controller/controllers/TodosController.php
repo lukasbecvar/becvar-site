@@ -6,12 +6,13 @@
         public function addTodo($text) {
 
             global $mysqlUtils;
+            global $adminController;
 
             //Insert to mysql
             $mysqlUtils->insertQuery("INSERT INTO `todos`(`text`, `status`) VALUES ( '$text', 'open')");    
             
             //Log action to mysql database 
-            $mysqlUtils->logToMysql("Todos", "User ".$_SESSION["username"]." added new todo $text");
+            $mysqlUtils->logToMysql("Todos", "User ".$adminController->getCurrentUsername()." added new todo $text");
 
             //Refrsh window aftre add todo
             print '<script type="text/javascript">window.location.replace("index.php?page=admin&process=todos");</script>';
@@ -23,9 +24,10 @@
         public function closeTodo($id) {
     
             global $mysqlUtils;
+            global $adminController;
             
             //Log action to mysql database 
-            $mysqlUtils->logToMysql("Todos", "User ".$_SESSION["username"]." closed todo $id");
+            $mysqlUtils->logToMysql("Todos", "User ".$adminController->getCurrentUsername()." closed todo $id");
     
             //Update todos for close 
             $mysqlUtils->insertQuery("UPDATE todos SET status='closed' WHERE id='$id'");

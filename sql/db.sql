@@ -92,6 +92,7 @@ CREATE TABLE `users` (
   `password` char(255) CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
   `role` char(255) CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
   `image_base64` longtext CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
+  `token` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -109,4 +110,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-06-21 13:02:43
+-- 2022-06-23 08:15:02

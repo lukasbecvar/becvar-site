@@ -60,10 +60,12 @@
                             echo "<tr class='text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Uploader") {
                             echo "<tr class='text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
-                        } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update" || $data["name"] == "Success login") {
+                        } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update") {
                             echo "<tr class='text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Encryptor") {
                             echo "<tr class='text-light-green'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        } elseif ($data["name"] == "Success login") {
+                            echo "<tr class='text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } else {
                             echo "<tr><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         }
@@ -124,7 +126,7 @@
         }        
 
         //Log action to mysql dsatabase 
-        $mysqlUtils->logToMysql("Log reader", "User ".$_SESSION["username"]." showed logs");
+        $mysqlUtils->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed logs");
     }
 ?>
 </div>

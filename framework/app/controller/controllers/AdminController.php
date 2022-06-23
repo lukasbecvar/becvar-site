@@ -33,6 +33,8 @@
 				} else {
 					return false;
 				}
+			} elseif ($this->getUserToken() != NULL) {
+				return false;
 			} else {
 				return false;
 			}
@@ -62,7 +64,7 @@
 
 
 		//Unset login cookie
-		public function unSetLoginCookies($username) {
+		public function unSetLoginCookies() {
 
 			global $cookieUtils;
 			global $pageConfig;
@@ -70,20 +72,20 @@
 			//Unset login key cookie
 			$cookieUtils->unset_cookie($pageConfig->getValueByName("loginCookie"));
 
-			//Unset username
-			$cookieUtils->unset_cookie($username);			
+			//Unset token
+			$cookieUtils->unset_cookie("userToken");			
 		}
 
 
 
 		//Set login cookie
-		public function setLoginCookies($username) {
+		public function setLoginCookies($token) {
 
 			global $cookieUtils;
 			global $pageConfig;
 
 			//Set username cookie for next auth
-			$cookieUtils->cookieSet("username", $username, time() + (60*60*24*7*365));
+			$cookieUtils->cookieSet("userToken", $token, time() + (60*60*24*7*365));
 
 			//Set token cookie for next login
 			$cookieUtils->cookieSet($pageConfig->getValueByName("loginCookie"), $pageConfig->getValueByName("loginValue"), time() + (60*60*24*7*365));			
@@ -104,7 +106,7 @@
 
 
 		//Set login session
-		public function setLoginSession($username) {
+		public function setLoginSession($token) {
 
 			global $sessionUtils;
 			global $pageConfig;
@@ -115,8 +117,8 @@
 			//Set token session
 			$sessionUtils->setSession($pageConfig->getValueByName("loginCookie"), $pageConfig->getValueByName("loginValue"));		
 
-			//Set username session
-			$sessionUtils->setSession("username", $username);
+			//Set token session
+			$sessionUtils->setSession("userToken", $token);
 		}
 
 
@@ -138,11 +140,12 @@
 			$cookieUtils->unset_cookie($pageConfig->getValueByName("loginCookie"));
 
 			//Unset username
-			$cookieUtils->unset_cookie("username");
+			$cookieUtils->unset_cookie("userToken");
 
 			//Log action to mysql dsatabase 
-			if (!empty($_SESSION["username"])) {
-				$mysqlUtils->logToMysql("Logout", "User ".$_SESSION["username"]." logout out of admin site");
+			if (!empty($this->getCurrentUsername())) {
+
+				$mysqlUtils->logToMysql("Logout", "User ".$this->getCurrentUsername()." logout out of admin site");
 			}
 
 			//Redirect to index page
@@ -185,7 +188,7 @@
 
 		//Check if user is owner
 		public function isUserOwner() {
-			if($_SESSION["role"] == "Owner") {
+			if($this->getCurrentRole() == "Owner" or $this->getCurrentRole() == "owner") {
 				return true;
 			} else {
 				return false;
@@ -196,8 +199,11 @@
 
 		//Get current username form session
 		public function getCurrentUsername() {
-			if (isset($_SESSION["username"])) {
-				return $_SESSION["username"];
+
+			global $mysqlUtils;
+
+			if ($this->getUserToken() != NULL) {
+				return $mysqlUtils->readFromMysql("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
 			} else {
 				return null;
 			}
@@ -207,13 +213,42 @@
 
 		//Get user role form session
 		public function getCurrentRole() {
-			if (isset($_SESSION["role"])) {
-				return $_SESSION["role"];
+
+			global $mysqlUtils;
+			global $pageConfig;
+
+			if ($this->getUserToken() != NULL) {
+				return $mysqlUtils->readFromMysql("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
 			} else {
 				return null;
 			}
 		}
 
+
+		//Get user token
+		public function getUserToken() {
+
+			global $mysqlUtils;
+			global $pageConfig;
+
+			if (!empty($_SESSION["userToken"])) {
+				
+				//Get token count
+				$count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users WHERE token='".$_SESSION["userToken"]."'"))["count"];
+				
+				//Check if token exist in users
+				if ($count == "1") {
+					return $_SESSION["userToken"];
+				} else {
+					return NULL;
+				}
+
+
+
+			} else {
+				return NULL;
+			}
+		}
 
 
 		//Auto user login (for cookie login)
@@ -227,17 +262,14 @@
 			//Start session
 			$sessionUtils->sessionStartedCheckWithStart();
 
-			//Set token session
+			//Set login identify session
 			$sessionUtils->setSession($pageConfig->getValueByName('loginCookie'), $_COOKIE[$pageConfig->getValueByName('loginCookie')]);
 
-			//Set username session
-			$sessionUtils->setSession("username", $_COOKIE["username"]);
-
-			//Set role session
-			$sessionUtils->setSession("role", $mysqlUtils->readFromMysql("SELECT role FROM users WHERE username = '".$_SESSION["username"]."'", "role"));
+			//Set token session
+			$sessionUtils->setSession("userToken", $_COOKIE["userToken"]);
 
 			//log action to mysql
-			$mysqlUtils->logToMysql("Success login", "user ".$_COOKIE["username"]." success login by login cookie");
+			$mysqlUtils->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
 
 			//Refresh page
 			$urlUtils->redirect("index.php?page=admin");
@@ -250,7 +282,12 @@
 
 			global $mysqlUtils;
 
-			return $mysqlUtils->readFromMysql("SELECT image_base64 FROM users WHERE username = '".$_SESSION["username"]."'", "image_base64");
+			if ($this->getUserToken() != NULL) {
+				return $mysqlUtils->readFromMysql("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
+			} else {
+				$this->logout();
+			}
+
 		}
 	}
 ?>

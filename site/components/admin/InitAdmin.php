@@ -66,7 +66,7 @@
 	} else {
 
 		//Auto login if user have token cookie
-		if (isset($_COOKIE[$pageConfig->getValueByName('loginCookie')]) and isset($_COOKIE["username"])) {
+		if (isset($_COOKIE[$pageConfig->getValueByName('loginCookie')]) and isset($_COOKIE["userToken"])) {
 
 			//Check if token valid
 			if ($_COOKIE[$pageConfig->getValueByName('loginCookie')] == $pageConfig->getValueByName('loginValue')) {
