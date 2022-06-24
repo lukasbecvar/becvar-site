@@ -80,11 +80,9 @@
 
 	//Init whoops for error headling
 	if ($pageConfig->getValueByName("dev_mode") == true) {
-		if ($_SERVER['HTTP_HOST'] == "localhost") {
-			$whoops = new \Whoops\Run;
-			$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-			$whoops->register();		  
-		}
+		$whoops = new \Whoops\Run;
+		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+		$whoops->register();
 	}
 
 	//Check if page is in maintenance mode
