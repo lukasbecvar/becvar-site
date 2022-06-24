@@ -289,9 +289,9 @@
 									"id" => $data["id"],
 									"key" => $data["key"],
 									"visited_sites" => $data["visited_sites"],
-									"first_visit" => $data["first_visit"],
-									"last_visit" => $data["last_visit"],
-									"browser" => "<span class='text-red'>". $data["browser"]."</span>",
+                                                                        "first_visit" => "<span class='text-red'>".$data["first_visit"]."</span>",
+                                                                        "last_visit" => "<span class='text-red'>".$data["last_visit"]."</span>",
+                                                                        "browser" => "<span class='text-red'>".$data["browser"]."</span>",
 									"ip_adress" => $data["ip_adress"],
 								];
 
