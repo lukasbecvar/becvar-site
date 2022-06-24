@@ -14,16 +14,21 @@
 
             $configOBJ = new PageConfig();
 
-            $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
-            if (!$connection) {
-                if ($configOBJ->config["dev_mode"] == true) {
-                    if ($_SERVER['HTTP_HOST'] == "localhost") {
-                        http_response_code(503);
-                        die('[DEV-MODE]:Database error: the application layer was unable to connect to the database');		  
+            //Try connect to database
+            try {
+                $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
+            
+            } catch(Exception $e) { 
+                
+                //Print error
+                if ($configOBJ->config["dev_mode"] == false) {
+                    if ($e->getMessage() == "Connection refused") {
+                        die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/Maintenance.php"));
+                    } else {
+                        die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/UnknownError.php"));
                     }
-                } else {
-                    die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=520");</script>');
                 }
+
             }
 
             //Set mysql utf/8 charset
