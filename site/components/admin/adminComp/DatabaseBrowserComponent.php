@@ -275,7 +275,7 @@
 
 								$data = [ 
 									"id" => $data["id"],
-									"key" => "<span class='text-warning'>".$data["key"]."</span> [<span class='text-success'>You</span>]",
+									"key" => "<span class='text-warning'>".$data["key"]."</span>[<span class='text-success'>You</span>]",
 									"visited_sites" => $data["visited_sites"],
 									"first_visit" => $data["first_visit"],
 									"last_visit" => $data["last_visit"],
