@@ -1,7 +1,7 @@
 <div class="pageContentText">
     <strong class="pageSubTitle">My Skills</strong><br><br>
     <div class="bar-1">
-        <div class="title">PHP [Advanced] {Laravl/Lumen}</div>
+        <div class="title">PHP [Advanced]</div>
         <div class="bar" data-width="85%">
         <div class="bar-inner"></div>
         <div class="bar-percent"><strong>85%</strong></div>
@@ -15,7 +15,7 @@
 		</div>
 	</div>
     <div class="bar-1">
-        <div class="title">Linux [Advanced] {Debian/Arch}</div>
+        <div class="title">Linux [Advanced]</div>
         <div class="bar" data-width="75%">
         <div class="bar-inner"></div>
         <div class="bar-percent"><strong>75%</strong></div>

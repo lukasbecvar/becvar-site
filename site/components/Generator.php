@@ -34,7 +34,7 @@
 
 
 	//Password & hash
-	echo '<p class="pageTitle borderer-bot">Password & hash</p>';
+	echo '<p class="pageTitle">Password & hash</p>';
 
 	//Include hash generator
 	include_once("elements/forms/generatorForms/HashGeneratorForm.php");
@@ -45,7 +45,7 @@
 
 
 	//Base64
-	echo '<br class="removeFloat"><br class="removeFloat"><br class="removeFloat"><p class="removeFloat pageTitle borderer-bot">Base64</p>';
+	echo '<br class="removeFloat"><br class="removeFloat"><br class="removeFloat"><p class="removeFloat pageTitle">Base64</p>';
 
 	//Include Base64 decoder
 	include_once("elements/forms/generatorForms/base64/Base64DecoderForm.php");	
@@ -62,7 +62,7 @@
 	
 
 	//AES
-	echo '<br class="removeFloat"><br class="removeFloat"><br class="removeFloat"><p class="removeFloat pageTitle borderer-bot">AES</p>';
+	echo '<br class="removeFloat"><br class="removeFloat"><br class="removeFloat"><p class="removeFloat pageTitle">AES</p>';
 
 	//Include AES encryption form
 	include_once("elements/forms/generatorForms/aes/AESDecryptionForm.php");
