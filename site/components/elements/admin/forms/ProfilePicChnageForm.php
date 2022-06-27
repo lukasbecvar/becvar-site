@@ -1,4 +1,4 @@
-<form class="imageUploadForm bg-dark" action="index.php?page=admin&process=accountSettings" method="post" enctype="multipart/form-data">
+<form class="imageUploadForm bg-dark" action="?page=admin&process=accountSettings" method="post" enctype="multipart/form-data">
     <h2 class="loginFormTitle">Change profile image</h2>
         <div class="custom-file">
             <input type="file" class="custom-file-input" name="fileToUpload" id="inputGroupFile01">

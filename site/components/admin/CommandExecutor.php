@@ -27,6 +27,16 @@
 
 
 
+            //OpenSSH service
+            } elseif ($command == "sshStop") {
+                $servicesController->executeScriptAsROOT("ssh_stop.sh");
+
+            } elseif ($command == "sshStart") {
+                $servicesController->executeScriptAsROOT("ssh_start.sh");
+
+
+
+
             //OpenVPN service
             } elseif ($command == "openvpnStop") {
                 $servicesController->executeScriptAsROOT("openvpn_stop.sh");
@@ -102,7 +112,7 @@
             }
 
             //Redirect back to dashboard
-            $urlUtils->jsRedirect("index.php?page=admin&process=dashboard");
+            $urlUtils->jsRedirect("?page=admin&process=dashboard");
 
         } else {
             $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");

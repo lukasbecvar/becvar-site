@@ -1,7 +1,7 @@
 <p class="settingsValueBox">
     Maintenance [<?php echo $pageConfig->getValueByName('maintenance');?>]
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=maintenanceDisable">Disable</a>
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=maintenanceEnable">Enable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=maintenanceDisable">Disable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=maintenanceEnable">Enable</a>
 </p>
 
 <p class="settingsValueBox">
@@ -12,8 +12,8 @@
             echo "disabled";
         }
     ?>]
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=devmodeDisable">Disable</a>
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=devmodeEnable">Enable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=devmodeDisable">Disable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=devmodeEnable">Enable</a>
 </p>
 
 <p class="settingsValueBox">
@@ -24,6 +24,6 @@
             echo "disabled";
         }
     ?>]
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=apiDisable">Disable</a>
-    <a class="settingsButton" href="index.php?page=admin&process=pageSettings&config=apiEnable">Enable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=apiDisable">Disable</a>
+    <a class="settingsButton" href="?page=admin&process=pageSettings&config=apiEnable">Enable</a>
 </p>

@@ -31,7 +31,7 @@
 			$mysqlUtils->logToMysql("Uploader", "uploaded new image");	
 
 			//Redirect to image view
-			$urlUtils->redirect("index.php?process=image&spec=".$imgSpec);
+			$urlUtils->redirect("?process=image&spec=".$imgSpec);
 
 		} else {
 			die($alertController->flashError("Error file have wrong format!"));

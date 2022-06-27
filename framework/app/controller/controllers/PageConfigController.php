@@ -22,6 +22,7 @@
         public function maintenanceDisable() {
 
             global $mysqlUtils;
+            global $adminController;
                         
             //Edit value in config file
             file_put_contents("../config.php", str_replace("enabled", "disabled", file_get_contents("../config.php")));
@@ -35,6 +36,7 @@
         public function devModeEnable() {
 
             global $mysqlUtils;
+            global $adminController;
 
             //Edit value in config file
             file_put_contents("../config.php", str_replace('"dev_mode"    => false', '"dev_mode"    => true', file_get_contents("../config.php")));
@@ -49,6 +51,7 @@
         public function devModeDisable() {
 
             global $mysqlUtils;
+            global $adminController;
                         
             //Edit value in config file
             file_put_contents("../config.php", str_replace('"dev_mode"    => true', '"dev_mode"    => false', file_get_contents("../config.php")));
@@ -63,6 +66,7 @@
         public function apiEnable() {
 
             global $mysqlUtils;
+            global $adminController;
 
             //Edit value in config file
             file_put_contents("../config.php", str_replace('"apiEnable" => false', '"apiEnable" => true', file_get_contents("../config.php")));
@@ -77,6 +81,7 @@
         public function apiDisable() {
 
             global $mysqlUtils;
+            global $adminController;
                         
             //Edit value in config file
             file_put_contents("../config.php", str_replace('"apiEnable" => true', '"apiEnable" => false', file_get_contents("../config.php")));

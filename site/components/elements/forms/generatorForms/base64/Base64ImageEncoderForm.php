@@ -1,5 +1,5 @@
 <center>
-    <form class="contentBox" action="index.php?page=generator" method="post" enctype="multipart/form-data">
+    <form class="contentBox" action="?page=generator" method="post" enctype="multipart/form-data">
         <h2 class="boxTitle">Base64 Image Encode</h2>
         <div class="boxContent">
             <div class="result">

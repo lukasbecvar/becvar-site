@@ -31,7 +31,7 @@
             }
 
             //Refresh page
-            $urlUtils->jsRedirect("index.php?page=admin&process=pageSettings"); 
+            $urlUtils->jsRedirect("?page=admin&process=pageSettings"); 
         }
     ?>
     <h1 class="pageTitle display-4">Page settings</h1>

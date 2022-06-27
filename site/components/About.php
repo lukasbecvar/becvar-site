@@ -16,6 +16,9 @@
         //Include timeline element
         include_once("elements/public/ProjectTimelineElement.php");
 
+        //Include github
+        include_once("elements/public/GithubGraph.php");
+
         //Include skillbar element
         include_once("elements/public/SkillBarElement.php");
     ?>

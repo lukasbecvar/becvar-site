@@ -1,4 +1,4 @@
-<form class="formLimiter" action="index.php?page=imageUploader" method="post" enctype="multipart/form-data">
+<form class="formLimiter" action="?page=imageUploader" method="post" enctype="multipart/form-data">
 	<div class="file-upload">
 		<p class="formTitle">Image upload</p>
 			<div class="image-upload-wrap">

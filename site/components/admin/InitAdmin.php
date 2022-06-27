@@ -7,7 +7,7 @@
 
 		//Set default process if is empty
 		if ($siteController->isProcessEmpty()) {
-			$urlUtils->redirect("index.php?page=admin&process=dashboard");
+			$urlUtils->redirect("?page=admin&process=dashboard");
 		}
 
 		//Include admin top nav bar

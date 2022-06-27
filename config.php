@@ -37,13 +37,14 @@
 
 
 			/* Rest API config */
-			"apiEnable" => false, 	//Api status (index.php?process=api or api.url.domain)
+			"apiEnable" => false, 	//Api status (?process=api or api.url.domain)
 			"apiToken"  => "1234",	//Token to acces api
 
 
 
 
 			/* Contact links */
+			"email"     => "lukas@becvold.xyz",
 			"discord"   => "https://discord.gg/XfAWKpHm6k",
 			"twitter"   => "https://twitter.com/Lordbecvold",
 			"instagram" => "https://www.instagram.com/lordbecvold",

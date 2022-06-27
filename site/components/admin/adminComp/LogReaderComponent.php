@@ -53,21 +53,21 @@
                     
                     if ($data["status"] != "readed") {
                         if ($data["name"] == "Log reader" || $data["name"] == "Database" || $data["name"] == "Database delete" || $data["name"] == "Database list" || $data["name"] == "Database edit") {
-                            echo "<tr class='text-primary'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong></strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-primary'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong></strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Sended message" || $data["name"] == "Messages" || $data["name"] == "Todos") {
-                            echo "<tr class='text-dark-yellow'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-dark-yellow'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Paste") {
-                            echo "<tr class='text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Uploader") {
-                            echo "<tr class='text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update") {
-                            echo "<tr class='text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Encryptor") {
-                            echo "<tr class='text-light-green'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-light-green'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } elseif ($data["name"] == "Success login") {
-                            echo "<tr class='text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr class='text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         } else {
-                            echo "<tr><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'index.php?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            echo "<tr><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?page=admin&process=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         }
                     }
                 }
@@ -96,7 +96,7 @@
                 $mysqlUtils->insertQuery("UPDATE logs SET status='readed' WHERE status='unreader'");
             
                 //Redirect to log reader
-                $urlUtils->jsRedirect("index.php?page=admin&process=dashboard");
+                $urlUtils->jsRedirect("?page=admin&process=dashboard");
 
             } else {
                 echo "<br><h2 class=pageTitle>Error action: $action not found!</h2>";
@@ -111,13 +111,13 @@
         
             //Print back button if user in next page
             if ($showLimit > $limitOnPage) {
-                echo '<br><a class="backPageButton" href=index.php?page=admin&process=logReader&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+                echo '<br><a class="backPageButton" href=?page=admin&process=logReader&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
             }
 
 
             //Print next button if user on start page and can see next items
             if ($logs->num_rows == $limitOnPage) {
-                echo '<br><a class="backPageButton" href=index.php?page=admin&process=logReader&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+                echo '<br><a class="backPageButton" href=?page=admin&process=logReader&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
             }
     
             if (($showLimit > $limitOnPage) or ($logs->num_rows == $limitOnPage)) {

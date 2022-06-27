@@ -25,11 +25,10 @@ a:hover {
 
 ::-webkit-scrollbar-track { /*Own scroolbar bacground*/
 	background: rgb(20,20,20);
-	border: 1px solid #343a40;
 }
  
 ::-webkit-scrollbar-thumb { /*Own scrollbar button*/
-	background: #4f555a;
+	background: #40444b;
 	-webkit-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 } 
@@ -852,8 +851,8 @@ textarea {
 
 .gallery_images {
 	margin: 10px;
-	max-height: 500px;
-	max-width: 90%;
+	max-height: 400px;
+	max-width: 80%;
 	border: 1px solid darkgrey;
 	transition: all 0.2s ease;
 }
@@ -1557,6 +1556,21 @@ textarea {
 
 .close {
 	margin-top: -2px;
+}
+
+.text-muted, .contrib-number {
+	color: white !important;
+}
+
+.calendar {
+	position: relative !important;
+	width: 95% !important;
+}
+
+@media (max-width: 1100px) {
+	.hiden500 {
+		display: none;
+	}
 }
 
 @media (max-width: 600px) {

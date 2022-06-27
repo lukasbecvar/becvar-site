@@ -1,4 +1,4 @@
-<form class="loginFormPosY loginForm bg-dark" action="index.php?page=admin" method="post">
+<form class="loginFormPosY loginForm bg-dark" action="?page=admin" method="post">
 	<h2 class="loginFormTitle">Login to admin panel</h2>
 	<input class="textInput bg-dark" type="text" name="username" placeholder="Username"><br>
 	<input class="textInput bg-dark" type="password" name="password" placeholder="Password"><br>

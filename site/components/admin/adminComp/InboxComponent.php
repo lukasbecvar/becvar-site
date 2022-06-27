@@ -12,7 +12,7 @@
                 $contactController->deleteMsgByID($id);
 
                 //Redirect to messages page
-                $urlUtils->jsRedirect("index.php?page=admin&process=inbox");
+                $urlUtils->jsRedirect("?page=admin&process=inbox");
             } 
          
             //Print msgs is not empty

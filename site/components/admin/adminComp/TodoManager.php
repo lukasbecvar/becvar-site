@@ -14,14 +14,14 @@
                 $todosController->addTodo($todoText);
 
                 //Instant refrash after add new todo
-                $urlUtils->jsRedirect("index.php?page=admin&process=todos");
+                $urlUtils->jsRedirect("?page=admin&process=todos");
 
             } else {
                 echo '<center><div class="alert alert-danger todoErrorAlert alert-dismissible fade show" role="alert">
                 
                     Maximum todo characters is 120
                 
-                    <a href="index.php?page=admin&process=todos" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+                    <a href="?page=admin&process=todos" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
 
                 </div></center>';
 
@@ -42,7 +42,7 @@
         $todosController->closeTodo($id);
 
         //Redirect to todos page
-        $urlUtils->jsRedirect("index.php?page=admin&process=todos"); 
+        $urlUtils->jsRedirect("?page=admin&process=todos"); 
     }
 ?>
 
@@ -67,7 +67,7 @@
 
                 //Print todos to table
                 while ($row = mysqli_fetch_assoc($finalTodos)) { 
-                    echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='index.php?page=admin&process=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='index.php?page=admin&process=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
+                    echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?page=admin&process=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?page=admin&process=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
                 }
 
                 //End of table struct

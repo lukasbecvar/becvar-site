@@ -45,7 +45,7 @@
                             $mysqlUtils->insertQuery("INSERT INTO `users`(`username`, `password`, `role`, `image_base64`, `token`) VALUES ( '$username', '$password', '$role', '$image_base64', '$token')");   
 
                             //Redirect to login page
-                            $urlUtils->redirect("index.php?page=admin");
+                            $urlUtils->redirect("?page=admin");
                        
                         } else {
                             echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";

@@ -1,4 +1,4 @@
-<form class="loginFormPosY loginForm bg-dark" action="index.php?page=register" method="post">
+<form class="loginFormPosY loginForm bg-dark" action="?page=register" method="post">
     <h2 class="loginFormTitle">Create default admin account</h2>
     <input class="textInput bg-dark" type="text" name="username" placeholder="Username"><br>
     <input class="textInput bg-dark" type="password" name="password" placeholder="Password"><br>

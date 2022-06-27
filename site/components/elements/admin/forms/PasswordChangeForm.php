@@ -1,4 +1,4 @@
-<form class="loginForm bg-dark" style="top: 56%;" action="index.php?page=admin&process=accountSettings" method="post">
+<form class="loginForm bg-dark" style="top: 56%;" action="?page=admin&process=accountSettings" method="post">
     <h2 class="loginFormTitle">Change password</h2>
     <input class="textInput bg-dark" type="password" name="password" placeholder="Password"><br>
     <input class="textInput bg-dark" type="password" name="repassword" placeholder="Re - Password"><br>

@@ -34,7 +34,7 @@
         $imagesUpload = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
     
         while ($row = mysqli_fetch_assoc($imagesUpload)) {
-            echo '<span data-src="data:image/png;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=index.php?process=image&spec='.$row["imgSpec"].' target=blank_>'.$row["imgSpec"].'</a> | <a class=imgEditButton href=index.php?page=admin&process=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/png;base64,'.$row["image"].'"></span>'; 
+            echo '<span data-src="data:image/png;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=?process=image&spec='.$row["imgSpec"].' target=blank_>'.$row["imgSpec"].'</a> | <a class=imgEditButton href=?page=admin&process=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/png;base64,'.$row["image"].'"></span>'; 
         } 
     
         //End of gallery list
@@ -47,13 +47,13 @@
         
             //Print back button if user in next page
             if ($showLimit > $limitOnPage) {
-                echo '<br><a class="backPageButton" href=index.php?page=admin&process=mediaBrowser&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+                echo '<br><a class="backPageButton" href=?page=admin&process=mediaBrowser&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
             }
 
 
             //Print next button if user on start page and can see next items
             if ($imagesUpload->num_rows == $limitOnPage) {
-                echo '<br><a class="backPageButton" href=index.php?page=admin&process=mediaBrowser&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+                echo '<br><a class="backPageButton" href=?page=admin&process=mediaBrowser&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
             }
     
             echo '</div>';

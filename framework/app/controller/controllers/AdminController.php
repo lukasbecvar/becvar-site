@@ -149,7 +149,7 @@
 			}
 
 			//Redirect to index page
-			$urlUtils->redirect("index.php?page=admin");			
+			$urlUtils->redirect("?page=admin");			
 		}
 
 
@@ -272,7 +272,7 @@
 			$mysqlUtils->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
 
 			//Refresh page
-			$urlUtils->redirect("index.php?page=admin");
+			$urlUtils->redirect("?page=admin");
 		}
 
 

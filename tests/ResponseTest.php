@@ -16,11 +16,11 @@
 
     //Register all testing urls
     $register = [
-        "http://".$pageConfig->config["url"]."/index.php?page=home",
-        "http://".$pageConfig->config["url"]."/index.php?page=generator",
-        "http://".$pageConfig->config["url"]."/index.php?page=contact",
-        "http://".$pageConfig->config["url"]."/index.php?page=imageUploader",
-        "http://".$pageConfig->config["url"]."/index.php?page=admin"
+        "http://".$pageConfig->config["url"]."/?page=home",
+        "http://".$pageConfig->config["url"]."/?page=generator",
+        "http://".$pageConfig->config["url"]."/?page=contact",
+        "http://".$pageConfig->config["url"]."/?page=imageUploader",
+        "http://".$pageConfig->config["url"]."/?page=admin"
     ];
 
     

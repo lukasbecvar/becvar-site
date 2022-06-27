@@ -21,28 +21,28 @@
         </li>
 
         <li>
-            <a class="sMenuButton" href="index.php?page=admin&process=dashboard">
+            <a class="sMenuButton" href="?page=admin&process=dashboard">
 				<span class="icon"><i class="fas fa-desktop"></i></span>
 				<span class="item">Dashboard</span>
 			</a>
 		</li>
 		
         <li>
-		    <a class="sMenuButton" href="index.php?page=admin&process=dbBrowser">
+		    <a class="sMenuButton" href="?page=admin&process=dbBrowser">
 				<span class="icon"><i class="fas fa-database"></i></span>
 				<span class="item">Database</span>
 			</a>
 		</li>
 	
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=logReader&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0">
+			<a class="sMenuButton" href="?page=admin&process=logReader&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0">
 			    <span class="icon"><i class="fas fa-file"></i></span>
 			    <span class="item">Log reader</span>
 	    	</a>
 		</li>
 					
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=mediaBrowser&limit=<?php echo $pageConfig->getValueByName("imagesInBrowserLimit"); ?>&startby=0">
+			<a class="sMenuButton" href="?page=admin&process=mediaBrowser&limit=<?php echo $pageConfig->getValueByName("imagesInBrowserLimit"); ?>&startby=0">
 	    		<span class="icon"><i class="fas fa-image"></i></span>
 				<span class="item">Media browser</span>
 			</a>
@@ -62,35 +62,35 @@
 		?>
 					
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=inbox">
+			<a class="sMenuButton" href="?page=admin&process=inbox">
 				<span class="icon"><i class="fas fa-envelope"></i></span>
 				<span class="item">Inbox</span>
 			</a>
 		</li>
 					
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=todos">
+			<a class="sMenuButton" href="?page=admin&process=todos">
 				<span class="icon"><i class="fas fa-tasks"></i></span>
 				<span class="item">Todo Manager</span>
 			</a>
 		</li>
 				
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=phpInfo">
+			<a class="sMenuButton" href="?page=admin&process=phpInfo">
 				<span class="icon"><i class="fab fa-php"></i></span>
 				<span class="item">PHP information</span>
 			</a>
 		</li>
 					
         <li>
-			<a class="sMenuButton" href="index.php?page=admin&process=pageSettings">
+			<a class="sMenuButton" href="?page=admin&process=pageSettings">
 				<span class="icon"><i class="fas fa-cogs"></i></span>
 				<span class="item">Page settings</span>
 			</a>
 		</li>
 
 		<li>
-			<a class="sMenuButton" href="index.php?page=admin&process=accountSettings">
+			<a class="sMenuButton" href="?page=admin&process=accountSettings">
 	    		<span class="icon"><i class="fas fa-user-cog"></i></span>
 				<span class="item">Account settings</span>
 			</a>

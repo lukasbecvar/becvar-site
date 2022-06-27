@@ -26,9 +26,9 @@
 				$sendMSG = $contactController->sendMessage($_POST["name"], $_POST["email"], $_POST["message"], "open");
 
 				if ($sendMSG) {
-					$urlUtils->redirect("index.php?page=contact&status=success");
+					$urlUtils->redirect("?page=contact&status=success");
 				} else {
-					$urlUtils->redirect("index.php?page=contact&status=error");
+					$urlUtils->redirect("?page=contact&status=error");
 				}
 			}
 		}

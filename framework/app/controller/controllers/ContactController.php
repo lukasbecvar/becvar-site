@@ -44,7 +44,7 @@
 
             //Show all messages from array messages in page
             while ($row = mysqli_fetch_assoc($messages)) {
-                echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") [".$row["time"]."]<a class='deleteLink' href='index.php?page=admin&process=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
+                echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") [".$row["time"]."]<a class='deleteLink' href='?page=admin&process=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
             }
 		}
 	

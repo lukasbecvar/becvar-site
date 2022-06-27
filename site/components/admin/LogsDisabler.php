@@ -10,14 +10,14 @@
             $adminController->setAntiLogCookie(); 
 
             //Redirect back to admin
-            $urlUtils->jsRedirect("index.php?page=admin&process=dashboard");
+            $urlUtils->jsRedirect("?page=admin&process=dashboard");
         } else {
 
             //Unset anti log cookie
             $cookieUtils->unset_cookie($pageConfig->getValueByName("antiLogCookie"));
 
             //Redirect back to admin
-            $urlUtils->jsRedirect("index.php?page=admin&process=dashboard");
+            $urlUtils->jsRedirect("?page=admin&process=dashboard");
         }    
     } else {
         if ($pageConfig->getValueByName("dev_mode") == true) {

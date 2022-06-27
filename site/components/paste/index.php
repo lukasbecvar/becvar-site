@@ -14,11 +14,11 @@
             }
             $("#file").val(name);
             $.ajax({
-                url: 'index.php?process=paste&method=save',
+                url: '?process=paste&method=save',
                 type: 'post',
                 data: $('#form').serialize(),
                 success: function () {
-                    window.open("index.php?process=paste&method=view&f=" + name, "_self");
+                    window.open("?process=paste&method=view&f=" + name, "_self");
                 }
             })
         }
@@ -91,7 +91,7 @@
 <a class="icon" onclick="save();">
     <img src="assets/img/pasteSave.svg">
 </a>
-<form action="index.php?process=paste&method=save" method="post" id="form">
+<form action="?process=paste&method=save" method="post" id="form">
     <input type="hidden" name="file" value="" id="file">
     <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" name="data"></textarea>
 </form>

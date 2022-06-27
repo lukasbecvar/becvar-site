@@ -15,7 +15,7 @@
             $mysqlUtils->logToMysql("Todos", "User ".$adminController->getCurrentUsername()." added new todo $text");
 
             //Refrsh window aftre add todo
-            print '<script type="text/javascript">window.location.replace("index.php?page=admin&process=todos");</script>';
+            print '<script type="text/javascript">window.location.replace("?page=admin&process=todos");</script>';
         }
     
 

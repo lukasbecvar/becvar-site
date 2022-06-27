@@ -1,5 +1,5 @@
 <center>
-    <form class="contentBox" action="index.php?page=generator" method="post" style="height:500px;">
+    <form class="contentBox" action="?page=generator" method="post" style="height:500px;">
         <h2 class="boxTitle">AES Encrypt</h2>
         <div class="boxContent">
             <div class="result">

@@ -39,10 +39,10 @@
 		//Print button if name not empty
 		if (!empty($_GET["name"]) or !empty($_GET["editor"])) {
 			echo '<ul class="breadcrumb bg-dark">';
-				echo '<li><a class="selectorButton btn-small" href="index.php?page=admin&process=dbBrowser"><strong>Table selector</strong></a></li>';
+				echo '<li><a class="selectorButton btn-small" href="?page=admin&process=dbBrowser"><strong>Table selector</strong></a></li>';
 
 				if (!empty($_GET["name"])) {
-					echo '<li><a class="selectorButton btn-small" href="index.php?page=admin&process=dbBrowser&delete='.$_GET["name"].'&id=all"><strong>Delete all '.$_GET["name"].'</strong></a></li>';
+					echo '<li><a class="selectorButton btn-small" href="?page=admin&process=dbBrowser&delete='.$_GET["name"].'&id=all"><strong>Delete all '.$_GET["name"].'</strong></a></li>';
 				}
 
 				if (!empty($_GET["name"])) {
@@ -85,21 +85,21 @@
 						echo "<script>window.close();</script>";
 					} else {
 						if (isset($_GET["reader"])) {
-							$urlUtils->jsRedirect("index.php?page=admin&process=logReader&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+							$urlUtils->jsRedirect("?page=admin&process=logReader&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
 						} else {
-							$urlUtils->jsRedirect("index.php?page=admin&process=dbBrowser&name=$dbName&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+							$urlUtils->jsRedirect("?page=admin&process=dbBrowser&name=$dbName&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
 						}
 					}
 					
 				} else {
 
 					//If user seted name and not id
-					$urlUtils->jsRedirect("index.php?page=admin&process=dbBrowser");
+					$urlUtils->jsRedirect("?page=admin&process=dbBrowser");
 				}
 
 			//If id is not seted redirect to browser				
 			} else { 
-				$urlUtils->jsRedirect("index.php?page=admin&process=dbBrowser");
+				$urlUtils->jsRedirect("?page=admin&process=dbBrowser");
 			}
 
 			//Check if set editor for edit item by id
@@ -133,7 +133,7 @@
 						//Close editor after save
 						echo "<script>window.close();</script>";
 					} else {
-						$urlUtils->jsRedirect("index.php?page=admin&process=dbBrowser&name=".$_GET['editor']."&limit=".$limitOnPage."&startby=0");
+						$urlUtils->jsRedirect("?page=admin&process=dbBrowser&name=".$_GET['editor']."&limit=".$limitOnPage."&startby=0");
 					}
 				}
 
@@ -157,9 +157,9 @@
 
 				//Create form
 				if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
-					echo '<form class="dbEditForm" action="index.php?page=admin&process=dbBrowser&editor='.$dbName.'&id='.$id.'&postby=todomanager" method="post">';
+					echo '<form class="dbEditForm" action="?page=admin&process=dbBrowser&editor='.$dbName.'&id='.$id.'&postby=todomanager" method="post">';
 				} else {
-					echo '<form class="dbEditForm" action="index.php?page=admin&process=dbBrowser&editor='.$dbName.'&id='.$id.'" method="post">';
+					echo '<form class="dbEditForm" action="?page=admin&process=dbBrowser&editor='.$dbName.'&id='.$id.'" method="post">';
 				}
 				echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$id.'<p>';
 
@@ -195,7 +195,7 @@
 
 						//Print all tables to page
 						while ($row = mysqli_fetch_assoc($tables)) {
-							echo "<a class='dbBrowserSelectLink' href=index.php?page=admin&process=dbBrowser&name=".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."</a><br><br>";
+							echo "<a class='dbBrowserSelectLink' href=?page=admin&process=dbBrowser&name=".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."</a><br><br>";
 						}	
 					}
 					echo '</ol></div>';		
@@ -248,7 +248,7 @@
 						if ($_GET["name"] == "image_uploader") {
 							$data = [
 								"id" => $data["id"],
-								"imgSpec" => '<a href="index.php?process=image&spec='.$data["imgSpec"].'" target="_blank">'.$data["imgSpec"].'</a>',
+								"imgSpec" => '<a href="?process=image&spec='.$data["imgSpec"].'" target="_blank">'.$data["imgSpec"].'</a>',
 								"image" => "encrypted",
 								"date" => $data["date"]
 							];			
@@ -259,7 +259,7 @@
 						if ($_GET["name"] == "pastes") {
 							$data = [
 								"id" => $data["id"],
-								"link" => '<a href="index.php?process=paste&method=view&f='.$data["link"].'" target="_blank">'.$data["link"].'</a>',
+								"link" => '<a href="?process=paste&method=view&f='.$data["link"].'" target="_blank">'.$data["link"].'</a>',
 								"spec" => $data["spec"],
 								"content" => "hidden",
 								"date" => $data["date"]
@@ -346,7 +346,7 @@
 									"algorithm" => "<span class='text-warning'>".$data["algorithm"]."</span>",
 									"key" => "<span class='text-red'>".$data["key"]."</span>",
 									"method" => "<span class='text-light-green'>".$data["method"]."</span>",
-									"input" => "<a href='index.php?process=image&spec=".$data["input"]."' target='_blank'>".$data["input"]."</a>",
+									"input" => "<a href='?process=image&spec=".$data["input"]."' target='_blank'>".$data["input"]."</a>",
 									"output" => $data["output"]
 								];							
 							
@@ -376,11 +376,11 @@
 						}
 				
 						if(empty($data["base64"])) {
-							echo '<td><a class="deleteLinkTodos" href="index.php?page=admin&process=dbBrowser&delete='.$name.'&id='.$dataOK[0].'">X</a></td>';
+							echo '<td><a class="deleteLinkTodos" href="?page=admin&process=dbBrowser&delete='.$name.'&id='.$dataOK[0].'">X</a></td>';
 							
 							//Add edit link to row
 							if ($_GET["name"] != "visitors" && $_GET["name"] != "pastes" && $_GET["name"] != "crypted" && $_GET["name"] != "hash_gen" && $_GET["name"] != "users") {
-								echo '<td><a class="text-warning deleteLinkTodos" href="index.php?page=admin&process=dbBrowser&editor='.$name.'&id='.$dataOK[0].'">Edit</a></td>';
+								echo '<td><a class="text-warning deleteLinkTodos" href="?page=admin&process=dbBrowser&editor='.$name.'&id='.$dataOK[0].'">Edit</a></td>';
 							}
 						}
 						echo '</tr></tbody>';
@@ -399,13 +399,13 @@
 				
 					//Print back button if user in next page
 					if ($showLimit > $limitOnPage) {
-						echo '<br><a class="backPageButton" href=index.php?page=admin&process=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+						echo '<br><a class="backPageButton" href=?page=admin&process=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
 					}
 
 
 					//Print next button if user on start page and can see next items
 					if ($tableData->num_rows == $limitOnPage) {
-						echo '<br><a class="backPageButton" href=index.php?page=admin&process=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+						echo '<br><a class="backPageButton" href=?page=admin&process=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
 					}
 			
 					if (($showLimit > $limitOnPage) or ($tableData->num_rows == $limitOnPage)) {

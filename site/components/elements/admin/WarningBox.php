@@ -25,21 +25,21 @@
             
             //Print anti log warning
             if (empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")])) {
-                echo '<p class="card-text text-warning"><strong>Logging for your browser is enabled you can disable <a href="index.php?page=admin&process=disableLogsForMe">here</a></strong></p>';
+                echo '<p class="card-text text-warning"><strong>Logging for your browser is enabled you can disable <a href="?page=admin&process=disableLogsForMe">here</a></strong></p>';
             }
 
 
 
             //Print new logs warning
             if (($dashboardController->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")]))) {
-                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="index.php?page=admin&process=logReader&limit='.$pageConfig->getValueByName("rowInTableLimit").'&startby=0">here</a></strong></p>';
+                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?page=admin&process=logReader&limit='.$pageConfig->getValueByName("rowInTableLimit").'&startby=0">here</a></strong></p>';
             }
 
 
 
             //Print new messages
             if ($dashboardController->getMSGSCount() != "0") {
-                echo '<p class="card-text text-warning"><strong>New messages found you can see it <a href="index.php?page=admin&process=inbox">here</a></strong></p>';
+                echo '<p class="card-text text-warning"><strong>New messages found you can see it <a href="?page=admin&process=inbox">here</a></strong></p>';
             }
 
 

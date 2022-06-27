@@ -8,7 +8,7 @@
 
 	//If user table is empty print warning
 	if ($adminController->isUserEmpty()) {
-		$alertController->flashWarning('Users table is empty<br>Please add admin user manually <strong/><a href="index.php?page=register">here</a></strong>');
+		$alertController->flashWarning('Users table is empty<br>Please add admin user manually <strong/><a href="?page=register">here</a></strong>');
 	}
 
 
@@ -71,7 +71,7 @@
 						$mysqlUtils->logToMysql("Success login", "User $username logged in success");
 
 						//Redirect to admin page
-						$urlUtils->redirect("index.php?page=admin");
+						$urlUtils->redirect("?page=admin");
 
 					} else {
 						if ($pageConfig->getValueByName("dev_mode") == true) {
