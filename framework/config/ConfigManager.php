@@ -11,7 +11,7 @@
 		public function getValueByName($name) {
 
 			//Init config file
-			require_once('../config.php');
+			require_once("../config.php");
 
 			//Config obj Array get
 			$configOBJ = new PageConfig();

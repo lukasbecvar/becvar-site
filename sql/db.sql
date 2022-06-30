@@ -8,18 +8,6 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
-DROP TABLE IF EXISTS `crypted`;
-CREATE TABLE `crypted` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
-  `algorithm` char(255) NOT NULL,
-  `key` char(255) NOT NULL,
-  `method` char(255) NOT NULL,
-  `input` longtext NOT NULL,
-  `output` longtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 DROP TABLE IF EXISTS `hash_gen`;
 CREATE TABLE `hash_gen` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -110,4 +98,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-06-23 08:15:02
+-- 2022-06-30 07:01:30

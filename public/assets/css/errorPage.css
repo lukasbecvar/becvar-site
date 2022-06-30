@@ -1,0 +1,27 @@
+* { 
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background: rgb(12, 12, 12);
+}
+.mainPage {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.errorPageMSG {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    font-family: 'Maven Pro', sans-serif;
+    user-select: none;
+    opacity: 0.8;
+}

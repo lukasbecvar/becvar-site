@@ -1,4 +1,4 @@
-<?php
+<?php /* Admin dashboard controller (system, database information getters) */
  
     class DashboardController {
 

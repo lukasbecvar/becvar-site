@@ -1,10 +1,10 @@
-<?php //The main site contorller and getter
+<?php //The Example app controller
 
-    class SiteController {
+	class SiteController {
 
         //Get true or false if admin page
         public function isCurrentPageAdmin() {
-            if (!empty($_GET["page"]) && $_GET["page"] == "admin") {
+            if (!empty($_GET["admin"])) {
                 return true;
             } else {
                 return false;
@@ -13,44 +13,17 @@
 
 
 
-        //Get method name if isset
-        public function getCurrentMethod() {
+        //Get true or false for maintenance mode
+        public function ifMaintenance() {
 
+            global $pageConfig;
             global $mysqlUtils;
 
-            if (isset($_GET["method"])) {
-                $method = $mysqlUtils->escapeString($_GET["method"], true, true);
-                return $method;
-            }
-        }
-
-
-
-        //Get action name if isset
-        public function getCurrentAction() {
-
-            global $mysqlUtils;
-
-            if (isset($_GET["action"])) {
-               return $mysqlUtils->escapeString($_GET["action"], true, true);
-            }
-        }
-
-
-        //Get Http host aka domain name
-        public function getHTTPhost() {
-            return $_SERVER['HTTP_HOST'];
-        }
-
-
-        //Check if process isset and return true or false
-        public function isProcessEmpty() {
-            if (empty($_GET["process"])) {
+            if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false) or $mysqlUtils->isOffline()) {
                 return true;
-            } else {
-                return false;
             }
         }
+
 
 
         //Get process name if isset
@@ -70,6 +43,28 @@
         }
 
 
+
+        //Get admin process name if isset
+        public function getCurrentAdminProcess() {
+
+            global $mysqlUtils;
+
+            if (isset($_GET["admin"])) {
+               return $mysqlUtils->escapeString($_GET["admin"], true, true);
+            } else {
+                return null;
+            }
+        }
+
+
+
+        //Get Http host aka domain name
+        public function getHTTPhost() {
+            return $_SERVER['HTTP_HOST'];
+        }
+
+
+
         //Get page title by paramater
         public function getPageTitle() {
 
@@ -87,38 +82,32 @@
         }
 
 
-        //Get site protocol
-        public function getSiteProtocol() {
-            return stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://';;
-        }
 
+        //Get action name if isset
+        public function getCurrentAction() {
 
-        //Get true or false for maintenance mode
-        public function ifMaintenance() {
-
-            global $pageConfig;
             global $mysqlUtils;
 
-            if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->getCurrentPage() != "admin") or $mysqlUtils->isOffline()) {
-                return true;
+            if (isset($_GET["action"])) {
+               return $mysqlUtils->escapeString($_GET["action"], true, true);
+            }
+        } 
+
+
+
+        //Get method name if isset
+        public function getCurrentMethod() {
+
+            global $mysqlUtils;
+
+            if (isset($_GET["method"])) {
+                $method = $mysqlUtils->escapeString($_GET["method"], true, true);
+                return $method;
             }
         }
 
 
-        //Get current page value if isset
-        public function getCurrentPage() {
 
-            global $mysqlUtils;
-
-            if (isset($_GET["page"])) {
-                return $mysqlUtils->escapeString($_GET["page"], true, true);
-            } else {
-                return "home";
-            }
-
-        }
-
-        
         //Get age by birth data input
         public function getAge($birthDate) {
             $birthDate = explode("/", $birthDate);
@@ -126,5 +115,5 @@
             ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
             return $age;           
         }
-    }
+	}
 ?>

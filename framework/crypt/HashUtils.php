@@ -9,7 +9,7 @@
           * Returned final hash type string
         */
         public function genBlowFish($plainText) {
-            $hashFromat = "$2y$10$"; 
+            $hashFromat = "$2y$10$";
             $salt = "123sbrznvdzvchpj8z5p5k";
             $hashFromat_salt = $hashFromat.$salt;
             return crypt($plainText, $hashFromat_salt);
@@ -28,7 +28,7 @@
             return $hashFinal;
         }
 
-  
+
         /*
           * Function for hashMD5 hash generate
           * Usage: hashMD5("plaintext")
@@ -59,7 +59,7 @@
           * Returned final hash form string
         */
         public function customhash($string, $hash) {
-            return hash($hash, $string);
+          return hash($hash, $string);
         }
     }
 ?>

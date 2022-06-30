@@ -1,6 +1,5 @@
 <?php /* The controller for services action */
 
-
     class ServicesController {
 
 

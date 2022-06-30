@@ -1,3 +1,3 @@
 <?php //Redirect to admin page
-	header("location: ../?page=admin");
+	header("location: ../?admin=login");
 ?>

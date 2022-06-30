@@ -1,6 +1,6 @@
 ;;
 ;; Domain:     becvold.xyz.
-;; Exported:   2022-06-22 07:47:52
+;; Exported:   2022-06-30 07:07:15
 ;;
 ;; This file is intended for use for informational and archival
 ;; purposes ONLY and MUST be edited before use on a production
@@ -24,7 +24,7 @@
 ;;
 ;; Use at your own risk.
 ;; SOA Record
-becvold.xyz	3600	IN	SOA	becvold.xyz root.becvold.xyz 2040755067 7200 3600 86400 3600
+becvold.xyz	3600	IN	SOA	becvold.xyz root.becvold.xyz 2040823943 7200 3600 86400 3600
 
 ;; A Records
 becvold.xyz.	1	IN	A	000.000.000.000
@@ -41,7 +41,7 @@ _minecraft._tcp.becvold.xyz.	1	IN	SRV	0 0 25565 becvold.xyz.
 _ts3._udp.becvold.xyz.	1	IN	SRV	1 0 9987 becvold.xyz.
 
 ;; TXT Records
-becvold.xyz.	1	IN	TXT	"google-site-verification=iWITpvOPSg7_hKSTshYYgXL3HkFIN1_u9Ukqk6ICmhI"
+becvold.xyz.	1	IN	TXT	"google-site-verification=token"
 becvold.xyz.	1	IN	TXT	"v=spf1 -all"
 _dmarc.becvold.xyz.	1	IN	TXT	"v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s;"
 *._domainkey.becvold.xyz.	1	IN	TXT	"v=DKIM1; p="

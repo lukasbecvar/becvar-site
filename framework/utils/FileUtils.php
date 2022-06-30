@@ -1,7 +1,7 @@
 <?php //The File utils class
 
     class FileUtils {
-
+ 
         /*
           * The function for get json
           * Usage like $json = getJsonFromUrl("https://www.becvar.xyz/api/becwork.json")

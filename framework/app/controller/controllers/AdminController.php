@@ -149,7 +149,7 @@
 			}
 
 			//Redirect to index page
-			$urlUtils->redirect("?page=admin");			
+			$urlUtils->redirect("?admin=login");			
 		}
 
 
@@ -225,6 +225,7 @@
 		}
 
 
+		
 		//Get user token
 		public function getUserToken() {
 
@@ -251,6 +252,7 @@
 		}
 
 
+
 		//Auto user login (for cookie login)
 		public function autoLogin() {
 			
@@ -272,7 +274,7 @@
 			$mysqlUtils->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
 
 			//Refresh page
-			$urlUtils->redirect("?page=admin");
+			$urlUtils->redirect("?admin=dashboard");
 		}
 
 

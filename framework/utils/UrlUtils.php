@@ -39,7 +39,7 @@
           * The function for refrash page
           * Usage like refrash(1, "login.php")
         */
-        public function refrash($time, $page) {
+        public static function refrash($time, $page) {
             header("Refresh: $time; url=$page");
         }
 

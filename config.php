@@ -6,7 +6,7 @@
 
 			/* Main config */
 			"appName"     => "Becvold.xyz",        	//Define app name
-			"version"     => 2.0,                  	//Define app version
+			"version"     => 5.0,                  	//Define app version
 			"author"      => "Lukáš Bečvář",       	//Define app author
 			"authorLink"  => "becvold.xyz", 	   	//Define author site
 			"url"         => "localhost",        	//Define main app url
@@ -15,15 +15,16 @@
 			"https"       => false,				   	//If this = true (Site can run only on https://)
 
 
-
+			
 			/* Page config */
 			"maintenance" => "disabled", //The maintenance config (Disable acces to public page)
 
 
 
-			/* Google site verify token */
+			/* Site meta values */
 			"googleVerifyToken" => "token",
-
+			"siteDescription"   => "Lukáš Bečvář AKA Lordbecvold personal website",
+			"siteKeywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects",
 
 
 
@@ -35,20 +36,19 @@
 
 
 
-
 			/* Rest API config */
 			"apiEnable" => false, 	//Api status (?process=api or api.url.domain)
 			"apiToken"  => "1234",	//Token to acces api
 
 
 
-
-			/* Contact links */
+			/* Contact information */
 			"email"     => "lukas@becvold.xyz",
 			"discord"   => "https://discord.gg/XfAWKpHm6k",
 			"twitter"   => "https://twitter.com/Lordbecvold",
-			"instagram" => "https://www.instagram.com/lordbecvold",
 			"github"    => "https://github.com/lordbecvold",
+			"instagram" => "https://www.instagram.com/lordbecvold",
+			"telegram"  => "https://t.me/lordbecvold",
 			"youtube"   => "https://www.youtube.com/channel/UCcALaaQqdBlcR4-tGxavCvQ",
 
 

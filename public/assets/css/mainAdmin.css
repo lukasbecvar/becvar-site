@@ -1,0 +1,914 @@
+/* Main css file of admin component becvar_site [Coded by lukas becvar] */
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+	font-family: Verdana, sans-serif;
+} 
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: #292e33;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/*Custom scroolbar design (Not working on mobile divices)*/
+::-webkit-scrollbar { /*Own page scroolbar design*/
+	width: 12px;
+} 
+
+::-webkit-scrollbar-track { /*Own scroolbar bacground*/
+	background: rgb(20,20,20);
+}
+ 
+::-webkit-scrollbar-thumb { /*Own scrollbar button*/
+	background: #40444b;
+	-webkit-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+} 
+
+::-webkit-scrollbar-thumb:hover { /*Own scrollbar button hover*/
+	background: #5c646b;
+}
+/*End of Custom scrollBar*/
+
+.wrapper .sidebar {
+	background: #343a40;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 225px;
+	height: 100%;
+	padding: 5px 0;
+	transition: all 0.5s ease;
+	z-index: 1;
+}
+  
+.wrapper .sidebar .profile {
+	margin-bottom: 3px;
+	text-align: center;
+}
+  
+.wrapper .sidebar .profile img {
+	display: block;
+	width: 60px;
+	height: 60px;
+	border-radius: 10%;
+	margin: 0 auto;
+}
+  
+.wrapper .sidebar .profile h3 {
+	color: #ffffff;
+	margin: 5px 0 1px;
+	font-size: 25px;
+}
+  
+.wrapper .sidebar .profile p {
+	color: rgb(206, 240, 253);
+	font-size: 14px;
+}
+
+.wrapper .sidebar ul li a {
+	display: block;
+	padding: 2.5px 4px;
+	border-bottom: 0.5px solid #1c1f20;
+	color: rgb(241, 237, 237);
+	font-size: 18px;
+	position: relative;
+}
+  
+.wrapper .sidebar ul li a .icon {
+	color: #dee4ec;
+	width: 25px;
+	display: inline-block;
+}
+  
+.wrapper .sidebar ul li a:hover, .wrapper .sidebar ul li a.active {
+	color: #0c0e0f;
+	background:white;
+	border-right: 2px solid rgb(33, 39, 43);
+}
+  
+.wrapper .sidebar ul li a:hover .icon, .wrapper .sidebar ul li a.active .icon {
+	color: #0c0e0f;
+}
+  
+.wrapper .sidebar ul li a:hover:before, .wrapper .sidebar ul li a.active:before {
+	display: block;
+}
+  
+.wrapper .section {
+	width: calc(100% - 225px);
+	margin-left: 225px;
+	transition: all 0.5s ease;
+}
+
+.wrapper .section .top_navbar {
+	background: #343a40;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	padding: 0 1%;
+}
+
+.hamburger {
+	text-decoration: none;
+}
+
+.wrapper .section .top_navbar .hamburger a {
+	font-size: 28px;
+	color: #f4fbff;
+	text-decoration: none;
+ }
+  
+.wrapper .section .top_navbar .hamburger a:hover {
+	color: #a2ecff;
+	text-decoration: none;
+}
+
+.wrapper .section .container {
+	margin: 30px;
+	background: #292e33;
+	padding: 50px;
+	line-height: 28px;
+}
+  
+body.active .wrapper .sidebar {
+	left: -225px;
+}
+  
+body.active .wrapper .section {
+	margin-left: 0;
+	width: 100%;
+}
+
+.registerPage {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #292e33;
+}
+
+button {
+	border: 0;
+	outline: 0;
+}
+
+.progressBar {
+	border: 1px solid darkgrey;
+	padding: 5px;
+	border-radius: 10px;
+	color: white;
+	font-family: arial;
+	font-size: 17px;
+	margin-left: 20%;
+	margin-right: 20%;
+	opacity: 0.7;
+}
+
+.bg-red-custom {
+	background-color: rgb(167, 57, 57) !important;
+}
+
+form { 
+	margin: 50px auto; 
+}
+
+.feedback-input {
+	color:white;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight:500;
+	font-size: 18px;
+	border-radius: 5px;
+	line-height: 22px;
+	background-color: transparent;
+	border:2px solid white;
+	transition: all 0.3s;
+	padding: 13px;
+	margin-bottom: 15px;
+	width: 100%;
+	box-sizing: border-box;
+	outline:0;
+}
+
+.feedback-input:focus { 
+	border:2px 
+	solid white; 
+}
+
+textarea {
+	height: 150px;
+	line-height: 150%;
+	resize: none;
+}
+
+.alert {
+	position: relative;
+	top: 20px;
+	width: 30%;
+	font-size: 18px;
+	padding: 8px;
+	z-index: 2;
+}
+
+.pageTitle {
+	text-align: center; 
+	color: white;
+	font-size: 30px;
+	margin-top: 1%;
+}
+
+.loginPage {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #292e33;
+}
+
+.loginForm {
+	margin-top: 4%;
+	padding: 0.5%;
+	background: #171717;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid white;
+}
+
+.loginFormPosY {
+	padding: 1%;
+	top: 27%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.dbEditForm {
+	text-align: center;
+	border: 2px solid rgb(226, 225, 225);
+	padding: 10px;
+	position: relative;
+	top: -5%;
+	border-radius: 5px;
+	opacity: 0.8;
+	width: 40%;
+	background: #343a40;
+}
+
+.imageUploadForm {
+	padding: 2%;
+	background: #343a40;
+	position: absolute;
+	top: 17%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid white;
+}
+
+.loginFormTitle {
+	color: darkgrey;
+	text-align: center;
+}
+
+.textInput {
+	border: 1px solid darkgrey;
+	border-radius: 4px;
+	background: #171717;
+	text-align: center;
+	font-family: arial;
+	font-size: 17px;
+	margin: 3px;
+	padding: 4px;
+	color: white;
+	transition: all 0.2s ease;
+	width: 95%;
+}
+
+.textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus {
+    border: 1px solid darkgrey;
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px #343a40 inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.textInputTitle {
+	color: white;
+	margin-top: 10px;
+	margin-bottom: -5px;
+}
+
+.dbBrowserSelectLink {
+	position: absolute;
+	border: 1px solid white;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	width: 300px;
+	text-align: center;
+	color: white;
+	margin-bottom: 3px;
+}
+
+.dbBrowserSelectLink:hover {
+	color: red;
+	border: 1px solid red;
+}
+
+.textInput:focus {
+	color: white;
+}
+
+.textInput:hover {
+	border: 1px solid red;
+}
+
+.textInput::-moz-placeholder { 
+	color: lightgrey;
+}
+
+.textInput:-ms-input-placeholder {
+	color: lightgrey;
+}
+
+.textInput::placeholder { 
+	color: lightgrey;
+}
+
+.inputButton {
+	padding: 5px;
+	margin-top: 7px;
+	border: 1px solid darkgrey;
+	border-radius: 4px;
+	background-color: rgb(20,20,20);
+	text-align: center;
+	font-family: arial;
+	font-size: 18px;
+	color: white;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	text-decoration: none;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.textInput:hover {
+	border: 1px solid red;
+}
+
+.rightPosition {
+	text-align: right;
+}
+
+.checkbox { 
+	border: 1px solid darkgrey;
+	position: relative;
+	width: 25px;
+	height: 20px;
+	top: 5px;
+}
+
+.checkbox:hover { 
+	border: 1px solid red;
+}
+
+.checkboxText { 
+	color: white;
+	font-family: arial;
+	font-size: 20px;
+}
+
+.sMenuButton {
+	text-decoration: none;
+}
+
+.dashboardBox {
+	position: fixed;
+	background: #292e33;
+	width: 100%;
+	height: 100%;
+}
+
+.logoutLink {
+	position: absolute;
+	right: 1%;
+}
+
+.leftCenter {
+	text-align: left;
+	padding-left: 1%;
+}
+
+.card {
+	margin-top: 10px;
+}
+
+.deleteLink {
+	float: right;
+	color: rgb(207, 39, 39);
+	text-decoration: none;
+	font-size: 30px;
+	transition: all 0.2s ease;	
+}
+
+.deleteLink:hover {
+	color: rgb(33, 248, 97);
+	text-decoration: none;
+}
+
+.adminPanel {
+	background: #292e33;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #292e33;
+	position: absolute;
+}
+
+.adminPage {
+	position: absolute;
+	background: #292e33;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+.custom-file-label {
+	color: white;
+}
+
+.todoArea {
+	width: calc(100% - 6.5%);
+	color:white;
+	padding: 4px;
+	padding-left: 10px;
+	height: 100%;
+}
+
+.newTodoForm {
+	padding: 3px;
+	background: #292e33;
+	position: relative; 
+	margin-top: 2.2%;
+	left: 50%;
+	width: 100%;
+	height: 9%;
+	transform: translate(-50%, -50%);
+	border: 1px solid white;
+}
+
+.todoButton {
+	position: absolute;
+	right: 3px;
+	margin: 2px;
+	top: 2px;
+	height: 88%;
+	width: 6%;
+}
+
+.settingsValueBox {
+	color: white;
+	position: relative;
+	width: 45%;
+	padding: 3px;
+	padding-left: 8px;
+	border: 1px solid white;
+	transform: translate(-50%, -50%);
+	font-size: 28px;
+	top: 10%;
+	left: 50%;
+	margin-bottom: 0;
+}
+
+.settingsButton {
+	color: white;
+	border: 1px solid white;
+	padding: 4px;
+	float: right;
+	font-size: 20px;
+	padding-left: 6px;
+	padding-right: 6px;
+	margin-left: 5px;
+}
+
+.settingsButton:hover {
+	color: red;
+	border: 1px solid red;
+	text-decoration: none;
+}
+
+.table {
+	position: relative;
+	font-size: 18px;
+	margin-bottom: 0px;
+}
+
+.deleteLinkTodos {
+	color: rgb(207, 28, 28);
+	text-decoration: none;
+	font-size: 22px;
+	transition: all 0.2s ease;	
+}
+
+.deleteLinkTodos:hover {
+	color: rgb(33, 248, 97);
+	text-decoration: none;
+}
+
+.breadcrumb {
+	border: #4f555a 1px solid;
+	margin: 0;
+}
+
+.selectorButton {
+	margin-left: 3px;
+	margin-right: 3px;
+	padding: 5px;
+	color: white;
+	border: 1px solid white;
+}
+
+.selectorButton:hover {
+	color: red;
+	border: 1px solid red;	
+}
+
+.countTextInMenu {
+	color: white;
+	left: 1%;
+}
+
+.countTextInMenuR {
+	color: white;
+	position: absolute;
+	right: 1%;
+}
+
+.pageButtonBox {
+	text-align: center;
+}
+
+.backPageButton {
+	color: white;
+	border: 1px solid white;
+	font-size: 25px;
+	padding: 8px;
+}
+
+.backPageButton:hover {
+	color: red;
+	border: 1px solid red;	
+}
+
+.imgEditButton { 
+	color: white;
+	text-decoration: underline;
+}
+
+.gallery_images {
+	margin: 10px;
+	max-height: 400px;
+	max-width: 80%;
+	border: 1px solid darkgrey;
+	transition: all 0.2s ease;
+}
+
+.gallery_images:hover {
+	border: 1px solid red;
+}
+
+.fas {
+	margin-left: 5px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 4px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
+}
+
+.l-bg-cherry {
+    background: linear-gradient(to right, #632f50, rgb(218, 18, 138)) !important;
+    color: #fff;
+}
+
+.l-bg-blue-dark {
+    background: linear-gradient(to right, #113381, #0f459c) !important;
+    color: #fff;
+}
+
+.l-bg-green-dark {
+    background: linear-gradient(to right, #0e645d, #16a14b) !important;
+    color: #fff;
+}
+
+.l-bg-orange-dark {
+    background: linear-gradient(to right, #b46d16, #ce881e) !important;
+    color: #fff;
+}
+
+.l-bg-orange-darker {
+    background: linear-gradient(to right, #ad3b18, #973416) !important;
+    color: #fff;
+}
+
+.l-bg-cyan-darker {
+    background: linear-gradient(to right, #0f4bd6, #0a3d91) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.l-bg-green {
+    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+    color: #fff;
+}
+
+.l-bg-orange {
+    background: linear-gradient(to right, #f9900e, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
+    font-size: 110px;
+}
+
+.cardLink {
+	color: white;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.cardLink:hover {
+	color: #000;
+}
+
+.card .card-statistic-3 .card-icon {
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: 20px;
+    opacity: 0.1;
+}
+  
+.formTitle {
+	color: white;
+	font-size: 25px;
+	text-align: center;
+}
+
+.todoErrorAlert {
+	margin-bottom: 3%;
+}
+
+.stats-link {
+	color: white;
+}
+
+.confirmation {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #292e33;
+	border: 2px solid lightgrey;
+	text-align: center;
+	padding: 10px;
+	font-size: 20px;
+}
+
+.confirmationButton {
+	position: relative;
+	background: #292e33;
+	border: 1px solid lightgrey;
+	padding: 6px;
+	font-size: 23px;	
+	color: white;
+	width: 100px;
+}
+
+.confirmationButton:hover {
+	color: red;
+	border: 1px solid red;
+}
+
+.title {
+	font-weight: bold;
+	font-size: 20px;
+	color: white;
+}
+
+.websiteIN {
+	display: none;
+}
+  
+.blue-grey.darken-1 {
+	background-color: #4a535c;
+}
+  
+.green-text {
+	color: #35ee3b !important;
+}
+
+.text-red {
+	color: rgb(233, 102, 102);
+}
+
+.text-light-green {
+	color: rgb(39, 179, 20);
+}
+
+.text-dark-yellow {
+	color: rgb(179, 150, 20);
+}
+
+.green-text:hover {
+	color: #ee3535 !important;
+}
+
+.white-text {
+	color: #FFFFFF !important;
+}
+
+.todoTable {
+	position: absolute;
+	top: 9%;
+}
+
+.lineItem {
+	border-top: 2px solid #343a40;
+	border-bottom: 2px solid #343a40;
+}
+
+.lineItem:hover {
+	border-top: 3px solid rgb(13, 212, 40);
+	border-bottom: 3px solid rgb(13, 212, 40);
+}
+
+.cardSubTitle {
+	font-size: 28px;
+	margin-bottom: 0;
+}
+
+.close {
+	margin-top: -2px;
+}
+
+@media screen and (max-width: 800px) { 
+	.pageTitle {
+		font-size: 23px;
+	}
+	.menuText {
+		display: none;
+	}
+	.deleteLink {
+		margin-bottom: 20px;
+	}
+	.loginFormTitle {
+		font-size: 20px;
+	}
+	.newTodoForm {
+		margin-top: 7%;
+	}
+	.todoButton {
+		position: absolute;
+		width: 18%;
+	}	
+	.table {
+		font-size: 13px;
+	}
+	.todoTable {
+		position: absolute;
+		top: 8.6%;
+	}
+	.deleteLinkTodos {
+		color: rgb(207, 28, 28);
+		text-decoration: none;
+		font-size: 15px;
+		transition: all 0.2s ease;	
+	}
+	.settingsValueBox {
+		width: 98%;
+		padding: 1.5px;
+		padding-left: 4px;
+		font-size: 17px;
+		top: 5%;
+		left: 50%;
+	}
+	.settingsButton {
+		padding: 1px;
+		font-size: 13px;
+		padding-left: 3px;
+		padding-right: 3px;
+		margin-left: 2px;
+	}
+	.alert {
+		top: 6%;
+		text-align: center;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		position: absolute;
+		width: 90%;
+		font-size: 15px;
+		padding: 5px;
+		z-index: 2;
+	}	
+	.text-danger {
+		padding-bottom: 1px;
+	}
+	.backPageButton {
+		color: white;
+		border: 1px solid white;
+		font-size: 17px;
+		padding: 8px;
+	}
+	.loginForm {
+		margin-top: 18%;
+		padding: 0.5%;
+		left: 50%;
+		width: 90%;
+	}
+	.loginFormPosY {
+		padding: 10px;
+	}
+	.countTextInMenu {
+		display: none;
+	}
+	.countTextInMenuR {
+		display: none;
+	}
+	.selectorButton {
+		margin-left: 2px;
+		margin-right: 2px;
+		padding: 3px;
+	}
+	.dbBrowserSelectLink {
+		width: 200px;
+		margin-bottom: 3px;
+	}
+	.title {
+		font-size: 18px;
+	}
+	.settings {
+		font-size: 15px;
+	}
+	.imageUploadForm {
+		padding: 2%;
+		top: 17%;
+		left: 50%;
+		width: 90%;
+	}
+	.progressBar {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.cardPhone {
+		margin-left: 13px;
+		width: 90%;
+	}
+	.todoArea {
+		width: calc(100% - 20%);
+	}
+	.logReaderInfo {
+		font-size: 16px;
+	}
+	.todoErrorAlert {
+		margin-top: 11%;
+	}
+	.close {
+		margin-top: -7px;
+	}
+	.dbEditForm { 
+		width: 95%;
+		top: -13%;
+	}
+}
+
+@media screen and (max-height: 500px) {
+	.newTodoForm {
+		top: 0;
+		width: 100%;
+		height: 17.2%;
+	}
+	.table {
+		top: 16.3%;
+		height: 100%;
+	}
+}

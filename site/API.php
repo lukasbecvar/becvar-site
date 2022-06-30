@@ -6,10 +6,8 @@
         //Init token for controll user add token
         $accesToken = $pageConfig->getValueByName('apiToken');
 
-        
         //Init token from get parameter and escaped
         $token = $mysqlUtils->escapeString($apiController->getToken(), true, true);
-
         
         //Check if token is valid
         if ($apiController->isTokenValid($token, $accesToken) == null) {
@@ -19,11 +17,9 @@
             die("Error: api token is invalid, please check token format or validate with admin");
 
         } elseif ($apiController->isTokenValid($token, $accesToken) == "valid") {
-
             
             //Get value from url get
             $value = $mysqlUtils->escapeString($apiController->getValue(), true, true);
-
             
             //Check if value is null
             if ($value == null) {

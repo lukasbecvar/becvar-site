@@ -28,6 +28,8 @@
             return $browser;
         }
 
+
+        
         //First visit site
         public function firstVisit() {
             
@@ -62,7 +64,6 @@
             }
 
         }
-
 
 
 
@@ -116,7 +117,5 @@
                 $this->firstVisit();
             }
         }
-
-        
     }
 ?>

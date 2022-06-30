@@ -1,5 +1,5 @@
 #!/usr/bin/php 
-<?php
+<?php //Image uploader database dumper -> GalleryDump.tar.gz
 
     //Include config
     require_once("config.php");
