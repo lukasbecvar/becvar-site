@@ -27,6 +27,7 @@ cp -R scripts/ build/scripts/
 cp -R site/ build/site/
 cp -R tests/ build/tests/
 cp composer.json build/
+cp composer.phar build/
 cp config.php build/
 cp panel.sh build/
 
