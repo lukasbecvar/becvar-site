@@ -2,7 +2,9 @@
 <?php //Main admin component for include all dashboard elements
 
     //Include warnning box
-    include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/WarningBox.php');
+    if (!$dashboardController->isWarninBoxEmpty()) {
+        include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/WarningBox.php');
+    }
 
     //Include services status element
     include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/ServiceStatusBox.php');

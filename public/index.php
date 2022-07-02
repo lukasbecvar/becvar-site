@@ -148,7 +148,7 @@
 				if ($siteController->isCurrentPageAdmin()) {
 					include_once("../site/admin/InitAdmin.php");
 				} else {
-					include_once("../site/Main.php");
+					require_once("../site/Main.php");
 				}
 			}		
 		}

@@ -5,7 +5,7 @@
             <div class="card l-bg-cherry">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=logReader&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0" class="stats-link">Logs</a> <a href="?admin=disableLogsForMe">.</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=logReader&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0" class="stats-link">Logs</a> <a href="?process=disableLogsForMe">.</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">

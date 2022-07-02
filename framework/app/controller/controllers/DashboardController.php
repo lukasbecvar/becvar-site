@@ -1,5 +1,5 @@
 <?php /* Admin dashboard controller (system, database information getters) */
- 
+  
     class DashboardController {
 
         /**
@@ -202,6 +202,73 @@
             global $pageConfig;
         
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM image_uploader"))["count"];
+        }
+
+
+
+        //Check if warnings box empty
+        public function isWarninBoxEmpty() {
+            global $pageConfig;
+            global $mainUtils;
+            global $siteController;
+            global $servicesController;
+
+            //Check if service directory exist in system
+            if (!file_exists($pageConfig->getValueByName('serviceDir'))) {
+                return false;
+
+            //Check if site running on ssl connction
+            } elseif ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
+                return false;
+
+            //Check if hard drive is not full
+            } elseif ($this->getDrivesInfo() > 89) {
+                return false;
+            
+            //Check if antilog cookie not empty
+            } elseif (empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")])) {
+                return false;
+
+            //Check if found new logs
+            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")]))) {
+                return false;
+
+            //Check if found new msgs in inbox
+            } elseif ($this->getMSGSCount() != "0") {
+                return false;
+
+            //Check if UFW firewall is installed
+            } elseif (!$servicesController->isServiceInstalled("ufw")) {
+                return false;
+
+            //Check if OpenVPN is installed
+            } elseif (!$servicesController->isServiceInstalled("openvpn")) {
+                return false;
+
+            //Check if Apache2 is installed
+            } elseif (!$servicesController->isServiceInstalled("apache2")) {
+                return false;
+
+            //Check if MariaDB is installed
+            } elseif (!$servicesController->isServiceInstalled("mariadb")) {
+                return false;
+     
+            //Check if Tor is installed
+            } elseif (!$servicesController->isServiceInstalled("tor")) {
+                return false;
+
+            //Check if Minecraft server is installed
+            } elseif (!$servicesController->isServiceInstalled("minecraft")) {
+                return false;
+
+            //Check if TeamSpeak server is installed
+            } elseif (!$servicesController->isServiceInstalled("ts3server")) {
+                return false;
+
+            //Return true if warnings not found
+            } else {
+                return true;
+            }
         }
     }
 ?>

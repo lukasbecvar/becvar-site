@@ -20,7 +20,7 @@ a:hover {
 
 /*Custom scroolbar design (Not working on mobile divices)*/
 ::-webkit-scrollbar { /*Own page scroolbar design*/
-	width: 12px;
+	width: 18px;
 } 
 
 ::-webkit-scrollbar-track { /*Own scroolbar bacground*/
@@ -772,6 +772,9 @@ textarea {
 }
 
 @media screen and (max-width: 800px) { 
+	::-webkit-scrollbar {
+		width: 10px;
+	} 
 	.pageTitle {
 		font-size: 23px;
 	}
@@ -799,10 +802,7 @@ textarea {
 		top: 8.6%;
 	}
 	.deleteLinkTodos {
-		color: rgb(207, 28, 28);
-		text-decoration: none;
 		font-size: 15px;
-		transition: all 0.2s ease;	
 	}
 	.settingsValueBox {
 		width: 98%;
@@ -834,10 +834,7 @@ textarea {
 		padding-bottom: 1px;
 	}
 	.backPageButton {
-		color: white;
-		border: 1px solid white;
 		font-size: 17px;
-		padding: 8px;
 	}
 	.loginForm {
 		margin-top: 18%;
