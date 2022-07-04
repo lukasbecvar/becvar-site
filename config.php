@@ -24,7 +24,7 @@
 			/* Site meta values */
 			"googleVerifyToken" => "token",
 			"siteDescription"   => "Lukáš Bečvář AKA Lordbecvold personal website",
-			"siteKeywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects",
+			"siteKeywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
 
 
 

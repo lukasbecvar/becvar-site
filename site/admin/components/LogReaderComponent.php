@@ -1,6 +1,9 @@
 <div class="adminPanel">
 <?php //Log reader [admin component]
 
+	//Init default values 
+	$startByRow = 0;
+
 	//Check if user is owner
 	if (!$adminController->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";

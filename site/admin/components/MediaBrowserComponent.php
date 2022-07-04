@@ -1,6 +1,9 @@
 <div class="adminPanel">
 <?php //The private media browser component in admin
     
+	//Init default values 
+	$startByRow = 0;
+
     //Check if user is owner 
 	if (!$adminController->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
