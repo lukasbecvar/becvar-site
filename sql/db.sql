@@ -93,9 +93,10 @@ CREATE TABLE `visitors` (
   `first_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `last_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `browser` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
+  `location` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `ip_adress` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-06-30 07:01:30
+-- 2022-07-05 08:32:13

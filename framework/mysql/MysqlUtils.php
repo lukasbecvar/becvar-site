@@ -85,6 +85,8 @@
 
             $configOBJ = new PageConfig();
 
+            global $mainUtils;
+
             if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
 
                 //Escape values
@@ -92,7 +94,7 @@
                 $value = $this->escapeString($value, true, true);
 
                 $date = date('d.m.Y H:i:s');
-                $remote_addr = $_SERVER['REMOTE_ADDR'];
+                $remote_addr = $mainUtils->getRemoteAdress();
                 $status = "unreader";
 
                 if (isset($_COOKIE["identifier"])) {

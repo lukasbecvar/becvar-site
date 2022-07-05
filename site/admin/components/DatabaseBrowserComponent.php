@@ -278,6 +278,7 @@
 									"first_visit" => $data["first_visit"],
 									"last_visit" => $data["last_visit"],
 									"browser" => $data["browser"],
+									"location" => $data["location"],
 									"ip_adress" => $data["ip_adress"],
 								];
 
@@ -290,6 +291,7 @@
 									"first_visit" => "<span class='text-red'>".$data["first_visit"]."</span>",
 									"last_visit" => "<span class='text-red'>".$data["last_visit"]."</span>",
 									"browser" => "<span class='text-red'>".$data["browser"]."</span>",
+									"location" => $data["location"],
 									"ip_adress" => $data["ip_adress"],
 								];
 
@@ -302,6 +304,7 @@
 									"first_visit" => "<span class='text-red'>". $data["first_visit"]."</span>",
 									"last_visit" => "<span class='text-red'>". $data["last_visit"]."</span>",
 									"browser" => $data["browser"],
+									"location" => $data["location"],
 									"ip_adress" => $data["ip_adress"],
 								];
 
@@ -314,6 +317,7 @@
 									"first_visit" => $data["first_visit"],
 									"last_visit" => $data["last_visit"],
 									"browser" => $data["browser"],
+									"location" => $data["location"],
 									"ip_adress" => $data["ip_adress"],
 								];
 
