@@ -100,7 +100,7 @@
                 if (isset($_COOKIE["identifier"])) {
                     $user_key = $_COOKIE["identifier"];
                 } else {
-                    $user_key = "NULL";
+                    $user_key = "Undefined/NULL";
                 }
 
                 $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `user_key`, `remote_addr`, `status`) VALUES ('$name', '$value', '$date', '$user_key', '$remote_addr', '$status')");

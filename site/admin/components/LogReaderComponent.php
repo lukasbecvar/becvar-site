@@ -145,7 +145,7 @@
             }
         }        
 
-        //Log action to mysql dsatabase 
+        //Log action to mysql database 
         $mysqlUtils->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed logs");
     }
 ?>

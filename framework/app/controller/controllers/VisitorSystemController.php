@@ -111,6 +111,13 @@
             $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
             $location = $mysqlUtils->escapeString($this->getVisitorLocation($mainUtils->getRemoteAdress()), true, true);
+            
+            //Check if ip is banned in database
+            if ($this->isVisitorBanned($ip_adress)) {
+                $banned = "yes";
+            } else {
+                $banned = "no";
+            }
 
             //Get key count in db for duplicity check
             $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
@@ -119,12 +126,17 @@
             if ($key_count == "0" && !isset($_COOKIE["identifier"])) {
 
                 //Save firt visi
-                $mysqlUtils->insertQuery("INSERT INTO `visitors`(`key`, `visited_sites`, `first_visit`, `last_visit`, `browser`, `location`, `ip_adress`) VALUES ( '$key', '$visited_sites', '$first_visit', '$last_visit', '$browser', '$location', '$ip_adress')");    
+                $mysqlUtils->insertQuery("INSERT INTO `visitors`(`key`, `visited_sites`, `first_visit`, `last_visit`, `browser`, `location`, `banned`, `ip_adress`) VALUES ( '$key', '$visited_sites', '$first_visit', '$last_visit', '$browser', '$location', '$banned', '$ip_adress')");    
             
                 //Set cookie
                 $cookieUtils->cookieSet("identifier", $key, 2147483647);
             }
 
+
+            //Rdirect banned users to banned page
+            if ($this->isVisitorBanned($ip_adress)) {
+                die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
+            }
         }
 
 
@@ -178,12 +190,69 @@
                         $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `key` = '$key'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `key` = '$key'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `key` = '$key'");
+
+                        //Show ban page if IP banned
+                        if($this->isVisitorBanned($ip_adress)) {
+                            die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
+                        }
                     }
                     
                 } else {
                     $this->firstVisit();
                 }
 
+            }
+        }
+
+
+
+        //Get user ip by key
+        public function getVisitorIPByKey($key) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            //Get key count
+            $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
+
+            //Check if key found in database
+            if ($key_count == "0") {
+                return NULL;
+            } else {
+
+                //Get visitor ip by key
+                $visitorIP = $mysqlUtils->readFromMysql("SELECT ip_adress FROM visitors WHERE `key` = '".$key."'", "ip_adress");
+
+                return $visitorIP;
+            }
+        }
+
+
+
+        //Check if visitor is banned
+        public function isVisitorBanned($ip) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            //Get ip count
+            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
+            $ip_count = intval($ip_count);
+            
+            //Check if ip is in database
+            if ($ip_count > 0) {
+
+                //Get banned status
+                $banned_status = $mysqlUtils->readFromMysql("SELECT banned FROM visitors WHERE `ip_adress` = '".$ip."'", "banned");
+
+                //Check if banned status = yes
+                if ($banned_status == "yes") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
         }
 
@@ -225,6 +294,24 @@
 
                 return $country."/".$city;
             }
+        }
+
+
+
+        //Ban user by IP
+        public function bannVisitorByIP($ip) {
+            global $mysqlUtils;
+
+            $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'yes' WHERE `ip_adress` = '$ip'");
+        }
+
+
+ 
+        //UnBan user by IP
+        public function unbannVisitorByIP($ip) {
+            global $mysqlUtils;
+
+            $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'no' WHERE `ip_adress` = '$ip'");
         }
 
 
