@@ -1,3 +1,6 @@
+<?php  
+	http_response_code(403);
+?>
 <!DOCTYPE html>
 <html lang="cs">
 <head>
