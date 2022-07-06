@@ -5,9 +5,11 @@
         //Get user browser
         public function getBrowser() {
 
+            //Get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
 
-            if( preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
+            //Build browser agent from http agent
+            if(preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
                 $browser = "Internet Explore";
            
             } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $agent) ) {
@@ -43,11 +45,23 @@
             } else if (str_contains($agent, "YandexBot")) {
                 $browser = "YandexBot";
 
+            } else if (str_contains($agent, "tchelebi")) {
+                $browser = "tchelebi";
+
+            } else if (str_contains($agent, "NetSystemsResearch")) {
+                $browser = "NetSystemsResearch";
+
             } else if (str_contains($agent, "NetcraftSurveyAgent")) {
                 $browser = "NetcraftSurveyAgent";
 
             } else if (str_contains($agent, "CensysInspect")) {
                 $browser = "CensysInspect";
+
+            } else if (str_contains($agent, "PolycomRealPresenceTrio")) {
+                $browser = "PolycomRealPresenceTrio";
+
+            } else if (str_contains($agent, "masscan-ng")) {
+                $browser = "masscan-ng scanner";
 
             } else if (str_contains($agent, "Baiduspider")) {
                 $browser = "Baiduspider";
@@ -61,13 +75,16 @@
             } else if($agent == "python-requests/2.6.0 CPython/2.7.5 Linux/3.10.0-1160.el7.x86_64") {
                 $browser = "python-requests/2.6.0";
 
+            //Return undefined
             } else if ($agent == null) {
                 $browser = "Undefined";
            
+            //Return aget
             } else {
                 $browser = $agent;
             }
-
+            
+            //Return browser ID
             return $browser;
         }
 
@@ -118,6 +135,7 @@
             global $mysqlUtils;
             global $dashboardController;
             global $mainUtils;
+            global $pageConfig;
 
             if ($dashboardController->getVisitorsCount() == "0") {
                 $this->firstVisit();
@@ -126,25 +144,41 @@
                 //Check if cookie seted
                 if (isset($_COOKIE["identifier"])) {
 
-                    //Get key from cookie
-                    $key = $_COOKIE["identifier"];
+                    //Get key form identifier cookie
+                    if (!empty($_COOKIE["identifier"])) {
+                        $key = $mysqlUtils->escapeString($_COOKIE["identifier"], true, true);
+                    } else {
+                        die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=400");</script>');
+                    }
 
-                    //Get data from mysql by cookie identifier
-                    $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `key` = '".$key."'", "visited_sites"));
+                    //Get key count in db for duplicity check
+                    $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
 
-                    //New values to insert
-                    $visited_sites = $visited_sites + 1;
-                    $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
-                    $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
-                    $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-                    $location = $mysqlUtils->escapeString($this->getVisitorLocation($mainUtils->getRemoteAdress()), true, true);
+                    //Check if key is not exist in database
+                    if ($key_count == "0") {
+                        $this->firstVisit();
 
-                    //Update database
-                    $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `key` = '$key'");
-                    $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `key` = '$key'");
-                    $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `key` = '$key'");
-                    $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `key` = '$key'");
-                    $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `key` = '$key'");
+                    } else {
+                        //Get key from cookie
+                        $key = $_COOKIE["identifier"];
+
+                        //Get data from mysql by cookie identifier
+                        $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `key` = '".$key."'", "visited_sites"));
+
+                        //New values to insert
+                        $visited_sites = $visited_sites + 1;
+                        $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
+                        $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
+                        $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+                        $location = $mysqlUtils->escapeString($this->getVisitorLocation($mainUtils->getRemoteAdress()), true, true);
+
+                        //Update database
+                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `key` = '$key'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `key` = '$key'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `key` = '$key'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `key` = '$key'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `key` = '$key'");
+                    }
                     
                 } else {
                     $this->firstVisit();

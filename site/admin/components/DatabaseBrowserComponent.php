@@ -85,6 +85,8 @@
 					} else {
 						if (isset($_GET["reader"])) {
 							$urlUtils->jsRedirect("?admin=logReader&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+						} else if (isset($_GET["visitors"])) {
+							$urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
 						} else {
 							$urlUtils->jsRedirect("?admin=dbBrowser&name=$dbName&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
 						}
@@ -263,67 +265,8 @@
 								"date" => $data["date"]
 							];				
 						}
-						
 
-						//Edit raw visitors data
-						if ($_GET["name"] == "visitors") {
-
-							//Check if cookie seted and if key = cookie (for highlite user cookie)
-							if (!empty($_COOKIE["identifier"]) && $data["key"] == $_COOKIE["identifier"]) {
-
-								$data = [ 
-									"id" => $data["id"],
-									"key" => "<span class='text-warning'>".$data["key"]."</span>[<span class='text-success'>You</span>]",
-									"visited_sites" => $data["visited_sites"],
-									"first_visit" => $data["first_visit"],
-									"last_visit" => $data["last_visit"],
-									"browser" => $data["browser"],
-									"location" => $data["location"],
-									"ip_adress" => $data["ip_adress"],
-								];
-
-							} elseif ($data["browser"] == "Undefined") {
-
-								$data = [
-									"id" => $data["id"],
-									"key" => $data["key"],
-									"visited_sites" => $data["visited_sites"],
-									"first_visit" => "<span class='text-red'>".$data["first_visit"]."</span>",
-									"last_visit" => "<span class='text-red'>".$data["last_visit"]."</span>",
-									"browser" => "<span class='text-red'>".$data["browser"]."</span>",
-									"location" => $data["location"],
-									"ip_adress" => $data["ip_adress"],
-								];
-
-							} elseif ($data["first_visit"] == $data["last_visit"]) {
-
-								$data = [
-									"id" => $data["id"],
-									"key" => $data["key"],
-									"visited_sites" => $data["visited_sites"],
-									"first_visit" => "<span class='text-red'>". $data["first_visit"]."</span>",
-									"last_visit" => "<span class='text-red'>". $data["last_visit"]."</span>",
-									"browser" => $data["browser"],
-									"location" => $data["location"],
-									"ip_adress" => $data["ip_adress"],
-								];
-
-							} else {
-
-								$data = [
-									"id" => $data["id"],
-									"key" => $data["key"],
-									"visited_sites" => $data["visited_sites"],
-									"first_visit" => $data["first_visit"],
-									"last_visit" => $data["last_visit"],
-									"browser" => $data["browser"],
-									"location" => $data["location"],
-									"ip_adress" => $data["ip_adress"],
-								];
-
-							}			
-						}
-
+					
 
 						//Edit raw user data
 						if ($_GET["name"] == "users") {

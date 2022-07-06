@@ -87,6 +87,9 @@
             } elseif ($siteController->getCurrentAdminProcess() == "logReader") {
                 include_once("components/LogReaderComponent.php");
 
+            } elseif ($siteController->getCurrentAdminProcess() == "visitors") {
+                include_once("components/VisitorsManagerComponent.php");
+
             } elseif ($siteController->getCurrentAdminProcess() == "mediaBrowser") {
                 include_once("components/MediaBrowserComponent.php");
 

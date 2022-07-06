@@ -90,7 +90,7 @@
             <div class="card l-bg-cyan-darker">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=dbBrowser&name=visitors&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0" class="stats-link">Visitors</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=visitors&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0" class="stats-link">Visitors</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
