@@ -182,14 +182,12 @@
                         $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
                         $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
                         $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-                        $location = $mysqlUtils->escapeString($this->getVisitorLocation($mainUtils->getRemoteAdress()), true, true);
 
                         //Update database
                         $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `key` = '$key'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `key` = '$key'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `key` = '$key'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `key` = '$key'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `key` = '$key'");
 
                         //Show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
@@ -261,9 +259,11 @@
         //Get visitor details
         public function getVisitorDetails($ip) {
 
+            global $pageConfig;
+
             //Check if ip not localhost
             if ($ip != "localhost" or $ip != "127.0.0.1" or $ip != "192.168.0.103") {
-                $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+                $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
             } else {
                 $details = NULL;
             }

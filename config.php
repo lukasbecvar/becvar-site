@@ -42,6 +42,10 @@
 
 
 
+			/* IP info api token */
+			"IPinfoToken" => "000_token", //Token to access https://ipinfo.io/ API
+
+
 			/* Contact information */
 			"email"     => "lukas@becvold.xyz",
 			"discord"   => "https://discord.gg/XfAWKpHm6k",
