@@ -39,7 +39,7 @@
           } else {
             $address = $_SERVER['REMOTE_ADDR'];
           }
-          return $address = "88.103.239.161";
+          return $address;
         }
 
 

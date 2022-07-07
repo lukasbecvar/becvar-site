@@ -43,28 +43,20 @@
             if ($visitors->num_rows != 0) {
 
                 //Add default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">User-key</th><th scope="col">Visited</th><th scope="col">First visit</th><th scope="col">Last visit</th><th scope="col">BrowserID</th><th scope="col">Location</th><th scope="col">Banned</th><th scope="col">Client-IP</th><th scope="col">Ban</th><th scope="col">X</th></tr></thead><tbody>';
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Visited</th><th scope="col">First visit</th><th scope="col">Last visit</th><th scope="col">BrowserID</th><th scope="col">Location</th><th scope="col">Banned</th><th scope="col">Client-IP</th><th scope="col">Ban</th><th scope="col">X</th></tr></thead><tbody>';
                 
                 //print elements
                 foreach ($visitors as $data) {
-                    
-                    //Get raw key for next use
-                    $rawkey = $data["key"];
 
-                    //Check if ip not have > 15 characters (for IPV6)
-                    if (strlen($data["ip_adress"]) > 15) {
-                        $data["ip_adress"] = substr($data["ip_adress"], 0, 15)."...";
+                    //If ip = session ip
+                    if ($data["ip_adress"] == $mainUtils->getRemoteAdress()) {
+                        $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span>";
                     }
 
-                    //Check if browser not have > 24 characters
-                    if (strlen($data["browser"]) > 24) {
-                        $data["browser"] = substr($data["browser"], 0, 24)."...";
+                    //Check if browser not have > 32 characters
+                    if (strlen($data["browser"]) > 32) {
+                        $data["browser"] = substr($data["browser"], 0, 32)."...";
                     }
-
-                    //Check if identified is current browser
-                    if (!empty($_COOKIE["identifier"]) && $data["key"] == $_COOKIE["identifier"]) {
-                        $data["key"] = "<span class='text-warning'>".$data["key"]."</span>[<span class='text-success'>You</span>]";
-                    } 
                     
                     //Check if browser is undefined
                     if ($data["browser"] == "Undefined") {
@@ -92,7 +84,6 @@
                     //Build table row
                     $row = "<tr class='lineItem'>
                         <th scope='row'><strong>".$data["id"]."</strong>
-                        <td><strong>".$data["key"]."</strong>
                         <td><strong>".$data["visited_sites"]."</strong>
                         <td><strong>".$data["first_visit"]."</strong>
                         <td><strong>".$data["last_visit"]."</strong>
@@ -100,7 +91,7 @@
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$data["banned"]."</strong>
                         <td><strong>".$data["ip_adress"]."</strong>
-                        <td><a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&key=".$rawkey."&limit=500&startby=0'><strong>Ban/u</strong></a>
+                        <td><a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>Ban/u</strong></a>
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
 
@@ -126,11 +117,11 @@
 
             } elseif ($action == "ban") {
 
-                //Get key from query string
-                $key = $mysqlUtils->escapeString($_GET["key"], true, true);
+                //Get id from query string
+                $id = $mysqlUtils->escapeString($_GET["id"], true, true);
 
-                //Get visitor ip by key
-                $ip = $visitorController->getVisitorIPByKey($key);
+                //Get visitor ip by id
+                $ip = $visitorController->getVisitorIPByID($id);
 
                 //Check if user banned
                 if ($visitorController->isVisitorBanned($ip)) {

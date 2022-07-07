@@ -93,24 +93,16 @@
         //First visit site
         public function firstVisit() {
             
-            global $stringUtils;
             global $mysqlUtils;
-            global $pageConfig;
-            global $cookieUtils;
             global $mainUtils;
 
-            if (isset($_COOKIE["identifier"])) {
-                $cookieUtils->unset_cookie("identifier");
-            }
-
             //Get data
-            $key = $mysqlUtils->escapeString($stringUtils->genRandomStringAll(35), true, true);
             $visited_sites = 1;
             $first_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
             $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
             $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-            $location = $mysqlUtils->escapeString($this->getVisitorLocation($mainUtils->getRemoteAdress()), true, true);
+            $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
             
             //Check if ip is banned in database
             if ($this->isVisitorBanned($ip_adress)) {
@@ -119,19 +111,8 @@
                 $banned = "no";
             }
 
-            //Get key count in db for duplicity check
-            $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
-
-            //Check if key not duplicit and save
-            if ($key_count == "0" && !isset($_COOKIE["identifier"])) {
-
-                //Save firt visi
-                $mysqlUtils->insertQuery("INSERT INTO `visitors`(`key`, `visited_sites`, `first_visit`, `last_visit`, `browser`, `location`, `banned`, `ip_adress`) VALUES ( '$key', '$visited_sites', '$first_visit', '$last_visit', '$browser', '$location', '$banned', '$ip_adress')");    
-            
-                //Set cookie
-                $cookieUtils->cookieSet("identifier", $key, 2147483647);
-            }
-
+            //Save firt visit
+            $mysqlUtils->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `location`, `banned`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$location', '$banned', '$ip_adress')");   
 
             //Rdirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
@@ -154,33 +135,27 @@
             global $mainUtils;
             global $pageConfig;
 
+            //Get visitor ip
+            $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+
+            //Check if visitors count is zero
             if ($dashboardController->getVisitorsCount() == "0") {
                 $this->firstVisit();
             } else {
 
-                //Check if cookie seted
-                if (isset($_COOKIE["identifier"])) {
-
-                    //Get key form identifier cookie
-                    if (!empty($_COOKIE["identifier"])) {
-                        $key = $mysqlUtils->escapeString($_COOKIE["identifier"], true, true);
-                    } else {
-                        die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=400");</script>');
-                    }
+                //Check if visitor exist in table
+                if ($this->ifVisitorIsInTable($ip_adress)) {
 
                     //Get key count in db for duplicity check
-                    $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
+                    $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip_adress'"))["count"];
 
                     //Check if key is not exist in database
-                    if ($key_count == "0") {
+                    if ($ip_count == "0") {
                         $this->firstVisit();
 
                     } else {
-                        //Get key from cookie
-                        $key = $_COOKIE["identifier"];
-
-                        //Get data from mysql by cookie identifier
-                        $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `key` = '".$key."'", "visited_sites"));
+                        //Get data from mysql by IP
+                        $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
                         //New values to insert
                         $visited_sites = $visited_sites + 1;
@@ -189,10 +164,10 @@
                         $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
                         //Update database
-                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `key` = '$key'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `key` = '$key'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `key` = '$key'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `key` = '$key'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
 
                         //Show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
@@ -211,30 +186,6 @@
 
             }
         }
-
-
-
-        //Get user ip by key
-        public function getVisitorIPByKey($key) {
-
-            global $mysqlUtils;
-            global $pageConfig;
-
-            //Get key count
-            $key_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `key`='$key'"))["count"];
-
-            //Check if key found in database
-            if ($key_count == "0") {
-                return NULL;
-            } else {
-
-                //Get visitor ip by key
-                $visitorIP = $mysqlUtils->readFromMysql("SELECT ip_adress FROM visitors WHERE `key` = '".$key."'", "ip_adress");
-
-                return $visitorIP;
-            }
-        }
-
 
 
         //Check if visitor is banned
@@ -271,20 +222,19 @@
 
             global $pageConfig;
 
-            //Check if ip not localhost
-            if ($ip != "localhost" or $ip != "127.0.0.1" or !str_starts_with($ip, "192.168.0")) {
-
+            //Check if site running on localhost
+            if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") (str_starts_with($pageConfig->getValueByName("url"), "192.168.0"))) {
+                $country = "HOST";
+                $city = "Location";
+            
+            } else {
+ 
                 //Get data by IP from ipinfo API 
                 $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
            
                 //Get country and site from API data
                 $country = $details->country;
                 $city = $details->city;
-           
-            //Set default data for localhost
-            } else {
-                $country = "HOST";
-                $city = "Location";
             }
 
             //Set undefined if country is empty
@@ -299,6 +249,29 @@
 
             //Final return
             return $country."/".$city;
+        }
+
+
+
+        //Get user ip by id
+        public function getVisitorIPByID($id) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            //Get ID count
+            $ID_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='$id'"))["count"];
+
+            //Check if key found in database
+            if ($ID_count == "0") {
+                return NULL;
+            } else {
+
+                //Get visitor ip by key
+                $visitorIP = $mysqlUtils->readFromMysql("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
+
+                return $visitorIP;
+            }
         }
 
 
@@ -321,11 +294,37 @@
 
 
 
+        //Check if visitor is in table
+        public function ifVisitorIsInTable($ip) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            //Get IP count from visitors table
+            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
+            $ip_count = intval($ip_count);    
+            
+            if ($ip_count > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+
+
         //Call visit or first visit function
         public function init() {
 
+            global $mysqlUtils;
+            global $mainUtils;
+
+            //Get user ip
+            $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+
             //Check if cookie seted
-            if (isset($_COOKIE["identifier"])) {
+            if ($this->ifVisitorIsInTable($ip_adress)) {
                 $this->visitSite();
             } else {
                 $this->firstVisit();

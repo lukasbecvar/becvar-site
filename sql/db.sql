@@ -32,9 +32,8 @@ DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
-  `value` longtext CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
+  `value` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
-  `user_key` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `remote_addr` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `status` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
@@ -67,7 +66,7 @@ CREATE TABLE `pastes` (
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` longtext COLLATE utf8_czech_ci NOT NULL,
+  `text` char(255) COLLATE utf8_czech_ci NOT NULL,
   `status` char(255) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -88,7 +87,6 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
-  `key` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `visited_sites` int(255) NOT NULL,
   `first_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `last_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
@@ -100,4 +98,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-07-06 16:37:08
+-- 2022-07-07 14:54:00

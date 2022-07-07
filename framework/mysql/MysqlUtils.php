@@ -97,13 +97,7 @@
                 $remote_addr = $mainUtils->getRemoteAdress();
                 $status = "unreader";
 
-                if (isset($_COOKIE["identifier"])) {
-                    $user_key = $_COOKIE["identifier"];
-                } else {
-                    $user_key = "Undefined/NULL";
-                }
-
-                $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `user_key`, `remote_addr`, `status`) VALUES ('$name', '$value', '$date', '$user_key', '$remote_addr', '$status')");
+                $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$status')");
             }
         }
 
