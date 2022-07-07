@@ -223,7 +223,7 @@
             global $pageConfig;
 
             //Check if site running on localhost
-            if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") (str_starts_with($pageConfig->getValueByName("url"), "192.168.0"))) {
+            if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") or (str_starts_with($pageConfig->getValueByName("url"), "192.168"))) {
                 $country = "HOST";
                 $city = "Location";
             
