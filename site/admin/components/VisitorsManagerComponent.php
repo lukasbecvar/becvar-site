@@ -35,7 +35,7 @@
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/VisitorsManagerNavPanel.php');
         
         //Get all visitors from table
-        $visitors = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM visitors ORDER BY visited_sites DESC LIMIT $startByRow, $limitOnPage");
+        $visitors = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
 
         if (empty($_GET["action"])) {
 

@@ -66,7 +66,7 @@
                             $row = "<tr class='text-dark-yellow'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         //Paste logs
-                        } elseif ($data["name"] == "Paste") {
+                        } elseif ($data["name"] == "Paste" || $data["name"] == "Banned" || $data["name"] == "Unban visitor") {
                             $row = "<tr class='text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         //Upload logs
@@ -78,7 +78,7 @@
                             $row = "<tr class='text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         //Success login logs
-                        } elseif ($data["name"] == "Success login") {
+                        } elseif ($data["name"] == "Success login" || $data["name"] == "Ban visitor") {
                             $row = "<tr class='text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["user_key"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         //Others

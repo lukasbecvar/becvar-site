@@ -206,6 +206,16 @@
 
 
 
+        //Get banned visitors count 
+        public function getBannedCount() {
+            global $mysqlUtils;
+            global $pageConfig;
+        
+            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE banned='yes'"))["count"];
+        }
+
+
+
         //Check if warnings box empty
         public function isWarninBoxEmpty() {
             global $pageConfig;

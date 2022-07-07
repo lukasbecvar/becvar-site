@@ -135,6 +135,11 @@
 
             //Rdirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
+
+                //Log trying to access site if user banned
+                $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+
+                //Redirect to banned page
                 die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
             }
         }
@@ -191,6 +196,11 @@
 
                         //Show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
+
+                            //Log trying to access site if user banned
+                            $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+
+                            //Redirect to banned page
                             die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
                         }
                     }
@@ -256,44 +266,39 @@
 
 
 
-        //Get visitor details
-        public function getVisitorDetails($ip) {
+        //Get visitor location
+        public function getVisitorLocation($ip) {
 
             global $pageConfig;
 
             //Check if ip not localhost
-            if ($ip != "localhost" or $ip != "127.0.0.1" or $ip != "192.168.0.103") {
+            if ($ip != "localhost" or $ip != "127.0.0.1" or !str_starts_with($ip, "192.168.0")) {
+
+                //Get data by IP from ipinfo API 
                 $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
+           
+                //Get country and site from API data
+                $country = $details->country;
+                $city = $details->city;
+           
+            //Set default data for localhost
             } else {
-                $details = NULL;
+                $country = "HOST";
+                $city = "Location";
             }
-            
-            return $details;
-        }
 
-
-
-        //Get visitor location
-        public function getVisitorLocation($ip) {
-
-            //Check if ip is localhost
-            if ($ip == "localhost" or $ip == "127.0.0.1" or $ip == "192.168.0.103") {
-                return "HOST/Location";
-            } else {
-                
-                $country = $this->getVisitorDetails($ip)->country;
-                $city = $this->getVisitorDetails($ip)->city;
-                
-                if (empty($country)) {
-                    $country = "Undefined";
-                }
-
-                if (empty($city)) {
-                    $city = "Undefined";
-                }
-
-                return $country."/".$city;
+            //Set undefined if country is empty
+            if (empty($country)) {
+                $country = "Undefined";
             }
+
+            //Set undefined city is empty
+            if (empty($city)) {
+                $city = "Undefined";
+            }
+
+            //Final return
+            return $country."/".$city;
         }
 
 
