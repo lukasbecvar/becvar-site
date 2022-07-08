@@ -43,7 +43,7 @@
             if ($visitors->num_rows != 0) {
 
                 //Add default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Visited</th><th scope="col">First visit</th><th scope="col">Last visit</th><th scope="col">BrowserID</th><th scope="col">Location</th><th scope="col">Banned</th><th scope="col">Client-IP</th><th scope="col">Ban</th><th scope="col">X</th></tr></thead><tbody>';
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Visited</th><th scope="col">First visit</th><th scope="col">Last visit</th><th scope="col">BrowserID</th><th scope="col">OS</th><th scope="col">Location</th><th scope="col">Banned</th><th scope="col">Client-IP</th><th scope="col">Ban</th><th scope="col">X</th></tr></thead><tbody>';
                 
                 //print elements
                 foreach ($visitors as $data) {
@@ -88,6 +88,7 @@
                         <td><strong>".$data["first_visit"]."</strong>
                         <td><strong>".$data["last_visit"]."</strong>
                         <td><strong>".$data["browser"]."</strong>
+                        <td><strong>".$data["os"]."</strong>
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$data["banned"]."</strong>
                         <td><strong>".$data["ip_adress"]."</strong>
