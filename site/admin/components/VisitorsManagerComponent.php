@@ -43,19 +43,31 @@
             if ($visitors->num_rows != 0) {
 
                 //Add default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Visited</th><th scope="col">First visit</th><th scope="col">Last visit</th><th scope="col">BrowserID</th><th scope="col">OS</th><th scope="col">Location</th><th scope="col">Banned</th><th scope="col">Client-IP</th><th scope="col">Ban</th><th scope="col">X</th></tr></thead><tbody>';
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Visited</th>
+                    <th scope="col">First visit</th>
+                    <th scope="col">Last visit</th>
+                    <th scope="col">BrowserID</th>
+                    <th scope="col">OS</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Banned</th>
+                    <th scope="col">Client-IP</th>
+                    <th scope="col">Ban</th>
+                    <th scope="col">X</th>
+                </tr></thead><tbody>';
                 
                 //print elements
                 foreach ($visitors as $data) {
 
                     //If ip = session ip
                     if ($data["ip_adress"] == $mainUtils->getRemoteAdress()) {
-                        $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span>";
+                        $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                     }
 
                     //Check if browser not have > 32 characters
-                    if (strlen($data["browser"]) > 32) {
-                        $data["browser"] = substr($data["browser"], 0, 32)."...";
+                    if (strlen($data["browser"]) > 27) {
+                        $data["browser"] = substr($data["browser"], 0, 27)."...";
                     }
                     
                     //Check if browser is undefined

@@ -62,7 +62,12 @@
             } else {
 
                 //Print table struct
-                echo '<table class="todoTable table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Todo</th><th scope="col">X</th><th scope="col">Edit</th></tr></thead><tbody>';
+                echo '<table class="todoTable table table-dark"><thead><tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Todo</th>
+                    <th scope="col">X</th>
+                    <th scope="col">Edit</th>
+                </tr></thead><tbody>';
 
                 //Get todos from database
                 $finalTodos = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * from todos WHERE status = 'open'"); 

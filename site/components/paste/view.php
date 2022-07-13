@@ -1,7 +1,7 @@
 <?php //Code paste viewer
 
     //Get paste spec
-    $spec = $mysqlUtils->escapeString($_GET["f"]);
+    $spec = $mysqlUtils->escapeString($_GET["f"], true, true);
 
     //Get paste content
     $pasteContent = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM pastes WHERE spec='$spec'"));

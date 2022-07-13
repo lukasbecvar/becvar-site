@@ -129,10 +129,15 @@
 			//Set code paste page
 			else if($siteController->getCurrentProcess() == "paste") {
 
+				//Paste save 
 				if ($siteController->getCurrentMethod() == "save") {
 					include_once("../site/components/paste/save.php");
-				} else if (isset($_GET["method"]) && $_GET["method"] == "view") {
+				
+				//Paste view
+				} else if (isset($_GET["method"]) && $siteController->getCurrentMethod() == "view") {
 					include_once("../site/components/paste/view.php");
+				
+				//Paste init
 				} else {
 					include_once("../site/components/paste/index.php");
 				}	

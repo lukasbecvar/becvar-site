@@ -51,9 +51,6 @@
             } elseif ($command == "apacheStop") {
                 $servicesController->executeScriptAsROOT("services/apache_stop.sh");
 
-            } elseif ($command == "apacheStart") {
-                $servicesController->executeScriptAsROOT("services/apache_start.sh");
-
 
 
 
@@ -70,10 +67,6 @@
             //Mariadb service
             } elseif ($command == "mariadbStop") {
                 $servicesController->executeScriptAsROOT("services/mariadb_stop.sh");
-
-            } elseif ($command == "mariadbStart") {
-                $servicesController->executeScriptAsROOT("services/mariadb_start.sh");
-
 
 
 

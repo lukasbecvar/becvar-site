@@ -49,7 +49,14 @@
             if ($logs->num_rows != 0) {
 
                 //Add default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">Value</th><th scope="col">Date</th><th scope="col">Client IP</th><th scope="col">X</th></tr></thead><tbody>';
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Client IP</th>
+                    <th scope="col">X</th>
+                </tr></thead><tbody>';
                 
                 //print elements
                 foreach ($logs as $data) {

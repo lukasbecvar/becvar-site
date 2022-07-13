@@ -18,10 +18,10 @@
             } else if (preg_match('/Edge\/\d+/', $agent) ) {
                 $browser = "Edge";
             
-            } else if ( preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
+            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
                 $browser = "Firefox";
             
-            } else if ( preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
+            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
                 $browser = "Opera";
             
             } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
@@ -69,11 +69,32 @@
             } else if (str_contains($agent, "SemrushBot")) {
                 $browser = "SemrushBot";
 
+            } else if (str_contains($agent, "AhrefsBot")) {
+                $browser = "AhrefsBot";
+
+            } else if (str_contains($agent, "RepoLookoutBot")) {
+                $browser = "RepoLookoutBot"; 
+
+            } else if (str_contains($agent, "Gather")) {
+                $browser = "Gather"; 
+
             } else if (str_contains($agent, "Firefox/96")) {
                 $browser = "Firefox/96";
 
-            } else if($agent == "python-requests/2.6.0 CPython/2.7.5 Linux/3.10.0-1160.el7.x86_64") {
-                $browser = "python-requests/2.6.0";
+            } else if (str_contains($agent, "python-requests")) {
+                $browser = "python-requests";
+
+            } else if (str_contains($agent, "zgrab")) {
+                $browser = "zgrab";
+
+            } else if (str_contains($agent, "everyfeed")) {
+                $browser = "EveryFeed";
+            
+            } else if (str_contains($agent, "https://security.ipip.net")) {
+                $browser = "HTTP BD";
+
+            } else if (str_contains($agent, "KHTML")) {
+                $browser = "KHTML";
 
             //Return undefined
             } else if ($agent == null) {
@@ -96,7 +117,7 @@
             //Get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
         
-            $os_platform  = "Unknown OS Platform";
+            $os_platform  = "Unknown OS";
         
             $os_array = array (
                 '/windows nt 10/i'      =>  'Windows 10',
@@ -104,7 +125,7 @@
                 '/windows nt 6.2/i'     =>  'Windows 8',
                 '/windows nt 6.1/i'     =>  'Windows 7',
                 '/windows nt 6.0/i'     =>  'Windows Vista',
-                '/windows nt 5.2/i'     =>  'Windows Server 2003/XP x64',
+                '/windows nt 5.2/i'     =>  'Windows Server_2003',
                 '/windows nt 5.1/i'     =>  'Windows XP',
                 '/windows xp/i'         =>  'Windows XP',
                 '/windows nt 5.0/i'     =>  'Windows 2000',
@@ -180,6 +201,7 @@
             global $dashboardController;
             global $mainUtils;
             global $pageConfig;
+            global $adminController;
 
             //Get visitor ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
@@ -194,6 +216,10 @@
 
                     //Get key count in db for duplicity check
                     $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip_adress'"))["count"];
+
+                    //Get id = 1 count
+                    $id_one_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='1'"))["count"];
+
 
                     //Check if key is not exist in database
                     if ($ip_count == "0") {
@@ -211,11 +237,22 @@
                         $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
 
                         //Update database
-                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");
+                        if ($adminController->isLoggedIn() && $id_one_count != "0") {
+
+                            //Update is session = admin
+                            $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `id` = '1'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `id` = '1'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `id` = '1'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `id` = '1'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `id` = '1'");  
+
+                        } else {
+                            $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
+                            $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");    
+                        }
 
                         //Show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {

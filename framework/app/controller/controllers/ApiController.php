@@ -19,10 +19,13 @@
 
         //Function for get token from get parameter
         public function getToken() {
+
+            global $mysqlUtils;
+
             if (isset($_GET["token"])) {
-                return $token = $_GET["token"];
+                return $mysqlUtils->escapeString($_GET["token"], true, true);
             } else {
-                return $token = null;
+                return null;
             }         
         }
 
@@ -30,10 +33,13 @@
 
         //Function for get values from query string
         public function getValue() {
+
+            global $mysqlUtils;
+
             if (isset($_GET["value"])) {
-                return $value = $_GET["value"];
+                return $mysqlUtils->escapeString($_GET["value"], true, true);
             } else {
-                return $value = null;
+                return null;
             }
         }  
 

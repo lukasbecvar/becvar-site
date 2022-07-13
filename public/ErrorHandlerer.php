@@ -2,7 +2,7 @@
     if (isset($_GET["code"])) {
 
         //Get error code form url
-        $code = $_GET["code"];
+        $code = htmlspecialchars($_GET["code"], ENT_QUOTES);
 
         //Set error page by code
         if ($code == 404) {
