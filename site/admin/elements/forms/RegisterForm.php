@@ -1,7 +1,7 @@
-<form class="loginFormPosY loginForm bg-dark" action="?admin=login&action=register" method="post">
+<form class="loginFormPosY loginForm" action="?admin=login&action=register" method="post">
     <h2 class="loginFormTitle">Create default admin account</h2>
-    <input class="textInput bg-dark" type="text" name="username" placeholder="Username"><br>
-    <input class="textInput bg-dark" type="password" name="password" placeholder="Password"><br>
-    <input class="textInput bg-dark" type="password" name="repassword" placeholder="Re-password"><br>
-    <div class="rightPosition" style="margin-right: 18px;"><input class="inputButton bg-dark" type="submit" name="submitRegister" value="Register"></div>
+    <input class="textInput" type="text" name="username" placeholder="Username"><br>
+    <input class="textInput" type="password" name="password" placeholder="Password"><br>
+    <input class="textInput" type="password" name="repassword" placeholder="Re-password"><br>
+    <div class="rightPosition" style="margin-right: 18px;"><input class="inputButton" type="submit" name="submitRegister" value="Register"></div>
 </form>

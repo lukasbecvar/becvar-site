@@ -91,7 +91,7 @@ a:hover {
   
 .wrapper .sidebar ul li a:hover, .wrapper .sidebar ul li a.active {
 	color: #0c0e0f;
-	background:white;
+	background: #6899a5;
 	border-right: 2px solid rgb(33, 39, 43);
 }
   
@@ -228,7 +228,8 @@ textarea {
 	position: fixed;
 	height: 100%;
 	width: 100%;
-	background: #292e33;
+    background: #040404 url("../img/bg.jpg") top right no-repeat;
+    background-size: cover;
 }
 
 .loginForm {
@@ -239,6 +240,13 @@ textarea {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border: 1px solid white;
+}
+
+.loginForm .textInput:-webkit-autofill, .loginForm .textInput:-webkit-autofill:hover , .loginForm .textInput:-webkit-autofill:focus {
+    border: 1px solid white;
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px #171717 inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .loginFormPosY {
@@ -271,7 +279,7 @@ textarea {
 }
 
 .loginFormTitle {
-	color: darkgrey;
+	color: white;
 	text-align: center;
 }
 
@@ -323,10 +331,6 @@ textarea {
 	color: white;
 }
 
-.textInput:hover {
-	border: 1px solid red;
-}
-
 .textInput::-moz-placeholder { 
 	color: lightgrey;
 }
@@ -356,10 +360,6 @@ textarea {
 	padding-right: 8px;
 }
 
-.textInput:hover {
-	border: 1px solid red;
-}
-
 .rightPosition {
 	text-align: right;
 }
@@ -370,10 +370,6 @@ textarea {
 	width: 25px;
 	height: 20px;
 	top: 5px;
-}
-
-.checkbox:hover { 
-	border: 1px solid red;
 }
 
 .checkboxText { 
