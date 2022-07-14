@@ -1,5 +1,5 @@
 <div class="adminPanel">
-    <?php //The system/site tester component (for check all system/server components)
+    <?php //The system/site Diagnostics component (for check all system/server components)
         
         //include system diag card
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/diagnostics/SystemDiagnosticsCard.php');

@@ -1,6 +1,6 @@
-<div class="cardPhone card text-white bg-dark mb-3" style="margin-left: 1%; margin-right: 1%">
-    <div class="card-header">Website diagnostics</div>
-    <div class="card-body">
+<div class="cardPhone card diagCardPhone text-white bg-dark mb-3" style="margin-left: 1%; margin-right: 1%">
+    <div class="card-header diagnostics-large-title">Website diagnostics</div>
+    <div class="card-body diagnostics-large">
         <?php //System checks
         
             //Print subdomain test

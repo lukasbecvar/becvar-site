@@ -3,7 +3,8 @@
     //Check if command defined
     if (empty($_GET["command"])) {
 
-        $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
+        //Redirect to 404 page if command is empty
+        $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
     
     } else {
 
@@ -23,6 +24,7 @@
 
             } elseif ($command == "torStart") {
                 $servicesController->executeScriptAsROOT("services/tor_start.sh");
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -33,6 +35,7 @@
 
             } elseif ($command == "openvpnStart") {
                 $servicesController->executeScriptAsROOT("services/openvpn_start.sh");
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -43,6 +46,7 @@
 
             } elseif ($command == "ufwStart") {
                 $servicesController->executeScriptAsROOT("services/ufw_enable.sh");
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -52,11 +56,15 @@
                 $servicesController->executeScriptAsROOT("services/apache_stop.sh");
 
 
-            //SSHD service
+            //SSHD service 
             } elseif ($command == "sshdStart") {
                 $servicesController->executeScriptAsROOT("services/sshd_start.sh");
             
-            
+            } elseif ($command == "sshdStop") {
+                $servicesController->executeScriptAsROOT("services/sshd_stop.sh");
+            ////////////////////////////////////////////////////////////////////////////
+                
+
 
             //TeamSpeak service
             } elseif ($command == "ts3serverStop") {
@@ -64,13 +72,14 @@
 
             } elseif ($command == "ts3serverStart") {
                 $servicesController->executeScriptAsROOT("services/teamspeak_start.sh");
-
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
             //Mariadb service
             } elseif ($command == "mariadbStop") {
                 $servicesController->executeScriptAsROOT("services/mariadb_stop.sh");
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -80,7 +89,7 @@
 
             } elseif ($command == "minecraftStart") {
                 $servicesController->executeScriptAsROOT("services/minecraft_start.sh");
-
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -90,6 +99,7 @@
 
             } elseif ($command == "dubinekStart") {
                 $servicesController->executeScriptAsROOT("services/dubinek_start.sh");
+            ////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -102,6 +112,8 @@
             $urlUtils->jsRedirect("?admin=dashboard");
 
         } else {
+
+            //Redirect to 403 page if user not logged in
             $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
         }
     }

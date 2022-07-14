@@ -8,7 +8,7 @@
             if ($servicesController->isServiceInstalled("sshd")) {
 
                 if ($servicesController->ifServiceActive("sshd")) {
-                    echo '<p class="card-text">SSHD: <span class="text-success">enabled</span> <strong><span></span></strong></p>';
+                    echo '<p class="card-text">SSHD: <span class="text-success">enabled</span> <strong>[<a href="?admin=executeTask&command=sshdStop">STOP</a>]<span></span></strong></p>';
                 } else {
                     echo '<p class="card-text">SSHD: <span class="text-warning">disabled</span> <strong><span>[<a href="?admin=executeTask&command=sshdStart">START</a>]</span></strong></p>';
                 }

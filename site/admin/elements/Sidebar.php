@@ -90,9 +90,9 @@
 		</li>
 					
         <li>
-			<a class="sMenuButton" href="?admin=tester">
+			<a class="sMenuButton" href="?admin=diagnostics">
 				<span class="icon"><i class="fa fa-check"></i></span>
-				<span class="item">Tester</span>
+				<span class="item">Diagnostics</span>
 			</a>
 		</li>
 

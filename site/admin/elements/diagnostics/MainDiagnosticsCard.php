@@ -1,6 +1,6 @@
-<div class="cardPhone card text-white bg-dark mb-3" style="margin-left: 1%; margin-right: 1%">
-    <div class="card-header">Main diagnostics</div>
-    <div class="card-body">
+<div class="cardPhone diagCardPhone card text-white bg-dark mb-3" style="margin-left: 1%; margin-right: 1%">
+    <div class="card-header diagnostics-large-title">Main diagnostics</div>
+    <div class="card-body diagnostics-large">
         <?php //Main & basic system checks
         
             //Print main service dir test

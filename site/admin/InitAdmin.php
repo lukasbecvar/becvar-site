@@ -81,8 +81,8 @@
             } elseif ($siteController->getCurrentAdminProcess() == "phpInfo") {
                 include_once("components/phpInfoComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "tester") {
-                include_once("components/TesterComponent.php");
+            } elseif ($siteController->getCurrentAdminProcess() == "diagnostics") {
+                include_once("components/DiagnosticsComponent.php");
 
             } elseif ($siteController->getCurrentAdminProcess() == "dbBrowser") {
                 include_once("components/DatabaseBrowserComponent.php");

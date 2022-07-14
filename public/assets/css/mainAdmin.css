@@ -767,6 +767,14 @@ textarea {
 	margin-top: -2px;
 }
 
+.diagnostics-large {
+	font-size: 20px;
+}
+
+.diagnostics-large-title {
+	font-size: 25px;
+}
+
 @media screen and (max-width: 800px) { 
 	::-webkit-scrollbar {
 		width: 10px;
@@ -873,8 +881,12 @@ textarea {
 		margin-right: 10px;
 	}
 	.cardPhone {
-		margin-left: 13px;
+		margin-left: 10px;
 		width: 90%;
+	}
+	.diagCardPhone {
+		margin-left: 4%;
+		width: calc(100% - 3%);	
 	}
 	.todoArea {
 		width: calc(100% - 20%);
@@ -891,6 +903,12 @@ textarea {
 	.dbEditForm { 
 		width: 95%;
 		top: -13%;
+	}
+	.diagnostics-large {
+		font-size: 15px;
+	}
+	.diagnostics-large-title {
+		font-size: 18px;
 	}
 }
 
