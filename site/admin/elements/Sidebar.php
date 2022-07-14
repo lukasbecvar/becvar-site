@@ -90,6 +90,13 @@
 		</li>
 					
         <li>
+			<a class="sMenuButton" href="?admin=tester">
+				<span class="icon"><i class="fa fa-check"></i></span>
+				<span class="item">Tester</span>
+			</a>
+		</li>
+
+        <li>
 			<a class="sMenuButton" href="?admin=pageSettings">
 				<span class="icon"><i class="fas fa-cogs"></i></span>
 				<span class="item">Page settings</span>

@@ -2,7 +2,7 @@
     <div class="card-header">Warnings</div>
     <div class="card-body">
         <?php
-        
+         
             /* 
                 !!!!--                                     Warning                                       --!!!!
                 !!!!-- if you add new warning you must add to in $dashboardController > isWarninBoxEmpty --!!!!

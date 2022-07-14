@@ -216,6 +216,18 @@
 
 
 
+        //Check if system is linux
+        public function isSystemLinux() {
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'LIN') {
+                return true;
+            } else {
+                return false;
+            }            
+        }
+
+
+
+
         //Check if warnings box empty
         public function isWarninBoxEmpty() {
             global $pageConfig;

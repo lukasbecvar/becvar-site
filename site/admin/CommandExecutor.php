@@ -52,7 +52,11 @@
                 $servicesController->executeScriptAsROOT("services/apache_stop.sh");
 
 
-
+            //SSHD service
+            } elseif ($command == "sshdStart") {
+                $servicesController->executeScriptAsROOT("services/sshd_start.sh");
+            
+            
 
             //TeamSpeak service
             } elseif ($command == "ts3serverStop") {

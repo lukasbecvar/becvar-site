@@ -1,5 +1,9 @@
 <?php  
 	http_response_code(403);
+
+	//Include config
+	include_once("../config.php");
+	$configOBJ = new PageConfig();
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -13,7 +17,7 @@
 </head>
 <body class="mainPage">
 	<main>
-		<center><h3 class="errorPageMSG"><strong>You are permanently banned on this site.<br></strong></h3></center>
+		<center><h3 class="errorPageMSG"><strong>You are permanently banned on this site.<br><br><br>Please contact me at <?php echo $configOBJ->config["email"]; ?></strong></h3></center>
 	</main>
 </body>
 </html>

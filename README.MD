@@ -9,14 +9,14 @@ becvar site is my personal website builded on becwork
  - Set service path in scripts (if not same /services/)
 
 
-## Website included
- * Public site
+ ## Public site
  - Components: about, services list, contact, etc...
  - Password, hash generator
  - Image uploader
  - Code paste site
 
- * Admin site
+
+ ## Admin site
  - Private todo manager
  - Server dashboard
  - Services manager
@@ -30,8 +30,10 @@ becvar site is my personal website builded on becwork
  - Warning system
  - Visitors counter system
  - Advanced log system
+ - System/Services tester component
 
- * Others
+
+ ## Others
  - API manager
 
  
@@ -72,4 +74,4 @@ This project requires PHP8 or < .
    * [Github](https://github.com/filp/whoops)
 * Adminer
    * Version: **4.8.1**
-   * [Website](https://www.adminer.org/r)
+   * [Website](https://www.adminer.org/)
