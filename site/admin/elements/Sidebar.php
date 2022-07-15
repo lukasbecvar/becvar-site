@@ -55,19 +55,6 @@
 			</a>
         </li>
 					
-        <?php //Add cloud link if nextcloud installed on server
-			if ($servicesController->isServiceInstalled("nextcloud")) {
-				echo '
-					<li>
-						<a class="sMenuButton" target="_blank" href="/nextcloud/index.php/apps/files/?dir=/&fileid=6">
-							<span class="icon"><i class="fas fa-cloud"></i></span>
-							<span class="item">Cloud storage</span>
-						</a>	
-					</li>
-				';
-			}
-		?>
-					
         <li>
 			<a class="sMenuButton" href="?admin=inbox">
 				<span class="icon"><i class="fas fa-envelope"></i></span>

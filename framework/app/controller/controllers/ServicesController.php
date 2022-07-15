@@ -89,14 +89,6 @@
                     return false;
                 }
 
-            //Nextcloud web app
-            } elseif ($serviceName == "nextcloud") {
-                if (file_exists($serviceDir."/web/nextcloud/")) {
-                    return true;
-                } else {
-                    return false;
-                }
-
             //Check others (for systemctl)
             } else {
 

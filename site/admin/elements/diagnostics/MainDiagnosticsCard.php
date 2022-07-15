@@ -72,13 +72,6 @@
                 }
             }
 
-            //Print NextCloud test
-            if (!$servicesController->isServiceInstalled("nextcloud")) {
-                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>NextCloud not installed in system</strong></span></p>';
-            } else {
-                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>NextCloud installed</strong></span></p>';
-            }
-
             //Print Minecraft server test
             if (!$servicesController->isServiceInstalled("minecraft")) {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>Minecraft server '.$pageConfig->getValueByName('serviceDir').'/minecraft not found, minecraft is not installed</strong></span></p>';
