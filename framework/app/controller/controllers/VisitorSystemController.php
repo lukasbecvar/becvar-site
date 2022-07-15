@@ -237,22 +237,11 @@
                         $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
 
                         //Update database
-                        if ($adminController->isLoggedIn() && $id_one_count != "0") {
-
-                            //Update is session = admin
-                            $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `id` = '1'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `id` = '1'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `id` = '1'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `id` = '1'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `id` = '1'");  
-
-                        } else {
-                            $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
-                            $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");    
-                        }
+                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
+                        $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
                         //Show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {

@@ -60,6 +60,11 @@
                 //print elements
                 foreach ($visitors as $data) {
 
+                    //Check if client ip not have > 15 characters
+                    if (strlen($data["ip_adress"]) > 15) {
+                        $data["ip_adress"] = substr($data["ip_adress"], 0, 15)."...";
+                    }
+
                     //If ip = session ip
                     if ($data["ip_adress"] == $mainUtils->getRemoteAdress()) {
                         $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
@@ -91,6 +96,13 @@
                         $data["banned"] = "<span class='text-red'>".$data["banned"]."</span>";
                     } else {
                         $data["banned"] = "<span class='text-success'>".$data["banned"]."</span>";
+                    }
+
+                    //Check if OS is unknown
+                    if ($data["os"] == "Unknown OS") {
+                        $data["os"] = "<span class='text-red'>".$data["os"]."</span>";
+                    } else {
+                        $data["os"] = "<span class='text-success'>".$data["os"]."</span>";
                     }
                     
                     //Build table row
