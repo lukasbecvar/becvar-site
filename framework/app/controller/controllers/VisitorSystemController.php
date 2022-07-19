@@ -87,6 +87,9 @@
             } else if (str_contains($agent, "zgrab")) {
                 $browser = "zgrab";
 
+            } else if (str_contains($agent, "becvold.xyz")) {
+                $browser = "BecvoldBot";
+
             } else if (str_contains($agent, "everyfeed")) {
                 $browser = "EveryFeed";
             
