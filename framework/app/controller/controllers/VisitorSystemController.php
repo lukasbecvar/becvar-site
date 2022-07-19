@@ -75,6 +75,9 @@
             } else if (str_contains($agent, "RepoLookoutBot")) {
                 $browser = "RepoLookoutBot"; 
 
+            } else if (str_contains($agent, "Trident")) {
+                $browser = "Trident"; 
+
             } else if (str_contains($agent, "Gather")) {
                 $browser = "Gather"; 
 
@@ -86,6 +89,12 @@
 
             } else if (str_contains($agent, "zgrab")) {
                 $browser = "zgrab";
+
+            } else if (str_contains($agent, "crawlson")) {
+                $browser = "Crawlson";
+
+            } else if (str_contains($agent, "bingbot")) {
+                $browser = "Bingbot";
 
             } else if (str_contains($agent, "becvold.xyz")) {
                 $browser = "BecvoldBot";
