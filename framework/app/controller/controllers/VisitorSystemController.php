@@ -63,6 +63,9 @@
             } else if (str_contains($agent, "masscan-ng")) {
                 $browser = "masscan-ng scanner";
 
+            } else if (str_contains($agent, "IonCrawl")) {
+                $browser = "IonCrawl";
+
             } else if (str_contains($agent, "Baiduspider")) {
                 $browser = "Baiduspider";
 
