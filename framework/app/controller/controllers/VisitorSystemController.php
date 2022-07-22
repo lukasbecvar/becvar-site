@@ -39,6 +39,9 @@
             } else if (str_contains($agent, "Googlebot")) {
                 $browser = "Googlebot";
 
+            } else if (str_contains($agent, "seznambot")) {
+                $browser = "SeznamBot";
+
             } else if (str_contains($agent, "Discordbot")) {
                 $browser = "Discordbot";
 
