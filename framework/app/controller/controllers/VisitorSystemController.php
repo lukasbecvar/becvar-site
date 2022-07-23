@@ -57,6 +57,9 @@
             } else if (str_contains($agent, "ips-agent")) {
                 $browser = "ips-agent";
 
+            } else if (str_contains($agent, "UCWEB")) {
+                $browser = "UC Browser"; 
+
             } else if (str_contains($agent, "NetcraftSurveyAgent")) {
                 $browser = "NetcraftSurveyAgent";
 
