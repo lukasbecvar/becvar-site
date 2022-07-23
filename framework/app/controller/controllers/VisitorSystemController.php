@@ -54,6 +54,9 @@
             } else if (str_contains($agent, "NetSystemsResearch")) {
                 $browser = "NetSystemsResearch";
 
+            } else if (str_contains($agent, "ips-agent")) {
+                $browser = "ips-agent";
+
             } else if (str_contains($agent, "NetcraftSurveyAgent")) {
                 $browser = "NetcraftSurveyAgent";
 
