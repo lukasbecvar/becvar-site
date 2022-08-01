@@ -75,6 +75,9 @@
             } else if (str_contains($agent, "IonCrawl")) {
                 $browser = "IonCrawl";
 
+            } else if (str_contains($agent, "Netcraft")) {
+                $browser = "Netcraft"; 
+
             } else if (str_contains($agent, "Baiduspider")) {
                 $browser = "Baiduspider";
 
