@@ -70,11 +70,6 @@
                         $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                     }
 
-                    //Check if browser not have > 32 characters
-                    if (strlen($data["browser"]) > 27) {
-                        $data["browser"] = substr($data["browser"], 0, 27)."...";
-                    }
-                    
                     //Check if browser is undefined
                     if ($data["browser"] == "Undefined") {
                         $data["browser"] = "<span class='text-red'>".$data["browser"]."</span>";
