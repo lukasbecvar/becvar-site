@@ -122,7 +122,13 @@
 
             } else if (str_contains($agent, "everyfeed")) {
                 $browser = "EveryFeed";
-            
+
+            } else if (str_contains($agent, "Yahoo")) {
+                $browser = "YahooBot";
+       
+            } else if (str_contains($agent, "archive.org")) {
+                $browser = "archive.org";
+                
             } else if (str_contains($agent, "https://security.ipip.net")) {
                 $browser = "HTTP BD";
 
