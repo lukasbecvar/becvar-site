@@ -95,7 +95,7 @@
 		$visitorController->init();		
 
 		//Check if page loaded with valid url
-		if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
+		if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && ($siteController->getHTTPhost() != "www.".$pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
 			$urlUtils->redirect("ErrorHandlerer.php?code=400");
 		}
 

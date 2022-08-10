@@ -287,6 +287,14 @@
             } elseif (!$servicesController->isServiceInstalled("ts3server")) {
                 return false;
 
+            //Check if maintenance is enabled
+            } elseif ($pageConfig->getValueByName("maintenance") == "enabled") {
+                return false;
+
+            //Check if dev_mode is enabled
+            } elseif ($pageConfig->getValueByName("dev_mode") == true) {
+                return false;
+
             //Return true if warnings not found
             } else {
                 return true;
@@ -294,3 +302,4 @@
         }
     }
 ?>
+ 
