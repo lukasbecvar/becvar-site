@@ -8,30 +8,8 @@
             //Get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
 
-            //Build browser agent from http agent
-            if(preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
-                $browser = "Internet Explore";
-           
-            } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $agent) ) {
-                $browser = "Chrome";
-            
-            } else if (preg_match('/Edge\/\d+/', $agent) ) {
-                $browser = "Edge";
-            
-            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
-                $browser = "Firefox";
-            
-            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
-                $browser = "Opera";
-            
-            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
-                $browser = "Safari";
- 
-            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $agent) ) {
-                $browser = "Opera";
-
             //Return undefined
-            } else if ($agent == null) {
+            if ($agent == null) {
                 $browser = "Undefined";
            
             //Return browser agent
@@ -47,8 +25,29 @@
 
         //Shortify BrowserID
         public function getShortBrowserID($raw) {
+            
+            if(preg_match('/MSIE (\d+\.\d+);/', $raw) ) {
+                return "Internet Explore";
+           
+            } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $raw) ) {
+                return "Chrome";
+            
+            } else if (preg_match('/Edge\/\d+/', $raw) ) {
+                return "Edge";
+            
+            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw) ) {
+                return "Firefox";
+            
+            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw) ) {
+                return "Opera";
+            
+            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw) ) {
+                return "Safari";
+ 
+            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw) ) {
+                return "Opera";
 
-            if (str_contains($raw, "Dalvik")) {
+            } else if (str_contains($raw, "Dalvik")) {
                 return "Dalvik/Android";
 
             } else if (str_contains($raw, "Googlebot")) {

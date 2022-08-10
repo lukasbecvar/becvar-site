@@ -69,7 +69,7 @@
 
 
 			/* Mysql config */
-			"ip" 		=> 	"127.0.0.1",	//Define mysql server ip
+			"ip" 		=> 	"localhost",	//Define mysql server ip
 			"basedb" 	=> 	"becvar_site",	//Define mysql default db name
 			"username"	=> 	"root",			//Define mysql user 
 			"password" 	=> 	"root"			//Define Mysql password
