@@ -8,6 +8,9 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
+CREATE DATABASE `becvar_site` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `becvar_site`;
+
 DROP TABLE IF EXISTS `hash_gen`;
 CREATE TABLE `hash_gen` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50,6 +53,15 @@ CREATE TABLE `messages` (
   `status` char(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
+
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `pastes`;
@@ -99,4 +111,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-07-08 08:51:25
+-- 2022-08-10 07:52:22

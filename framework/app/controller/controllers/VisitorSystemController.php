@@ -30,116 +30,11 @@
             } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $agent) ) {
                 $browser = "Opera";
 
-            } else if (str_contains($agent, "Dalvik")) {
-                $browser = "Dalvik/Android";
-           
-            } else if (str_contains($agent, "Dalvik")) {
-                $browser = "Dalvik/Android";
-
-            } else if (str_contains($agent, "Googlebot")) {
-                $browser = "Googlebot";
-
-            } else if (str_contains($agent, "Trident")) {
-                $browser = "Trident";
-
-            } else if (str_contains($agent, "DuckDuckGo")) {
-                $browser = "DuckDuckGo";
-
-            } else if (str_contains($agent, "seznambot")) {
-                $browser = "SeznamBot";
-
-            } else if (str_contains($agent, "Discordbot")) {
-                $browser = "Discordbot";
-
-            } else if (str_contains($agent, "YandexBot")) {
-                $browser = "YandexBot";
-
-            } else if (str_contains($agent, "tchelebi")) {
-                $browser = "tchelebi";
-
-            } else if (str_contains($agent, "NetSystemsResearch")) {
-                $browser = "NetSystemsResearch";
-
-            } else if (str_contains($agent, "ips-agent")) {
-                $browser = "ips-agent";
-
-            } else if (str_contains($agent, "UCWEB")) {
-                $browser = "UC Browser"; 
-
-            } else if (str_contains($agent, "NetcraftSurveyAgent")) {
-                $browser = "NetcraftSurveyAgent";
-
-            } else if (str_contains($agent, "CensysInspect")) {
-                $browser = "CensysInspect";
-
-            } else if (str_contains($agent, "PolycomRealPresenceTrio")) {
-                $browser = "PolycomRealPresenceTrio";
-
-            } else if (str_contains($agent, "masscan-ng")) {
-                $browser = "masscan-ng scanner";
-
-            } else if (str_contains($agent, "IonCrawl")) {
-                $browser = "IonCrawl";
-
-            } else if (str_contains($agent, "Netcraft")) {
-                $browser = "Netcraft"; 
-
-            } else if (str_contains($agent, "Baiduspider")) {
-                $browser = "Baiduspider";
-
-            } else if (str_contains($agent, "SemrushBot")) {
-                $browser = "SemrushBot";
-
-            } else if (str_contains($agent, "AhrefsBot")) {
-                $browser = "AhrefsBot";
-
-            } else if (str_contains($agent, "RepoLookoutBot")) {
-                $browser = "RepoLookoutBot"; 
-
-            } else if (str_contains($agent, "Trident")) {
-                $browser = "Trident"; 
-
-            } else if (str_contains($agent, "Gather")) {
-                $browser = "Gather"; 
-
-            } else if (str_contains($agent, "Firefox/96")) {
-                $browser = "Firefox/96";
-
-            } else if (str_contains($agent, "python-requests")) {
-                $browser = "python-requests";
-
-            } else if (str_contains($agent, "zgrab")) {
-                $browser = "zgrab";
-
-            } else if (str_contains($agent, "crawlson")) {
-                $browser = "Crawlson";
-
-            } else if (str_contains($agent, "bingbot")) {
-                $browser = "Bingbot";
-
-            } else if (str_contains($agent, "becvold.xyz")) {
-                $browser = "BecvoldBot";
-
-            } else if (str_contains($agent, "everyfeed")) {
-                $browser = "EveryFeed";
-
-            } else if (str_contains($agent, "Yahoo")) {
-                $browser = "YahooBot";
-       
-            } else if (str_contains($agent, "archive.org")) {
-                $browser = "archive.org";
-                
-            } else if (str_contains($agent, "https://security.ipip.net")) {
-                $browser = "HTTP BD";
-
-            } else if (str_contains($agent, "KHTML")) {
-                $browser = "KHTML";
-
             //Return undefined
             } else if ($agent == null) {
                 $browser = "Undefined";
            
-            //Return aget
+            //Return browser agent
             } else {
                 $browser = $agent;
             }
@@ -149,7 +44,125 @@
         }
 
 
-        
+
+        //Shortify BrowserID
+        public function getShortBrowserID($raw) {
+
+            if (str_contains($raw, "Dalvik")) {
+                return "Dalvik/Android";
+
+            } else if (str_contains($raw, "Googlebot")) {
+                return "Googlebot";
+
+            } else if (str_contains($raw, "Trident")) {
+                return "Trident";
+
+            } else if (str_contains($raw, "DuckDuckGo")) {
+                return "DuckDuckGo";
+
+            } else if (str_contains($raw, "seznambot")) {
+                return "SeznamBot";
+
+            } else if (str_contains($raw, "Discordbot")) {
+                return "Discordbot";
+
+            } else if (str_contains($raw, "YandexBot")) {
+                return "YandexBot";
+
+            } else if (str_contains($raw, "tchelebi")) {
+                return "tchelebi";
+
+            } else if (str_contains($raw, "NetSystemsResearch")) {
+                return "NetSystemsResearch";
+
+            } else if (str_contains($raw, "ips-agent")) {
+                return "ips-agent";
+
+            } else if (str_contains($raw, "UCWEB")) {
+                return "UC Browser"; 
+
+            } else if (str_contains($raw, "NetcraftSurveyAgent")) {
+                return "NetcraftSurveyAgent";
+
+            } else if (str_contains($raw, "CensysInspect")) {
+                return "CensysInspect";
+
+            } else if (str_contains($raw, "PolycomRealPresenceTrio")) {
+                return "PolycomRealPresenceTrio";
+
+            } else if (str_contains($raw, "masscan-ng")) {
+                return "masscan-ng scanner";
+
+            } else if (str_contains($raw, "IonCrawl")) {
+                return "IonCrawl";
+
+            } else if (str_contains($raw, "Netcraft")) {
+                return "Netcraft"; 
+
+            } else if (str_contains($raw, "Baiduspider")) {
+                return "Baiduspider";
+
+            } else if (str_contains($raw, "SemrushBot")) {
+                return "SemrushBot";
+
+            } else if (str_contains($raw, "AhrefsBot")) {
+                return "AhrefsBot";
+
+            } else if (str_contains($raw, "RepoLookoutBot")) {
+                return "RepoLookoutBot"; 
+
+            } else if (str_contains($raw, "Trident")) {
+                return "Trident"; 
+
+            } else if (str_contains($raw, "Gather")) {
+                return "Gather"; 
+
+            } else if (str_contains($raw, "Firefox/96")) {
+                return "Firefox/96";
+
+            } else if (str_contains($raw, "python-requests")) {
+                return "python-requests";
+
+            } else if (str_contains($raw, "zgrab")) {
+                return "zgrab";
+
+            } else if (str_contains($raw, "crawlson")) {
+                return "Crawlson";
+
+            } else if (str_contains($raw, "bingbot")) {
+                return "Bingbot";
+
+            } else if (str_contains($raw, "becvold.xyz")) {
+                return "BecvoldBot";
+
+            } else if (str_contains($raw, "everyfeed")) {
+                return "EveryFeed";
+
+            } else if (str_contains($raw, "Yahoo")) {
+                return "YahooBot";
+    
+            } else if (str_contains($raw, "archive.org")) {
+                return "archive.org";
+                
+            } else if (str_contains($raw, "https://security.ipip.net")) {
+                return "HTTP BD";
+
+            } else if (str_contains($raw, "KHTML")) {
+                return "KHTML";
+
+            } else if (str_contains($raw, "MSIE")) {
+                return "Internet Explorer";
+
+            } else if ($raw == "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330") {
+                return "Netscape Navigator";
+
+            } else {
+                return $raw;
+            }
+        }
+
+
+
         //Get visitor OS
         public function getVisitorOS() { 
 

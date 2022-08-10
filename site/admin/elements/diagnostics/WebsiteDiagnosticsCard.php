@@ -16,6 +16,13 @@
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>developer mode policy are OK</strong></span></p>';
             }
+
+            //Print maintenance test
+            if ($pageConfig->getValueByName("maintenance") == "enabled") {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>public pages are unavailable for maintenance</strong></span></p>';
+            } else {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>maintenance is disabled, page is available</strong></span></p>';
+            }
         ?>
     </div>
 </div>

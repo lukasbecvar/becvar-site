@@ -73,6 +73,10 @@
                     //Check if browser is undefined
                     if ($data["browser"] == "Undefined") {
                         $data["browser"] = "<span class='text-red'>".$data["browser"]."</span>";
+                    } else {
+
+                        //Shortify browserID
+                        $data["browser"] = $visitorController->getShortBrowserID($data["browser"]);
                     }
 
                     //Check if first_visit & last_visit have same time

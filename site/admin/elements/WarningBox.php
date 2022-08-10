@@ -18,6 +18,16 @@
                 echo '<p class="card-text"><span class="text-red"><strong>Your session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>';
             }
 
+            //Print if maintenance is enabled
+            if ($pageConfig->getValueByName("maintenance") == "enabled") {
+                echo '<p class="card-text"><span class="text-red"><strong>Maintenance is enabled!</strong></span></p>';
+            }
+
+            //Print if dev_mode is enabled
+            if ($pageConfig->getValueByName("dev_mode") == true) {
+                echo '<p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>';
+            }
+
             //Print Used disk space == 90%
             if ($dashboardController->getDrivesInfo() > 89) {
                 echo '<p class="card-text"><span class="text-red"><strong>Used disk space is more than 90% please try clean the file system</strong></span></p>';
