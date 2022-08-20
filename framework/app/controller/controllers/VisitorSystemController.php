@@ -152,10 +152,21 @@
             } else if (str_contains($raw, "MSIE")) {
                 return "Internet Explorer";
 
+            } else if (str_contains($raw, "Iceape")) {
+                return "IceApe";
+
+            } else if (str_contains($raw, "internet-measurement.com")) {
+                return "internet-measurement.com";
+
             } else if ($raw == "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330") {
                 return "Netscape Navigator";
 
             } else {
+
+                if (strlen($raw) > 90) {
+                    $raw = substr($raw, 0, 90)."...";
+                }
+                
                 return $raw;
             }
         }
