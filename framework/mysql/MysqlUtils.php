@@ -110,7 +110,7 @@
          * Usage complete protect string like $str = escapeString("string", true, true)
          * Returned escaped string
        */
-        public function escapeString($string, $stripTags = false, $specialChasr = false) {
+        public function escapeString($string, $stripTags = false, $specialChars = false) {
             require_once("../config.php");
 
             $configOBJ = new PageConfig();
@@ -119,7 +119,7 @@
             if ($stripTags) {
                 $out = strip_tags($out);
             }
-            if ($specialChasr) {
+            if ($specialChars) {
                 $out = htmlspecialchars($out, ENT_QUOTES);
             }
             return $out;
