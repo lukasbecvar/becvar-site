@@ -155,6 +155,9 @@
             } else if (str_contains($raw, "Iceape")) {
                 return "IceApe";
 
+            } else if (str_contains($raw, "pdrlabs.net")) {
+                return "pdrlabs.net";
+
             } else if (str_contains($raw, "internet-measurement.com")) {
                 return "internet-measurement.com";
 
