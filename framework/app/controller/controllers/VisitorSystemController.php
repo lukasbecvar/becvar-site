@@ -161,6 +161,9 @@
             } else if (str_contains($raw, "Nmap Scripting Engine")) {
                 return "Nmap Scripting Engine";
 
+            } else if (str_contains($raw, "Midori")) {
+                return "Midori browser";
+
             } else if (str_contains($raw, "internet-measurement.com")) {
                 return "internet-measurement.com";
 
