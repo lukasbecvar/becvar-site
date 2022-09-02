@@ -1,4 +1,4 @@
-<?php 
+<?php //Todo list manager
 
     class TodosController {
 
@@ -18,8 +18,6 @@
             print '<script type="text/javascript">window.location.replace("?admin=todos");</script>';
         }
     
-
-
         //Close todo
         public function closeTodo($id) {
     
@@ -32,8 +30,6 @@
             //Update todos for close 
             $mysqlUtils->insertQuery("UPDATE todos SET status='closed' WHERE id='$id'");
         }
-
-
         
         //Check if todos empty
         public function isEmpty() {

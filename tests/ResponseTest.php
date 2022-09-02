@@ -13,12 +13,10 @@
     //Init response utils class
     $responseUtils = new ResponseUtils();
 
-
     //Register all testing urls
     $register = [
         $pageConfig->config["url"]
     ];
-
     
     //Test all pages in array
     foreach ($register as $value) {
@@ -31,5 +29,6 @@
         }
     }
 
+    //Print spacer
     echo"\033[33m================================================================================\n";
 ?>

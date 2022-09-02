@@ -17,8 +17,6 @@
 			}
 		}
 		
-
-
 		//if check if user logged in
 		public function isLoggedIn() {
 
@@ -40,8 +38,6 @@
 			}
 		} 
 
-
-
 		//if check if user can login with username and password
 		public function canLogin($username, $password) {
 
@@ -59,8 +55,6 @@
 			} 
 		}
 
-
-
 		//Unset login cookie
 		public function unSetLoginCookies() {
 
@@ -73,8 +67,6 @@
 			//Unset token
 			$cookieUtils->unset_cookie("userToken");			
 		}
-
-
 
 		//Set login cookie
 		public function setLoginCookies($token) {
@@ -89,8 +81,6 @@
 			$cookieUtils->cookieSet($pageConfig->getValueByName("loginCookie"), $pageConfig->getValueByName("loginValue"), time() + (60*60*24*7*365));			
 		}
 
-
-
 		//Set anti log cookie
 		public function setAntiLogCookie() {
 
@@ -100,8 +90,6 @@
 			//Set antilog cookie
 			$cookieUtils->cookieSet($pageConfig->getValueByName("antiLogCookie"), $pageConfig->getValueByName("antiLogValue"), time() + (60*60*24*7*365));			
 		}
-
-
 
 		//Set login session
 		public function setLoginSession($token) {
@@ -118,8 +106,6 @@
 			//Set token session
 			$sessionUtils->setSession("userToken", $token);
 		}
-
-
 
 		//Logout user
 		public function logout() {
@@ -150,8 +136,6 @@
 			$urlUtils->redirect("?admin=login");			
 		}
 
-
-
 		//Update password
 		public function updatePassword($username, $password) {
 
@@ -168,8 +152,6 @@
 			$mysqlUtils->logToMysql("Password update", "User $username updated password");
 		}
 
-
-		
 		//Update profile image
 		public function updateProfileImage($base64Final, $username) {
 
@@ -182,8 +164,6 @@
 			$mysqlUtils->logToMysql("Profile update", "User $username updated image");
 		}
 
-
-
 		//Check if user is owner
 		public function isUserOwner() {
 			if($this->getCurrentRole() == "Owner" or $this->getCurrentRole() == "owner") {
@@ -192,8 +172,6 @@
 				return false;
 			}
 		}
-
-
 
 		//Get current username form session
 		public function getCurrentUsername() {
@@ -207,8 +185,6 @@
 			}
 		}
 
-
-
 		//Get user role form session
 		public function getCurrentRole() {
 
@@ -221,8 +197,6 @@
 				return null;
 			}
 		}
-
-
 		
 		//Get user token
 		public function getUserToken() {
@@ -249,8 +223,6 @@
 			}
 		}
 
-
-
 		//Auto user login (for cookie login)
 		public function autoLogin() {
 			
@@ -274,8 +246,6 @@
 			//Refresh page
 			$urlUtils->redirect("?admin=dashboard");
 		}
-
-
 
 		//Get user avara base64 code
 		public function getUserAvatar() {

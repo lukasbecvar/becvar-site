@@ -49,20 +49,16 @@
 
     } else { 
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-
         //Check if user logged in
         if ($adminController->isLoggedIn()) {	
 
             //Include admin top nav bar
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/TopPanel.php');
 
-
             //Include admin sidebar
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/Sidebar.php');
 
-
-            //Define process by name
+            //Define process by name //////////////////////////////////////////////////////////////
             if ($siteController->getCurrentAdminProcess() == "dashboard") {
                 include_once("components/DashboardComponent.php");
 
@@ -95,7 +91,7 @@
 
             } elseif ($siteController->getCurrentAdminProcess() == "mediaBrowser") {
                 include_once("components/MediaBrowserComponent.php");
-
+            ///////////////////////////////////////////////////////////////////////////////////////
 
             //Login admin action redirect logged in users
             } elseif ($siteController->getCurrentAdminProcess() == "login") {
@@ -138,15 +134,13 @@
         //Sidebar menu toggle script includer
         if(!$mobileDetector->isMobile()) {
 
+            //Check if is admin process not dashboard
             if($siteController->getCurrentAdminProcess() != "dashboard") {
                 include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');
             }	
-
         } else {
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');;		
         }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 ?>
 </main>

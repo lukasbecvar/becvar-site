@@ -30,8 +30,6 @@
 			}
 		}
 
-
-
 		//Print all messages
 		public function printMSGS() {
 
@@ -47,8 +45,6 @@
                 echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") [".$row["time"]."]<a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
             }
 		}
-	
-
 		
 		//Delete message by id
 		public function deleteMsgByID($id) {
@@ -62,8 +58,6 @@
 			//Update message for close 
 			$mysqlUtils->insertQuery("UPDATE messages SET status='closed' WHERE id='$id'");
 		}
-
-
 		
         //Check if msgs empty
         public function isEmpty() {

@@ -2,7 +2,6 @@
 
     class PageConfigController {
 
-
         //Update maintenance value in config to enable
         public function maintenanceEnable() {
 
@@ -15,8 +14,6 @@
             //Log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Activated maintenance mode");
         }
-
-
 
         //Update maintenance value in config to disable
         public function maintenanceDisable() {
@@ -31,7 +28,6 @@
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Deactivated maintenance mode");
         }
 
-
         //Update dev mode value in config to enable
         public function devModeEnable() {
 
@@ -44,8 +40,6 @@
             //Log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Activated maintenance mode");
         }
-
-
 
         //Update dev mode value in config to disable
         public function devModeDisable() {
@@ -60,8 +54,6 @@
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Deactivated maintenance mode");
         }
 
-
-
         //Update api enabled value in config to enable
         public function apiEnable() {
 
@@ -74,8 +66,6 @@
             //Log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Activated maintenance mode");
         }
-
-
 
         //Update api enabled value in config to disable
         public function apiDisable() {

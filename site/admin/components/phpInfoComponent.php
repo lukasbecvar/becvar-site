@@ -24,7 +24,6 @@
         return $info_arr;
     }
 
-
     function myprint_r($my_array) {
         if (is_array($my_array)) {
             echo "<table border=1 cellspacing=0 cellpadding=3 width=100%>";

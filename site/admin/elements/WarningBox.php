@@ -4,7 +4,7 @@
         <?php
          
             /* 
-                !!!!--                                     Warning                                       --!!!!
+                !!!!-- //////////////////////////////////// Warning //////////////////////////////////// --!!!!
                 !!!!-- if you add new warning you must add to in $dashboardController > isWarninBoxEmpty --!!!!
             */
 

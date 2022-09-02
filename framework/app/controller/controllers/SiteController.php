@@ -11,8 +11,6 @@
             }
         }
 
-
-
         //Get true or false for maintenance mode
         public function ifMaintenance() {
 
@@ -23,8 +21,6 @@
                 return true;
             }
         }
-
-
 
         //Get process name if isset
         public function getCurrentProcess() {
@@ -42,8 +38,6 @@
             }
         }
 
-
-
         //Get admin process name if isset
         public function getCurrentAdminProcess() {
 
@@ -56,14 +50,10 @@
             }
         }
 
-
-
         //Get Http host aka domain name
         public function getHTTPhost() {
             return $_SERVER['HTTP_HOST'];
         }
-
-
 
         //Get page title by paramater
         public function getPageTitle() {
@@ -81,8 +71,6 @@
             }
         }
 
-
-
         //Get action name if isset
         public function getCurrentAction() {
 
@@ -92,8 +80,6 @@
                return $mysqlUtils->escapeString($_GET["action"], true, true);
             }
         } 
-
-
 
         //Get method name if isset
         public function getCurrentMethod() {
@@ -105,8 +91,6 @@
                 return $method;
             }
         }
-
-
 
         //Get age by birth data input
         public function getAge($birthDate) {

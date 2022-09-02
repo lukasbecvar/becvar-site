@@ -2,7 +2,6 @@
 
     class MainUtils { 
 
-
         /*
           * The function for get php server infromation
           * Usage like echo drawPhpInformation()
@@ -11,7 +10,6 @@
         public function drawPhpInformation() {
             return phpinfo();
         }
-
 
         /*
           * The function for get date by format
@@ -23,26 +21,23 @@
             return date($format);
         }
 
-
         /*
           * The function for get user remote adress
           * Usage like $ip = getRemoteAdress()
           * Return remote adress
         */
         public function getRemoteAdress() {
-          if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $address = $_SERVER['HTTP_CLIENT_IP'];
+            if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+                $address = $_SERVER['HTTP_CLIENT_IP'];
           
-          } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $address = $_SERVER['HTTP_X_FORWARDED_FOR'];
 
-          } else {
-            $address = $_SERVER['REMOTE_ADDR'];
-          }
-          return $address;
+            } else {
+                $address = $_SERVER['REMOTE_ADDR'];
+            }
+            return $address;
         }
-
-
 
         /*
           * The function for redirect user
@@ -52,7 +47,6 @@
         public static function getRootDoc() {
             return $_SERVER['DOCUMENT_ROOT'];
         }
-
 
         /*
           * The function for check if is lampp server
@@ -67,7 +61,6 @@
             }
         }
 
-
         /*
           * The function for get protocol
           * Usage like $protocol = getProtocol();
@@ -81,7 +74,6 @@
             }
         }
 
-
         /*
           * The function for print array
           * Usage like drawArray($array)
@@ -93,7 +85,6 @@
             echo '</pre>';
         }
 
-
         /*
           * The function for print errors to page
         */
@@ -103,22 +94,21 @@
             error_reporting(E_ALL);         
         }
 
-
         /**
           * Determine if this is a secure HTTPS connection
           * 
           * @return bool True if it is a secure HTTPS connection, otherwise false.
         */
         public function isSSL() {
-          if (isset($_SERVER['HTTPS'])) {
-              if ($_SERVER['HTTPS'] == 1) {
-                  return true;
-              } elseif ($_SERVER['HTTPS'] == 'on') {
-                  return true;
-              }
-          }
+            if (isset($_SERVER['HTTPS'])) {
+                if ($_SERVER['HTTPS'] == 1) {
+                    return true;
+                } elseif ($_SERVER['HTTPS'] == 'on') {
+                    return true;
+                }
+            }
         
-          return false;
+            return false;
         }
     }
 ?>

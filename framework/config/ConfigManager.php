@@ -2,7 +2,6 @@
 
 	class ConfigManager {
 
-
 		/*
 		 * Get value by name form config
 		 * Input value name

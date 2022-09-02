@@ -1,5 +1,5 @@
 
--- Adminer 4.8.1 MySQL 10.3.34-MariaDB-0ubuntu0.20.04.1 dump
+-- Adminer 4.8.1 MySQL 10.6.7-MariaDB-2ubuntu1.1 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -7,9 +7,6 @@ SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
-
-CREATE DATABASE `becvar_site` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `becvar_site`;
 
 DROP TABLE IF EXISTS `hash_gen`;
 CREATE TABLE `hash_gen` (
@@ -24,11 +21,11 @@ CREATE TABLE `hash_gen` (
 DROP TABLE IF EXISTS `image_uploader`;
 CREATE TABLE `image_uploader` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imgSpec` char(255) CHARACTER SET utf8 NOT NULL,
-  `image` longtext COLLATE utf8_czech_ci NOT NULL,
-  `date` char(255) COLLATE utf8_czech_ci NOT NULL,
+  `imgSpec` char(255) CHARACTER SET utf8mb3 NOT NULL,
+  `image` longtext COLLATE utf8mb3_czech_ci NOT NULL,
+  `date` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
 
 DROP TABLE IF EXISTS `logs`;
@@ -38,19 +35,20 @@ CREATE TABLE `logs` (
   `value` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `remote_addr` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
+  `browser` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `status` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
 
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
-  `email` longtext CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
-  `message` longtext CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
-  `time` char(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
-  `status` char(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
+  `name` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `email` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `message` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `time` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
@@ -67,7 +65,7 @@ CREATE TABLE `migrations` (
 DROP TABLE IF EXISTS `pastes`;
 CREATE TABLE `pastes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `link` char(255) CHARACTER SET utf8 NOT NULL,
+  `link` char(255) CHARACTER SET utf8mb3 NOT NULL,
   `spec` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
@@ -78,10 +76,10 @@ CREATE TABLE `pastes` (
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` char(255) COLLATE utf8_czech_ci NOT NULL,
-  `status` char(255) COLLATE utf8_czech_ci NOT NULL,
+  `text` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
+  `status` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
 
 DROP TABLE IF EXISTS `users`;
@@ -111,4 +109,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-08-10 07:52:22
+-- 2022-09-02 07:10:14

@@ -2,7 +2,6 @@
 
     class StringUtils { 
 
-
         /*
           * The function for generate random lower string
           * Usage like echo genRandomStringLower(20)
@@ -14,7 +13,6 @@
             $generated = substr(str_shuffle($permitted_chars), 0, $lenght);
             return $generated;
         }
-
 
         /*
           * The function for generate random uper string
@@ -28,7 +26,6 @@
             return $generated;
         }
 
-
         /*
           * The function for generate random string
           * Usage like echo genRandomStringAll(20)
@@ -40,7 +37,6 @@
             $generated = substr(str_shuffle($permitted_chars), 0, $lenght);
             return $generated;
         }
-
 
         /*
           * The function for generate random special chars
@@ -54,7 +50,6 @@
             return $generated;
         }
 
-
         /*
           * The function for generate random characters
           * Usage like echo genCombinated(20)
@@ -66,7 +61,6 @@
             $generated = substr(str_shuffle($permitted_chars), 0, $lenght);
             return $generated;
         }
-
 
         /*
           * The function for generate random numbers

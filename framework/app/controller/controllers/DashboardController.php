@@ -20,8 +20,6 @@
         
         }
         
-
-
         /**
          * Method for getting cpu information
          *
@@ -39,8 +37,6 @@
                 return $load;
             }
         }
-        
-
 
         /**
          * Method for getting memory information
@@ -70,8 +66,6 @@
             );	
         }
         
-
-
         /**
          * Method for getting hard drive information
          *
@@ -80,8 +74,6 @@
             $output = exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
             return $output;
         }
-        
-
 
         /**
          * Method for getting software / kernal information
@@ -118,9 +110,6 @@
             );
         }
 
-
-
-
         //Get pastes count
         public function getPastesCount() {
             global $mysqlUtils;
@@ -128,8 +117,6 @@
 
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM pastes"))["count"];
         }
-        
-        
 
         //Get log count
         public function getLogsCount() {
@@ -139,9 +126,6 @@
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs"))["count"];
         }
 
-
-
-
         //Get login logs count
         public function getLoginLogsCount() {
             global $mysqlUtils;
@@ -150,19 +134,14 @@
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'"))["count"];
         }
 
-        
-
-
         //Get unreaded logs count
         public function getUnreadedLogs() {
             global $mysqlUtils;
             global $pageConfig;
         
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE status LIKE '%unreader%'"))["count"];
+            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE status LIKE '%unreaded%'"))["count"];
            
         }
-
-
 
         //Get page visitors count
         public function getVisitorsCount() {
@@ -173,9 +152,6 @@
            
         }
 
-
-
-
         //Get MSGS in inbox count
         public function getMSGSCount() {
             global $mysqlUtils;
@@ -184,8 +160,6 @@
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM messages WHERE status='open'"))["count"];
         }
 
-
-
         //Get todos count in todos table
         public function getTodosCount() {
             global $mysqlUtils;
@@ -193,8 +167,6 @@
 
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM todos WHERE status='open'"))["count"];
         }
-
-
         
         //Get images count in gallery
         public function getImagesCount() {
@@ -204,8 +176,6 @@
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM image_uploader"))["count"];
         }
 
-
-
         //Get banned visitors count 
         public function getBannedCount() {
             global $mysqlUtils;
@@ -213,8 +183,6 @@
         
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE banned='yes'"))["count"];
         }
-
-
 
         //Check if system is linux
         public function isSystemLinux() {
@@ -224,9 +192,6 @@
                 return false;
             }            
         }
-
-
-
 
         //Check if warnings box empty
         public function isWarninBoxEmpty() {

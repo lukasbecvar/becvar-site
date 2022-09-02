@@ -28,7 +28,7 @@
             } else {
 
                 
-                /* Main value list */
+                /* ////////////////////////////// Main value list ////////////////////////////// */
 
                 //Print api data to json by value name
                 if ($value == "list") {
@@ -37,7 +37,7 @@
                 } elseif ($value == "status") {
                     $apiController->printApiStatus();
                 
-                /* End of value list */
+                /* ///////////////////////////// End of value list ///////////////////////////// */
 
 
                 //Print error if value not found

@@ -12,7 +12,6 @@
                 } else {
                     echo '<p class="card-text">SSHD: <span class="text-warning">disabled</span> <strong><span>[<a href="?admin=executeTask&command=sshdStart">START</a>]</span></strong></p>';
                 }
-
             }
 
             //Get UFW status
@@ -23,7 +22,6 @@
                 } else {
                     echo '<p class="card-text">UFW[Firewall]: <span class="text-warning">disabled</span> <strong><span>[<a href="?admin=executeTask&command=ufwStart">START</a>]</span></strong></p>';
                 }
-
             }
 
             //Get openvpn status

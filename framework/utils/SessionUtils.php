@@ -2,7 +2,6 @@
 
     class SessionUtils { 
 
-
         /*
           * The function for start session if not started
           * Usage like sessionStartedCheckWithStart()
@@ -13,7 +12,6 @@
             }
         }
 
-
         /*
           * The function for set specific session
           * Usage like setSession("name", "value")
@@ -23,7 +21,6 @@
             $this->sessionStartedCheckWithStart();
             $_SESSION[$sessionName] = $sessionValue;
         }
-
 
         /*
           * The function for check if session seted
@@ -40,7 +37,6 @@
             }
         }
 
-
         /*
           * The function for session destroy (Destroy all user sessions)
           * Usage like sessionDestroy()
@@ -49,7 +45,6 @@
             $this->sessionStartedCheckWithStart();
             session_destroy();
         }
-
 
         /*
           * The function for print session array
@@ -60,5 +55,4 @@
             print_r($_SESSION);
         }
     }
-
 ?>

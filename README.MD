@@ -8,13 +8,11 @@ becvar site is my personal website builded on becwork
  - Configure mysql and import db.sql to database
  - Set service path in scripts (if not same /services/)
 
-
  ## Public site
  - Components: about, services list, contact, etc...
  - Password, hash generator
  - Image uploader
  - Code paste site
-
 
  ## Admin site
  - Private todo manager
@@ -32,18 +30,15 @@ becvar site is my personal website builded on becwork
  - Advanced log system
  - System/Services tester component
 
-
  ## Others
  - API manager
 
- 
 ## Becwork required
  - php 8 or <
  - mysql8 or <
  - php-cli
  - php-curl
  - php-mysqli
-
 
 ## Dependencies
 This project requires PHP8 or < .

@@ -11,7 +11,6 @@
             setcookie($name, $value, $expiration);
         }
 
-
         /*
           * The function for get cookie
           * Usage like $cookie = getCookie("cookieName")
@@ -21,7 +20,6 @@
         public function getCookie($name) {
             return $_COOKIE[$name];
         }
-
 
         /*
           * The function for unset cookie by name

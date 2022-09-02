@@ -2,7 +2,6 @@
 
     class EscapeUtils {
 
-
         /*
           * The function for replace dangerous chars in string (XSS proteection)
           * Usage like specialCharshStrip("<p>Ola</p>")

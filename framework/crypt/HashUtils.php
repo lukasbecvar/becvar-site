@@ -59,7 +59,7 @@
           * Returned final hash form string
         */
         public function customhash($string, $hash) {
-          return hash($hash, $string);
+            return hash($hash, $string);
         }
     }
 ?>

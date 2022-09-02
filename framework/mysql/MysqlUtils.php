@@ -2,7 +2,6 @@
 
     class MysqlUtils {
 
-        
         /*
           * The database connection function
           * Usage like $con = mysqlConnect("dbName")
@@ -37,7 +36,6 @@
             return $connection;
         }
 
-
         /*
           * The database insert sql query function (Use basedb name from config.php)
           * Usage like insertQuery("INSERT INTO `users`(`firstName`, `secondName`, `password`) VALUES ('$firstName', '$secondName', '$password')"))
@@ -62,7 +60,6 @@
             }
         }
 
-
         /*
           * The mysql get version function
           * Usage like $ver = getMySQLVersion();
@@ -73,7 +70,6 @@
             preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
             return $version[0];
         }
-
 
         /*
          * The mysql log function (Muste instaled logs table form sql)
@@ -86,6 +82,7 @@
             $configOBJ = new PageConfig();
 
             global $mainUtils;
+            global $visitorController;
 
             if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
 
@@ -95,12 +92,12 @@
 
                 $date = date('d.m.Y H:i:s');
                 $remote_addr = $mainUtils->getRemoteAdress();
-                $status = "unreader";
+                $status = "unreaded";
+                $browser = $visitorController->getBrowser();
 
-                $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$status')");
+                $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `browser`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
             }
         }
-
 
         /*
          * The escape string function
@@ -125,7 +122,6 @@
             return $out;
         }
 
-
         /*
           * The set mysql charset to basedb from config
           * Usage like setCharset("utf8")
@@ -138,7 +134,6 @@
 
             mysqli_set_charset($this->mysqlConnect($configOBJ->config["basedb"]), $charset);
         }
-
 
         /*
           * The read specific value from mysql base db by query
@@ -154,7 +149,6 @@
             $sql=mysqli_fetch_assoc(mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query));
             return $sql[$specifis];
         }
-
 
         /*
           * Check if mysql is offline

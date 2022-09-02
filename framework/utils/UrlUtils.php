@@ -2,7 +2,6 @@
 
     class UrlUtils { 
 
-
         /*
           * The function for get actual url by protocol
           * Usage like getActualURLComplete('https://')
@@ -12,7 +11,6 @@
         public function getActualURLComplete($protocol) {
             return $out = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
         }
-
 
         /*
           * The function for get actual url by protocol
@@ -24,7 +22,6 @@
             return $out = $protocol.$_SERVER['HTTP_HOST'];
         }
 
-
         /*
           * The function for redirect user
           * Usage like redirect("home.php")
@@ -34,7 +31,6 @@
             header("location:$page");
         }
 
-
         /*
           * The function for refrash page
           * Usage like refrash(1, "login.php")
@@ -42,7 +38,6 @@
         public static function refrash($time, $page) {
             header("Refresh: $time; url=$page");
         }
-
 
         /*
           * The function for redirect with java script

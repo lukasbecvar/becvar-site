@@ -15,8 +15,6 @@
             }
         }
 
-
-
         //Function for get token from get parameter
         public function getToken() {
 
@@ -29,8 +27,6 @@
             }         
         }
 
-
-
         //Function for get values from query string
         public function getValue() {
 
@@ -42,8 +38,6 @@
                 return null;
             }
         }  
-
-
 
         //Function for check if api token is valid
         public function isTokenValid($token, $controlToken) {
@@ -58,8 +52,6 @@
             }
         }
 
-
-
         //Send API headers
         public function sendAPIHeaders() {
             header('Access-Control-Allow-Origin: *');
@@ -67,8 +59,6 @@
             header("Access-Control-Allow-Headers: X-Requested-With"); 
             header('Content-Type: application/json; charset=utf-8');
         }
-
-
         
         //Print null value json
         public function printValueNull() {
@@ -84,8 +74,6 @@
             echo json_encode($arr);           
         }
 
-
-
         //Print api status
         public function printApiStatus() {
 
@@ -99,8 +87,6 @@
 
             echo json_encode($arr);            
         }
-
-
 
         //Print unknow value
         public function printUnknowValue() {
@@ -116,8 +102,6 @@
 
             echo json_encode($arr);              
         }
-
-        
 
         //Print value list
         public function prntValueList() {

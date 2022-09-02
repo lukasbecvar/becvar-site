@@ -21,11 +21,10 @@
             return $browser;
         }
 
-
-
         //Shortify BrowserID
         public function getShortBrowserID($raw) {
             
+            /////////////////////////////////////////////////////////////////////////////////////////////////
             if(preg_match('/MSIE (\d+\.\d+);/', $raw) ) {
                 return "Internet Explore";
            
@@ -169,18 +168,16 @@
 
             } else if ($raw == "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330") {
                 return "Netscape Navigator";
+            /////////////////////////////////////////////////////////////////////////////////////////////////
 
+            //Return raw
             } else {
-
                 if (strlen($raw) > 90) {
                     $raw = substr($raw, 0, 90)."...";
                 }
-                
                 return $raw;
             }
         }
-
-
 
         //Get visitor OS
         public function getVisitorOS() { 
@@ -188,8 +185,10 @@
             //Get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
         
+            //Define default OS
             $os_platform  = "Unknown OS";
         
+            //OS array
             $os_array = array (
                 '/windows nt 10/i'      =>  'Windows 10',
                 '/windows nt 6.3/i'     =>  'Windows 8.1',
@@ -224,8 +223,6 @@
         
             return $os_platform;
         }
-
-
 
         //First visit site
         public function firstVisit() {
@@ -262,8 +259,6 @@
                 die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
             }
         }
-
-
 
         //Visit site
         public function visitSite() {
@@ -332,7 +327,6 @@
             }
         }
 
-
         //Check if visitor is banned
         public function isVisitorBanned($ip) {
 
@@ -359,8 +353,6 @@
                 return false;
             }
         }
-
-
 
         //Get visitor location
         public function getVisitorLocation($ip) {
@@ -396,8 +388,6 @@
             return $country."/".$city;
         }
 
-
-
         //Get user ip by id
         public function getVisitorIPByID($id) {
 
@@ -419,16 +409,12 @@
             }
         }
 
-
-
         //Ban user by IP
         public function bannVisitorByIP($ip) {
             global $mysqlUtils;
 
             $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'yes' WHERE `ip_adress` = '$ip'");
         }
-
-
  
         //UnBan user by IP
         public function unbannVisitorByIP($ip) {
@@ -436,8 +422,6 @@
 
             $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'no' WHERE `ip_adress` = '$ip'");
         }
-
-
 
         //Check if visitor is in table
         public function ifVisitorIsInTable($ip) {
@@ -456,8 +440,6 @@
             }
 
         }
-
-
 
         //Call visit or first visit function
         public function init() {

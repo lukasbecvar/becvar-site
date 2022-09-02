@@ -2,7 +2,6 @@
 
     class ServicesController {
 
-
         /**
          * Method for getting true or false for process id returned running
          *
@@ -17,8 +16,6 @@
                 return true;
             }
         }
-
-
 
         /**
          * Method for getting true or false for service running
@@ -35,8 +32,6 @@
             }
         }
 
-
-
         /**
          * Method for getting true or false for ufw running
          *
@@ -51,8 +46,6 @@
                 return false;
             }
         }
-
-
 
         /**
          * Method for getting true or false for service running
@@ -100,8 +93,6 @@
                 }
             }
         }
-
-
         
         //Check if screen session running
         public function checkScreenSession($sessionName) {
@@ -114,13 +105,10 @@
             }
         }
 
-
-
         //Execute system command
         public function executeCommand($command) {
             shell_exec($command);
         }
-
 
         //Execute bash/sh script form /scripts in web [Input: script name]
         public function executeScriptAsROOT($scriptName) {

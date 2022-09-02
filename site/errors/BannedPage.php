@@ -24,6 +24,7 @@
 	body {
 		background: rgb(12, 12, 12);
 	}
+	
 	.mainPage {
 		position: fixed;
 		width: 100%;

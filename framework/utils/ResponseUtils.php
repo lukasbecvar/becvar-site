@@ -2,7 +2,6 @@
 
 	class ResponseUtils { 
 
-
 		/*
 		  * The function for get website status
 		  * Usage like $status = checkOnline("https://becvar.xyz");
@@ -29,7 +28,6 @@
 			}
 		}
 
-
         /*
           * The function for send 404 error
           * Usage: just call function
@@ -48,7 +46,6 @@
             $string = "<!DOCTYPE HTML PUBLIC '-//IETF//DTD HTML 2.0//EN'>\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>";
             return $string;
         }
-
 
         /*
           * The function for get service status
