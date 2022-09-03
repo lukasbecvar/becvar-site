@@ -120,7 +120,7 @@
             } elseif ($action == "setReaded") {
             
                 //Set all logs to readed
-                $mysqlUtils->insertQuery("UPDATE logs SET status='readed' WHERE status='unreader'");
+                $mysqlUtils->insertQuery("UPDATE logs SET status='readed' WHERE status='unreaded'");
             
                 //Redirect to log reader
                 $urlUtils->jsRedirect("?admin=dashboard");
