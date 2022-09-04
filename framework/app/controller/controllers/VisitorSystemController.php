@@ -74,6 +74,11 @@
                 $out = "Opera";
             }
 
+            //Non complete agents
+            else if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
+                $out = "Undefined";
+            }
+
             //Identify shortify array [ID: str_contains, Value: replacement]
             $browser_array = [
 
@@ -82,7 +87,6 @@
                 "Dalvik"                    => "Dalvik",
                 "Gather"                    => "Gather",
                 "zgrab"                     => "Zgrab",
-                "KHTML"                     => "KHTML",
 
                 //Becvold service identifier
                 "becvold.xyz" => "Becvold-service",
