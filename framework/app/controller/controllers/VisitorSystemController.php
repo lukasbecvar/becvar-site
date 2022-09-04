@@ -77,6 +77,13 @@
             //Identify shortify array [ID: str_contains, Value: replacement]
             $browser_array = [
 
+                //Basics
+                "Trident"                   => "Trident",
+                "Dalvik"                    => "Dalvik",
+                "Gather"                    => "Gather",
+                "zgrab"                     => "Zgrab",
+                "KHTML"                     => "KHTML",
+
                 //Becvold service identifier
                 "becvold.xyz" => "Becvold-service",
 
@@ -110,12 +117,7 @@
                 "IonCrawl"                  => "Ion-crawl",
                 "tchelebi"                  => "Tchelebi",
                 "Netcraft"                  => "Netcraft",
-                "crawlson"                  => "Crawlson",
-                "Trident"                   => "Trident",
-                "Dalvik"                    => "Dalvik",
-                "Gather"                    => "Gather",
-                "zgrab"                     => "Zgrab",
-                "KHTML"                     => "KHTML",
+                "crawlson"                  => "Crawlson"
             ];
 
             foreach ($browser_array as $index => $value) {
