@@ -59,15 +59,6 @@
                 }
             }
 
-            //Get dubinek status
-            if ($servicesController->isServiceInstalled("dubinek")) {
-                if ($servicesController->checkScreenSession("dubinek") == true) {
-                    echo '<p class="card-text">Dubinek: <span class="text-success">online</span> <strong><span>[<a href="?admin=executeTask&command=dubinekStop">STOP</a>]</span></strong></p>';
-                } else {
-                    echo '<p class="card-text">Dubinek: <span class="text-warning">offline</span> <strong><span>[<a href="?admin=executeTask&command=dubinekStart">START</a>]</span></strong></p>';
-                }
-            } 
-
             //Get SSH status
             if ($servicesController->isServiceInstalled("sshd")) {
 

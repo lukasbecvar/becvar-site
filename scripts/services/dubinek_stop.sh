@@ -1,1 +1,0 @@
-sudo screen -S dubinek -X quit

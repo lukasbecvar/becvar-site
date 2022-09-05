@@ -75,14 +75,6 @@
                 $servicesController->executeScriptAsROOT("services/minecraft_start.sh");
             ////////////////////////////////////////////////////////////////////////////
 
-            //Dubinek
-            } elseif ($command == "dubinekStop") {
-                $servicesController->executeScriptAsROOT("services/dubinek_stop.sh");
-
-            } elseif ($command == "dubinekStart") {
-                $servicesController->executeScriptAsROOT("services/dubinek_start.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
             //If command not found
             } else {
                 $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");

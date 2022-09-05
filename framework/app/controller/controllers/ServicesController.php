@@ -74,14 +74,6 @@
                     return false;
                 }
 
-            //Dubinek bot
-            } elseif ($serviceName == "dubinek") {
-                if (file_exists($serviceDir."/dubinek/")) {
-                    return true;
-                } else {
-                    return false;
-                }
-
             //Check others (for systemctl)
             } else {
 
@@ -96,7 +88,7 @@
         
         //Check if screen session running
         public function checkScreenSession($sessionName) {
-            $exec = shell_exec("sudo screen -S dubinek -Q select . ; echo $?");
+            $exec = shell_exec("sudo screen -S $sessionName -Q select . ; echo $?");
 
             if ($exec == "0") {
                 return true;

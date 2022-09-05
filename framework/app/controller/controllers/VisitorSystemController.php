@@ -59,6 +59,10 @@
             } else if (str_contains($raw, 'Iceape') ) {
                 $out = "IceApe Browser";
 
+            //Identify NetFront Browser
+            } else if (str_contains($raw, 'NetFront') ) {
+                $out = "NetFront Browser";
+
             //Identify Midori Browser
             } else if (str_contains($raw, 'Midori') ) {
                 $out = "Midori Browser";
