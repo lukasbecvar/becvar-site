@@ -16,10 +16,10 @@
 
 			//Init values
 			$username = $mysqlUtils->escapeString($_POST["username"], true, true);
-			$password = $mysqlUtils->escapeString($_POST["password"], true, true);
+			$passwordRaw = $mysqlUtils->escapeString($_POST["password"], true, true);
 
 			//Hash password
-			$password = $hashUtils->genBlowFish($password);
+			$password = $hashUtils->genBlowFish($passwordRaw);
 
 			//Default save account
 			$saveAccount = false;
@@ -74,16 +74,15 @@
 
 					//Print error msg
 					$alertController->flashError("Incorrect username or password.");
+			
+					//log to mysql
+					if (empty($username) or empty($passwordRaw)) {
+						$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
+					} else {
+						$mysqlUtils->logToMysql("Login", "Trying to login with name: $username:$passwordRaw", true, true);				
+					}
 				}
 			}
-
-			//log to mysql
-			if (empty($username) or empty($password)) {
-				$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
-			} else {
-				$mysqlUtils->logToMysql("Login", "Trying to login with name: $username ", true, true);				
-			}
-
 		}
 	}
 

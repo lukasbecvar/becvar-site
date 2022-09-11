@@ -97,6 +97,7 @@
 
                 //Index bots
                 "RepoLookoutBot"    => "RepoLookout-bot",
+                "intelx.io_bot"     => "Intelx.io - bot",
                 "DuckDuckGo"        => "DuckDuckGo-bot",
                 "Discordbot"        => "Discord-bot",
                 "SemrushBot"        => "Semrush-bot",

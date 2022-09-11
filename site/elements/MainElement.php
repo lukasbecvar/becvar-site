@@ -1,7 +1,7 @@
 <header id="header">
     <div class="container">
         <h1><a href="/admin">Lukáš Bečvář</a></h1>
-        <h2>I'm a <span>developer</span> focusing on web backend</h2>
+        <h2>I'm a <span>full stack developer</span></h2>
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="nav-link active" href="#header">Home</a></li>

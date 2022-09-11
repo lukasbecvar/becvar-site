@@ -25,3 +25,17 @@
         </ul>
     </p>
 </div>
+
+<div class="projects-item">
+    <h4>Dubinek bot</h4>
+    <h5>2021 - 2022</h5>
+    <p>
+        <em>My own discord bot.</em>
+    </p>
+    <p>
+        <ul>
+            <li>Technology: Java</li>
+            <li>Source: <a href="https://github.com/lordbecvold/dubinekBot" target="_blank">Dubinek</a> github</li>
+        </ul>
+    </p>
+</div>

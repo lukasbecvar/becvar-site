@@ -3,7 +3,7 @@
         <h3>JAVA, PHP & WEB Developer</h3>
             
         <p class="fst-italic">
-            I am a developer focusing on web backend and server solutions.
+            I am a full stack web & server solutions developer.
         </p>
         
         <div class="row">
