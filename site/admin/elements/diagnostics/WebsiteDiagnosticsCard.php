@@ -3,6 +3,13 @@
     <div class="card-body diagnostics-large">
         <?php //System checks
         
+            //Print ssl test
+            if ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>';
+            } else {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>page is secured with https</strong></span></p>';
+            }
+
             //Print subdomain test
             if (str_starts_with($_SERVER['HTTP_HOST'], "www")) {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>the page runs on a subdomain, please remove subdomain form config only like domain.name</strong></span></p>';

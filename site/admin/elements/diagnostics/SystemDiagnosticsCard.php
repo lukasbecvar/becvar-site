@@ -30,6 +30,13 @@
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>RAM Memory is available</strong></span></p>';
             }
+
+            //Print main service dir test
+            if (!file_exists($pageConfig->getValueByName('serviceDir'))) {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>directory: '.$pageConfig->getValueByName('serviceDir').' not exist</strong></span></p>';
+            } else {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>directory: '.$pageConfig->getValueByName('serviceDir').' was initialized successfully</strong></span></p>';
+            }
         ?>
     </div>
 </div>

@@ -16,6 +16,12 @@
 
 	//Init controller system
 	require_once("../framework/app/controller/ControllerManager.php");
+
+	//Include browser list for visitor controller
+	require_once("../browser-list.php");
+
+	//Include services list for dashboard system
+	require_once("../services-list.php");
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Init ConfigManager
@@ -53,6 +59,12 @@
 
 	//Init MysqlUtils
 	$mysqlUtils = new MysqlUtils();
+
+	//Init BrowsersList
+	$browsersList = new BrowsersList();
+
+	//Init ServicesManager
+	$servicesList = new ServicesManager();
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Autoload composer vendor

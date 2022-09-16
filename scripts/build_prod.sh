@@ -26,6 +26,8 @@ cp -R public/ build/public/
 cp -R scripts/ build/scripts/
 cp -R site/ build/site/
 cp -R tests/ build/tests/
+cp services-list.php build/
+cp browser-list.php build/
 cp composer.json build/
 cp composer.phar build/
 cp config.php build/

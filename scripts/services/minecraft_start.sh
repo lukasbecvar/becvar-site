@@ -1,1 +1,0 @@
-sudo sh /services/minecraft/srv_start.sh

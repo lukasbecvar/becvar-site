@@ -6,8 +6,5 @@
         
         //include website diag card
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/diagnostics/WebsiteDiagnosticsCard.php');
-        
-        //include main diag card
-        include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/diagnostics/MainDiagnosticsCard.php');
     ?><br>
 </div>

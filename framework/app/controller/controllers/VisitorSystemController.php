@@ -24,6 +24,8 @@
         //Shortify BrowserID
         public function getShortBrowserID($raw) {
             
+            global $browsersList;
+
             //Init default value
             $out = $raw;
 
@@ -84,50 +86,7 @@
             }
 
             //Identify shortify array [ID: str_contains, Value: replacement]
-            $browser_array = [
-
-                //Basics
-                "Trident"                   => "Trident",
-                "Dalvik"                    => "Dalvik",
-                "Gather"                    => "Gather",
-                "zgrab"                     => "Zgrab",
-
-                //Becvold service identifier
-                "becvold.xyz" => "Becvold-service",
-
-                //Index bots
-                "RepoLookoutBot"    => "RepoLookout-bot",
-                "intelx.io_bot"     => "Intelx.io - bot",
-                "DuckDuckGo"        => "DuckDuckGo-bot",
-                "Discordbot"        => "Discord-bot",
-                "SemrushBot"        => "Semrush-bot",
-                "Googlebot"         => "Google-bot",
-                "seznambot"         => "Seznam-bot",
-                "YandexBot"         => "Yandex-bot",
-                "AhrefsBot"         => "Ahrefs-bot",
-                "bingbot"           => "Bing-bot",
-                "Yahoo"             => "Yahoo-bot",
-
-                //Others
-                "https://security.ipip.net" => "HTTP BD/security.ipip.net",
-                "internet-measurement.com"  => "internet-measurement.com",
-                "PolycomRealPresenceTrio"   => "PolycomRealPresenceTrio",
-                "Nmap Scripting Engine"     => "Nmap Scripting Engine",
-                "NetcraftSurveyAgent"       => "NetcraftSurveyAgent",
-                "NetSystemsResearch"        => "NetSystemsResearch",
-                "python-requests"           => "python-requests",
-                "CensysInspect"             => "CensysInspect",
-                "Baiduspider"               => "Baiduspider",
-                "archive.org"               => "archive.org",
-                "pdrlabs.net"               => "pdrlabs.net",
-                "masscan-ng"                => "Masscan-ng",
-                "ips-agent"                 => "IPS-agent",
-                "everyfeed"                 => "EveryFeed",
-                "IonCrawl"                  => "Ion-crawl",
-                "tchelebi"                  => "Tchelebi",
-                "Netcraft"                  => "Netcraft",
-                "crawlson"                  => "Crawlson"
-            ];
+            $browser_array = $browsersList->browserList;
 
             foreach ($browser_array as $index => $value) {
                 if (str_contains($raw, $index)) {

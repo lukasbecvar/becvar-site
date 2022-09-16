@@ -17,68 +17,39 @@
             //Init services path
             $serviceDir = $pageConfig->getValueByName('serviceDir');
 
-            //Tor service
-            if ($command == "torStop") {
-                $servicesController->executeScriptAsROOT("services/tor_stop.sh");
+            //Get Service name
+            $service = str_replace("_Stop", "", $command);
+            $service = str_replace("_Start", "", $service);
 
-            } elseif ($command == "torStart") {
-                $servicesController->executeScriptAsROOT("services/tor_start.sh");
-            ////////////////////////////////////////////////////////////////////////////
+            //Init default final command
+            $finalCommand = "pwd";
 
-            //OpenVPN service
-            } elseif ($command == "openvpnStop") {
-                $servicesController->executeScriptAsROOT("services/openvpn_stop.sh");
-
-            } elseif ($command == "openvpnStart") {
-                $servicesController->executeScriptAsROOT("services/openvpn_start.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
-            //UFW firewall
-            } elseif ($command == "ufwStop") {
-                $servicesController->executeScriptAsROOT("services/ufw_disable.sh");
-
-            } elseif ($command == "ufwStart") {
-                $servicesController->executeScriptAsROOT("services/ufw_enable.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
-            //Apache service
-            } elseif ($command == "apacheStop") {
-                $servicesController->executeScriptAsROOT("services/apache_stop.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
-            //SSHD service 
-            } elseif ($command == "sshdStart") {
-                $servicesController->executeScriptAsROOT("services/sshd_start.sh");
+            //Service starter system
+            if (str_ends_with($command, "_Start")) {
+                
+                //Get final start command
+                $finalCommand = $servicesList->services[$service]["start_cmd"];
             
-            } elseif ($command == "sshdStop") {
-                $servicesController->executeScriptAsROOT("services/sshd_stop.sh");
-            ////////////////////////////////////////////////////////////////////////////
+                //Log to mysql
+                $mysqlUtils->logToMysql("Service", "$service start");
+            } 
+            
+            //Service stop system
+            elseif (str_ends_with($command, "_Stop")) {
 
-            //TeamSpeak service
-            } elseif ($command == "ts3serverStop") {
-                $servicesController->executeScriptAsROOT("services/teamspeak_stop.sh");
+                //Get final stop command
+                $finalCommand = $servicesList->services[$service]["stop_cmd"];
 
-            } elseif ($command == "ts3serverStart") {
-                $servicesController->executeScriptAsROOT("services/teamspeak_start.sh");
-            ////////////////////////////////////////////////////////////////////////////
+                //Log to mysql
+                $mysqlUtils->logToMysql("Service", "$service stop");
 
-            //Mariadb service
-            } elseif ($command == "mariadbStop") {
-                $servicesController->executeScriptAsROOT("services/mariadb_stop.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
-            //Minecraft server
-            } elseif ($command == "minecraftStop") {
-                $servicesController->executeScriptAsROOT("services/minecraft_stop.sh");
-
-            } elseif ($command == "minecraftStart") {
-                $servicesController->executeScriptAsROOT("services/minecraft_start.sh");
-            ////////////////////////////////////////////////////////////////////////////
-
-            //If command not found
+            //Undefind action
             } else {
                 $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
             }
+        
+            //Execute final command
+            $servicesController->executeCommand($finalCommand);
 
             //Redirect back to dashboard
             $urlUtils->jsRedirect("?admin=dashboard");
