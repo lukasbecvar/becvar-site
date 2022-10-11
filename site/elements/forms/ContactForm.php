@@ -7,7 +7,7 @@
             <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
         </div>
         <div class="col-md-6 form-group mt-3 mt-md-0 websiteIN">
-            <input class="websiteIN" name="website" type="text" class="feedback-input" placeholder="Website" value="www.3vs0Y6Xw6Q7N0RAo5syY14Xw6ueoZHYm.com"/>
+            <input class="websiteIN" name="website" type="text" class="feedback-input" placeholder="Website"/>
         </div>
     </div>
     <div class="form-group mt-3">
@@ -27,7 +27,7 @@
                     $message = $mysqlUtils->escapeString($_POST["message"], true, true);
 
                     //honeypot check
-                    if ($_POST["website"] == "www.3vs0Y6Xw6Q7N0RAo5syY14Xw6ueoZHYm.com") {
+                    if (empty($_POST["website"])) {
 
                         //Check if inputs is not empty
                         if (empty($name) or empty($email) or empty($message)) {
