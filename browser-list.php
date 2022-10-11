@@ -34,6 +34,7 @@
             "NetcraftSurveyAgent"        => "NetcraftSurveyAgent",
             "NetSystemsResearch"         => "NetSystemsResearch",
             "python-requests"            => "python-requests",
+            "Intel Mac OS X"             => "Intel Mac OS X",
             "CensysInspect"              => "CensysInspect",
             "Baiduspider"                => "Baiduspider",
             "archive.org"                => "archive.org",
