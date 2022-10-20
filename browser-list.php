@@ -4,6 +4,7 @@
 
         public $browserList = [
             //Basics
+            "Symbian"                   => "Symbian browser",
             "Trident"                   => "Trident",
             "Dalvik"                    => "Dalvik",
             "Gather"                    => "Gather",
@@ -13,8 +14,9 @@
             "becvold.xyz" => "Becvold-service",
 
             //Index bots
+            "CheckMarkNetwork"  => "Check Mark Network",
             "RepoLookoutBot"    => "RepoLookout-bot",
-            "intelx.io_bot"     => "Intelx.io - bot",
+            "intelx.io_bot"     => "Intelx.io-bot",
             "DuckDuckGo"        => "DuckDuckGo-bot",
             "Discordbot"        => "Discord-bot",
             "SemrushBot"        => "Semrush-bot",
