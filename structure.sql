@@ -77,18 +77,6 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `projects` (`id`, `name`, `description`, `technology`, `github_link`, `started_developed_year`, `ended_developed_year`, `status`) VALUES
-(1,	'My website',	'My personal website with basic information about me, projects and custom admin system.',	'HTML, CSS, JS, PHP',	'https://github.com/lordbecvold/becvar_site/',	'2020',	'Present',	'open'),
-(2,	'Becwork',	'Becwork is a simple php framework.',	'PHP',	'https://github.com/lordbecvold/Becwork',	'2020',	'Present',	'open'),
-(3,	'BecvoldCore',	'Basic minecraft survival core plugin.',	'Java',	'https://github.com/lordbecvold/BecvoldCore',	'2020',	'Present',	'open'),
-(4,	'JDA Discord bot base',	' Open source base for programming discord bots with basic functions and config, log systems.',	'Java',	'https://github.com/lordbecvold/JdaDiscordBotBase',	'2021',	'2022',	'closed'),
-(5,	'Advanced image uploader',	'Image uploader page, stores images in a database encoded in base64.',	'PHP, HTML, CSS',	'https://github.com/lordbecvold/AdvancedImageUploader',	'2021',	'2021',	'closed'),
-(6,	'Encrypted gallery',	'Encrypted image database API with JS-Frontend.',	'PHP, HTML, CSS, JS, BASH',	'https://github.com/lordbecvold/encrypted-gallery-app',	'2022',	'2022',	'closed'),
-(7,	'Website scanner',	'Java website scanner.',	'Java',	'https://github.com/lordbecvold/WebsiteScanner',	'2022',	'Present',	'open'),
-(8,	'Wind',	'Modified minecraft client.',	'Java',	'none',	'2018',	'2020',	'closed'),
-(9,	'Lorderon',	'Online MMORPG Game Lorderon [Private metin2 server].',	'C++, Python, Lua',	'https://github.com/lordbecvold/Lorderon',	'2017',	'2021',	'closed'),
-(10,	'Dubínek bot',	'My discord bot.',	'Java',	'https://github.com/lordbecvold/dubinekBot',	'2021',	'2022',	'closed'),
-(11,	'MFSite',	'Models free is media gallery site',	'PHP, JS, CSS, HTML',	'https://github.com/lordbecvold/MFSite',	'2022',	'2022',	'closed');
 
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
@@ -126,4 +114,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
--- 2022-11-29 12:23:10
+-- 2022-11-29 12:24:45
