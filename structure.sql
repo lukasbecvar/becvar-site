@@ -1,5 +1,5 @@
 
--- Adminer 4.8.1 MySQL 10.6.7-MariaDB-2ubuntu1.1 dump
+-- Adminer 4.8.1 MySQL 8.0.31-0ubuntu0.22.04.1 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -10,7 +10,7 @@ SET NAMES utf8mb4;
 
 DROP TABLE IF EXISTS `hash_gen`;
 CREATE TABLE `hash_gen` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `text` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hashType` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hash` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -20,8 +20,8 @@ CREATE TABLE `hash_gen` (
 
 DROP TABLE IF EXISTS `image_uploader`;
 CREATE TABLE `image_uploader` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imgSpec` char(255) CHARACTER SET utf8mb3 NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `imgSpec` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `image` longtext COLLATE utf8mb3_czech_ci NOT NULL,
   `date` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -30,7 +30,7 @@ CREATE TABLE `image_uploader` (
 
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `value` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `logs` (
 
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   `email` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   `message` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
@@ -53,19 +53,10 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
 
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
 DROP TABLE IF EXISTS `pastes`;
 CREATE TABLE `pastes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `link` char(255) CHARACTER SET utf8mb3 NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `link` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `spec` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
@@ -73,9 +64,35 @@ CREATE TABLE `pastes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+DROP TABLE IF EXISTS `projects`;
+CREATE TABLE `projects` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `description` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `technology` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `github_link` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `started_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `ended_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `projects` (`id`, `name`, `description`, `technology`, `github_link`, `started_developed_year`, `ended_developed_year`, `status`) VALUES
+(1,	'My website',	'My personal website with basic information about me, projects and custom admin system.',	'HTML, CSS, JS, PHP',	'https://github.com/lordbecvold/becvar_site/',	'2020',	'Present',	'open'),
+(2,	'Becwork',	'Becwork is a simple php framework.',	'PHP',	'https://github.com/lordbecvold/Becwork',	'2020',	'Present',	'open'),
+(3,	'BecvoldCore',	'Basic minecraft survival core plugin.',	'Java',	'https://github.com/lordbecvold/BecvoldCore',	'2020',	'Present',	'open'),
+(4,	'JDA Discord bot base',	' Open source base for programming discord bots with basic functions and config, log systems.',	'Java',	'https://github.com/lordbecvold/JdaDiscordBotBase',	'2021',	'2022',	'closed'),
+(5,	'Advanced image uploader',	'Image uploader page, stores images in a database encoded in base64.',	'PHP, HTML, CSS',	'https://github.com/lordbecvold/AdvancedImageUploader',	'2021',	'2021',	'closed'),
+(6,	'Encrypted gallery',	'Encrypted image database API with JS-Frontend.',	'PHP, HTML, CSS, JS, BASH',	'https://github.com/lordbecvold/encrypted-gallery-app',	'2022',	'2022',	'closed'),
+(7,	'Website scanner',	'Java website scanner.',	'Java',	'https://github.com/lordbecvold/WebsiteScanner',	'2022',	'Present',	'open'),
+(8,	'Wind',	'Modified minecraft client.',	'Java',	'none',	'2018',	'2020',	'closed'),
+(9,	'Lorderon',	'Online MMORPG Game Lorderon [Private metin2 server].',	'C++, Python, Lua',	'https://github.com/lordbecvold/Lorderon',	'2017',	'2021',	'closed'),
+(10,	'Dubínek bot',	'My discord bot.',	'Java',	'https://github.com/lordbecvold/dubinekBot',	'2021',	'2022',	'closed'),
+(11,	'MFSite',	'Models free is media gallery site',	'PHP, JS, CSS, HTML',	'https://github.com/lordbecvold/MFSite',	'2022',	'2022',	'closed');
+
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `text` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
   `status` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -84,7 +101,7 @@ CREATE TABLE `todos` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` char(255) CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
   `password` char(255) CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
   `role` char(255) CHARACTER SET cp1250 COLLATE cp1250_czech_cs NOT NULL,
@@ -96,8 +113,8 @@ CREATE TABLE `users` (
 
 DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
-  `visited_sites` int(255) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `visited_sites` int NOT NULL,
   `first_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `last_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `browser` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
@@ -106,7 +123,7 @@ CREATE TABLE `visitors` (
   `banned` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `ip_adress` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
--- 2022-09-02 07:10:14
+-- 2022-11-29 12:23:10

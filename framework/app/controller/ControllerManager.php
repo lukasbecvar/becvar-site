@@ -11,6 +11,7 @@
 	require_once(__DIR__."/controllers/VisitorSystemController.php");
 	require_once(__DIR__."/controllers/ServicesController.php");
 	require_once(__DIR__."/controllers/AlertController.php");
+	require_once(__DIR__."/controllers/ProjectsController.php");
 
 	//Init ContactController
 	$contactController = new ContactController();
@@ -41,4 +42,7 @@
 
 	//Init AlertController
 	$alertController = new AlertController();
+
+	//Init ProjectsController
+	$projectsController = new ProjectsController();
 ?>
