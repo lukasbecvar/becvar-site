@@ -292,6 +292,7 @@
 								"password" => "encrypted_hash",
 								"role" => $data["role"],
 								"image_base64" => "hidden",
+								"remote_addr" => $data["remote_addr"],
 								"token" => $data["token"]
 							];			
 						}
