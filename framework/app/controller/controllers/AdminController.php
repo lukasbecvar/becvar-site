@@ -230,18 +230,28 @@
 			global $mysqlUtils;
 			global $urlUtils;
 			global $pageConfig;
+			global $mainUtils;
+
+			//Get user token
+			$userToken = $_COOKIE["userToken"];
+
+			//Get user ip
+			$userIP = $mainUtils->getRemoteAdress();
 
 			//Start session
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			//Set login identify session
 			$sessionUtils->setSession($pageConfig->getValueByName('loginCookie'), $_COOKIE[$pageConfig->getValueByName('loginCookie')]);
-
+ 
 			//Set token session
-			$sessionUtils->setSession("userToken", $_COOKIE["userToken"]);
+			$sessionUtils->setSession("userToken", $userToken);
 
 			//log action to mysql
 			$mysqlUtils->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
+
+			//Update user ip
+			$mysqlUtils->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE token='$userToken'");
 
 			//Refresh page
 			$urlUtils->redirect("?admin=dashboard");

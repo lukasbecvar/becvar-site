@@ -5,18 +5,20 @@
 		//Send message to database
 		public function sendMessage($name, $email, $message, $status) {
 
-			//Init mysql utils
+			//Init objects
 			global $mysqlUtils;
+			global $mainUtils;
 
 			//Escape values
 			$name = $mysqlUtils->escapeString(trim($name), true, true);
 			$email = $mysqlUtils->escapeString(trim($email), true, true);
 			$message = $mysqlUtils->escapeString(trim($message), true, true);
 			$time = date('d.m.Y H:i:s');
+			$remote_addr = $mainUtils->getRemoteAdress();
 			$status = $mysqlUtils->escapeString(trim($status), true, true);
 
 			//Insert values
-			$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `status`) VALUES ('$name', '$email', '$message', '$time', '$status')");
+			$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
 
 			//Return output
 			if ($queryInsert) {
@@ -33,16 +35,29 @@
 		//Print all messages
 		public function printMSGS() {
 
-			//Init mysql utils 
+			//Init objects 
 			global $mysqlUtils;
 			global $pageConfig;
+			global $visitorController;
 
             /*Save all messages if status open to this array*/
             $messages = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * from messages WHERE status = 'open' ORDER BY id DESC"); 
 
+			//Default ID
+			$userID = NULL;
+
             //Show all messages from array messages in page
             while ($row = mysqli_fetch_assoc($messages)) {
-                echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") [".$row["time"]."]<a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
+
+				//Get user ID
+				$userID = $visitorController->getVisitorIDByIP($row["remote_addr"]);
+
+				//Check if ip found
+				if ($userID == NULL) {
+					echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") <span class='text-success phoneNone'>[".$row["time"]."]</span>, <span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span><a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
+				} else {
+					echo"<div class='card text-white bg-dark mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") <span class='text-success phoneNone'>[".$row["time"]."]</span>, <span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span><a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a><a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0' target='blank_'>BAN</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
+				}
             }
 		}
 		

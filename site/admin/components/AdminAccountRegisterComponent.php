@@ -38,8 +38,11 @@
                             //Generate user identify token
                             $token = $stringUtils->genRandomStringAll(40);
 
+                            //Get user ip
+                            $remote_addr = $mainUtils->getRemoteAdress();
+
                             //insert user account to database
-                            $mysqlUtils->insertQuery("INSERT INTO `users`(`username`, `password`, `role`, `image_base64`, `token`) VALUES ( '$username', '$password', '$role', '$image_base64', '$token')");   
+                            $mysqlUtils->insertQuery("INSERT INTO `users`(`username`, `password`, `role`, `image_base64`, `remote_addr`, `token`) VALUES ( '$username', '$password', '$role', '$image_base64', '$remote_addr', '$token')");   
 
                             //Redirect to login page
                             $urlUtils->redirect("?admin=login");

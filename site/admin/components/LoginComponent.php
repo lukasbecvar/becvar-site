@@ -57,6 +57,12 @@
 							$adminController->unSetLoginCookies();
 						}
 
+						//Get user ip
+						$userIP = $mainUtils->getRemoteAdress();
+
+						//Update user ip
+						$mysqlUtils->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE username='$username'");
+
 						//log to mysql
 						$mysqlUtils->logToMysql("Success login", "User $username logged in success");
 

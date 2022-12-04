@@ -329,6 +329,27 @@
             }
         }
 
+        //Get user ip by ip
+        public function getVisitorIDByIP($ip) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            //Get IP count
+            $IP_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
+
+            //Check if key found in database
+            if ($IP_count == "0") {
+                return NULL;
+            } else {
+
+                //Get visitor id by ip
+                $visitorID = $mysqlUtils->readFromMysql("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
+
+                return $visitorID;
+            }
+        }
+
         //Ban user by IP
         public function bannVisitorByIP($ip) {
             global $mysqlUtils;
