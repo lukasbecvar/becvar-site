@@ -223,6 +223,29 @@
 			}
 		}
 
+		//Get user ip
+		public function getUserIPByToken($token) {
+
+			global $mysqlUtils;
+			global $pageConfig;
+
+			//Get token count
+			$count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users WHERE token='".$_SESSION["userToken"]."'"))["count"];
+
+			//Check if token found
+			if (intval($count) > 0) {
+				
+				//Get ip by token
+				$ip = $mysqlUtils->readFromMysql("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
+
+				//Return ip
+				return $ip;
+
+			} else {
+				return null;
+			}
+		}
+
 		//Auto user login (for cookie login)
 		public function autoLogin() {
 			

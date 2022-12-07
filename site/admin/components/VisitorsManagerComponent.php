@@ -66,7 +66,7 @@
                     }
 
                     //If ip = session ip
-                    if ($data["ip_adress"] == $mainUtils->getRemoteAdress()) {
+                    if ($data["ip_adress"] == $adminController->getUserIPByToken($adminController->getUserToken())) {
                         $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                     }
 
