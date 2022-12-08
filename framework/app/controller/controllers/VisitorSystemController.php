@@ -387,9 +387,25 @@
 
             global $mysqlUtils;
             global $mainUtils;
+            global $pageConfig;
+
+            //Get value banned russia
+            $bannedRussia = $pageConfig->getValueByName('bannedRussia');
 
             //Get user ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+
+
+            //Check russia banned
+            if ($bannedRussia == true) {
+                
+                //Check if user is russian
+                if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "host")) {
+
+                    //Redirect to banned page
+                    die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
+                }
+            }
 
             //Check if cookie seted
             if ($this->ifVisitorIsInTable($ip_adress)) {

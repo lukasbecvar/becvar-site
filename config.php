@@ -51,6 +51,9 @@
 			/* Server variabiles */
 			"serviceDir" => "/services",    //Define services directory
 
+			/* Banned country */
+			"bannedRussia" => true,
+
 			/* Mysql config */
 			"ip" 		=> 	"localhost",	//Define mysql server ip
 			"basedb" 	=> 	"becvar_site",	//Define mysql default db name
