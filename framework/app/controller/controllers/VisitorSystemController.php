@@ -243,7 +243,6 @@
                 } else {
                     $this->firstVisit();
                 }
-
             }
         }
 
@@ -379,7 +378,6 @@
             } else {
                 return false;
             }
-
         }
 
         //Call visit or first visit function
@@ -394,7 +392,6 @@
 
             //Get user ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-
 
             //Check russia banned
             if ($bannedRussia == true) {
