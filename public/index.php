@@ -73,7 +73,7 @@
 	} else {
 		
 		//Redirect to error page if composer components is not installed
-		if ($pageConfig->getValueByName("dev_mode") == true) {
+		if ($siteController->isSiteDevMode()) {
 			die(include_once("../site/errors/VendorNotFound.php"));
 		} else {
 			die(include_once("../site/errors/Maintenance.php"));
@@ -90,7 +90,7 @@
 	header('Content-type: text/html; charset='.$pageConfig->getValueByName('encoding'));
 
 	//Init whoops for error headling
-	if ($pageConfig->getValueByName("dev_mode") == true) {
+	if ($siteController->isSiteDevMode()) {
 		$whoops = new \Whoops\Run;
 		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 		$whoops->register();

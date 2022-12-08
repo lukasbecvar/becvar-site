@@ -99,5 +99,18 @@
             ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
             return $age;           
         }
+
+        //Check if page in dev mode
+        public function isSiteDevMode() {
+
+            global $pageConfig;
+
+            //Check if dev mode enabled
+            if ($pageConfig->getValueByName("dev_mode") == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 	}
 ?>

@@ -103,7 +103,7 @@
                 
             //Redirect to 404 if process not found or print error for dev mode
             } else {
-                if ($pageConfig->getValueByName("dev_mode") == true) {
+                if ($siteController->isSiteDevMode()) {
                     die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteController->getCurrentAdminProcess()." not found<h2>");
                 } else {
                     $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");

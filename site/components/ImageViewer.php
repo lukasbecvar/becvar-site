@@ -19,7 +19,7 @@
         }
 
     } else {
-        if ($pageConfig->getValueByName("dev_mode") == true) {
+        if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: image spec is empty");
         } else {
             $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");

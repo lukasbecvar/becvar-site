@@ -8,7 +8,7 @@
 
     //Check if content to view is not empty
     if (empty($pasteContent["content"])) {
-        if ($pageConfig->getValueByName("dev_mode") == true) {
+        if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: paste content is empty");
         } else {
             $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");

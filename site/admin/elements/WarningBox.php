@@ -24,7 +24,7 @@
             }
 
             //Print if dev_mode is enabled
-            if ($pageConfig->getValueByName("dev_mode") == true) {
+            if ($siteController->isSiteDevMode()) {
                 echo '<p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>';
             }
 

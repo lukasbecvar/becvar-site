@@ -70,7 +70,7 @@
 						$urlUtils->redirect("?admin=dashboard");
 
 					} else {
-						if ($pageConfig->getValueByName("dev_mode") == true) {
+						if ($siteController->isSiteDevMode()) {
 							die("<h2 class=pageTitle>[DEV-MODE]:Login, error user token is empty</h2>");
 						} else {
 							include_once("errors/UnknownError.php");

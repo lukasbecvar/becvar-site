@@ -257,7 +257,7 @@
                 return false;
 
             //Check if dev_mode is enabled
-            } elseif ($pageConfig->getValueByName("dev_mode") == true) {
+            } elseif ($siteController->isSiteDevMode()) {
                 return false;
 
             //Return true if warnings not found

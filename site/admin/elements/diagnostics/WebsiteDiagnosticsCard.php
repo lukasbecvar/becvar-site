@@ -18,7 +18,7 @@
             }
 
             //Print dev mode test
-            if (($_SERVER['HTTP_HOST'] != "localhost") && $pageConfig->getValueByName("dev_mode")) {
+            if (($_SERVER['HTTP_HOST'] != "localhost") && $siteController->isSiteDevMode()) {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>developer mode is enabled on non localhost site, please disable dev_mode in config.php</strong></span></p>';
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>developer mode policy are OK</strong></span></p>';

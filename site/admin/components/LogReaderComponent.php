@@ -70,7 +70,7 @@
                     if ($data["status"] != "readed") {
                         
                         //Database logs
-                        if ($data["name"] == "Log reader" || $data["name"] == "Database" || $data["name"] == "Database delete" || $data["name"] == "Database list" || $data["name"] == "Database edit") {
+                        if ($data["name"] == "Log reader" || $data["name"] == "Database" || $data["name"] == "Database delete" || $data["name"] == "Database insert" || $data["name"] == "Database list" || $data["name"] == "Database edit") {
                             $row = "<tr class='text-primary'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong></strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong>".$data["remote_addr"]."</strong><td><a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0' target='blank_'>BAN</a><td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         //Contact & todos logs

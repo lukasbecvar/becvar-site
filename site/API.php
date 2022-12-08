@@ -48,7 +48,7 @@
         }
     } else {
         
-        if ($pageConfig->getValueByName("dev_mode") == true) {
+        if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: api is disabled in comfig file");
 
         } else {
