@@ -400,7 +400,7 @@
             if ($bannedRussia == true) {
                 
                 //Check if user is russian
-                if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "host")) {
+                if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "ru")) {
 
                     //Redirect to banned page
                     die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
