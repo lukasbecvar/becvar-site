@@ -163,8 +163,17 @@
                     $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
                 }
 
-                //Redirect to visitors
-                $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                //Check if auto close seted
+                if (isset($_GET["close"])) {
+
+                    //Close tab
+                    echo "<script>window.close();</script>";
+
+                } else {
+
+                    //Redirect to visitors
+                    $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                }
 
             } else {
                 echo "<br><h2 class=pageTitle>Error action: $action not found!</h2>";
