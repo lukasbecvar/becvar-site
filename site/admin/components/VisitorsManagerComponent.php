@@ -60,6 +60,9 @@
                 //print elements
                 foreach ($visitors as $data) {
 
+                    //Get banned status
+                    $bannedStatus = $data["banned"];
+
                     //Check if client ip not have > 15 characters
                     if (strlen($data["ip_adress"]) > 15) {
                         $data["ip_adress"] = substr($data["ip_adress"], 0, 15)."...";
@@ -91,7 +94,7 @@
                     }
 
                     //Check if banned
-                    if ($data["banned"] == "yes") {
+                    if ($bannedStatus == "yes") {
                         $data["banned"] = "<span class='text-red'>".$data["banned"]."</span>";
                     } else {
                         $data["banned"] = "<span class='text-success'>".$data["banned"]."</span>";
@@ -104,6 +107,12 @@
                         $data["os"] = "<span class='text-success'>".$data["os"]."</span>";
                     }
                     
+                    if ($bannedStatus == "yes") {
+                        $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
+                    } else {
+                        $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
+                    }
+
                     //Build table row
                     $row = "<tr class='lineItem'>
                         <th scope='row'><strong>".$data["id"]."</strong>
@@ -115,7 +124,7 @@
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$data["banned"]."</strong>
                         <td><strong>".$data["ip_adress"]."</strong>
-                        <td><a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>Ban/u</strong></a>
+                        <td>".$banLink."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
 
