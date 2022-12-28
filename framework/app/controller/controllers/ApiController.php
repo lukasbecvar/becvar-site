@@ -110,10 +110,78 @@
 
             $arr = [
                 "list",
-                "status"
+                "status",
+                "log"
             ];
 
             echo "Value list: " . json_encode($arr);              
+        }
+
+        //Save log to mysql
+        public function saveLog() {
+            
+            global $mysqlUtils;
+
+            //Get log name if is set
+            if (empty($_GET["name"])) {
+                $name = null;
+            } else {
+                $name = $mysqlUtils->escapeString($_GET["name"], true, true);
+            }
+
+             //Get log log if is set
+             if (empty($_GET["log"])) {
+                $log = null;
+            } else {
+                $log = $mysqlUtils->escapeString($_GET["log"], true, true);
+            }  
+            
+            //Check if inputs is null
+            if ($name == null) {
+
+                $this->sendAPIHeaders();
+
+                $arr = [
+                    "status" => "ko",
+                    "errors" => 1,
+                    "values" => $this->getValue(),
+                    "error" => "name get value is null"
+                ];
+    
+                echo json_encode($arr);  
+
+            } else if ($log == null) {
+
+                $this->sendAPIHeaders();
+
+                $arr = [
+                    "status" => "ko",
+                    "errors" => 1,
+                    "values" => $this->getValue(),
+                    "error" => "log get value is null"
+                ];
+    
+                echo json_encode($arr);  
+
+            } else {
+
+                //Log to mysql
+                $logFunc = $mysqlUtils->logToMysql($name, $log);
+
+                // set api headers
+                $this->sendAPIHeaders();
+
+                // build response
+                $arr = [
+                    "status" => "ok",
+                    "errors" => 1,
+                    "values" => $this->getValue(),
+                    "error" => "Log inserted"
+                ];
+
+                // print response
+                echo json_encode($arr); 
+            }
         }
     }
 ?>

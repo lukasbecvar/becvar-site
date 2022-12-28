@@ -34,9 +34,14 @@
                 if ($value == "list") {
                     $apiController->prntValueList();
 
+                //Get API status
                 } elseif ($value == "status") {
                     $apiController->printApiStatus();
                 
+                //Log to mysql
+                } elseif ($value == "log") {
+                    $apiController->saveLog();
+
                 /* ///////////////////////////// End of value list ///////////////////////////// */
 
 

@@ -29,7 +29,7 @@
 			"loginValue"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",	//Value of login cookie
 
 			/* Rest API config */
-			"apiEnable" => false, 	//Api status (?process=api or api.url.domain)
+			"apiEnable" => true, 	//Api status (?process=api or api.url.domain)
 			"apiToken"  => "1234",	//Token to acces api
 
 			/* IP info api token */
