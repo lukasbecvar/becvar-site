@@ -5,7 +5,6 @@
             <h3>Social sites</h3>
             <div class="social-links">
                 <a href="<?php echo $pageConfig->getValuebyName("instagram"); ?>" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="<?php echo $pageConfig->getValuebyName("discord"); ?>" class="discord"><i class="bi bi-discord"></i></a>
                 <a href="<?php echo $pageConfig->getValuebyName("telegram"); ?>" class="telegram"><i class="bi bi-telegram"></i></a>
                 <a href="<?php echo $pageConfig->getValuebyName("twitter"); ?>" class="twitter"><i class="bi bi-twitter"></i></a>
             </div>

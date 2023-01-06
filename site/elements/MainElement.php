@@ -16,11 +16,9 @@
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <div class="social-links">
-            <a href="<?php echo $pageConfig->getValuebyName("discord"); ?>" target="_blank" class="discord"><i class="bi bi-discord"></i></a>
             <a href="<?php echo $pageConfig->getValuebyName("instagram"); ?>" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
             <a href="<?php echo $pageConfig->getValuebyName("twitter"); ?>" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
             <a href="<?php echo $pageConfig->getValuebyName("github"); ?>" target="_blank" class="github"><i class="bi bi-github"></i></a>
-            <a href="<?php echo $pageConfig->getValuebyName("youtube"); ?>" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
             <a href="<?php echo $pageConfig->getValuebyName("telegram"); ?>" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
         </div>
     </div>
