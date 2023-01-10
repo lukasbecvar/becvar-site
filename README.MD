@@ -10,6 +10,7 @@ This application does not serve as an example of my work, it is my personal site
  - Run install in panel.sh
  - Configure mysql and import db.sql to database
  - Set service path in scripts (if not same /services/)
+ - Disable apache autoindex module
 
  ## Public site
  - Components: about, services list, contact, etc...
