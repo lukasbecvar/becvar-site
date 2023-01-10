@@ -2,7 +2,7 @@
 
 becvar site is my personal website builded on becwork
 
-## <span style="color:blue">some *WARNING* text</span>
+## <span style="color:red">WARNING</span>
 This application does not serve as an example of my work, it is my personal site, for testing functions and controlling the basic elements of the server and services, the application is not built on any Front-end or Back-end framework.
 
 ## Installation
