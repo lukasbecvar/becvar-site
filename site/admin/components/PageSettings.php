@@ -1,13 +1,13 @@
 <div class="dashboardBox">
     <?php 
-        //Check if config change submited
+        // check if config change submited
         if (isset($_GET["config"])) {
 
-            //Get config action from url
+            // get config action from url
             $config = $mysqlUtils->escapeString($_GET["config"], true, true);
 
             //////////////////////////////////////////////////////////
-            //Maintenance settings change requests
+            // maintenance settings change requests
             if ($config == "maintenanceDisable") {
                 $pageConfigController->maintenanceDisable();
 
@@ -15,7 +15,7 @@
                 $pageConfigController->maintenanceEnable();
             
 
-            //Dev mode settings change requests
+            // dev mode settings change requests
             } elseif ($config == "devmodeDisable") {
                 $pageConfigController->devModeDisable();
             
@@ -23,7 +23,7 @@
                 $pageConfigController->devModeEnable();
             
 
-            //API settings change requests
+            // API settings change requests
             } elseif ($config == "apiEnable") {
                 $pageConfigController->apiEnable();
             } elseif ($config == "apiDisable") {
@@ -31,13 +31,13 @@
             }
             //////////////////////////////////////////////////////////
             
-            //Refresh page
+            // refresh page
             $urlUtils->jsRedirect("?admin=pageSettings"); 
         }
     ?>
     <h1 class="pageTitle display-4">Page settings</h1>
     <?php
-        //Include settings box
+        // settings box
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/PageSettingsBox.php');
     ?>
 </div>

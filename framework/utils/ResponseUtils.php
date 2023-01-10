@@ -1,4 +1,4 @@
-<?php //The Response utils (Status getters utils, etc.)
+<?php // response utils (Status getters utils, etc.)
 
 	namespace becwork\utils;
 

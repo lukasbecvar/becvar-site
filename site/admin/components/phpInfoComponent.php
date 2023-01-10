@@ -4,7 +4,7 @@
         overflow: auto;
     }
 </style>
-<?php //PHP info component form admin site
+<?php // PHP info component form admin site
 
     function phpinfo_array() {
         ob_start();
@@ -13,7 +13,6 @@
         $info_lines = explode("\n", strip_tags(ob_get_clean(), "<tr><td><h2>"));
         $cat = "General";
         foreach($info_lines as $line) {
-            // new cat?
             preg_match("~<h2>(.*)</h2>~", $line, $title) ? $cat = $title[1] : null;
             if(preg_match("~<tr><td[^>]+>([^<]*)</td><td[^>]+>([^<]*)</td></tr>~", $line, $val)) {
                 $info_arr[$cat][$val[1]] = $val[2];
@@ -40,7 +39,7 @@
         echo $my_array;
     }
 
-    //Print info
+    // print info
     echo '<div class="table-dark">';
     myprint_r(phpinfo_array());
     echo '</div>';

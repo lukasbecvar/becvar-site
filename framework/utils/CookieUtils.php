@@ -1,4 +1,4 @@
-<?php //The cookie manage utils
+<?php // cookie manage utils
 
     namespace becwork\utils;
 
@@ -29,28 +29,42 @@
           * Input cookie name (string)
         */
         public function unset_cookie($name) {
+            
+            // get http host
             $host = $_SERVER['HTTP_HOST'];
+            
+            // explode host to array
             $domain = explode(':', $host)[0];
 
+            // get request uri
             $uri = $_SERVER['REQUEST_URI'];
+            
+            // valudate uri
             $uri = rtrim(explode('?', $uri)[0], '/');
 
+            // exeption handle
             if ($uri && !filter_var('file://' . $uri, FILTER_VALIDATE_URL)) {
                 throw new Exception('invalid uri: ' . $uri);
             }
 
+            // explode parts array
             $parts = explode('/', $uri);
 
+            // default cookie path
             $cookiePath = '';
+            
             foreach ($parts as $part) {
+                
+                // cookie path builder
                 $cookiePath = '/'.ltrim($cookiePath.'/'.$part, '//');
 
+                // set cookie whit minimal time
                 setcookie($name, '', 1, $cookiePath);
 
-                $_domain = $domain;
+                // set cookie whit minimal time and domain
                 do {
-                    setcookie($name, '', 1, $cookiePath, $_domain);
-                } while (strpos($_domain, '.') !== false && $_domain = substr($_domain, 1 + strpos($_domain, '.')));
+                    setcookie($name, '', 1, $cookiePath, $domain);
+                } while (strpos($domain, '.') !== false && $domain = substr($domain, 1 + strpos($domain, '.')));
             }
         }
 

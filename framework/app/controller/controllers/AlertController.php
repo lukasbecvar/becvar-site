@@ -1,10 +1,10 @@
-<?php //Controller for flash alert msg 
+<?php // flash alert msg 
 
     namespace becwork\controllers;
 
     class AlertController { 
 
-        //Flash alert
+        // flash success alert
         public function flashSuccess($msg) {
             echo '
                 <center>
@@ -16,7 +16,7 @@
             ';
         }
 
-        //Flash warning alert
+        // flash warning alert
         public function flashWarning($msg) {
             echo '
                 <center><div class="alert alert-warning" role="alert">
@@ -28,9 +28,10 @@
                 </div><center>';
         }
 
-        //Flash error alert
+        // flash error alert
         public function flashError($msg, $withoutClose = false) {
 
+            // check if closeble
             if ($withoutClose) {
                 echo 
                     '<center><div class="alert alert-danger alert-dismissible fade show" role="alert">

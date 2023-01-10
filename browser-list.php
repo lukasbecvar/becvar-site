@@ -5,17 +5,17 @@
     class BrowsersList {
 
         public $browserList = [
-            //Basics
+            // basics
             "Symbian"                   => "Symbian browser",
             "Trident"                   => "Trident",
             "Dalvik"                    => "Dalvik",
             "Gather"                    => "Gather",
             "zgrab"                     => "Zgrab",
 
-            //Becvold service identifier
+            // becvold service identifier
             "becvold.xyz" => "Becvold-service",
 
-            //Index bots
+            // index bots
             "CheckMarkNetwork"  => "Check Mark Network",
             "RepoLookoutBot"    => "RepoLookout-bot",
             "intelx.io_bot"     => "Intelx.io-bot",
@@ -29,7 +29,7 @@
             "bingbot"           => "Bing-bot",
             "Yahoo"             => "Yahoo-bot",
 
-            //Others
+            // others
             "https://domainsproject.org" => "dataset domainsproject.org",
             "https://security.ipip.net"  => "HTTP BD/security.ipip.net",
             "internet-measurement.com"   => "internet-measurement.com",

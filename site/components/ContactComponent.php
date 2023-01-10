@@ -4,10 +4,10 @@
             <h2>Contact me</h2>
         </div>
         <?php 
-            //Include social links
+            // social links
             include(__DIR__."/../elements/ContactSocialLinksElement.php");
 
-            //include contact form
+            // contact form
             include(__DIR__."/../elements/forms/ContactForm.php");
         ?>
     </div>

@@ -6,13 +6,13 @@
         <div class="row">
             <div class="col-lg-6">
                 <h3 class="projects-title">Open</h3>
-                <?php //Include open projects
+                <?php // open projects
                     include(__DIR__."/../elements/projects/ProjectsOpenElement.php");
                 ?>
             </div>
             <div class="col-lg-6">
                 <h3 class="projects-title">Closed</h3>
-                <?php //Include closed projects
+                <?php // closed projects
                     include(__DIR__."/../elements/projects/ProjectsClosedElement.php");
                 ?>
          </div>

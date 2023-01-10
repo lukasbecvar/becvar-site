@@ -1,4 +1,4 @@
-<?php //The main mysql utils class
+<?php // mysql/database utils
 
     namespace becwork\utils;
 
@@ -14,13 +14,15 @@
             
             global $configOBJ;
 
-            //Try connect to database
+            // try connect to database
             try {
+
+                // build connection 
                 $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
             
             } catch(Exception $e) { 
                 
-                //Print error
+                // rediret for non devmode
                 if ($configOBJ->config["dev_mode"] == false) {
                     if ($e->getMessage() == "Connection refused") {
                         die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/Maintenance.php"));
@@ -28,12 +30,12 @@
                         die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/UnknownError.php"));
                     }
                 }
-
             }
 
-            //Set mysql utf/8 charset
+            // set mysql utf/8 charset
             mysqli_set_charset($connection, $configOBJ->config["encoding"]);
 
+            // return connection function
             return $connection;
         }
 
@@ -47,14 +49,20 @@
             
             global $configOBJ;
 
+            // insert query
             $useInsertQuery = mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query);
+            
+            // check if insert
             if (!$useInsertQuery) {
+                
+                // print developer error
                 if ($configOBJ->config["dev_mode"] == true) {
-                    if ($_SERVER['HTTP_HOST'] == "localhost") {
-                        http_response_code(503);
-                        die('[DEV-MODE]:Database error: the database server query could not be completed');		  
-                    }
-                } else {
+                    http_response_code(503);
+                    die('[DEV-MODE]:Database error: the database server query could not be completed');		
+                } 
+                
+                // non developer redirect error page
+                else {
                     die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=520");</script>');
                 }
             }
@@ -81,17 +89,20 @@
             global $mainUtils;
             global $visitorController;
 
+            // check if antilog cookie set
             if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
 
                 //Escape values
                 $name = $this->escapeString($name, true, true);
                 $value = $this->escapeString($value, true, true);
 
+                // get values
                 $date = date('d.m.Y H:i:s');
                 $remote_addr = $mainUtils->getRemoteAdress();
                 $status = "unreaded";
                 $browser = $visitorController->getBrowser();
 
+                // insert log to mysql
                 $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `browser`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
             }
         }
@@ -108,11 +119,16 @@
             
             global $configOBJ;
 
+            // escape mysql special chars
             $out = mysqli_real_escape_string($this->mysqlConnect($configOBJ->config["basedb"]), $string);
-            if ($stripTags) {
+            
+            // strip html tags
+            if ($stripTags = true) {
                 $out = strip_tags($out);
             }
-            if ($specialChars) {
+
+            // encode html chars
+            if ($specialChars = true) {
                 $out = htmlspecialchars($out, ENT_QUOTES);
             }
             return $out;
@@ -127,6 +143,7 @@
 
             global $configOBJ;
 
+            // set charset
             mysqli_set_charset($this->mysqlConnect($configOBJ->config["basedb"]), $charset);
         }
 
@@ -140,7 +157,10 @@
             
             global $configOBJ;
 
-            $sql=mysqli_fetch_assoc(mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query));
+            // read query builder
+            $sql = mysqli_fetch_assoc(mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query));
+            
+            // return specific value
             return $sql[$specifis];
         }
 
@@ -153,6 +173,7 @@
 
             global $configOBJ;
 
+            // check if mysql is offline
             if($this->mysqlConnect($configOBJ->config["basedb"])->connect_error) {
                 return true;
             } else {

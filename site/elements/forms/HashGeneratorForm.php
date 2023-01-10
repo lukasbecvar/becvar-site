@@ -2,23 +2,23 @@
     <form action="/#generator" method="post">
         <h2 class="form-title">Hash Generator</h2>
             <div class="result">            
-				<?php //Print hash result
+				<?php // print hash result
 					
-					//Check if for submited
+					// check if for submited
 					if(isset($_POST["submitHashGen"])) {
 
-						//Get plain text and escaped
+						// get plain text and escaped
 						$text = $mysqlUtils->escapeString($_POST["text"], true, true);
 
-						//Get hash type and escaped
+						// get hash type and escaped
 						$hashType = $mysqlUtils->escapeString($_POST["hashType"], true, true);
 
-						//Check if plaintext is not empty
+						// check if plaintext is not empty
 						if (empty($text)) {
 							echo '<div type="text" class="result__viewbox">Hash text is empty!</div>';
 						} else {
 
-							//Hash text to hash by type
+							// hash text to hash by type
 							if ($hashType == "BlowFish") {
 								$hash = $hashUtils->genBlowFish($text);
 							
@@ -88,17 +88,16 @@
 							} elseif ($hashType == "Joaat") {
 								$hash = $hashUtils->customhash($text, "joaat");
 
-							//Print error if hash not found
+							// print error if hash not found
 							} else {
 								echo '<div type="text" class="result__viewbox">Unknown hash type</div>';
 							}
 
-
-							//Print final hash and log to mysql
+							// print final hash and log to mysql
 							if (!empty($hash)) {
                                 echo '<input type="text" name="text" class="form-control text-input" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value='.$hash.'>';
 
-								//Insert result to mysql
+								// insert result to mysql
 								$mysqlUtils->insertQuery("INSERT INTO `hash_gen`(`text`, `hashType`, `hash`) VALUES ( '$text', '$hashType', '$hash')");   
 							}
 						}

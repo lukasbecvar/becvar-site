@@ -1,10 +1,10 @@
 <div class="adminPanel">
-    <?php //The system/site Diagnostics component (for check all system/server components)
+    <?php // system/site Diagnostics component (for check all system/server components)
         
-        //include system diag card
+        // system diag card
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/diagnostics/SystemDiagnosticsCard.php');
         
-        //include website diag card
+        // website diag card
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/diagnostics/WebsiteDiagnosticsCard.php');
     ?><br>
 </div>

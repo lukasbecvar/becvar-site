@@ -1,4 +1,4 @@
-<?php //The main hash class
+<?php // hash class
 
     namespace becwork\utils;
 

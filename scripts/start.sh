@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start server script for development use -> php, database server
+# start server script for development use -> php, database server
 
 clear
 cd public/ 

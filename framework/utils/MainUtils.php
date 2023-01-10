@@ -1,4 +1,4 @@
-<?php //Main utils class
+<?php // main utils class
 
     namespace becwork\utils;
 

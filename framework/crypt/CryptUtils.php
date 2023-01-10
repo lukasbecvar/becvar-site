@@ -1,4 +1,4 @@
-<?php //The main crypt utils
+<?php // crypt utils
 
     namespace becwork\utils;
 

@@ -1,11 +1,13 @@
-<?php //The Example app controller
+<?php // main site controller
 
     namespace becwork\controllers;
 
 	class SiteController {
 
-        //Get true or false if admin page
+        // get true or false if admin page
         public function isCurrentPageAdmin() {
+            
+            // check if page is admin
             if (!empty($_GET["admin"])) {
                 return true;
             } else {
@@ -13,25 +15,30 @@
             }
         }
 
-        //Get true or false for maintenance mode
+        // check maintenance mode
         public function ifMaintenance() {
 
             global $pageConfig;
             global $mysqlUtils;
 
+            // check if maintenance mode valid
             if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false) or $mysqlUtils->isOffline()) {
                 return true;
             }
         }
 
-        //Get process name if isset
+        // get process name if isset
         public function getCurrentProcess() {
 
             global $mysqlUtils;
 
             if (isset($_GET["process"])) {
-               return $mysqlUtils->escapeString($_GET["process"], true, true);
+
+                // return escaped process
+                return $mysqlUtils->escapeString($_GET["process"], true, true);
             } else {
+
+                // check if page is dashboard
                 if ($this->isCurrentPageAdmin()) {
                     return "dashboard";
                 } else {
@@ -40,74 +47,87 @@
             }
         }
 
-        //Get admin process name if isset
+        // get admin process name if isset
         public function getCurrentAdminProcess() {
 
             global $mysqlUtils;
 
             if (isset($_GET["admin"])) {
-               return $mysqlUtils->escapeString($_GET["admin"], true, true);
+
+                // return escaped admin get
+                return $mysqlUtils->escapeString($_GET["admin"], true, true);
             } else {
                 return null;
             }
         }
 
-        //Get Http host aka domain name
+        // get Http host aka domain name
         public function getHTTPhost() {
             return $_SERVER['HTTP_HOST'];
         }
 
-        //Get page title by paramater
+        // get page title by paramater
         public function getPageTitle() {
 
             global $pageConfig;
 
+            // check if host is localhost
             if ($this->getHTTPhost() == "localhost") {
                 return "Localhost Testing"; 
             } else {
+
+                // check if admin site
                 if ($this->isCurrentPageAdmin()) { 
                     return "Admin site"; 
                 } else {
+
+                    // return app name
                     return $pageConfig->getValueByName('appName'); 
                 }
             }
         }
 
-        //Get action name if isset
+        // get action name if isset
         public function getCurrentAction() {
 
             global $mysqlUtils;
 
             if (isset($_GET["action"])) {
-               return $mysqlUtils->escapeString($_GET["action"], true, true);
+
+                // return escaped action
+                return $mysqlUtils->escapeString($_GET["action"], true, true);
             }
         } 
 
-        //Get method name if isset
+        // get method name if isset
         public function getCurrentMethod() {
 
             global $mysqlUtils;
 
             if (isset($_GET["method"])) {
-                $method = $mysqlUtils->escapeString($_GET["method"], true, true);
-                return $method;
+
+                // retun escaped method
+                return $mysqlUtils->escapeString($_GET["method"], true, true);
             }
         }
 
-        //Get age by birth data input
+        // get age by birth data input
         public function getAge($birthDate) {
+
+            // explode string data to array
             $birthDate = explode("/", $birthDate);
-            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") 
-            ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
+
+            // calculate age
+            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
             return $age;           
         }
 
-        //Check if page in dev mode
+        // check if page in dev mode
         public function isSiteDevMode() {
 
             global $pageConfig;
 
-            //Check if dev mode enabled
+            // check if dev mode enabled
             if ($pageConfig->getValueByName("dev_mode") == true) {
                 return true;
             } else {

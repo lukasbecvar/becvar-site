@@ -1,4 +1,4 @@
-<?php //Services list for dashboard panel
+<?php // services list for dashboard panel
 
     namespace becwork\services;
 
@@ -6,7 +6,7 @@
 
         public $services = [
 
-            //Uncomplicated Firewall service 
+            // uncomplicated Firewall service 
             "ufw" => [
                 "service_name" => "ufw",
                 "display_name" => "UFW[Firewall]",
@@ -15,7 +15,7 @@
                 "enable" => true
             ],
 
-            //TeamSpeak server
+            // teamSpeak server
             "ts3server" => [
                 "service_name" => "ts3server",
                 "display_name" => "TeamSpeak",
@@ -24,7 +24,7 @@
                 "enable" => true                
             ],
 
-            //Minecraft server
+            // minecraft server
             "minecraft" => [
                 "service_name" => "minecraft",
                 "display_name" => "Minecraft",
@@ -33,7 +33,7 @@
                 "enable" => true                
             ],
 
-            //OpenVPN service
+            // openVPN service
             "openvpn" => [
                 "service_name" => "openvpn",
                 "display_name" => "OpenVPN",
@@ -42,7 +42,7 @@
                 "enable" => true                
             ],
 
-            //Apache2 service
+            // apache2 web service
             "apache2" => [
                 "service_name" => "apache2",
                 "display_name" => "Apache2",
@@ -51,7 +51,7 @@
                 "enable" => true                
             ],
 
-            //Mariadb service
+            // mariadb service
             "mariadb" => [
                 "service_name" => "mariadb",
                 "display_name" => "MariaDB",
@@ -60,7 +60,7 @@
                 "enable" => true                
             ],
             
-            //SSHD service
+            // SSHD service
             "sshd" => [
                 "service_name" => "sshd",
                 "display_name" => "SSHD",
@@ -69,7 +69,7 @@
                 "enable" => true                
             ],
 
-            //Tor service
+            // tor service
             "tor" => [
                 "service_name" => "tor",
                 "display_name" => "Tor",

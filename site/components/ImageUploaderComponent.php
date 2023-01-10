@@ -4,7 +4,7 @@
             <h2>Image uploader</h2>
         </div>
 
-        <?php //Include image uploader form 
+        <?php // image uploader form 
             include(__DIR__."/../elements/forms/ImageUploaderForm.php");
         ?>
 

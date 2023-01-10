@@ -1,4 +1,4 @@
-<?php //The String utils class
+<?php // string utils class
 
     namespace becwork\utils;
 

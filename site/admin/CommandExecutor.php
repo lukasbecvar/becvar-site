@@ -1,61 +1,61 @@
-<?php //Command executor (for admin tasks)
+<?php // command executor (for admin tasks)
 
-    //Check if command defined
+    // check if command defined
     if (empty($_GET["command"])) {
 
-        //Redirect to 404 page if command is empty
+        // redirect to 404 page if command is empty
         $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
     
     } else {
 
-        //Check if user logged in
+        // check if user logged in
         if ($adminController->isLoggedIn()) {
 
-            //Get command and escapeit
+            // get command and escapeit
             $command = $mysqlUtils->escapeString($_GET["command"], true, true); 
 
-            //Init services path
+            // get services path
             $serviceDir = $pageConfig->getValueByName('serviceDir');
 
-            //Get Service name
+            // get Service name
             $service = str_replace("_Stop", "", $command);
             $service = str_replace("_Start", "", $service);
 
-            //Init default final command
+            // init default final command
             $finalCommand = "pwd";
 
-            //Service starter system
+            // service starter system
             if (str_ends_with($command, "_Start")) {
                 
-                //Get final start command
+                // get final start command
                 $finalCommand = $servicesList->services[$service]["start_cmd"];
             
-                //Log to mysql
+                // log to mysql
                 $mysqlUtils->logToMysql("Service", "$service start");
             } 
             
-            //Service stop system
+            // service stop system
             elseif (str_ends_with($command, "_Stop")) {
 
-                //Get final stop command
+                // get final stop command
                 $finalCommand = $servicesList->services[$service]["stop_cmd"];
 
-                //Log to mysql
+                // log to mysql
                 $mysqlUtils->logToMysql("Service", "$service stop");
 
-            //Undefind action
+            // undefind action
             } else {
                 $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
             }
         
-            //Execute final command
+            // execute final command
             $servicesController->executeCommand($finalCommand);
 
-            //Redirect back to dashboard
+            // redirect back to dashboard
             $urlUtils->jsRedirect("?admin=dashboard");
 
         } else {
-            //Redirect to 403 page if user not logged in
+            // redirect to 403 page if user not logged in
             $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
         }
     }

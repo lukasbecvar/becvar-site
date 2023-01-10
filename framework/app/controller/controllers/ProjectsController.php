@@ -1,10 +1,10 @@
-<?php //Projects table controller
+<?php // projects table controller
 
     namespace becwork\controllers;
 
     class ProjectsController {
 
-        //function for get projects list objects where status string
+        // get projects list objects where status string
         public function getProjectsWhereStatus($status) {
 
             global $mysqlUtils;

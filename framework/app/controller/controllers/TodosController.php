@@ -33,7 +33,7 @@
             $mysqlUtils->insertQuery("UPDATE todos SET status='closed' WHERE id='$id'");
         }
         
-        //Check if todos empty
+        // check if todos empty
         public function isEmpty() {
 
             global $mysqlUtils;

@@ -1,9 +1,5 @@
 <?php  
 	http_response_code(403);
-
-	//Include config
-	include_once("../config.php");
-	$configOBJ = new PageConfig();
 ?>
 <!DOCTYPE html>
 <html lang="cs">

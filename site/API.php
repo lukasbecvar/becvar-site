@@ -1,15 +1,15 @@
-<?php //REST API function
+<?php // REST API function
 
-    //Check if API enabled
+    // check if API enabled
     if ($apiController->isApiEnabled()) {
 
-        //Init token for controll user add token
+        // init token for controll user add token
         $accesToken = $pageConfig->getValueByName('apiToken');
 
-        //Init token from get parameter and escaped
+        // init token from get parameter and escaped
         $token = $mysqlUtils->escapeString($apiController->getToken(), true, true);
         
-        //Check if token is valid
+        // check if token is valid
         if ($apiController->isTokenValid($token, $accesToken) == null) {
             die("Error: api token is empty");
        
@@ -18,34 +18,32 @@
 
         } elseif ($apiController->isTokenValid($token, $accesToken) == "valid") {
             
-            //Get value from url get
+            // get value from url get
             $value = $mysqlUtils->escapeString($apiController->getValue(), true, true);
             
-            //Check if value is null
+            // check if value is null
             if ($value == null) {
                 $apiController->printValueNull();
             
             } else {
 
-                
                 /* ////////////////////////////// Main value list ////////////////////////////// */
 
-                //Print api data to json by value name
+                // print api data to json by value name
                 if ($value == "list") {
                     $apiController->prntValueList();
 
-                //Get API status
+                // get API status
                 } elseif ($value == "status") {
                     $apiController->printApiStatus();
                 
-                //Log to mysql
+                // log to mysql
                 } elseif ($value == "log") {
                     $apiController->saveLog();
 
                 /* ///////////////////////////// End of value list ///////////////////////////// */
 
-
-                //Print error if value not found
+                // print error if value not found
                 } else {
                     $apiController->printUnknowValue();
                 }
@@ -53,6 +51,7 @@
         }
     } else {
         
+        // print valid error format 
         if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: api is disabled in comfig file");
 

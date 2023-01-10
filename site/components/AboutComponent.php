@@ -4,16 +4,16 @@
             <h2>About</h2>
         </div>
         <?php 
-            //Include main info
+            // main info
             include(__DIR__."/../elements/about/AboutInfoElement.php");
 
-            //Include counter element
+            // counter element
             include(__DIR__."/../elements/about/AboutCounterElement.php");
 
-            //Include skills element
+            // skills element
             include(__DIR__."/../elements/about/AboutSkillsElement.php");
             
-            //Include skills element
+            // skills element
             include(__DIR__."/../elements/about/AboutGithubGraph.php");
         ?>
     </div>

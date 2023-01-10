@@ -1,9 +1,9 @@
 <?php  
 	http_response_code(403);
 
-	//Include config
+	// include config
 	include_once("../config.php");
-	$configOBJ = new PageConfig();
+	$configOBJ = new becwork\config\PageConfig();
 ?>
 <!DOCTYPE html>
 <html lang="cs">

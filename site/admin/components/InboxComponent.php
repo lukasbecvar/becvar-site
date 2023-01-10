@@ -1,21 +1,21 @@
 <div class="adminPanel">
     <center>
-        <?php //The admin inbox component (for show msgs from contact site)
+        <?php // admin inbox component (for show msgs from contact site)
         
-            //Check if user typed id
+            // check if user typed id
             if (isset($_GET["delete"])) {
 
-                //Get and escape string id form url and save to id
+                // get and escape string id form url and save to id
                 $id = $mysqlUtils->escapeString($_GET["delete"], true, true);
 
-                //Delete msg by id
+                // delete msg by id
                 $contactController->deleteMsgByID($id);
 
-                //Redirect to messages page
+                // redirect to messages page
                 $urlUtils->jsRedirect("?admin=inbox");
             } 
          
-            //Print msgs is not empty
+            // print msgs is not empty
             if ($contactController->isEmpty()) {
                 echo"<h2 class=pageTitle>Inbox is empty</h2>";
             } else {

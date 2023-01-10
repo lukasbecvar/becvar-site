@@ -1,10 +1,10 @@
-<?php //The error site handlerer
+<?php // error site handlerer
     if (isset($_GET["code"])) {
 
-        //Get error code form url
+        // get error code form url
         $code = htmlspecialchars($_GET["code"], ENT_QUOTES);
 
-        //Set error page by code
+        // set error page by code
         if ($code == 404) {
             include_once("../site/errors/404.php");
         } else if ($code == 403) {

@@ -15,29 +15,29 @@
     </div>
     <div class="my-3">
         <?php 
-            //Check if request is post
+            // check if request is post
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                //Check if post have value email (contact form verification)
+                // check if post have value email (contact form verification)
                 if (isset($_POST["email"])) {
 
-                    //Init values from form and escape
+                    // init values from form and escape
                     $name = $mysqlUtils->escapeString($_POST["name"], true, true);
                     $email = $mysqlUtils->escapeString($_POST["email"], true, true);
                     $message = $mysqlUtils->escapeString($_POST["message"], true, true);
 
-                    //honeypot check
+                    // honeypot check
                     if (empty($_POST["website"])) {
 
-                        //Check if inputs is not empty
+                        // check if inputs is not empty
                         if (empty($name) or empty($email) or empty($message)) {
                             echo '<div class="error-message">You must enter all inputs!</div>';
                         } else {
 
-                            //Save msg to database
+                            // save msg to database
                             $sendMSG = $contactController->sendMessage($name, $email, $message, "open");
                     
-                            //Flash msg with status
+                            // flash msg with status
                             if ($sendMSG) {
                                 echo '<div class="sent-message">Your message has been sent. Thank you!</div>';
                             } else {
@@ -45,7 +45,7 @@
                             }
                         }
 
-                    //Flash error msg
+                    // flash error msg
                     } else {
                         echo '<div class="error-message">System error please contact page administrator!</div>';
                     }

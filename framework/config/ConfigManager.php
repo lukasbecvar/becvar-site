@@ -1,4 +1,4 @@
-<?php //The main config manager functions
+<?php // config manager functions
 
 	namespace becwork\config;
 
@@ -13,11 +13,8 @@
 
 			global $configOBJ;
 
-			//Get String form array
-			$value = $configOBJ->config[$name];
-
-			//Return value
-			return $value;
+			// return config value
+			return $configOBJ->config[$name];
 		}
 	}
 ?>

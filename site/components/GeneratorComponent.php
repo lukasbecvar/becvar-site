@@ -4,10 +4,10 @@
             <h2>Generator</h2>
         </div>
         <?php 
-            //include passowrd generator form
+            // passowrd generator form
             include(__DIR__."/../elements/forms/PasswordGeneratorForm.php");
 
-            //include hash generator form
+            // hash generator form
             include(__DIR__."/../elements/forms/HashGeneratorForm.php");
         ?>
     </div>

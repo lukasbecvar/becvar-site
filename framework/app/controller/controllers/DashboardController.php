@@ -1,4 +1,4 @@
-<?php /* Admin dashboard controller (system, database information getters) */
+<?php // dashboard controller (system, database information getters)
   
     namespace becwork\controllers;
 
@@ -112,82 +112,91 @@
             );
         }
 
-        //Get pastes count
+        // get pastes count
         public function getPastesCount() {
             global $mysqlUtils;
             global $pageConfig;
 
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM pastes"))["count"];
         }
 
-        //Get log count
+        // get log count
         public function getLogsCount() {
             global $mysqlUtils;
             global $pageConfig;
 
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs"))["count"];
         }
 
-        //Get login logs count
+        // get login logs count
         public function getLoginLogsCount() {
             global $mysqlUtils;
             global $pageConfig;
 
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'"))["count"];
         }
 
-        //Get unreaded logs count
+        // get unreaded logs count
         public function getUnreadedLogs() {
             global $mysqlUtils;
             global $pageConfig;
         
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE status LIKE '%unreaded%'"))["count"];
-           
         }
 
-        //Get page visitors count
+        // get page visitors count
         public function getVisitorsCount() {
             global $mysqlUtils;
             global $pageConfig;
         
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors"))["count"];
-           
         }
 
-        //Get MSGS in inbox count
+        // get MSGS in inbox count
         public function getMSGSCount() {
             global $mysqlUtils;
             global $pageConfig;
 
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM messages WHERE status='open'"))["count"];
         }
 
-        //Get todos count in todos table
+        // get todos count in todos table
         public function getTodosCount() {
             global $mysqlUtils;
             global $pageConfig;
 
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM todos WHERE status='open'"))["count"];
         }
         
-        //Get images count in gallery
+        // get images count in gallery
         public function getImagesCount() {
             global $mysqlUtils;
             global $pageConfig;
         
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM image_uploader"))["count"];
         }
 
-        //Get banned visitors count 
+        // get banned visitors count 
         public function getBannedCount() {
             global $mysqlUtils;
             global $pageConfig;
         
+            // return count as number
             return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE banned='yes'"))["count"];
         }
 
-        //Check if system is linux
+        // check if system is linux
         public function isSystemLinux() {
+
+            // check if PHP-OS is linux
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'LIN') {
                 return true;
             } else {
@@ -195,74 +204,74 @@
             }            
         }
 
-        //Check if warnings box empty
+        // check if warnings box empty
         public function isWarninBoxEmpty() {
             global $pageConfig;
             global $mainUtils;
             global $siteController;
             global $servicesController;
 
-            //Check if service directory exist in system
+            // check if service directory exist in system
             if (!file_exists($pageConfig->getValueByName('serviceDir'))) {
                 return false;
 
-            //Check if site running on ssl connction
+            // check if site running on ssl connction
             } elseif ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
                 return false;
 
-            //Check if hard drive is not full
+            // check if hard drive is not full
             } elseif ($this->getDrivesInfo() > 89) {
                 return false;
             
-            //Check if antilog cookie not empty
+            // check if antilog cookie not empty
             } elseif (empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")])) {
                 return false;
 
-            //Check if found new logs
+            // check if found new logs
             } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")]))) {
                 return false;
 
-            //Check if found new msgs in inbox
+            // check if found new msgs in inbox
             } elseif ($this->getMSGSCount() != "0") {
                 return false;
 
-            //Check if UFW firewall is installed
+            // check if UFW firewall is installed
             } elseif (!$servicesController->isServiceInstalled("ufw")) {
                 return false;
 
-            //Check if OpenVPN is installed
+            // check if OpenVPN is installed
             } elseif (!$servicesController->isServiceInstalled("openvpn")) {
                 return false;
 
-            //Check if Apache2 is installed
+            // check if Apache2 is installed
             } elseif (!$servicesController->isServiceInstalled("apache2")) {
                 return false;
 
-            //Check if MariaDB is installed
+            // check if MariaDB is installed
             } elseif (!$servicesController->isServiceInstalled("mariadb")) {
                 return false;
      
-            //Check if Tor is installed
+            // check if Tor is installed
             } elseif (!$servicesController->isServiceInstalled("tor")) {
                 return false;
 
-            //Check if Minecraft server is installed
+            // check if Minecraft server is installed
             } elseif (!$servicesController->isServiceInstalled("minecraft")) {
                 return false;
 
-            //Check if TeamSpeak server is installed
+            // check if TeamSpeak server is installed
             } elseif (!$servicesController->isServiceInstalled("ts3server")) {
                 return false;
 
-            //Check if maintenance is enabled
+            // check if maintenance is enabled
             } elseif ($pageConfig->getValueByName("maintenance") == "enabled") {
                 return false;
 
-            //Check if dev_mode is enabled
+            // check if dev_mode is enabled
             } elseif ($siteController->isSiteDevMode()) {
                 return false;
 
-            //Return true if warnings not found
+            // return true if warnings not found
             } else {
                 return true;
             }

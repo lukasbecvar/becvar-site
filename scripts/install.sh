@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Installation script for development & production use
-# Install: composer with phar
+# installation script for development & production use
+# install: composer with phar
 
 php composer.phar upgrade
 php composer.phar update

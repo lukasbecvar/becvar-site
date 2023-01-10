@@ -1,4 +1,4 @@
-<?php //Escape security utils
+<?php // escape security utils
 
     namespace becwork\utils;
 

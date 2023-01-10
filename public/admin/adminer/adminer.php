@@ -1,13 +1,20 @@
 <?php //Check if user logged in
-    session_start();
-
+    
+    session_start(); // start session
+    
+    ini_set('display_errors','Off'); // disable error report
+    
+    // include config
     require_once("../../../config.php");
-
-    $configOBJ = new  becwork\config\PageConfig();
-
+        
+    // init config
+    $configOBJ = new becwork\config\PageConfig();
+    
+    // get config value
     $session = $configOBJ->config["loginCookie"];
     $session_value = $configOBJ->config["loginValue"];
-
+    
+    // check if user logged in
     if (!isset($_SESSION[$session]) || !($_SESSION[$session] == $session_value)) {
         die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=403');</script>'");
     }

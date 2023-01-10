@@ -1,12 +1,12 @@
-<?php //Open project site component 
+<?php // open project site component 
 
-    //Get projects list object from controller
+    // get projects list object from controller
     $openProjects = $projectsController->getProjectsWhereStatus("open"); 
 
-    //Print all open project to element
+    // print all open project to element
     foreach ($openProjects as $data) {
 
-        //get information form object
+        // get information form object
         $name = $data["name"];
         $description = $data["description"];
         $technology = $data["technology"];
@@ -14,10 +14,10 @@
         $started_developed_year = $data["started_developed_year"];
         $ended_developed_year = $data["ended_developed_year"];
 
-        //Build item elemen
+        // build item elemen
         if ($github_link == "none" or empty($github_link) or $github_link == null) {
 
-            //element with github link
+            // element with github link
             $element = '
                 <div class="projects-item">
                     <h4>'.$name.'</h4>
@@ -30,7 +30,7 @@
             ';
         } else {
 
-            //element withou github link
+            // element withou github link
             $element = '
                 <div class="projects-item">
                     <h4>'.$name.'</h4>
@@ -44,7 +44,7 @@
             ';
         }
 
-        //Print element
+        // print element
         echo $element;
     }
 ?>

@@ -161,7 +161,7 @@
             $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
             $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
             
-            //Check if ip is banned in database
+            // check if ip is banned in database
             if ($this->isVisitorBanned($ip_adress)) {
                 $banned = "yes";
             } else {
@@ -194,12 +194,12 @@
             //Get visitor ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
-            //Check if visitors count is zero
+            // check if visitors count is zero
             if ($dashboardController->getVisitorsCount() == "0") {
                 $this->firstVisit();
             } else {
 
-                //Check if visitor exist in table
+                // check if visitor exist in table
                 if ($this->ifVisitorIsInTable($ip_adress)) {
 
                     //Get key count in db for duplicity check
@@ -209,7 +209,7 @@
                     $id_one_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='1'"))["count"];
 
 
-                    //Check if key is not exist in database
+                    // check if key is not exist in database
                     if ($ip_count == "0") {
                         $this->firstVisit();
 
@@ -248,7 +248,7 @@
             }
         }
 
-        //Check if visitor is banned
+        // check if visitor is banned
         public function isVisitorBanned($ip) {
 
             global $mysqlUtils;
@@ -258,13 +258,13 @@
             $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
             $ip_count = intval($ip_count);
             
-            //Check if ip is in database
+            // check if ip is in database
             if ($ip_count > 0) {
 
                 //Get banned status
                 $banned_status = $mysqlUtils->readFromMysql("SELECT banned FROM visitors WHERE `ip_adress` = '".$ip."'", "banned");
 
-                //Check if banned status = yes
+                // check if banned status = yes
                 if ($banned_status == "yes") {
                     return true;
                 } else {
@@ -301,7 +301,7 @@
             //Get ID count
             $ID_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='$id'"))["count"];
 
-            //Check if key found in database
+            // check if key found in database
             if ($ID_count == "0") {
                 return NULL;
             } else {
@@ -322,7 +322,7 @@
             //Get IP count
             $IP_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
 
-            //Check if key found in database
+            // check if key found in database
             if ($IP_count == "0") {
                 return NULL;
             } else {
@@ -348,7 +348,7 @@
             $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'no' WHERE `ip_adress` = '$ip'");
         }
 
-        //Check if visitor is in table
+        // check if visitor is in table
         public function ifVisitorIsInTable($ip) {
 
             global $mysqlUtils;
@@ -378,10 +378,10 @@
             //Get user ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
-            //Check russia banned
+            // check russia banned
             if ($bannedRussia == true) {
                 
-                //Check if user is russian
+                // check if user is russian
                 if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "ru")) {
 
                     //Redirect to banned page
@@ -389,7 +389,7 @@
                 }
             }
 
-            //Check if cookie seted
+            // check if cookie seted
             if ($this->ifVisitorIsInTable($ip_adress)) {
                 $this->visitSite();
             } else {

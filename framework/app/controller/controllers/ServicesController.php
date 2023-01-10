@@ -1,4 +1,4 @@
-<?php /* The controller for services action */
+<?php // services controller
 
     namespace becwork\controllers;
 
@@ -10,8 +10,10 @@
         **/
         public function ifProcessRunning($process) {
             
+            // execute builder
             exec("pgrep ".$process, $pids);
             
+            // check if outputed pid
             if(empty($pids)) {
                 return false;
             } else {
@@ -25,8 +27,10 @@
         **/
         public function ifServiceActive($service) {
             
+            // execute builder
             $output = shell_exec("systemctl is-active $service");
             
+            // check if service running
             if (trim($output) == "active") {
                 return true;
             } else {
@@ -40,8 +44,10 @@
         **/
         public function isUFWRunning() {
 
+            // execute builder
             $output = shell_exec("sudo ufw status");
 
+            // check if ufw running
             if (str_starts_with($output, "Status: active")) {
                 return true;
             } else {
@@ -57,29 +63,36 @@
             
             global $pageConfig;
 
-            //Get service dir from config
+            // get service dir from config
             $serviceDir = $pageConfig->getValueByName('serviceDir');
 
-            //Minecraft server
+            // minecraft server
             if ($serviceName == "minecraft") {
+
+                // check if minecraft installed
                 if (file_exists($serviceDir."/minecraft/")) {
                     return true;
                 } else {
                     return false;
                 }
 
-            //Teamspeak server
+            // teamspeak server
             } elseif ($serviceName == "ts3server") {
+
+                // check if teamspeak installed
                 if (file_exists($serviceDir."/teamspeak/")) {
                     return true;
                 } else {
                     return false;
                 }
 
-            //Check others (for systemctl)
+            // check others (for systemctl)
             } else {
 
+                // execute builder
                 $output = shell_exec("which $serviceName");
+                
+                // check if output is empty
                 if (empty($output)) {
                     return false;
                 } else {
@@ -88,10 +101,13 @@
             }
         }
         
-        //Check if screen session running
+        // check if screen session running
         public function checkScreenSession($sessionName) {
+
+            // execite builder
             $exec = shell_exec("sudo screen -S $sessionName -Q select . ; echo $?");
 
+            // check if exec get output
             if ($exec == "0") {
                 return true;
             } else {
@@ -99,19 +115,22 @@
             }
         }
 
-        //Execute system command
+        // execute system command
         public function executeCommand($command) {
+
+            // execite command
             shell_exec($command);
         }
 
-        //Execute bash/sh script form /scripts in web [Input: script name]
+        // execute bash/sh script form /scripts in web [Input: script name]
         public function executeScriptAsROOT($scriptName) {
 
             global $pageConfig;
 
-            //Get service dir from config
+            // get service dir from config
             $serviceDir = $pageConfig->getValueByName('serviceDir');
 
+            // execute script
             shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$scriptName."'");
         }
     }
