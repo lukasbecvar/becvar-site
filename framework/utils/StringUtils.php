@@ -1,5 +1,7 @@
 <?php //The String utils class
 
+    namespace becwork\utils;
+
     class StringUtils { 
 
         /*

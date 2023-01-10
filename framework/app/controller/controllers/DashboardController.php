@@ -1,5 +1,7 @@
 <?php /* Admin dashboard controller (system, database information getters) */
   
+    namespace becwork\controllers;
+
     class DashboardController {
 
         /**

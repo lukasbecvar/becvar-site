@@ -1,5 +1,7 @@
 <?php //Services list for dashboard panel
 
+    namespace becwork\services;
+
     class ServicesManager {
 
         public $services = [

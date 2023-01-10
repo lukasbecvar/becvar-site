@@ -1,5 +1,7 @@
 <?php //The main mysql utils class
 
+    namespace becwork\utils;
+
     class MysqlUtils {
 
         /*
@@ -9,9 +11,8 @@
           * Returned mysql con usable in function, etc
         */
         public function mysqlConnect($mysqlDbName) {
-            require_once("../config.php");
-
-            $configOBJ = new PageConfig();
+            
+            global $configOBJ;
 
             //Try connect to database
             try {
@@ -43,9 +44,8 @@
           * Returned true or false if insers, array if select, etc
         */
         public function insertQuery($query) {
-            require_once("../config.php");
-
-            $configOBJ = new PageConfig();
+            
+            global $configOBJ;
 
             $useInsertQuery = mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query);
             if (!$useInsertQuery) {
@@ -77,10 +77,7 @@
        */
         public function logToMysql($name, $value) {
 
-            require_once("../config.php");
-
-            $configOBJ = new PageConfig();
-
+            global $configOBJ;
             global $mainUtils;
             global $visitorController;
 
@@ -108,9 +105,8 @@
          * Returned escaped string
        */
         public function escapeString($string, $stripTags = false, $specialChars = false) {
-            require_once("../config.php");
-
-            $configOBJ = new PageConfig();
+            
+            global $configOBJ;
 
             $out = mysqli_real_escape_string($this->mysqlConnect($configOBJ->config["basedb"]), $string);
             if ($stripTags) {
@@ -128,9 +124,8 @@
           * Input charset type
         */
         public function setCharset($charset) {
-            require_once("../config.php");
 
-            $configOBJ = new PageConfig();
+            global $configOBJ;
 
             mysqli_set_charset($this->mysqlConnect($configOBJ->config["basedb"]), $charset);
         }
@@ -142,9 +137,8 @@
           * Return value type string or number
         */
         public function readFromMysql($query, $specifis) {
-            require_once("../config.php");
-
-            $configOBJ = new PageConfig();
+            
+            global $configOBJ;
 
             $sql=mysqli_fetch_assoc(mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query));
             return $sql[$specifis];
@@ -156,9 +150,8 @@
           * Return: true or false
         */
         public function isOffline() {
-            require_once("../config.php");
 
-            $configOBJ = new PageConfig();
+            global $configOBJ;
 
             if($this->mysqlConnect($configOBJ->config["basedb"])->connect_error) {
                 return true;

@@ -1,5 +1,7 @@
 <?php //The Response utils (Status getters utils, etc.)
 
+	namespace becwork\utils;
+
 	class ResponseUtils { 
 
 		/*
@@ -34,17 +36,6 @@
         */
         public function send404Header() {
             header("HTTP/1.0 404 Not Found");
-        }
-
-
-        /*
-          * The fake apache errro draw
-          * Usage like echo drawApache404ErrorIndex()
-          * Returned apache not found page
-        */
-        public function drawApache404ErrorIndex() {
-            $string = "<!DOCTYPE HTML PUBLIC '-//IETF//DTD HTML 2.0//EN'>\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>";
-            return $string;
         }
 
         /*

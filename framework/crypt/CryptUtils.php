@@ -1,5 +1,7 @@
 <?php //The main crypt utils
 
+    namespace becwork\utils;
+
     class CryptUtils {
 
         /*
@@ -11,7 +13,6 @@
             return base64_encode($string);
         }
 
-
         /*
           * Base64 decode function
           * Input: base64 code
@@ -20,7 +21,6 @@
         public function decodeBase64($base64) {
             return base64_decode($base64);
         }
-
 
         /*
           * AES128 AES encrypt
@@ -45,7 +45,6 @@
           
             return json_encode($data);
         }
-
 
         /*
           * AES128 AES decrypt

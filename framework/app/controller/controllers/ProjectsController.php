@@ -1,5 +1,7 @@
 <?php //Projects table controller
 
+    namespace becwork\controllers;
+
     class ProjectsController {
 
         //function for get projects list objects where status string

@@ -1,5 +1,7 @@
 <?php //Visitor system controller & manager
 
+    namespace becwork\controllers;
+
     class VisitorSystemController {
 
         //Get user browser

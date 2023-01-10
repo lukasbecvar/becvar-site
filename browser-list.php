@@ -1,5 +1,7 @@
 <?php //Sortify browserID list
 
+    namespace becwork\utils;
+
     class BrowsersList {
 
         public $browserList = [

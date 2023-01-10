@@ -1,5 +1,7 @@
 <?php //Controll action change get config in database table config 
 
+    namespace becwork\controllers;
+
     class PageConfigController {
 
         //Update maintenance value in config to enable

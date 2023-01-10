@@ -1,5 +1,7 @@
 <?php //Main utils class
 
+    namespace becwork\utils;
+
     class MainUtils { 
 
         /*

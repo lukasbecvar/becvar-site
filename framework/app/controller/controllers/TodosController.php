@@ -1,5 +1,7 @@
 <?php //Todo list manager
 
+    namespace becwork\controllers;
+
     class TodosController {
 
         //Add new todo to mysql

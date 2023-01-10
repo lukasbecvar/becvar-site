@@ -1,5 +1,7 @@
 <?php /* The controller for services action */
 
+    namespace becwork\controllers;
+
     class ServicesController {
 
         /**

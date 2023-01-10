@@ -1,5 +1,7 @@
 <?php //The Example app controller
 
+    namespace becwork\controllers;
+
 	class SiteController {
 
         //Get true or false if admin page

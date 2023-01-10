@@ -1,5 +1,7 @@
 <?php //The cookie manage utils
 
+    namespace becwork\utils;
+
     class CookieUtils {
 
         /*

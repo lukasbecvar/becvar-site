@@ -1,5 +1,7 @@
 <?php //Define site config
 
+	namespace becwork\config;
+
 	class PageConfig {
 
 		public $config = [

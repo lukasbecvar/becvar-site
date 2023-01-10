@@ -1,5 +1,7 @@
 <?php //All admin functions in one class
 
+	namespace becwork\controllers;
+
 	class AdminController {
 
 		//Check if users table not empty

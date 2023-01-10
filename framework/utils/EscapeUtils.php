@@ -1,5 +1,7 @@
 <?php //Escape security utils
 
+    namespace becwork\utils;
+
     class EscapeUtils {
 
         /*

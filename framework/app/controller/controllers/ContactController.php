@@ -1,5 +1,7 @@
 <?php /* Contact controller (read, sent, delelete msg) */
 
+	namespace becwork\controllers;
+
 	class ContactController {
 
 		//Send message to database

@@ -22,49 +22,53 @@
 
 	//Include services list for dashboard system
 	require_once("../services-list.php");
+
+	//Include config file
+	require_once("../config.php");
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
-	//Init ConfigManager
-	$pageConfig = new ConfigManager();
+	//Init ConfigManager & Config objcts
+	$configOBJ = new becwork\config\PageConfig();
+	$pageConfig = new becwork\config\ConfigManager();
 
 	//Init HashUtils
-	$hashUtils = new HashUtils();
+	$hashUtils = new becwork\utils\HashUtils();
 
 	//Init CryptUtils
-	$cryptUtils = new CryptUtils();
+	$cryptUtils = new becwork\utils\CryptUtils();
 
 	//Init ResponseUtils
-	$responseUtils = new ResponseUtils();
+	$responseUtils = new becwork\utils\ResponseUtils();
 
 	//Init FileUtils
-	$fileUtils = new FileUtils();
+	$fileUtils = new becwork\utils\FileUtils();
 
 	//Init MainUtils
-	$mainUtils = new MainUtils();
+	$mainUtils = new becwork\utils\MainUtils();
 
 	//Init StringUtils
-	$stringUtils = new StringUtils();
+	$stringUtils = new becwork\utils\StringUtils();
 
 	//Init SessionUtils
-	$sessionUtils = new SessionUtils();
+	$sessionUtils = new becwork\utils\SessionUtils();
 
 	//Init UrlUtils
-	$urlUtils = new UrlUtils();
+	$urlUtils = new becwork\utils\UrlUtils();
 
 	//Init CookieUtils
-	$cookieUtils = new CookieUtils();
+	$cookieUtils = new becwork\utils\CookieUtils();
 
 	//Init EscapeUtils
-	$escapeUtils = new EscapeUtils();
+	$escapeUtils = new becwork\utils\EscapeUtils();
 
 	//Init MysqlUtils
-	$mysqlUtils = new MysqlUtils();
+	$mysqlUtils = new becwork\utils\MysqlUtils();
 
 	//Init BrowsersList
-	$browsersList = new BrowsersList();
+	$browsersList = new becwork\utils\BrowsersList();
 
 	//Init ServicesManager
-	$servicesList = new ServicesManager();
+	$servicesList = new becwork\services\ServicesManager();
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Autoload composer vendor
@@ -117,9 +121,6 @@
 		//Include main page component or process
 		else {
 			
-
-
-
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Set logs disabler function by process
 			if($siteController->getCurrentProcess() == "disableLogsForMe") {
@@ -153,8 +154,6 @@
 				}	
 			}
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 			//Set main page component in process is empty
 			else {

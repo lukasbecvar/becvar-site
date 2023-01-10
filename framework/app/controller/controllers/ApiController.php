@@ -1,5 +1,7 @@
 <?php //The main api actions class
 
+    namespace becwork\controllers;
+
     class ApiController {
 
         //Function for get true or false api enabled check

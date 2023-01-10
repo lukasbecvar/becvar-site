@@ -1,5 +1,7 @@
 <?php //Controller for flash alert msg 
 
+    namespace becwork\controllers;
+
     class AlertController { 
 
         //Flash alert

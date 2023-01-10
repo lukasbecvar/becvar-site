@@ -3,7 +3,7 @@
 
     require_once("../../../config.php");
 
-    $configOBJ = new PageConfig();
+    $configOBJ = new  becwork\config\PageConfig();
 
     $session = $configOBJ->config["loginCookie"];
     $session_value = $configOBJ->config["loginValue"];

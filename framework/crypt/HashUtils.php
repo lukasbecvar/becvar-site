@@ -1,5 +1,7 @@
 <?php //The main hash class
 
+    namespace becwork\utils;
+
     class HashUtils { 
 
         /*

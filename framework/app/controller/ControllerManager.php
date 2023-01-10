@@ -14,35 +14,35 @@
 	require_once(__DIR__."/controllers/ProjectsController.php");
 
 	//Init ContactController
-	$contactController = new ContactController();
+	$contactController = new becwork\controllers\ContactController();
 
 	//Init AdminController
-	$adminController = new AdminController();
+	$adminController = new becwork\controllers\AdminController();
 
 	//Init TodosController
-	$todosController = new TodosController();
+	$todosController = new becwork\controllers\TodosController();
 
 	//Init PageConfigController
-	$pageConfigController = new PageConfigController();
+	$pageConfigController = new becwork\controllers\PageConfigController();
 
 	//Init DashboardController
-	$dashboardController = new DashboardController();
+	$dashboardController = new becwork\controllers\DashboardController();
 
 	//Init ApiController 
-	$apiController = new ApiController();
+	$apiController = new becwork\controllers\ApiController();
 
 	//Init SiteController
-	$siteController = new SiteController();
+	$siteController = new becwork\controllers\SiteController();
 
 	//Init VisitorSystemController
-	$visitorController = new VisitorSystemController();
+	$visitorController = new becwork\controllers\VisitorSystemController();
 
 	//Init ServicesController
-	$servicesController = new ServicesController();
+	$servicesController = new becwork\controllers\ServicesController();
 
 	//Init AlertController
-	$alertController = new AlertController();
+	$alertController = new becwork\controllers\AlertController();
 
 	//Init ProjectsController
-	$projectsController = new ProjectsController();
+	$projectsController = new becwork\controllers\ProjectsController();
 ?>
