@@ -89,7 +89,7 @@
                     }
 
                     //Check if location is CZ
-                    if (str_starts_with($data["location"], 'CZ/') or str_starts_with($data["location"], 'cz/')) {
+                    if (strtolower(str_starts_with($data["location"], 'cz'))) {
                         $data["location"] = "<span class='text-warning'>".$data["location"]."</span>";
                     }
 
