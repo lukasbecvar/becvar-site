@@ -65,12 +65,12 @@
 
                     //Check if client ip not have > 15 characters
                     if (strlen($data["ip_adress"]) > 15) {
-                        $data["ip_adress"] = substr($data["ip_adress"], 0, 15)."...";
+                        $formatedIP = substr($data["ip_adress"], 0, 15)."...";
                     }
 
                     //If ip = session ip
                     if ($data["ip_adress"] == $adminController->getUserIPByToken($adminController->getUserToken())) {
-                        $data["ip_adress"] = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
+                        $formatedIP = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                     }
 
                     //Check if browser is undefined
@@ -89,7 +89,7 @@
                     }
 
                     //Check if location is CZ
-                    if (strtolower(str_starts_with($data["location"], 'cz'))) {
+                    if (str_starts_with(strtolower($data["location"]), 'cz')) {
                         $data["location"] = "<span class='text-warning'>".$data["location"]."</span>";
                     }
 
@@ -123,7 +123,7 @@
                         <td><strong>".$data["os"]."</strong>
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$data["banned"]."</strong>
-                        <td><strong>".$data["ip_adress"]."</strong>
+                        <td><strong>".$formatedIP."</strong>
                         <td>".$banLink."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
