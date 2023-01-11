@@ -72,7 +72,13 @@
 
                     // if ip = session ip
                     if ($data["ip_adress"] == $adminController->getUserIPByToken($adminController->getUserToken())) {
-                        $formatedIP = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
+                        // check if client ip not have > 15 characters
+                        if (strlen($data["ip_adress"]) > 15) {
+                            $formatedIP = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
+
+                        } else {
+                            $formatedIP = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
+                        }                
                     }
 
                     // check if browser is undefined
@@ -104,7 +110,7 @@
 
                     // check if location is unknown
                     if ($data["location"] == "Undefined") {
-                        $data["location"] = "<span class='text-muted'>".$data["location"]."</span>";
+                        $data["location"] = "<span class='text-red'>".$data["location"]."</span>";
                     }
 
                     // check if OS is unknown
