@@ -102,13 +102,18 @@
                         $data["banned"] = "<span class='text-success'>".$data["banned"]."</span>";
                     }
 
+                    // check if location is unknown
+                    if ($data["location"] == "Undefined") {
+                        $data["location"] = "<span class='text-muted'>".$data["location"]."</span>";
+                    }
+
                     // check if OS is unknown
                     if ($data["os"] == "Unknown OS") {
                         $data["os"] = "<span class='text-red'>".$data["os"]."</span>";
                     } else {
                         $data["os"] = "<span class='text-success'>".$data["os"]."</span>";
                     }
-                    
+
                     // check if visitor is banned
                     if ($bannedStatus == "yes") {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";

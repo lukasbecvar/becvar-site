@@ -285,7 +285,7 @@
 
                 $location = $_SERVER["HTTP_CF_IPCOUNTRY"];
             } else {
-                $location = "NULL";
+                $location = "Undefined";
             }
 
             //Final return
