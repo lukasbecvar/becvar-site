@@ -755,11 +755,6 @@ textarea {
 	border-bottom: 2px solid #343a40;
 }
 
-.lineItem:hover {
-	border-top: 2.1px solid #38be1d;
-	border-bottom: 2px solid #38be1d;
-}
-
 .cardSubTitle {
 	font-size: 28px;
 	margin-bottom: 0;
