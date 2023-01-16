@@ -280,16 +280,37 @@
 
             global $pageConfig;
 
-            // check if page running on cloudflare
-            if (!empty($_SERVER["HTTP_CF_IPCOUNTRY"])) {
-
-                $location = $_SERVER["HTTP_CF_IPCOUNTRY"];
+            //Check if site running on localhost
+            if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") or (str_starts_with($pageConfig->getValueByName("url"), "192.168"))) {
+                $country = "HOST";
+                $city = "Location";
+            
             } else {
-                $location = "Undefined";
+ 
+                //Get data by IP from ipinfo API 
+                $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
+           
+                //Get country and site from API data
+                $country = $details->country;
+                $city = $details->city;
+            }
+
+            //Set undefined if country is empty
+            if (empty($country)) {
+                $country = "Undefined";
+            }
+
+            //Set undefined city is empty
+            if (empty($city)) {
+                $city = "Undefined";
             }
 
             //Final return
-            return $location;
+            if  ($country == "Undefined" or $city == "Undefined") {
+                return "Undefined";
+            } else {
+                return $country."/".$city;
+            }
         }
 
         //Get user ip by id
