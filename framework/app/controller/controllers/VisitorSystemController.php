@@ -1,93 +1,94 @@
-<?php //Visitor system controller & manager
+<?php // visitor system controller & manager
 
     namespace becwork\controllers;
 
     class VisitorSystemController {
 
-        //Get user browser
+        // get user browser
         public function getBrowser() {
 
-            //Get user agent
+            // get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
 
-            //Return undefined
+            // return undefined
             if ($agent == null) {
                 $browser = "Undefined";
            
-            //Return browser agent
+            // return browser agent
             } else {
                 $browser = $agent;
             }
             
-            //Return browser ID
+            // return browser ID
             return $browser;
         }
 
-        //Shortify BrowserID
+        // shortify BrowserID
         public function getShortBrowserID($raw) {
             
             global $browsersList;
 
-            //Init default value
+            // init default value
             $out = $raw;
 
-            //Identify Internet explorer
+            // identify Internet explorer
             if(preg_match('/MSIE (\d+\.\d+);/', $raw) ) {
                 $out = "Internet Explore";
             } else if (str_contains($raw, 'MSIE') ) {
                 $out = "Internet Explore";    
 
-            //Identify Google chrome
+            // identify Google chrome
             } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Chrome";
             
-            //Identify Internet edge
+            // identify Internet edge
             } else if (preg_match('/Edge\/\d+/', $raw) ) {
                 $out = "Edge";
             
-            //Identify Firefox
+            // identify Firefox
             } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Firefox";
             } else if (str_contains($raw, 'Firefox/96') ) {
                 $out = "Firefox/96";            
                 
-            //Identify Safari
+            // identify Safari
             } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Safari";
                 
-            //Identify UC Browser
+            // identify UC Browser
             } else if (str_contains($raw, 'UCWEB') ) {
                 $out = "UC Browser";
   
-            //Identify IceApe Browser
+            // identify IceApe Browser
             } else if (str_contains($raw, 'Iceape') ) {
                 $out = "IceApe Browser";
 
-            //Identify NetFront Browser
+            // identify NetFront Browser
             } else if (str_contains($raw, 'NetFront') ) {
                 $out = "NetFront Browser";
 
-            //Identify Midori Browser
+            // identify Midori Browser
             } else if (str_contains($raw, 'Midori') ) {
                 $out = "Midori Browser";
 
-            //Identify Netscape Navigator
+            // identify Netscape Navigator
             } else if (str_contains($raw, 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330') ) {
                 $out = "Netscape Navigator";
 
-            //Identify Opera
+            // identify Opera
             } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Opera";
             } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Opera";
             }
 
-            //Identify shortify array [ID: str_contains, Value: replacement]
+            // identify shortify array [ID: str_contains, Value: replacement]
             $browser_array = $browsersList->browserList;
 
-            //Default found in browser list
+            // default found in browser list
             $found = "no";
 
+            // get short output from browser list
             foreach ($browser_array as $index => $value) {
                 if (str_contains($raw, $index)) {
                     $out = $value;
@@ -95,7 +96,7 @@
                 }
             }
 
-            //Non complete agents
+            // non complete agents
             if ($found == "no") {
                 if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
                     $out = "Undefined";
@@ -108,16 +109,16 @@
             return $out;
         }
 
-        //Get visitor OS
+        // get visitor OS
         public function getVisitorOS() { 
 
-            //Get user agent
+            // get user agent
             $agent = $this->getBrowser();
         
-            //Define default OS
+            // define default OS
             $os_platform  = "Unknown OS";
         
-            //OS array
+            // OS array
             $os_array = array (
                 '/windows nt 10/i'      =>  'Windows 10',
                 '/windows nt 6.3/i'     =>  'Windows 8.1',
@@ -145,22 +146,24 @@
                 '/SMART-TV/i'           =>  'Smart TV'
             );
         
+            // get os name from list
             foreach ($os_array as $regex => $value) {
                 if (preg_match($regex, $agent)) {
                     $os_platform = $value;
                 }
             }
         
+            // return on
             return $os_platform;
         }
 
-        //First visit site
+        // first visit site
         public function firstVisit() {
             
             global $mysqlUtils;
             global $mainUtils;
 
-            //Get data
+            // get data
             $visited_sites = 1;
             $first_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
             $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
@@ -176,21 +179,21 @@
                 $banned = "no";
             }
 
-            //Save firt visit
+            // save firt visit
             $mysqlUtils->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `banned`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$banned', '$ip_adress')");   
 
-            //Rdirect banned users to banned page
+            // redirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
 
-                //Log trying to access site if user banned
+                // log trying to access site if user banned
                 $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
-                //Redirect to banned page
+                // redirect to banned page
                 die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
             }
         }
 
-        //Visit site
+        // visit site
         public function visitSite() {
 
             global $mysqlUtils;
@@ -198,7 +201,7 @@
             global $mainUtils;
             global $pageConfig;
 
-            //Get visitor ip
+            // get visitor ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
             // check if visitors count is zero
@@ -209,7 +212,7 @@
                 // check if visitor exist in table
                 if ($this->ifVisitorIsInTable($ip_adress)) {
 
-                    //Get key count in db for duplicity check
+                    // get key count in db for duplicity check
                     $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip_adress'"))["count"];
 
                     // check if key is not exist in database
@@ -217,35 +220,35 @@
                         $this->firstVisit();
 
                     } else {
-                        //Get data from mysql by IP
+                        // get data from mysql by IP
                         $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
-                        //New values to insert
+                        // new values to insert
                         $visited_sites = $visited_sites + 1;
                         $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
                         $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
                         $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
                         $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
 
-                        //Update database
+                        // update database
                         $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
-                        //Show ban page if IP banned
+                        // show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
 
-                            //Log trying to access site if user banned
+                            // log trying to access site if user banned
                             $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
-                            //Redirect to banned page
+                            // redirect to banned page
                             die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
                         }
                     }
                     
-                } else {
+                } else { // init first visit for new visitors
                     $this->firstVisit();
                 }
             }
@@ -257,14 +260,14 @@
             global $mysqlUtils;
             global $pageConfig;
 
-            //Get ip count
+            // get ip count
             $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
             $ip_count = intval($ip_count);
             
             // check if ip is in database
             if ($ip_count > 0) {
 
-                //Get banned status
+                // get banned status
                 $banned_status = $mysqlUtils->readFromMysql("SELECT banned FROM visitors WHERE `ip_adress` = '".$ip."'", "banned");
 
                 // check if banned status = yes
@@ -278,37 +281,37 @@
             }
         }
 
-        //Get visitor location
+        // get visitor location
         public function getVisitorLocation($ip) {
 
             global $pageConfig;
 
-            //Check if site running on localhost
+            // check if site running on localhost
             if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") or (str_starts_with($pageConfig->getValueByName("url"), "192.168"))) {
                 $country = "HOST";
                 $city = "Location";
             
             } else {
  
-                //Get data by IP from ipinfo API 
+                // get data by IP from ipinfo API 
                 $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
            
-                //Get country and site from API data
+                // get country and site from API data
                 $country = $details->country;
                 $city = $details->city;
             }
 
-            //Set undefined if country is empty
+            // set undefined if country is empty
             if (empty($country)) {
                 $country = "Undefined";
             }
 
-            //Set undefined city is empty
+            // set undefined city is empty
             if (empty($city)) {
                 $city = "Undefined";
             }
 
-            //Final return
+            // final return
             if  ($country == "Undefined" or $city == "Undefined") {
                 return "Undefined";
             } else {
@@ -316,13 +319,13 @@
             }
         }
 
-        //Get user ip by id
+        // get user ip by id
         public function getVisitorIPByID($id) {
 
             global $mysqlUtils;
             global $pageConfig;
 
-            //Get ID count
+            // get ID count
             $ID_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='$id'"))["count"];
 
             // check if key found in database
@@ -330,20 +333,21 @@
                 return NULL;
             } else {
 
-                //Get visitor ip by key
+                // get visitor ip by key
                 $visitorIP = $mysqlUtils->readFromMysql("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
 
+                // return ip
                 return $visitorIP;
             }
         }
 
-        //Get user ip by ip
+        // get user ip by ip
         public function getVisitorIDByIP($ip) {
 
             global $mysqlUtils;
             global $pageConfig;
 
-            //Get IP count
+            // get IP count
             $IP_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
 
             // check if key found in database
@@ -351,24 +355,28 @@
                 return NULL;
             } else {
 
-                //Get visitor id by ip
+                // get visitor id by ip
                 $visitorID = $mysqlUtils->readFromMysql("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
 
                 return $visitorID;
             }
         }
 
-        //Ban user by IP
+        // ban user by IP
         public function bannVisitorByIP($ip) {
+            
             global $mysqlUtils;
 
+            // update ban status
             $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'yes' WHERE `ip_adress` = '$ip'");
         }
  
-        //UnBan user by IP
+        // un-ban user by IP
         public function unbannVisitorByIP($ip) {
+            
             global $mysqlUtils;
 
+            // update ban status
             $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'no' WHERE `ip_adress` = '$ip'");
         }
 
@@ -378,7 +386,7 @@
             global $mysqlUtils;
             global $pageConfig;
 
-            //Get IP count from visitors table
+            // get IP count from visitors table
             $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
             $ip_count = intval($ip_count);    
             
@@ -389,17 +397,17 @@
             }
         }
 
-        //Call visit or first visit function
+        // call visit or first visit function
         public function init() {
 
             global $mysqlUtils;
             global $mainUtils;
             global $pageConfig;
 
-            //Get value banned russia
+            // get value banned russia
             $bannedRussia = $pageConfig->getValueByName('bannedRussia');
 
-            //Get user ip
+            // get user ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
             // check russia banned
@@ -408,7 +416,10 @@
                 // check if user is russian
                 if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "ru")) {
 
-                    //Redirect to banned page
+                    // log russia banned
+                    $mysqlUtils->logToMysql("Banned", "Russian visitory trying to access site");
+
+                    // redirect to banned page
                     die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
                 }
             }

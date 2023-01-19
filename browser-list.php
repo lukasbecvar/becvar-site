@@ -1,4 +1,4 @@
-<?php //Sortify browserID list
+<?php // shortify browserID list
 
     namespace becwork\utils;
 

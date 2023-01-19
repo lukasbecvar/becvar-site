@@ -1,4 +1,4 @@
-<?php //This is the main class to include all active controllers 
+<?php // this is the main class to include all active controllers 
 
     // require all controllers path
 	require_once(__DIR__."/controllers/ContactController.php");

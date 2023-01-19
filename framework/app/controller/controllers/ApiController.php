@@ -188,7 +188,7 @@
             } else {
 
                 //Log to mysql
-                $logFunc = $mysqlUtils->logToMysql($name, $log);
+                $mysqlUtils->logToMysql($name, $log);
 
                 // set api headers
                 $this->sendAPIHeaders();

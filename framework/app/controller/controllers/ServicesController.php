@@ -127,9 +127,6 @@
 
             global $pageConfig;
 
-            // get service dir from config
-            $serviceDir = $pageConfig->getValueByName('serviceDir');
-
             // execute script
             shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$scriptName."'");
         }
