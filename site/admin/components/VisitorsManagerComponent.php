@@ -81,13 +81,12 @@
                         }                
                     }
 
+                    // shortify browserID
+                    $data["browser"] = $visitorController->getShortBrowserID($data["browser"]);
+
                     // check if browser is undefined
                     if ($data["browser"] == "Undefined") {
                         $data["browser"] = "<span class='text-red'>".$data["browser"]."</span>";
-                    } else {
-
-                        // shortify browserID
-                        $data["browser"] = $visitorController->getShortBrowserID($data["browser"]);
                     }
 
                     // check if first_visit & last_visit have same time

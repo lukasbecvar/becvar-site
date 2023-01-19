@@ -82,22 +82,29 @@
                 $out = "Opera";
             }
 
-            //Non complete agents
-            else if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
-                $out = "Undefined";
-            } else if ($raw = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)") {
-                $out = "Undefined";
-            }
-
             //Identify shortify array [ID: str_contains, Value: replacement]
             $browser_array = $browsersList->browserList;
+
+            //Default found in browser list
+            $found = "no";
 
             foreach ($browser_array as $index => $value) {
                 if (str_contains($raw, $index)) {
                     $out = $value;
+                    $found = "yes";
                 }
             }
 
+            //Non complete agents
+            if ($found == "no") {
+                if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
+                    $out = "Undefined";
+                } else if ($raw = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)") {
+                    $out = "Undefined";
+                }
+            }
+
+            // return output
             return $out;
         }
 
@@ -105,7 +112,7 @@
         public function getVisitorOS() { 
 
             //Get user agent
-            $agent = $_SERVER["HTTP_USER_AGENT"];
+            $agent = $this->getBrowser();
         
             //Define default OS
             $os_platform  = "Unknown OS";
@@ -125,16 +132,17 @@
                 '/win98/i'              =>  'Windows 98',
                 '/win95/i'              =>  'Windows 95',
                 '/win16/i'              =>  'Windows 3.11',
-                '/macintosh|mac os x/i' =>  'Mac OS X',
-                '/mac_powerpc/i'        =>  'Mac OS 9',
                 '/linux/i'              =>  'Linux',
                 '/ubuntu/i'             =>  'Ubuntu',
+                '/macintosh|mac os x/i' =>  'Mac OS X',
+                '/mac_powerpc/i'        =>  'Mac OS 9',
                 '/iphone/i'             =>  'iPhone',
                 '/ipod/i'               =>  'iPod',
                 '/ipad/i'               =>  'iPad',
                 '/android/i'            =>  'Android',
                 '/blackberry/i'         =>  'BlackBerry',
-                '/webos/i'              =>  'Mobile'
+                '/webos/i'              =>  'Mobile',
+                '/SMART-TV/i'           =>  'Smart TV'
             );
         
             foreach ($os_array as $regex => $value) {
@@ -189,7 +197,6 @@
             global $dashboardController;
             global $mainUtils;
             global $pageConfig;
-            global $adminController;
 
             //Get visitor ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
@@ -204,10 +211,6 @@
 
                     //Get key count in db for duplicity check
                     $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip_adress'"))["count"];
-
-                    //Get id = 1 count
-                    $id_one_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='1'"))["count"];
-
 
                     // check if key is not exist in database
                     if ($ip_count == "0") {
