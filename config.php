@@ -56,6 +56,9 @@
 			/* Banned country */
 			"bannedRussia" => true,
 
+			/* Enabled logs */
+			"logs" => false,
+
 			/* Mysql config */
 			"ip" 		=> 	"localhost",	// define mysql server ip
 			"basedb" 	=> 	"becvar_site",	// define mysql default db name

@@ -89,21 +89,25 @@
             global $mainUtils;
             global $visitorController;
 
-            // check if antilog cookie set
-            if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
+            // check if logs enable
+            if ($configOBJ->config["logs"] == true) {
 
-                //Escape values
-                $name = $this->escapeString($name, true, true);
-                $value = $this->escapeString($value, true, true);
+                // check if antilog cookie set
+                if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
 
-                // get values
-                $date = date('d.m.Y H:i:s');
-                $remote_addr = $mainUtils->getRemoteAdress();
-                $status = "unreaded";
-                $browser = $visitorController->getBrowser();
+                    //Escape values
+                    $name = $this->escapeString($name, true, true);
+                    $value = $this->escapeString($value, true, true);
 
-                // insert log to mysql
-                $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `browser`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
+                    // get values
+                    $date = date('d.m.Y H:i:s');
+                    $remote_addr = $mainUtils->getRemoteAdress();
+                    $status = "unreaded";
+                    $browser = $visitorController->getBrowser();
+
+                    // insert log to mysql
+                    $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `browser`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
+                }
             }
         }
 
