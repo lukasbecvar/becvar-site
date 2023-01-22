@@ -185,12 +185,12 @@
         }
 
         // get banned visitors count 
-        public function getBannedCount() {
+        public function getBannedCount() {  //date("d.m.Y")
             global $mysqlUtils;
             global $pageConfig;
         
             // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE banned='yes'"))["count"];
+            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE status='banned'"))["count"];
         }
 
         // check if system is linux

@@ -57,7 +57,7 @@
 			"bannedRussia" => true,
 
 			/* Enabled logs */
-			"logs" => false,
+			"logs" => true,
 
 			/* Mysql config */
 			"ip" 		=> 	"localhost",	// define mysql server ip

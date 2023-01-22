@@ -180,7 +180,7 @@
             }
 
             // save firt visit
-            $mysqlUtils->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `banned`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$banned', '$ip_adress')");   
+            $mysqlUtils->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
 
             // redirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
@@ -261,17 +261,17 @@
             global $pageConfig;
 
             // get ip count
-            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
+            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE `ip_adress`='$ip'"))["count"];
             $ip_count = intval($ip_count);
             
             // check if ip is in database
             if ($ip_count > 0) {
 
                 // get banned status
-                $banned_status = $mysqlUtils->readFromMysql("SELECT banned FROM visitors WHERE `ip_adress` = '".$ip."'", "banned");
+                $banned_status = $mysqlUtils->readFromMysql("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
 
                 // check if banned status = yes
-                if ($banned_status == "yes") {
+                if ($banned_status == "banned") {
                     return true;
                 } else {
                     return false;
@@ -363,12 +363,34 @@
         }
 
         // ban user by IP
-        public function bannVisitorByIP($ip) {
+        public function bannVisitorByIP($ip, $reason) {
             
             global $mysqlUtils;
+            global $pageConfig; 
 
-            // update ban status
-            $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'yes' WHERE `ip_adress` = '$ip'");
+            // get IP count from banned table
+            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE `ip_adress`='$ip'"))["count"];
+            $ip_count = intval($ip_count);  
+
+            // check if ip found in banned table
+            if ($ip_count > 0) {
+
+                // update ban status
+                $mysqlUtils->insertQuery("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
+
+                // update reason
+                $mysqlUtils->insertQuery("UPDATE banned SET reason = '$reason' WHERE `ip_adress` = '$ip'");
+
+            } else {
+                // default banned status
+                $status = "banned";
+
+                // get current date
+                $banned_date = date("d.m.Y");
+
+                // insert ban users
+                $mysqlUtils->insertQuery("INSERT INTO `banned`(`ip_adress`, `reason`, `banned_date`, `status`) VALUES ('$ip', '$reason', '$banned_date', '$status')");
+            }
         }
  
         // un-ban user by IP
@@ -377,7 +399,7 @@
             global $mysqlUtils;
 
             // update ban status
-            $mysqlUtils->insertQuery("UPDATE visitors SET banned = 'no' WHERE `ip_adress` = '$ip'");
+            $mysqlUtils->insertQuery("UPDATE banned SET status = 'unbanned' WHERE `ip_adress` = '$ip'");
         }
 
         // check if visitor is in table

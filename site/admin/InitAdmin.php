@@ -47,7 +47,7 @@
     } else if ($siteController->getCurrentAction() == "register") {
         include_once("components/AdminAccountRegisterComponent.php");
 
-    } else { 
+    } else {    
 
         // check if user logged in
         if ($adminController->isLoggedIn()) {	

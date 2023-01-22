@@ -61,7 +61,11 @@
                 foreach ($visitors as $data) {
 
                     // get banned status
-                    $bannedStatus = $data["banned"];
+                    if ($visitorController->isVisitorBanned($data["ip_adress"])) {
+                        $banStatus = "banned";
+                    } else {
+                        $banStatus = "unbanned";
+                    }
 
                     // check if client ip not have > 15 characters
                     if (strlen($data["ip_adress"]) > 15) {
@@ -101,10 +105,10 @@
                     }
 
                     // check if banned
-                    if ($bannedStatus == "yes") {
-                        $data["banned"] = "<span class='text-red'>".$data["banned"]."</span>";
+                    if ($banStatus == "banned") {
+                        $banned = "<span class='text-red'>yes</span>";
                     } else {
-                        $data["banned"] = "<span class='text-success'>".$data["banned"]."</span>";
+                        $banned = "<span class='text-success'>no</span>";
                     }
 
                     // check if location is unknown
@@ -120,7 +124,7 @@
                     }
 
                     // check if visitor is banned
-                    if ($bannedStatus == "yes") {
+                    if ($banStatus == "banned") {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
                     } else {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
@@ -135,7 +139,7 @@
                         <td><strong>".$data["browser"]."</strong>
                         <td><strong>".$data["os"]."</strong>
                         <td><strong>".$data["location"]."</strong>
-                        <td><strong>".$data["banned"]."</strong>
+                        <td><strong>".$banned."</strong>
                         <td><strong>".$formatedIP."</strong>
                         <td>".$banLink."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
@@ -172,19 +176,27 @@
                 // check if user banned
                 if ($visitorController->isVisitorBanned($ip)) {
                     
-                    // unban user by ip
-                    $visitorController->unbannVisitorByIP($ip);
-
                     // log unban
                     $mysqlUtils->logToMysql("Unban visitor", "User ".$adminController->getCurrentUsername()." unbanned ip: ".$ip);
 
+                    // unban user by ip
+                    $visitorController->unbannVisitorByIP($ip);
                 } else {
                     
-                    // ban user by ip
-                    $visitorController->bannVisitorByIP($ip);
+                    // check ban reason
+                    if (!empty($_GET["reason"])) {
+
+                        // escape ban reason
+                        $reason = $mysqlUtils->escapeString($_GET["reason"], true, true);
+                    } else {
+                        $reason = "no reason";
+                    }
 
                     // log ban
                     $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
+
+                    // ban user by ip
+                    $visitorController->bannVisitorByIP($ip, $reason);
                 }
 
                 // check if auto close seted

@@ -56,7 +56,7 @@
 				if ($visitorController->isVisitorBanned($row["remote_addr"])) {
 					$banLink = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=y' target='blank_'>UNBAN</a>";
 				} else {
-					$banLink = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=y' target='blank_'>BAN</a>";
+					$banLink = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=y&reason=spam' target='blank_'>BAN</a>";
 				}
 
 				// check if ip found

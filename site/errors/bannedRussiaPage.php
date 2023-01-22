@@ -42,7 +42,15 @@
 </style>
 <body class="mainPage">
 	<main>
-		<center><h3 class="errorPageMSG"><strong>[RU]: Путин - массовый убийца и международный преступник.<br><br>[EN]:Putin is a mass murderer and international criminal.<br>Russians are not welcome on this site</strong></h3></center>
+		<center>
+			<h3 class="errorPageMSG">
+				<strong>
+					[RU]: Путин - массовый убийца и международный преступник.<br><br>
+					[EN]:Putin is a mass murderer and international criminal.<br>
+					Russians are not welcome on this site
+				</strong>
+			</h3>
+		</center>
 	</main>
 </body>
 </html>
