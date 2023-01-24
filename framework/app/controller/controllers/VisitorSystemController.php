@@ -439,7 +439,7 @@
                 if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "ru")) {
 
                     // log russia banned
-                    $mysqlUtils->logToMysql("Banned", "Russian visitory trying to access site");
+                    $mysqlUtils->logToMysql("Banned", "Russian visitor trying to access site");
 
                     // redirect to banned page
                     die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
