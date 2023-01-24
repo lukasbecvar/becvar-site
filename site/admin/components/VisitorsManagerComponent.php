@@ -181,6 +181,21 @@
 
                     // unban user by ip
                     $visitorController->unbannVisitorByIP($ip);
+
+
+                    // check if auto close seted
+                    if (isset($_GET["close"])) {
+
+                        // close tab
+                        echo "<script>window.close();</script>";
+
+                    } else {
+
+                        // redirect to visitors
+                        if (($action == "ban") && !empty($_GET["reason"])) {
+                            $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                        }
+                    }
                 } else {
                     
                     // check ban reason
@@ -188,15 +203,32 @@
 
                         // escape ban reason
                         $reason = $mysqlUtils->escapeString($_GET["reason"], true, true);
+
+                        // log ban
+                        $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
+
+                        // ban user by ip
+                        $visitorController->bannVisitorByIP($ip, $reason);
+
                     } else {
-                        $reason = "no reason";
+
+                        // check if ban form submit
+                        if (isset($_POST["submitBan"])) {
+
+                            // check if ban reason seted
+                            if (!empty($_POST["banReason"])) {
+                                $banReason = $mysqlUtils->escapeString($_POST["banReason"], true, true);
+                            } else {
+                                $banReason = "no reason";
+                            }
+
+                            // redirect to banned with reason
+                            $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason");
+                        }
+
+                        // include ban from
+                        include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/BanForm.php');
                     }
-
-                    // log ban
-                    $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
-
-                    // ban user by ip
-                    $visitorController->bannVisitorByIP($ip, $reason);
                 }
 
                 // check if auto close seted
@@ -208,7 +240,9 @@
                 } else {
 
                     // redirect to visitors
-                    $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                    if (($action == "ban") && !empty($_GET["reason"])) {
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                    }
                 }
 
             } else {
