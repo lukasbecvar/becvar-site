@@ -12,6 +12,10 @@
             <div>
                 <img src="data:image/png;base64,<?php echo $image["image"]; ?>"/> 
             </div>
+            <?php 
+                // log image view to database
+                $mysqlUtils->logToMysql("Image-load", "visitor loaded image: $imgSpec");
+            ?>
         <center>
     </body>
 </html>

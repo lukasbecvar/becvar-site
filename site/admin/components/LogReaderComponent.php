@@ -88,7 +88,7 @@
                             $row = "<tr class='text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong>".$data["remote_addr"]."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         // upload logs
-                        } elseif ($data["name"] == "Uploader") {
+                        } elseif ($data["name"] == "Uploader" || $data["name"] == "Image-load") {
                             $row = "<tr class='text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong>".$data["remote_addr"]."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         // login, logout, password logs
