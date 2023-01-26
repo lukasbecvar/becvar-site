@@ -1,10 +1,10 @@
 <?php // image viewer component
 
     // check if image specified
-    if (!empty($_GET["spec"])) {
+    if ($siteController->getQueryString("spec") != null) {
 
         // get image spec
-        $imgSpec = $mysqlUtils->escapeString($_GET["spec"], true, true);
+        $imgSpec = $siteController->getQueryString("spec");
 
         // get image by specID
         $image = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM image_uploader WHERE imgSpec='".$imgSpec."'"));

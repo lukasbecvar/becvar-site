@@ -157,7 +157,7 @@
         } else {
 
             // get action
-            $action = $siteController->getCurrentAction();
+            $action = $siteController->getQueryString("action");
 
             // if action = delete all
             if ($action == "deleteVisitors") {

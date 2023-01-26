@@ -35,10 +35,10 @@
     }
 	
     // check if user typed id
-    if (isset($_GET["delete"])) {
+    if ($siteController->getQueryString("delete") != null) {
 
         // get id form url and escape
-        $id = $mysqlUtils->escapeString($_GET["delete"], true, true);
+        $id = $siteController->getQueryString("delete");
 
         // close todo
         $todosController->closeTodo($id);

@@ -121,29 +121,29 @@
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// set logs disabler function by process
-			if($siteController->getCurrentProcess() == "disableLogsForMe") {
+			if($siteController->getQueryString("process") == "disableLogsForMe") {
 				include_once("../site/admin/LogsDisabler.php");
 			}
 
 			// set api manager process
-			else if($siteController->getCurrentProcess() == "api" or str_starts_with($siteController->getHTTPhost(), "api")) {
+			else if($siteController->getQueryString("process") == "api" or str_starts_with($siteController->getHTTPhost(), "api")) {
 				include_once("../site/API.php");
 			}
 			
 			// set image viewer by process
-			else if($siteController->getCurrentProcess() == "image") {
+			else if($siteController->getQueryString("process") == "image") {
 				include_once("../site/components/ImageViewer.php");
 			}
 
 			// set code paste page
-			else if($siteController->getCurrentProcess() == "paste") {
+			else if($siteController->getQueryString("process") == "paste") {
 
 				// paste save 
-				if ($siteController->getCurrentMethod() == "save") {
+				if ($siteController->getQueryString("method") == "save") {
 					include_once("../site/components/paste/save.php");
 				
 				// paste view
-				} else if (isset($_GET["method"]) && $siteController->getCurrentMethod() == "view") {
+				} else if (($siteController->getQueryString("method") != null) && $siteController->getQueryString("method") == "view") {
 					include_once("../site/components/paste/view.php");
 				
 				// paste init

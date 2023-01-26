@@ -1,10 +1,10 @@
 <div class="dashboardBox">
     <?php 
         // check if config change submited
-        if (isset($_GET["config"])) {
+        if ($siteController->getQueryString("config") != null) {
 
             // get config action from url
-            $config = $mysqlUtils->escapeString($_GET["config"], true, true);
+            $config = $siteController->getQueryString("config");
 
             //////////////////////////////////////////////////////////
             // maintenance settings change requests

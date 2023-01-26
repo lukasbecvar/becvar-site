@@ -3,10 +3,10 @@
         <?php // admin inbox component (for show msgs from contact site)
         
             // check if user typed id
-            if (isset($_GET["delete"])) {
+            if ($siteController->getQueryString("delete") != null) {
 
                 // get and escape string id form url and save to id
-                $id = $mysqlUtils->escapeString($_GET["delete"], true, true);
+                $id = $siteController->getQueryString("delete");
 
                 // delete msg by id
                 $contactController->deleteMsgByID($id);

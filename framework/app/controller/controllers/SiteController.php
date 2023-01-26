@@ -8,7 +8,7 @@
         public function isCurrentPageAdmin() {
             
             // check if page is admin
-            if (!empty($_GET["admin"])) {
+            if ($this->getQueryString("admin") != null) {
                 return true;
             } else {
                 return false;
@@ -27,38 +27,22 @@
             }
         }
 
-        // get process name if isset
-        public function getCurrentProcess() {
-
+        // get query string by name
+        public function getQueryString($query) {
+            
             global $mysqlUtils;
 
-            if (isset($_GET["process"])) {
-
-                // return escaped process
-                return $mysqlUtils->escapeString($_GET["process"], true, true);
+            // check if query is empty
+            if (empty($_GET[$query])) {
+                $output = null;
             } else {
 
-                // check if page is dashboard
-                if ($this->isCurrentPageAdmin()) {
-                    return "dashboard";
-                } else {
-                    return null;
-                }
+                // escape query
+                $output = $mysqlUtils->escapeString($_GET[$query], true, true);
             }
-        }
 
-        // get admin process name if isset
-        public function getCurrentAdminProcess() {
-
-            global $mysqlUtils;
-
-            if (isset($_GET["admin"])) {
-
-                // return escaped admin get
-                return $mysqlUtils->escapeString($_GET["admin"], true, true);
-            } else {
-                return null;
-            }
+            // return final query value
+            return $output;
         }
 
         // get Http host aka domain name
@@ -84,30 +68,6 @@
                     // return app name
                     return $pageConfig->getValueByName('appName'); 
                 }
-            }
-        }
-
-        // get action name if isset
-        public function getCurrentAction() {
-
-            global $mysqlUtils;
-
-            if (isset($_GET["action"])) {
-
-                // return escaped action
-                return $mysqlUtils->escapeString($_GET["action"], true, true);
-            }
-        } 
-
-        // get method name if isset
-        public function getCurrentMethod() {
-
-            global $mysqlUtils;
-
-            if (isset($_GET["method"])) {
-
-                // retun escaped method
-                return $mysqlUtils->escapeString($_GET["method"], true, true);
             }
         }
 

@@ -1,7 +1,7 @@
 <?php // command executor (for admin tasks)
 
     // check if command defined
-    if (empty($_GET["command"])) {
+    if ($siteController->getQueryString("command") == null) {
 
         // redirect to 404 page if command is empty
         $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
@@ -12,7 +12,7 @@
         if ($adminController->isLoggedIn()) {
 
             // get command and escapeit
-            $command = $mysqlUtils->escapeString($_GET["command"], true, true); 
+            $command = $siteController->getQueryString("command");
 
             // get services path
             $serviceDir = $pageConfig->getValueByName('serviceDir');

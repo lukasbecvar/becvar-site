@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="assets/vendor/jquery/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" href="assets/vendor/fontawesome/fontawesome.min.css">
 	<?php // import gallery css if user browsing media
-		if ($siteController->getCurrentAdminProcess() == "mediaBrowser") {
+		if ($siteController->getQueryString("admin") == "mediaBrowser") {
 			echo '<link href="assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">';	
 			echo '<link href="assets/css/assets/vendor/lightgallery/css/lg-transitions.css" rel="stylesheet">';	
 		}
@@ -40,11 +40,11 @@
 <?php // main site redirector
 
 	// check if user send logout request
-	if ($siteController->getCurrentAction() == "logout") {
+	if ($siteController->getQueryString("action") == "logout") {
         $adminController->logout();
 
     // check if user send register action
-    } else if ($siteController->getCurrentAction() == "register") {
+    } else if ($siteController->getQueryString("action") == "register") {
         include_once("components/AdminAccountRegisterComponent.php");
 
     } else {    
@@ -59,52 +59,52 @@
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/Sidebar.php');
 
             // define process by name //////////////////////////////////////////////////////////////
-            if ($siteController->getCurrentAdminProcess() == "dashboard") {
+            if ($siteController->getQueryString("admin") == "dashboard") {
                 include_once("components/DashboardComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "accountSettings") {
+            } elseif ($siteController->getQueryString("admin") == "accountSettings") {
                 include_once("components/AccountSettingsComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "inbox") {
+            } elseif ($siteController->getQueryString("admin") == "inbox") {
                 include_once("components/InboxComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "todos") {
+            } elseif ($siteController->getQueryString("admin") == "todos") {
                 include_once("components/TodoManager.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "pageSettings") {
+            } elseif ($siteController->getQueryString("admin") == "pageSettings") {
                 include_once("components/PageSettings.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "phpInfo") {
+            } elseif ($siteController->getQueryString("admin") == "phpInfo") {
                 include_once("components/phpInfoComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "diagnostics") {
+            } elseif ($siteController->getQueryString("admin") == "diagnostics") {
                 include_once("components/DiagnosticsComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "dbBrowser") {
+            } elseif ($siteController->getQueryString("admin") == "dbBrowser") {
                 include_once("components/DatabaseBrowserComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "logReader") {
+            } elseif ($siteController->getQueryString("admin") == "logReader") {
                 include_once("components/LogReaderComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "visitors") {
+            } elseif ($siteController->getQueryString("admin") == "visitors") {
                 include_once("components/VisitorsManagerComponent.php");
 
-            } elseif ($siteController->getCurrentAdminProcess() == "mediaBrowser") {
+            } elseif ($siteController->getQueryString("admin") == "mediaBrowser") {
                 include_once("components/MediaBrowserComponent.php");
             ////////////////////////////////////////////////////////////////////////////////////////
 
             // login admin action redirect logged in users
-            } elseif ($siteController->getCurrentAdminProcess() == "login") {
+            } elseif ($siteController->getQueryString("admin") == "login") {
                 $urlUtils->jsRedirect("/?admin=dashboard");
 
             // task executor
-            } elseif ($siteController->getCurrentAdminProcess() == "executeTask") {
+            } elseif ($siteController->getQueryString("admin") == "executeTask") {
                 include_once("CommandExecutor.php");
                 
             // redirect to 404 if process not found or print error for dev mode
             } else {
                 if ($siteController->isSiteDevMode()) {
-                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteController->getCurrentAdminProcess()." not found<h2>");
+                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteController->getQueryString("admin")." not found<h2>");
                 } else {
                     $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
                 }
@@ -135,7 +135,7 @@
         if(!$mobileDetector->isMobile()) {
 
             // check if is admin process not dashboard
-            if($siteController->getCurrentAdminProcess() != "dashboard") {
+            if($siteController->getQueryString("admin") != "dashboard") {
                 include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');
             }	
         } else {

@@ -1,7 +1,7 @@
 <?php // code paste viewer
 
     // get paste spec
-    $spec = $mysqlUtils->escapeString($_GET["f"], true, true);
+    $spec = $siteController->getQueryString("f");
 
     // get paste content
     $pasteContent = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM pastes WHERE spec='$spec'"));
@@ -37,7 +37,7 @@
     </script>
 
     <?php // select title by file name
-        echo "<title>Viewing".$_GET["f"]."</title>";
+        echo "<title>Viewing".$siteController->getQueryString("f")."</title>";
     ?>
 </head>
 <body>

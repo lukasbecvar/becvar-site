@@ -13,13 +13,13 @@
 		$limitOnPage = $pageConfig->getValueByName("imagesInBrowserLimit");
 
 		// if limit get seted make this trash part of code xD
-		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
+		if (($siteController->getQueryString("limit") != null) && ($siteController->getQueryString("startby") != null)) {
 
 			// get show limit form url
-			$showLimit = $mysqlUtils->escapeString($_GET["limit"], true, true);
+			$showLimit = $siteController->getQueryString("limit");
 
 			// get start row form url
-			$startByRow = $mysqlUtils->escapeString($_GET["startby"], true, true);
+			$startByRow = $siteController->getQueryString("startby");
 
 			// set next limit
 			$nextLimit = (int) $showLimit + $limitOnPage;
@@ -52,7 +52,7 @@
 
 
         // pager button box check
-        if (isset($_GET["limit"]) and isset($_GET["startby"]) and !isset($_GET["action"])) {
+        if (($siteController->getQueryString("limit") != null) and ($siteController->getQueryString("startby") != null) and ($siteController->getQueryString("action") == null)) {
 
             echo '<div class="pageButtonBox">';
         
