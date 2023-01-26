@@ -32,12 +32,12 @@
             // others
             "https://domainsproject.org" => "dataset domainsproject.org",
             "https://security.ipip.net"  => "HTTP BD/security.ipip.net",
-            "internet-measurement.com"   => "internet-measurement.com",
             "PolycomRealPresenceTrio"    => "PolycomRealPresenceTrio",
             "Nmap Scripting Engine"      => "Nmap Scripting Engine",
             "NetcraftSurveyAgent"        => "NetcraftSurveyAgent",
             "NetSystemsResearch"         => "NetSystemsResearch",
             "python-requests"            => "python-requests",
+            "measurement.com"            => "measurement.com",
             "CensysInspect"              => "CensysInspect",
             "Baiduspider"                => "Baiduspider",
             "archive.org"                => "archive.org",
