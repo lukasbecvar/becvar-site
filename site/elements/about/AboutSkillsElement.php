@@ -27,6 +27,13 @@
         </div>
 
         <div class="progress">
+            <span class="skill">JavaScript / React<i class="val">60%</i></span>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div> 
+
+        <div class="progress">
             <span class="skill">Java <i class="val">50%</i></span>
             <div class="progress-bar-wrap">
                 <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -44,13 +51,6 @@
             <span class="skill">Python <i class="val">40%</i></span>
             <div class="progress-bar-wrap">
                 <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div> 
-
-        <div class="progress">
-            <span class="skill">JavaScript <i class="val">30%</i></span>
-            <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div> 
     </div>
