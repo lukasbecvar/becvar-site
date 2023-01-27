@@ -195,7 +195,7 @@
 					if ($tableName == "pastes") {
 						$data = [
 							"id" => $data["id"],
-							"link" => '<a href="?process=paste&method=view&f='.$data["link"].'" target="_blank">'.$data["link"].'</a>',
+							"link" => '<a href="?process=paste&method=view&f='.$data["spec"].'" target="_blank">'.$data["spec"].'</a>',
 							"spec" => $data["spec"],
 							"content" => "hidden",
 							"date" => $data["date"]

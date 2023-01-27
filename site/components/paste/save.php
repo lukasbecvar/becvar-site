@@ -4,26 +4,23 @@
 	if (isset($_POST['data'])) {
 
 		// get data from post
-		$conent = $mysqlUtils->escapeString($_POST['data']);
+		$content = $_POST['data'];
 
 		// get file name
 		$name = $mysqlUtils->escapeString($_POST['file'], true, true);
 
-		// select conent to write (Escape [XSS Protection])
-		$conent = str_replace(array("<", ">"), array("&lt;", "&gt;"), $conent);
-
-		// get link on paste
-		$link = $name;
+		// select content to write (Escape [XSS Protection])
+		$content = str_replace(array("<", ">"), array("&lt;", "&gt;"), $content);
 
 		// get date
 		$date = date('d.m.Y H:i:s');
 
 		// save paste to mysql table
-		if (!empty($conent)) {
-			$mysqlUtils->insertQuery("INSERT INTO `pastes`(`link`, `spec`, `content`, `date`) VALUES ('$link', '$name', '$conent', '$date')");
+		if (!empty($content)) {
+			$mysqlUtils->insertQuery("INSERT INTO `pastes`(`spec`, `content`, `date`) VALUES ('$name', '$content', '$date')");
 		}
 
 		// log to mysql
-		$mysqlUtils->logToMysql("Paste", "added new paste: ".$link);	
+		$mysqlUtils->logToMysql("Paste", "added new paste: ".$name);	
 	}
 ?>

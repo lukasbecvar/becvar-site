@@ -67,7 +67,6 @@ CREATE TABLE `messages` (
 DROP TABLE IF EXISTS `pastes`;
 CREATE TABLE `pastes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `link` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `spec` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
