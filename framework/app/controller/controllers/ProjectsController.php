@@ -10,8 +10,10 @@
             global $mysqlUtils;
             global $pageConfig;
 
+            // get projects where status
             $output = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM projects WHERE status='".$status."'");
 
+            // return projects objct
             return $output;
         }
     }

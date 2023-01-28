@@ -171,7 +171,7 @@
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
             $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
             $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
-            
+
             // check if ip is banned in database
             if ($this->isVisitorBanned($ip_adress)) {
                 $banned = "yes";
@@ -412,6 +412,7 @@
             $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
             $ip_count = intval($ip_count);    
             
+            // check if ip found
             if ($ip_count > 0) {
                 return true;
             } else {
@@ -446,9 +447,11 @@
                 }
             }
 
-            // check if cookie seted
+            // check if visitor found in database by IP
             if ($this->ifVisitorIsInTable($ip_adress)) {
                 $this->visitSite();
+            
+            // insert new visitor to database
             } else {
                 $this->firstVisit();
             }

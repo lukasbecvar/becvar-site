@@ -13,6 +13,7 @@
 			// get user count as count key
 			$userCount = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users"));
 
+			// check if user is empty
 			if ($userCount["count"] == 0) {
 				return true;
 			} else {
@@ -39,6 +40,7 @@
 					return false;
 				}
 
+			// check if token is null
 			} elseif ($this->getUserToken() != NULL) {
 				return false;
 			} else {
@@ -140,6 +142,7 @@
 			// log logout to mysql dsatabase 
 			if (!empty($this->getCurrentUsername())) {
 
+				// log logout action
 				$mysqlUtils->logToMysql("Logout", "User ".$this->getCurrentUsername()." logout out of admin site");
 			}
 
@@ -177,6 +180,8 @@
 
 		// check if user is owner
 		public function isUserOwner() {
+			
+			// check if user is owner
 			if($this->getCurrentRole() == "Owner" or $this->getCurrentRole() == "owner") {
 				return true;
 			} else {
@@ -203,7 +208,6 @@
 		public function getCurrentRole() {
 
 			global $mysqlUtils;
-			global $pageConfig;
 
 			// check if user token is not null
 			if ($this->getUserToken() != NULL) {

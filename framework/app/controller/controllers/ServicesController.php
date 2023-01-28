@@ -125,8 +125,6 @@
         // execute bash/sh script form /scripts in web [Input: script name]
         public function executeScriptAsROOT($scriptName) {
 
-            global $pageConfig;
-
             // execute script
             shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$scriptName."'");
         }

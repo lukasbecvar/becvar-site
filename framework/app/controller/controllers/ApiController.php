@@ -152,6 +152,7 @@
                     "error" => "log get value is null"
                 ];
     
+                // print json to page
                 echo json_encode($arr);  
 
             } else {
