@@ -15,6 +15,9 @@
                 <?php // closed projects
                     include(__DIR__."/../elements/projects/ProjectsClosedElement.php");
                 ?>
-         </div>
+        </div>
+        <?php // github referal link
+            include(__DIR__."/../elements/projects/GitHubReferal.php");
+        ?>
     </div>
 </section>
