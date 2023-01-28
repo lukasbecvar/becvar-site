@@ -83,7 +83,7 @@
 
 		////////////////////////////////////SUB-PANEL////////////////////////////////////
 		if (!empty($_GET["name"]) or !empty($_GET["editor"]) or !empty($_GET["add"])) { // check if panel required
-			echo '<ul class="breadcrumb bg-dark">'; // panel element
+			echo '<ul class="breadcrumb">'; // panel element
 
 				// table selector button to panel
 				echo '
@@ -364,11 +364,11 @@
 				// print Fields
 				while($row = mysqli_fetch_array($result)) {
 					echo '<p class="textInputTitle">'.$row['Field'].'</p>';
-					echo '<input class="textInput bg-dark" type="text" name="'.$row['Field'].'" value="'.$rowAll[$row['Field']].'"><br>';
+					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$rowAll[$row['Field']].'"><br>';
 				}
 
 			// end form
-			echo '<input class="inputButton bg-dark" type="submit" name="submitEdit" value="Edit"></form>';
+			echo '<input class="inputButton" type="submit" name="submitEdit" value="Edit"></form>';
 		}
 		
 		// addition function /////////////////////////////////////////////////////////////
@@ -438,17 +438,17 @@
 				echo '<form class="dbEditForm" action="?admin=dbBrowser&add='.$addGet.'" method="post">';
 
 				// print from title
-				echo '<p class="textInputTitle">New item</p>';
+				echo '<p class="textInputTitle">New item</p><br>';
 
 				// fields
 				while($row = mysqli_fetch_array($selectedColumns)) {
 					if (strtolower($row["Field"]) != "id") {
-						echo '<input class="textInput bg-dark" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
+						echo '<input class="textInput" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
 					}
 				}
 
 				// form submit button
-				echo '<input class="inputButton bg-dark" type="submit" name="submitSave" value="SAVE">';
+				echo '<input class="inputButton" type="submit" name="submitSave" value="SAVE">';
 
 				// form end
 				echo '</form>';

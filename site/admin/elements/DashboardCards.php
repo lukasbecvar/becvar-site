@@ -9,7 +9,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getUnreadedLogs(); ?>
                             </h2>
                         </div>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getMSGSCount(); ?>
                             </h2>
                         </div>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getTodosCount(); ?>
                             </h2>
                          </div>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getImagesCount(); ?>
                             </h2>
                         </div>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getPastesCount(); ?>
                             </h2>
                         </div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0">
+                            <h2 class="text-white d-flex align-items-center mb-0">
                                 <?php echo $dashboardController->getVisitorsCount(); ?>
                             </h2>
                         </div>
@@ -107,11 +107,11 @@
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-3">
-                        <h5 class="card-title mb-0">Server uptime</h5>
+                        <h5 class="card-title mb-0 text-white">Server uptime</h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-12">
-                            <h5 class="d-flex align-items-center mb-3">
+                            <h5 class="text-white d-flex align-items-center mb-3">
                                 <?php echo $dashboardController->getUpTime(); ?>
                             </h5>
                         </div>
@@ -124,11 +124,11 @@
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-3">
-                        <h5 class="card-title mb-0">CPU usage[CORE/AVG]</h5>
+                        <h5 class="card-title mb-0 text-white">CPU usage[CORE/AVG]</h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-12">
-                            <h5 class="d-flex align-items-center mb-0">
+                            <h5 class="text-white d-flex align-items-center mb-0">
                                 <span><?php echo $dashboardController->getCPUProc(); ?>%</span>
                             </h5>
                         </div>
@@ -144,11 +144,11 @@
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-3">
-                        <h5 class="card-title mb-0">Memory usage[RAM]</h5>
+                        <h5 class="card-title mb-0 text-white">Memory usage[RAM]</h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-12">
-                            <h5 class="d-flex align-items-center mb-0">
+                            <h5 class="text-white d-flex align-items-center mb-0">
                                 <span><?php echo $dashboardController->getMemoryInfo()["used"]; ?>%</span>
                             </h5>
                         </div>
@@ -164,11 +164,11 @@
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-3">
-                        <h5 class="card-title mb-0">Used disk space</h5>
+                        <h5 class="card-title mb-0 text-white">Used disk space</h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-12">
-                            <h5 class="d-flex align-items-center mb-0">
+                            <h5 class="text-white d-flex align-items-center mb-0">
                                 <span><?php echo $dashboardController->getDrivesInfo()."%"; ?></span>
                             </h5>
                         </div>

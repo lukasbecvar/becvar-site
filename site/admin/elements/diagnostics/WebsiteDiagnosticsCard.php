@@ -1,4 +1,4 @@
-<div class="cardPhone card diagCardPhone text-white bg-dark mb-3" style="margin-left: 1%; margin-right: 1%">
+<div class="cardPhone card diagCardPhone text-white mb-3" style="margin-left: 1%; margin-right: 1%">
     <div class="card-header diagnostics-large-title">Website diagnostics</div>
     <div class="card-body diagnostics-large">
         <?php // system checks

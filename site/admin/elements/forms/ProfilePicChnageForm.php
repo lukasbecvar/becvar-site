@@ -1,10 +1,10 @@
-<form class="imageUploadForm bg-dark" action="?admin=accountSettings" method="post" enctype="multipart/form-data">
+<form class="imageUploadForm" action="?admin=accountSettings" method="post" enctype="multipart/form-data">
     <h2 class="loginFormTitle">Change profile image</h2>
         <div class="custom-file">
-            <input type="file" class="custom-file-input" name="fileToUpload" id="inputGroupFile01">
-            <label class="custom-file-label bg-dark">Choose file</label>
+            <input type="file" class="custom-file-input bg-dark bg-image-input" name="fileToUpload" id="file-upload">
+            <label class="custom-file-label bg-dark bg-image-input">Choose file</label>
         </div>
-  <div class="rightPosition"><input class="inputButton bg-dark" type="submit" value="Upload Image" name="submitUploadImage"></div>
+  <div class="rightPosition"><input class="inputButton" type="submit" value="Upload Image" name="submitUploadImage"></div>
 </form>
 
 <script type="application/javascript">
