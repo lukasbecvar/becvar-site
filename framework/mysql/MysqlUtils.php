@@ -14,21 +14,13 @@
             
             global $configOBJ;
 
-            // try connect to database
-            try {
-
-                // build connection 
-                $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
-            
-            } catch(Exception $e) { 
-                
-                // rediret for non devmode
+            // build connection 
+            $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
+        
+            // check if connection failed
+            if ($connection == false) {
                 if ($configOBJ->config["dev_mode"] == false) {
-                    if ($e->getMessage() == "Connection refused") {
-                        die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/Maintenance.php"));
-                    } else {
-                        die(include_once($_SERVER['DOCUMENT_ROOT']."/../site/errors/UnknownError.php"));
-                    }
+                    die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=400");</script>');
                 }
             }
 
