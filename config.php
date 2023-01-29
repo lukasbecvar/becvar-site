@@ -47,7 +47,7 @@
 			"youtube"   => "https://www.youtube.com/channel/UCcALaaQqdBlcR4-tGxavCvQ",
 
 			/* Browsers limiters */
-			"rowInTableLimit"      => 500,	// database browser & log reader [table row limit]
+			"rowInTableLimit"      => 10,	// database browser & log reader [table row limit]
 			"imagesInBrowserLimit" => 50,	// images in browser
 
 			/* Server variabiles */

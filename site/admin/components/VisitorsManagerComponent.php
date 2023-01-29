@@ -192,9 +192,7 @@
                     } else {
 
                         // redirect to visitors
-                        if (($action == "ban") && !empty($_GET["reason"])) {
-                            $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
-                        }
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
                     }
                 } else {
                     
@@ -222,8 +220,15 @@
                                 $banReason = "no reason";
                             }
 
-                            // redirect to banned with reason
-                            $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason");
+                            // check if auto close seted
+                            if (isset($_GET["close"])) {
+
+                                // redirect to banned with reason with autoclose
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason&close=yes");
+                            } else {
+                                // redirect to banned with reason
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason");
+                            }
                         }
 
                         // include ban from
@@ -235,12 +240,14 @@
                 if (isset($_GET["close"])) {
 
                     // close tab
-                    echo "<script>window.close();</script>";
+                    if ((!empty($_GET["reason"])) || (!empty($_POST["banReason"]))) {
+                        echo "<script>window.close();</script>";
+                    }
 
                 } else {
 
                     // redirect to visitors
-                    if (($action == "ban") && !empty($_GET["reason"])) {
+                    if ((!empty($_GET["reason"])) || (!empty($_POST["banReason"]))) {
                         $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
                     }
                 }
