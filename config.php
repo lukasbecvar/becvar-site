@@ -12,7 +12,7 @@
 			"author"      => "Lukáš Bečvář",       	// define app author
 			"authorLink"  => "becvold.xyz", 	   	// define author site
 			"url"         => "localhost",        	// define main app url
-			"dev_mode"    => false,					// define devmode value
+			"dev_mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
 			"https"       => false,				   	// if this = true (Site can run only on https://)
 			
