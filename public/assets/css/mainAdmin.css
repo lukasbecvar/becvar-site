@@ -39,7 +39,7 @@ a:hover {
 /*End of Custom scrollBar*/
 
 .wrapper .sidebar {
-	background-color: #131313;
+	background-color: #242424;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -48,7 +48,7 @@ a:hover {
 	padding: 5px 0;
 	transition: all 0.5s ease;
 	z-index: 1;
-	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	border-right: 1px solid rgba(255, 255, 255, 0.24);
 }
   
 .wrapper .sidebar .profile {
@@ -107,12 +107,12 @@ a:hover {
 }
 
 .wrapper .section .top_navbar {
-	background-color: #131313;
+	background-color: #242424;
 	height: 50px;
 	display: flex;
 	align-items: center;
 	padding: 0 1%;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .hamburger {
@@ -175,7 +175,7 @@ form {
 	border-radius: 5px;
 	line-height: 22px;
 	background-color: transparent;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	transition: all 0.3s;
 	padding: 13px;
 	margin-bottom: 15px;
@@ -218,14 +218,14 @@ textarea {
 	margin-top: 4%;
 	padding: 0.5%;
 	background: rgba(0, 0, 0, 0.596);
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
 .loginForm .textInput:-webkit-autofill, .loginForm .textInput:-webkit-autofill:hover , .loginForm .textInput:-webkit-autofill:focus {
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
     transition: background-color 5000s ease-in-out 0s;
@@ -240,7 +240,7 @@ textarea {
 
 .dbEditForm {
 	text-align: center;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	padding: 10px;
 	position: relative;
 	top: -5%;
@@ -256,7 +256,7 @@ textarea {
 	top: 17%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 }
 
 .bg-image-input {
@@ -269,7 +269,7 @@ textarea {
 }
 
 .textInput {
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 	text-align: center;
 	font-family: arial;
@@ -282,7 +282,7 @@ textarea {
 }
 
 .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus {
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px #343a40 inset;
     transition: background-color 5000s ease-in-out 0s;
@@ -330,7 +330,7 @@ textarea {
 .inputButton {
 	padding: 5px;
 	margin-top: 7px;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 	text-align: center;
 	font-family: arial;
@@ -344,7 +344,7 @@ textarea {
 }
 
 .inputButton:hover {
-	border: 2px solid rgba(255, 255, 255, 0.219);
+	border: 2px solid rgba(255, 255, 255, 0.2419);
 	background: rgba(255, 255, 255, 0.103);
 }
 
@@ -353,7 +353,7 @@ textarea {
 }
 
 .checkbox { 
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(180, 38, 38, 0.062);
 	position: relative;
 	width: 25px;
@@ -389,7 +389,7 @@ textarea {
 }
 
 .card-header {
-	border-bottom: 1px solid rgba(255, 255, 255, 0.2);;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.24);;
 }
 
 .card {
@@ -435,7 +435,7 @@ textarea {
 	padding: 4px;
 	padding-left: 10px;
 	height: 100%;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 }
 
@@ -486,8 +486,8 @@ textarea {
 }
 
 .settingsButton:hover {
-	color: rgb(245, 47, 47);
-	border: 1px solid rgb(245, 47, 47);
+	color: #fada28;
+	border: 1px solid #fada28;
 	text-decoration: none;
 }
 
@@ -495,7 +495,7 @@ textarea {
 	position: relative;
 	font-size: 18px;
 	margin-bottom: 0px;
-	background-color: #131313;
+	background-color: #242424;
 	color: white;
 }
 
@@ -512,7 +512,7 @@ textarea {
 }
 
 .breadcrumb {
-	background-color: #131313;
+	background-color: #242424;
 	border-top: #242627 1px solid;
 	border-bottom: #242627 1px solid;
 	margin: 0;
@@ -527,8 +527,8 @@ textarea {
 }
 
 .selectorButton:hover {
-	color: rgb(241, 53, 53);
-	border: 1px solid rgb(241, 53, 53);
+	color: #fada28;
+	border: 1px solid #fada28;
 }
 
 .countTextInMenu {
@@ -554,8 +554,8 @@ textarea {
 }
 
 .backPageButton:hover {
-	color: rgb(241, 53, 53);
-	border: 1px solid rgb(241, 53, 53);
+	color: #fada28;
+	border: 1px solid #fada28;
 }
 
 .imgEditButton { 
@@ -580,7 +580,7 @@ textarea {
 }
 
 .card {
-    background-color: #131313;
+    background-color: #242424;
     border-radius: 4px;
     border: none;
     position: relative;
@@ -588,7 +588,7 @@ textarea {
 }
 
 .l-bg-dark {
-    background: linear-gradient(to right, #1a1a1a, #131313) !important;
+    background: linear-gradient(to right, #1a1a1a, #242424) !important;
     color: #fff;
 }
 
@@ -636,8 +636,8 @@ textarea {
 	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: #131313;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	background-color: #242424;
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	text-align: center;
 	padding: 10px;
 	font-size: 20px;
@@ -645,8 +645,8 @@ textarea {
 
 .confirmationButton {
 	position: relative;
-	background-color: #131313;
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	background-color: #242424;
+	border: 2px solid rgba(255, 255, 255, 0.24);
 	padding: 6px;
 	font-size: 23px;	
 	color: white;
