@@ -78,7 +78,7 @@ a:hover {
 .wrapper .sidebar ul li a {
 	display: block;
 	padding: 2.5px 4px;
-	border-bottom: 0.5px solid #242627;
+	border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
 	color: rgb(241, 237, 237);
 	font-size: 18px;
 	position: relative;
@@ -160,7 +160,7 @@ button {
 }
 
 .bg-red-custom {
-	background-color: rgb(96, 141, 12) !important;
+	background-color: rgb(231, 64, 64);
 }
 
 form { 
@@ -389,7 +389,7 @@ textarea {
 }
 
 .card-header {
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .card {
