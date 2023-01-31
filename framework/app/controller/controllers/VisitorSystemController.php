@@ -2,6 +2,8 @@
 
     namespace becwork\controllers;
 
+use mysqli;
+
     class VisitorSystemController {
 
         // get user browser
@@ -300,6 +302,26 @@
             } else {
                 return false;
             }
+        }
+
+        // get visitor location from table
+        public function getVisitorLocationFromDatabase($id) {
+
+            global $mysqlUtils;
+            global $pageConfig;
+
+            // get visitor data by ip
+            $visitor = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM visitors WHERE `id` = $id");
+
+            if ($visitor->num_rows > 0) {
+
+                $out = mysqli_fetch_assoc($visitor)["location"];
+
+            } else {
+                $out = "Undefined";
+            }
+
+            return $out;
         }
 
         // get visitor location
