@@ -49,6 +49,9 @@ This project requires PHP8 or < .
 * Boxicons
    * Version: **2.1.2**
    * [Website](https://boxicons.com/)
+* Font-awesome
+   * Version: **5.8.1 - FREE**
+   * [Website](https://fontawesome.com)
 * Remixicon
    * Version: **2.5.0**
    * [Website](https://remixicon.com/)
