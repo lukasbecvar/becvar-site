@@ -1,4 +1,4 @@
-<ul class="breadcrumb">
+<ul class="breadcrumb"> 
     <li>
         <a class="selectorButton btn-small" href="?admin=dbBrowser&name=logs&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0"><strong>Unfiltered browser</strong></a>
     </li>  

@@ -1,4 +1,4 @@
-<div class="card text-white mb-4" style="margin-left: 10px; margin-right: 10px;">
+<div class="card text-white mb-0" style="margin: 0; border-top: 1px solid rgba(255, 255, 255, 0.24); border-bottom: 1px solid rgba(255, 255, 255, 0.24);">
 <div class="card-header">Basic info</div>
     <div class="card-body">
     <p class="card-text"><strong>Logs count: <span class="text-primary"><?php echo $dashboardController->getLogsCount(); ?></span> / unreaded: <span class="text-primary"><?php echo $dashboardController->getUnreadedLogs(); ?></span></strong></strong></p>
