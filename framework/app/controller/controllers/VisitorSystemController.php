@@ -31,68 +31,89 @@
             // init default value
             $out = $raw;
 
+            // default found in browser list
+            $found = "no";
+
             // identify Internet explorer
             if(preg_match('/MSIE (\d+\.\d+);/', $raw) ) {
                 $out = "Internet Explore";
+                $found = "yes";
+
             } else if (str_contains($raw, 'MSIE') ) {
-                $out = "Internet Explore";    
+                $out = "Internet Explore";   
+                $found = "yes"; 
 
             // identify Google chrome
             } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Chrome";
+                $found = "yes";
             
             // identify Internet edge
             } else if (preg_match('/Edge\/\d+/', $raw) ) {
                 $out = "Edge";
+                $found = "yes";
             
             // identify Firefox
             } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Firefox";
+                $found = "yes";
+
             } else if (str_contains($raw, 'Firefox/96') ) {
-                $out = "Firefox/96";            
+                $out = "Firefox/96";  
+                $found = "yes";          
                 
             // identify Safari
             } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Safari";
+                $found = "yes";
                 
             // identify UC Browser
             } else if (str_contains($raw, 'UCWEB') ) {
                 $out = "UC Browser";
+                $found = "yes";
   
             // identify IceApe Browser
             } else if (str_contains($raw, 'Iceape') ) {
                 $out = "IceApe Browser";
+                $found = "yes";
 
             // identify NetFront Browser
             } else if (str_contains($raw, 'NetFront') ) {
                 $out = "NetFront Browser";
+                $found = "yes";
 
             // identify Midori Browser
             } else if (str_contains($raw, 'Midori') ) {
                 $out = "Midori Browser";
+                $found = "yes";
 
             // identify Netscape Navigator
             } else if (str_contains($raw, 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330') ) {
                 $out = "Netscape Navigator";
+                $found = "yes";
 
             // identify Opera
             } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Opera";
+                $found = "yes";
+
             } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw) ) {
                 $out = "Opera";
+                $found = "yes";
             }
 
             // identify shortify array [ID: str_contains, Value: replacement]
             $browser_array = $browsersList->browserList;
 
-            // default found in browser list
-            $found = "no";
+            // check if browser ID not found
+            if ($found == "no") {
 
-            // get short output from browser list
-            foreach ($browser_array as $index => $value) {
-                if (str_contains($raw, $index)) {
-                    $out = $value;
-                    $found = "yes";
+                // get short output from browser list
+                foreach ($browser_array as $index => $value) {
+                    if (str_contains($raw, $index)) {
+                        $out = $value;
+                        $found = "yes";
+                    }
                 }
             }
 
