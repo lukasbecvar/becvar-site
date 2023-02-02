@@ -224,6 +224,10 @@ textarea {
 	transform: translate(-50%, -50%);
 }
 
+.ac-form {
+	background-color: #303030 !important;
+}
+
 .loginForm .textInput:-webkit-autofill, .loginForm .textInput:-webkit-autofill:hover , .loginForm .textInput:-webkit-autofill:focus {
     border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;

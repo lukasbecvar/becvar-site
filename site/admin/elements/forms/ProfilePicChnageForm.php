@@ -1,4 +1,4 @@
-<form class="imageUploadForm" action="?admin=accountSettings" method="post" enctype="multipart/form-data">
+<form class="imageUploadForm ac-form" action="?admin=accountSettings" method="post" enctype="multipart/form-data">
     <h2 class="loginFormTitle">Change profile image</h2>
         <div class="custom-file">
             <input type="file" class="custom-file-input bg-dark bg-image-input" name="fileToUpload" id="file-upload">
