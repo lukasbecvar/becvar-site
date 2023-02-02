@@ -24,7 +24,7 @@ a:hover {
 } 
 
 ::-webkit-scrollbar-track { /*Own scroolbar bacground*/
-	background: rgb(26, 26, 26);
+	background: rgb(17, 17, 17);
 }
  
 ::-webkit-scrollbar-thumb { /*Own scrollbar button*/
