@@ -62,7 +62,7 @@
             } else {
 
                 // print table struct
-                echo '<table class="todoTable table table-dark"><thead><tr>
+                echo '<table class="todoTable table table-dark"><thead><tr class="lineItem">
                     <th scope="col">#</th>
                     <th scope="col">Todo</th>
                     <th scope="col">X</th>
@@ -74,7 +74,7 @@
 
                 // print todos to table
                 while ($row = mysqli_fetch_assoc($finalTodos)) { 
-                    echo "<tr><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
+                    echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
                 }
 
                 // end of table struct

@@ -43,7 +43,7 @@
             if ($visitors->num_rows != 0) {
 
                 // default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr>
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr class="lineItem">
                     <th scope="col">#</th>
                     <th scope="col">Visited</th>
                     <th scope="col">First visit</th>

@@ -161,7 +161,7 @@
 
 				// create table element
 				echo '<div class="table-responsive"><table class="table table-dark">';
-				echo '<thead><tr>'; 
+				echo '<thead><tr class="lineItem">'; 
 
 				// mysql fields to table
 				while($row = mysqli_fetch_array($tableColumns)) {
