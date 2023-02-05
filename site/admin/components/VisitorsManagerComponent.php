@@ -74,14 +74,17 @@
                         $formatedIP = $data["ip_adress"];
                     }
 
+                    // build link to ip log reader
+                    $linkToIPLogs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formatedIP."</a>";
+
                     // if ip = session ip
                     if ($data["ip_adress"] == $adminController->getUserIPByToken($adminController->getUserToken())) {
                         // check if client ip not have > 15 characters
                         if (strlen($data["ip_adress"]) > 15) {
-                            $formatedIP = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
+                            $linkToIPLogs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
 
                         } else {
-                            $formatedIP = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
+                            $linkToIPLogs = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                         }                
                     }
 
@@ -140,7 +143,7 @@
                         <td><strong>".$data["os"]."</strong>
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$banned."</strong>
-                        <td><strong>".$formatedIP."</strong>
+                        <td><strong>".$linkToIPLogs."</strong>
                         <td>".$banLink."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";

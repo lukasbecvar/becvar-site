@@ -310,8 +310,8 @@ use mysqli;
             global $mysqlUtils;
             global $pageConfig;
 
-            // get visitor data by ip
-            $visitor = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM visitors WHERE `id` = $id");
+            // get visitor data by id
+            $visitor = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM visitors WHERE `id` = '$id'");
 
             if ($visitor->num_rows > 0) {
 

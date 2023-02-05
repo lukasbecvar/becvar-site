@@ -681,8 +681,13 @@ textarea {
 	color: #35ee3b !important;
 }
 
+
+.color-white {
+	color: white;
+}
+
 .text-red {
-	color: rgb(233, 102, 102);
+	color: rgb(233, 102, 102) !important;
 }
 
 .text-light-green {
@@ -731,6 +736,10 @@ textarea {
 
 .diagnostics-large-title {
 	font-size: 25px;
+}
+
+.log-reader-link {
+	text-decoration: underline;
 }
 
 @media screen and (max-width: 800px) { 

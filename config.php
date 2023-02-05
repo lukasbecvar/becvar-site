@@ -47,8 +47,8 @@
 			"youtube"   => "https://www.youtube.com/channel/UCcALaaQqdBlcR4-tGxavCvQ",
 
 			/* Browsers limiters */
-			"rowInTableLimit"      => 20,	// database browser & log reader [table row limit]
-			"imagesInBrowserLimit" => 50,	// images in browser
+			"rowInTableLimit"      => 50,	// database browser & log reader [table row limit]
+			"imagesInBrowserLimit" => 10,	// images in browser
 
 			/* Server variabiles */
 			"serviceDir" => "/services",    // define services directory
