@@ -90,7 +90,7 @@
                     $location = $visitorController->getVisitorLocationFromDatabase($userID);
 
                     // table row builder
-                    if ($data["status"] != "readed") {
+                    if (($data["status"] != "readed") || ($data["status"] == "readed" && $whereIP != null)) {
                         
                         // database logs
                         if ($data["name"] == "Log reader" || $data["name"] == "Database" || $data["name"] == "Database delete" || $data["name"] == "Database insert" || $data["name"] == "Database list" || $data["name"] == "Database edit") {
