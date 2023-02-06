@@ -143,6 +143,7 @@ use mysqli;
         
             // OS array
             $os_array = array (
+                '/windows/i'      =>  'Windows',
                 '/windows nt 10/i'      =>  'Windows 10',
                 '/windows nt 6.3/i'     =>  'Windows 8.1',
                 '/windows nt 6.2/i'     =>  'Windows 8',
