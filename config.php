@@ -34,9 +34,6 @@
 			"apiEnable" => true, 	// API status (?process=api or api.url.domain)
 			"apiToken"  => "1234",	// token to acces api
 
-			/* IP info api token */
-			"IPinfoToken" => "000_token", // token to access https://ipinfo.io/ API
-
 			/* Contact information */
 			"email"     => "lukas@becvold.xyz",
 			"discord"   => "https://discord.gg/XfAWKpHm6k",

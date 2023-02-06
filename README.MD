@@ -77,3 +77,5 @@ This project requires PHP8 or < .
 * Adminer
    * Version: **4.8.1**
    * [Website](https://www.adminer.org/)
+* Geo-Plugin
+   * [Website](http://www.geoplugin.net/)

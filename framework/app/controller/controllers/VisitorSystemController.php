@@ -252,6 +252,7 @@ use mysqli;
                         $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
                         $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
                         $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
+                        $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
 
                         // update database
                         $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
@@ -259,6 +260,7 @@ use mysqli;
                         $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
+                        $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
 
                         // show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
@@ -337,11 +339,12 @@ use mysqli;
             } else {
  
                 // get data by IP from ipinfo API 
-                $details = json_decode(file_get_contents("http://ipinfo.io/$ip/json?token=".$pageConfig->getValueByName(("IPinfoToken"))));
-           
+                $details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+       
+
                 // get country and site from API data
-                $country = $details->country;
-                $city = $details->city;
+                $country = $details->geoplugin_countryCode;
+                $city = $details->geoplugin_city;
             }
 
             // set undefined if country is empty
