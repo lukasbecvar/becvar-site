@@ -355,9 +355,9 @@
 
 			// create form
 			if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
-				echo '<form class="dbEditForm" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'&postby=todomanager" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'&postby=todomanager" method="post">';
 			} else {
-				echo '<form class="dbEditForm" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'" method="post">';
 			}
 			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$idGet.'<p>';
 
@@ -435,7 +435,7 @@
 			else {
 
 				// create add form
-				echo '<form class="dbEditForm" action="?admin=dbBrowser&add='.$addGet.'" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&add='.$addGet.'" method="post">';
 
 				// print from title
 				echo '<p class="textInputTitle">New item</p><br>';

@@ -503,6 +503,10 @@ textarea {
 	color: white;
 }
 
+.dark-table {
+	background-color: rgb(27, 27, 27);
+}
+
 .deleteLinkTodos {
 	color: rgb(207, 28, 28);
 	text-decoration: none;

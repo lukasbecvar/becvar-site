@@ -1,4 +1,4 @@
-<form class="loginForm ac-form" style="top: 56%;" action="?admin=accountSettings" method="post">
+<form class="loginForm dark-table" style="top: 56%;" action="?admin=accountSettings" method="post">
     <h2 class="loginFormTitle">Change password</h2>
     <input class="textInput" type="password" name="password" placeholder="Password"><br>
     <input class="textInput" type="password" name="repassword" placeholder="Re - Password"><br>
