@@ -260,6 +260,16 @@ use mysqli;
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
+                        // check if ip in database is undefined
+                        if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Undefined") {
+
+                            // get location 
+                            $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
+
+                            // insert location
+                            $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
+                        }
+
                         // show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
 
