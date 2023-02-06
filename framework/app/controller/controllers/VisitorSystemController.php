@@ -252,7 +252,6 @@ use mysqli;
                         $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
                         $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
                         $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
-                        $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
 
                         // update database
                         $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
@@ -260,7 +259,6 @@ use mysqli;
                         $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
-                        $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
 
                         // show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
@@ -479,20 +477,6 @@ use mysqli;
             // get user ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
 
-            // check russia banned
-            if ($bannedRussia == true) {
-                
-                // check if user is russian
-                if (str_starts_with(strtolower($this->getVisitorLocation($ip_adress)), "ru")) {
-
-                    // log russia banned
-                    $mysqlUtils->logToMysql("Banned", "Russian visitor trying to access site");
-
-                    // redirect to banned page
-                    die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
-                }
-            }
-
             // check if visitor found in database by IP
             if ($this->ifVisitorIsInTable($ip_adress)) {
                 $this->visitSite();
@@ -500,6 +484,20 @@ use mysqli;
             // insert new visitor to database
             } else {
                 $this->firstVisit();
+            }
+
+            // check russia banned
+            if ($bannedRussia == true) {
+                
+                // check if user is russian
+                if (str_starts_with(strtolower($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress))), "ru")) {
+
+                    // log russia banned
+                    $mysqlUtils->logToMysql("Banned", "Russian visitor trying to access site");
+
+                    // redirect to banned page
+                    die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
+                }
             }
         }
     }
