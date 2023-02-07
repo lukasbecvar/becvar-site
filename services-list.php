@@ -9,7 +9,7 @@
             // uncomplicated Firewall service 
             "ufw" => [
                 "service_name" => "ufw",
-                "display_name" => "UFW[Firewall]",
+                "display_name" => "UFW-[Firewall]",
                 "start_cmd" => "sudo ufw enable",
                 "stop_cmd" => "sudo ufw disable",
                 "enable" => true
