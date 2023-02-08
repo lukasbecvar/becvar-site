@@ -30,6 +30,7 @@
         echo '
             <script>
                 document.body.style.zoom = "80%";
+                document.querySelector("body").classList.toggle("active");
             </script>
         ';
     }
