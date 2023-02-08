@@ -50,6 +50,9 @@
 			/* Server variabiles */
 			"serviceDir" => "/services",    // define services directory
 
+			/* Geolocate config */
+			"geoplugin_url" => "http://www.geoplugin.net",
+
 			/* Banned country */
 			"bannedRussia" => true,
 

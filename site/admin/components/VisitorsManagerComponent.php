@@ -91,8 +91,8 @@
                     // shortify browserID
                     $data["browser"] = $visitorController->getShortBrowserID($data["browser"]);
 
-                    // check if browser is undefined
-                    if ($data["browser"] == "Undefined") {
+                    // check if browser is Unknown
+                    if ($data["browser"] == "Unknown") {
                         $data["browser"] = "<span class='text-red'>".$data["browser"]."</span>";
                     }
 
@@ -115,7 +115,7 @@
                     }
 
                     // check if location is unknown
-                    if ($data["location"] == "Undefined") {
+                    if ($data["location"] == "Unknown") {
                         $data["location"] = "<span class='text-red'>".$data["location"]."</span>";
                     }
 

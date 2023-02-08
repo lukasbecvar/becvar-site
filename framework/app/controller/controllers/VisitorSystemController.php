@@ -12,9 +12,9 @@ use mysqli;
             // get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
 
-            // return undefined
+            // return Unknown
             if ($agent == null) {
-                $browser = "Undefined";
+                $browser = "Unknown";
            
             // return browser agent
             } else {
@@ -37,11 +37,11 @@ use mysqli;
             $found = "no";
 
             // identify Internet explorer
-            if(preg_match('/MSIE (\d+\.\d+);/', $raw) ) {
+            if(preg_match('/MSIE (\d+\.\d+);/', $raw)) {
                 $out = "Internet Explore";
                 $found = "yes";
 
-            } else if (str_contains($raw, 'MSIE') ) {
+            } else if (str_contains($raw, 'MSIE')) {
                 $out = "Internet Explore";   
                 $found = "yes"; 
 
@@ -51,41 +51,51 @@ use mysqli;
                 $found = "yes";
             
             // identify Internet edge
-            } else if (preg_match('/Edge\/\d+/', $raw) ) {
+            } else if (preg_match('/Edge\/\d+/', $raw)) {
                 $out = "Edge";
                 $found = "yes";
             
             // identify Firefox
-            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw) ) {
+            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw)) {
                 $out = "Firefox";
                 $found = "yes";
 
-            } else if (str_contains($raw, 'Firefox/96') ) {
+            } else if (str_contains($raw, 'Firefox/96')) {
                 $out = "Firefox/96";  
                 $found = "yes";          
                 
             // identify Safari
-            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw) ) {
+            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw)) {
                 $out = "Safari";
                 $found = "yes";
                 
             // identify UC Browser
-            } else if (str_contains($raw, 'UCWEB') ) {
+            } else if (str_contains($raw, 'UCWEB')) {
                 $out = "UC Browser";
                 $found = "yes";
   
             // identify IceApe Browser
-            } else if (str_contains($raw, 'Iceape') ) {
+            } else if (str_contains($raw, 'Iceape')) {
                 $out = "IceApe Browser";
                 $found = "yes";
 
+            // identify Maxthon Browser
+            } else if (str_contains($raw, 'maxthon')) {
+                $out = "Maxthon Browser";
+                $found = "yes";
+
+            // identify Konqueror Browser
+            } else if (str_contains($raw, 'konqueror')) {
+                $out = "Konqueror Browser";
+                $found = "yes";
+
             // identify NetFront Browser
-            } else if (str_contains($raw, 'NetFront') ) {
+            } else if (str_contains($raw, 'NetFront')) {
                 $out = "NetFront Browser";
                 $found = "yes";
 
             // identify Midori Browser
-            } else if (str_contains($raw, 'Midori') ) {
+            } else if (str_contains($raw, 'Midori')) {
                 $out = "Midori Browser";
                 $found = "yes";
 
@@ -95,11 +105,11 @@ use mysqli;
                 $found = "yes";
 
             // identify Opera
-            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw) ) {
+            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw)) {
                 $out = "Opera";
                 $found = "yes";
 
-            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw) ) {
+            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw)) {
                 $out = "Opera";
                 $found = "yes";
             }
@@ -122,9 +132,9 @@ use mysqli;
             // non complete agents
             if ($found == "no") {
                 if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
-                    $out = "Undefined";
+                    $out = "Unknown";
                 } else if ($raw = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)") {
-                    $out = "Undefined";
+                    $out = "Unknown";
                 }
             }
 
@@ -143,7 +153,7 @@ use mysqli;
         
             // OS array
             $os_array = array (
-                '/windows/i'      =>  'Windows',
+                '/windows/i'            =>  'Windows',
                 '/windows nt 10/i'      =>  'Windows 10',
                 '/windows nt 6.3/i'     =>  'Windows 8.1',
                 '/windows nt 6.2/i'     =>  'Windows 8',
@@ -261,8 +271,8 @@ use mysqli;
                         $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
                         $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
-                        // check if ip in database is undefined
-                        if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Undefined") {
+                        // check if ip in database is Unknown
+                        if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Unknown") {
 
                             // get location 
                             $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
@@ -329,7 +339,7 @@ use mysqli;
                 $out = mysqli_fetch_assoc($visitor)["location"];
 
             } else {
-                $out = "Undefined";
+                $out = "Unknown";
             }
 
             return $out;
@@ -348,27 +358,28 @@ use mysqli;
             } else {
  
                 // get data by IP from ipinfo API 
-                $details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=$ip"));
+                $details = json_decode(file_get_contents($pageConfig->getValueByName("geoplugin_url")."/json.gp?ip=$ip"));
        
-
                 // get country and site from API data
                 $country = $details->geoplugin_countryCode;
-                $city = $details->geoplugin_city;
+
+                // get city name from timezone (explode /)
+                $city = explode("/", $details->geoplugin_timezone)[1];
             }
 
-            // set undefined if country is empty
+            // set Unknown if country is empty
             if (empty($country)) {
-                $country = "Undefined";
+                $country = null;
             }
 
-            // set undefined city is empty
+            // set Unknown city is empty
             if (empty($city)) {
-                $city = "Undefined";
+                $city = null;
             }
 
             // final return
-            if  ($country == "Undefined" or $city == "Undefined") {
-                return "Undefined";
+            if  ($country == null or $city == null) {
+                return "Unknown";
             } else {
                 return $country."/".$city;
             }
