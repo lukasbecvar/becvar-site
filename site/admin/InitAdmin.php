@@ -25,11 +25,20 @@
 </head>
 <body>
 
-<?php // 20% unzoom on non mobile device
+<?php 
+    // 20% unzoom on non mobile device
     if(!$mobileDetector->isMobile()) {
         echo '
             <script>
                 document.body.style.zoom = "80%";
+            </script>
+        ';
+    }
+
+    // default disable sidebar
+    if ($siteController->getQueryString("admin") != "dashboard") {
+        echo '
+            <script>
                 document.querySelector("body").classList.toggle("active");
             </script>
         ';
@@ -140,6 +149,16 @@
                 include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');
             }	
         } else {
+
+            // disable sidebar for dashboard (mobile)
+            if ($siteController->getQueryString("admin") == "dashboard") {
+                echo '
+                    <script>
+                        document.querySelector("body").classList.toggle("active");
+                    </script>
+                ';
+            }
+
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');;		
         }
 	}

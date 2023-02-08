@@ -363,8 +363,14 @@ use mysqli;
                 // get country and site from API data
                 $country = $details->geoplugin_countryCode;
 
-                // get city name from timezone (explode /)
-                $city = explode("/", $details->geoplugin_timezone)[1];
+                // check if city name defined
+                if (!empty(explode("/", $details->geoplugin_timezone)[1])) {
+                    
+                    // get city name from timezone (explode /)
+                    $city = explode("/", $details->geoplugin_timezone)[1];
+                } else {
+                    $city = null;
+                }
             }
 
             // set Unknown if country is empty
