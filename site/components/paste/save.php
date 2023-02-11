@@ -4,7 +4,7 @@
 	if (isset($_POST['data'])) {
 
 		// get data from post
-		$content = $_POST['data'];
+		$content = $mysqlUtils->escapeString($_POST['data'], true, true);
 
 		// get file name
 		$name = $mysqlUtils->escapeString($_POST['file'], true, true);
