@@ -37,12 +37,10 @@
 
 			/* Contact information */
 			"email"     => "lukas@becvold.xyz",
-			"discord"   => "https://discord.gg/XfAWKpHm6k",
 			"twitter"   => "https://twitter.com/Lordbecvold",
 			"github"    => "https://github.com/lordbecvold",
 			"instagram" => "https://www.instagram.com/lordbecvold",
 			"telegram"  => "https://t.me/lordbecvold",
-			"youtube"   => "https://www.youtube.com/channel/UCcALaaQqdBlcR4-tGxavCvQ",
 
 			/* Browsers limiters */
 			"rowInTableLimit"      => 50,	// database browser & log reader [table row limit]
