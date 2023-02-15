@@ -74,9 +74,9 @@
     }
 ?>
 <!----------------------- import scripts ---------------------------->
-<script src="assets/vendor/lightgallery/js/lightgallery.js"></script>
-<script src="assets/vendor/lightgallery/js/lg-zoom.js"></script>
-<script src="assets/vendor/lightgallery/js/lg-autoplay.js"></script>
+<script src="/assets/vendor/lightgallery/js/lightgallery.js"></script>
+<script src="/assets/vendor/lightgallery/js/lg-zoom.js"></script>
+<script src="/assets/vendor/lightgallery/js/lg-autoplay.js"></script>
 <script>lightGallery(document.getElementById('lightgallery'));</script>
 <!-------------------- end of import scripts ------------------------>
 </div>

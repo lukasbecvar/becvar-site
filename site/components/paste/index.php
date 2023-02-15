@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="assets/vendor/jquery/jquery_3.2.0.min.js"></script>
+    <script src="/assets/vendor/jquery/jquery_3.2.0.min.js"></script>
     <title>Code paste</title>
-    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon"/>
-    <link rel="stylesheet" href="assets/css/pasteAdd.css">
+    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/css/pasteAdd.css">
     
     <script>
         function save() {
@@ -38,7 +38,7 @@
 </head>
 <body>
     <a class="icon" onclick="save();">
-        <img src="assets/img/pasteSave.svg">
+        <img src="/assets/img/pasteSave.svg">
     </a>
     <form action="?process=paste&method=save" method="post" id="form">
         <input type="hidden" name="file" value="" id="file">

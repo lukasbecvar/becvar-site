@@ -18,5 +18,5 @@
         ?>
     </div>
 </section>
-<script src="assets/vendor/purecounter/purecounter.js"></script>
-<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="/assets/vendor/purecounter/purecounter.js"></script>
+<script src="/assets/vendor/waypoints/noframework.waypoints.js"></script>

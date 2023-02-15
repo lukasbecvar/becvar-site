@@ -27,4 +27,4 @@
     </div>
     <button class="input-button btn" id="generate">Generate Password</button>
 </center>
-<script src="assets/js/passwordGenerator.js"></script>
+<script src="/assets/js/passwordGenerator.js"></script>

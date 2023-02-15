@@ -8,6 +8,6 @@
             include(__DIR__."/../elements/forms/ImageUploaderForm.php");
         ?>
 
-        <script src="assets/js/imageUploader.js"></script>
+        <script src="/assets/js/imageUploader.js"></script>
     </div>
 </section>

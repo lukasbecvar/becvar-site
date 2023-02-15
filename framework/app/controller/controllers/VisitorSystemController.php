@@ -196,6 +196,7 @@ use mysqli;
             
             global $mysqlUtils;
             global $mainUtils;
+            global $siteController;
 
             // get data
             $visited_sites = 1;
@@ -223,7 +224,7 @@ use mysqli;
                 $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
                 // redirect to banned page
-                die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
+                $siteController->redirectError("banned");
             }
         }
 
@@ -234,6 +235,7 @@ use mysqli;
             global $dashboardController;
             global $mainUtils;
             global $pageConfig;
+            global $siteController;
 
             // get visitor ip
             $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
@@ -288,7 +290,7 @@ use mysqli;
                             $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
                             // redirect to banned page
-                            die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=banned');</script>'"); 
+                            $siteController->redirectError("banned");
                         }
                     }
                     
@@ -498,6 +500,7 @@ use mysqli;
             global $mysqlUtils;
             global $mainUtils;
             global $pageConfig;
+            global $siteController;
 
             // get value banned russia
             $bannedRussia = $pageConfig->getValueByName('bannedRussia');
@@ -524,7 +527,7 @@ use mysqli;
                     $mysqlUtils->logToMysql("Banned", "Russian visitor trying to access site");
 
                     // redirect to banned page
-                    die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=bannedRussia');</script>'"); 
+                    $siteController->redirectError("bannedRussia");
                 }
             }
         }

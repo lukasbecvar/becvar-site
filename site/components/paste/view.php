@@ -20,15 +20,15 @@
 <html>
 <head>
     <title>Code paste</title>
-    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon"/>    
-    <script type="text/javascript" src="assets/js/highlight.min.js"></script>
-    <script src="assets/js/highlight.min.jshighlightjs-line-numbers.min.js"></script>
+    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>    
+    <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
+    <script src="/assets/js/highlight.min.jshighlightjs-line-numbers.min.js"></script>
     <script>
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();
     </script>
-    <link rel="stylesheet" href="assets/css/atom-one-dark.min.css">
-    <link rel="stylesheet" href="assets/css/pasteView.css">
+    <link rel="stylesheet" href="/assets/css/atom-one-dark.min.css">
+    <link rel="stylesheet" href="/assets/css/pasteView.css">
 
     <script>
         $("img").on("dragstart", function(e) {

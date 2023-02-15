@@ -82,6 +82,13 @@
             return $age;           
         }
 
+        // redirect to error page
+        public function redirectError($error) {
+
+            // redirct loaction header
+            header("location: ErrorHandlerer.php?code=$error");
+        }
+
         // check if page in dev mode
         public function isSiteDevMode() {
 

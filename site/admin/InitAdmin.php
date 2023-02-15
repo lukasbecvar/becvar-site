@@ -5,15 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-------------------- import assets ------------------------>
-	<link rel="icon" href="assets/img/favicon.png" type="image/x-icon"/>
-	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/mainAdmin.css">
-	<script type="text/javascript" src="assets/vendor/jquery/jquery-3.6.0.min.js"></script>
-	<link rel="stylesheet" href="assets/vendor/fontawesome/fontawesome.min.css">
+	<link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/mainAdmin.css">
+	<script type="text/javascript" src="/assets/vendor/jquery/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="/assets/vendor/fontawesome/fontawesome.min.css">
 	<?php // import gallery css if user browsing media
 		if ($siteController->getQueryString("admin") == "mediaBrowser") {
-			echo '<link href="assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">';	
-			echo '<link href="assets/css/assets/vendor/lightgallery/css/lg-transitions.css" rel="stylesheet">';	
+			echo '<link href="/assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">';	
+			echo '<link href="/assets/css/assets/vendor/lightgallery/css/lg-transitions.css" rel="stylesheet">';	
 		}
 	?>
     <!-------------------- end of assets import ------------------------>
@@ -165,9 +165,9 @@
 ?>
 </main>
 <!----------------------- import scripts ---------------------------->
-<script type="text/javascript" src="assets/vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/vendor/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="assets/js/mainAdmin.js"></script>
+<script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/assets/js/mainAdmin.js"></script>
 <!-------------------- end of import scripts ------------------------>
 </body>
 </html>
