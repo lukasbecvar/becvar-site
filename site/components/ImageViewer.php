@@ -11,7 +11,7 @@
     
         // check if image found
         if ($image == NULL) {
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+            $siteController->redirectError(404);
         } else {
 
             // page View
@@ -24,7 +24,7 @@
         if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: image spec is empty");
         } else {
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+            $siteController->redirectError(404);
         }
     }
 ?>

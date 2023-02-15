@@ -25,7 +25,7 @@
         if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: you must log in first");
         } else {
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
+            $siteController->redirectError(403);
         }
     }
 ?>

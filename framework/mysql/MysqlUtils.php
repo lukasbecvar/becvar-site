@@ -13,6 +13,7 @@
         public function mysqlConnect($mysqlDbName) {
             
             global $configOBJ;
+            global $siteController;
 
             // build connection 
             $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
@@ -20,7 +21,7 @@
             // check if connection failed
             if ($connection == false) {
                 if ($configOBJ->config["dev-mode"] == false) {
-                    die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=400");</script>');
+                    $siteController->redirectError(400);
                 }
             }
 
@@ -40,6 +41,7 @@
         public function insertQuery($query) {
             
             global $configOBJ;
+            global $siteController;
 
             // insert query
             $useInsertQuery = mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query);
@@ -55,7 +57,7 @@
                 
                 // non developer redirect error page
                 else {
-                    die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=520");</script>');
+                    $siteController->redirectError(520);
                 }
             }
         }

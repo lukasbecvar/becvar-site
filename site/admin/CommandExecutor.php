@@ -4,7 +4,7 @@
     if ($siteController->getQueryString("command") == null) {
 
         // redirect to 404 page if command is empty
-        $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+        $siteController->redirectError(404);
     
     } else {
 
@@ -45,7 +45,7 @@
 
             // undefind action
             } else {
-                $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
+                $siteController->redirectError(403);
             }
         
             // execute final command
@@ -56,7 +56,7 @@
 
         } else {
             // redirect to 403 page if user not logged in
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=403");
+            $siteController->redirectError(403);
         }
     }
 ?>

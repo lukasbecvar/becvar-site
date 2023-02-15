@@ -10,7 +10,7 @@
 
 		// honeypot check
 		if (!empty($_POST["website"])) {
-			$urlUtils->jsRedirect("ErrorHandlerer.php?code=400");
+			$siteController->redirectError(400);
 
 		} else {
 

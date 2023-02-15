@@ -112,13 +112,13 @@
 
 			// check if page loaded with valid url
 			if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && ($siteController->getHTTPhost() != "www.".$pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
-				$urlUtils->redirect("ErrorHandlerer.php?code=400");
+				$siteController->redirectError(400);
 			}
 		}
 
 		// check if page running on https
 		if ($pageConfig->getValueByName("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
-			$urlUtils->redirect("ErrorHandlerer.php?code=400");
+			$siteController->redirectError(400);
 		} 
 				
 		// include main page component or process

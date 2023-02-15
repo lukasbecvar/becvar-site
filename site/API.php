@@ -56,7 +56,7 @@
             die("[DEV-MODE]:Error: api is disabled in comfig file");
 
         } else {
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+            $siteController->redirectError(404);
         }
     }
 ?>

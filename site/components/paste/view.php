@@ -11,7 +11,7 @@
         if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: paste content is empty");
         } else {
-            $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+            $siteController->redirectError(520);
         }
     }
 ?>

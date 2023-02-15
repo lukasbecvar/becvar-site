@@ -116,7 +116,7 @@
                 if ($siteController->isSiteDevMode()) {
                     die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteController->getQueryString("admin")." not found<h2>");
                 } else {
-                    $urlUtils->jsRedirect("ErrorHandlerer.php?code=404");
+                    $siteController->redirectError(404);
                 }
             }
 
