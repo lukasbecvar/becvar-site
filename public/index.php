@@ -106,13 +106,18 @@
 		// init visitor system
 		$visitorController->init();		
 
-		// check if page loaded with valid url
-		if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && ($siteController->getHTTPhost() != "www.".$pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
-			$urlUtils->redirect("ErrorHandlerer.php?code=400");
+		
+		// check if url-check is enabled
+		if ($pageConfig->getValueByName("url-check")) { 
+
+			// check if page loaded with valid url
+			if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && ($siteController->getHTTPhost() != "www.".$pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
+				$urlUtils->redirect("ErrorHandlerer.php?code=400");
+			}
 		}
 
 		// check if page running on https
-		else if ($pageConfig->getValueByName("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
+		if ($pageConfig->getValueByName("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
 			$urlUtils->redirect("ErrorHandlerer.php?code=400");
 		} 
 				

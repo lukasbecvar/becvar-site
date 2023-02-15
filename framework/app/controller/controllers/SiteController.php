@@ -88,7 +88,7 @@
             global $pageConfig;
 
             // check if dev mode enabled
-            if ($pageConfig->getValueByName("dev_mode") == true) {
+            if ($pageConfig->getValueByName("dev-mode") == true) {
                 return true;
             } else {
                 return false;

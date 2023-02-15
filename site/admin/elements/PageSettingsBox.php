@@ -6,7 +6,7 @@
 
 <p class="settingsValueBox">
     Dev mode [<?php
-        if ($pageConfig->getValueByName('dev_mode')) {
+        if ($pageConfig->getValueByName('dev-mode')) {
             echo "enabled";
         } else {
             echo "disabled";

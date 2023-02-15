@@ -267,7 +267,7 @@
             } elseif ($pageConfig->getValueByName("maintenance") == "enabled") {
                 return false;
 
-            // check if dev_mode is enabled
+            // check if dev-mode is enabled
             } elseif ($siteController->isSiteDevMode()) {
                 return false;
 

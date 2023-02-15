@@ -11,8 +11,9 @@
 			"version"     => 6.0,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
 			"authorLink"  => "becvold.xyz", 	   	// define author site
-			"url"         => "localhost",        	// define main app url
-			"dev_mode"    => true,					// define devmode value
+			"url-check"   => true,				    // check if url valid
+			"url"         => "gg",        	// define main app url
+			"dev-mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
 			"https"       => false,				   	// if this = true (Site can run only on https://)
 			

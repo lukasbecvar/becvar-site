@@ -19,7 +19,7 @@
         
             // check if connection failed
             if ($connection == false) {
-                if ($configOBJ->config["dev_mode"] == false) {
+                if ($configOBJ->config["dev-mode"] == false) {
                     die('<script type="text/javascript">window.location.replace("ErrorHandlerer.php?code=400");</script>');
                 }
             }
@@ -48,7 +48,7 @@
             if (!$useInsertQuery) {
                 
                 // print developer error
-                if ($configOBJ->config["dev_mode"] == true) {
+                if ($configOBJ->config["dev-mode"] == true) {
                     http_response_code(503);
                     die('[DEV-MODE]:Database error: the database server query could not be completed');		
                 } 

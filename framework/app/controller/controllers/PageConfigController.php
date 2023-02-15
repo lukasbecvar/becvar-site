@@ -37,7 +37,7 @@
             global $adminController;
 
             // edit value in config file
-            file_put_contents("../config.php", str_replace('"dev_mode"    => false', '"dev_mode"    => true', file_get_contents("../config.php")));
+            file_put_contents("../config.php", str_replace('"dev-mode"    => false', '"dev-mode"    => true', file_get_contents("../config.php")));
         
             // log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Activated maintenance mode");
@@ -50,7 +50,7 @@
             global $adminController;
                         
             // edit value in config file
-            file_put_contents("../config.php", str_replace('"dev_mode"    => true', '"dev_mode"    => false', file_get_contents("../config.php")));
+            file_put_contents("../config.php", str_replace('"dev-mode"    => true', '"dev-mode"    => false', file_get_contents("../config.php")));
 
             // log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Deactivated maintenance mode");

@@ -23,7 +23,7 @@
                 echo '<p class="card-text"><span class="text-red"><strong>Maintenance is enabled!</strong></span></p>';
             }
 
-            // print if dev_mode is enabled
+            // print if dev-mode is enabled
             if ($siteController->isSiteDevMode()) {
                 echo '<p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>';
             }
