@@ -1,6 +1,6 @@
 ## About becvar site
 
-becvar site is my personal website builded on becwork
+becvar site is my personal website builded with becwork
 
 ## WARNING
 This application does not serve as an example of my work, it is my personal site, for testing functions and controlling the basic components of the server and services, the application is not built on any Front-end or Back-end framework.
@@ -46,6 +46,9 @@ This application does not serve as an example of my work, it is my personal site
 
 ## Dependencies
 This project requires PHP8 or < .
+* Becwork
+   * Version: **2.0**
+   * [Github](https://github.com/lordbecvold/Becwork)
 * Boxicons
    * Version: **2.1.2**
    * [Website](https://boxicons.com/)
