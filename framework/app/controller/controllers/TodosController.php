@@ -37,13 +37,12 @@
         public function isEmpty() {
 
             global $mysqlUtils;
-            global $pageConfig;
 
             // select todos count form database
-            $todosCount = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM todos WHERE status='open'"));
+            $todos = $mysqlUtils->fetch("SELECT id FROM todos WHERE status='open'");
 
             // check if logs is empy
-            if ($todosCount["count"] == 0) {
+            if (count($todos) == 0) {
                 return true;
             } else {
                 return false;

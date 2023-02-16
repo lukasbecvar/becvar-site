@@ -4,7 +4,7 @@
     if (isset($_POST["submitNewTodo"])) {
 
         // get text from for and escape
-        $todoText = $mysqlUtils->escapeString($_POST["todoText"], true, true);
+        $todoText = $escapeUtils->specialCharshStrip($_POST["todoText"]);
 
         // check if text is empty
         if (!empty($todoText)) {
@@ -70,10 +70,10 @@
                 </tr></thead><tbody>';
 
                 // get todos from database
-                $finalTodos = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * from todos WHERE status = 'open'"); 
+                $finalTodos = $mysqlUtils->fetch("SELECT * from todos WHERE status = 'open'");
 
                 // print todos to table
-                while ($row = mysqli_fetch_assoc($finalTodos)) { 
+                foreach ($finalTodos as $row) { 
                     echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
                 }
 

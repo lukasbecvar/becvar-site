@@ -16,10 +16,10 @@
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
 
 			// get show limit form url
-			$showLimit = $mysqlUtils->escapeString($_GET["limit"], true, true);
+			$showLimit = $escapeUtils->specialCharshStrip($_GET["limit"]);
 
 			// get start row form url
-			$startByRow = $mysqlUtils->escapeString($_GET["startby"], true, true);
+			$startByRow = $escapeUtils->specialCharshStrip($_GET["startby"]);
 
 			// set next limit
 			$nextLimit = (int) $showLimit + $limitOnPage;
@@ -35,12 +35,12 @@
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/VisitorsManagerNavPanel.php');
         
         // get all visitors from table
-        $visitors = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
+        $visitors = $mysqlUtils->fetch("SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
 
         if (empty($_GET["action"])) {
 
             // check if table not empty
-            if ($visitors->num_rows != 0) {
+            if (count($visitors) != 0) {
 
                 // default table structure
                 echo '<div class="table-responsive"><table class="table table-dark"><thead><tr class="lineItem">
@@ -171,7 +171,7 @@
             } elseif ($action == "ban") {
 
                 // get id from query string
-                $id = $mysqlUtils->escapeString($_GET["id"], true, true);
+                $id = $escapeUtils->specialCharshStrip($_GET["id"]);
 
                 // get visitor ip by id
                 $ip = $visitorController->getVisitorIPByID($id);
@@ -203,7 +203,7 @@
                     if (!empty($_GET["reason"])) {
 
                         // escape ban reason
-                        $reason = $mysqlUtils->escapeString($_GET["reason"], true, true);
+                        $reason = $escapeUtils->specialCharshStrip($_GET["reason"]);
 
                         // log ban
                         $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
@@ -218,7 +218,7 @@
 
                             // check if ban reason seted
                             if (!empty($_POST["banReason"])) {
-                                $banReason = $mysqlUtils->escapeString($_POST["banReason"], true, true);
+                                $banReason = $escapeUtils->specialCharshStrip($_POST["banReason"]);
                             } else {
                                 $banReason = "no reason";
                             }
@@ -264,7 +264,7 @@
         if (isset($_GET["limit"]) and isset($_GET["startby"]) and !isset($_GET["action"])) {
 
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or ($visitors->num_rows == $limitOnPage)) {
+            if (($showLimit > $limitOnPage) or (count($visitors) == $limitOnPage)) {
                 echo '<div class="pageButtonBox">';
             }
         
@@ -274,12 +274,12 @@
             }
 
             // print next button if user on start page and can see next items
-            if ($visitors->num_rows == $limitOnPage) {
+            if (count($visitors) == $limitOnPage) {
                 echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
             }
     
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or ($visitors->num_rows == $limitOnPage)) {
+            if (($showLimit > $limitOnPage) or (count($visitors) == $limitOnPage)) {
                 echo '</div><br>';
             }
         }        

@@ -22,9 +22,9 @@
                 if (isset($_POST["email"])) {
 
                     // init values from form and escape
-                    $name = $mysqlUtils->escapeString($_POST["name"], true, true);
-                    $email = $mysqlUtils->escapeString($_POST["email"], true, true);
-                    $message = $mysqlUtils->escapeString($_POST["message"], true, true);
+                    $name = $escapeUtils->specialCharshStrip($_POST["name"]);
+                    $email = $escapeUtils->specialCharshStrip($_POST["email"]);
+                    $message = $escapeUtils->specialCharshStrip($_POST["message"]);
 
                     // honeypot check
                     if (empty($_POST["website"])) {

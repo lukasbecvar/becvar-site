@@ -12,7 +12,7 @@
 			"author"      => "Lukáš Bečvář",       	// define app author
 			"authorLink"  => "becvold.xyz", 	   	// define author site
 			"url-check"   => true,				    // check if url valid
-			"url"         => "gg",        	// define main app url
+			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
 			"https"       => false,				   	// if this = true (Site can run only on https://)
@@ -59,10 +59,10 @@
 			"logs" => true,
 
 			/* Mysql config */
-			"ip" 		=> 	"localhost",	// define mysql server ip
-			"basedb" 	=> 	"becvar_site",	// define mysql default db name
-			"username"	=> 	"root",			// define mysql user 
-			"password" 	=> 	"root"			// define Mysql password
+			"mysql-address"		=> 	"localhost",	// define mysql server ip
+			"mysql-database" 	=> 	"becvar_site",	// define mysql default db name
+			"mysql-username"	=> 	"root",			// define mysql user 
+			"mysql-password" 	=> 	"root"			// define Mysql password
 		];
 	}
 ?>

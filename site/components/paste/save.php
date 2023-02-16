@@ -2,25 +2,34 @@
 
 	// check if user save paste
 	if (isset($_POST['data'])) {
-
+ 
 		// get data from post
-		$content = $mysqlUtils->escapeString($_POST['data'], true, true);
+		$contentRaw = $escapeUtils->specialCharshStrip($_POST['data']);
 
 		// get file name
-		$name = $mysqlUtils->escapeString($_POST['file'], true, true);
+		$name = $escapeUtils->specialCharshStrip($_POST['file']);
 
 		// select content to write (Escape [XSS Protection])
-		$content = str_replace(array("<", ">"), array("&lt;", "&gt;"), $content);
+		$content = str_replace(array("<", ">"), array("&lt;", "&gt;"), $contentRaw);
 
 		// get date
 		$date = date('d.m.Y H:i:s');
+		
+		// check if maximum lenght reached
+		if (strlen($contentRaw) > 60001) {
 
-		// save paste to mysql table
-		if (!empty($content)) {
-			$mysqlUtils->insertQuery("INSERT INTO `pastes`(`spec`, `content`, `date`) VALUES ('$name', '$content', '$date')");
+			// redirect error
+			$siteController->redirectError(400);
+
+		} else {
+
+			// save paste to mysql table
+			if (!empty($content)) {
+				$mysqlUtils->insertQuery("INSERT INTO pastes(spec, content, date) VALUES ('$name', '$content', '$date')");
+			}
+
+			// log to mysql
+			$mysqlUtils->logToMysql("Paste", "added new paste: ".$name);	
 		}
-
-		// log to mysql
-		$mysqlUtils->logToMysql("Paste", "added new paste: ".$name);	
 	}
 ?>

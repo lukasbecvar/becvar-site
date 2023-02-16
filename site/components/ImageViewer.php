@@ -7,7 +7,7 @@
         $imgSpec = $siteController->getQueryString("spec");
 
         // get image by specID
-        $image = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM image_uploader WHERE imgSpec='".$imgSpec."'"));
+        $image = $mysqlUtils->fetchValue("SELECT image FROM image_uploader WHERE imgSpec='".$imgSpec."'", "image");
     
         // check if image found
         if ($image == NULL) {

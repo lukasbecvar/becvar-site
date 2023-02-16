@@ -2,8 +2,6 @@
 
     namespace becwork\controllers;
 
-use mysqli;
-
     class VisitorSystemController {
 
         // get user browser
@@ -197,15 +195,16 @@ use mysqli;
             global $mysqlUtils;
             global $mainUtils;
             global $siteController;
+            global $escapeUtils;
 
             // get data
             $visited_sites = 1;
-            $first_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
-            $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
-            $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
-            $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-            $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
-            $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
+            $first_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
+            $last_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
+            $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
+            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+            $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
+            $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
 
             // check if ip is banned in database
             if ($this->isVisitorBanned($ip_adress)) {
@@ -234,11 +233,11 @@ use mysqli;
             global $mysqlUtils;
             global $dashboardController;
             global $mainUtils;
-            global $pageConfig;
             global $siteController;
+            global $escapeUtils;
 
             // get visitor ip
-            $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
 
             // check if visitors count is zero
             if ($dashboardController->getVisitorsCount() == "0") {
@@ -249,22 +248,22 @@ use mysqli;
                 if ($this->ifVisitorIsInTable($ip_adress)) {
 
                     // get key count in db for duplicity check
-                    $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip_adress'"))["count"];
+                    $ip_ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress`='$ip_adress'");
 
                     // check if key is not exist in database
-                    if ($ip_count == "0") {
+                    if (count($ip_ids) == 0) {
                         $this->firstVisit();
 
                     } else {
                         // get data from mysql by IP
-                        $visited_sites = intval($mysqlUtils->readFromMysql("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
+                        $visited_sites = intval($mysqlUtils->fetchValue("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
                         // new values to insert
                         $visited_sites = $visited_sites + 1;
-                        $last_visit = $mysqlUtils->escapeString(date('d.m.Y H:i'), true, true);
-                        $browser = $mysqlUtils->escapeString($this->getBrowser(), true, true);
-                        $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
-                        $os = $mysqlUtils->escapeString($this->getVisitorOS(), true, true);
+                        $last_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
+                        $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
+                        $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+                        $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
 
                         // update database
                         $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
@@ -277,7 +276,7 @@ use mysqli;
                         if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Unknown") {
 
                             // get location 
-                            $location = $mysqlUtils->escapeString($this->getVisitorLocation($ip_adress), true, true);
+                            $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
 
                             // insert location
                             $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
@@ -304,17 +303,15 @@ use mysqli;
         public function isVisitorBanned($ip) {
 
             global $mysqlUtils;
-            global $pageConfig;
 
-            // get ip count
-            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE `ip_adress`='$ip'"))["count"];
-            $ip_count = intval($ip_count);
+            // get ip ids
+            $ip_ids = $mysqlUtils->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
             
             // check if ip is in database
-            if ($ip_count > 0) {
+            if (count($ip_ids) > 0) {
 
                 // get banned status
-                $banned_status = $mysqlUtils->readFromMysql("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
+                $banned_status = $mysqlUtils->fetchValue("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
 
                 // check if banned status = yes
                 if ($banned_status == "banned") {
@@ -331,14 +328,13 @@ use mysqli;
         public function getVisitorLocationFromDatabase($id) {
 
             global $mysqlUtils;
-            global $pageConfig;
 
             // get visitor data by id
-            $visitor = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName("basedb")), "SELECT * FROM visitors WHERE `id` = '$id'");
+            $visitor = $mysqlUtils->fetch("SELECT * FROM visitors WHERE `id` = '$id'");
 
-            if ($visitor->num_rows > 0) {
+            if (count($visitor) > 0) {
 
-                $out = mysqli_fetch_assoc($visitor)["location"];
+                $out = $mysqlUtils->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
 
             } else {
                 $out = "Unknown";
@@ -397,18 +393,17 @@ use mysqli;
         public function getVisitorIPByID($id) {
 
             global $mysqlUtils;
-            global $pageConfig;
 
-            // get ID count
-            $ID_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `id`='$id'"))["count"];
+            // get IDs
+            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `id`='$id'");
 
             // check if key found in database
-            if ($ID_count == "0") {
-                return NULL;
+            if (count($ids) == 0) {
+                return null;
             } else {
 
                 // get visitor ip by key
-                $visitorIP = $mysqlUtils->readFromMysql("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
+                $visitorIP = $mysqlUtils->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
 
                 // return ip
                 return $visitorIP;
@@ -419,18 +414,17 @@ use mysqli;
         public function getVisitorIDByIP($ip) {
 
             global $mysqlUtils;
-            global $pageConfig;
 
-            // get IP count
-            $IP_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
+            // get IDs by IP
+            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
 
             // check if key found in database
-            if ($IP_count == "0") {
-                return NULL;
+            if (count($ids) == 0) {
+                return null;
             } else {
 
                 // get visitor id by ip
-                $visitorID = $mysqlUtils->readFromMysql("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
+                $visitorID = $mysqlUtils->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
 
                 return $visitorID;
             }
@@ -440,14 +434,12 @@ use mysqli;
         public function bannVisitorByIP($ip, $reason) {
             
             global $mysqlUtils;
-            global $pageConfig; 
 
             // get IP count from banned table
-            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE `ip_adress`='$ip'"))["count"];
-            $ip_count = intval($ip_count);  
+            $ids = $mysqlUtils->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
 
             // check if ip found in banned table
-            if ($ip_count > 0) {
+            if (count($ids) > 0) {
 
                 // update ban status
                 $mysqlUtils->insertQuery("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
@@ -480,14 +472,12 @@ use mysqli;
         public function ifVisitorIsInTable($ip) {
 
             global $mysqlUtils;
-            global $pageConfig;
 
-            // get IP count from visitors table
-            $ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors WHERE `ip_adress`='$ip'"))["count"];
-            $ip_count = intval($ip_count);    
+            // get IDs where ip
+            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
             
             // check if ip found
-            if ($ip_count > 0) {
+            if (count($ids) > 0) {
                 return true;
             } else {
                 return false;
@@ -501,12 +491,13 @@ use mysqli;
             global $mainUtils;
             global $pageConfig;
             global $siteController;
+            global $escapeUtils;
 
             // get value banned russia
             $bannedRussia = $pageConfig->getValueByName('bannedRussia');
 
             // get user ip
-            $ip_adress = $mysqlUtils->escapeString($mainUtils->getRemoteAdress(), true, true);
+            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
 
             // check if visitor found in database by IP
             if ($this->ifVisitorIsInTable($ip_adress)) {

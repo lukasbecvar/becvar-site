@@ -15,8 +15,8 @@
 		} else {
 
 			// init values
-			$username = $mysqlUtils->escapeString($_POST["username"], true, true);
-			$passwordRaw = $mysqlUtils->escapeString($_POST["password"], true, true);
+			$username = $escapeUtils->specialCharshStrip($_POST["username"]);
+			$passwordRaw = $escapeUtils->specialCharshStrip($_POST["password"]);
 
 			// hash password
 			$password = $hashUtils->genBlowFish($passwordRaw);
@@ -39,7 +39,7 @@
 				if ($adminController->canLogin($username, $password)) {
 
 					// get user token
-					$token = $mysqlUtils->readFromMysql("SELECT token FROM users WHERE username = '".$username."'", "token");
+					$token = $mysqlUtils->fetchValue("SELECT token FROM users WHERE username = '".$username."'", "token");
 
 					// check if token is seted
 					if (!empty($token)) {
@@ -48,7 +48,7 @@
 						$adminController->setLoginSession($token);
 
 						// set role session
-						$sessionUtils->setSession("role", $mysqlUtils->readFromMysql("SELECT role FROM users WHERE token = '".$token."'", "role"));
+						$sessionUtils->setSession("role", $mysqlUtils->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
 
 						// check if user stay logged in
 						if ($saveAccount) {
@@ -90,7 +90,7 @@
 					if (empty($username) or empty($passwordRaw)) {
 						$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
 					} else {
-						$mysqlUtils->logToMysql("Login", "Trying to login with name: $username:$passwordRaw", true, true);				
+						$mysqlUtils->logToMysql("Login", "Trying to login with name: $username:$passwordRaw");				
 					}
 				}
 			}

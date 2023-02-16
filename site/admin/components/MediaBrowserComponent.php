@@ -34,13 +34,13 @@
         echo '<center><div id="lightgallery">';
 
         // draw all images to page
-        $imagesUpload = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
+        $imagesUpload = $mysqlUtils->fetch("SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
     
         // print images (if found)
-        if ($imagesUpload->num_rows != 0) {
+        if (count($imagesUpload) != 0) {
             
             // print all images to gallery box
-            while ($row = mysqli_fetch_assoc($imagesUpload)) {
+            foreach ($imagesUpload as $row) {
                 echo '<span data-src="data:image/jpg;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=?process=image&spec='.$row["imgSpec"].' target=blank_>'.$row["imgSpec"].'</a> | <a class=imgEditButton href=?admin=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/jpg;base64,'.$row["image"].'"></span>'; 
             } 
         } else {
@@ -62,7 +62,7 @@
             }
 
             // print next button if user on start page and can see next items
-            if ($imagesUpload->num_rows == $limitOnPage) {
+            if (count($imagesUpload) == $limitOnPage) {
                 echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
             }
     

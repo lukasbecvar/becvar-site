@@ -16,10 +16,10 @@
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
 
 			// get show limit form url
-			$showLimit = $mysqlUtils->escapeString($_GET["limit"], true, true);
+			$showLimit = $escapeUtils->specialCharshStrip($_GET["limit"]);
 
 			// get start row form url
-			$startByRow = $mysqlUtils->escapeString($_GET["startby"], true, true);
+			$startByRow = $escapeUtils->specialCharshStrip($_GET["startby"]);
 
 			// set next limit
 			$nextLimit = (int) $showLimit + $limitOnPage;
@@ -40,11 +40,11 @@
         if ($whereIP == null) {
             
             // get all logs from table
-            $logs = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM logs WHERE status NOT LIKE 'readed' ORDER BY id DESC LIMIT $startByRow, $limitOnPage");            
+            $logs = $mysqlUtils->fetch("SELECT * FROM logs WHERE status NOT LIKE 'readed' ORDER BY id DESC LIMIT $startByRow, $limitOnPage");          
         } else {
             
             // select logs where ip
-            $logs = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM logs WHERE remote_addr = '$whereIP' LIMIT $startByRow, $limitOnPage");
+            $logs = $mysqlUtils->fetch("SELECT * FROM logs WHERE remote_addr = '$whereIP' LIMIT $startByRow, $limitOnPage");
         }
 
         // set action
@@ -55,7 +55,7 @@
 
            
             // check if table not empty
-            if ($logs->num_rows != 0) {
+            if (count($logs) != 0) {
 
                 // default table structure
                 echo '<div class="table-responsive"><table class="table table-dark"><thead><tr class="lineItem">
@@ -161,7 +161,7 @@
         if (isset($_GET["limit"]) and isset($_GET["startby"]) and !isset($_GET["action"])) {
 
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or ($logs->num_rows == $limitOnPage)) {
+            if (($showLimit > $limitOnPage) or (count($logs) == $limitOnPage)) {
                 echo '<div class="pageButtonBox">';
             }
         
@@ -181,7 +181,7 @@
             }
 
             // print next button if user on start page and can see next items
-            if ($logs->num_rows == $limitOnPage) {
+            if (count($logs) == $limitOnPage) {
 
                 // check if where ip is null
                 if ($whereIP == null) {
@@ -196,7 +196,7 @@
             }
     
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or ($logs->num_rows == $limitOnPage)) {
+            if (($showLimit > $limitOnPage) or (count($logs) == $limitOnPage)) {
                 echo '</div><br>';
             }
         }        

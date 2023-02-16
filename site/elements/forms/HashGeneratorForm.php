@@ -8,10 +8,10 @@
 					if(isset($_POST["submitHashGen"])) {
 
 						// get plain text and escaped
-						$text = $mysqlUtils->escapeString($_POST["text"], true, true);
+						$text = $escapeUtils->specialCharshStrip($_POST["text"]);
 
 						// get hash type and escaped
-						$hashType = $mysqlUtils->escapeString($_POST["hashType"], true, true);
+						$hashType = $escapeUtils->specialCharshStrip($_POST["hashType"]);
 
 						// check if plaintext is not empty
 						if (empty($text)) {

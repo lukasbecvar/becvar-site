@@ -7,7 +7,7 @@
         $accesToken = $pageConfig->getValueByName('apiToken');
 
         // init token from get parameter and escaped
-        $token = $mysqlUtils->escapeString($siteController->getQueryString("token"), true, true);
+        $token = $escapeUtils->specialCharshStrip($siteController->getQueryString("token"));
         
         // check if token is valid
         if ($apiController->isTokenValid($token, $accesToken) == null) {
@@ -19,7 +19,7 @@
         } elseif ($apiController->isTokenValid($token, $accesToken) == "valid") {
             
             // get value from url get
-            $value = $mysqlUtils->escapeString($siteController->getQueryString("value"), true, true);
+            $value = $escapeUtils->specialCharshStrip($siteController->getQueryString("value"));
             
             // check if value is null
             if ($value == null) {

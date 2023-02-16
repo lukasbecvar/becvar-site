@@ -42,7 +42,7 @@ This application does not serve as an example of my work, it is my personal site
  - mysql8 or <
  - php-cli
  - php-curl
- - php-mysqli
+ - php-pdo
 
 ## Dependencies
 This project requires PHP8 or < .

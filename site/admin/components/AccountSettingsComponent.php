@@ -5,8 +5,8 @@
     if (isset($_POST["submitPasswordChange"])) {
         
         // init values from form and escaped
-        $password = $mysqlUtils->escapeString($_POST["password"], true, true);
-        $rePassword = $mysqlUtils->escapeString($_POST["repassword"], true, true);
+        $password = $escapeUtils->specialCharshStrip($_POST["password"]);
+        $rePassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
 
         // check if values not empty
         if (!empty($password) or !empty($rePassword)) {

@@ -4,10 +4,10 @@
     $spec = $siteController->getQueryString("f");
 
     // get paste content
-    $pasteContent = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM pastes WHERE spec='$spec'"));
+    $pasteContent = $mysqlUtils->fetchValue("SELECT content FROM pastes WHERE spec='$spec'", "content");
 
     // check if content to view is not empty
-    if (empty($pasteContent["content"])) {
+    if (empty($pasteContent)) {
         if ($siteController->isSiteDevMode()) {
             die("[DEV-MODE]:Error: paste content is empty");
         } else {
@@ -43,8 +43,8 @@
 <body>
     <pre>
         <?php // print content from db to site
-            if (!empty($pasteContent["content"])) {
-                echo "<code>".$pasteContent["content"]."</code>";
+            if (!empty($pasteContent)) {
+                echo "<code>".$pasteContent."</code>";
             }
         ?>     
     </pre>

@@ -114,83 +114,110 @@
 
         // get pastes count
         public function getPastesCount() {
-            global $mysqlUtils;
-            global $pageConfig;
 
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM pastes"))["count"];
+            global $mysqlUtils;
+
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM pastes");
+
+            // return pastes count
+            return count($data);
         }
 
         // get log count
         public function getLogsCount() {
-            global $mysqlUtils;
-            global $pageConfig;
 
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs"))["count"];
+            global $mysqlUtils;
+
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM logs");
+
+            // return logs count
+            return count($data);
         }
 
         // get login logs count
         public function getLoginLogsCount() {
-            global $mysqlUtils;
-            global $pageConfig;
 
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'"))["count"];
+            global $mysqlUtils;
+
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'");
+
+            // return logs count
+            return count($data);
         }
 
         // get unreaded logs count
         public function getUnreadedLogs() {
+
             global $mysqlUtils;
-            global $pageConfig;
         
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM logs WHERE status LIKE '%unreaded%'"))["count"];
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM logs WHERE status LIKE '%unreaded%'");
+
+            // return logs count
+            return count($data);
         }
 
         // get page visitors count
         public function getVisitorsCount() {
+
             global $mysqlUtils;
-            global $pageConfig;
         
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM visitors"))["count"];
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM visitors");
+
+            // return visitors count
+            return count($data);
         }
 
         // get MSGS in inbox count
         public function getMSGSCount() {
-            global $mysqlUtils;
-            global $pageConfig;
 
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM messages WHERE status='open'"))["count"];
+            global $mysqlUtils;
+
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM messages WHERE status='open'");
+
+            // return messages count
+            return count($data);
         }
 
         // get todos count in todos table
         public function getTodosCount() {
-            global $mysqlUtils;
-            global $pageConfig;
 
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM todos WHERE status='open'"))["count"];
+            global $mysqlUtils;
+
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM todos WHERE status='open'");
+
+            // return todos count
+            return count($data);
         }
         
         // get images count in gallery
         public function getImagesCount() {
+
             global $mysqlUtils;
-            global $pageConfig;
         
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM image_uploader"))["count"];
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM image_uploader");
+
+            // return images count
+            return count($data);
         }
 
         // get banned visitors count 
-        public function getBannedCount() {  //date("d.m.Y")
+        public function getBannedCount() { 
+
             global $mysqlUtils;
-            global $pageConfig;
         
-            // return count as number
-            return mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM banned WHERE status='banned'"))["count"];
+            // get data ids
+            $data = $mysqlUtils->fetch("SELECT id FROM banned WHERE status='banned'");
+
+            // return banned count
+            return count($data);
         }
 
         // check if system is linux

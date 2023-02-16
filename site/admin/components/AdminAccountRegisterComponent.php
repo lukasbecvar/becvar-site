@@ -10,9 +10,9 @@
             } else {
                
                 // get data from post and escapeit
-                $username = $mysqlUtils->escapeString($_POST["username"], true, true);
-                $password = $mysqlUtils->escapeString($_POST["password"], true, true);
-                $repassword = $mysqlUtils->escapeString($_POST["repassword"], true, true);
+                $username = $escapeUtils->specialCharshStrip($_POST["username"]);
+                $password = $escapeUtils->specialCharshStrip($_POST["password"]);
+                $repassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
                 
                 // check if values not empty
                 if (empty($username) or empty($password) or empty($repassword)) {

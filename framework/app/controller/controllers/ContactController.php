@@ -4,19 +4,28 @@
 
 	class ContactController {
 
+		// get messages from database
+		public function getMessages() {
+
+			global $mysqlUtils;
+
+			return $mysqlUtils->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC");
+		}
+
 		// send message to database
 		public function sendMessage($name, $email, $message, $status) {
 
 			global $mysqlUtils;
 			global $mainUtils;
+			global $escapeUtils;
 
 			// get & escape values
-			$name = $mysqlUtils->escapeString(trim($name), true, true);
-			$email = $mysqlUtils->escapeString(trim($email), true, true);
-			$message = $mysqlUtils->escapeString(trim($message), true, true);
+			$name = $escapeUtils->specialCharshStrip(trim($name));
+			$email = $escapeUtils->specialCharshStrip(trim($email));
+			$message = $escapeUtils->specialCharshStrip(trim($message));
 			$time = date('d.m.Y H:i:s');
 			$remote_addr = $mainUtils->getRemoteAdress();
-			$status = $mysqlUtils->escapeString(trim($status), true, true);
+			$status = $escapeUtils->specialCharshStrip(trim($status));
 
 			// insert values
 			$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
@@ -36,18 +45,16 @@
 		// print all messages
 		public function printMSGS() {
 
-			global $mysqlUtils;
-			global $pageConfig;
 			global $visitorController;
 
-            // save all messages if status open to this array
-            $messages = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * from messages WHERE status = 'open' ORDER BY id DESC"); 
+            // get messages array
+            $messages = $this->getMessages();
 
 			// default ID
 			$userID = NULL;
 
             // show all messages from array messages in page
-            while ($row = mysqli_fetch_assoc($messages)) {
+            foreach ($messages as $row) {
 
 				// get user ID
 				$userID = $visitorController->getVisitorIDByIP($row["remote_addr"]);
@@ -90,14 +97,11 @@
         // check if msgs empty
         public function isEmpty() {
 
-            global $mysqlUtils;
-			global $pageConfig;
-
-            // select msgs count form database
-            $msgsCount = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM messages WHERE status='open'"));
+            // get messages from database
+            $msgs = $this->getMessages();
 
 			// check if msgs list empty
-            if ($msgsCount["count"] == 0) {
+            if (count($msgs) < 1) {
                 return true;
             } else {
                 return false;

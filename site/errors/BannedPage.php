@@ -32,15 +32,14 @@
 				// get current ip
 				$ip = $mainUtils->getRemoteAdress();
 
-				// get IP count from banned table
-				$ip_count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($configOBJ->config["basedb"]), "SELECT COUNT(*) AS count FROM banned WHERE `ip_adress`='$ip'"))["count"];
-				$ip_count = intval($ip_count);  
+				// get IDs where ip
+				$ids = $mysqlUtils->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
 
 				// check if banned found
-				if ($ip_count > 0) {
+				if (count($ids) > 0) {
 					// print reason if found
-					if ($mysqlUtils->readFromMysql("SELECT reason FROM banned WHERE ip_adress = '$ip'", "reason") != "no reason") {
-						echo "REASON: ".$mysqlUtils->readFromMysql("SELECT reason FROM banned WHERE ip_adress = '$ip'", "reason");
+					if ($mysqlUtils->fetchValue("SELECT reason FROM banned WHERE ip_adress = '$ip'", "reason") != "no reason") {
+						echo "REASON: ".$mysqlUtils->fetchValue("SELECT reason FROM banned WHERE ip_adress = '$ip'", "reason");
 					} 
 				}
 			?>

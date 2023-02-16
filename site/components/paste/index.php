@@ -42,7 +42,7 @@
     </a>
     <form action="?process=paste&method=save" method="post" id="form">
         <input type="hidden" name="file" value="" id="file">
-        <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" name="data"></textarea>
+        <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" name="data" maxlength="30000"></textarea>
     </form>
 </body>
 </html>

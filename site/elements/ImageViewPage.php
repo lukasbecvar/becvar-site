@@ -10,7 +10,7 @@
     <body>
         <center>
             <div>
-                <img src="data:image/png;base64,<?php echo $image["image"]; ?>"/> 
+                <img src="data:image/png;base64,<?php echo $image; ?>"/> 
             </div>
             <?php 
                 // log image view to database

@@ -19,10 +19,9 @@
         public function ifMaintenance() {
 
             global $pageConfig;
-            global $mysqlUtils;
 
             // check if maintenance mode valid
-            if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false) or $mysqlUtils->isOffline()) {
+            if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false)) {
                 return true;
             }
         }
@@ -30,7 +29,7 @@
         // get query string by name
         public function getQueryString($query) {
             
-            global $mysqlUtils;
+            global $escapeUtils;
 
             // check if query is empty
             if (empty($_GET[$query])) {
@@ -38,7 +37,7 @@
             } else {
 
                 // escape query
-                $output = $mysqlUtils->escapeString($_GET[$query], true, true);
+                $output = $escapeUtils->specialCharshStrip($_GET[$query]);
             }
 
             // return final query value

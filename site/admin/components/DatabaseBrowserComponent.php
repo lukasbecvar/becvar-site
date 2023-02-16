@@ -12,42 +12,42 @@
 		if (isset($_GET["id"])) {
 
 			// get id from query string
-			$idGet = $mysqlUtils->escapeString($_GET["id"], true, true);
+			$idGet = $escapeUtils->specialCharshStrip($_GET["id"]);
 		}
 
 		// check if delete seted
 		if (isset($_GET["delete"])) {
 
 			// get delete from query string
-			$deleteGet = $mysqlUtils->escapeString($_GET["delete"], true, true);
+			$deleteGet = $escapeUtils->specialCharshStrip($_GET["delete"]);
 		}
 
 		// check if editor seted
 		if (isset($_GET["editor"])) {
 
 			// get editor from query string
-			$editorGet = $mysqlUtils->escapeString($_GET["editor"], true, true);
+			$editorGet = $escapeUtils->specialCharshStrip($_GET["editor"]);
 		}
 
 		// check if add seted
 		if (isset($_GET["add"])) {
 
 			// get add from query string
-			$addGet = $mysqlUtils->escapeString($_GET["add"], true, true);
+			$addGet = $escapeUtils->specialCharshStrip($_GET["add"]);
 		}
 
 		// check if browse table
 		if (isset($_GET["name"])) {
 
 			// get escaped table name
-			$tableName = $mysqlUtils->escapeString($_GET["name"], true, true);
+			$tableName = $escapeUtils->specialCharshStrip($_GET["name"]);
 		}
 
 		// check if browse table
 		if (isset($_GET["name"])) {
 
 			// get row count in table by name
-			$rowsCount = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM ".$tableName)); 
+			$rowsCount = $mysqlUtils->fetch("SELECT id FROM ".$tableName);
 		} else {
 			$rowsCount = 0;
 		}
@@ -62,10 +62,10 @@
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) && isset($_GET["startby"]))) {
  
 			// get show limit form url
-			$showLimit = $mysqlUtils->escapeString($_GET["limit"], true, true);
+			$showLimit = $escapeUtils->specialCharshStrip($_GET["limit"]);
  
 			// get start row form url
-			$startByRow = $mysqlUtils->escapeString($_GET["startby"], true, true);
+			$startByRow = $escapeUtils->specialCharshStrip($_GET["startby"]);
  
 			// calculate next limit
 			$nextLimit = (int) $showLimit + $limitOnPage;
@@ -117,7 +117,7 @@
 
 				// row count
 				if (!empty($_GET["name"])) {
-					echo '<li class="countTextInMenuR">'.$_GET["name"].' = '.$rowsCount["count"].' rows</li>';	
+					echo '<li class="countTextInMenuR">'.$_GET["name"].' = '.count($rowsCount).' rows</li>';	
 				} else {
 
 					// editor title
@@ -143,16 +143,13 @@
 		if (isset($_GET["name"])) {
 
 			// select table data
-			$tableData = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM ".$tableName." LIMIT $startByRow, $limitOnPage");
- 
-			// create associative array from table data
-			$tableDataAssoc = mysqli_fetch_array($tableData, MYSQLI_ASSOC);
+			$tableData = $mysqlUtils->connect()->query("SELECT * FROM ".$tableName." LIMIT $startByRow, $limitOnPage")->fetchAll(\PDO::FETCH_ASSOC);
 
 			// select columns from table
-			$tableColumns = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW COLUMNS FROM ".$tableName);
+			$tableColumns = $mysqlUtils->connect()->query("SHOW COLUMNS FROM ".$tableName)->fetchAll(\PDO::FETCH_ASSOC);
  
 			// check if table empty
-			if ($tableData->num_rows == 0) {
+			if (count($tableData) == 0) {
 				echo"<h2 class=pageTitle>Table is empty</h2>";
 			} 
 			
@@ -164,7 +161,7 @@
 				echo '<thead><tr class="lineItem">'; 
 
 				// mysql fields to table
-				while($row = mysqli_fetch_array($tableColumns)) {
+				foreach($tableColumns as $row) {
 					echo "<th scope='col'>".$row['Field']."</th>";
 				}
 
@@ -219,8 +216,9 @@
 					$dataOK = array_values($data);
 
 					echo '<tbody><tr class="lineItem">';
+					
 					// table data
-					for ($id = 0; $id <= 100; $id++) {
+					for ($id = 0; $id <= 50; $id++) {
 						if (!empty($dataOK[$id])) {
 							echo "<th scope='row'>".$dataOK[$id]."</th>";	
 						}
@@ -315,10 +313,10 @@
 			if (isset($_POST["submitEdit"])) {
 
 				// select columns from selected table
-				$resultEdit = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW COLUMNS FROM ".$editorGet);
+				$resultEdit = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$editorGet);
 
 				// update all fileds by id
-				while($rowOK = mysqli_fetch_array($resultEdit)) { 
+				foreach($resultEdit as $rowOK) { 
 
 					// insert query
 					$mysqlUtils->insertQuery("UPDATE $editorGet SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$idGet'");
@@ -340,16 +338,16 @@
 			}
 
 			// init table name
-			$dbName = $mysqlUtils->escapeString($editorGet, true, true);
+			$dbName = $escapeUtils->specialCharshStrip($editorGet);
 
 			// select columns from selected table
-			$result = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW COLUMNS FROM ".$editorGet);
+			$result = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$editorGet);
 
 			// select all from selected table
-			$resultAll = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT * FROM $editorGet WHERE id = '$idGet'");
+			$resultAll = $mysqlUtils->connect()->query("SELECT * FROM $editorGet WHERE id = '$idGet'");
 
 			// migrate object to array
-			$rowAll = mysqli_fetch_array($resultAll);
+			$rowAll = $resultAll->fetchAll(\PDO::FETCH_ASSOC);
 
 			echo "<br><br>";
 
@@ -362,7 +360,7 @@
 			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$idGet.'<p>';
 
 				// print Fields
-				while($row = mysqli_fetch_array($result)) {
+				foreach($result as $row) {
 					echo '<p class="textInputTitle">'.$row['Field'].'</p>';
 					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$rowAll[$row['Field']].'"><br>';
 				}
@@ -375,7 +373,7 @@
 		elseif (isset($_GET["add"])) {
 			
 			// select columns add table
-			$selectedColumns = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW COLUMNS FROM ".$addGet);
+			$selectedColumns = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$addGet);
 
 			// check if save submited
 			if (isset($_POST["submitSave"])) {
@@ -385,7 +383,7 @@
 				$columnsBuilder = "";
 
 				// build columns list
-				while($row = mysqli_fetch_array($selectedColumns)) {
+				foreach($selectedColumns as $row) {
 
 					// prevent id valud build
 					if (strtolower($row["Field"]) != "id") {
@@ -441,7 +439,7 @@
 				echo '<p class="textInputTitle">New item</p><br>';
 
 				// fields
-				while($row = mysqli_fetch_array($selectedColumns)) {
+				foreach($selectedColumns as $row) {
 					if (strtolower($row["Field"]) != "id") {
 						echo '<input class="textInput" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
 					}
@@ -465,11 +463,12 @@
 			echo '<div><ol><br>';
  
 			// get tables object from database
-			$tables = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SHOW TABLES");
+			$tables = $mysqlUtils->fetch("SHOW TABLES");
 
 			// print all tables links
-			while ($row = mysqli_fetch_assoc($tables)) {
-				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$pageConfig->getValueByName("basedb")]."</a><br><br>";
+			foreach ($tables as $row) {
+
+				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$pageConfig->getValueByName("mysql-database")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$pageConfig->getValueByName("mysql-database")]."</a><br><br>";
 			}
 
 			// end of select box element
@@ -483,7 +482,7 @@
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) and isset($_GET["startby"]))) {
  
 			// check if page buttons can show
-			if (($showLimit > $limitOnPage) or ($tableData->num_rows == $limitOnPage)) {
+			if (($showLimit > $limitOnPage) or (count($tableData) == $limitOnPage)) {
 				echo '<div class="pageButtonBox">'; //Create buttons element area
 			}
 		
@@ -493,12 +492,12 @@
 			}
 
 			// print next button if user on start page and can see next items
-			if ($tableData->num_rows == $limitOnPage) {
+			if (count($tableData) == $limitOnPage) {
 				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
 			}
 	
 			// check if page buttons can show
-			if (($showLimit > $limitOnPage) or ($tableData->num_rows == $limitOnPage)) {
+			if (($showLimit > $limitOnPage) or (count($tableData) == $limitOnPage)) {
 				echo '</div><br>'; // close buttons element area
 			}
 		}

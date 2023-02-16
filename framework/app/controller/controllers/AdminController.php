@@ -8,13 +8,12 @@
 		public function isUserEmpty() {
 
 			global $mysqlUtils;
-			global $pageConfig;
 
-			// get user count as count key
-			$userCount = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users"));
+			// get users data
+			$users = $mysqlUtils->fetch("SELECT * FROM users");
 
 			// check if user is empty
-			if ($userCount["count"] == 0) {
+			if (count($users) < 1) {
 				return true;
 			} else {
 				return false;
@@ -52,16 +51,12 @@
 		public function canLogin($username, $password) {
 
 			global $mysqlUtils;
-			global $pageConfig;
 
-			// build login query
-			$query = mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT id FROM users WHERE username = '$username' and password = '$password'"); 
-						
-			// get query results user row
-			$count = mysqli_num_rows($query);
+			// select ID with valid login data
+			$loginSelect = $mysqlUtils->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");
 			
 			// check if user with password exist
-			if ($count == 1) {
+			if (count($loginSelect) == 1) {
 				return true; 
 			} else { 
 				return false; 
@@ -198,7 +193,7 @@
 			if ($this->getUserToken() != NULL) {
 				
 				// return username
-				return $mysqlUtils->readFromMysql("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
+				return $mysqlUtils->fetchValue("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
 			} else {
 				$this->logout();
 			}
@@ -213,7 +208,7 @@
 			if ($this->getUserToken() != NULL) {
 
 				// return user role
-				return $mysqlUtils->readFromMysql("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
+				return $mysqlUtils->fetchValue("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
 			} else {
 				$this->logout();
 			}
@@ -223,16 +218,15 @@
 		public function getUserToken() {
 
 			global $mysqlUtils;
-			global $pageConfig;
 
 			// check if user token in session
 			if (!empty($_SESSION["userToken"])) {
 				
-				// get token count
-				$count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users WHERE token='".$_SESSION["userToken"]."'"))["count"];
+				// get ids where token 
+				$ids = $mysqlUtils->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
 				
 				// check if token exist in users
-				if ($count == "1") {
+				if (count($ids) > 0) {
 					return $_SESSION["userToken"];
 				} else {
 					return NULL;
@@ -247,16 +241,15 @@
 		public function getUserIPByToken($token) {
 
 			global $mysqlUtils;
-			global $pageConfig;
 
-			// get token count
-			$count = mysqli_fetch_assoc(mysqli_query($mysqlUtils->mysqlConnect($pageConfig->getValueByName('basedb')), "SELECT COUNT(*) AS count FROM users WHERE token='".$_SESSION["userToken"]."'"))["count"];
-
+			// get ids where token 
+			$ids = $mysqlUtils->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
+				
 			// check if token found
-			if (intval($count) > 0) {
+			if (count($ids) > 0) {
 				
 				// get ip by token
-				$ip = $mysqlUtils->readFromMysql("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
+				$ip = $mysqlUtils->fetchValue("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
 
 				return $ip;
 
@@ -308,7 +301,7 @@
 			if ($this->getUserToken() != NULL) {
 
 				// return user profile pic
-				return $mysqlUtils->readFromMysql("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
+				return $mysqlUtils->fetchValue("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
 			} else {
 				$this->logout();
 			}

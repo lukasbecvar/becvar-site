@@ -1,86 +1,100 @@
-<?php // mysql/database utils
-
+<?php 
     namespace becwork\utils;
 
     class MysqlUtils {
 
-        /*
-          * The database connection function
-          * Usage like $con = mysqlConnect("dbName")
-          * Input only database name (Server ip, username, password from config.php)
-          * Returned mysql con usable in function, etc
+        /* 
+          * FUNCTION: database connection (use PDO)
+          * RETURN: database connection
         */
-        public function mysqlConnect($mysqlDbName) {
+        public function connect() {
             
             global $configOBJ;
             global $siteController;
 
-            // build connection 
-            $connection = mysqli_connect($configOBJ->config["ip"], $configOBJ->config["username"], $configOBJ->config["password"], $mysqlDbName);
-        
-            // check if connection failed
-            if ($connection == false) {
-                if ($configOBJ->config["dev-mode"] == false) {
-                    $siteController->redirectError(400);
+            // get mysql connection data form app config
+            $address = $configOBJ->config["mysql-address"];
+            $database = $configOBJ->config["mysql-database"];
+            $username = $configOBJ->config["mysql-username"];
+            $password = $configOBJ->config["mysql-password"];
+
+            // get default database charset
+            $encoding = $configOBJ->config["encoding"];
+            
+            // try connect to database
+            try {
+
+                // build connction string
+                $conn = new \PDO("mysql:host=$address;dbname=$database;charset=$encoding", $username, $password);
+               
+                // set the PDO error mode to exception
+                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                   
+            // catch connection error
+            } catch(\PDOException $e) {
+                
+                // check if dev-mode is enabled
+                if ($configOBJ->config["dev-mode"] == true) {
+                    
+                    // print error to page
+                    die('Database connection error: '.$e->getMessage());
+                } else {
+                    
+                    // redirect to error page
+                    $siteController->redirectError("400");
                 }
             }
 
-            // set mysql utf/8 charset
-            mysqli_set_charset($connection, $configOBJ->config["encoding"]);
-
-            // return connection function
-            return $connection;
+            // return connection
+            return $conn;
         }
 
         /*
-          * The database insert sql query function (Use basedb name from config.php)
-          * Usage like insertQuery("INSERT INTO `users`(`firstName`, `secondName`, `password`) VALUES ('$firstName', '$secondName', '$password')"))
-          * Input sql command like string
-          * Returned true or false if insers, array if select, etc
+          * FUNCTION:  database insert sql query function (Use database name from config.php)
+          * USAGE: like insertQuery("INSERT INTO logs(name, value, date, remote_addr) VALUES('log name', 'log value', 'log date', 'log remote_addr')")
+          * INPUT: sql command like string
         */
         public function insertQuery($query) {
-            
+
             global $configOBJ;
             global $siteController;
 
-            // insert query
-            $useInsertQuery = mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query);
-            
-            // check if insert
-            if (!$useInsertQuery) {
+            // get PDO connection
+            $connection = $this->connect();
+
+            // use prepare statement for query
+            $statement = $connection->prepare($query);
+
+            try {
                 
-                // print developer error
+                // execute prepered query
+                $statement->execute();
+
+            // catch insert error
+            } catch(\PDOException $e) {
+
+                // check if dev-mode is enabled
                 if ($configOBJ->config["dev-mode"] == true) {
-                    http_response_code(503);
-                    die('[DEV-MODE]:Database error: the database server query could not be completed');		
-                } 
-                
-                // non developer redirect error page
-                else {
-                    $siteController->redirectError(520);
+                    
+                    // print error to page
+                    die('SQL query insert error: '.$e->getMessage());
+                } else {
+                    
+                    // redirect to error page
+                    $siteController->redirectError("400");
                 }
             }
         }
 
         /*
-          * The mysql get version function
-          * Usage like $ver = getMySQLVersion();
-          * Returned mysql version in system
+         * FUNCTION: mysql log function (Muste instaled logs table form sql)
+         * INPUT: log name and value
         */
-        public function getMySQLVersion() {
-            $output = shell_exec('mysql -V');
-            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
-            return $version[0];
-        }
-
-        /*
-         * The mysql log function (Muste instaled logs table form sql)
-         * Input log name and value
-       */
         public function logToMysql($name, $value) {
 
-            global $configOBJ;
+            global $escapeUtils;
             global $mainUtils;
+            global $configOBJ;
             global $visitorController;
 
             // check if logs enable
@@ -89,9 +103,19 @@
                 // check if antilog cookie set
                 if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
 
-                    //Escape values
-                    $name = $this->escapeString($name, true, true);
-                    $value = $this->escapeString($value, true, true);
+                    // check if name is null
+                    if (empty($name)) {
+                        $name = null;
+                    }
+
+                    // check if value is null
+                    if (empty($value)) {
+                        $value = null;
+                    }
+
+                    // get data & escape
+                    $name = $escapeUtils->specialCharshStrip($name);
+                    $value = $escapeUtils->specialCharshStrip($value);
 
                     // get values
                     $date = date('d.m.Y H:i:s');
@@ -100,83 +124,98 @@
                     $browser = $visitorController->getBrowser();
 
                     // insert log to mysql
-                    $this->insertQuery("INSERT INTO `logs`(`name`, `value`, `date`, `remote_addr`, `browser`, `status`) VALUES ('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
+                    $this->insertQuery("INSERT INTO logs(name, value, date, remote_addr, browser, status) VALUES('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
                 }
             }
         }
 
         /*
-         * The escape string function
-         * Usage standard like $str = escapeString("string")
-         * Usage protected html tasg like $str = escapeString("string", true)
-         * Usage protected html special chars like $str = escapeString("string", false, true)
-         * Usage complete protect string like $str = escapeString("string", true, true)
-         * Returned escaped string
-       */
-        public function escapeString($string, $stripTags = false, $specialChars = false) {
-            
-            global $configOBJ;
+          * FUNCTION: mysql data query fetch
+          * INPUT: query like "SELECT * FROM logs"
+          * RETURN: database output
+        */
+        public function fetch($query) {
 
-            // escape mysql special chars
-            $out = mysqli_real_escape_string($this->mysqlConnect($configOBJ->config["basedb"]), $string);
-            
-            // strip html tags
-            if ($stripTags = true) {
-                $out = strip_tags($out);
-            }
+            // get database connection
+            $connection = $this->connect();
 
-            // encode html chars
-            if ($specialChars = true) {
-                $out = htmlspecialchars($out, ENT_QUOTES);
-            }
-            return $out;
+            // use prepare statement for query
+            $statement = $connection->prepare($query);
+
+            // execute query
+            $statement->execute();
+            
+            // fetch data
+            $data = $statement->fetchAll();
+
+            // return data
+            return $data;
         }
 
         /*
-          * The set mysql charset to basedb from config
-          * Usage like setCharset("utf8")
-          * Input charset type
+          * FUNCTION: fetch single value form database
+          * INPUT: sql query & specific value
+          * RETURN: selected value
         */
-        public function setCharset($charset) {
+        public function fetchValue($query, $value) {
 
             global $configOBJ;
+            global $siteController;
 
-            // set charset
-            mysqli_set_charset($this->mysqlConnect($configOBJ->config["basedb"]), $charset);
-        }
+            // get database connection
+            $connection = $this->connect();
 
-        /*
-          * The read specific value from mysql base db by query
-          * Usage like $vaue = readFromMysql("SELECT name FROM users WHERE username = 'lukas'", "name");
-          * Input query select string and select value
-          * Return value type string or number
-        */
-        public function readFromMysql($query, $specifis) {
-            
-            global $configOBJ;
+            // use prepare statement for query
+            $statement = $connection->prepare($query);
 
-            // read query builder
-            $sql = mysqli_fetch_assoc(mysqli_query($this->mysqlConnect($configOBJ->config["basedb"]), $query));
-            
-            // return specific value
-            return $sql[$specifis];
-        }
+            // execute query
+            $statement->execute();
 
-        /*
-          * Check if mysql is offline
-          * Usage like: $status = isOffline();
-          * Return: true or false
-        */
-        public function isOffline() {
+            // fetch data query
+            $fetch = $statement->fetchAll();
 
-            global $configOBJ;
+            // check if select exist
+            if (array_key_exists(0, $fetch)) {
+                
+                // check if selected value exist in array
+                if (array_key_exists($value, $fetch[0])) {
 
-            // check if mysql is offline
-            if($this->mysqlConnect($configOBJ->config["basedb"])->connect_error) {
-                return true;
+                    // get value from retrun
+                    $valueOutput = $fetch[0][$value];
+                
+                } else {
+                
+                    // print not found error (only for developer mode)
+                    if ($configOBJ->config["dev-mode"]) {
+                        die("Database select error: '$value' not exist in selected data");
+                    } else {
+                        $siteController->redirectError(404);
+                    }
+                }
+
             } else {
-                return false;
+
+                // print not found error (only for developer mode)
+                if ($configOBJ->config["dev-mode"] == true) {
+                    die("Database select error: please check if query valid, query:'$query'");
+                } else {
+                    $siteController->redirectError(404);
+                }
             }
+
+            // return value
+            return $valueOutput;
+        }
+
+        /*
+          * FUNCTION: get version function
+          * USAGE: $ver = getMySQLVersion();
+          * RETURN: mysql version in system
+        */
+        public function getMySQLVersion() {
+            $output = shell_exec('mysql -V');
+            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
+            return $version[0];
         }
     }
 ?>
