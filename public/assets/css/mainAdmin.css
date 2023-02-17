@@ -505,7 +505,7 @@ textarea {
 }
 
 .dark-table {
-	background-color: rgb(37, 37, 37);
+	background-color: rgb(41, 41, 41) !important;
 }
 
 .deleteLinkTodos {

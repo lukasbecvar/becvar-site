@@ -81,7 +81,7 @@
 	} 
 	
 	// init detect mobile lib
-	$mobileDetector = new Mobile_Detect;
+	$mobileDetector = new Detection\MobileDetect;
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// set default encoding

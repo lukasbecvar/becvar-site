@@ -5,7 +5,7 @@
     "keywords": ["site", "Becwork", "becvar", "becvold"],
     "license": "MIT",
     "require": {
-        "mobiledetect/mobiledetectlib": "^2.8",
+        "mobiledetect/mobiledetectlib": "^3.74",
         "filp/whoops": "^2.14"
     }
 }

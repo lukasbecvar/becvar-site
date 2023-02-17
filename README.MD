@@ -70,6 +70,7 @@ This project requires PHP8 or < .
    * Version: **5.1.3**
    * [Website](https://getbootstrap.com/)
 * Mobile-Detect
+   * Version: **3.74.0**
    * [Github](https://github.com/serbanghita/Mobile-Detect)
 * Light-Gallery
    * Version: **1.10.0**

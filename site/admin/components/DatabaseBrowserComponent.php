@@ -249,11 +249,23 @@
 
 				// check if user delete all form table
 				if ($idGet == "all") {
-					// delete all rows
-					$mysqlUtils->insertQuery("DELETE FROM $deleteGet WHERE id=id");
 
-					// reset auto increment
-					$mysqlUtils->insertQuery("ALTER TABLE $deleteGet AUTO_INCREMENT = 1");
+					// include delete all confirmation
+					if ($siteController->getQueryString("confirm") != "yes") {
+						include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/DatabaseDeleteConfirmationBox.php');
+					} 
+					
+					// delete all
+					else {
+						// check if confirm selected (only for delete all)
+						if ($siteController->getQueryString("confirm") == "yes") {
+							// delete all rows
+							$mysqlUtils->insertQuery("DELETE FROM $deleteGet WHERE id=id");
+
+							// reset auto increment
+							$mysqlUtils->insertQuery("ALTER TABLE $deleteGet AUTO_INCREMENT = 1");
+						}
+					}
 				} 
 				
 				// one row delete
@@ -286,7 +298,18 @@
 					
 					// redirect to database browser
 					else {
-						$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+
+						// check if delete all redirect
+						if ($idGet == "all") {
+
+							// check if confirmation is used
+							if ($siteController->getQueryString("confirm") == "yes") {
+								$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+							}
+
+						} else {
+							$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+						}
 					}
 				}
 
