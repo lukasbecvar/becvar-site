@@ -1,20 +1,21 @@
 <?php // config manager functions
 
-	namespace becwork\config;
+	namespace becwork\config; 
 
 	class ConfigManager {
 
 		/*
-		 * Get value by name form config
-		 * Input value name
-		 * Return value 
+		 * FUNCTION: value by name form config
+		 * INPUT: value name
+		 * RETURN: value 
 		*/
 		public function getValueByName($name) {
 
-			global $configOBJ;
+			require_once(__DIR__."./../../config.php");
 
-			// return config value
-			return $configOBJ->config[$name];
+			$config = new \becwork\config\PageConfig();
+
+			return $config->config[$name];
 		}
 	}
 ?>

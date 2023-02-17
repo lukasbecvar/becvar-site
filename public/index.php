@@ -22,13 +22,9 @@
 
 	// include services list for dashboard system
 	require_once("../services-list.php");
-
-	// include config file
-	require_once("../config.php");
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// init ConfigManager & Config objcts
-	$configOBJ = new becwork\config\PageConfig();
 	$pageConfig = new becwork\config\ConfigManager();
 
 	// init HashUtils

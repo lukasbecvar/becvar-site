@@ -9,17 +9,17 @@
         */
         public function connect() {
             
-            global $configOBJ;
+            global $pageConfig;
             global $siteController;
 
             // get mysql connection data form app config
-            $address = $configOBJ->config["mysql-address"];
-            $database = $configOBJ->config["mysql-database"];
-            $username = $configOBJ->config["mysql-username"];
-            $password = $configOBJ->config["mysql-password"];
+            $address = $pageConfig->getValueByName("mysql-address");
+            $database = $pageConfig->getValueByName("mysql-database");
+            $username = $pageConfig->getValueByName("mysql-username");
+            $password = $pageConfig->getValueByName("mysql-password");
 
             // get default database charset
-            $encoding = $configOBJ->config["encoding"];
+            $encoding = $pageConfig->getValueByName("encoding");
             
             // try connect to database
             try {
@@ -34,7 +34,7 @@
             } catch(\PDOException $e) {
                 
                 // check if dev-mode is enabled
-                if ($configOBJ->config["dev-mode"] == true) {
+                if ($pageConfig->getValueByName("dev-mode") == true) {
                     
                     // print error to page
                     die('Database connection error: '.$e->getMessage());
@@ -56,7 +56,7 @@
         */
         public function insertQuery($query) {
 
-            global $configOBJ;
+            global $pageConfig;
             global $siteController;
 
             // get PDO connection
@@ -74,7 +74,7 @@
             } catch(\PDOException $e) {
 
                 // check if dev-mode is enabled
-                if ($configOBJ->config["dev-mode"] == true) {
+                if ($pageConfig->getValueByName("dev-mode") == true) {
                     
                     // print error to page
                     die('SQL query insert error: '.$e->getMessage());
@@ -94,14 +94,14 @@
 
             global $escapeUtils;
             global $mainUtils;
-            global $configOBJ;
+            global $pageConfig;
             global $visitorController;
 
             // check if logs enable
-            if ($configOBJ->config["logs"] == true) {
+            if ($pageConfig->getValueByName("logs") == true) {
 
                 // check if antilog cookie set
-                if (empty($_COOKIE[$configOBJ->config["antiLogCookie"]])) {
+                if (empty($_COOKIE[$pageConfig->getValueByName("antiLogCookie")])) {
 
                     // check if name is null
                     if (empty($name)) {
@@ -159,7 +159,7 @@
         */
         public function fetchValue($query, $value) {
 
-            global $configOBJ;
+            global $pageConfig;
             global $siteController;
 
             // get database connection
@@ -186,7 +186,7 @@
                 } else {
                 
                     // print not found error (only for developer mode)
-                    if ($configOBJ->config["dev-mode"]) {
+                    if ($pageConfig->getValueByName("dev-mode")) {
                         die("Database select error: '$value' not exist in selected data");
                     } else {
                         $siteController->redirectError(404);
@@ -196,7 +196,7 @@
             } else {
 
                 // print not found error (only for developer mode)
-                if ($configOBJ->config["dev-mode"] == true) {
+                if ($pageConfig->getValueByName("dev-mode") == true) {
                     die("Database select error: please check if query valid, query:'$query'");
                 } else {
                     $siteController->redirectError(404);
