@@ -90,10 +90,13 @@
 	// init whoops for error headling
 	if ($siteController->isSiteDevMode()) {
 		$whoops = new \Whoops\Run;
-		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+		$handlerer = new \Whoops\Handler\PrettyPageHandler();
+		$handlerer->addResourcePath($_SERVER['DOCUMENT_ROOT']);
+		$handlerer->addCustomCss("assets/css/whoops-custom.css");
+		$whoops->pushHandler($handlerer);
 		$whoops->register();
 	}
-
+grggg;
 	// check if page is in maintenance mode
 	if($siteController->ifMaintenance()) {
 		include_once("../site/errors/Maintenance.php");
