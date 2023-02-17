@@ -96,7 +96,7 @@
 		$whoops->pushHandler($handlerer);
 		$whoops->register();
 	}
-grggg;
+
 	// check if page is in maintenance mode
 	if($siteController->ifMaintenance()) {
 		include_once("../site/errors/Maintenance.php");
