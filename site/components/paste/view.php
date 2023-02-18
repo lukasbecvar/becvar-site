@@ -28,7 +28,7 @@
         hljs.initLineNumbersOnLoad();
     </script>
     <link rel="stylesheet" href="/assets/css/atom-one-dark.min.css">
-    <link rel="stylesheet" href="/assets/css/pasteView.css">
+    <link rel="stylesheet" href="/assets/css/paste-view.css">
 
     <script>
         $("img").on("dragstart", function(e) {

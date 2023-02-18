@@ -7,7 +7,7 @@
     <!-------------------- import assets ------------------------>
 	<link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
 	<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/mainAdmin.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/admin.css">
 	<script type="text/javascript" src="/assets/vendor/jquery/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" href="/assets/vendor/fontawesome/fontawesome.min.css">
 	<?php // import gallery css if user browsing media
@@ -167,7 +167,7 @@
 <!----------------------- import scripts ---------------------------->
 <script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="/assets/js/mainAdmin.js"></script>
+<script type="text/javascript" src="/assets/js/admin.js"></script>
 <!-------------------- end of import scripts ------------------------>
 </body>
 </html>

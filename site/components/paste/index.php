@@ -4,7 +4,7 @@
     <script src="/assets/vendor/jquery/jquery_3.2.0.min.js"></script>
     <title>Code paste</title>
     <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
-    <link rel="stylesheet" href="/assets/css/pasteAdd.css">
+    <link rel="stylesheet" href="/assets/css/paste-add.css">
     
     <script>
         function save() {

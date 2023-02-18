@@ -20,7 +20,7 @@
     <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/assets/css/mainPublic.css" rel="stylesheet">
+    <link href="/assets/css/public.css" rel="stylesheet">
     <!-------------------- end of assets import ------------------------>
 </head>
 <body>
@@ -50,7 +50,7 @@
     <!----------------------- import scripts ---------------------------->
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/vendor/jquery/jquery-3.6.0.min.js"></script>
-    <script src="/assets/js/mainPublic.js"></script> 
+    <script src="/assets/js/public.js"></script> 
     <!-------------------- end of import scripts ------------------------>
 </body>
 </html>
