@@ -382,10 +382,11 @@
 			}
 			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$idGet.'<p>';
 
+
 				// print Fields
 				foreach($result as $row) {
 					echo '<p class="textInputTitle">'.$row['Field'].'</p>';
-					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$rowAll[$row['Field']].'"><br>';
+					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$rowAll[0][$row['Field']].'"><br>';
 				}
 
 			// end form
