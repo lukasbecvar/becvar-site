@@ -72,6 +72,11 @@
                 $out = "UC Browser";
                 $found = "yes";
   
+            // identify UCBrowser Browser
+            } else if (str_contains($raw, 'UCBrowser')) {
+                $out = "UC Browser";
+                $found = "yes";
+
             // identify IceApe Browser
             } else if (str_contains($raw, 'Iceape')) {
                 $out = "IceApe Browser";
