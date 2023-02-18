@@ -91,8 +91,6 @@
 	if ($siteController->isSiteDevMode()) {
 		$whoops = new \Whoops\Run;
 		$handlerer = new \Whoops\Handler\PrettyPageHandler();
-		$handlerer->addResourcePath($_SERVER['DOCUMENT_ROOT']);
-		$handlerer->addCustomCss("assets/css/whoops-custom.css");
 		$whoops->pushHandler($handlerer);
 		$whoops->register();
 	}

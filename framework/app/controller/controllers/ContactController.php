@@ -12,6 +12,18 @@
 			return $mysqlUtils->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC");
 		}
 
+		// get banned email count
+		public function getBannedEmailCount($email) {
+
+			global $mysqlUtils;
+
+			// get banned email count
+			$bannedEmailCount = $mysqlUtils->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
+			
+			// return count
+			return count($bannedEmailCount);
+		}
+
 		// send message to database
 		public function sendMessage($name, $email, $message, $status) {
 
@@ -19,26 +31,37 @@
 			global $mainUtils;
 			global $escapeUtils;
 
-			// get & escape values
-			$name = $escapeUtils->specialCharshStrip(trim($name));
-			$email = $escapeUtils->specialCharshStrip(trim($email));
-			$message = $escapeUtils->specialCharshStrip(trim($message));
-			$time = date('d.m.Y H:i:s');
-			$remote_addr = $mainUtils->getRemoteAdress();
-			$status = $escapeUtils->specialCharshStrip(trim($status));
-
-			// insert values
-			$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
-
-			// return output
-			if ($queryInsert) {
-				return false;
-			} else {
+			// check if email banned
+			if ($this->getBannedEmailCount($email) > 0) {
 
 				// log to mysql
-				$mysqlUtils->logToMysql("Sended message", "by sender $name");
+				$mysqlUtils->logToMysql("Message block", "blocked email: $email");
+
+				// return banned
+				return "banned";
 				
-				return true;
+			} else {
+				// get & escape values
+				$name = $escapeUtils->specialCharshStrip(trim($name));
+				$email = $escapeUtils->specialCharshStrip(trim($email));
+				$message = $escapeUtils->specialCharshStrip(trim($message));
+				$time = date('d.m.Y H:i:s');
+				$remote_addr = $mainUtils->getRemoteAdress();
+				$status = $escapeUtils->specialCharshStrip(trim($status));
+
+				// insert values
+				$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
+
+				// return output
+				if ($queryInsert) {
+					return false;
+				} else {
+
+					// log to mysql
+					$mysqlUtils->logToMysql("Sended message", "by sender $name");
+					
+					return true;
+				}	
 			}
 		}
 

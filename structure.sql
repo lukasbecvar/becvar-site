@@ -1,4 +1,5 @@
--- Adminer 4.8.1 MySQL 8.0.31-0ubuntu0.22.04.1 dump
+
+-- Adminer 4.8.1 MySQL 8.0.32-0ubuntu0.22.04.2 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -18,12 +19,20 @@ CREATE TABLE `banned` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+DROP TABLE IF EXISTS `banned_emails`;
+CREATE TABLE `banned_emails` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` char(255) CHARACTER SET cp1250 COLLATE cp1250_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 DROP TABLE IF EXISTS `hash_gen`;
 CREATE TABLE `hash_gen` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `text` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hashType` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hash` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hashType` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hash` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -32,8 +41,8 @@ DROP TABLE IF EXISTS `image_uploader`;
 CREATE TABLE `image_uploader` (
   `id` int NOT NULL AUTO_INCREMENT,
   `imgSpec` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `image` longtext COLLATE utf8mb3_czech_ci NOT NULL,
-  `date` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
+  `image` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `date` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
@@ -67,8 +76,8 @@ CREATE TABLE `messages` (
 DROP TABLE IF EXISTS `pastes`;
 CREATE TABLE `pastes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `spec` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `spec` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -77,22 +86,22 @@ CREATE TABLE `pastes` (
 DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `description` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `technology` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `github_link` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `started_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `ended_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `name` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `description` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `technology` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `github_link` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `started_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `ended_developed_year` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `text` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
-  `status` char(255) COLLATE utf8mb3_czech_ci NOT NULL,
+  `text` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
+  `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
@@ -124,4 +133,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
--- 2023-01-22 11:00:58
+-- 2023-02-18 13:39:27
