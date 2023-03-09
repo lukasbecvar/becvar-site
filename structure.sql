@@ -16,7 +16,7 @@ CREATE TABLE `banned` (
   `banned_date` char(255) CHARACTER SET cp1250 COLLATE cp1250_general_ci NOT NULL,
   `status` char(255) CHARACTER SET cp1250 COLLATE cp1250_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `banned_emails`;
@@ -24,7 +24,7 @@ CREATE TABLE `banned_emails` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` char(255) CHARACTER SET cp1250 COLLATE cp1250_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `hash_gen`;
