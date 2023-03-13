@@ -43,7 +43,7 @@
 					} 
 				}
 			?>
-			<br><br>Please direct unban requests to <?php echo $pageConfig->getValueByName("email"]; ?></strong></h3>
+			<br><br>Please direct unban requests to <?php echo $pageConfig->getValueByName("email"); ?></strong></h3>
 		</center>
 	</main>
 </body>
