@@ -7,6 +7,7 @@
                 <a href="<?php echo $pageConfig->getValuebyName("instagram"); ?>" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="<?php echo $pageConfig->getValuebyName("telegram"); ?>" class="telegram"><i class="bi bi-telegram"></i></a>
                 <a href="<?php echo $pageConfig->getValuebyName("twitter"); ?>" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="<?php echo $pageConfig->getValuebyName("linkedin"); ?>" class="linkedin"><i class="bi bi-linkedin"></i></a>
             </div>
         </div>
     </div>

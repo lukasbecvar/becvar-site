@@ -9,8 +9,18 @@
 
             global $mysqlUtils;
 
-            // get projects where status
-            $output = $mysqlUtils->fetch("SELECT * FROM projects WHERE status='".$status."'");
+            // check if status is all
+            if ($status == "all") {
+
+                // get all projects
+                $output = $mysqlUtils->fetch("SELECT * FROM projects");
+
+            } else {
+
+                // get projects where status
+                $output = $mysqlUtils->fetch("SELECT * FROM projects WHERE status='".$status."'");
+            }
+
 
             // return projects objct
             return $output;

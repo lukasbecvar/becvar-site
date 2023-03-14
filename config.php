@@ -41,6 +41,7 @@
 			"github"    => "https://github.com/lordbecvold",
 			"instagram" => "https://www.instagram.com/lordbecvold",
 			"telegram"  => "https://t.me/lordbecvold",
+			"linkedin"  => "https://www.linkedin.com/in/luk%C3%A1%C5%A1-be%C4%8Dv%C3%A1%C5%99-29900a204/",
 
 			/* Browsers limiters */
 			"rowInTableLimit"      => 50,	// database browser & log reader [table row limit]

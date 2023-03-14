@@ -24,6 +24,11 @@
             </div>
         
         </div>
+        
+        <p>
+            You can find my CV <a href="/?process=cv">here</a>
+        </p>
+
         <p>
             My first programming language was Pascal I started learning it in 2012.<br>
             My main programming languages are "currently" Java and PHP.

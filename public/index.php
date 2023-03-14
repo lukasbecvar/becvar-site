@@ -137,6 +137,11 @@
 				include_once("../site/components/ImageViewer.php");
 			}
 
+			// set cv viewer
+			else if($siteController->getQueryString("process") == "cv") {
+				include_once("../site/components/cv/CurriculumVitae.php");
+			}
+
 			// set code paste page
 			else if($siteController->getQueryString("process") == "paste") {
 
