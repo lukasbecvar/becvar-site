@@ -63,7 +63,7 @@
 
                 <div class="skill-card">
                     <p>PYTHON</p>
-                    <p class="skill-level">Level: Beginner</p>
+                    <p class="skill-level">Level: Besic</p>
                 </div>
             </div>
             
