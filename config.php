@@ -13,7 +13,7 @@
 			"authorLink"  => "becvar.xyz", 	   	// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
-			"dev-mode"    => false,					// define devmode value
+			"dev-mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
 			"https"       => false,				   	// if this = true (Site can run only on https://)
 			
