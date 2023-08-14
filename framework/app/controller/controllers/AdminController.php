@@ -1,4 +1,4 @@
-<?php // admin functions in one class
+<?php // admin functions
 
 	namespace becwork\controllers;
 

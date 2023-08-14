@@ -85,7 +85,7 @@
         public function redirectError($error) {
 
             // redirct loaction header
-            header("location: ErrorHandlerer.php?code=$error");
+            header("location: error.php?code=$error");
         }
 
         // check if page in dev mode

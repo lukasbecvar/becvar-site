@@ -184,46 +184,63 @@
             // get database connection
             $connection = $this->connect();
 
-            // use prepare statement for query
-            $statement = $connection->prepare($query);
-
-            // execute query
-            $statement->execute();
-
-            // fetch data query
-            $fetch = $statement->fetchAll();
-
-            // check if select exist
-            if (array_key_exists(0, $fetch)) {
+            try {
                 
-                // check if selected value exist in array
-                if (array_key_exists($value, $fetch[0])) {
+                // use prepare statement for query
+                $statement = $connection->prepare($query);
 
-                    // get value from retrun
-                    $valueOutput = $fetch[0][$value];
-                
+                // execute query
+                $statement->execute();
+
+                // fetch data query
+                $fetch = $statement->fetchAll();
+
+                // check if select exist
+                if (array_key_exists(0, $fetch)) {
+                    
+                    // check if selected value exist in array
+                    if (array_key_exists($value, $fetch[0])) {
+
+                        // get value from retrun
+                        $valueOutput = $fetch[0][$value];
+                    
+                    } else {
+                    
+                        // print not found error (only for developer mode)
+                        if ($pageConfig->getValueByName("dev-mode")) {
+                            die("Database select error: '$value' not exist in selected data");
+                        } else {
+                            $siteController->redirectError(404);
+                        }
+                    }
+
                 } else {
-                
+
                     // print not found error (only for developer mode)
-                    if ($pageConfig->getValueByName("dev-mode")) {
-                        die("Database select error: '$value' not exist in selected data");
+                    if ($pageConfig->getValueByName("dev-mode") == true) {
+                        die("Database select error: please check if query valid, query:'$query'");
                     } else {
                         $siteController->redirectError(404);
                     }
                 }
 
-            } else {
+                // return value
+                return $valueOutput;
 
-                // print not found error (only for developer mode)
+            // catch fetch error
+            } catch(\PDOException $e) {
+
+                // check if dev-mode is enabled
                 if ($pageConfig->getValueByName("dev-mode") == true) {
-                    die("Database select error: please check if query valid, query:'$query'");
+                    
+                    // print error to page
+                    die('SQL fetch error: '.$e->getMessage());
                 } else {
-                    $siteController->redirectError(404);
+                    
+                    // redirect to error page
+                    $siteController->redirectError("400");
                 }
             }
-
-            // return value
-            return $valueOutput;
         }
 
         /*

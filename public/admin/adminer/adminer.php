@@ -16,7 +16,7 @@
     
     // check if user logged in
     if (!isset($_SESSION[$session]) || !($_SESSION[$session] == $session_value)) {
-        die("'<script type='text/javascript'>window.location.replace('/ErrorHandlerer.php?code=403');</script>'");
+        die("'<script type='text/javascript'>window.location.replace('/error.php?code=403');</script>'");
     }
 ?>
 
