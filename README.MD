@@ -13,7 +13,7 @@ This application does not serve as an example of my work, it is my personal site
  - Disable apache autoindex module
 
  ## Public site
- - Components: about, services project list, contact, etc...
+ - Components: about, services list, contact, etc...
  - Image uploader
  - Code paste site
 
