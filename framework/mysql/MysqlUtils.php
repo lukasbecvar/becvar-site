@@ -13,7 +13,7 @@
             global $siteController;
 
             // get mysql connection data form app config
-            $address = $pageConfig->getValueByName("mysql-address");
+            $address  = $pageConfig->getValueByName("mysql-address");
             $database = $pageConfig->getValueByName("mysql-database");
             $username = $pageConfig->getValueByName("mysql-username");
             $password = $pageConfig->getValueByName("mysql-password");
@@ -136,20 +136,39 @@
         */
         public function fetch($query) {
 
+            global $pageConfig;
+
             // get database connection
             $connection = $this->connect();
 
-            // use prepare statement for query
-            $statement = $connection->prepare($query);
+            try {
+                
+                // use prepare statement for query
+                $statement = $connection->prepare($query);
 
-            // execute query
-            $statement->execute();
-            
-            // fetch data
-            $data = $statement->fetchAll();
+                // execute query
+                $statement->execute();
+                
+                // fetch data
+                $data = $statement->fetchAll();
 
-            // return data
-            return $data;
+                // return data
+                return $data;
+
+            // catch fetch error
+            } catch(\PDOException $e) {
+
+                // check if dev-mode is enabled
+                if ($pageConfig->getValueByName("dev-mode") == true) {
+                    
+                    // print error to page
+                    die('SQL fetch error: '.$e->getMessage());
+                } else {
+                    
+                    // redirect to error page
+                    $siteController->redirectError("400");
+                }
+            }
         }
 
         /*

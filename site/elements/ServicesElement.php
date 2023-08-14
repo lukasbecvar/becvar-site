@@ -40,7 +40,7 @@
             <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                 <div class="icon-box">
                     <div class="icon"><i class="bx bx-code-block"></i></div>
-                    <h4>Scripting and automation</h4>
+                    <h4>Scripting & auromatization</h4>
                     <p>Design and creation of scripts and tools for process automation<br>for example, backing up or deploying an update</p>
                 </div>
             </div>

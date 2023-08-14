@@ -13,8 +13,7 @@ This application does not serve as an example of my work, it is my personal site
  - Disable apache autoindex module
 
  ## Public site
- - Components: about, services list, contact, etc...
- - Password, hash generator
+ - Components: about, services project list, contact, etc...
  - Image uploader
  - Code paste site
 
@@ -30,15 +29,11 @@ This application does not serve as an example of my work, it is my personal site
  - Media browser (Image uploader)
  - Inbox for contact form
  - Warning system
- - Visitors counter system
  - Advanced log system
  - System/Services tester component
 
- ## Others
- - API manager
-
 ## Becwork required
- - php 8 or <
+ - php-8 or <
  - mysql8 or <
  - php-cli
  - php-curl

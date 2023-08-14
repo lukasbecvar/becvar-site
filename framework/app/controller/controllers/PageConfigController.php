@@ -55,31 +55,5 @@
             // log to mysql
             $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Deactivated maintenance mode");
         }
-
-        // update api enabled value in config to enable
-        public function apiEnable() {
-
-            global $mysqlUtils;
-            global $adminController;
-
-            // edit value in config file
-            file_put_contents("../config.php", str_replace('"apiEnable" => false', '"apiEnable" => true', file_get_contents("../config.php")));
-        
-            // log to mysql
-            $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Activated maintenance mode");
-        }
-
-        // update api enabled value in config to disable
-        public function apiDisable() {
-
-            global $mysqlUtils;
-            global $adminController;
-                        
-            // edit value in config file
-            file_put_contents("../config.php", str_replace('"apiEnable" => true', '"apiEnable" => false', file_get_contents("../config.php")));
-
-            // log to mysql
-            $mysqlUtils->logToMysql("Config update", $adminController->getCurrentUsername()." Deactivated maintenance mode");
-        }
     }
 ?>

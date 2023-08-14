@@ -12,9 +12,6 @@
 
             // skills element
             include(__DIR__."/../elements/about/AboutSkillsElement.php");
-            
-            // skills element
-            include(__DIR__."/../elements/about/AboutGithubGraph.php");
         ?>
     </div>
 </section>

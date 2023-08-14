@@ -7,10 +7,10 @@
 		public $config = [
 
 			/* Main config */
-			"appName"     => "Becvold.xyz",        	// define app name
-			"version"     => 6.0,                  	// define app version
+			"appName"     => "Becvar.xyz",        	// define app name
+			"version"     => 7.0,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
-			"authorLink"  => "becvold.xyz", 	   	// define author site
+			"authorLink"  => "becvar.xyz", 	   	// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
@@ -31,12 +31,8 @@
 			"loginCookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",	// login cookie name
 			"loginValue"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",	// value of login cookie
 
-			/* Rest API config */
-			"apiEnable" => true, 	// API status (?process=api or api.url.domain)
-			"apiToken"  => "1234",	// token to acces api
-
 			/* Contact information */
-			"email"     => "lukas@becvold.xyz",
+			"email"     => "lukas@becvar.xyz",
 			"twitter"   => "https://twitter.com/Lordbecvold",
 			"github"    => "https://github.com/lordbecvold",
 			"instagram" => "https://www.instagram.com/lordbecvold",
@@ -44,7 +40,7 @@
 			"linkedin"  => "https://www.linkedin.com/in/luk%C3%A1%C5%A1-be%C4%8Dv%C3%A1%C5%99-29900a204/",
 
 			/* Browsers limiters */
-			"rowInTableLimit"      => 50,	// database browser & log reader [table row limit]
+			"rowInTableLimit"      => 100,	// database browser & log reader [table row limit]
 			"imagesInBrowserLimit" => 10,	// images in browser
 
 			/* Server variabiles */
@@ -52,9 +48,6 @@
 
 			/* Geolocate config */
 			"geoplugin_url" => "http://www.geoplugin.net",
-
-			/* Banned country */
-			"bannedRussia" => true,
 
 			/* Enabled logs */
 			"logs" => true,

@@ -6,10 +6,8 @@
             <ul>
                 <li><a class="nav-link active" href="#header">Home</a></li>
                 <li><a class="nav-link" href="#about">About</a></li>
-                <li><a class="nav-link" href="#projects">Projects</a></li>
                 <li><a class="nav-link" href="#services">Services</a></li>
                 <li><a class="nav-link" href="#contact">Contact</a></li>
-                <li><a class="nav-link" href="#generator">Generator</a></li>
                 <li><a class="nav-link" href="#uploader">Uploader</a></li>
                 <li><a class="nav-link" href="/?process=paste">Paste</a></li>
             </ul>

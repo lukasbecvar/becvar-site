@@ -15,15 +15,3 @@
     <a class="settingsButton" href="?admin=pageSettings&config=devmodeDisable">Disable</a>
     <a class="settingsButton" href="?admin=pageSettings&config=devmodeEnable">Enable</a>
 </p>
-
-<p class="settingsValueBox">
-    API [<?php
-        if ($pageConfig->getValueByName('apiEnable')) {
-            echo "enabled";
-        } else {
-            echo "disabled";
-        }
-    ?>]
-    <a class="settingsButton" href="?admin=pageSettings&config=apiDisable">Disable</a>
-    <a class="settingsButton" href="?admin=pageSettings&config=apiEnable">Enable</a>
-</p>

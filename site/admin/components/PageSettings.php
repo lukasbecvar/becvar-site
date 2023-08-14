@@ -21,13 +21,6 @@
             
             } elseif ($config == "devmodeEnable") {
                 $pageConfigController->devModeEnable();
-            
-
-            // API settings change requests
-            } elseif ($config == "apiEnable") {
-                $pageConfigController->apiEnable();
-            } elseif ($config == "apiDisable") {
-                $pageConfigController->apiDisable();
             }
             //////////////////////////////////////////////////////////
             

@@ -498,9 +498,6 @@
             global $siteController;
             global $escapeUtils;
 
-            // get value banned russia
-            $bannedRussia = $pageConfig->getValueByName('bannedRussia');
-
             // get user ip
             $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
 
@@ -511,20 +508,6 @@
             // insert new visitor to database
             } else {
                 $this->firstVisit();
-            }
-
-            // check russia banned
-            if ($bannedRussia == true) {
-                
-                // check if user is russian
-                if (str_starts_with(strtolower($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress))), "ru")) {
-
-                    // log russia banned
-                    $mysqlUtils->logToMysql("Banned", "Russian visitor trying to access site");
-
-                    // redirect to banned page
-                    $siteController->redirectError("bannedRussia");
-                }
             }
         }
     }

@@ -126,20 +126,10 @@
 			if($siteController->getQueryString("process") == "disableLogsForMe") {
 				include_once("../site/admin/LogsDisabler.php");
 			}
-
-			// set api manager process
-			else if($siteController->getQueryString("process") == "api" or str_starts_with($siteController->getHTTPhost(), "api")) {
-				include_once("../site/API.php");
-			}
 			
 			// set image viewer by process
 			else if($siteController->getQueryString("process") == "image") {
 				include_once("../site/components/ImageViewer.php");
-			}
-
-			// set cv viewer
-			else if($siteController->getQueryString("process") == "cv") {
-				include_once("../site/components/cv/CurriculumVitae.php");
 			}
 
 			// set code paste page

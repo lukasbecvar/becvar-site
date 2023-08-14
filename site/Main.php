@@ -31,9 +31,6 @@
 
         // include about component
         include_once("components/AboutComponent.php");
-
-        // include projects component
-        include_once("components/ProjectsComponent.php");
  
         // include services element
         include_once("elements/ServicesElement.php");
@@ -42,10 +39,7 @@
         include_once("components/ContactComponent.php");
 
         // include uploader component
-        include_once("components/ImageUploaderComponent.php");
-
-        // include generator component
-        include_once("components/GeneratorComponent.php");
+        include_once("components/ImageUploaderComponent.php");  
     ?>
     <!----------------------- import scripts ---------------------------->
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

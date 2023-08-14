@@ -26,7 +26,7 @@
         </div>
         
         <p>
-            You can find my CV <a href="/?process=cv">here</a>
+            All my public projects are <?php echo '<a href="'.$pageConfig->getValueByName("github").'">here</a>'; ?>
         </p>
 
         <p>

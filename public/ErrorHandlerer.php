@@ -13,8 +13,6 @@
             include_once("../site/errors/400.php");
         } else if ($code == "banned") {
             include_once("../site/errors/BannedPage.php");
-        } else if ($code == "bannedRussia") {
-            include_once("../site/errors/bannedRussiaPage.php");
         } else {
             include_once("../site/errors/UnknownError.php");
         }
