@@ -243,7 +243,7 @@
                 return false;
 
             // check if site running on ssl connction
-            } elseif ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
+            } elseif (!$mainUtils->isSSL()) {
                 return false;
 
             // check if hard drive is not full

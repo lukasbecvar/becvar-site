@@ -14,7 +14,7 @@
             }
 
             // print if site loaded on non https
-            if ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
+            if (!$mainUtils->isSSL()) {
                 echo '<p class="card-text"><span class="text-red"><strong>Your session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>';
             }
 
