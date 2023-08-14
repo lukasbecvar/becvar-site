@@ -48,41 +48,6 @@
                 echo '<p class="card-text text-warning"><strong>New messages found you can see it <a href="?admin=inbox">here</a></strong></p>';
             }
 
-            // print UFW not installed warning
-            if (!$servicesController->isServiceInstalled("ufw")) {
-                echo '<p class="card-text text-warning"><strong>UFW firewall not installed in system</strong></p>';
-            }
-
-            // print OpenVPN not installed warning
-            if (!$servicesController->isServiceInstalled("openvpn")) {
-                echo '<p class="card-text text-warning"><strong>OpenVPN service not installed in system</strong></p>';
-            }
-
-            // print Apache2 not installed warning
-            if (!$servicesController->isServiceInstalled("apache2")) {
-                echo '<p class="card-text text-warning"><strong>Apache2 service not installed in system</strong></p>';
-            }
-
-            // print MariaDB not installed warning
-            if (!$servicesController->isServiceInstalled("mariadb")) {
-                echo '<p class="card-text text-red"><strong>MariaDB service not installed in system</strong></p>';
-            }
-
-            // print Tor not installed warning
-            if (!$servicesController->isServiceInstalled("tor")) {
-                echo '<p class="card-text text-warning"><strong>Tor service not installed in system</strong></p>';
-            }
-
-            // print Minecraft not installed warning
-            if (!$servicesController->isServiceInstalled("minecraft")) {
-                echo '<p class="card-text text-warning"><strong>Minecraft server directory not found in '.$pageConfig->getValueByName("serviceDir").'</strong></p>';
-            }
-
-            // print Teamspeak server not installed warning
-            if (!$servicesController->isServiceInstalled("ts3server")) {
-                echo '<p class="card-text text-warning"><strong>Teamspeak server directory not found in '.$pageConfig->getValueByName("serviceDir").'</strong></p>';
-            }
-
             // print if no warnings
             if ($dashboardController->isWarninBoxEmpty()) {
                 echo 'No warnings found.';

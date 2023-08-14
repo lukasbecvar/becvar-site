@@ -262,34 +262,6 @@
             } elseif ($this->getMSGSCount() != "0") {
                 return false;
 
-            // check if UFW firewall is installed
-            } elseif (!$servicesController->isServiceInstalled("ufw")) {
-                return false;
-
-            // check if OpenVPN is installed
-            } elseif (!$servicesController->isServiceInstalled("openvpn")) {
-                return false;
-
-            // check if Apache2 is installed
-            } elseif (!$servicesController->isServiceInstalled("apache2")) {
-                return false;
-
-            // check if MariaDB is installed
-            } elseif (!$servicesController->isServiceInstalled("mariadb")) {
-                return false;
-     
-            // check if Tor is installed
-            } elseif (!$servicesController->isServiceInstalled("tor")) {
-                return false;
-
-            // check if Minecraft server is installed
-            } elseif (!$servicesController->isServiceInstalled("minecraft")) {
-                return false;
-
-            // check if TeamSpeak server is installed
-            } elseif (!$servicesController->isServiceInstalled("ts3server")) {
-                return false;
-
             // check if maintenance is enabled
             } elseif ($pageConfig->getValueByName("maintenance") == "enabled") {
                 return false;
