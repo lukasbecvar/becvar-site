@@ -22,7 +22,10 @@
 <body class="mainPage">
 	<main>
 		<center>
-			<h3 class="errorPageMSG"><strong>You are permanently banned on this site.<br>
+			<h3 class="errorPageMSG"><strong>You are permanently banned on this site.<br><br>
+
+			Ban reason: Rule violations or bot detection
+
 			<br><br>Please direct unban requests to <?php echo $configOBJ->config["email"]; ?></strong></h3>
 		</center>
 	</main>
