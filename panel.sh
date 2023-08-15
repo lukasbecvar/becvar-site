@@ -42,6 +42,6 @@ case $number in
 		exit
 	;;
 	*) # error msg
-		echo "\033[31m\033[1m$number: not found!\033[0m \n"
+		echo "\033[31m\033[1m$number: not found!\033[0m"
 	;;
 esac
