@@ -61,10 +61,10 @@
         **/
         public function isServiceInstalled($serviceName) {
             
-            global $pageConfig;
+            global $config;
 
             // get service dir from config
-            $serviceDir = $pageConfig->getValueByName('serviceDir');
+            $serviceDir = $config->getValue('serviceDir');
 
             // minecraft server
             if ($serviceName == "minecraft") {

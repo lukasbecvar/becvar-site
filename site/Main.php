@@ -9,10 +9,10 @@
 		?>
 	</title>
     <?php // google token
-        echo '<meta name="google-site-verification" content="'.$pageConfig->getValueByName("googleVerifyToken").'"/>';  
+        echo '<meta name="google-site-verification" content="'.$config->getValue("googleVerifyToken").'"/>';  
     ?>
-    <meta content="<?php echo $pageConfig->getValueByName("siteDescription"); ?>" name="description">
-    <meta content="<?php echo $pageConfig->getValueByName("siteKeywords"); ?>" name="keywords">
+    <meta content="<?php echo $config->getValue("siteDescription"); ?>" name="description">
+    <meta content="<?php echo $config->getValue("siteKeywords"); ?>" name="keywords">
 
     <!-------------------- import assets ------------------------>
     <link href="/assets/img/favicon.png" rel="icon">

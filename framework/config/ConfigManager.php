@@ -9,7 +9,7 @@
 		 * INPUT: value name
 		 * RETURN: value 
 		*/
-		public function getValueByName($name) {
+		public function getValue($name) {
 
 			require_once(__DIR__."./../../config.php");
 

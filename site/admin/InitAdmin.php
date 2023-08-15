@@ -123,10 +123,10 @@
         } else {
 
             // auto login if user have token cookie
-            if (isset($_COOKIE[$pageConfig->getValueByName('loginCookie')]) and isset($_COOKIE["userToken"])) {
+            if (isset($_COOKIE[$config->getValue('loginCookie')]) and isset($_COOKIE["userToken"])) {
 
                 // check if token valid
-                if ($_COOKIE[$pageConfig->getValueByName('loginCookie')] == $pageConfig->getValueByName('loginValue')) {
+                if ($_COOKIE[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
 
                     //Auto user login
                     $adminController->autoLogin();

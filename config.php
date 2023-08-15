@@ -10,7 +10,7 @@
 			"appName"     => "Becvar.xyz",        	// define app name
 			"version"     => 7.0,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
-			"authorLink"  => "becvar.xyz", 	   	// define author site
+			"authorLink"  => "becvar.xyz", 	   		// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value

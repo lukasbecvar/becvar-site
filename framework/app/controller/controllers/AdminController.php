@@ -24,16 +24,16 @@
 		public function isLoggedIn() {
 
 			global $sessionUtils;
-			global $pageConfig;
+			global $config;
 
 			// start session
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// check if login cookie seted
-			if (isset($_SESSION[$pageConfig->getValueByName('loginCookie')])) {
+			if (isset($_SESSION[$config->getValue('loginCookie')])) {
 				
 				// check if login cookie is valid
-				if ($_SESSION[$pageConfig->getValueByName('loginCookie')] == $pageConfig->getValueByName('loginValue')) {
+				if ($_SESSION[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
 					return true;
 				} else {
 					return false;
@@ -67,10 +67,10 @@
 		public function unSetLoginCookies() {
 
 			global $cookieUtils;
-			global $pageConfig;
+			global $config;
 
 			// unset login key cookie
-			$cookieUtils->unset_cookie($pageConfig->getValueByName("loginCookie"));
+			$cookieUtils->unset_cookie($config->getValue("loginCookie"));
 
 			// unset token
 			$cookieUtils->unset_cookie("userToken");			
@@ -80,36 +80,36 @@
 		public function setLoginCookies($token) {
 
 			global $cookieUtils;
-			global $pageConfig;
+			global $config;
 
 			// set username cookie for next auth
 			$cookieUtils->cookieSet("userToken", $token, time() + (60*60*24*7*365));
 
 			// set token cookie for next login
-			$cookieUtils->cookieSet($pageConfig->getValueByName("loginCookie"), $pageConfig->getValueByName("loginValue"), time() + (60*60*24*7*365));			
+			$cookieUtils->cookieSet($config->getValue("loginCookie"), $config->getValue("loginValue"), time() + (60*60*24*7*365));			
 		}
 
 		// set anti log cookie
 		public function setAntiLogCookie() {
 
 			global $cookieUtils;
-			global $pageConfig;
+			global $config;
 
 			// set antilog cookie
-			$cookieUtils->cookieSet($pageConfig->getValueByName("antiLogCookie"), $pageConfig->getValueByName("antiLogValue"), time() + (60*60*24*7*365));			
+			$cookieUtils->cookieSet($config->getValue("antiLogCookie"), $config->getValue("antiLogValue"), time() + (60*60*24*7*365));			
 		}
 
 		// set login session
 		public function setLoginSession($token) {
 
 			global $sessionUtils;
-			global $pageConfig;
+			global $config;
 
 			// start session
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// set token session
-			$sessionUtils->setSession($pageConfig->getValueByName("loginCookie"), $pageConfig->getValueByName("loginValue"));		
+			$sessionUtils->setSession($config->getValue("loginCookie"), $config->getValue("loginValue"));		
 
 			// set token session
 			$sessionUtils->setSession("userToken", $token);
@@ -123,13 +123,13 @@
 			global $mysqlUtils;
 			global $urlUtils;
 			global $sessionUtils;
-			global $pageConfig;
+			global $config;
 			
 			// destroy all sessions
 			$sessionUtils->sessionDestroy();
 
 			// unset login key cookie
-			$cookieUtils->unset_cookie($pageConfig->getValueByName("loginCookie"));
+			$cookieUtils->unset_cookie($config->getValue("loginCookie"));
 
 			// unset username
 			$cookieUtils->unset_cookie("userToken");
@@ -264,7 +264,7 @@
 			global $sessionUtils;
 			global $mysqlUtils;
 			global $urlUtils;
-			global $pageConfig;
+			global $config;
 			global $mainUtils;
 
 			// get user token
@@ -277,7 +277,7 @@
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// set login identify session
-			$sessionUtils->setSession($pageConfig->getValueByName('loginCookie'), $_COOKIE[$pageConfig->getValueByName('loginCookie')]);
+			$sessionUtils->setSession($config->getValue('loginCookie'), $_COOKIE[$config->getValue('loginCookie')]);
  
 			// set token session
 			$sessionUtils->setSession("userToken", $userToken);

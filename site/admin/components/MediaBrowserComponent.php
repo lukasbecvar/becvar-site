@@ -10,7 +10,7 @@
 	} else {
 
 		// get page items limit
-		$limitOnPage = $pageConfig->getValueByName("imagesInBrowserLimit");
+		$limitOnPage = $config->getValue("imagesInBrowserLimit");
 
 		// if limit get seted make this trash part of code xD
 		if (($siteController->getQueryString("limit") != null) && ($siteController->getQueryString("startby") != null)) {

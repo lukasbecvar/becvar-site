@@ -233,13 +233,13 @@
 
         // check if warnings box empty
         public function isWarninBoxEmpty() {
-            global $pageConfig;
+            global $config;
             global $mainUtils;
             global $siteController;
             global $servicesController;
 
             // check if service directory exist in system
-            if (!file_exists($pageConfig->getValueByName('serviceDir'))) {
+            if (!file_exists($config->getValue('serviceDir'))) {
                 return false;
 
             // check if site running on ssl connction
@@ -251,11 +251,11 @@
                 return false;
             
             // check if antilog cookie not empty
-            } elseif (empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")])) {
+            } elseif (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
                 return false;
 
             // check if found new logs
-            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")]))) {
+            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
                 return false;
 
             // check if found new msgs in inbox
@@ -263,7 +263,7 @@
                 return false;
 
             // check if maintenance is enabled
-            } elseif ($pageConfig->getValueByName("maintenance") == "enabled") {
+            } elseif ($config->getValue("maintenance") == "enabled") {
                 return false;
 
             // check if dev-mode is enabled

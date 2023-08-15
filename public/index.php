@@ -25,7 +25,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// init ConfigManager & Config objcts
-	$pageConfig = new becwork\config\ConfigManager();
+	$config = new becwork\config\ConfigManager();
 
 	// init HashUtils
 	$hashUtils = new becwork\utils\HashUtils();
@@ -85,7 +85,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// set default encoding
-	header('Content-type: text/html; charset='.$pageConfig->getValueByName('encoding'));
+	header('Content-type: text/html; charset='.$config->getValue('encoding'));
 
 	// init whoops for error headling
 	if ($siteController->isSiteDevMode()) {
@@ -105,16 +105,16 @@
 
 		
 		// check if url-check is enabled
-		if ($pageConfig->getValueByName("url-check")) { 
+		if ($config->getValue("url-check")) { 
 
 			// check if page loaded with valid url
-			if (($siteController->getHTTPhost() != $pageConfig->getValueByName("url")) && ($siteController->getHTTPhost() != "www.".$pageConfig->getValueByName("url")) && $siteController->getHTTPhost() != "localhost") {
+			if (($siteController->getHTTPhost() != $config->getValue("url")) && ($siteController->getHTTPhost() != "www.".$config->getValue("url")) && $siteController->getHTTPhost() != "localhost") {
 				$siteController->redirectError(400);
 			}
 		}
 
 		// check if page running on https
-		if ($pageConfig->getValueByName("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
+		if ($config->getValue("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
 			$siteController->redirectError(400);
 		} 
 				

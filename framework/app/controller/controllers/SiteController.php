@@ -18,10 +18,10 @@
         // check maintenance mode
         public function ifMaintenance() {
 
-            global $pageConfig;
+            global $config;
 
             // check if maintenance mode valid
-            if (($pageConfig->getValueByName('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false)) {
+            if (($config->getValue('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false)) {
                 return true;
             }
         }
@@ -52,7 +52,7 @@
         // get page title by paramater
         public function getPageTitle() {
 
-            global $pageConfig;
+            global $config;
 
             // check if host is localhost
             if ($this->getHTTPhost() == "localhost") {
@@ -65,7 +65,7 @@
                 } else {
 
                     // return app name
-                    return $pageConfig->getValueByName('appName'); 
+                    return $config->getValue('appName'); 
                 }
             }
         }
@@ -91,10 +91,10 @@
         // check if page in dev mode
         public function isSiteDevMode() {
 
-            global $pageConfig;
+            global $config;
 
             // check if dev mode enabled
-            if ($pageConfig->getValueByName("dev-mode") == true) {
+            if ($config->getValue("dev-mode") == true) {
                 return true;
             } else {
                 return false;

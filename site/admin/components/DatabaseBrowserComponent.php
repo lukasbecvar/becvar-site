@@ -56,7 +56,7 @@
 		$startByRow = 0;
 		
 		// page items limit (read from config)
-		$limitOnPage = $pageConfig->getValueByName("rowInTableLimit");
+		$limitOnPage = $config->getValue("rowInTableLimit");
 
 		// pager system calculator
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) && isset($_GET["startby"]))) {
@@ -288,12 +288,12 @@
 				else {
 					// redirect to log reader
 					if (isset($_GET["reader"])) {
-						$urlUtils->jsRedirect("?admin=logReader&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+						$urlUtils->jsRedirect("?admin=logReader&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 					} 
 					
 					// redirect to visitors system
 					else if (isset($_GET["visitors"])) {
-						$urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+						$urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 					} 
 					
 					// redirect to database browser
@@ -304,11 +304,11 @@
 
 							// check if confirmation is used
 							if ($siteController->getQueryString("confirm") == "yes") {
-								$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+								$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 							}
 
 						} else {
-							$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+							$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 						}
 					}
 				}
@@ -450,7 +450,7 @@
 				$mysqlUtils->logToMysql("Database insert", "User ".$adminController->getCurrentUsername()." add new row to $addGet");
 
 				// redirect back to table reader
-				$urlUtils->jsRedirect("?admin=dbBrowser&name=$addGet&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+				$urlUtils->jsRedirect("?admin=dbBrowser&name=$addGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 			} 
 			
 			// print add form
@@ -492,7 +492,7 @@
 			// print all tables links
 			foreach ($tables as $row) {
 
-				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$pageConfig->getValueByName("mysql-database")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$pageConfig->getValueByName("mysql-database")]."</a><br><br>";
+				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->getValue("mysql-database")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$config->getValue("mysql-database")]."</a><br><br>";
 			}
 
 			// end of select box element

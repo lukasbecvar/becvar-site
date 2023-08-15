@@ -4,7 +4,7 @@
     if ($adminController->isLoggedIn()) {
         
         // check if logging disabled
-        if (empty($_COOKIE[$pageConfig->getValueByName('antiLogCookie')])) {
+        if (empty($_COOKIE[$config->getValue('antiLogCookie')])) {
 
             // set anti log cookie
             $adminController->setAntiLogCookie(); 
@@ -14,7 +14,7 @@
         } else {
 
             // unset anti log cookie
-            $cookieUtils->unset_cookie($pageConfig->getValueByName("antiLogCookie"));
+            $cookieUtils->unset_cookie($config->getValue("antiLogCookie"));
 
             // redirect back to admin
             $urlUtils->jsRedirect("?admin=dashboard");

@@ -10,7 +10,7 @@
 	} else {
 
 		// items limit
-		$limitOnPage = $pageConfig->getValueByName("rowInTableLimit");
+		$limitOnPage = $config->getValue("rowInTableLimit");
 
 		// if limit get seted make this trash part of code xD
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
@@ -84,7 +84,7 @@
                     }
                     
                     // build link to ip (show logs where ip)
-                    $linkToIP = "?admin=logReader&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&whereip=".$data["remote_addr"];
+                    $linkToIP = "?admin=logReader&limit=".$config->getValue("rowInTableLimit")."&startby=0&whereip=".$data["remote_addr"];
 
                     // get location string from visitors database
                     $location = $visitorController->getVisitorLocationFromDatabase($userID);

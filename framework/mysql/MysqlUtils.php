@@ -9,17 +9,17 @@
         */
         public function connect() {
             
-            global $pageConfig;
+            global $config;
             global $siteController;
 
             // get mysql connection data form app config
-            $address  = $pageConfig->getValueByName("mysql-address");
-            $database = $pageConfig->getValueByName("mysql-database");
-            $username = $pageConfig->getValueByName("mysql-username");
-            $password = $pageConfig->getValueByName("mysql-password");
+            $address  = $config->getValue("mysql-address");
+            $database = $config->getValue("mysql-database");
+            $username = $config->getValue("mysql-username");
+            $password = $config->getValue("mysql-password");
 
             // get default database charset
-            $encoding = $pageConfig->getValueByName("encoding");
+            $encoding = $config->getValue("encoding");
             
             // try connect to database
             try {
@@ -34,7 +34,7 @@
             } catch(\PDOException $e) {
                 
                 // check if dev-mode is enabled
-                if ($pageConfig->getValueByName("dev-mode") == true) {
+                if ($config->getValue("dev-mode") == true) {
                     
                     // print error to page
                     die('Database connection error: '.$e->getMessage());
@@ -56,7 +56,7 @@
         */
         public function insertQuery($query) {
 
-            global $pageConfig;
+            global $config;
             global $siteController;
 
             // get PDO connection
@@ -74,7 +74,7 @@
             } catch(\PDOException $e) {
 
                 // check if dev-mode is enabled
-                if ($pageConfig->getValueByName("dev-mode") == true) {
+                if ($config->getValue("dev-mode") == true) {
                     
                     // print error to page
                     die('SQL query insert error: '.$e->getMessage());
@@ -94,14 +94,14 @@
 
             global $escapeUtils;
             global $mainUtils;
-            global $pageConfig;
+            global $config;
             global $visitorController;
 
             // check if logs enable
-            if ($pageConfig->getValueByName("logs") == true) {
+            if ($config->getValue("logs") == true) {
 
                 // check if antilog cookie set
-                if (empty($_COOKIE[$pageConfig->getValueByName("antiLogCookie")])) {
+                if (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
 
                     // check if name is null
                     if (empty($name)) {
@@ -136,7 +136,7 @@
         */
         public function fetch($query) {
 
-            global $pageConfig;
+            global $config;
 
             // get database connection
             $connection = $this->connect();
@@ -159,7 +159,7 @@
             } catch(\PDOException $e) {
 
                 // check if dev-mode is enabled
-                if ($pageConfig->getValueByName("dev-mode") == true) {
+                if ($config->getValue("dev-mode") == true) {
                     
                     // print error to page
                     die('SQL fetch error: '.$e->getMessage());
@@ -178,7 +178,7 @@
         */
         public function fetchValue($query, $value) {
 
-            global $pageConfig;
+            global $config;
             global $siteController;
 
             // get database connection
@@ -207,7 +207,7 @@
                     } else {
                     
                         // print not found error (only for developer mode)
-                        if ($pageConfig->getValueByName("dev-mode")) {
+                        if ($config->getValue("dev-mode")) {
                             die("Database select error: '$value' not exist in selected data");
                         } else {
                             $siteController->redirectError(404);
@@ -217,7 +217,7 @@
                 } else {
 
                     // print not found error (only for developer mode)
-                    if ($pageConfig->getValueByName("dev-mode") == true) {
+                    if ($config->getValue("dev-mode") == true) {
                         die("Database select error: please check if query valid, query:'$query'");
                     } else {
                         $siteController->redirectError(404);
@@ -231,7 +231,7 @@
             } catch(\PDOException $e) {
 
                 // check if dev-mode is enabled
-                if ($pageConfig->getValueByName("dev-mode") == true) {
+                if ($config->getValue("dev-mode") == true) {
                     
                     // print error to page
                     die('SQL fetch error: '.$e->getMessage());

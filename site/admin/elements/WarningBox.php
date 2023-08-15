@@ -9,8 +9,8 @@
             */
 
             // print if services dir not exist on the server
-            if (!file_exists($pageConfig->getValueByName('serviceDir'))) {
-                echo '<p class="card-text"><span class="text-red"><strong>Directory: '.$pageConfig->getValueByName('serviceDir').' not exist</strong></span></p>';
+            if (!file_exists($config->getValue('serviceDir'))) {
+                echo '<p class="card-text"><span class="text-red"><strong>Directory: '.$config->getValue('serviceDir').' not exist</strong></span></p>';
             }
 
             // print if site loaded on non https
@@ -19,7 +19,7 @@
             }
 
             // print if maintenance is enabled
-            if ($pageConfig->getValueByName("maintenance") == "enabled") {
+            if ($config->getValue("maintenance") == "enabled") {
                 echo '<p class="card-text"><span class="text-red"><strong>Maintenance is enabled!</strong></span></p>';
             }
 
@@ -34,13 +34,13 @@
             }
             
             // print anti log warning
-            if (empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")])) {
+            if (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
                 echo '<p class="card-text text-warning"><strong>Logging for your browser is enabled you can disable <a href="?process=disableLogsForMe">here</a></strong></p>';
             }
 
             // print new logs warning
-            if (($dashboardController->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$pageConfig->getvalueByName("antiLogCookie")]))) {
-                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?admin=logReader&limit='.$pageConfig->getValueByName("rowInTableLimit").'&startby=0">here</a></strong></p>';
+            if (($dashboardController->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
+                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?admin=logReader&limit='.$config->getValue("rowInTableLimit").'&startby=0">here</a></strong></p>';
             }
 
             // print new messages

@@ -2,7 +2,7 @@
     // get delete table name
     $table = $siteController->getQueryString("delete");
 
-    $rowLimit = $pageConfig->getValueByName("rowInTableLimit");
+    $rowLimit = $config->getValue("rowInTableLimit");
 
 ?>
 

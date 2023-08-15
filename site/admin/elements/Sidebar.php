@@ -35,21 +35,21 @@
 		</li>
 	
         <li>
-			<a class="sMenuButton" href="?admin=logReader&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=logReader&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0">
 			    <span class="icon"><i class="fas fa-file"></i></span>
 			    <span class="item">Log reader</span>
 	    	</a>
 		</li>
 
 		<li>
-			<a class="sMenuButton" href="?admin=visitors&limit=<?php echo $pageConfig->getValueByName("rowInTableLimit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=visitors&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0">
 			    <span class="icon"><i class="fas fa-user"></i></span>
 			    <span class="item">Visitors manager</span>
 	    	</a>
 		</li>
 
         <li>
-			<a class="sMenuButton" href="?admin=mediaBrowser&limit=<?php echo $pageConfig->getValueByName("imagesInBrowserLimit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=mediaBrowser&limit=<?php echo $config->getValue("imagesInBrowserLimit"); ?>&startby=0">
 	    		<span class="icon"><i class="fas fa-image"></i></span>
 				<span class="item">Media browser</span>
 			</a>

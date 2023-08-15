@@ -10,7 +10,7 @@
 	} else {
 
 		// page items limit
-		$limitOnPage = $pageConfig->getValueByName("rowInTableLimit");
+		$limitOnPage = $config->getValue("rowInTableLimit");
 
 		// if limit get seted make this trash part of code xD
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
@@ -195,7 +195,7 @@
                     } else {
 
                         // redirect to visitors
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
                     }
                 } else {
                     
@@ -227,10 +227,10 @@
                             if (isset($_GET["close"])) {
 
                                 // redirect to banned with reason with autoclose
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason&close=yes");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$banReason&close=yes");
                             } else {
                                 // redirect to banned with reason
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0&reason=$banReason");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$banReason");
                             }
                         }
 
@@ -251,7 +251,7 @@
 
                     // redirect to visitors
                     if ((!empty($_GET["reason"])) || (!empty($_POST["banReason"]))) {
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$pageConfig->getValueByName("rowInTableLimit")."&startby=0");
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
                     }
                 }
 

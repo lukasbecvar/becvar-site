@@ -351,17 +351,17 @@
         // get visitor location
         public function getVisitorLocation($ip) {
 
-            global $pageConfig;
+            global $config;
 
             // check if site running on localhost
-            if (($pageConfig->getValueByName("url") == "localhost") or ($pageConfig->getValueByName("url") == "127.0.0.1") or (str_starts_with($pageConfig->getValueByName("url"), "192.168"))) {
+            if (($config->getValue("url") == "localhost") or ($config->getValue("url") == "127.0.0.1") or (str_starts_with($config->getValue("url"), "192.168"))) {
                 $country = "HOST";
                 $city = "Location";
             
             } else {
  
                 // get data by IP from ipinfo API 
-                $details = json_decode(file_get_contents($pageConfig->getValueByName("geoplugin_url")."/json.gp?ip=$ip"));
+                $details = json_decode(file_get_contents($config->getValue("geoplugin_url")."/json.gp?ip=$ip"));
        
                 // get country and site from API data
                 $country = $details->geoplugin_countryCode;
@@ -494,7 +494,7 @@
 
             global $mysqlUtils;
             global $mainUtils;
-            global $pageConfig;
+            global $config;
             global $siteController;
             global $escapeUtils;
 
