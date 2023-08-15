@@ -40,7 +40,6 @@ This application does not serve as an example of my work, it is my personal site
  - php-pdo
 
 ## Dependencies
-This project requires PHP8 or < .
 * Becwork
    * Version: **2.0**
    * [Github](https://github.com/lordbecvold/Becwork)
