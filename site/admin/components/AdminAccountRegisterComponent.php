@@ -42,7 +42,7 @@
                             $remote_addr = $mainUtils->getRemoteAdress();
 
                             // insert user account to database
-                            $mysqlUtils->insertQuery("INSERT INTO `users`(`username`, `password`, `role`, `image_base64`, `remote_addr`, `token`) VALUES ( '$username', '$password', '$role', '$image_base64', '$remote_addr', '$token')");   
+                            $mysql->insertQuery("INSERT INTO `users`(`username`, `password`, `role`, `image_base64`, `remote_addr`, `token`) VALUES ( '$username', '$password', '$role', '$image_base64', '$remote_addr', '$token')");   
 
                             // redirect to login page
                             $urlUtils->redirect("?admin=login");

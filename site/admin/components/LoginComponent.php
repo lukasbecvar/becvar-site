@@ -39,7 +39,7 @@
 				if ($adminController->canLogin($username, $password)) {
 
 					// get user token
-					$token = $mysqlUtils->fetchValue("SELECT token FROM users WHERE username = '".$username."'", "token");
+					$token = $mysql->fetchValue("SELECT token FROM users WHERE username = '".$username."'", "token");
 
 					// check if token is seted
 					if (!empty($token)) {
@@ -48,7 +48,7 @@
 						$adminController->setLoginSession($token);
 
 						// set role session
-						$sessionUtils->setSession("role", $mysqlUtils->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
+						$sessionUtils->setSession("role", $mysql->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
 
 						// check if user stay logged in
 						if ($saveAccount) {
@@ -61,10 +61,10 @@
 						$userIP = $mainUtils->getRemoteAdress();
 
 						// update user ip
-						$mysqlUtils->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE username='$username'");
+						$mysql->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE username='$username'");
 
 						// log to mysql
-						$mysqlUtils->logToMysql("Success login", "User $username logged in success");
+						$mysql->logToMysql("Success login", "User $username logged in success");
 
 						// redirect to admin page
 						$urlUtils->redirect("?admin=dashboard");
@@ -88,9 +88,9 @@
 			
 					// log to mysql
 					if (empty($username) or empty($passwordRaw)) {
-						$mysqlUtils->logToMysql("Login", "Trying to login with empty values");
+						$mysql->logToMysql("Login", "Trying to login with empty values");
 					} else {
-						$mysqlUtils->logToMysql("Login", "Trying to login with name: $username:$passwordRaw");				
+						$mysql->logToMysql("Login", "Trying to login with name: $username:$passwordRaw");				
 					}
 				}
 			}

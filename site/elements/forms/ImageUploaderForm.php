@@ -20,10 +20,10 @@
 			$date = date('d.m.Y H:i:s');
 
 			// insert query to mysql table images
-			$mysqlUtils->insertQuery("INSERT INTO `image_uploader`(`imgSpec`, `image`, `date`) VALUES ('$imgSpec', '$image', '$date')");				
+			$mysql->insertQuery("INSERT INTO `image_uploader`(`imgSpec`, `image`, `date`) VALUES ('$imgSpec', '$image', '$date')");				
 
 			// log to mysql
-			$mysqlUtils->logToMysql("Uploader", "uploaded new image");	
+			$mysql->logToMysql("Uploader", "uploaded new image");	
 
 			// redirect to image view
 			$urlUtils->jsRedirect("?process=image&spec=".$imgSpec);

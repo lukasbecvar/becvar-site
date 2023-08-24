@@ -34,7 +34,7 @@
         echo '<center><div id="lightgallery">';
 
         // draw all images to page
-        $imagesUpload = $mysqlUtils->fetch("SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
+        $imagesUpload = $mysql->fetch("SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
     
         // print images (if found)
         if (count($imagesUpload) != 0) {

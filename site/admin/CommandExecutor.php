@@ -31,7 +31,7 @@
                 $finalCommand = $servicesList->services[$service]["start_cmd"];
             
                 // log to mysql
-                $mysqlUtils->logToMysql("Service", "$service start");
+                $mysql->logToMysql("Service", "$service start");
             } 
             
             // service stop system
@@ -41,7 +41,7 @@
                 $finalCommand = $servicesList->services[$service]["stop_cmd"];
 
                 // log to mysql
-                $mysqlUtils->logToMysql("Service", "$service stop");
+                $mysql->logToMysql("Service", "$service stop");
 
             // undefind action
             } else {

@@ -40,11 +40,11 @@
         if ($whereIP == null) {
             
             // get all logs from table
-            $logs = $mysqlUtils->fetch("SELECT * FROM logs WHERE status NOT LIKE 'readed' ORDER BY id DESC LIMIT $startByRow, $limitOnPage");          
+            $logs = $mysql->fetch("SELECT * FROM logs WHERE status NOT LIKE 'readed' ORDER BY id DESC LIMIT $startByRow, $limitOnPage");          
         } else {
             
             // select logs where ip
-            $logs = $mysqlUtils->fetch("SELECT * FROM logs WHERE remote_addr = '$whereIP' LIMIT $startByRow, $limitOnPage");
+            $logs = $mysql->fetch("SELECT * FROM logs WHERE remote_addr = '$whereIP' LIMIT $startByRow, $limitOnPage");
         }
 
         // set action
@@ -147,7 +147,7 @@
             } elseif ($action == "setReaded") {
             
                 // set all logs to readed
-                $mysqlUtils->insertQuery("UPDATE logs SET status='readed' WHERE status='unreaded'");
+                $mysql->insertQuery("UPDATE logs SET status='readed' WHERE status='unreaded'");
             
                 // redirect to log reader
                 $urlUtils->jsRedirect("?admin=dashboard");
@@ -202,7 +202,7 @@
         }        
 
         // log action to mysql database 
-        $mysqlUtils->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed logs");
+        $mysql->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed logs");
     }
 ?>
 </div>

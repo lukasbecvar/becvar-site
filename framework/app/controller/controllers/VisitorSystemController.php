@@ -197,7 +197,7 @@
         // first visit site
         public function firstVisit() {
             
-            global $mysqlUtils;
+            global $mysql;
             global $mainUtils;
             global $siteController;
             global $escapeUtils;
@@ -219,13 +219,13 @@
             }
 
             // save firt visit
-            $mysqlUtils->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
+            $mysql->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
 
             // redirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
 
                 // log trying to access site if user banned
-                $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+                $mysql->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
                 // redirect to banned page
                 $siteController->redirectError("banned");
@@ -235,7 +235,7 @@
         // visit site
         public function visitSite() {
 
-            global $mysqlUtils;
+            global $mysql;
             global $dashboardController;
             global $mainUtils;
             global $siteController;
@@ -253,7 +253,7 @@
                 if ($this->ifVisitorIsInTable($ip_adress)) {
 
                     // get key count in db for duplicity check
-                    $ip_ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress`='$ip_adress'");
+                    $ip_ids = $mysql->fetch("SELECT id FROM visitors WHERE `ip_adress`='$ip_adress'");
 
                     // check if key is not exist in database
                     if (count($ip_ids) == 0) {
@@ -261,7 +261,7 @@
 
                     } else {
                         // get data from mysql by IP
-                        $visited_sites = intval($mysqlUtils->fetchValue("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
+                        $visited_sites = intval($mysql->fetchValue("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
                         // new values to insert
                         $visited_sites = $visited_sites + 1;
@@ -271,11 +271,11 @@
                         $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
 
                         // update database
-                        $mysqlUtils->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
-                        $mysqlUtils->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
+                        $mysql->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
                         // check if ip in database is Unknown
                         if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Unknown") {
@@ -284,14 +284,14 @@
                             $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
 
                             // insert location
-                            $mysqlUtils->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
+                            $mysql->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
                         }
 
                         // show ban page if IP banned
                         if($this->isVisitorBanned($ip_adress)) {
 
                             // log trying to access site if user banned
-                            $mysqlUtils->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+                            $mysql->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
 
                             // redirect to banned page
                             $siteController->redirectError("banned");
@@ -307,16 +307,16 @@
         // check if visitor is banned
         public function isVisitorBanned($ip) {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get ip ids
-            $ip_ids = $mysqlUtils->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
+            $ip_ids = $mysql->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
             
             // check if ip is in database
             if (count($ip_ids) > 0) {
 
                 // get banned status
-                $banned_status = $mysqlUtils->fetchValue("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
+                $banned_status = $mysql->fetchValue("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
 
                 // check if banned status = yes
                 if ($banned_status == "banned") {
@@ -332,14 +332,14 @@
         // get visitor location from table
         public function getVisitorLocationFromDatabase($id) {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get visitor data by id
-            $visitor = $mysqlUtils->fetch("SELECT * FROM visitors WHERE `id` = '$id'");
+            $visitor = $mysql->fetch("SELECT * FROM visitors WHERE `id` = '$id'");
 
             if (count($visitor) > 0) {
 
-                $out = $mysqlUtils->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
+                $out = $mysql->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
 
             } else {
                 $out = "Unknown";
@@ -352,7 +352,7 @@
         public function getVisitorLocation($ip) {
 
             global $config;
-            global $mysqlUtils; 
+            global $mysql; 
 
             // check if site running on localhost
             if (($config->getValue("url") == "localhost") or ($config->getValue("url") == "127.0.0.1") or (str_starts_with($config->getValue("url"), "192.168"))) {
@@ -386,7 +386,7 @@
                     $city = null;
 
                     // log error to mysql
-                    $mysqlUtils->logToMysql("Geolocate error", "error to geolocate ip: " . $ip . " error: " . $e->getMessage());
+                    $mysql->logToMysql("Geolocate error", "error to geolocate ip: " . $ip . " error: " . $e->getMessage());
                 }   
             }
 
@@ -411,10 +411,10 @@
         // get user ip by id
         public function getVisitorIPByID($id) {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get IDs
-            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `id`='$id'");
+            $ids = $mysql->fetch("SELECT id FROM visitors WHERE `id`='$id'");
 
             // check if key found in database
             if (count($ids) == 0) {
@@ -422,7 +422,7 @@
             } else {
 
                 // get visitor ip by key
-                $visitorIP = $mysqlUtils->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
+                $visitorIP = $mysql->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
 
                 // return ip
                 return $visitorIP;
@@ -432,10 +432,10 @@
         // get user ip by ip
         public function getVisitorIDByIP($ip) {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get IDs by IP
-            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
+            $ids = $mysql->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
 
             // check if key found in database
             if (count($ids) == 0) {
@@ -443,7 +443,7 @@
             } else {
 
                 // get visitor id by ip
-                $visitorID = $mysqlUtils->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
+                $visitorID = $mysql->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
 
                 return $visitorID;
             }
@@ -452,19 +452,19 @@
         // ban user by IP
         public function bannVisitorByIP($ip, $reason) {
             
-            global $mysqlUtils;
+            global $mysql;
 
             // get IP count from banned table
-            $ids = $mysqlUtils->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
+            $ids = $mysql->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
 
             // check if ip found in banned table
             if (count($ids) > 0) {
 
                 // update ban status
-                $mysqlUtils->insertQuery("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
+                $mysql->insertQuery("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
 
                 // update reason
-                $mysqlUtils->insertQuery("UPDATE banned SET reason = '$reason' WHERE `ip_adress` = '$ip'");
+                $mysql->insertQuery("UPDATE banned SET reason = '$reason' WHERE `ip_adress` = '$ip'");
 
             } else {
                 // default banned status
@@ -474,26 +474,26 @@
                 $banned_date = date("d.m.Y");
 
                 // insert ban users
-                $mysqlUtils->insertQuery("INSERT INTO `banned`(`ip_adress`, `reason`, `banned_date`, `status`) VALUES ('$ip', '$reason', '$banned_date', '$status')");
+                $mysql->insertQuery("INSERT INTO `banned`(`ip_adress`, `reason`, `banned_date`, `status`) VALUES ('$ip', '$reason', '$banned_date', '$status')");
             }
         }
  
         // un-ban user by IP
         public function unbannVisitorByIP($ip) {
             
-            global $mysqlUtils;
+            global $mysql;
 
             // update ban status
-            $mysqlUtils->insertQuery("UPDATE banned SET status = 'unbanned' WHERE `ip_adress` = '$ip'");
+            $mysql->insertQuery("UPDATE banned SET status = 'unbanned' WHERE `ip_adress` = '$ip'");
         }
 
         // check if visitor is in table
         public function ifVisitorIsInTable($ip) {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get IDs where ip
-            $ids = $mysqlUtils->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
+            $ids = $mysql->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
             
             // check if ip found
             if (count($ids) > 0) {
@@ -506,7 +506,7 @@
         // call visit or first visit function
         public function init() {
 
-            global $mysqlUtils;
+            global $mysql;
             global $mainUtils;
             global $config;
             global $siteController;

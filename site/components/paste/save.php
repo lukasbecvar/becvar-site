@@ -25,11 +25,11 @@
 
 			// save paste to mysql table
 			if (!empty($content)) {
-				$mysqlUtils->insertQuery("INSERT INTO pastes(spec, content, date) VALUES ('$name', '$content', '$date')");
+				$mysql->insertQuery("INSERT INTO pastes(spec, content, date) VALUES ('$name', '$content', '$date')");
 			}
 
 			// log to mysql
-			$mysqlUtils->logToMysql("Paste", "added new paste: ".$name);	
+			$mysql->logToMysql("Paste", "added new paste: ".$name);	
 		}
 	}
 ?>

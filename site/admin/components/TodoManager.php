@@ -70,7 +70,7 @@
                 </tr></thead><tbody>';
 
                 // get todos from database
-                $finalTodos = $mysqlUtils->fetch("SELECT * from todos WHERE status = 'open'");
+                $finalTodos = $mysql->fetch("SELECT * from todos WHERE status = 'open'");
 
                 // print todos to table
                 foreach ($finalTodos as $row) { 

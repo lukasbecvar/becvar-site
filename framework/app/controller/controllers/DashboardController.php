@@ -115,10 +115,10 @@
         // get pastes count
         public function getPastesCount() {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM pastes");
+            $data = $mysql->fetch("SELECT id FROM pastes");
 
             // return pastes count
             return count($data);
@@ -127,10 +127,10 @@
         // get log count
         public function getLogsCount() {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM logs");
+            $data = $mysql->fetch("SELECT id FROM logs");
 
             // return logs count
             return count($data);
@@ -139,10 +139,10 @@
         // get login logs count
         public function getLoginLogsCount() {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'");
+            $data = $mysql->fetch("SELECT id FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'");
 
             // return logs count
             return count($data);
@@ -151,10 +151,10 @@
         // get unreaded logs count
         public function getUnreadedLogs() {
 
-            global $mysqlUtils;
+            global $mysql;
         
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM logs WHERE status LIKE '%unreaded%'");
+            $data = $mysql->fetch("SELECT id FROM logs WHERE status LIKE '%unreaded%'");
 
             // return logs count
             return count($data);
@@ -163,10 +163,10 @@
         // get page visitors count
         public function getVisitorsCount() {
 
-            global $mysqlUtils;
+            global $mysql;
         
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM visitors");
+            $data = $mysql->fetch("SELECT id FROM visitors");
 
             // return visitors count
             return count($data);
@@ -175,10 +175,10 @@
         // get MSGS in inbox count
         public function getMSGSCount() {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM messages WHERE status='open'");
+            $data = $mysql->fetch("SELECT id FROM messages WHERE status='open'");
 
             // return messages count
             return count($data);
@@ -187,10 +187,10 @@
         // get todos count in todos table
         public function getTodosCount() {
 
-            global $mysqlUtils;
+            global $mysql;
 
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM todos WHERE status='open'");
+            $data = $mysql->fetch("SELECT id FROM todos WHERE status='open'");
 
             // return todos count
             return count($data);
@@ -199,10 +199,10 @@
         // get images count in gallery
         public function getImagesCount() {
 
-            global $mysqlUtils;
+            global $mysql;
         
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM image_uploader");
+            $data = $mysql->fetch("SELECT id FROM image_uploader");
 
             // return images count
             return count($data);
@@ -211,10 +211,10 @@
         // get banned visitors count 
         public function getBannedCount() { 
 
-            global $mysqlUtils;
+            global $mysql;
         
             // get data ids
-            $data = $mysqlUtils->fetch("SELECT id FROM banned WHERE status='banned'");
+            $data = $mysql->fetch("SELECT id FROM banned WHERE status='banned'");
 
             // return banned count
             return count($data);

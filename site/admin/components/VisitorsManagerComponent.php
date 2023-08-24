@@ -35,7 +35,7 @@
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/VisitorsManagerNavPanel.php');
         
         // get all visitors from table
-        $visitors = $mysqlUtils->fetch("SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
+        $visitors = $mysql->fetch("SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
 
         if (empty($_GET["action"])) {
 
@@ -180,7 +180,7 @@
                 if ($visitorController->isVisitorBanned($ip)) {
                     
                     // log unban
-                    $mysqlUtils->logToMysql("Unban visitor", "User ".$adminController->getCurrentUsername()." unbanned ip: ".$ip);
+                    $mysql->logToMysql("Unban visitor", "User ".$adminController->getCurrentUsername()." unbanned ip: ".$ip);
 
                     // unban user by ip
                     $visitorController->unbannVisitorByIP($ip);
@@ -206,7 +206,7 @@
                         $reason = $escapeUtils->specialCharshStrip($_GET["reason"]);
 
                         // log ban
-                        $mysqlUtils->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
+                        $mysql->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
 
                         // ban user by ip
                         $visitorController->bannVisitorByIP($ip, $reason);
@@ -285,7 +285,7 @@
         }        
 
         // log action to mysql database 
-        $mysqlUtils->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed visitors");
+        $mysql->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed visitors");
     }
 ?>
 </div>

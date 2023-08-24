@@ -7,18 +7,18 @@
 		// get messages from database
 		public function getMessages() {
 
-			global $mysqlUtils;
+			global $mysql;
 
-			return $mysqlUtils->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC");
+			return $mysql->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC");
 		}
 
 		// get banned email count
 		public function getBannedEmailCount($email) {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// get banned email count
-			$bannedEmailCount = $mysqlUtils->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
+			$bannedEmailCount = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
 			
 			// return count
 			return count($bannedEmailCount);
@@ -27,7 +27,7 @@
 		// send message to database
 		public function sendMessage($name, $email, $message, $status) {
 
-			global $mysqlUtils;
+			global $mysql;
 			global $mainUtils;
 			global $escapeUtils;
 
@@ -35,7 +35,7 @@
 			if ($this->getBannedEmailCount($email) > 0) {
 
 				// log to mysql
-				$mysqlUtils->logToMysql("Message block", "blocked email: $email");
+				$mysql->logToMysql("Message block", "blocked email: $email");
 
 				// return banned
 				return "banned";
@@ -50,7 +50,7 @@
 				$status = $escapeUtils->specialCharshStrip(trim($status));
 
 				// insert values
-				$queryInsert = $mysqlUtils->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
+				$queryInsert = $mysql->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
 
 				// return output
 				if ($queryInsert) {
@@ -58,7 +58,7 @@
 				} else {
 
 					// log to mysql
-					$mysqlUtils->logToMysql("Sended message", "by sender $name");
+					$mysql->logToMysql("Sended message", "by sender $name");
 					
 					return true;
 				}	
@@ -107,14 +107,14 @@
 		// felete message by id
 		public function deleteMsgByID($id) {
 
-			global $mysqlUtils;
+			global $mysql;
 			global $adminController;
 
 			// log process to mysql database 
-			$mysqlUtils->logToMysql("Messages", "User ".$adminController->getCurrentUsername()." closed message $id");
+			$mysql->logToMysql("Messages", "User ".$adminController->getCurrentUsername()." closed message $id");
 
 			// update message for close 
-			$mysqlUtils->insertQuery("UPDATE messages SET status='closed' WHERE id='$id'");
+			$mysql->insertQuery("UPDATE messages SET status='closed' WHERE id='$id'");
 		}
 		
         // check if msgs empty

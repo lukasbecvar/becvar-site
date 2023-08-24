@@ -7,10 +7,10 @@
 		// check if users table not empty
 		public function isUserEmpty() {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// get users data
-			$users = $mysqlUtils->fetch("SELECT * FROM users");
+			$users = $mysql->fetch("SELECT * FROM users");
 
 			// check if user is empty
 			if (count($users) < 1) {
@@ -50,10 +50,10 @@
 		// check if user can login with username and password
 		public function canLogin($username, $password) {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// select ID with valid login data
-			$loginSelect = $mysqlUtils->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");
+			$loginSelect = $mysql->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");
 			
 			// check if user with password exist
 			if (count($loginSelect) == 1) {
@@ -120,7 +120,7 @@
 
 			// init all classes
 			global $cookieUtils;
-			global $mysqlUtils;
+			global $mysql;
 			global $urlUtils;
 			global $sessionUtils;
 			global $config;
@@ -138,7 +138,7 @@
 			if (!empty($this->getCurrentUsername())) {
 
 				// log logout action
-				$mysqlUtils->logToMysql("Logout", "User ".$this->getCurrentUsername()." logout out of admin site");
+				$mysql->logToMysql("Logout", "User ".$this->getCurrentUsername()." logout out of admin site");
 			}
 
 			// redirect to index page
@@ -148,29 +148,29 @@
 		// update password
 		public function updatePassword($username, $password) {
 
-			global $mysqlUtils;
+			global $mysql;
 			global $hashUtils;
 
 			// generate hash from password
 			$password = $hashUtils->genBlowFish($password);
 
 			// update password
-			$mysqlUtils->insertQuery("UPDATE users SET password = '$password' WHERE username = '$username'");
+			$mysql->insertQuery("UPDATE users SET password = '$password' WHERE username = '$username'");
 
 			// log to mysql
-			$mysqlUtils->logToMysql("Password update", "User $username updated password");
+			$mysql->logToMysql("Password update", "User $username updated password");
 		}
 
 		// update profile image
 		public function updateProfileImage($base64Final, $username) {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// update image in mysql
-			$mysqlUtils->insertQuery("UPDATE users SET image_base64 = '$base64Final' WHERE username = '$username'");
+			$mysql->insertQuery("UPDATE users SET image_base64 = '$base64Final' WHERE username = '$username'");
         
 			// log to mysql
-			$mysqlUtils->logToMysql("Profile update", "User $username updated image");
+			$mysql->logToMysql("Profile update", "User $username updated image");
 		}
 
 		// check if user is owner
@@ -187,13 +187,13 @@
 		// get current username form session
 		public function getCurrentUsername() {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// check if user token is not null
 			if ($this->getUserToken() != NULL) {
 				
 				// return username
-				return $mysqlUtils->fetchValue("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
+				return $mysql->fetchValue("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
 			} else {
 				$this->logout();
 			}
@@ -202,13 +202,13 @@
 		// get user role form session
 		public function getCurrentRole() {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// check if user token is not null
 			if ($this->getUserToken() != NULL) {
 
 				// return user role
-				return $mysqlUtils->fetchValue("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
+				return $mysql->fetchValue("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
 			} else {
 				$this->logout();
 			}
@@ -217,13 +217,13 @@
 		//Get user token
 		public function getUserToken() {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// check if user token in session
 			if (!empty($_SESSION["userToken"])) {
 				
 				// get ids where token 
-				$ids = $mysqlUtils->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
+				$ids = $mysql->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
 				
 				// check if token exist in users
 				if (count($ids) > 0) {
@@ -240,16 +240,16 @@
 		// get user ip
 		public function getUserIPByToken($token) {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// get ids where token 
-			$ids = $mysqlUtils->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
+			$ids = $mysql->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
 				
 			// check if token found
 			if (count($ids) > 0) {
 				
 				// get ip by token
-				$ip = $mysqlUtils->fetchValue("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
+				$ip = $mysql->fetchValue("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
 
 				return $ip;
 
@@ -262,7 +262,7 @@
 		public function autoLogin() {
 			
 			global $sessionUtils;
-			global $mysqlUtils;
+			global $mysql;
 			global $urlUtils;
 			global $config;
 			global $mainUtils;
@@ -283,10 +283,10 @@
 			$sessionUtils->setSession("userToken", $userToken);
 
 			// log action to mysql
-			$mysqlUtils->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
+			$mysql->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
 
 			// update user ip
-			$mysqlUtils->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE token='$userToken'");
+			$mysql->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE token='$userToken'");
 
 			// refresh page
 			$urlUtils->redirect("?admin=dashboard");
@@ -295,13 +295,13 @@
 		// get user avara base64 code
 		public function getUserAvatar() {
 
-			global $mysqlUtils;
+			global $mysql;
 
 			// check if user token is not null
 			if ($this->getUserToken() != NULL) {
 
 				// return user profile pic
-				return $mysqlUtils->fetchValue("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
+				return $mysql->fetchValue("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
 			} else {
 				$this->logout();
 			}

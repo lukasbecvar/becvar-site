@@ -47,7 +47,7 @@
 		if (isset($_GET["name"])) {
 
 			// get row count in table by name
-			$rowsCount = $mysqlUtils->fetch("SELECT id FROM ".$tableName);
+			$rowsCount = $mysql->fetch("SELECT id FROM ".$tableName);
 		} else {
 			$rowsCount = 0;
 		}
@@ -143,10 +143,10 @@
 		if (isset($_GET["name"])) {
 
 			// select table data
-			$tableData = $mysqlUtils->connect()->query("SELECT * FROM ".$tableName." LIMIT $startByRow, $limitOnPage")->fetchAll(\PDO::FETCH_ASSOC);
+			$tableData = $mysql->connect()->query("SELECT * FROM ".$tableName." LIMIT $startByRow, $limitOnPage")->fetchAll(\PDO::FETCH_ASSOC);
 
 			// select columns from table
-			$tableColumns = $mysqlUtils->connect()->query("SHOW COLUMNS FROM ".$tableName)->fetchAll(\PDO::FETCH_ASSOC);
+			$tableColumns = $mysql->connect()->query("SHOW COLUMNS FROM ".$tableName)->fetchAll(\PDO::FETCH_ASSOC);
  
 			// check if table empty
 			if (count($tableData) == 0) {
@@ -238,7 +238,7 @@
 			}
 
 			// log action to database 
-			$mysqlUtils->logToMysql("Database", "User ".$adminController->getCurrentUsername()." viewed table $tableName");
+			$mysql->logToMysql("Database", "User ".$adminController->getCurrentUsername()." viewed table $tableName");
 		} 
 		
 		// delete function //////////////////////////////////////////////////////////////
@@ -260,10 +260,10 @@
 						// check if confirm selected (only for delete all)
 						if ($siteController->getQueryString("confirm") == "yes") {
 							// delete all rows
-							$mysqlUtils->insertQuery("DELETE FROM $deleteGet WHERE id=id");
+							$mysql->insertQuery("DELETE FROM $deleteGet WHERE id=id");
 
 							// reset auto increment
-							$mysqlUtils->insertQuery("ALTER TABLE $deleteGet AUTO_INCREMENT = 1");
+							$mysql->insertQuery("ALTER TABLE $deleteGet AUTO_INCREMENT = 1");
 						}
 					}
 				} 
@@ -272,11 +272,11 @@
 				else {
 
 					// delete one row
-					$mysqlUtils->insertQuery("DELETE FROM $deleteGet WHERE id='$idGet'"); 
+					$mysql->insertQuery("DELETE FROM $deleteGet WHERE id='$idGet'"); 
 				}
 
 				// log action to database
-				$mysqlUtils->logToMysql("Database delete", "User ".$adminController->getCurrentUsername()." deleted item $idGet form table $deleteGet");
+				$mysql->logToMysql("Database delete", "User ".$adminController->getCurrentUsername()." deleted item $idGet form table $deleteGet");
 
 
 				// check if delete auto close
@@ -336,17 +336,17 @@
 			if (isset($_POST["submitEdit"])) {
 
 				// select columns from selected table
-				$resultEdit = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$editorGet);
+				$resultEdit = $mysql->fetch("SHOW COLUMNS FROM ".$editorGet);
 
 				// update all fileds by id
 				foreach($resultEdit as $rowOK) { 
 
 					// insert query
-					$mysqlUtils->insertQuery("UPDATE $editorGet SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$idGet'");
+					$mysql->insertQuery("UPDATE $editorGet SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$idGet'");
 				} 
 
 				// log action to mysql dsatabase 
-				$mysqlUtils->logToMysql("Database edit", "User ".$adminController->getCurrentUsername()." edited item $idGet in table $editorGet");
+				$mysql->logToMysql("Database edit", "User ".$adminController->getCurrentUsername()." edited item $idGet in table $editorGet");
 
 				// flash status msg
 				$alertController->flashSuccess("Row has saved!");
@@ -364,10 +364,10 @@
 			$dbName = $escapeUtils->specialCharshStrip($editorGet);
 
 			// select columns from selected table
-			$result = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$editorGet);
+			$result = $mysql->fetch("SHOW COLUMNS FROM ".$editorGet);
 
 			// select all from selected table
-			$resultAll = $mysqlUtils->connect()->query("SELECT * FROM $editorGet WHERE id = '$idGet'");
+			$resultAll = $mysql->connect()->query("SELECT * FROM $editorGet WHERE id = '$idGet'");
 
 			// migrate object to array
 			$rowAll = $resultAll->fetchAll(\PDO::FETCH_ASSOC);
@@ -397,7 +397,7 @@
 		elseif (isset($_GET["add"])) {
 			
 			// select columns add table
-			$selectedColumns = $mysqlUtils->fetch("SHOW COLUMNS FROM ".$addGet);
+			$selectedColumns = $mysql->fetch("SHOW COLUMNS FROM ".$addGet);
 
 			// check if save submited
 			if (isset($_POST["submitSave"])) {
@@ -441,13 +441,13 @@
 				$query = "INSERT INTO `".$addGet."`(".$columnsBuilder.") VALUES (".$valuesBuilder.")";
 
 				// insert query to database
-				$mysqlUtils->insertQuery($query);
+				$mysql->insertQuery($query);
 
 				// flash alert
 				$alertController->flashSuccess("New item has saved!");
 
 				// log to database
-				$mysqlUtils->logToMysql("Database insert", "User ".$adminController->getCurrentUsername()." add new row to $addGet");
+				$mysql->logToMysql("Database insert", "User ".$adminController->getCurrentUsername()." add new row to $addGet");
 
 				// redirect back to table reader
 				$urlUtils->jsRedirect("?admin=dbBrowser&name=$addGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
@@ -487,7 +487,7 @@
 			echo '<div><ol><br>';
  
 			// get tables object from database
-			$tables = $mysqlUtils->fetch("SHOW TABLES");
+			$tables = $mysql->fetch("SHOW TABLES");
 
 			// print all tables links
 			foreach ($tables as $row) {
@@ -499,7 +499,7 @@
 			echo '</ol></div>';
 
 			// log action to database 
-			$mysqlUtils->logToMysql("Database list", "User ".$adminController->getCurrentUsername()." viewed database list");
+			$mysql->logToMysql("Database list", "User ".$adminController->getCurrentUsername()." viewed database list");
 		}
 
 		///////////////////////////////////////PAGER-BUTTONS///////////////////////////////////////

@@ -4,7 +4,7 @@
     $spec = $siteController->getQueryString("f");
 
     // get paste content
-    $pasteContent = $mysqlUtils->fetchValue("SELECT content FROM pastes WHERE spec='$spec'", "content");
+    $pasteContent = $mysql->fetchValue("SELECT content FROM pastes WHERE spec='$spec'", "content");
 
     // check if content to view is not empty
     if (empty($pasteContent)) {

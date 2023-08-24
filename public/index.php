@@ -58,7 +58,7 @@
 	$escapeUtils = new becwork\utils\EscapeUtils();
 
 	// init MysqlUtils
-	$mysqlUtils = new becwork\utils\MysqlUtils();
+	$mysql = new becwork\utils\MysqlUtils();
 
 	// init BrowsersList
 	$browsersList = new becwork\utils\BrowsersList();
