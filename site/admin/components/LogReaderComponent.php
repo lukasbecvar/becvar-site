@@ -109,7 +109,7 @@
                             $row = "<tr class='lineItem text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-success'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         // login, logout, password logs
-                        } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update") {
+                        } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update" || $data["name"] == "Geolocate error") {
                             $row = "<tr class='lineItem text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-red'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         // success login logs

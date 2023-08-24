@@ -352,6 +352,7 @@
         public function getVisitorLocation($ip) {
 
             global $config;
+            global $mysqlUtils; 
 
             // check if site running on localhost
             if (($config->getValue("url") == "localhost") or ($config->getValue("url") == "127.0.0.1") or (str_starts_with($config->getValue("url"), "192.168"))) {
@@ -360,20 +361,33 @@
             
             } else {
  
-                // get data by IP from ipinfo API 
-                $details = json_decode(file_get_contents($config->getValue("geoplugin_url")."/json.gp?ip=$ip"));
-       
-                // get country and site from API data
-                $country = $details->geoplugin_countryCode;
+                // try get data
+                try {
 
-                // check if city name defined
-                if (!empty(explode("/", $details->geoplugin_timezone)[1])) {
-                    
-                    // get city name from timezone (explode /)
-                    $city = explode("/", $details->geoplugin_timezone)[1];
-                } else {
+                    // get data by IP from ipinfo API 
+                    $details = json_decode(file_get_contents($config->getValue("geoplugin_url")."/json.gp?ip=$ip"));
+        
+                    // get country and site from API data
+                    $country = $details->geoplugin_countryCode;
+
+                    // check if city name defined
+                    if (!empty(explode("/", $details->geoplugin_timezone)[1])) {
+                        
+                        // get city name from timezone (explode /)
+                        $city = explode("/", $details->geoplugin_timezone)[1];
+                    } else {
+                        $city = null;
+                    }
+
+                } catch (\Exception $e) {
+
+                    // set null if data not getted
+                    $country = null;
                     $city = null;
-                }
+
+                    // log error to mysql
+                    $mysqlUtils->logToMysql("Geolocate error", "error to geolocate ip: " . $ip . " error: " . $e->getMessage());
+                }   
             }
 
             // set Unknown if country is empty
