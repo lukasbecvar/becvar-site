@@ -1,5 +1,5 @@
 
--- Adminer 4.8.1 MySQL 8.0.32-0ubuntu0.22.04.2 dump
+-- Adminer 4.8.1 MySQL 8.0.34-0ubuntu0.22.04.1 dump
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
@@ -18,12 +18,14 @@ CREATE TABLE `banned` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 DROP TABLE IF EXISTS `banned_emails`;
 CREATE TABLE `banned_emails` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` char(255) CHARACTER SET cp1250 COLLATE cp1250_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 DROP TABLE IF EXISTS `image_uploader`;
 CREATE TABLE `image_uploader` (
@@ -33,6 +35,7 @@ CREATE TABLE `image_uploader` (
   `date` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
+
 
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs` (
@@ -46,6 +49,7 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
 
+
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -58,6 +62,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_czech_ci;
 
+
 DROP TABLE IF EXISTS `pastes`;
 CREATE TABLE `pastes` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -67,6 +72,7 @@ CREATE TABLE `pastes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 DROP TABLE IF EXISTS `todos`;
 CREATE TABLE `todos` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -74,6 +80,7 @@ CREATE TABLE `todos` (
   `status` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_czech_ci;
+
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -87,6 +94,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -94,10 +102,12 @@ CREATE TABLE `visitors` (
   `first_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `last_visit` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `browser` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
+  `referer` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `os` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `location` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   `ip_adress` char(255) CHARACTER SET cp1250 COLLATE cp1250_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 2023-02-18 13:39:27
+
+-- 2023-08-25 10:50:59
