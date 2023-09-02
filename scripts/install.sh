@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # installation script for development & production use
-# install: composer with phar
+# install: all requirements
+
+# color codes.
+red_echo () { echo "$(tput setaf 9)$1"; }
 
 php composer.phar upgrade
 php composer.phar update

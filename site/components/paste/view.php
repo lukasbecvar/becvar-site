@@ -27,7 +27,7 @@
         hljs.initHighlightingOnLoad();
         hljs.initLineNumbersOnLoad();
     </script>
-    <link rel="stylesheet" href="/assets/css/atom-one-dark.min.css">
+    <link rel="stylesheet" href="/assets/css/atom-one-dark.css">
     <link rel="stylesheet" href="/assets/css/paste-view.css">
 
     <script>
