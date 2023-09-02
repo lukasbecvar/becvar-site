@@ -9,18 +9,18 @@
             //////////////////////////////////////////////////////////
             // maintenance settings change requests
             if ($config == "maintenanceDisable") {
-                $pageConfigController->maintenanceDisable();
+                $configController->maintenanceDisable();
 
             } elseif ($config == "maintenanceEnable") {
-                $pageConfigController->maintenanceEnable();
+                $configController->maintenanceEnable();
             
 
             // dev mode settings change requests
             } elseif ($config == "devmodeDisable") {
-                $pageConfigController->devModeDisable();
+                $configController->devModeDisable();
             
             } elseif ($config == "devmodeEnable") {
-                $pageConfigController->devModeEnable();
+                $configController->devModeEnable();
             }
             //////////////////////////////////////////////////////////
             

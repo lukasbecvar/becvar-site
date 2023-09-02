@@ -103,6 +103,15 @@
                 include_once("components/MediaBrowserComponent.php");
             ////////////////////////////////////////////////////////////////////////////////////////
 
+            // init project reload
+            } elseif ($siteController->getQueryString("admin") == "projectsReload") {
+
+                // update project list by github
+                $projectsController->updateProjectDatabase();
+
+                // redirect back to table
+                $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+
             // login admin action redirect logged in users
             } elseif ($siteController->getQueryString("admin") == "login") {
                 $urlUtils->jsRedirect("/?admin=dashboard");

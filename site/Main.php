@@ -32,6 +32,9 @@
         // include about component
         include_once("components/AboutComponent.php");
  
+        // include projects component
+        include_once("components/ProjectsComponent.php");
+
         // include services element
         include_once("elements/ServicesElement.php");
 

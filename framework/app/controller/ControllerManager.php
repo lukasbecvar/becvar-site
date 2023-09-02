@@ -10,6 +10,7 @@
 	require_once(__DIR__."/controllers/VisitorSystemController.php");
 	require_once(__DIR__."/controllers/ServicesController.php");
 	require_once(__DIR__."/controllers/AlertController.php");
+	require_once(__DIR__."/controllers/ProjectsController.php");
 
 	// ContactController
 	$contactController = new becwork\controllers\ContactController();
@@ -21,7 +22,7 @@
 	$todosController = new becwork\controllers\TodosController();
 
 	// PageConfigController
-	$pageConfigController = new becwork\controllers\PageConfigController();
+	$configController = new becwork\controllers\PageConfigController();
 
 	// DashboardController
 	$dashboardController = new becwork\controllers\DashboardController();
@@ -37,4 +38,7 @@
 
 	// AlertController
 	$alertController = new becwork\controllers\AlertController();
+
+	// ProjectsController
+	$projectsController = new becwork\controllers\ProjectsController();
 ?>

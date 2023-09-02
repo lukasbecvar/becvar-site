@@ -107,6 +107,16 @@
 						</li>';
 				}
 
+				// new row button to panel
+				if (!empty($_GET["name"])) {
+					if ($_GET["name"] == "projects") {
+						echo '
+							<li> 
+								<a class="selectorButton btn-small" href="?admin=projectsReload"><strong>R</strong></a>
+							</li>';
+					}
+				}
+
 				// back table button to panel
 				if (!empty($_GET["add"])) {
 					echo '

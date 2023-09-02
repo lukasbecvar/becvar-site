@@ -13,7 +13,8 @@ This application does not serve as an example of my work, it is my personal site
  - Disable apache autoindex module
 
  ## Public site
- - Components: about, services list, contact, etc...
+ - Components: about, projects, services list, contact, etc...
+ - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader
  - Code paste site
 
@@ -31,6 +32,7 @@ This application does not serve as an example of my work, it is my personal site
  - Warning system
  - Advanced log system
  - System/Services tester component
+ - Server Emergency shutdown
 
 ## Becwork required
  - php-8 or <
