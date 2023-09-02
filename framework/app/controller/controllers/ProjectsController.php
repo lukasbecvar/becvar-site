@@ -89,7 +89,7 @@
             }
 
             // log action to mysql
-            $mysql->logToMysql("Project-update", "project list updated!");
+            $mysql->logToMysql("Project update", "project list updated!");
         }
     }
 ?>

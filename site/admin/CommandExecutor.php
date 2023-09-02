@@ -48,7 +48,7 @@
             elseif ($command == "shutdown") {
 
                 // log to mysql
-                $mysql->logToMysql("Emergency-shutdown", "user: ".$adminController->getCurrentUsername()." used emergency server shutdown");
+                $mysql->logToMysql("Emergency shutdown", "user: ".$adminController->getCurrentUsername()." used emergency server shutdown");
             
                 // execute final command
                 $servicesController->executeCommand("sudo poweroff");
