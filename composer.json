@@ -6,6 +6,6 @@
     "license": "MIT",
     "require": {
         "mobiledetect/mobiledetectlib": "^3.74",
-        "filp/whoops": "^2.14"
+        "filp/whoops": "^2.15.3"
     }
 }

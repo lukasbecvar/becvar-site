@@ -272,6 +272,11 @@ textarea {
 	text-align: center;
 }
 
+.loginFormSubTitle {
+	font-size: 15px;
+	font-weight: bold;
+}
+
 .textInput {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
@@ -687,13 +692,16 @@ textarea {
 	color: #35ee3b !important;
 }
 
+.online-text {
+	color: #35ee3b !important;
+}
 
 .color-white {
 	color: white;
 }
 
 .text-red {
-	color: rgb(233, 102, 102) !important;
+	color: rgb(253, 94, 94) !important;
 }
 
 .text-light-green {

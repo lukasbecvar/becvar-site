@@ -110,7 +110,11 @@
             // task executor
             } elseif ($siteController->getQueryString("admin") == "executeTask") {
                 include_once("CommandExecutor.php");
-                
+            
+            // show form
+            } elseif ($siteController->getQueryString("admin") == "form") {
+                include_once("FormManager.php");
+
             // redirect to 404 if process not found or print error for dev mode
             } else {
                 if ($siteController->isSiteDevMode()) {

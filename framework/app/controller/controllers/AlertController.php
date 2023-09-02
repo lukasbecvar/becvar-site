@@ -18,6 +18,7 @@
 
         // flash warning alert
         public function flashWarning($msg) {
+
             echo '
                 <center><div class="alert alert-warning" role="alert">
                 
