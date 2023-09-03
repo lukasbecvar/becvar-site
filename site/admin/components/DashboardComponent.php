@@ -15,4 +15,9 @@
     // card element
     include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/DashboardCards.php');
 ?>
+<style>
+    .wrapper .section .top_navbar {
+        width: calc(100% - 240px);
+    }
+</style>
 </div>

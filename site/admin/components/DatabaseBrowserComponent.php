@@ -88,14 +88,14 @@
 				// table selector button to panel
 				echo '
 					<li>
-						<a class="selectorButton btn-small" href="?admin=dbBrowser"><strong>TABLES</strong></a>
+						<a class="selectorButton btn-small" href="?admin=dbBrowser"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
 					</li>';
 
 				// delete all button to panel
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&delete='.$tableName.'&id=all"><strong>DELETE ALL '.$tableName.'</strong></a>
+							<a class="selectorButton btn-small" href="?admin=dbBrowser&delete='.$tableName.'&id=all"><strong><i class="fa fa-trash" aria-hidden="true"></i> '.$tableName.'</strong></a>
 						</li>';
 				}
  
@@ -103,7 +103,7 @@
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&add='.$tableName.'"><strong>ADD</strong></a>
+							<a class="selectorButton btn-small" href="?admin=dbBrowser&add='.$tableName.'"><strong>NEW</strong></a>
 						</li>';
 				}
 
@@ -111,8 +111,8 @@
 				if (!empty($_GET["name"])) {
 					if ($_GET["name"] == "projects") {
 						echo '
-							<li> 
-								<a class="selectorButton btn-small" href="?admin=projectsReload"><strong>R</strong></a>
+							<li>
+								<a class="selectorButton btn-small" href="?admin=projectsReload"><strong><i class="fas fa-sync"></i></strong></a>
 							</li>';
 					}
 				}

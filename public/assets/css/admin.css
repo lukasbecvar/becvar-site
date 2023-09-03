@@ -21,6 +21,7 @@ a:hover {
 /*Custom scroolbar design (Not working on mobile divices)*/
 ::-webkit-scrollbar { /*Own page scroolbar design*/
 	width: 15px;
+	height: 15px;
 } 
 
 ::-webkit-scrollbar-track { /*Own scroolbar bacground*/
@@ -774,6 +775,7 @@ textarea {
 @media screen and (max-width: 800px) { 
 	::-webkit-scrollbar {
 		width: 10px;
+		height: 10px;
 	} 
 	.phoneNone {
 		display: none;
@@ -903,7 +905,7 @@ textarea {
 		right: 15px;
 	}
 	.wrapper .section .top_navbar {
-		width: calc(100% - 10px);
+		width: calc(100% - 10px) !important;
 	}
 }
 
