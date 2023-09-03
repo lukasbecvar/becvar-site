@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
     <li>
-        <a class="selectorButton btn-small" href="?admin=dbBrowser&name=visitors&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0"><strong>Unfiltered browser</strong></a>
+        <a class="selectorButton btn-small" href="?admin=dbBrowser&name=visitors&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0"><strong>Unfiltered</strong></a>
     </li>  
     
     <li>

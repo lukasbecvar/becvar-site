@@ -1,4 +1,4 @@
-/* Main css file of admin component becvar_site [Coded by lukas becvar] */
+/* Main css file of admin component becvar_site [Coded by lukas becvar] */ 
 * {
 	padding: 0px;
 	margin: 0px;
@@ -37,6 +37,14 @@ a:hover {
 	background: #5c646b;
 }
 /*End of Custom scrollBar*/
+
+.lg {
+	z-index: 9999; 
+}
+
+.overflow-x-hiden {
+	overflow-x: hidden;
+}
 
 .wrapper .sidebar {
 	background-color: #242424;
@@ -108,7 +116,7 @@ a:hover {
 
 .wrapper .section .top_navbar {
 	background-color: #242424;
-	height: 50px;
+	height: 40px;
 	display: flex;
 	align-items: center;
 	padding: 0 1%;
@@ -117,6 +125,12 @@ a:hover {
 
 .hamburger {
 	text-decoration: none;
+}
+
+.wrapper .section .top_navbar {
+	position: fixed; 
+	z-index: 1000; 
+	width: calc(100% - 15px);
 }
 
 .wrapper .section .top_navbar .hamburger a {
@@ -247,7 +261,7 @@ textarea {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	padding: 10px;
 	position: relative;
-	top: -5%;
+	top: -2%;
 	opacity: 0.8;
 	width: 40%;
 	background: rgba(0, 0, 0, 0.877);
@@ -389,8 +403,8 @@ textarea {
 }
 
 .logoutLink {
-	position: absolute;
-	right: 1%;
+	position: fixed;
+	right: 25px;
 }
 
 .leftCenter {
@@ -425,6 +439,7 @@ textarea {
 	width: 100%;
 	height: 100%;
 	position: absolute;
+	top: 40px;
 }
 
 .adminPage {
@@ -836,6 +851,7 @@ textarea {
 		margin-left: 2px;
 		margin-right: 2px;
 		padding: 3px;
+		font-size: 16px;
 	}
 	.dbBrowserSelectLink {
 		width: 200px;
@@ -882,6 +898,12 @@ textarea {
 	}
 	.diagnostics-large-title {
 		font-size: 18px;
+	}
+	.logoutLink {
+		right: 15px;
+	}
+	.wrapper .section .top_navbar {
+		width: calc(100% - 10px);
 	}
 }
 

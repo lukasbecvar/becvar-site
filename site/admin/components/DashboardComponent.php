@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="adminPanel ooverflow-x-hiden">
 <?php // main admin component for include all dashboard elements
 
     // warnning box

@@ -1,3 +1,4 @@
+<div class="adminPanel">
 <style>
     .wrapper {
         color: white;
@@ -44,3 +45,4 @@
     myprint_r(phpinfo_array());
     echo '</div>';
 ?>
+</div>

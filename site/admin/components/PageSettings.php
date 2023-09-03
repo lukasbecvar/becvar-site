@@ -1,4 +1,4 @@
-<div class="dashboardBox">
+<div class="adminPanel">
     <?php 
         // check if config change submited
         if ($siteController->getQueryString("config") != null) {

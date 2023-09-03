@@ -1,4 +1,4 @@
-<div class="dashboardBox">
+<div class="adminPanel">
 <?php // account settings component in admin site
 
     // check if user submit password change
