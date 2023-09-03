@@ -2,18 +2,22 @@
 	http_response_code(520);
 ?>
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/css/error-page.css" rel="stylesheet">
 	<link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
-	<link href="/assets/css/error-page.css" rel="stylesheet">
-	<title>520 Unknown error</title>
+    <title>Error: 520, unknown error</title>
 </head>
-<body class="mainPage">
-	<main>
-		<center><h3 class="errorPageMSG"><strong>Unknown error, please contact the service administrator.<br></strong></h3></center>
-	</main>
+<body>    
+	<p class="errorPageMSG">
+		<strong>
+			Unknown error, please contact the service administrator.
+		</strong>
+	</p>
+	<!-- init fluid animation -->
+	<canvas></canvas>
+	<script src="/assets/js/fluid-animation.js"></script>
 </body>
 </html>
