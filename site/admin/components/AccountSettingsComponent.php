@@ -18,21 +18,21 @@
                 if (strlen($password) >= 5) {
         
                     // get username from session
-                    $username = $userController->getCurrentUsername();
+                    $username = $userManager->getCurrentUsername();
                     
                     // update password
-                    $userController->updatePassword($username, $password);
+                    $userManager->updatePassword($username, $password);
 
                     // show updates msg
-                    $alertController->flashSuccess("Your password is updated");
+                    $alertManager->flashSuccess("Your password is updated");
                 } else {
-                    $alertController->flashError("Minimal password lenght is 6 characters");
+                    $alertManager->flashError("Minimal password lenght is 6 characters");
                 }
             } else {
-                $alertController->flashError("Password is not matched");
+                $alertManager->flashError("Password is not matched");
             }
         } else {
-            $alertController->flashError("Minimal password lenght is 6 characters");
+            $alertManager->flashError("Minimal password lenght is 6 characters");
         }
     }
 
@@ -41,7 +41,7 @@
 
         // check if file not empty
         if (empty($_FILES['fileToUpload']["tmp_name"])) {        
-            $alertController->flashError("Image file is empty");
+            $alertManager->flashError("Image file is empty");
         } else {
 
             // get file from form
@@ -51,13 +51,13 @@
             $base64Final = base64_encode($imageFile);
             
             // get username
-            $username = $userController->getCurrentUsername();
+            $username = $userManager->getCurrentUsername();
 
             // update user avatar
-            $userController->updateProfileImage($base64Final, $username);
+            $userManager->updateProfileImage($base64Final, $username);
 
             // flash msg
-            $alertController->flashSuccess("Image updated");
+            $alertManager->flashSuccess("Image updated");
         }
     }
 

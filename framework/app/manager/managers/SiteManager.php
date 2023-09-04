@@ -1,4 +1,4 @@
-<?php // main site manager
+<?php // main site manager (get basic values)
 
     namespace becwork\managers;
 
@@ -7,12 +7,15 @@
         // get true or false if admin page
         public function isCurrentPageAdmin() {
             
+            // default state output
+			$state = false;
+
             // check if page is admin
             if ($this->getQueryString("admin") != null) {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
         // check maintenance mode
@@ -20,10 +23,15 @@
 
             global $config;
 
+            // default state output
+			$state = false;
+
             // check if maintenance mode valid
-            if (($config->getValue('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false)) {
-                return true;
+            if ($config->getValue('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false) {
+                $state = true;
             }
+
+            return $state;
         }
 
         // get query string by name
@@ -31,22 +39,24 @@
             
             global $escapeUtils;
 
-            // check if query is empty
-            if (empty($_GET[$query])) {
-                $output = null;
-            } else {
+            // default query string
+            $queryString = null;
 
-                // escape query
-                $output = $escapeUtils->specialCharshStrip($_GET[$query]);
+            // check if query is empty
+            if (!empty($_GET[$query])) {
+
+                // get & escape paramater
+                $queryString = $escapeUtils->specialCharshStrip($_GET[$query]);
             }
 
             // return final query value
-            return $output;
+            return $queryString;
         }
 
         // get Http host aka domain name
         public function getHTTPhost() {
-            return $_SERVER['HTTP_HOST'];
+            $host = $_SERVER['HTTP_HOST'];
+            return $host;
         }
 
         // get page title by paramater
@@ -56,18 +66,22 @@
 
             // check if host is localhost
             if ($this->getHTTPhost() == "localhost") {
-                return "Localhost Testing"; 
+                
+                $title = "Localhost Testing"; 
             } else {
 
                 // check if admin site
                 if ($this->isCurrentPageAdmin()) { 
-                    return "Admin site"; 
+                
+                    $title =  "Admin site"; 
                 } else {
 
-                    // return app name
-                    return $config->getValue('appName'); 
+                    // set main app name
+                    $title = $config->getValue('appName'); 
                 }
             }
+
+            return $title;
         }
 
         // get age by birth data input
@@ -93,12 +107,36 @@
 
             global $config;
 
+            // default state output
+			$state = false;
+
             // check if dev mode enabled
             if ($config->getValue("dev-mode") == true) {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+            
+            return $state;
+        }
+
+        // check if site running on localhost
+        public function isRunningLocalhost() {
+
+            global $config;
+
+            // default state output
+			$state = false;
+
+            // check if running on url localhost
+            if ($config->getValue("url") == "localhost") {
+                $state = true;
+            } 
+            
+            // check if running on localhost ip
+            if ($config->getValue("url") == "127.0.0.1") {
+                $state = true;
+            }
+
+            return $state;
         }
 	}
 ?>

@@ -7,5 +7,5 @@
         <a class="selectorButton btn-small" href="?admin=visitors&action=deleteVisitors&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0"><strong>Delete all</strong></a>
     </li>    
     
-    <li class="countTextInMenuR">Banned visitors: <strong><?php echo $dashboardController->getBannedCount(); ?></strong></li>
+    <li class="countTextInMenuR">Banned visitors: <strong><?php echo $dashboardManager->getBannedCount(); ?></strong></li>
 </ul>

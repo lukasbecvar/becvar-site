@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="/assets/vendor/jquery/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" href="/assets/vendor/fontawesome/fontawesome.min.css">
 	<?php // import gallery css if user browsing media
-		if ($siteController->getQueryString("admin") == "mediaBrowser") {
+		if ($siteManager->getQueryString("admin") == "mediaBrowser") {
 			echo '<link href="/assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">';	
 			echo '<link href="/assets/css/assets/vendor/lightgallery/css/lg-transitions.css" rel="stylesheet">';	
 		}
@@ -19,7 +19,7 @@
     <!-------------------- end of assets import ------------------------>
 	<title>
 		<?php // print page title 
-			echo $siteController->getPageTitle();
+			echo $siteManager->getPageTitle();
 		?>
 	</title>
 </head>
@@ -36,7 +36,7 @@
     }
 
     // default disable sidebar
-    if ($siteController->getQueryString("admin") != "dashboard") {
+    if ($siteManager->getQueryString("admin") != "dashboard") {
         echo '
             <script>
                 document.querySelector("body").classList.toggle("active");
@@ -50,17 +50,17 @@
 <?php // main site redirector
 
 	// check if user send logout request
-	if ($siteController->getQueryString("action") == "logout") {
-        $userController->logout();
+	if ($siteManager->getQueryString("action") == "logout") {
+        $userManager->logout();
 
     // check if user send register action
-    } else if ($siteController->getQueryString("action") == "register") {
+    } else if ($siteManager->getQueryString("action") == "register") {
         include_once("components/AdminAccountRegisterComponent.php");
 
     } else {    
 
         // check if user logged in
-        if ($userController->isLoggedIn()) {	
+        if ($userManager->isLoggedIn()) {	
 
             // admin top nav bar
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/TopPanel.php');
@@ -69,67 +69,67 @@
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/Sidebar.php');
 
             // define process by name //////////////////////////////////////////////////////////////
-            if ($siteController->getQueryString("admin") == "dashboard") {
+            if ($siteManager->getQueryString("admin") == "dashboard") {
                 include_once("components/DashboardComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "accountSettings") {
+            } elseif ($siteManager->getQueryString("admin") == "accountSettings") {
                 include_once("components/AccountSettingsComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "inbox") {
+            } elseif ($siteManager->getQueryString("admin") == "inbox") {
                 include_once("components/InboxComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "todos") {
+            } elseif ($siteManager->getQueryString("admin") == "todos") {
                 include_once("components/TodoManager.php");
 
-            } elseif ($siteController->getQueryString("admin") == "pageSettings") {
+            } elseif ($siteManager->getQueryString("admin") == "pageSettings") {
                 include_once("components/PageSettings.php");
 
-            } elseif ($siteController->getQueryString("admin") == "phpInfo") {
+            } elseif ($siteManager->getQueryString("admin") == "phpInfo") {
                 include_once("components/phpInfoComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "diagnostics") {
+            } elseif ($siteManager->getQueryString("admin") == "diagnostics") {
                 include_once("components/DiagnosticsComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "dbBrowser") {
+            } elseif ($siteManager->getQueryString("admin") == "dbBrowser") {
                 include_once("components/DatabaseBrowserComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "logReader") {
+            } elseif ($siteManager->getQueryString("admin") == "logReader") {
                 include_once("components/LogReaderComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "visitors") {
+            } elseif ($siteManager->getQueryString("admin") == "visitors") {
                 include_once("components/VisitorsManagerComponent.php");
 
-            } elseif ($siteController->getQueryString("admin") == "mediaBrowser") {
+            } elseif ($siteManager->getQueryString("admin") == "mediaBrowser") {
                 include_once("components/MediaBrowserComponent.php");
             ////////////////////////////////////////////////////////////////////////////////////////
 
             // init project reload
-            } elseif ($siteController->getQueryString("admin") == "projectsReload") {
+            } elseif ($siteManager->getQueryString("admin") == "projectsReload") {
 
                 // update project list by github
-                $projectsController->updateProjectDatabase();
+                $projectsManager->updateProjectDatabase();
 
                 // redirect back to table
                 $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 
             // login admin action redirect logged in users
-            } elseif ($siteController->getQueryString("admin") == "login") {
+            } elseif ($siteManager->getQueryString("admin") == "login") {
                 $urlUtils->jsRedirect("/?admin=dashboard");
 
             // task executor
-            } elseif ($siteController->getQueryString("admin") == "executeTask") {
+            } elseif ($siteManager->getQueryString("admin") == "executeTask") {
                 include_once("CommandExecutor.php");
             
             // show form
-            } elseif ($siteController->getQueryString("admin") == "form") {
-                include_once("FormManager.php");
+            } elseif ($siteManager->getQueryString("admin") == "form") {
+                include_once("FormHandlerer.php");
 
             // redirect to 404 if process not found or print error for dev mode
             } else {
-                if ($siteController->isSiteDevMode()) {
-                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteController->getQueryString("admin")." not found<h2>");
+                if ($siteManager->isSiteDevMode()) {
+                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteManager->getQueryString("admin")." not found<h2>");
                 } else {
-                    $siteController->redirectError(404);
+                    $siteManager->redirectError(404);
                 }
             }
 
@@ -142,7 +142,7 @@
                 if ($_COOKIE[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
 
                     //Auto user login
-                    $userController->autoLogin();
+                    $userManager->autoLogin();
 
                 } else {
                     // set login action if user not logged in
@@ -158,13 +158,13 @@
         if(!$mobileDetector->isMobile()) {
 
             // check if is admin process not dashboard
-            if($siteController->getQueryString("admin") != "dashboard") {
+            if($siteManager->getQueryString("admin") != "dashboard") {
                 include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');
             }	
         } else {
 
             // disable sidebar for dashboard (mobile)
-            if ($siteController->getQueryString("admin") == "dashboard") {
+            if ($siteManager->getQueryString("admin") == "dashboard") {
                 echo '
                     <script>
                         document.querySelector("body").classList.toggle("active");
@@ -180,7 +180,6 @@
 <!----------------------- import scripts ---------------------------->
 <script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/vendor/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="/assets/js/admin.js"></script>
 <!-------------------- end of import scripts ------------------------>
 </body>
 </html>

@@ -18,7 +18,7 @@
             
             <div class="col-lg-6">
                 <ul>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span><?php echo $siteController->getAge("05/28/1999"); ?></span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span><?php echo $siteManager->getAge("05/28/1999"); ?></span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
                 </ul>
             </div>

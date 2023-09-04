@@ -12,8 +12,18 @@ then
     red_echo "Build-error: vendor not found, please install composer"
     die
 fi
+
+# clear console
 clear
+
+# go to public
 cd public/ 
+
+# start mysql
 sudo systemctl start mysql
+
+# print mysql status
 sudo systemctl --no-pager status mysql
+
+# run php dev server
 sudo php -S localhost:80

@@ -4,7 +4,7 @@
         <?php // system checks
         
             // print ssl test
-            if ((!$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost")) {
+            if ((!$mainUtils->isSSL() && $siteManager->getHTTPhost() != "localhost")) {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>';
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>page is secured with https</strong></span></p>';
@@ -18,7 +18,7 @@
             }
 
             // print dev mode test
-            if (($_SERVER['HTTP_HOST'] != "localhost") && $siteController->isSiteDevMode()) {
+            if (($_SERVER['HTTP_HOST'] != "localhost") && $siteManager->isSiteDevMode()) {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>developer mode is enabled on non localhost site, please disable dev-mode in config.php</strong></span></p>';
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>developer mode policy are OK</strong></span></p>';

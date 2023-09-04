@@ -2,7 +2,7 @@
 <?php // admin database table browser
 
 	// check if user is owner
-	if (!$userController->isUserOwner()) {
+	if (!$userManager->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -248,7 +248,7 @@
 			}
 
 			// log action to database 
-			$mysql->logToMysql("Database", "User ".$userController->getCurrentUsername()." viewed table $tableName");
+			$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." viewed table $tableName");
 		} 
 		
 		// delete function //////////////////////////////////////////////////////////////
@@ -261,14 +261,14 @@
 				if ($idGet == "all") {
 
 					// include delete all confirmation
-					if ($siteController->getQueryString("confirm") != "yes") {
+					if ($siteManager->getQueryString("confirm") != "yes") {
 						include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/DatabaseDeleteConfirmationBox.php');
 					} 
 					
 					// delete all
 					else {
 						// check if confirm selected (only for delete all)
-						if ($siteController->getQueryString("confirm") == "yes") {
+						if ($siteManager->getQueryString("confirm") == "yes") {
 							// delete all rows
 							$mysql->insertQuery("DELETE FROM $deleteGet WHERE id=id");
 
@@ -286,7 +286,7 @@
 				}
 
 				// log action to database
-				$mysql->logToMysql("Database delete", "User ".$userController->getCurrentUsername()." deleted item $idGet form table $deleteGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." deleted item $idGet form table $deleteGet");
 
 
 				// check if delete auto close
@@ -313,7 +313,7 @@
 						if ($idGet == "all") {
 
 							// check if confirmation is used
-							if ($siteController->getQueryString("confirm") == "yes") {
+							if ($siteManager->getQueryString("confirm") == "yes") {
 								$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 							}
 
@@ -326,7 +326,7 @@
 			} else {
 
 				// check if site dev mode enabled
-				if ($siteController->isSiteDevMode()) {
+				if ($siteManager->isSiteDevMode()) {
 
 					// print error
 					die("<h2 class=pageTitle>[DEV-MODE]:Error: query string id not found.<h2>");
@@ -356,10 +356,10 @@
 				} 
 
 				// log action to mysql dsatabase 
-				$mysql->logToMysql("Database edit", "User ".$userController->getCurrentUsername()." edited item $idGet in table $editorGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." edited item $idGet in table $editorGet");
 
 				// flash status msg
-				$alertController->flashSuccess("Row has saved!");
+				$alertManager->flashSuccess("Row has saved!");
 				
 				// set final action
 				if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
@@ -454,10 +454,10 @@
 				$mysql->insertQuery($query);
 
 				// flash alert
-				$alertController->flashSuccess("New item has saved!");
+				$alertManager->flashSuccess("New item has saved!");
 
 				// log to database
-				$mysql->logToMysql("Database insert", "User ".$userController->getCurrentUsername()." add new row to $addGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." add new row to $addGet");
 
 				// redirect back to table reader
 				$urlUtils->jsRedirect("?admin=dbBrowser&name=$addGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
@@ -509,7 +509,7 @@
 			echo '</ol></div>';
 
 			// log action to database 
-			$mysql->logToMysql("Database list", "User ".$userController->getCurrentUsername()." viewed database list");
+			$mysql->logToMysql("database", "User ".$userManager->getCurrentUsername()." viewed database list");
 		}
 
 		///////////////////////////////////////PAGER-BUTTONS///////////////////////////////////////

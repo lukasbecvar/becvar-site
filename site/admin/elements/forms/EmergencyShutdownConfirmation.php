@@ -18,11 +18,11 @@
             $urlUtils->jsRedirect("?admin=executeTask&command=shutdown");
 
         } else {
-            $alertController->flashError("Incorrect confirmation code.");
+            $alertManager->flashError("Incorrect confirmation code.");
         }
     } else {
         // flash warning msg
-        $alertController->flashWarning("Warning this action will completely <strong>shutdown</strong> your server, it can only be started physically or from the administration");
+        $alertManager->flashWarning("Warning this action will completely <strong>shutdown</strong> your server, it can only be started physically or from the administration");
     }
 ?>
 

@@ -1,9 +1,9 @@
 <?php 
     // get delete table name
-    $table = $siteController->getQueryString("delete");
+    $table = $siteManager->getQueryString("delete");
 
+    // get table row limit
     $rowLimit = $config->getValue("rowInTableLimit");
-
 ?>
 
 <div class="confirmation dark-table">

@@ -19,7 +19,7 @@
 		if (strlen($contentRaw) > 60001) {
 
 			// redirect error
-			$siteController->redirectError(400);
+			$siteManager->redirectError(400);
 
 		} else {
 
@@ -29,7 +29,7 @@
 			}
 
 			// log to mysql
-			$mysql->logToMysql("Paste", "added new paste: ".$name);	
+			$mysql->logToMysql("paste", "saved new paste: ".$name);	
 		}
 	}
 ?>

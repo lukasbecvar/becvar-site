@@ -1,4 +1,4 @@
-<?php // projects table manager
+<?php // projects list manager
 
     namespace becwork\managers;
 
@@ -9,28 +9,29 @@
 
             global $mysql;
 
+            // default projects output value
+            $projects = null;
+
             // check if status is all
             if ($status == "all") {
 
                 // get all projects
-                $output = $mysql->fetch("SELECT * FROM projects");
+                $projects = $mysql->fetch("SELECT * FROM projects");
 
             } else {
 
                 // get projects where status
-                $output = $mysql->fetch("SELECT * FROM projects WHERE status='".$status."'");
+                $projects = $mysql->fetch("SELECT * FROM projects WHERE status='".$status."'");
             }
 
-            // return projects objct
-            return $output;
+            // return projects object
+            return $projects;
         }
 
         // update all github repos in database table
         public function updateProjectDatabase() {
 
-            global $mysql;
-            global $config;
-            global $escapeUtils;
+            global $mysql, $config, $escapeUtils;
 
             // set requst options
             $opts = [
@@ -89,7 +90,7 @@
             }
 
             // log action to mysql
-            $mysql->logToMysql("Project update", "project list updated!");
+            $mysql->logToMysql("project-update", "project list updated!");
         }
     }
 ?>

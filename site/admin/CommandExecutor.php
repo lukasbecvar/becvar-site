@@ -1,18 +1,18 @@
 <?php // command executor (for admin tasks)
 
     // check if command defined
-    if ($siteController->getQueryString("command") == null) {
+    if ($siteManager->getQueryString("command") == null) {
 
         // redirect to 404 page if command is empty
-        $siteController->redirectError(404);
+        $siteManager->redirectError(404);
     
     } else {
 
         // check if user logged in
-        if ($userController->isLoggedIn()) {
+        if ($userManager->isLoggedIn()) {
 
             // get command and escapeit
-            $command = $siteController->getQueryString("command");
+            $command = $siteManager->getQueryString("command");
 
             // get services path
             $serviceDir = $config->getValue('serviceDir');
@@ -31,7 +31,7 @@
                 $finalCommand = $servicesList->services[$service]["start_cmd"];
             
                 // log to mysql
-                $mysql->logToMysql("Service", "$service start");
+                $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." started: $service");
             } 
             
             // service stop system
@@ -41,32 +41,32 @@
                 $finalCommand = $servicesList->services[$service]["stop_cmd"];
 
                 // log to mysql
-                $mysql->logToMysql("Service", "$service stop");
+                $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." stoped: $service");
             }
 
             // emergency shutdown
             elseif ($command == "shutdown") {
 
                 // log to mysql
-                $mysql->logToMysql("Emergency shutdown", "user: ".$userController->getCurrentUsername()." used emergency server shutdown");
+                $mysql->logToMysql("emergency-shutdown", "user: ".$userManager->getCurrentUsername()." used emergency server shutdown");
             
                 // execute final command
-                $servicesController->executeCommand("sudo poweroff");
+                $servicesManager->executeCommand("sudo poweroff");
 
             // undefind action
             } else {
-                $siteController->redirectError(403);
+                $siteManager->redirectError(403);
             }
         
             // execute final command
-            $servicesController->executeCommand($finalCommand);
+            $servicesManager->executeCommand($finalCommand);
 
             // redirect back to dashboard
             $urlUtils->jsRedirect("?admin=dashboard");
 
         } else {
             // redirect to 403 page if user not logged in
-            $siteController->redirectError(403);
+            $siteManager->redirectError(403);
         }
     }
 ?>

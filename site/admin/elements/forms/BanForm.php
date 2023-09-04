@@ -1,14 +1,14 @@
-<?php 
+<?php // ban user forms
 
     // check if auto close seted
     if (isset($_GET["close"])) {
-        $formAction = '?admin=visitors&action=ban&id='.$siteController->getQueryString("id").'&limit=500&startby=0&close=yes';
+        $formAction = '?admin=visitors&action=ban&id='.$siteManager->getQueryString("id").'&limit=500&startby=0&close=yes';
     } else {
-        $formAction = '?admin=visitors&action=ban&id='.$siteController->getQueryString("id").'&limit=500&startby=0';
+        $formAction = '?admin=visitors&action=ban&id='.$siteManager->getQueryString("id").'&limit=500&startby=0';
     }
 
     // check if get not empty
-    if ($siteController->getQueryString("id") != null) {
+    if ($siteManager->getQueryString("id") != null) {
         echo '
             <form class="newTodoForm" action="'.$formAction.'" method="post">
                 <textarea class="todoArea" maxlength="120" name="banReason" class="feedback-input" placeholder="Reason"></textarea>

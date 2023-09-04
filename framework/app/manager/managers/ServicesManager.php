@@ -1,67 +1,67 @@
-<?php // services manager
+<?php // services manager (for admin dashboard panel)
 
     namespace becwork\managers;
 
     class ServicesManager {
 
-        /**
-         * Method for getting true or false for process id returned running
-         *
-        **/
+        // method for getting true or false for process id returned running
         public function ifProcessRunning($process) {
             
-            // execute builder
+            // default state output
+			$state = false;
+
+            // execute cmd
             exec("pgrep ".$process, $pids);
             
             // check if outputed pid
             if(empty($pids)) {
-                return false;
-            } else {
-                return true;
-            }
+                $state = false;
+            } 
+        
+            return $state;
         }
 
-        /**
-         * Method for getting true or false for service running
-         *
-        **/
+        // method for getting true or false for service running
         public function ifServiceActive($service) {
             
-            // execute builder
+            // default state output
+			$state = false;
+
+            // execute cmd
             $output = shell_exec("systemctl is-active $service");
             
             // check if service running
             if (trim($output) == "active") {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
-        /**
-         * Method for getting true or false for ufw running
-         *
-        **/
+        // method for getting true or false for ufw running
         public function isUFWRunning() {
 
-            // execute builder
+            // default state output
+			$state = false;
+
+            // execute cmd
             $output = shell_exec("sudo ufw status");
 
             // check if ufw running
             if (str_starts_with($output, "Status: active")) {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
-        /**
-         * Method for getting true or false for service running
-         *
-        **/
+        // method for getting true or false for service running
         public function isServiceInstalled($serviceName) {
             
             global $config;
+
+            // default state output
+			$state = false;
 
             // get service dir from config
             $serviceDir = $config->getValue('serviceDir');
@@ -71,9 +71,7 @@
 
                 // check if minecraft installed
                 if (file_exists($serviceDir."/minecraft/")) {
-                    return true;
-                } else {
-                    return false;
+                    $state = true;
                 }
 
             // teamspeak server
@@ -81,38 +79,39 @@
 
                 // check if teamspeak installed
                 if (file_exists($serviceDir."/teamspeak/")) {
-                    return true;
-                } else {
-                    return false;
-                }
+                    $state = true;
+                } 
 
             // check others (for systemctl)
             } else {
 
-                // execute builder
+                // execute cmd
                 $output = shell_exec("which $serviceName");
                 
                 // check if output is empty
-                if (empty($output)) {
-                    return false;
-                } else {
-                    return true;
+                if (!empty($output)) {
+                    $state = true;
                 }
             }
+
+            return $state;
         }
         
         // check if screen session running
         public function checkScreenSession($sessionName) {
 
-            // execite builder
+            // default state output
+			$state = false;
+
+            // execite cmd
             $exec = shell_exec("sudo screen -S $sessionName -Q select . ; echo $?");
 
             // check if exec get output
             if ($exec == "0") {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
         // execute system command

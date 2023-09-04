@@ -1,4 +1,4 @@
-<?php // contact manager (read, sent, delelete msg)
+<?php // contact manager (read, send, delelete msg)
 
 	namespace becwork\managers;
 
@@ -9,7 +9,8 @@
 
 			global $mysql;
 
-			return $mysql->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC");
+			$messages = $mysql->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC"); 
+			return $messages;
 		}
 
 		// get banned email count
@@ -17,25 +18,28 @@
 
 			global $mysql;
 
-			// get banned email count
-			$bannedEmailCount = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
+			// get banned emails
+			$bannedEmails = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
 			
-			// return count
-			return count($bannedEmailCount);
+			// get emails count
+			$bannedEmailCount = count($bannedEmails);
+
+			return $bannedEmailCount;
 		}
 
 		// send message to database
 		public function sendMessage($name, $email, $message, $status) {
 
-			global $mysql;
-			global $mainUtils;
-			global $escapeUtils;
+			global $mysql, $mainUtils, $escapeUtils;
+
+			// default state value
+			$state = false;
 
 			// check if email banned
 			if ($this->getBannedEmailCount($email) > 0) {
 
 				// log to mysql
-				$mysql->logToMysql("Message block", "blocked email: $email");
+				$mysql->logToMysql("message-block", "blocked email: $email");
 
 				// return banned
 				return "banned";
@@ -45,24 +49,28 @@
 				$name = $escapeUtils->specialCharshStrip(trim($name));
 				$email = $escapeUtils->specialCharshStrip(trim($email));
 				$message = $escapeUtils->specialCharshStrip(trim($message));
-				$time = date('d.m.Y H:i:s');
-				$remote_addr = $mainUtils->getRemoteAdress();
 				$status = $escapeUtils->specialCharshStrip(trim($status));
 
-				// insert values
+				// get current time
+				$time = date('d.m.Y H:i:s');
+
+				// get user ip
+				$remote_addr = $mainUtils->getRemoteAdress();
+
+				// insert message 
 				$queryInsert = $mysql->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
 
-				// return output
-				if ($queryInsert) {
-					return false;
-				} else {
+				// check if message inserted
+				if (!$queryInsert) {
 
 					// log to mysql
-					$mysql->logToMysql("Sended message", "by sender $name");
+					$mysql->logToMysql("recived-message", "by sender $name");
 					
-					return true;
-				}	
+					$state = true;
+				}
 			}
+
+			return $state;
 		}
 
 		// print all messages
@@ -74,7 +82,7 @@
             $messages = $this->getMessages();
 
 			// default ID
-			$userID = NULL;
+			$userID = null;
 
             // show all messages from array messages in page
             foreach ($messages as $row) {
@@ -90,7 +98,7 @@
 				}
 
 				// check if ip found
-				if ($userID == NULL) {
+				if ($userID == null) {
 					echo"<div class='card text-white mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") <span class='text-success phoneNone'>[".$row["time"]."]</span>, <span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span><a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
 				} else {
 
@@ -107,28 +115,30 @@
 		// felete message by id
 		public function deleteMsgByID($id) {
 
-			global $mysql;
-			global $userManager;
+			global $mysql, $userManager;
 
 			// log process to mysql database 
-			$mysql->logToMysql("Messages", "User ".$userManager->getCurrentUsername()." closed message $id");
+			$mysql->logToMysql("close-message", "user ".$userManager->getCurrentUsername()." closed message id: $id");
 
-			// update message for close 
+			// update message status = close 
 			$mysql->insertQuery("UPDATE messages SET status='closed' WHERE id='$id'");
 		}
 		
-        // check if msgs empty
+        // check if inbox empty
         public function isEmpty() {
+
+			// default state output
+			$state = false;
 
             // get messages from database
             $msgs = $this->getMessages();
 
 			// check if msgs list empty
             if (count($msgs) < 1) {
-                return true;
-            } else {
-                return false;
-            }
+                $state = true;
+            } 
+			
+			return $state;
         }
 	}
 ?>

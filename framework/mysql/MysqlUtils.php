@@ -1,7 +1,20 @@
-<?php 
+<?php // mysql utils (PDO functions: connect, read, insert, etc...)
     namespace becwork\utils;
 
     class MysqlUtils {
+
+        private $db_host;
+        private $db_name;
+        private $db_username;
+        private $db_password;
+
+        // init constructor
+        public function __construct($db_ip, $database_name, $username, $password) {
+            $this->db_host = $db_ip;
+            $this->db_name = $database_name;
+            $this->db_username = $username;
+            $this->db_password = $password;
+        }
 
         /* 
           * FUNCTION: database connection (use PDO)
@@ -9,14 +22,13 @@
         */
         public function connect() {
             
-            global $config;
-            global $siteController;
+            global $config, $siteManager;
 
             // get mysql connection data form app config
-            $address  = $config->getValue("mysql-address");
-            $database = $config->getValue("mysql-database");
-            $username = $config->getValue("mysql-username");
-            $password = $config->getValue("mysql-password");
+            $address  = $this->db_host;
+            $database = $this->db_name;
+            $username = $this->db_username;
+            $password = $this->db_password;
 
             // get default database charset
             $encoding = $config->getValue("encoding");
@@ -41,11 +53,11 @@
                 } else {
                     
                     // redirect to error page
-                    $siteController->redirectError("400");
+                    $siteManager->redirectError("400");
                 }
             }
 
-            // return connection
+            // return database connection object
             return $conn;
         }
 
@@ -56,8 +68,7 @@
         */
         public function insertQuery($query) {
 
-            global $config;
-            global $siteController;
+            global $config, $siteManager;
 
             // get PDO connection
             $connection = $this->connect();
@@ -81,7 +92,7 @@
                 } else {
                     
                     // redirect to error page
-                    $siteController->redirectError("400");
+                    $siteManager->redirectError("400");
                 }
             }
         }
@@ -92,10 +103,7 @@
         */
         public function logToMysql($name, $value) {
 
-            global $escapeUtils;
-            global $mainUtils;
-            global $config;
-            global $visitorController;
+            global $config, $escapeUtils, $mainUtils, $visitorManager;
 
             // check if logs enable
             if ($config->getValue("logs") == true) {
@@ -121,7 +129,7 @@
                     $date = date('d.m.Y H:i:s');
                     $remote_addr = $mainUtils->getRemoteAdress();
                     $status = "unreaded";
-                    $browser = $visitorController->getBrowser();
+                    $browser = $visitorManager->getBrowser();
 
                     // insert log to mysql
                     $this->insertQuery("INSERT INTO logs(name, value, date, remote_addr, browser, status) VALUES('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
@@ -166,7 +174,7 @@
                 } else {
                     
                     // redirect to error page
-                    $siteController->redirectError("400");
+                    $siteManager->redirectError("400");
                 }
             }
         }
@@ -178,8 +186,7 @@
         */
         public function fetchValue($query, $value) {
 
-            global $config;
-            global $siteController;
+            global $config, $siteManager;
 
             // get database connection
             $connection = $this->connect();
@@ -210,7 +217,7 @@
                         if ($config->getValue("dev-mode")) {
                             die("Database select error: '$value' not exist in selected data");
                         } else {
-                            $siteController->redirectError(404);
+                            $siteManager->redirectError(404);
                         }
                     }
 
@@ -220,7 +227,7 @@
                     if ($config->getValue("dev-mode") == true) {
                         die("Database select error: please check if query valid, query:'$query'");
                     } else {
-                        $siteController->redirectError(404);
+                        $siteManager->redirectError(404);
                     }
                 }
 
@@ -238,7 +245,7 @@
                 } else {
                     
                     // redirect to error page
-                    $siteController->redirectError("400");
+                    $siteManager->redirectError("400");
                 }
             }
         }

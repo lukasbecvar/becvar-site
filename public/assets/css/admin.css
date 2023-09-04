@@ -455,6 +455,10 @@ textarea {
 	color: white;
 }
 
+.php-info {
+	overflow-x: scroll;
+ }
+
 .todoArea {
 	width: calc(100% - 6.5%);
 	color:white;

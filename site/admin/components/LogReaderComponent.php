@@ -5,7 +5,7 @@
 	$startByRow = 0;
 
 	// check if user is owner
-	if (!$userController->isUserOwner()) {
+	if (!$userManager->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -34,7 +34,7 @@
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/LogReaderNavPanel.php');
         
         // get where ip string
-        $whereIP = $siteController->getQueryString("whereip");
+        $whereIP = $siteManager->getQueryString("whereip");
 
         // check if where ip select
         if ($whereIP == null) {
@@ -74,10 +74,10 @@
                 foreach ($logs as $data) {
                     
                     // get visitor id
-                    $userID = $visitorController->getVisitorIDByIP($data["remote_addr"]);
+                    $userID = $visitorManager->getVisitorIDByIP($data["remote_addr"]);
 
                     // ban link builder
-                    if ($visitorController->isVisitorBanned($data["remote_addr"])) {
+                    if ($visitorManager->isVisitorBanned($data["remote_addr"])) {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=yes' target='blank_'>UNBAN</a>";
                     } else {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=yes' target='blank_'>BAN</a>";
@@ -87,38 +87,38 @@
                     $linkToIP = "?admin=logReader&limit=".$config->getValue("rowInTableLimit")."&startby=0&whereip=".$data["remote_addr"];
 
                     // get location string from visitors database
-                    $location = $visitorController->getVisitorLocationFromDatabase($userID);
+                    $location = $visitorManager->getVisitorLocationFromDatabase($userID);
 
                     // table row builder
                     if (($data["status"] != "readed") || ($data["status"] == "readed" && $whereIP != null)) {
                         
-                        // database logs
-                        if ($data["name"] == "Project update" || $data["name"] == "Log reader" || $data["name"] == "Database" || $data["name"] == "Database delete" || $data["name"] == "Database insert" || $data["name"] == "Database list" || $data["name"] == "Database edit") {
-                            $row = "<tr class='lineItem text-primary'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong></strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-primary'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // blue logs
+                        if ($data["name"] == "project-update" || $data["name"] == "log-reader" || $data["name"] == "database") {
+                            $row = "<tr class='lineItem text-primary'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong></strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-primary'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
-                        // contact & todos logs
-                        } elseif ($data["name"] == "Emergency shutdown" || $data["name"] == "Sended message" || $data["name"] == "Messages" || $data["name"] == "Todos") {
-                            $row = "<tr class='lineItem text-dark-yellow'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-dark-yellow'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // yellow logs
+                        } elseif ($data["name"] == "emergency-shutdown" || $data["name"] == "recived-message" || $data["name"] == "close-message" || $data["name"] == "todo-manager") {
+                            $row = "<tr class='lineItem text-dark-yellow'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-dark-yellow'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
-                        // paste logs 
-                        } elseif ($data["name"] == "Paste" || $data["name"] == "Banned" || $data["name"] == "Message block" || $data["name"] == "Unban visitor") {
-                            $row = "<tr class='lineItem text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-warning'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // dark yellow logs
+                        } elseif ($data["name"] == "config-update" || $data["name"] == "paste" || $data["name"] == "banned" || $data["name"] == "message-block" || $data["name"] == "unban-visitor") {
+                            $row = "<tr class='lineItem text-warning'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-warning'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
-                        // upload logs
-                        } elseif ($data["name"] == "Uploader" || $data["name"] == "Image-load") {
-                            $row = "<tr class='lineItem text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-success'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // green logs
+                        } elseif ($data["name"] == "image-uploader" || $data["name"] == "image-load") {
+                            $row = "<tr class='lineItem text-success'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-success'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
-                        // login, logout, password logs
-                        } elseif ($data["name"] == "Login" || $data["name"] == "Logout" || $data["name"] == "Profile update" || $data["name"] == "Password update" || $data["name"] == "Geolocate error") {
-                            $row = "<tr class='lineItem text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-red'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // red logs
+                        } elseif ($data["name"] == "authenticator" || $data["name"] == "profile-update" || $data["name"] == "geolocate-error") {
+                            $row = "<tr class='lineItem text-red'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-red'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
-                        // success login logs
-                        } elseif ($data["name"] == "Success login" || $data["name"] == "Ban visitor") {
-                            $row = "<tr class='lineItem text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-danger'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                        // dark red logs
+                        } elseif ($data["name"] == "ban-visitor") {
+                            $row = "<tr class='lineItem text-danger'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link text-danger'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         
                         // others
                         } else {
-                            $row = "<tr class='lineItem'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorController->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link color-white'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
+                            $row = "<tr class='lineItem'><th scope='row'><strong>".$data["id"]."</strong><td><strong>".$data["name"]."</strong><td><strong>".$data["value"]."</strong><td><strong>".$data["date"]."</strong><td><strong>".$visitorManager->getShortBrowserID($data["browser"])."</strong><td><strong><a href='".$linkToIP."' class='log-reader-link color-white'>".$data["remote_addr"]."</a></strong><td><strong>".$location."</strong><td>".$banLink."<td><a class='deleteLinkTodos' href='".'?admin=dbBrowser&delete=logs&id='.$data["id"]."&reader=yes'><strong>X</strong></a></td></td></th></tr>";
                         }
 
                         // prit row to table
@@ -135,7 +135,7 @@
         } else {
 
             // get action
-            $action = $siteController->getQueryString("action");
+            $action = $siteManager->getQueryString("action");
 
             // action = delete all
             if ($action == "deleteLogs") {
@@ -202,7 +202,7 @@
         }        
 
         // log action to mysql database 
-        $mysql->logToMysql("Log reader", "User ".$userController->getCurrentUsername()." showed logs");
+        $mysql->logToMysql("log-reader", "user: ".$userManager->getCurrentUsername()." showed logs");
     }
 ?>
 </div>

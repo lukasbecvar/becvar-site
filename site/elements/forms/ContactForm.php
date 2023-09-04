@@ -35,7 +35,7 @@
                         } else {
 
                             // save msg to database
-                            $sendMSG = $contactController->sendMessage($name, $email, $message, "open");
+                            $sendMSG = $contactManager->sendMessage($name, $email, $message, "open");
                     
                             // flash msg with status
                             if ($sendMSG) {

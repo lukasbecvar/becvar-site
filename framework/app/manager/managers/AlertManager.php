@@ -1,4 +1,4 @@
-<?php // flash alert msg 
+<?php // flash alert msg manager
 
     namespace becwork\managers;
 

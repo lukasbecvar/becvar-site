@@ -9,22 +9,30 @@
 
 			global $mysql;
 
+			// default state output
+			$state = false;
+
 			// get users data
 			$users = $mysql->fetch("SELECT * FROM users");
 
+			// count users
+			$usersCount = count($users);
+
 			// check if user is empty
-			if (count($users) < 1) {
-				return true;
-			} else {
-				return false;
+			if ($usersCount < 1) {
+				$state = true;
 			}
+
+			return $state;
 		}
 		
 		// check if user logged in
 		public function isLoggedIn() {
 
-			global $sessionUtils;
-			global $config;
+			global $sessionUtils, $config;
+
+			// default state output
+			$state = false;
 
 			// start session
 			$sessionUtils->sessionStartedCheckWithStart();
@@ -34,17 +42,11 @@
 				
 				// check if login cookie is valid
 				if ($_SESSION[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
-					return true;
-				} else {
-					return false;
-				}
-
-			// check if token is null
-			} elseif ($this->getUserToken() != NULL) {
-				return false;
-			} else {
-				return false;
+					$state = true; // this is logged in state
+				} 
 			}
+
+			return $state;
 		} 
 
 		// check if user can login with username and password
@@ -52,22 +54,24 @@
 
 			global $mysql;
 
+			// default state output
+			$state = false;
+
 			// select ID with valid login data
-			$loginSelect = $mysql->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");
-			
+			$loginSelect = $mysql->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");		
+
 			// check if user with password exist
 			if (count($loginSelect) == 1) {
-				return true; 
-			} else { 
-				return false; 
-			} 
+				$state = true; 
+			}
+
+			return $state;
 		}
 
 		// unset login cookie
 		public function unSetLoginCookies() {
 
-			global $cookieUtils;
-			global $config;
+			global $cookieUtils, $config;
 
 			// unset login key cookie
 			$cookieUtils->unset_cookie($config->getValue("loginCookie"));
@@ -79,8 +83,7 @@
 		// set login cookie
 		public function setLoginCookies($token) {
 
-			global $cookieUtils;
-			global $config;
+			global $cookieUtils, $config;
 
 			// set username cookie for next auth
 			$cookieUtils->cookieSet("userToken", $token, time() + (60*60*24*7*365));
@@ -92,8 +95,7 @@
 		// set anti log cookie
 		public function setAntiLogCookie() {
 
-			global $cookieUtils;
-			global $config;
+			global $cookieUtils, $config;
 
 			// set antilog cookie
 			$cookieUtils->cookieSet($config->getValue("antiLogCookie"), $config->getValue("antiLogValue"), time() + (60*60*24*7*365));			
@@ -102,8 +104,7 @@
 		// set login session
 		public function setLoginSession($token) {
 
-			global $sessionUtils;
-			global $config;
+			global $sessionUtils, $config;
 
 			// start session
 			$sessionUtils->sessionStartedCheckWithStart();
@@ -118,13 +119,11 @@
 		// logout user
 		public function logout() {
 
-			// init all classes
-			global $cookieUtils;
-			global $mysql;
-			global $urlUtils;
-			global $sessionUtils;
-			global $config;
+			global $mysql, $cookieUtils, $config, $sessionUtils, $urlUtils;
 			
+			// get username
+			$username = $this->getCurrentUsername();
+
 			// destroy all sessions
 			$sessionUtils->sessionDestroy();
 
@@ -135,10 +134,10 @@
 			$cookieUtils->unset_cookie("userToken");
 
 			// log logout to mysql dsatabase 
-			if (!empty($this->getCurrentUsername())) {
+			if (!empty($username)) {
 
 				// log logout action
-				$mysql->logToMysql("Logout", "User ".$this->getCurrentUsername()." logout out of admin site");
+				$mysql->logToMysql("authenticator", "user ".$username." logout out of admin site");
 			}
 
 			// redirect to index page
@@ -148,8 +147,7 @@
 		// update password
 		public function updatePassword($username, $password) {
 
-			global $mysql;
-			global $hashUtils;
+			global $mysql, $hashUtils;
 
 			// generate hash from password
 			$password = $hashUtils->genBlowFish($password);
@@ -158,7 +156,7 @@
 			$mysql->insertQuery("UPDATE users SET password = '$password' WHERE username = '$username'");
 
 			// log to mysql
-			$mysql->logToMysql("Password update", "User $username updated password");
+			$mysql->logToMysql("profile-update", "update password for user: $username");
 		}
 
 		// update profile image
@@ -170,18 +168,27 @@
 			$mysql->insertQuery("UPDATE users SET image_base64 = '$base64Final' WHERE username = '$username'");
         
 			// log to mysql
-			$mysql->logToMysql("Profile update", "User $username updated image");
+			$mysql->logToMysql("profile-update", "user: $username updated avatar image");
 		}
 
 		// check if user is owner
 		public function isUserOwner() {
 			
+			// default state output
+			$state = false;
+
+			// get user role
+			$userRole = $this->getCurrentRole();
+
+			// get user role to lower case
+			$userRole = strtolower($userRole);
+
 			// check if user is owner
-			if($this->getCurrentRole() == "Owner" or $this->getCurrentRole() == "owner") {
-				return true;
-			} else {
-				return false;
+			if($userRole == "owner") {
+				$state = true;
 			}
+
+			return $state;
 		}
 
 		// get current username form session
@@ -189,14 +196,20 @@
 
 			global $mysql;
 
+			// default username value
+			$username = null;
+
+			// get user token value
+			$userToken = $this->getUserToken();
+
 			// check if user token is not null
-			if ($this->getUserToken() != NULL) {
+			if ($userToken != null) {
 				
-				// return username
-				return $mysql->fetchValue("SELECT username FROM users WHERE token = '".$this->getUserToken()."'", "username");
-			} else {
-				$this->logout();
+				// get username
+				$username = $mysql->fetchValue("SELECT username FROM users WHERE token = '".$userToken."'", "username");
 			}
+
+			return $username;
 		}
 
 		// get user role form session
@@ -204,20 +217,28 @@
 
 			global $mysql;
 
+			// default role value
+			$role = null;
+
 			// check if user token is not null
-			if ($this->getUserToken() != NULL) {
+			if ($this->getUserToken() != null) {
 
 				// return user role
-				return $mysql->fetchValue("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
+				$role = $mysql->fetchValue("SELECT role FROM users WHERE token = '".$this->getUserToken()."'", "role");
 			} else {
 				$this->logout();
 			}
+
+			return $role;
 		}
 		
 		//Get user token
 		public function getUserToken() {
 
 			global $mysql;
+
+			// default token value
+			$token = null;
 
 			// check if user token in session
 			if (!empty($_SESSION["userToken"])) {
@@ -227,20 +248,20 @@
 				
 				// check if token exist in users
 				if (count($ids) > 0) {
-					return $_SESSION["userToken"];
-				} else {
-					return NULL;
-				}
-
-			} else {
-				return NULL;
+					$token = $_SESSION["userToken"];
+				} 
 			}
+
+			return $token;
 		}
 
 		// get user ip
 		public function getUserIPByToken($token) {
 
 			global $mysql;
+
+			// default user ip
+			$userIP = null;
 
 			// get ids where token 
 			$ids = $mysql->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
@@ -251,21 +272,17 @@
 				// get ip by token
 				$ip = $mysql->fetchValue("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
 
-				return $ip;
-
-			} else {
-				return null;
+				// save to user ip
+				$userIP = $ip;
 			}
+
+			return $userIP;
 		}
 
 		// auto user login (for cookie login)
 		public function autoLogin() {
 			
-			global $sessionUtils;
-			global $mysql;
-			global $urlUtils;
-			global $config;
-			global $mainUtils;
+			global $mysql, $config, $sessionUtils, $mainUtils, $urlUtils;
 
 			// get user token
 			$userToken = $_COOKIE["userToken"];
@@ -283,7 +300,7 @@
 			$sessionUtils->setSession("userToken", $userToken);
 
 			// log action to mysql
-			$mysql->logToMysql("Success login", "user ".$this->getCurrentUsername()." success login by login cookie");
+			$mysql->logToMysql("authenticator", "user: ".$this->getCurrentUsername()." success login by login cookie");
 
 			// update user ip
 			$mysql->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE token='$userToken'");
@@ -297,14 +314,22 @@
 
 			global $mysql;
 
-			// check if user token is not null
-			if ($this->getUserToken() != NULL) {
+			// default avatar value
+			$avatar = null;
 
-				// return user profile pic
-				return $mysql->fetchValue("SELECT image_base64 FROM users WHERE token = '".$this->getUserToken()."'", "image_base64");
+			// get user token
+			$token = $this->getUserToken();
+
+			// check if user token is not null
+			if ($token != null) {
+
+				// get user profile pic (base64 code)
+				$avatar = $mysql->fetchValue("SELECT image_base64 FROM users WHERE token = '".$token."'", "image_base64");
 			} else {
 				$this->logout();
 			}
+
+			return $avatar;
 		}
 	}
 ?>

@@ -41,7 +41,7 @@
     }
 
     // print info
-    echo '<div class="table table-dark">';
+    echo '<div class="php-info table table-dark">';
     myprint_r(phpinfo_array());
     echo '</div>';
 ?>

@@ -14,57 +14,41 @@
 	require_once("../framework/utils/EscapeUtils.php");
 	require_once("../framework/mysql/MysqlUtils.php");
 
-	// init controller system
-	require_once("../framework/app/controller/ControllerManager.php");
+	// init manager system
+	require_once("../framework/app/manager/ManagerList.php");
 
-	// include browser list for visitor controller
+	// include browser list for visitors manager
 	require_once("../browser-list.php");
 
 	// include services list for dashboard system
 	require_once("../services-list.php");
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
-	// init ConfigManager & Config objcts
+	// init objects
 	$config = new becwork\config\ConfigManager();
-
-	// init HashUtils
 	$hashUtils = new becwork\utils\HashUtils();
-
-	// init CryptUtils
 	$cryptUtils = new becwork\utils\CryptUtils();
-
-	// init ResponseUtils
 	$responseUtils = new becwork\utils\ResponseUtils();
-
-	// init FileUtils
 	$fileUtils = new becwork\utils\FileUtils();
-
-	// init MainUtils
 	$mainUtils = new becwork\utils\MainUtils();
-
-	// init StringUtils
 	$stringUtils = new becwork\utils\StringUtils();
-
-	// init SessionUtils
 	$sessionUtils = new becwork\utils\SessionUtils();
-
-	// init UrlUtils
 	$urlUtils = new becwork\utils\UrlUtils();
-
-	// init CookieUtils
 	$cookieUtils = new becwork\utils\CookieUtils();
-
-	// init EscapeUtils
 	$escapeUtils = new becwork\utils\EscapeUtils();
-
-	// init MysqlUtils
-	$mysql = new becwork\utils\MysqlUtils();
-
-	// init BrowsersList
+	
+	// visitors manager
 	$browsersList = new becwork\utils\BrowsersList();
-
-	// init ServicesManager
 	$servicesList = new becwork\services\ServicesManager();
+
+	// database config
+	$db_ip = $config->getValue("mysql-address");
+	$db_name = $config->getValue("mysql-database");
+	$db_username = $config->getValue("mysql-username");
+	$db_password = $config->getValue("mysql-password");
+	
+	// init mysql controller
+	$mysql = new becwork\utils\MysqlUtils($db_ip, $db_name, $db_username, $db_password);
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// autoload composer vendor
@@ -73,7 +57,7 @@
 	} else {
 		
 		// redirect to error page if composer components is not installed
-		if ($siteController->isSiteDevMode()) {
+		if ($siteManager->isSiteDevMode()) {
 			die(include_once("../site/errors/VendorNotFound.php"));
 		} else {
 			die(include_once("../site/errors/Maintenance.php"));
@@ -88,7 +72,7 @@
 	header('Content-type: text/html; charset='.$config->getValue('encoding'));
 
 	// init whoops for error headling
-	if ($siteController->isSiteDevMode()) {
+	if ($siteManager->isSiteDevMode()) {
 		$whoops = new \Whoops\Run;
 		$handlerer = new \Whoops\Handler\PrettyPageHandler();
 		$whoops->pushHandler($handlerer);
@@ -96,26 +80,25 @@
 	}
 
 	// check if page is in maintenance mode
-	if($siteController->ifMaintenance()) {
+	if($siteManager->ifMaintenance()) {
 		include_once("../site/errors/Maintenance.php");
 	} else { 
 		
 		// init visitor system
-		$visitorController->init();		
-
+		$visitorManager->init();		
 		
 		// check if url-check is enabled
 		if ($config->getValue("url-check")) { 
 
 			// check if page loaded with valid url
-			if (($siteController->getHTTPhost() != $config->getValue("url")) && ($siteController->getHTTPhost() != "www.".$config->getValue("url")) && $siteController->getHTTPhost() != "localhost") {
-				$siteController->redirectError(400);
+			if (($siteManager->getHTTPhost() != $config->getValue("url")) && ($siteManager->getHTTPhost() != "www.".$config->getValue("url")) && $siteManager->getHTTPhost() != "localhost") {
+				$siteManager->redirectError(400);
 			}
 		}
 
 		// check if page running on https
-		if ($config->getValue("https") == true && !$mainUtils->isSSL() && $siteController->getHTTPhost() != "localhost") {
-			$siteController->redirectError(400);
+		if ($config->getValue("https") == true && !$mainUtils->isSSL() && $siteManager->getHTTPhost() != "localhost") {
+			$siteManager->redirectError(400);
 		} 
 				
 		// include main page component or process
@@ -123,24 +106,24 @@
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// set logs disabler function by process
-			if($siteController->getQueryString("process") == "disableLogsForMe") {
+			if($siteManager->getQueryString("process") == "disableLogsForMe") {
 				include_once("../site/admin/LogsDisabler.php");
 			}
 			
 			// set image viewer by process
-			else if($siteController->getQueryString("process") == "image") {
+			else if($siteManager->getQueryString("process") == "image") {
 				include_once("../site/components/ImageViewer.php");
 			}
 
 			// set code paste page
-			else if($siteController->getQueryString("process") == "paste") {
+			else if($siteManager->getQueryString("process") == "paste") {
 
 				// paste save 
-				if ($siteController->getQueryString("method") == "save") {
+				if ($siteManager->getQueryString("method") == "save") {
 					include_once("../site/components/paste/save.php");
 				
 				// paste view
-				} else if (($siteController->getQueryString("method") != null) && $siteController->getQueryString("method") == "view") {
+				} else if (($siteManager->getQueryString("method") != null) && $siteManager->getQueryString("method") == "view") {
 					include_once("../site/components/paste/view.php");
 				
 				// paste init
@@ -154,7 +137,7 @@
 			else {
 
 				// check if page is admin or normal site
-				if ($siteController->isCurrentPageAdmin()) {
+				if ($siteManager->isCurrentPageAdmin()) {
 					include_once("../site/admin/InitAdmin.php");
 				} else {
 					require_once("../site/Main.php");

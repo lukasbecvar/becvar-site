@@ -1,4 +1,4 @@
-<?php // visitor system manager & manager
+<?php // visitor system manager
 
     namespace becwork\managers;
 
@@ -102,11 +102,6 @@
                 $out = "Midori Browser";
                 $found = "yes";
 
-            // identify Netscape Navigator
-            } else if (str_contains($raw, 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a3pre) Gecko/20070330') ) {
-                $out = "Netscape Navigator";
-                $found = "yes";
-
             // identify Opera
             } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw)) {
                 $out = "Opera";
@@ -129,15 +124,6 @@
                         $out = $value;
                         $found = "yes";
                     }
-                }
-            }
-
-            // non complete agents
-            if ($found == "no") {
-                if ($raw == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML") {
-                    $out = "Unknown";
-                } else if ($raw = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)") {
-                    $out = "Unknown";
                 }
             }
 
@@ -197,18 +183,28 @@
         // first visit site
         public function firstVisit() {
             
-            global $mysql;
-            global $mainUtils;
-            global $siteManager;
-            global $escapeUtils;
+            global $mysql, $mainUtils, $siteManager, $escapeUtils;
 
-            // get data
+            // default visited value
             $visited_sites = 1;
-            $first_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
-            $last_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
+
+            // get date
+            $date = date('d.m.Y H:i');;
+
+            // get date values
+            $first_visit = $date;
+            $last_visit = $date;
+
+            // get & escape visitor browser ID
             $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
+
+            // get & escape visitor IP
             $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+
+            // get & escape visitor location
             $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
+
+            // get & escape visitor OS
             $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
 
             // check if ip is banned in database
@@ -218,14 +214,14 @@
                 $banned = "no";
             }
 
-            // save firt visit
+            // insert firt visit
             $mysql->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
 
             // redirect banned users to banned page
             if ($this->isVisitorBanned($ip_adress)) {
 
                 // log trying to access site if user banned
-                $mysql->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+                $mysql->logToMysql("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                 // redirect to banned page
                 $siteManager->redirectError("banned");
@@ -235,13 +231,9 @@
         // visit site
         public function visitSite() {
 
-            global $mysql;
-            global $dashboardManager;
-            global $mainUtils;
-            global $siteManager;
-            global $escapeUtils;
+            global $mysql, $dashboardManager, $mainUtils, $siteManager, $escapeUtils;;
 
-            // get visitor ip
+            // get & escape visitor ip
             $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
 
             // check if visitors count is zero
@@ -263,7 +255,7 @@
                         // get data from mysql by IP
                         $visited_sites = intval($mysql->fetchValue("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
-                        // new values to insert
+                        // new values to update
                         $visited_sites = $visited_sites + 1;
                         $last_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
                         $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
@@ -291,7 +283,7 @@
                         if($this->isVisitorBanned($ip_adress)) {
 
                             // log trying to access site if user banned
-                            $mysql->logToMysql("Banned", "Banned user with ip: ".$ip_adress." trying to access site");
+                            $mysql->logToMysql("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                             // redirect to banned page
                             $siteManager->redirectError("banned");
@@ -309,6 +301,9 @@
 
             global $mysql;
 
+            // default banned state value
+            $state = false;
+
             // get ip ids
             $ip_ids = $mysql->fetch("SELECT id FROM banned WHERE `ip_adress`='$ip'");
             
@@ -320,13 +315,11 @@
 
                 // check if banned status = yes
                 if ($banned_status == "banned") {
-                    return true;
-                } else {
-                    return false;
+                    $state = true;
                 }
-            } else {
-                return false;
             }
+
+            return $state;
         }
 
         // get visitor location from table
@@ -334,28 +327,35 @@
 
             global $mysql;
 
+            // default location value
+            $location = null;
+
             // get visitor data by id
             $visitor = $mysql->fetch("SELECT * FROM visitors WHERE `id` = '$id'");
 
+            // check if visitor found in database
             if (count($visitor) > 0) {
 
-                $out = $mysql->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
+                // get visitor location from database
+                $location = $mysql->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
 
             } else {
-                $out = "Unknown";
+                $location = "Unknown";
             }
 
-            return $out;
+            return $location;
         }
 
         // get visitor location
         public function getVisitorLocation($ip) {
 
-            global $config;
-            global $mysql; 
+            global $mysql, $config, $siteManager;
+
+            // default location value
+            $location = null;
 
             // check if site running on localhost
-            if (($config->getValue("url") == "localhost") or ($config->getValue("url") == "127.0.0.1") or (str_starts_with($config->getValue("url"), "192.168"))) {
+            if ($siteManager->isRunningLocalhost()) {
                 $country = "HOST";
                 $city = "Location";
             
@@ -364,8 +364,14 @@
                 // try get data
                 try {
 
-                    // get data by IP from ipinfo API 
-                    $details = json_decode(file_get_contents($config->getValue("geoplugin_url")."/json.gp?ip=$ip"));
+                    // get geoplugin url
+                    $geopluginUrl = $config->getValue("geoplugin_url");
+
+                    // get geoplugin data
+                    $geopluginData = file_get_contents($geopluginUrl."/json.gp?ip=$ip");
+
+                    // decode data
+                    $details = json_decode($geopluginData );
         
                     // get country and site from API data
                     $country = $details->geoplugin_countryCode;
@@ -386,7 +392,7 @@
                     $city = null;
 
                     // log error to mysql
-                    $mysql->logToMysql("Geolocate error", "error to geolocate ip: " . $ip . " error: " . $e->getMessage());
+                    $mysql->logToMysql("geolocate-error", "error to geolocate ip: " . $ip . ", error: " . $e->getMessage());
                 }   
             }
 
@@ -402,10 +408,12 @@
 
             // final return
             if  ($country == null or $city == null) {
-                return "Unknown";
+                $location = "Unknown";
             } else {
-                return $country."/".$city;
+                $location = $country."/".$city;
             }
+
+            return $location;
         }
 
         // get user ip by id
@@ -506,13 +514,9 @@
         // call visit or first visit function
         public function init() {
 
-            global $mysql;
-            global $mainUtils;
-            global $config;
-            global $siteManager;
-            global $escapeUtils;
+            global $mysql, $config, $mainUtils, $siteManager, $escapeUtils;
 
-            // get user ip
+            // get & escape user ip
             $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
 
             // check if visitor found in database by IP

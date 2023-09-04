@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<title>
 		<?php // print page title 
-			echo $siteController->getPageTitle();
+			echo $siteManager->getPageTitle();
 		?>
 	</title>
     <?php // google token

@@ -5,7 +5,7 @@
          
             /* 
                 !!!!-- //////////////////////////////////// WARNING //////////////////////////////////// --!!!!
-                !!!!-- if you add new warning you must add to in $dashboardController > isWarninBoxEmpty --!!!!
+                !!!!-- if you add new warning you must add to in $dashboardManager > isWarninBoxEmpty --!!!!
             */
 
             // print if services dir not exist on the server
@@ -24,12 +24,12 @@
             }
 
             // print if dev-mode is enabled
-            if ($siteController->isSiteDevMode()) {
+            if ($siteManager->isSiteDevMode()) {
                 echo '<p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>';
             }
 
             // print Used disk space == 90%
-            if ($dashboardController->getDrivesInfo() > 89) {
+            if ($dashboardManager->getDrivesInfo() > 89) {
                 echo '<p class="card-text"><span class="text-red"><strong>Used disk space is more than 90% please try clean the file system</strong></span></p>';
             }
             
@@ -39,17 +39,17 @@
             }
 
             // print new logs warning
-            if (($dashboardController->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
+            if (($dashboardManager->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
                 echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?admin=logReader&limit='.$config->getValue("rowInTableLimit").'&startby=0">here</a></strong></p>';
             }
 
             // print new messages
-            if ($dashboardController->getMSGSCount() != "0") {
+            if ($dashboardManager->getMSGSCount() != "0") {
                 echo '<p class="card-text text-warning"><strong>New messages found you can see it <a href="?admin=inbox">here</a></strong></p>';
             }
 
             // print if no warnings
-            if ($dashboardController->isWarninBoxEmpty()) {
+            if ($dashboardManager->isWarninBoxEmpty()) {
                 echo 'No warnings found.';
             }
         ?>

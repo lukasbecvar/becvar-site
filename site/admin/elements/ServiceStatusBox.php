@@ -21,7 +21,7 @@
                         if ($value["service_name"] == "ufw") {
 
                             // check if UFW running
-                            if ($servicesController->isUFWRunning()) {
+                            if ($servicesManager->isUFWRunning()) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-warning">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';
@@ -32,7 +32,7 @@
                         elseif ($value["service_name"] == "ts3server") {
 
                             // check if Team speak running
-                            if ($servicesController->ifProcessRunning($value["service_name"])) {
+                            if ($servicesManager->ifProcessRunning($value["service_name"])) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-warning">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';
@@ -43,7 +43,7 @@
                         elseif ($value["service_name"] == "minecraft") {
 
                             // check if minecraft server starting
-                            if (($responseUtils->serviceOnlineCheck("127.0.0.1", "25565") == "Offline") && ($servicesController->checkScreenSession("minecraft"))) {
+                            if (($responseUtils->serviceOnlineCheck("127.0.0.1", "25565") == "Offline") && ($servicesManager->checkScreenSession("minecraft"))) {
                                 echo '<p class="card-text">'.$value["display_name"].': <span class="text-info">starting...</span></p>';
                             } else {
                                 
@@ -60,7 +60,7 @@
                         else {
 
                             // check if service Online
-                            if ($servicesController->ifServiceActive($value["service_name"])) {
+                            if ($servicesManager->ifServiceActive($value["service_name"])) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-red">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';

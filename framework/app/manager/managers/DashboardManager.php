@@ -4,47 +4,45 @@
 
     class DashboardManager {
 
-        /**
-         * Method for getting server uptime
-         *
-         * @return Array
-        **/
+        // get server uptime
         public function getUpTime() {
+
+            // get data
             $ut = strtok(exec("cat /proc/uptime"), ".");
             $days = sprintf("%2d", ($ut/(3600*24)));
             $hours = sprintf("%2d", (($ut % (3600*24))/3600));
             $min = sprintf("%2d", ($ut % (3600*24) % 3600)/60);
             $sec = sprintf("%2d", ($ut % (3600*24) % 3600)%60);
         
-            $arr = array( $days, $hours, $min, $sec );
+            // get data array
+            $arr = array($days, $hours, $min, $sec);
 
-            return "Days: $arr[0], Hours: $arr[1], Min: $arr[2]";
-        
+            // format uptimee
+            $uptime = "Days: $arr[0], Hours: $arr[1], Min: $arr[2]";
+
+            return $uptime;
         }
         
-        /**
-         * Method for getting cpu information
-         *
-         * @return Array
-        **/
+        // get CPU usage %
         public function getCPUProc() {
+            
+            // default load value
+            $load = 100;
+            
             $loads = sys_getloadavg();
             $core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
             $load = round($loads[0]/($core_nums + 1)*100, 2);
             
             if ($load > 100) {
-                return 100;
+                $load = 100;
             } else {
-
-                return $load;
+                $load = $load;
             }
+
+            return $load;
         }
 
-        /**
-         * Method for getting memory information
-         *
-         * @return Array
-        **/
+        // get memory (RAM) usage
         public function getMemoryInfo() {
             exec('cat /proc/meminfo', $memory_raw);
             $memory_free = 0;
@@ -68,20 +66,13 @@
             );	
         }
         
-        /**
-         * Method for getting hard drive information
-         *
-        **/
+        // get hard drive space usage in %
         public function getDrivesInfo() {
             $output = exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
             return $output;
         }
 
-        /**
-         * Method for getting software / kernal information
-         *
-         * @return Array
-        **/
+        // get software / kernal information
         public function getSoftwareInfo() {
             $softwares = array();
             $software = array();
@@ -120,8 +111,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM pastes");
 
-            // return pastes count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get log count
@@ -132,8 +125,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM logs");
 
-            // return logs count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get login logs count
@@ -144,8 +139,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'");
 
-            // return logs count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get unreaded logs count
@@ -156,8 +153,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM logs WHERE status LIKE '%unreaded%'");
 
-            // return logs count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get page visitors count
@@ -168,8 +167,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM visitors");
 
-            // return visitors count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get MSGS in inbox count
@@ -180,8 +181,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM messages WHERE status='open'");
 
-            // return messages count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get todos count in todos table
@@ -192,8 +195,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM todos WHERE status='open'");
 
-            // return todos count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
         
         // get images count in gallery
@@ -204,8 +209,10 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM image_uploader");
 
-            // return images count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // get banned visitors count 
@@ -216,64 +223,67 @@
             // get data ids
             $data = $mysql->fetch("SELECT id FROM banned WHERE status='banned'");
 
-            // return banned count
-            return count($data);
+            // count data
+            $dataCount = count($data);
+
+            return $dataCount;
         }
 
         // check if system is linux
         public function isSystemLinux() {
 
-            // check if PHP-OS is linux
+            // default state value
+            $state = false;
+
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'LIN') {
-                return true;
-            } else {
-                return false;
-            }            
+                $state = true;
+            } 
+            
+            return $state;
         }
 
         // check if warnings box empty
         public function isWarninBoxEmpty() {
-            global $config;
-            global $mainUtils;
-            global $siteManager;
-            global $servicesManager;
+
+            global $config, $mainUtils, $siteManager, $servicesManager;
+
+            // default state value
+            $state = true;
 
             // check if service directory exist in system
             if (!file_exists($config->getValue('serviceDir'))) {
-                return false;
+                $state = false;
 
             // check if site running on ssl connction
             } elseif (!$mainUtils->isSSL()) {
-                return false;
+                $state = false;
 
             // check if hard drive is not full
             } elseif ($this->getDrivesInfo() > 89) {
-                return false;
+                $state = false;
             
             // check if antilog cookie not empty
             } elseif (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
-                return false;
+                $state = false;
 
             // check if found new logs
             } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
-                return false;
+                $state = false;
 
             // check if found new msgs in inbox
             } elseif ($this->getMSGSCount() != "0") {
-                return false;
+                $state = false;
 
             // check if maintenance is enabled
             } elseif ($config->getValue("maintenance") == "enabled") {
-                return false;
+                $state = false;
 
             // check if dev-mode is enabled
             } elseif ($siteManager->isSiteDevMode()) {
-                return false;
-
-            // return true if warnings not found
-            } else {
-                return true;
+                $state = false;
             }
+
+            return $state;
         }
     }
 ?>

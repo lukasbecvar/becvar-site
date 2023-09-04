@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="profile">
-        <img src="data:image/jpeg;base64,<?php echo $userController->getUserAvatar(); ?>" alt="profile_picture">
-        <h3><?php echo $userController->getCurrentUsername(); ?></h3>
-        <p><?php echo $userController->getCurrentRole(); ?></p>
+        <img src="data:image/jpeg;base64,<?php echo $userManager->getUserAvatar(); ?>" alt="profile_picture">
+        <h3><?php echo $userManager->getCurrentUsername(); ?></h3>
+        <p><?php echo $userManager->getCurrentRole(); ?></p>
     </div>
 
     <ul>

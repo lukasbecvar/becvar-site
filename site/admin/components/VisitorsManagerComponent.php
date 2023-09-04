@@ -5,7 +5,7 @@
 	$startByRow = 0;
 
 	// check if user is owner
-	if (!$userController->isUserOwner()) {
+	if (!$userManager->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -30,7 +30,6 @@
 			$nextStartByRowBack = (int) $startByRow - $limitOnPage;	
 		}
 
-        
         // include navbar
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/VisitorsManagerNavPanel.php');
         
@@ -61,7 +60,7 @@
                 foreach ($visitors as $data) {
 
                     // get banned status
-                    if ($visitorController->isVisitorBanned($data["ip_adress"])) {
+                    if ($visitorManager->isVisitorBanned($data["ip_adress"])) {
                         $banStatus = "banned";
                     } else {
                         $banStatus = "unbanned";
@@ -78,7 +77,7 @@
                     $linkToIPLogs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formatedIP."</a>";
 
                     // if ip = session ip
-                    if ($data["ip_adress"] == $userController->getUserIPByToken($userController->getUserToken())) {
+                    if ($data["ip_adress"] == $userManager->getUserIPByToken($userManager->getUserToken())) {
                         // check if client ip not have > 15 characters
                         if (strlen($data["ip_adress"]) > 15) {
                             $linkToIPLogs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
@@ -89,7 +88,7 @@
                     }
 
                     // shortify browserID
-                    $data["browser"] = $visitorController->getShortBrowserID($data["browser"]);
+                    $data["browser"] = $visitorManager->getShortBrowserID($data["browser"]);
 
                     // check if browser is Unknown
                     if ($data["browser"] == "Unknown") {
@@ -160,7 +159,7 @@
         } else {
 
             // get action
-            $action = $siteController->getQueryString("action");
+            $action = $siteManager->getQueryString("action");
 
             // if action = delete all
             if ($action == "deleteVisitors") {
@@ -174,17 +173,16 @@
                 $id = $escapeUtils->specialCharshStrip($_GET["id"]);
 
                 // get visitor ip by id
-                $ip = $visitorController->getVisitorIPByID($id);
+                $ip = $visitorManager->getVisitorIPByID($id);
 
                 // check if user banned
-                if ($visitorController->isVisitorBanned($ip)) {
+                if ($visitorManager->isVisitorBanned($ip)) {
                     
                     // log unban
-                    $mysql->logToMysql("Unban visitor", "User ".$userController->getCurrentUsername()." unbanned ip: ".$ip);
+                    $mysql->logToMysql("unban-visitor", "user ".$userManager->getCurrentUsername()." unbanned ip: ".$ip);
 
                     // unban user by ip
-                    $visitorController->unbannVisitorByIP($ip);
-
+                    $visitorManager->unbannVisitorByIP($ip);
 
                     // check if auto close seted
                     if (isset($_GET["close"])) {
@@ -206,10 +204,10 @@
                         $reason = $escapeUtils->specialCharshStrip($_GET["reason"]);
 
                         // log ban
-                        $mysql->logToMysql("Ban visitor", "User ".$userController->getCurrentUsername()." banned ip: ".$ip);
+                        $mysql->logToMysql("ban-visitor", "user ".$userManager->getCurrentUsername()." banned ip: ".$ip);
 
                         // ban user by ip
-                        $visitorController->bannVisitorByIP($ip, $reason);
+                        $visitorManager->bannVisitorByIP($ip, $reason);
 
                     } else {
 
@@ -285,7 +283,7 @@
         }        
 
         // log action to mysql database 
-        $mysql->logToMysql("Log reader", "User ".$userController->getCurrentUsername()." showed visitors");
+        $mysql->logToMysql("log-reader", "user ".$userManager->getCurrentUsername()." showed visitors");
     }
 ?>
 </div>

@@ -11,7 +11,7 @@
 
             // check if todo test have < 121 characters
             if (strlen($todoText) < 121) {
-                $todosController->addTodo($todoText);
+                $todosManager->addTodo($todoText);
 
                 // instant refrash after add new todo
                 $urlUtils->jsRedirect("?admin=todos");
@@ -35,13 +35,13 @@
     }
 	
     // check if user typed id
-    if ($siteController->getQueryString("delete") != null) {
+    if ($siteManager->getQueryString("delete") != null) {
 
         // get id form url and escape
-        $id = $siteController->getQueryString("delete");
+        $id = $siteManager->getQueryString("delete");
 
         // close todo
-        $todosController->closeTodo($id);
+        $todosManager->closeTodo($id);
 
         // redirect to todos page
         $urlUtils->jsRedirect("?admin=todos"); 
@@ -57,7 +57,7 @@
         <?php // print todos to site
 
             // check if todos is empty
-            if ($todosController->isEmpty()) {
+            if ($todosManager->isEmpty()) {
                 echo"<h2 class=pageTitle>Todolist is empty</h2>";
             } else {
 

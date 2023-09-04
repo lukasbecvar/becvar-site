@@ -1,7 +1,7 @@
-<?php // admin dashboard form manager
+<?php // admin dashboard form handlerer
 
     // check if form is shutdown
-    if ($siteController->getQueryString("form") == "shutdown") {
+    if ($siteManager->getQueryString("form") == "shutdown") {
         include_once("elements/forms/EmergencyShutdownConfirmation.php");
     }
 ?>

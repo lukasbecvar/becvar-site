@@ -23,13 +23,13 @@
 			$mysql->insertQuery("INSERT INTO `image_uploader`(`imgSpec`, `image`, `date`) VALUES ('$imgSpec', '$image', '$date')");				
 
 			// log to mysql
-			$mysql->logToMysql("Uploader", "uploaded new image");	
+			$mysql->logToMysql("image-uploader", "uploaded new image: ".$imgSpec);	
 
 			// redirect to image view
 			$urlUtils->jsRedirect("?process=image&spec=".$imgSpec);
 
 		} else {
-			$alertController->flashError("Error file have wrong format!", true);
+			$alertManager->flashError("Error file have wrong format!", true);
 		}
 	}
 ?>

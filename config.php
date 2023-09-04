@@ -8,7 +8,7 @@
 
 			/* Main config */
 			"appName"     => "Becvar.xyz",        	// define app name
-			"version"     => 7.2,                  	// define app version
+			"version"     => 7.3,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
 			"authorLink"  => "becvar.xyz", 	   		// define author site
 			"url-check"   => true,				    // check if url valid
