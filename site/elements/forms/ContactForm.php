@@ -7,7 +7,7 @@
             <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
         </div>
         <div class="col-md-6 form-group mt-3 mt-md-0 websiteIN">
-            <input class="websiteIN" name="website" type="text" class="feedback-input" placeholder="Website"/>
+            <input class="websiteIN" name="nickname" type="text" class="feedback-input" placeholder="Website"/>
         </div>
     </div>
     <div class="form-group mt-3">
@@ -19,7 +19,7 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // check if post have value email (contact form verification)
-                if (isset($_POST["email"])) {
+                if (isset($_POST["nickname"])) {
 
                     // init values from form and escape
                     $name = $escapeUtils->specialCharshStrip($_POST["name"]);
