@@ -9,7 +9,7 @@
     } else {
 
         // check if user logged in
-        if ($adminController->isLoggedIn()) {
+        if ($userController->isLoggedIn()) {
 
             // get command and escapeit
             $command = $siteController->getQueryString("command");
@@ -48,7 +48,7 @@
             elseif ($command == "shutdown") {
 
                 // log to mysql
-                $mysql->logToMysql("Emergency shutdown", "user: ".$adminController->getCurrentUsername()." used emergency server shutdown");
+                $mysql->logToMysql("Emergency shutdown", "user: ".$userController->getCurrentUsername()." used emergency server shutdown");
             
                 // execute final command
                 $servicesController->executeCommand("sudo poweroff");

@@ -1,13 +1,13 @@
 <?php // secret Log disable function (Setup anti log cookie to browser...)
 
     // check if user logged in 
-    if ($adminController->isLoggedIn()) {
+    if ($userController->isLoggedIn()) {
         
         // check if logging disabled
         if (empty($_COOKIE[$config->getValue('antiLogCookie')])) {
 
             // set anti log cookie
-            $adminController->setAntiLogCookie(); 
+            $userController->setAntiLogCookie(); 
 
             // redirect back to admin
             $urlUtils->jsRedirect("?admin=dashboard");

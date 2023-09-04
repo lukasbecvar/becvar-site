@@ -5,7 +5,7 @@
         if (isset($_POST["submitRegister"])) {
             
             // check if user table is empty
-            if (!$adminController->isUserEmpty()) {
+            if (!$userController->isUserEmpty()) {
                 echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";
             } else {
                
@@ -26,7 +26,7 @@
                     } elseif ($password != $repassword) {
                         $alertController->flashError("Passwords do not match");
                     } else {
-                        if ($adminController->isUserEmpty()) {
+                        if ($userController->isUserEmpty()) {
 
                             // init basic values
                             $role = "Owner";
@@ -56,7 +56,7 @@
         }
 
         // check if users table is realy empty
-        if (!$adminController->isUserEmpty()) {
+        if (!$userController->isUserEmpty()) {
             echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";
         } else {
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/RegisterForm.php');

@@ -5,7 +5,7 @@
 	$startByRow = 0;
 
 	// check if user is owner
-	if (!$adminController->isUserOwner()) {
+	if (!$userController->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -78,7 +78,7 @@
                     $linkToIPLogs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formatedIP."</a>";
 
                     // if ip = session ip
-                    if ($data["ip_adress"] == $adminController->getUserIPByToken($adminController->getUserToken())) {
+                    if ($data["ip_adress"] == $userController->getUserIPByToken($userController->getUserToken())) {
                         // check if client ip not have > 15 characters
                         if (strlen($data["ip_adress"]) > 15) {
                             $linkToIPLogs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
@@ -180,7 +180,7 @@
                 if ($visitorController->isVisitorBanned($ip)) {
                     
                     // log unban
-                    $mysql->logToMysql("Unban visitor", "User ".$adminController->getCurrentUsername()." unbanned ip: ".$ip);
+                    $mysql->logToMysql("Unban visitor", "User ".$userController->getCurrentUsername()." unbanned ip: ".$ip);
 
                     // unban user by ip
                     $visitorController->unbannVisitorByIP($ip);
@@ -206,7 +206,7 @@
                         $reason = $escapeUtils->specialCharshStrip($_GET["reason"]);
 
                         // log ban
-                        $mysql->logToMysql("Ban visitor", "User ".$adminController->getCurrentUsername()." banned ip: ".$ip);
+                        $mysql->logToMysql("Ban visitor", "User ".$userController->getCurrentUsername()." banned ip: ".$ip);
 
                         // ban user by ip
                         $visitorController->bannVisitorByIP($ip, $reason);
@@ -285,7 +285,7 @@
         }        
 
         // log action to mysql database 
-        $mysql->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed visitors");
+        $mysql->logToMysql("Log reader", "User ".$userController->getCurrentUsername()." showed visitors");
     }
 ?>
 </div>

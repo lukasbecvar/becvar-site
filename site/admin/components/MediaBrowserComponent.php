@@ -5,7 +5,7 @@
 	$startByRow = 0;
 
     // check if user is owner 
-	if (!$adminController->isUserOwner()) {
+	if (!$userController->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 

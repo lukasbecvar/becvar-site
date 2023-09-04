@@ -18,10 +18,10 @@
                 if (strlen($password) >= 5) {
         
                     // get username from session
-                    $username = $adminController->getCurrentUsername();
+                    $username = $userController->getCurrentUsername();
                     
                     // update password
-                    $adminController->updatePassword($username, $password);
+                    $userController->updatePassword($username, $password);
 
                     // show updates msg
                     $alertController->flashSuccess("Your password is updated");
@@ -51,10 +51,10 @@
             $base64Final = base64_encode($imageFile);
             
             // get username
-            $username = $adminController->getCurrentUsername();
+            $username = $userController->getCurrentUsername();
 
             // update user avatar
-            $adminController->updateProfileImage($base64Final, $username);
+            $userController->updateProfileImage($base64Final, $username);
 
             // flash msg
             $alertController->flashSuccess("Image updated");

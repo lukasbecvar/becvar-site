@@ -1,8 +1,8 @@
-<?php // admin functions
+<?php // user functions (login, logout, etc...)
 
 	namespace becwork\controllers;
 
-	class AdminController {
+	class UserController {
 
 		// check if users table not empty
 		public function isUserEmpty() {

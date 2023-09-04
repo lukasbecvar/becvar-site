@@ -1,12 +1,12 @@
 <div class="loginPage">
 <?php 
 	// user table is empty print warning
-	if ($adminController->isUserEmpty()) {
+	if ($userController->isUserEmpty()) {
 		$alertController->flashWarning('Users table is empty<br>Please add admin user manually <strong/><a href="?admin=login&action=register">here</a></strong>');
 	}
 
 	// check if user not logged in and if submit login button
-	if (!$adminController->isLoggedIn() and isset($_POST["submitLogin"])) {
+	if (!$userController->isLoggedIn() and isset($_POST["submitLogin"])) {
 
 		// honeypot check
 		if (!empty($_POST["website"])) {
@@ -36,7 +36,7 @@
 			} else {
 
 				// check if user can login with our values
-				if ($adminController->canLogin($username, $password)) {
+				if ($userController->canLogin($username, $password)) {
 
 					// get user token
 					$token = $mysql->fetchValue("SELECT token FROM users WHERE username = '".$username."'", "token");
@@ -45,16 +45,16 @@
 					if (!empty($token)) {
 
 						// set session login
-						$adminController->setLoginSession($token);
+						$userController->setLoginSession($token);
 
 						// set role session
 						$sessionUtils->setSession("role", $mysql->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
 
 						// check if user stay logged in
 						if ($saveAccount) {
-							$adminController->setLoginCookies($token);
+							$userController->setLoginCookies($token);
 						} else {
-							$adminController->unSetLoginCookies();
+							$userController->unSetLoginCookies();
 						}
 
 						// get user ip

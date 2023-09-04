@@ -5,7 +5,7 @@
 	$startByRow = 0;
 
 	// check if user is owner
-	if (!$adminController->isUserOwner()) {
+	if (!$userController->isUserOwner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -202,7 +202,7 @@
         }        
 
         // log action to mysql database 
-        $mysql->logToMysql("Log reader", "User ".$adminController->getCurrentUsername()." showed logs");
+        $mysql->logToMysql("Log reader", "User ".$userController->getCurrentUsername()." showed logs");
     }
 ?>
 </div>

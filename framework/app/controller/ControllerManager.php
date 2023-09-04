@@ -2,7 +2,7 @@
 
     // require all controllers path
 	require_once(__DIR__."/controllers/ContactController.php");
-	require_once(__DIR__."/controllers/AdminController.php");
+	require_once(__DIR__."/controllers/UserController.php");
 	require_once(__DIR__."/controllers/TodosController.php");
 	require_once(__DIR__."/controllers/PageConfigController.php");
 	require_once(__DIR__."/controllers/DashboardController.php");
@@ -16,7 +16,7 @@
 	$contactController = new becwork\controllers\ContactController();
 
 	// AdminController
-	$adminController = new becwork\controllers\AdminController();
+	$userController = new becwork\controllers\UserController();
 
 	// TodosController
 	$todosController = new becwork\controllers\TodosController();

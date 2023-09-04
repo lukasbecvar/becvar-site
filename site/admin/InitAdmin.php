@@ -51,7 +51,7 @@
 
 	// check if user send logout request
 	if ($siteController->getQueryString("action") == "logout") {
-        $adminController->logout();
+        $userController->logout();
 
     // check if user send register action
     } else if ($siteController->getQueryString("action") == "register") {
@@ -60,7 +60,7 @@
     } else {    
 
         // check if user logged in
-        if ($adminController->isLoggedIn()) {	
+        if ($userController->isLoggedIn()) {	
 
             // admin top nav bar
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/TopPanel.php');
@@ -142,7 +142,7 @@
                 if ($_COOKIE[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
 
                     //Auto user login
-                    $adminController->autoLogin();
+                    $userController->autoLogin();
 
                 } else {
                     // set login action if user not logged in

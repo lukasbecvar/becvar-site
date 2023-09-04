@@ -108,10 +108,10 @@
 		public function deleteMsgByID($id) {
 
 			global $mysql;
-			global $adminController;
+			global $userController;
 
 			// log process to mysql database 
-			$mysql->logToMysql("Messages", "User ".$adminController->getCurrentUsername()." closed message $id");
+			$mysql->logToMysql("Messages", "User ".$userController->getCurrentUsername()." closed message $id");
 
 			// update message for close 
 			$mysql->insertQuery("UPDATE messages SET status='closed' WHERE id='$id'");
