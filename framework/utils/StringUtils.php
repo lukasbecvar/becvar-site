@@ -10,7 +10,7 @@
 		  * Input string lenght
 		  * Returned random string in lowercase
 		*/
-		public function genRandomStringLower($lenght) {
+		public function genRandomStringLower($lenght): string {
 			$permitted_chars = 'abcdefghijklmnopqrstuvwxyz';
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;
@@ -22,7 +22,7 @@
 		  * Input string lenght
 		  * Returned random string in upercase
 		*/
-		public function genRandomStringUper($lenght) {
+		public function genRandomStringUper($lenght): string {
 			$permitted_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;
@@ -34,7 +34,7 @@
 		  * Input string lenght
 		  * Returned random string
 		*/
-		public function genRandomStringAll($lenght) {
+		public function genRandomStringAll($lenght): string {
 			$permitted_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;
@@ -46,7 +46,7 @@
 		  * Input string lenght
 		  * Returned random special chars type string
 		*/
-		public function genSpecialChars($lenght) {
+		public function genSpecialChars($lenght): string {
 			$permitted_chars = "!#$%&()*+,-./:;<=>?@[\]^_`{|}~";
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;
@@ -58,7 +58,7 @@
 		  * Input string lenght
 		  * Returned random chars type string
 		*/
-		public static function genCombinated($lenght) {
+		public static function genCombinated($lenght): string {
 			$permitted_chars = "0123456789!#$%&()*+,-./:;<=>?@[\]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;
@@ -70,7 +70,7 @@
 		  * Input string lenght
 		  * Returned random numbers type string
 		*/
-		public static function genNumbrGenerator($lenght) {
+		public static function genNumbrGenerator($lenght): string {
 			$permitted_chars = "0123456789";
 			$generated = substr(str_shuffle($permitted_chars), 0, $lenght);
 			return $generated;

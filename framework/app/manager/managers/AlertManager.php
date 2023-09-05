@@ -5,7 +5,7 @@
     class AlertManager { 
 
         // flash success alert
-        public function flashSuccess($msg) {
+        public function flashSuccess($msg): void {
             echo '
                 <center>
                     <div class="alert alert-success alert-dismissible fade show alert-dismissible fade show" role="alert">'.$msg.'
@@ -17,7 +17,7 @@
         }
 
         // flash warning alert
-        public function flashWarning($msg) {
+        public function flashWarning($msg): void {
 
             echo '
                 <center><div class="alert alert-warning" role="alert">
@@ -30,7 +30,7 @@
         }
 
         // flash error alert
-        public function flashError($msg, $without_close = false) {
+        public function flashError($msg, $without_close = false): void {
 
             // check if closeble
             if ($without_close) {

@@ -41,7 +41,13 @@
                             if ($send_msg) {
                                 echo '<div class="sent-message">Your message has been sent. Thank you!</div>';
                             } else {
-                                echo '<div class="error-message">System error please contact page administrator!</div>';
+
+                                // check if email banned
+                                if ($contactManager->getBannedEmailCount($email) > 0) {
+                                    echo '<div class="error-message">You have been blocked by administrator, unban request here: '.$config->getValue("email").'</div>';
+                                } else {
+                                    echo '<div class="error-message">System error please contact page administrator!</div>';
+                                }
                             }
                         }
 

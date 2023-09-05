@@ -5,7 +5,7 @@
     class ServicesManager {
 
         // method for getting true or false for process id returned running
-        public function ifProcessRunning($process) {
+        public function ifProcessRunning($process): bool {
             
             // default state output
 			$state = false;
@@ -22,7 +22,7 @@
         }
 
         // method for getting true or false for service running
-        public function ifServiceActive($service) {
+        public function ifServiceActive($service): bool {
             
             // default state output
 			$state = false;
@@ -39,7 +39,7 @@
         }
 
         // method for getting true or false for ufw running
-        public function isUFWRunning() {
+        public function isUFWRunning(): bool {
 
             // default state output
 			$state = false;
@@ -56,7 +56,7 @@
         }
 
         // method for getting true or false for service running
-        public function isServiceInstalled($service_name) {
+        public function isServiceInstalled($service_name): bool {
             
             global $config;
 
@@ -98,7 +98,7 @@
         }
         
         // check if screen session running
-        public function checkScreenSession($session_name) {
+        public function checkScreenSession($session_name): bool {
 
             // default state output
 			$state = false;
@@ -115,14 +115,14 @@
         }
 
         // execute system command
-        public function executeCommand($command) {
+        public function executeCommand($command): void {
 
             // execite command
             shell_exec($command);
         }
 
         // execute bash/sh script form /scripts in web [Input: script name]
-        public function executeScriptAsROOT($script_name) {
+        public function executeScriptAsROOT($script_name): void {
 
             // execute script
             shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$script_name."'");

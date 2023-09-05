@@ -9,7 +9,7 @@
           * Usage like cookieSet("TestCookie", 69, time() + (60*60*24*7));
           * Input name value and expiration time in seconds
         */
-        public function cookieSet($name, $value, $expiration) {
+        public function cookieSet($name, $value, $expiration): void {
             setcookie($name, $value, $expiration);
         }
 
@@ -19,7 +19,7 @@
           * Input cookie name
           * Return cookie value
         */
-        public function getCookie($name) {
+        public function getCookie($name): ?string {
             return $_COOKIE[$name];
         }
 
@@ -28,7 +28,7 @@
           * Usage like unset_cookie("name");
           * Input cookie name (string)
         */
-        public function unset_cookie($name) {
+        public function unset_cookie($name): void {
             
             // get http host
             $host = $_SERVER['HTTP_HOST'];
@@ -72,7 +72,7 @@
           * The function for print cookie array
           * Usage like printCookie()
         */
-        public function printCookie() {
+        public function printCookie(): void {
             print_r($_COOKIE);
         }
     }

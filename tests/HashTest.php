@@ -9,7 +9,7 @@
     final class HashTest extends TestCase {
 
         // test blowfish hash
-        public function testBlowFish() {
+        public function testBlowFish(): void {
             $hashUtils = new \becwork\utils\HashUtils();
 
             $hash = $hashUtils->genBlowFish("test");
@@ -17,7 +17,7 @@
         }
 
         // test sha1 hash
-        public function testSHA1() {
+        public function testSHA1(): void {
             $hashUtils = new \becwork\utils\HashUtils();
 
             $hash = $hashUtils->genSHA1("test");
@@ -25,7 +25,7 @@
         }
 
         // test md5
-        public function testMD5() {
+        public function testMD5(): void {
             $hashUtils = new \becwork\utils\HashUtils();
 
             $hash = $hashUtils->hashMD5("test");
@@ -33,7 +33,7 @@
         }
 
         // test sha 256
-        public function testSHA256() {
+        public function testSHA256(): void {
             $hashUtils = new \becwork\utils\HashUtils();
 
             $hash = $hashUtils->genSHA256("test");
@@ -41,7 +41,7 @@
         }
 
         // test custom hash (with md4)
-        public function testCustomHash() {
+        public function testCustomHash(): void {
             $hashUtils = new \becwork\utils\HashUtils();
 
             $hash = $hashUtils->customHash("test", "md4");

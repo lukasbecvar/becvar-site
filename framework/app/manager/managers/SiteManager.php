@@ -5,7 +5,7 @@
 	class SiteManager {
 
         // get true or false if admin page
-        public function isCurrentPageAdmin() {
+        public function isCurrentPageAdmin(): bool {
             
             // default state output
 			$state = false;
@@ -19,7 +19,7 @@
         }
 
         // check maintenance mode
-        public function ifMaintenance() {
+        public function ifMaintenance(): bool {
 
             global $config;
 
@@ -35,7 +35,7 @@
         }
 
         // get query string by name
-        public function getQueryString($query) {
+        public function getQueryString($query): ?string {
             
             global $escapeUtils;
 

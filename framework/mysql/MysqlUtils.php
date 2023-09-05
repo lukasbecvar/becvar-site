@@ -20,7 +20,7 @@
           * FUNCTION: database connection (use PDO)
           * RETURN: database connection
         */
-        public function connect() {
+        public function connect(): \PDO {
             
             global $config, $siteManager;
 
@@ -58,7 +58,7 @@
           * USAGE: like insertQuery("INSERT INTO logs(name, value, date, remote_addr) VALUES('log name', 'log value', 'log date', 'log remote_addr')")
           * INPUT: sql command like string
         */
-        public function insertQuery($query) {
+        public function insertQuery($query): void {
 
             global $config, $siteManager;
 
@@ -85,7 +85,7 @@
          * FUNCTION: mysql log function (Muste instaled logs table form sql)
          * INPUT: log name and value
         */
-        public function logToMysql($name, $value) {
+        public function logToMysql($name, $value): void {
 
             global $config, $escapeUtils, $mainUtils, $visitorManager;
 
@@ -126,7 +126,7 @@
           * INPUT: query like "SELECT * FROM logs"
           * RETURN: database output
         */
-        public function fetch($query) {
+        public function fetch($query): ?array {
 
             global $config;
 
@@ -160,7 +160,7 @@
           * INPUT: sql query & specific value
           * RETURN: selected value
         */
-        public function fetchValue($query, $value) {
+        public function fetchValue($query, $value): ?string {
 
             global $config, $siteManager;
 
@@ -215,7 +215,7 @@
           * USAGE: $ver = getMySQLVersion();
           * RETURN: mysql version in system
         */
-        public function getMySQLVersion() {
+        public function getMySQLVersion(): ?string {
             $output = shell_exec('mysql -V');
             preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
             return $version[0];

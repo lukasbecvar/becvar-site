@@ -5,7 +5,7 @@
     class ProjectsManager {
 
         // get projects list objects where status string
-        public function getProjectsWhereStatus($status) {
+        public function getProjectsWhereStatus($status): ?array {
 
             global $mysql;
 
@@ -29,7 +29,7 @@
         }
 
         // update all github repos in database table
-        public function updateProjectDatabase() {
+        public function updateProjectDatabase(): void {
 
             global $mysql, $config, $escapeUtils;
 

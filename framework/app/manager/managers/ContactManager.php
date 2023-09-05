@@ -5,7 +5,7 @@
 	class ContactManager {
 
 		// get messages from database
-		public function getMessages() {
+		public function getMessages(): ?array {
 
 			global $mysql;
 
@@ -14,7 +14,7 @@
 		}
 
 		// get banned email count
-		public function getBannedEmailCount($email) {
+		public function getBannedEmailCount($email): ?string {
 
 			global $mysql;
 
@@ -28,7 +28,7 @@
 		}
 
 		// send message to database
-		public function sendMessage($name, $email, $message, $status) {
+		public function sendMessage($name, $email, $message, $status): bool {
 
 			global $mysql, $mainUtils, $escapeUtils;
 
@@ -40,9 +40,6 @@
 
 				// log to mysql
 				$mysql->logToMysql("message-block", "blocked email: $email");
-
-				// return banned
-				return "banned";
 				
 			} else {
 				// get & escape values
@@ -74,7 +71,7 @@
 		}
 
 		// print all messages
-		public function printMSGS() {
+		public function printMSGS(): void {
 
 			global $visitorManager;
 
@@ -113,7 +110,7 @@
 		}
 		
 		// felete message by id
-		public function deleteMsgByID($id) {
+		public function deleteMsgByID($id): void {
 
 			global $mysql, $userManager;
 
@@ -125,7 +122,7 @@
 		}
 		
         // check if inbox empty
-        public function isEmpty() {
+        public function isEmpty(): bool {
 
 			// default state output
 			$state = false;

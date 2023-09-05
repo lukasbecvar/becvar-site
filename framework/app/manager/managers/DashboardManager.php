@@ -5,7 +5,7 @@
     class DashboardManager {
 
         // get server uptime
-        public function getUpTime() {
+        public function getUpTime(): string {
 
             // get data
             $ut = strtok(exec("cat /proc/uptime"), ".");
@@ -24,7 +24,7 @@
         }
         
         // get CPU usage %
-        public function getCPUProc() {
+        public function getCPUProc(): float {
             
             // default load value
             $load = 100;
@@ -43,7 +43,7 @@
         }
 
         // get memory (RAM) usage
-        public function getMemoryInfo() {
+        public function getMemoryInfo(): array {
             exec('cat /proc/meminfo', $memory_raw);
             $memory_free = 0;
             $memory_total = 0;
@@ -67,13 +67,13 @@
         }
         
         // get hard drive space usage in %
-        public function getDrivesInfo() {
+        public function getDrivesInfo(): string {
             $output = exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
             return $output;
         }
 
         // get software / kernal information
-        public function getSoftwareInfo() {
+        public function getSoftwareInfo(): array {
             $softwares = array();
             $software = array();
             $iteration = 0;
@@ -104,7 +104,7 @@
         }
 
         // get pastes count
-        public function getPastesCount() {
+        public function getPastesCount(): ?int {
 
             global $mysql;
 
@@ -117,7 +117,7 @@
         }
 
         // get log count
-        public function getLogsCount() {
+        public function getLogsCount(): ?int {
 
             global $mysql;
 
@@ -130,7 +130,7 @@
         }
 
         // get login logs count
-        public function getLoginLogsCount() {
+        public function getLoginLogsCount(): ?int {
 
             global $mysql;
 
@@ -143,7 +143,7 @@
         }
 
         // get unreaded logs count
-        public function getUnreadedLogs() {
+        public function getUnreadedLogs(): ?int {
 
             global $mysql;
         
@@ -156,7 +156,7 @@
         }
 
         // get page visitors count
-        public function getVisitorsCount() {
+        public function getVisitorsCount(): ?int {
 
             global $mysql;
         
@@ -169,7 +169,7 @@
         }
 
         // get MSGS in inbox count
-        public function getMSGSCount() {
+        public function getMSGSCount(): ?int {
 
             global $mysql;
 
@@ -182,7 +182,7 @@
         }
 
         // get todos count in todos table
-        public function getTodosCount() {
+        public function getTodosCount(): ?int {
 
             global $mysql;
 
@@ -195,7 +195,7 @@
         }
         
         // get images count in gallery
-        public function getImagesCount() {
+        public function getImagesCount(): ?int {
 
             global $mysql;
         
@@ -208,7 +208,7 @@
         }
 
         // get banned visitors count 
-        public function getBannedCount() { 
+        public function getBannedCount(): ?int { 
 
             global $mysql;
         
@@ -221,7 +221,7 @@
         }
 
         // check if system is linux
-        public function isSystemLinux() {
+        public function isSystemLinux(): bool {
 
             // default state value
             $state = false;
@@ -234,7 +234,7 @@
         }
 
         // check if warnings box empty
-        public function isWarninBoxEmpty() {
+        public function isWarninBoxEmpty(): bool {
 
             global $config, $mainUtils, $siteManager, $servicesManager;
 

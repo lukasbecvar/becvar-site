@@ -10,7 +10,7 @@
 		  * Input text type string
 		  * Returned final hash type string
 		*/
-		public function genBlowFish($plain_text) {
+		public function genBlowFish($plain_text): string {
 			$hash_fromat = "$2y$10$";
 			$salt = "123sbrznvdzvchpj8z5p5k";
 			$hash_fromat_salt = $hash_fromat.$salt;
@@ -23,7 +23,7 @@
 		  * Input text type string
 		  * Returned final hash type string
 		*/
-		public function genSHA1($plain_text) {
+		public function genSHA1($plain_text): string {
 			$hash = "*" . sha1(sha1($plain_text, true));
 			$hash_final = strtoupper($hash);
 			return $hash_final;
@@ -35,7 +35,7 @@
 		  * Input text type string
 		  * Returned final hash type string
 		*/
-		public function hashMD5($plain_text) {
+		public function hashMD5($plain_text): string {
 			$hash_final= hash('md5', $plain_text);
 			return $hash_final;
 		}
@@ -46,7 +46,7 @@
 		  * Input: text in string
 		  * Returned final sha256 hash form string
 		*/
-		public function genSHA256($string) {
+		public function genSHA256($string): string {
 			return hash('sha256', $string);
 		}
 
@@ -56,7 +56,7 @@
 		  * Input: text in string, hash name in string
 		  * Returned final hash form string
 		*/
-		public function customhash($string, $hash) {
+		public function customhash($string, $hash): string {
 			return hash($hash, $string);
 		}
 	}

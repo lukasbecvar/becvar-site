@@ -5,7 +5,7 @@
 	class UserManager {
 
 		// check if users table not empty
-		public function isUserEmpty() {
+		public function isUserEmpty(): bool {
 
 			global $mysql;
 
@@ -27,7 +27,7 @@
 		}
 		
 		// check if user logged in
-		public function isLoggedIn() {
+		public function isLoggedIn(): bool {
 
 			global $sessionUtils, $config;
 
@@ -50,7 +50,7 @@
 		} 
 
 		// check if user can login with username and password
-		public function canLogin($username, $password) {
+		public function canLogin($username, $password): bool {
 
 			global $mysql;
 
@@ -69,7 +69,7 @@
 		}
 
 		// unset login cookie
-		public function unSetLoginCookies() {
+		public function unSetLoginCookies(): void {
 
 			global $cookieUtils, $config;
 
@@ -81,7 +81,7 @@
 		}
 
 		// set login cookie
-		public function setLoginCookies($token) {
+		public function setLoginCookies($token): void {
 
 			global $cookieUtils, $config;
 
@@ -93,7 +93,7 @@
 		}
 
 		// set anti log cookie
-		public function setAntiLogCookie() {
+		public function setAntiLogCookie(): void {
 
 			global $cookieUtils, $config;
 
@@ -102,7 +102,7 @@
 		}
 
 		// set login session
-		public function setLoginSession($token) {
+		public function setLoginSession($token): void {
 
 			global $sessionUtils, $config;
 
@@ -117,7 +117,7 @@
 		}
 
 		// logout user
-		public function logout() {
+		public function logout(): void {
 
 			global $mysql, $cookieUtils, $config, $sessionUtils, $urlUtils;
 			
@@ -145,7 +145,7 @@
 		}
 
 		// update password
-		public function updatePassword($username, $password) {
+		public function updatePassword($username, $password): void {
 
 			global $mysql, $hashUtils;
 
@@ -160,7 +160,7 @@
 		}
 
 		// update profile image
-		public function updateProfileImage($base64Final, $username) {
+		public function updateProfileImage($base64Final, $username): void {
 
 			global $mysql;
 
@@ -172,7 +172,7 @@
 		}
 
 		// check if user is owner
-		public function isUserOwner() {
+		public function isUserOwner(): bool {
 			
 			// default state output
 			$state = false;
@@ -192,7 +192,7 @@
 		}
 
 		// get current username form session
-		public function getCurrentUsername() {
+		public function getCurrentUsername(): ?string {
 
 			global $mysql;
 
@@ -213,7 +213,7 @@
 		}
 
 		// get user role form session
-		public function getCurrentRole() {
+		public function getCurrentRole(): string {
 
 			global $mysql;
 
@@ -233,7 +233,7 @@
 		}
 		
 		//Get user token
-		public function getUserToken() {
+		public function getUserToken(): ?string {
 
 			global $mysql;
 
@@ -256,7 +256,7 @@
 		}
 
 		// get user ip
-		public function getUserIPByToken($token) {
+		public function getUserIPByToken($token): string {
 
 			global $mysql;
 
@@ -280,7 +280,7 @@
 		}
 
 		// auto user login (for cookie login)
-		public function autoLogin() {
+		public function autoLogin(): void {
 			
 			global $mysql, $config, $sessionUtils, $mainUtils, $urlUtils;
 
@@ -310,7 +310,7 @@
 		}
 
 		// get user avara base64 code
-		public function getUserAvatar() {
+		public function getUserAvatar(): string {
 
 			global $mysql;
 

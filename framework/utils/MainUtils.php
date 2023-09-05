@@ -9,8 +9,8 @@
           * Usage like echo drawPhpInformation()
           * Returned phpinfo page
         */
-        public function drawPhpInformation() {
-            return phpinfo();
+        public function drawPhpInformation(): void {
+            phpinfo();
         }
 
         /*
@@ -19,8 +19,9 @@
           * Input time format
           * Return actual time in your format
         */
-        public function drawData($format) {
-            return date($format);
+        public function drawData($format): ?string {
+            $date = date($format);
+            return $data;
         }
 
         /*
@@ -28,7 +29,7 @@
           * Usage like $ip = getRemoteAdress()
           * Return remote adress
         */
-        public function getRemoteAdress() {
+        public function getRemoteAdress(): ?string {
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $address = $_SERVER['HTTP_CLIENT_IP'];
           
@@ -46,8 +47,9 @@
           * Usage like redirect("home.php")
           * Input page
         */
-        public static function getRootDoc() {
-            return $_SERVER['DOCUMENT_ROOT'];
+        public static function getRootDoc(): ?string {
+            $doc_root = $_SERVER['DOCUMENT_ROOT'];
+            return $doc_root;
         }
 
         /*
@@ -55,12 +57,16 @@
           * Usage like $lampp = isLampp();
           * Return true or false
         */
-        public function isLampp() {
+        public function isLampp(): bool {
+
+            // default state
+            $state = false;
+
             if ($this->getRootDoc() == "/opt/lampp/htdocs") {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
         /*
@@ -68,12 +74,17 @@
           * Usage like $protocol = getProtocol();
           * Return protocol (http, https)
         */
-        public function getProtocol() {
+        public function getProtocol(): ?string {
+
+            // default protocol
+            $protocol = "http://";
+
+            // check if https
             if (!empty($_SERVER['HTTPS'])) {
-                return "https://";
-            } else {
-                return "http://";
+                $protocol = "https://";
             }
+
+            return $protocol;
         }
 
         /*
@@ -81,7 +92,7 @@
           * Usage like drawArray($array)
           * Input array
         */
-        public function drawArray($array) {
+        public function drawArray($array): void {
             echo '<pre>';
             print_r($array);
             echo '</pre>';
@@ -90,7 +101,7 @@
         /*
           * The function for print errors to page
         */
-        public function drawErrors() {
+        public function drawErrors(): void {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);         
@@ -101,16 +112,21 @@
           * 
           * @return bool True if it is a secure HTTPS connection, otherwise false.
         */
-        public function isSSL() {
+        public function isSSL(): bool {
+
+            // default state
+            $state = false;
+
+            // ssl check
             if (isset($_SERVER['HTTPS'])) {
                 if ($_SERVER['HTTPS'] == 1) {
-                    return true;
+                    $state = true;
                 } elseif ($_SERVER['HTTPS'] == 'on') {
-                    return true;
+                    $state = true;
                 }
             }
         
-            return false;
+            return $state;
         }
     }
 ?>

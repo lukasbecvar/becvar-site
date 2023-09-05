@@ -5,7 +5,7 @@
 	class ConfigUtils {
 
 		// get config value by name
-		public function getValue($name) {
+		public function getValue($name): string {
 
 			global $siteManager;
 
@@ -27,7 +27,7 @@
 		}	
 
 		// update maintenance config value
-		public function updateMaintenanceValue($value) {
+		public function updateMaintenanceValue($value): void {
 		
 			global $siteManager, $mysql, $userManager;
 
@@ -52,7 +52,7 @@
 		}
 
 		// update dev-mode config value
-		public function updateDevModeValue($value) {
+		public function updateDevModeValue($value): void {
 		
 			global $siteManager, $mysql, $userManager;
 

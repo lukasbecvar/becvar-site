@@ -9,7 +9,7 @@
 		  * Input: String or file (img, etc.)
 		  * Return: Base64 code
 		*/
-		public function genBase64($string) {
+		public function genBase64($string): string {
 			$base64 = base64_encode($string);
 			return $base64;
 		}
@@ -19,7 +19,7 @@
 		  * Input: base64 code
 		  * Return: string or file
 		*/
-		public function decodeBase64($base64) {
+		public function decodeBase64($base64): string {
 			$decoded_string = base64_decode($base64);
 			return $decoded_string;
 		}
@@ -29,7 +29,7 @@
 		  * Input: string or file, encrypt key
 		  * Return: encrypted string
 		*/
-		public function encryptAES($plain_text, $password, $method) {
+		public function encryptAES($plain_text, $password, $method): string {
 		  
 			$salt = openssl_random_pseudo_bytes(8);
 			$salted = '';
@@ -53,7 +53,7 @@
 		  * Input: string or file, decrypt key
 		  * Return: decrypted string
 		*/
-		public function decryptAES($json_string, $password, $method) {
+		public function decryptAES($json_string, $password, $method): string {
 		  
 			$json_data = json_decode($json_string, true);
 			$salt = hex2bin($json_data["s"]);

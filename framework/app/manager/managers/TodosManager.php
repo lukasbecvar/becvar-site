@@ -5,7 +5,7 @@
     class TodosManager {
 
         // new todo to mysql
-        public function addTodo($text) {
+        public function addTodo($text): void {
 
             global $mysql, $userManager;
 
@@ -20,7 +20,7 @@
         }
     
         // close todo
-        public function closeTodo($id) {
+        public function closeTodo($id): void {
     
             global $mysql, $userManager;
             
@@ -32,7 +32,7 @@
         }
         
         // check if todos empty
-        public function isEmpty() {
+        public function isEmpty(): bool {
 
             global $mysql;
 

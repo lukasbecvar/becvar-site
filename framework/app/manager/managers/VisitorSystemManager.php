@@ -5,7 +5,7 @@
     class VisitorSystemManager {
 
         // get user browser
-        public function getBrowser() {
+        public function getBrowser(): ?string {
 
             // get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
@@ -24,7 +24,7 @@
         }
 
         // shortify BrowserID
-        public function getShortBrowserID($raw) {
+        public function getShortBrowserID($raw): ?string {
             
             global $browsersList;
 
@@ -132,7 +132,7 @@
         }
 
         // get visitor OS
-        public function getVisitorOS() { 
+        public function getVisitorOS(): ?string { 
 
             // get user agent
             $agent = $this->getBrowser();
@@ -181,7 +181,7 @@
         }
 
         // first visit site
-        public function firstVisit() {
+        public function firstVisit(): void {
             
             global $mysql, $mainUtils, $siteManager, $escapeUtils;
 
@@ -229,7 +229,7 @@
         }
 
         // visit site
-        public function visitSite() {
+        public function visitSite(): void {
 
             global $mysql, $dashboardManager, $mainUtils, $siteManager, $escapeUtils;;
 
@@ -297,7 +297,7 @@
         }
 
         // check if visitor is banned
-        public function isVisitorBanned($ip) {
+        public function isVisitorBanned($ip): bool {
 
             global $mysql;
 
@@ -323,7 +323,7 @@
         }
 
         // get visitor location from table
-        public function getVisitorLocationFromDatabase($id) {
+        public function getVisitorLocationFromDatabase($id): ?string {
 
             global $mysql;
 
@@ -347,7 +347,7 @@
         }
 
         // get visitor location
-        public function getVisitorLocation($ip) {
+        public function getVisitorLocation($ip): ?string {
 
             global $mysql, $config, $siteManager;
 
@@ -417,7 +417,7 @@
         }
 
         // get user ip by id
-        public function getVisitorIPByID($id) {
+        public function getVisitorIPByID($id): ?string {
 
             global $mysql;
 
@@ -438,7 +438,7 @@
         }
 
         // get user ip by ip
-        public function getVisitorIDByIP($ip) {
+        public function getVisitorIDByIP($ip): ?int {
 
             global $mysql;
 
@@ -458,7 +458,7 @@
         }
 
         // ban user by IP
-        public function bannVisitorByIP($ip, $reason) {
+        public function bannVisitorByIP($ip, $reason): void {
             
             global $mysql;
 
@@ -487,7 +487,7 @@
         }
  
         // un-ban user by IP
-        public function unbannVisitorByIP($ip) {
+        public function unbannVisitorByIP($ip): void {
             
             global $mysql;
 
@@ -496,23 +496,26 @@
         }
 
         // check if visitor is in table
-        public function ifVisitorIsInTable($ip) {
+        public function ifVisitorIsInTable($ip): bool {
 
             global $mysql;
+
+            // default state
+            $state = false;
 
             // get IDs where ip
             $ids = $mysql->fetch("SELECT id FROM visitors WHERE `ip_adress` = '$ip'");
             
             // check if ip found
             if (count($ids) > 0) {
-                return true;
-            } else {
-                return false;
+                $state = true;
             }
+
+            return $state;
         }
 
         // call visit or first visit function
-        public function init() {
+        public function init(): void {
 
             global $mysql, $config, $mainUtils, $siteManager, $escapeUtils;
 
