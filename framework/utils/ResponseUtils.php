@@ -13,29 +13,29 @@
 		public function checkOnline($domain) {
 
 			// default response output
-			$responseOutput = "Offline";
+			$response_output = "Offline";
 
 			// curl init
-			$curlInit = curl_init($domain);
+			$curl_init = curl_init($domain);
 
 			// set options
-			curl_setopt($curlInit,CURLOPT_CONNECTTIMEOUT,10);
-			curl_setopt($curlInit,CURLOPT_HEADER,true);
-			curl_setopt($curlInit,CURLOPT_NOBODY,true);
-			curl_setopt($curlInit,CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($curl_init, CURLOPT_CONNECTTIMEOUT,10);
+			curl_setopt($curl_init, CURLOPT_HEADER,true);
+			curl_setopt($curl_init, CURLOPT_NOBODY,true);
+			curl_setopt($curl_init, CURLOPT_RETURNTRANSFER,true);
 
 			// execute curl
-			$response = curl_exec($curlInit);
+			$response = curl_exec($curl_init);
 
 			// close curl
-			curl_close($curlInit);
+			curl_close($curl_init);
 			
 			// get response 
 			if ($response) {
-				$responseOutput = "Online";
+				$response_output = "Online";
 			} 
 
-			return $responseOutput;
+			return $response_output;
 		}
 
         /*
@@ -55,17 +55,17 @@
         public function serviceOnlineCheck($ip, $port) {
 
 			// default response output
-			$responseOutput = "Offline";
+			$response_output = "Offline";
 
 			// open service socket
             $service = @fsockopen($ip, $port);
 
 			// check is service online
             if($service >= 1) {
-                $responseOutput = 'Online';
+                $response_output = 'Online';
             }
 
-			return $responseOutput;
+			return $response_output;
         }
 	}
 ?>

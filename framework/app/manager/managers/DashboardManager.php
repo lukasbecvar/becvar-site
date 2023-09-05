@@ -112,9 +112,8 @@
             $data = $mysql->fetch("SELECT id FROM pastes");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get log count
@@ -126,9 +125,8 @@
             $data = $mysql->fetch("SELECT id FROM logs");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get login logs count
@@ -140,9 +138,8 @@
             $data = $mysql->fetch("SELECT id FROM logs WHERE name LIKE '%Login%' or name LIKE '%Logout%'");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get unreaded logs count
@@ -154,9 +151,8 @@
             $data = $mysql->fetch("SELECT id FROM logs WHERE status LIKE '%unreaded%'");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get page visitors count
@@ -168,9 +164,8 @@
             $data = $mysql->fetch("SELECT id FROM visitors");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get MSGS in inbox count
@@ -182,9 +177,8 @@
             $data = $mysql->fetch("SELECT id FROM messages WHERE status='open'");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get todos count in todos table
@@ -196,9 +190,8 @@
             $data = $mysql->fetch("SELECT id FROM todos WHERE status='open'");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
         
         // get images count in gallery
@@ -210,9 +203,8 @@
             $data = $mysql->fetch("SELECT id FROM image_uploader");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // get banned visitors count 
@@ -224,9 +216,8 @@
             $data = $mysql->fetch("SELECT id FROM banned WHERE status='banned'");
 
             // count data
-            $dataCount = count($data);
-
-            return $dataCount;
+            $data_count = count($data);
+            return $data_count;
         }
 
         // check if system is linux

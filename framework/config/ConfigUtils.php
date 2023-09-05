@@ -2,25 +2,29 @@
 
 	namespace becwork\config; 
 
-	class ConfigManager {
+	class ConfigUtils {
 
 		// get config value by name
 		public function getValue($name) {
 
+			global $siteManager;
+
 			// link config file
 			require_once(__DIR__."./../../config.php");
 
-			// default value
-			$value = null;
-
-			// init config object
+			// init config instance
 			$config = new \becwork\config\PageConfig();
-
+			
 			// get config value
 			$value = $config->config[$name];
 
-			return $value;
-		}
+			// check if value return valid
+			if ($value === null) {
+				$siteManager->handleError("error to get config value: ".$name." please check config file", 520);
+			} else {
+				return $value;
+			}
+		}	
 
 		// update maintenance config value
 		public function updateMaintenanceValue($value) {

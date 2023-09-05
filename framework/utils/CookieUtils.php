@@ -51,19 +51,19 @@
             $parts = explode('/', $uri);
 
             // default cookie path
-            $cookiePath = '';
+            $cookie_path = '';
             
             foreach ($parts as $part) {
                 
                 // cookie path builder
-                $cookiePath = '/'.ltrim($cookiePath.'/'.$part, '//');
+                $cookie_path = '/'.ltrim($cookie_path.'/'.$part, '//');
 
                 // set cookie whit minimal time
-                setcookie($name, '', 1, $cookiePath);
+                setcookie($name, '', 1, $cookie_path);
 
                 // set cookie whit minimal time and domain
                 do {
-                    setcookie($name, '', 1, $cookiePath, $domain);
+                    setcookie($name, '', 1, $cookie_path, $domain);
                 } while (strpos($domain, '.') !== false && $domain = substr($domain, 1 + strpos($domain, '.')));
             }
         }

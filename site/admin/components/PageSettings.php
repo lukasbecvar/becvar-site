@@ -4,22 +4,22 @@
         if ($siteManager->getQueryString("config") != null) {
 
             // get config action from url
-            $configValue = $siteManager->getQueryString("config");
+            $config_value = $siteManager->getQueryString("config");
  
             //////////////////////////////////////////////////////////
             // maintenance settings change requests
-            if ($configValue == "maintenanceDisable") {
+            if ($config_value == "maintenanceDisable") {
                 $config->updateMaintenanceValue("disabled");
 
-            } elseif ($configValue == "maintenanceEnable") {
+            } elseif ($config_value == "maintenanceEnable") {
                 $config->updateMaintenanceValue("enabled");
             
 
             // dev mode settings change requests
-            } elseif ($configValue == "devmodeDisable") {
+            } elseif ($config_value == "devmodeDisable") {
                 $config->updateDevModeValue(false);
             
-            } elseif ($configValue == "devmodeEnable") {
+            } elseif ($config_value == "devmodeEnable") {
                 $config->updateDevModeValue(true);
             }
             //////////////////////////////////////////////////////////

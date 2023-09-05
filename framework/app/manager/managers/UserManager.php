@@ -16,10 +16,10 @@
 			$users = $mysql->fetch("SELECT * FROM users");
 
 			// count users
-			$usersCount = count($users);
+			$users_count = count($users);
 
 			// check if user is empty
-			if ($usersCount < 1) {
+			if ($users_count < 1) {
 				$state = true;
 			}
 
@@ -58,10 +58,10 @@
 			$state = false;
 
 			// select ID with valid login data
-			$loginSelect = $mysql->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");		
+			$login_select = $mysql->fetch("SELECT id FROM users WHERE username = '$username' and password = '$password'");		
 
 			// check if user with password exist
-			if (count($loginSelect) == 1) {
+			if (count($login_select) == 1) {
 				$state = true; 
 			}
 
@@ -200,13 +200,13 @@
 			$username = null;
 
 			// get user token value
-			$userToken = $this->getUserToken();
+			$user_token = $this->getUserToken();
 
 			// check if user token is not null
-			if ($userToken != null) {
+			if ($user_token != null) {
 				
 				// get username
-				$username = $mysql->fetchValue("SELECT username FROM users WHERE token = '".$userToken."'", "username");
+				$username = $mysql->fetchValue("SELECT username FROM users WHERE token = '".$user_token."'", "username");
 			}
 
 			return $username;
@@ -261,7 +261,7 @@
 			global $mysql;
 
 			// default user ip
-			$userIP = null;
+			$user_ip = null;
 
 			// get ids where token 
 			$ids = $mysql->fetch("SELECT id FROM users WHERE token='".$_SESSION["userToken"]."'");
@@ -273,10 +273,10 @@
 				$ip = $mysql->fetchValue("SELECT remote_addr FROM users WHERE token = '".$token."'", "remote_addr");
 
 				// save to user ip
-				$userIP = $ip;
+				$user_ip = $ip;
 			}
 
-			return $userIP;
+			return $user_ip;
 		}
 
 		// auto user login (for cookie login)
@@ -285,10 +285,10 @@
 			global $mysql, $config, $sessionUtils, $mainUtils, $urlUtils;
 
 			// get user token
-			$userToken = $_COOKIE["userToken"];
+			$user_token = $_COOKIE["userToken"];
 
 			// get user ip
-			$userIP = $mainUtils->getRemoteAdress();
+			$user_ip = $mainUtils->getRemoteAdress();
 
 			// start session
 			$sessionUtils->sessionStartedCheckWithStart();
@@ -297,13 +297,13 @@
 			$sessionUtils->setSession($config->getValue('loginCookie'), $_COOKIE[$config->getValue('loginCookie')]);
  
 			// set token session
-			$sessionUtils->setSession("userToken", $userToken);
+			$sessionUtils->setSession("userToken", $user_token);
 
 			// log action to mysql
 			$mysql->logToMysql("authenticator", "user: ".$this->getCurrentUsername()." success login by login cookie");
 
 			// update user ip
-			$mysql->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE token='$userToken'");
+			$mysql->insertQuery("UPDATE users SET remote_addr='$user_ip' WHERE token='$user_token'");
 
 			// refresh page
 			$urlUtils->redirect("?admin=dashboard");

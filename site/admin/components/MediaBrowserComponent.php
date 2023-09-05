@@ -2,7 +2,7 @@
 <?php // private media browser component in admin
     
 	// default values 
-	$startByRow = 0;
+	$start_by_row = 0;
 
     // check if user is owner 
 	if (!$userManager->isUserOwner()) {
@@ -10,38 +10,38 @@
 	} else {
 
 		// get page items limit
-		$limitOnPage = $config->getValue("imagesInBrowserLimit");
+		$limit_on_page = $config->getValue("imagesInBrowserLimit");
 
 		// if limit get seted make this trash part of code xD
 		if (($siteManager->getQueryString("limit") != null) && ($siteManager->getQueryString("startby") != null)) {
 
 			// get show limit form url
-			$showLimit = $siteManager->getQueryString("limit");
+			$show_limit = $siteManager->getQueryString("limit");
 
 			// get start row form url
-			$startByRow = $siteManager->getQueryString("startby");
+			$start_by_row = $siteManager->getQueryString("startby");
 
 			// set next limit
-			$nextLimit = (int) $showLimit + $limitOnPage;
+			$next_limit = (int) $show_limit + $limit_on_page;
 
 			// set next start by for pages
-			$nextStartByRow = (int) $startByRow + $limitOnPage;
-			$nextLimitBack = (int) $showLimit - $limitOnPage;
-			$nextStartByRowBack = (int) $startByRow - $limitOnPage;	
+			$next_start_by_row = (int) $start_by_row + $limit_on_page;
+			$next_limit_back = (int) $show_limit - $limit_on_page;
+			$next_start_by_row_back = (int) $start_by_row - $limit_on_page;	
 		}
 
         // print gallery list
         echo '<center><div id="lightgallery">';
 
         // draw all images to page
-        $imagesUpload = $mysql->fetch("SELECT * FROM image_uploader ORDER BY id DESC LIMIT $startByRow, $limitOnPage");
+        $images_upload = $mysql->fetch("SELECT * FROM image_uploader ORDER BY id DESC LIMIT $start_by_row, $limit_on_page");
     
         // print images (if found)
-        if (count($imagesUpload) != 0) {
+        if (count($images_upload) != 0) {
             
             // print all images to gallery box
-            foreach ($imagesUpload as $row) {
-                echo '<span data-src="data:image/jpg;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=?process=image&spec='.$row["imgSpec"].' target=blank_>'.$row["imgSpec"].'</a> | <a class=imgEditButton href=?admin=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/jpg;base64,'.$row["image"].'"></span>'; 
+            foreach ($images_upload as $row) {
+                echo '<span data-src="data:image/jpg;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=?process=image&spec='.$row["img_spec"].' target=blank_>'.$row["img_spec"].'</a> | <a class=imgEditButton href=?admin=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/jpg;base64,'.$row["image"].'"></span>'; 
             } 
         } else {
             echo"<h2 class=pageTitle>Image database is empty!</h2>";
@@ -57,13 +57,13 @@
             echo '<div class="pageButtonBox">';
         
             // print back button if user in next page
-            if ($showLimit > $limitOnPage) {
-                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+            if ($show_limit > $limit_on_page) {
+                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
             }
 
             // print next button if user on start page and can see next items
-            if (count($imagesUpload) == $limitOnPage) {
-                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+            if (count($images_upload) == $limit_on_page) {
+                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
             }
     
             echo '</div>';

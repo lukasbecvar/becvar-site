@@ -1,3 +1,10 @@
+<?php // main admin initor
+
+    // get admin component name
+    $component = $siteManager->getQueryString("admin");
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +18,7 @@
 	<script type="text/javascript" src="/assets/vendor/jquery/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" href="/assets/vendor/fontawesome/fontawesome.min.css">
 	<?php // import gallery css if user browsing media
-		if ($siteManager->getQueryString("admin") == "mediaBrowser") {
+		if ($component == "mediaBrowser") {
 			echo '<link href="/assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">';	
 			echo '<link href="/assets/css/assets/vendor/lightgallery/css/lg-transitions.css" rel="stylesheet">';	
 		}
@@ -36,7 +43,7 @@
     }
 
     // default disable sidebar
-    if ($siteManager->getQueryString("admin") != "dashboard") {
+    if ($component != "dashboard") {
         echo '
             <script>
                 document.querySelector("body").classList.toggle("active");
@@ -69,42 +76,42 @@
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/Sidebar.php');
 
             // define process by name //////////////////////////////////////////////////////////////
-            if ($siteManager->getQueryString("admin") == "dashboard") {
+            if ($component == "dashboard") {
                 include_once("components/DashboardComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "accountSettings") {
+            } elseif ($component == "accountSettings") {
                 include_once("components/AccountSettingsComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "inbox") {
+            } elseif ($component == "inbox") {
                 include_once("components/InboxComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "todos") {
+            } elseif ($component == "todos") {
                 include_once("components/TodoManager.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "pageSettings") {
+            } elseif ($component == "pageSettings") {
                 include_once("components/PageSettings.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "phpInfo") {
+            } elseif ($component == "phpInfo") {
                 include_once("components/phpInfoComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "diagnostics") {
+            } elseif ($component == "diagnostics") {
                 include_once("components/DiagnosticsComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "dbBrowser") {
+            } elseif ($component == "dbBrowser") {
                 include_once("components/DatabaseBrowserComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "logReader") {
+            } elseif ($component == "logReader") {
                 include_once("components/LogReaderComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "visitors") {
+            } elseif ($component == "visitors") {
                 include_once("components/VisitorsManagerComponent.php");
 
-            } elseif ($siteManager->getQueryString("admin") == "mediaBrowser") {
+            } elseif ($component == "mediaBrowser") {
                 include_once("components/MediaBrowserComponent.php");
             ////////////////////////////////////////////////////////////////////////////////////////
 
             // init project reload
-            } elseif ($siteManager->getQueryString("admin") == "projectsReload") {
+            } elseif ($component == "projectsReload") {
 
                 // update project list by github
                 $projectsManager->updateProjectDatabase();
@@ -113,21 +120,21 @@
                 $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 
             // login admin action redirect logged in users
-            } elseif ($siteManager->getQueryString("admin") == "login") {
+            } elseif ($component == "login") {
                 $urlUtils->jsRedirect("/?admin=dashboard");
 
             // task executor
-            } elseif ($siteManager->getQueryString("admin") == "executeTask") {
+            } elseif ($component == "executeTask") {
                 include_once("CommandExecutor.php");
             
             // show form
-            } elseif ($siteManager->getQueryString("admin") == "form") {
+            } elseif ($component == "form") {
                 include_once("FormHandlerer.php");
 
             // redirect to 404 if process not found or print error for dev mode
             } else {
                 if ($siteManager->isSiteDevMode()) {
-                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$siteManager->getQueryString("admin")." not found<h2>");
+                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$component." not found<h2>");
                 } else {
                     $siteManager->redirectError(404);
                 }
@@ -158,13 +165,13 @@
         if(!$mobileDetector->isMobile()) {
 
             // check if is admin process not dashboard
-            if($siteManager->getQueryString("admin") != "dashboard") {
+            if($component != "dashboard") {
                 include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/functional/NavPanelToggler.php');
             }	
         } else {
 
             // disable sidebar for dashboard (mobile)
-            if ($siteManager->getQueryString("admin") == "dashboard") {
+            if ($component == "dashboard") {
                 echo '
                     <script>
                         document.querySelector("body").classList.toggle("active");

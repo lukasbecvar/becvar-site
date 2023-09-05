@@ -19,12 +19,12 @@
 			global $mysql;
 
 			// get banned emails
-			$bannedEmails = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
+			$banned_emails = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
 			
 			// get emails count
-			$bannedEmailCount = count($bannedEmails);
+			$banned_email_count = count($banned_emails);
 
-			return $bannedEmailCount;
+			return $banned_email_count;
 		}
 
 		// send message to database
@@ -58,10 +58,10 @@
 				$remote_addr = $mainUtils->getRemoteAdress();
 
 				// insert message 
-				$queryInsert = $mysql->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
+				$query_insert = $mysql->insertQuery("INSERT INTO `messages`(`name`, `email`, `message`, `time`, `remote_addr`, `status`) VALUES ('$name', '$email', '$message', '$time', '$remote_addr', '$status')");
 
 				// check if message inserted
-				if (!$queryInsert) {
+				if (!$query_insert) {
 
 					// log to mysql
 					$mysql->logToMysql("recived-message", "by sender $name");
@@ -82,23 +82,23 @@
             $messages = $this->getMessages();
 
 			// default ID
-			$userID = null;
+			$user_ID = null;
 
             // show all messages from array messages in page
             foreach ($messages as $row) {
 
 				// get user ID
-				$userID = $visitorManager->getVisitorIDByIP($row["remote_addr"]);
+				$user_ID = $visitorManager->getVisitorIDByIP($row["remote_addr"]);
 
 				// ban link builder
 				if ($visitorManager->isVisitorBanned($row["remote_addr"])) {
-					$banLink = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=y' target='blank_'>UNBAN</a>";
+					$ban_link = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$user_ID."&limit=500&startby=0&close=y' target='blank_'>UNBAN</a>";
 				} else {
-					$banLink = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$userID."&limit=500&startby=0&close=y&reason=spam' target='blank_'>BAN</a>";
+					$ban_link = "<a class='deleteLink text-warning' href='?admin=visitors&action=ban&id=".$user_ID."&limit=500&startby=0&close=y&reason=spam' target='blank_'>BAN</a>";
 				}
 
 				// check if ip found
-				if ($userID == null) {
+				if ($user_ID == null) {
 					echo"<div class='card text-white mb-3' style='max-width: 95%;'><div class=card-body><h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") <span class='text-success phoneNone'>[".$row["time"]."]</span>, <span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span><a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a></h5><p class=leftCenter class=card-text>".$row["message"]."</p></div></div>";
 				} else {
 

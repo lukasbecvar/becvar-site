@@ -12,72 +12,72 @@
 		if (isset($_GET["id"])) {
 
 			// get id from query string
-			$idGet = $escapeUtils->specialCharshStrip($_GET["id"]);
+			$id_get = $escapeUtils->specialCharshStrip($_GET["id"]);
 		}
 
 		// check if delete seted
 		if (isset($_GET["delete"])) {
 
 			// get delete from query string
-			$deleteGet = $escapeUtils->specialCharshStrip($_GET["delete"]);
+			$delete_get = $escapeUtils->specialCharshStrip($_GET["delete"]);
 		}
 
 		// check if editor seted
 		if (isset($_GET["editor"])) {
 
 			// get editor from query string
-			$editorGet = $escapeUtils->specialCharshStrip($_GET["editor"]);
+			$editor_get = $escapeUtils->specialCharshStrip($_GET["editor"]);
 		}
 
 		// check if add seted
 		if (isset($_GET["add"])) {
 
 			// get add from query string
-			$addGet = $escapeUtils->specialCharshStrip($_GET["add"]);
+			$add_get = $escapeUtils->specialCharshStrip($_GET["add"]);
 		}
 
 		// check if browse table
 		if (isset($_GET["name"])) {
 
 			// get escaped table name
-			$tableName = $escapeUtils->specialCharshStrip($_GET["name"]);
+			$table_name = $escapeUtils->specialCharshStrip($_GET["name"]);
 		}
 
 		// check if browse table
 		if (isset($_GET["name"])) {
 
 			// get row count in table by name
-			$rowsCount = $mysql->fetch("SELECT id FROM ".$tableName);
+			$rows_count = $mysql->fetch("SELECT id FROM ".$table_name);
 		} else {
-			$rowsCount = 0;
+			$rows_count = 0;
 		}
 		
 		// default select start id
-		$startByRow = 0;
+		$start_by_row = 0;
 		
 		// page items limit (read from config)
-		$limitOnPage = $config->getValue("rowInTableLimit");
+		$limit_on_page = $config->getValue("rowInTableLimit");
 
 		// pager system calculator
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) && isset($_GET["startby"]))) {
  
 			// get show limit form url
-			$showLimit = $escapeUtils->specialCharshStrip($_GET["limit"]);
+			$show_limit = $escapeUtils->specialCharshStrip($_GET["limit"]);
  
 			// get start row form url
-			$startByRow = $escapeUtils->specialCharshStrip($_GET["startby"]);
+			$start_by_row = $escapeUtils->specialCharshStrip($_GET["startby"]);
  
 			// calculate next limit
-			$nextLimit = (int) $showLimit + $limitOnPage;
+			$next_limit = (int) $show_limit + $limit_on_page;
  
 			// calculate next start
-			$nextStartByRow = (int) $startByRow + $limitOnPage;
+			$next_start_by_row = (int) $start_by_row + $limit_on_page;
 
 			// calculate back limit
-			$nextLimitBack = (int) $showLimit - $limitOnPage;
+			$next_limit_Back = (int) $show_limit - $limit_on_page;
 
 			// calculate back start row
-			$nextStartByRowBack = (int) $startByRow - $limitOnPage;	
+			$next_start_by_rowBack = (int) $start_by_row - $limit_on_page;	
 		}
 		/////////////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +95,7 @@
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&delete='.$tableName.'&id=all"><strong><i class="fa fa-trash" aria-hidden="true"></i> '.$tableName.'</strong></a>
+							<a class="selectorButton btn-small" href="?admin=dbBrowser&delete='.$table_name.'&id=all"><strong><i class="fa fa-trash" aria-hidden="true"></i> '.$table_name.'</strong></a>
 						</li>';
 				}
  
@@ -103,7 +103,7 @@
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&add='.$tableName.'"><strong>NEW</strong></a>
+							<a class="selectorButton btn-small" href="?admin=dbBrowser&add='.$table_name.'"><strong>NEW</strong></a>
 						</li>';
 				}
 
@@ -127,7 +127,7 @@
 
 				// row count
 				if (!empty($_GET["name"])) {
-					echo '<li class="countTextInMenuR">'.$_GET["name"].' = '.count($rowsCount).' rows</li>';	
+					echo '<li class="countTextInMenuR">'.$_GET["name"].' = '.count($rows_count).' rows</li>';	
 				} else {
 
 					// editor title
@@ -153,13 +153,13 @@
 		if (isset($_GET["name"])) {
 
 			// select table data
-			$tableData = $mysql->connect()->query("SELECT * FROM ".$tableName." LIMIT $startByRow, $limitOnPage")->fetchAll(\PDO::FETCH_ASSOC);
+			$table_data = $mysql->connect()->query("SELECT * FROM ".$table_name." LIMIT $start_by_row, $limit_on_page")->fetchAll(\PDO::FETCH_ASSOC);
 
 			// select columns from table
-			$tableColumns = $mysql->connect()->query("SHOW COLUMNS FROM ".$tableName)->fetchAll(\PDO::FETCH_ASSOC);
+			$table_columns = $mysql->connect()->query("SHOW COLUMNS FROM ".$table_name)->fetchAll(\PDO::FETCH_ASSOC);
  
 			// check if table empty
-			if (count($tableData) == 0) {
+			if (count($table_data) == 0) {
 				echo"<h2 class=pageTitle>Table is empty</h2>";
 			} 
 			
@@ -171,35 +171,35 @@
 				echo '<thead><tr class="lineItem">'; 
 
 				// mysql fields to table
-				foreach($tableColumns as $row) {
+				foreach($table_columns as $row) {
 					echo "<th scope='col'>".$row['Field']."</th>";
 				}
 
 				echo "<th cope='col'>X</th>";
 				
 				// edit col to table
-				if ($tableName != "visitors" && $tableName != "pastes" && $tableName != "hash_gen" && $tableName != "users") {
+				if ($table_name != "visitors" && $table_name != "pastes" && $table_name != "hash_gen" && $table_name != "users") {
 					echo "<th cope='col'>Edit</th>";
 				}
 
 				echo '</tr></thead>';
 
 				// all rows to site
-				foreach ($tableData as $data) {
+				foreach ($table_data as $data) {
 
 					//////////////////////////////////CUSTOM-VIEW//////////////////////////////////
 					// image uploader custom view
-					if ($tableName == "image_uploader") {
+					if ($table_name == "image_uploader") {
 						$data = [
 							"id" => $data["id"],
-							"imgSpec" => '<a href="?process=image&spec='.$data["imgSpec"].'" target="_blank">'.$data["imgSpec"].'</a>',
+							"img_spec" => '<a href="?process=image&spec='.$data["img_spec"].'" target="_blank">'.$data["img_spec"].'</a>',
 							"image" => "encrypted",
 							"date" => $data["date"]
 						];			
 					}
 
 					// paste custom view
-					if ($tableName == "pastes") {
+					if ($table_name == "pastes") {
 						$data = [
 							"id" => $data["id"],
 							"link" => '<a href="?process=paste&method=view&f='.$data["spec"].'" target="_blank">'.$data["spec"].'</a>',
@@ -209,7 +209,7 @@
 					}
 
 					// users custom view
-					if ($tableName == "users") {
+					if ($table_name == "users") {
 						$data = [
 							"id" => $data["id"],
 							"username" => $data["username"],
@@ -223,23 +223,23 @@
 					///////////////////////////////////////////////////////////////////////////////
 
 					// transfrom associative array to indexed array
-					$dataOK = array_values($data);
+					$data_ok = array_values($data);
 
 					echo '<tbody><tr class="lineItem">';
 					
 					// table data
 					for ($id = 0; $id <= 50; $id++) {
-						if (!empty($dataOK[$id])) {
-							echo "<th scope='row'>".$dataOK[$id]."</th>";	
+						if (!empty($data_ok[$id])) {
+							echo "<th scope='row'>".$data_ok[$id]."</th>";	
 						}
 					}
 			
 					if(empty($data["base64"])) {
-						echo '<td><a class="deleteLinkTodos" href="?admin=dbBrowser&delete='.$tableName.'&id='.$dataOK[0].'">X</a></td>';
+						echo '<td><a class="deleteLinkTodos" href="?admin=dbBrowser&delete='.$table_name.'&id='.$data_ok[0].'">X</a></td>';
 						
 						// edit link to row
-						if ($tableName != "visitors" && $tableName != "pastes" && $tableName != "hash_gen" && $tableName != "users") {
-							echo '<td><a class="text-warning deleteLinkTodos" href="?admin=dbBrowser&editor='.$tableName.'&id='.$dataOK[0].'">Edit</a></td>';
+						if ($table_name != "visitors" && $table_name != "pastes" && $table_name != "hash_gen" && $table_name != "users") {
+							echo '<td><a class="text-warning deleteLinkTodos" href="?admin=dbBrowser&editor='.$table_name.'&id='.$data_ok[0].'">Edit</a></td>';
 						}
 					}
 					echo '</tr></tbody>';
@@ -248,17 +248,17 @@
 			}
 
 			// log action to database 
-			$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." viewed table $tableName");
+			$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." viewed table $table_name");
 		} 
 		
 		// delete function //////////////////////////////////////////////////////////////
 		elseif (isset($_GET["delete"])) {
 
 			// check if seted id
-			if (isset($idGet)) {
+			if (isset($id_get)) {
 
 				// check if user delete all form table
-				if ($idGet == "all") {
+				if ($id_get == "all") {
 
 					// include delete all confirmation
 					if ($siteManager->getQueryString("confirm") != "yes") {
@@ -270,10 +270,10 @@
 						// check if confirm selected (only for delete all)
 						if ($siteManager->getQueryString("confirm") == "yes") {
 							// delete all rows
-							$mysql->insertQuery("DELETE FROM $deleteGet WHERE id=id");
+							$mysql->insertQuery("DELETE FROM $delete_get WHERE id=id");
 
 							// reset auto increment
-							$mysql->insertQuery("ALTER TABLE $deleteGet AUTO_INCREMENT = 1");
+							$mysql->insertQuery("ALTER TABLE $delete_get AUTO_INCREMENT = 1");
 						}
 					}
 				} 
@@ -282,11 +282,11 @@
 				else {
 
 					// delete one row
-					$mysql->insertQuery("DELETE FROM $deleteGet WHERE id='$idGet'"); 
+					$mysql->insertQuery("DELETE FROM $delete_get WHERE id='$id_get'"); 
 				}
 
 				// log action to database
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." deleted item $idGet form table $deleteGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." deleted item $id_get form table $delete_get");
 
 
 				// check if delete auto close
@@ -310,15 +310,15 @@
 					else {
 
 						// check if delete all redirect
-						if ($idGet == "all") {
+						if ($id_get == "all") {
 
 							// check if confirmation is used
 							if ($siteManager->getQueryString("confirm") == "yes") {
-								$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+								$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 							}
 
 						} else {
-							$urlUtils->jsRedirect("?admin=dbBrowser&name=$deleteGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+							$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 						}
 					}
 				}
@@ -346,17 +346,17 @@
 			if (isset($_POST["submitEdit"])) {
 
 				// select columns from selected table
-				$resultEdit = $mysql->fetch("SHOW COLUMNS FROM ".$editorGet);
+				$result_edit = $mysql->fetch("SHOW COLUMNS FROM ".$editor_get);
 
 				// update all fileds by id
-				foreach($resultEdit as $rowOK) { 
+				foreach($result_edit as $rowOK) { 
 
 					// insert query
-					$mysql->insertQuery("UPDATE $editorGet SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$idGet'");
+					$mysql->insertQuery("UPDATE $editor_get SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$id_get'");
 				} 
 
 				// log action to mysql dsatabase 
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." edited item $idGet in table $editorGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." edited item $id_get in table $editor_get");
 
 				// flash status msg
 				$alertManager->flashSuccess("Row has saved!");
@@ -366,37 +366,34 @@
 					// close editor after save
 					echo "<script>window.close();</script>";
 				} else {
-					$urlUtils->jsRedirect("?admin=dbBrowser&name=".$editorGet."&limit=".$limitOnPage."&startby=0");
+					$urlUtils->jsRedirect("?admin=dbBrowser&name=".$editor_get."&limit=".$limit_on_page."&startby=0");
 				}
 			}
 
-			// init table name
-			$dbName = $escapeUtils->specialCharshStrip($editorGet);
-
 			// select columns from selected table
-			$result = $mysql->fetch("SHOW COLUMNS FROM ".$editorGet);
+			$result = $mysql->fetch("SHOW COLUMNS FROM ".$editor_get);
 
 			// select all from selected table
-			$resultAll = $mysql->connect()->query("SELECT * FROM $editorGet WHERE id = '$idGet'");
+			$result_all = $mysql->connect()->query("SELECT * FROM $editor_get WHERE id = '$id_get'");
 
 			// migrate object to array
-			$rowAll = $resultAll->fetchAll(\PDO::FETCH_ASSOC);
+			$row_all = $result_all->fetchAll(\PDO::FETCH_ASSOC);
 
 			echo "<br><br>";
 
 			// create form
 			if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'&postby=todomanager" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'&postby=todomanager" method="post">';
 			} else {
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editorGet.'&id='.$idGet.'" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'" method="post">';
 			}
-			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$idGet.'<p>';
+			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$id_get.'<p>';
 
 
 				// print Fields
 				foreach($result as $row) {
 					echo '<p class="textInputTitle">'.$row['Field'].'</p>';
-					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$rowAll[0][$row['Field']].'"><br>';
+					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$row_all[0][$row['Field']].'"><br>';
 				}
 
 			// end form
@@ -407,48 +404,48 @@
 		elseif (isset($_GET["add"])) {
 			
 			// select columns add table
-			$selectedColumns = $mysql->fetch("SHOW COLUMNS FROM ".$addGet);
+			$selected_columns = $mysql->fetch("SHOW COLUMNS FROM ".$add_get);
 
 			// check if save submited
 			if (isset($_POST["submitSave"])) {
 
 				////////////////////-COLUMNS-LIST-BUILDER-/////////////////////
 				// create columns list
-				$columnsBuilder = "";
+				$columns_builder = "";
 
 				// build columns list
-				foreach($selectedColumns as $row) {
+				foreach($selected_columns as $row) {
 
 					// prevent id valud build
 					if (strtolower($row["Field"]) != "id") {
-						$columnsBuilder = $columnsBuilder.", `".$row["Field"]."`";
+						$columns_builder = $columns_builder.", `".$row["Field"]."`";
 					}
 				}
 
 				// remove invalid character from columns list
-				$columnsBuilder = substr($columnsBuilder, 1);
+				$columns_builder = substr($columns_builder, 1);
 				///////////////////////////////////////////////////////////////
  
 				/////////////////////-VALUES-LIST-BUILDER-/////////////////////
 				// create values list string
-				$valuesBuilder = "";
+				$values_builder = "";
 
 				// build values list
 				foreach ($_POST as $post) {
 
 					// check if value not SAVE (button post remove)
 					if ($post != "SAVE") {
-						$valuesBuilder = $valuesBuilder.", '".$post."'";
+						$values_builder = $values_builder.", '".$post."'";
 					}
 						
 				}
 
 				// remove invalid character from values
-				$valuesBuilder = substr($valuesBuilder, 1);
+				$values_builder = substr($values_builder, 1);
 				///////////////////////////////////////////////////////////////
 
 				// build query
-				$query = "INSERT INTO `".$addGet."`(".$columnsBuilder.") VALUES (".$valuesBuilder.")";
+				$query = "INSERT INTO `".$add_get."`(".$columns_builder.") VALUES (".$values_builder.")";
 
 				// insert query to database
 				$mysql->insertQuery($query);
@@ -457,23 +454,23 @@
 				$alertManager->flashSuccess("New item has saved!");
 
 				// log to database
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." add new row to $addGet");
+				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." add new row to $add_get");
 
 				// redirect back to table reader
-				$urlUtils->jsRedirect("?admin=dbBrowser&name=$addGet&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+				$urlUtils->jsRedirect("?admin=dbBrowser&name=$add_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
 			} 
 			
 			// print add form
 			else {
 
 				// create add form
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&add='.$addGet.'" method="post">';
+				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&add='.$add_get.'" method="post">';
 
 				// print from title
 				echo '<p class="textInputTitle">New item</p><br>';
 
 				// fields
-				foreach($selectedColumns as $row) {
+				foreach($selected_columns as $row) {
 					if (strtolower($row["Field"]) != "id") {
 						echo '<input class="textInput" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
 					}
@@ -502,7 +499,7 @@
 			// print all tables links
 			foreach ($tables as $row) {
 
-				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->getValue("mysql-database")]."&limit=".$limitOnPage."&startby=0>".$row["Tables_in_".$config->getValue("mysql-database")]."</a><br><br>";
+				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->getValue("mysql-database")]."&limit=".$limit_on_page."&startby=0>".$row["Tables_in_".$config->getValue("mysql-database")]."</a><br><br>";
 			}
 
 			// end of select box element
@@ -516,22 +513,22 @@
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) and isset($_GET["startby"]))) {
  
 			// check if page buttons can show
-			if (($showLimit > $limitOnPage) or (count($tableData) == $limitOnPage)) {
+			if (($show_limit > $limit_on_page) or (count($table_data) == $limit_on_page)) {
 				echo '<div class="pageButtonBox">'; //Create buttons element area
 			}
 		
 			// print back button if user in next page
-			if ($showLimit > $limitOnPage) {
-				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+			if ($show_limit > $limit_on_page) {
+				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit_Back.'&startby='.$next_start_by_rowBack.'>Back</a><br>';
 			}
 
 			// print next button if user on start page and can see next items
-			if (count($tableData) == $limitOnPage) {
-				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+			if (count($table_data) == $limit_on_page) {
+				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
 			}
 	
 			// check if page buttons can show
-			if (($showLimit > $limitOnPage) or (count($tableData) == $limitOnPage)) {
+			if (($show_limit > $limit_on_page) or (count($table_data) == $limit_on_page)) {
 				echo '</div><br>'; // close buttons element area
 			}
 		}

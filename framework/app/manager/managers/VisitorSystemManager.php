@@ -365,13 +365,13 @@
                 try {
 
                     // get geoplugin url
-                    $geopluginUrl = $config->getValue("geoplugin_url");
+                    $geoplugin_url = $config->getValue("geoplugin_url");
 
                     // get geoplugin data
-                    $geopluginData = file_get_contents($geopluginUrl."/json.gp?ip=$ip");
+                    $geoplugin_data = file_get_contents($geoplugin_url."/json.gp?ip=$ip");
 
                     // decode data
-                    $details = json_decode($geopluginData );
+                    $details = json_decode($geoplugin_data);
         
                     // get country and site from API data
                     $country = $details->geoplugin_countryCode;
@@ -430,10 +430,10 @@
             } else {
 
                 // get visitor ip by key
-                $visitorIP = $mysql->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
+                $visitor_ip = $mysql->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
 
                 // return ip
-                return $visitorIP;
+                return $visitor_ip;
             }
         }
 
@@ -451,9 +451,9 @@
             } else {
 
                 // get visitor id by ip
-                $visitorID = $mysql->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
+                $visitor_id = $mysql->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
 
-                return $visitorID;
+                return $visitor_id;
             }
         }
 

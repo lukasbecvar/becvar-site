@@ -30,7 +30,7 @@ CREATE TABLE `banned_emails` (
 DROP TABLE IF EXISTS `image_uploader`;
 CREATE TABLE `image_uploader` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `imgSpec` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `img_spec` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `image` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   `date` char(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_czech_ci NOT NULL,
   PRIMARY KEY (`id`)

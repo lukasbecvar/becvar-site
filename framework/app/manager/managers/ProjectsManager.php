@@ -47,14 +47,14 @@
             $context = stream_context_create($opts);
 
             // get github username
-            $githubLink = $config->getValue("github");
+            $github_link = $config->getValue("github");
 
             // strip link
-            $githubUser = str_replace("https://github.com/", "", $githubLink);
-            $githubUser = str_replace("/", "", $githubUser);
+            $github_user = str_replace("https://github.com/", "", $github_link);
+            $github_user = str_replace("/", "", $github_user);
 
             // get repos from api
-            $repos = file_get_contents("https://api.github.com/users/$githubUser/repos", false, $context);
+            $repos = file_get_contents("https://api.github.com/users/$github_user/repos", false, $context);
             
             // decode json object
             $repos = json_decode($repos);
@@ -75,7 +75,7 @@
                 $html_url = $escapeUtils->specialCharshStrip($repo->html_url);
 
                 // check if repo is profile readme
-                if ($name != $githubUser) {
+                if ($name != $github_user) {
 
                     // check if repo archived
                     if ($repo->archived == true) {

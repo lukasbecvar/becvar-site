@@ -35,10 +35,10 @@
                         } else {
 
                             // save msg to database
-                            $sendMSG = $contactManager->sendMessage($name, $email, $message, "open");
+                            $send_msg = $contactManager->sendMessage($name, $email, $message, "open");
                     
                             // flash msg with status
-                            if ($sendMSG) {
+                            if ($send_msg) {
                                 echo '<div class="sent-message">Your message has been sent. Thank you!</div>';
                             } else {
                                 echo '<div class="error-message">System error please contact page administrator!</div>';

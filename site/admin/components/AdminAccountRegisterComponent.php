@@ -12,10 +12,10 @@
                 // get data from post and escapeit
                 $username = $escapeUtils->specialCharshStrip($_POST["username"]);
                 $password = $escapeUtils->specialCharshStrip($_POST["password"]);
-                $repassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
+                $re_rassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
                 
                 // check if values not empty
-                if (empty($username) or empty($password) or empty($repassword)) {
+                if (empty($username) or empty($password) or empty($re_rassword)) {
                     $alertManager->flashError("You must add all values in form!");
                 } else {
                     
@@ -23,7 +23,7 @@
                     if (strlen($password) < 5) {
                         $alertManager->flashError("Password must have more than 5 characters");
                     // check password match
-                    } elseif ($password != $repassword) {
+                    } elseif ($password != $re_rassword) {
                         $alertManager->flashError("Passwords do not match");
                     } else {
                         if ($userManager->isUserEmpty()) {

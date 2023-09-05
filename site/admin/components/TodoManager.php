@@ -4,14 +4,14 @@
     if (isset($_POST["submitNewTodo"])) {
 
         // get text from for and escape
-        $todoText = $escapeUtils->specialCharshStrip($_POST["todoText"]);
+        $todo_text = $escapeUtils->specialCharshStrip($_POST["todoText"]);
 
         // check if text is empty
-        if (!empty($todoText)) {
+        if (!empty($todo_text)) {
 
             // check if todo test have < 121 characters
-            if (strlen($todoText) < 121) {
-                $todosManager->addTodo($todoText);
+            if (strlen($todo_text) < 121) {
+                $todosManager->addTodo($todo_text);
 
                 // instant refrash after add new todo
                 $urlUtils->jsRedirect("?admin=todos");
@@ -70,10 +70,10 @@
                 </tr></thead><tbody>';
 
                 // get todos from database
-                $finalTodos = $mysql->fetch("SELECT * from todos WHERE status = 'open'");
+                $final_todos = $mysql->fetch("SELECT * from todos WHERE status = 'open'");
 
                 // print todos to table
-                foreach ($finalTodos as $row) { 
+                foreach ($final_todos as $row) { 
                     echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
                 }
 

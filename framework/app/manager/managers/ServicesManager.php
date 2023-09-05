@@ -56,7 +56,7 @@
         }
 
         // method for getting true or false for service running
-        public function isServiceInstalled($serviceName) {
+        public function isServiceInstalled($service_name) {
             
             global $config;
 
@@ -67,7 +67,7 @@
             $serviceDir = $config->getValue('serviceDir');
 
             // minecraft server
-            if ($serviceName == "minecraft") {
+            if ($service_name == "minecraft") {
 
                 // check if minecraft installed
                 if (file_exists($serviceDir."/minecraft/")) {
@@ -75,7 +75,7 @@
                 }
 
             // teamspeak server
-            } elseif ($serviceName == "ts3server") {
+            } elseif ($service_name == "ts3server") {
 
                 // check if teamspeak installed
                 if (file_exists($serviceDir."/teamspeak/")) {
@@ -86,7 +86,7 @@
             } else {
 
                 // execute cmd
-                $output = shell_exec("which $serviceName");
+                $output = shell_exec("which $service_name");
                 
                 // check if output is empty
                 if (!empty($output)) {
@@ -98,13 +98,13 @@
         }
         
         // check if screen session running
-        public function checkScreenSession($sessionName) {
+        public function checkScreenSession($session_name) {
 
             // default state output
 			$state = false;
 
             // execite cmd
-            $exec = shell_exec("sudo screen -S $sessionName -Q select . ; echo $?");
+            $exec = shell_exec("sudo screen -S $session_name -Q select . ; echo $?");
 
             // check if exec get output
             if ($exec == "0") {
@@ -122,10 +122,10 @@
         }
 
         // execute bash/sh script form /scripts in web [Input: script name]
-        public function executeScriptAsROOT($scriptName) {
+        public function executeScriptAsROOT($script_name) {
 
             // execute script
-            shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$scriptName."'");
+            shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$script_name."'");
         }
     }
 ?>

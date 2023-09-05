@@ -30,10 +30,10 @@
         }
 
         // flash error alert
-        public function flashError($msg, $withoutClose = false) {
+        public function flashError($msg, $without_close = false) {
 
             // check if closeble
-            if ($withoutClose) {
+            if ($without_close) {
                 echo 
                     '<center><div class="alert alert-danger alert-dismissible fade show" role="alert">
                         '.$msg.'

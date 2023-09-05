@@ -1,7 +1,7 @@
 <?php // main site index
 	
 	// init framework
-	require_once("../framework/config/ConfigManager.php");
+	require_once("../framework/config/ConfigUtils.php");
 	require_once("../framework/crypt/HashUtils.php");
 	require_once("../framework/crypt/CryptUtils.php");
 	require_once("../framework/utils/ResponseUtils.php");
@@ -25,7 +25,7 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// init objects
-	$config = new becwork\config\ConfigManager();
+	$config = new becwork\config\ConfigUtils();
 	$hashUtils = new becwork\utils\HashUtils();
 	$cryptUtils = new becwork\utils\CryptUtils();
 	$responseUtils = new becwork\utils\ResponseUtils();

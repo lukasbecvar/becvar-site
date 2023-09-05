@@ -19,9 +19,9 @@
 		  * Usage like setSession("name", "value")
 		  * Input session name and session value
 		*/
-		public function setSession($sessionName, $sessionValue) {
+		public function setSession($session_name, $session_value) {
 			$this->sessionStartedCheckWithStart();
-			$_SESSION[$sessionName] = $sessionValue;
+			$_SESSION[$session_name] = $session_value;
 		}
 
 		/*
@@ -30,7 +30,7 @@
 		  * Input session name
 		  * Return true or false
 		*/
-		public function checkSessionSet($sessionName) {
+		public function checkSessionSet($session_name) {
 
 			// default state value
 			$state = false;
@@ -39,7 +39,7 @@
 			$this->sessionStartedCheckWithStart();
 
 			// check if session found
-			if (isset($_SESSION[$sessionName])) {
+			if (isset($_SESSION[$session_name])) {
 				$state = true;
 			}
 

@@ -40,23 +40,23 @@
             global $escapeUtils;
 
             // default query string
-            $queryString = null;
+            $query_string = null;
 
             // check if query is empty
             if (!empty($_GET[$query])) {
 
                 // get & escape paramater
-                $queryString = $escapeUtils->specialCharshStrip($_GET[$query]);
+                $query_string = $escapeUtils->specialCharshStrip($_GET[$query]);
             }
 
             // return final query value
-            return $queryString;
+            return $query_string;
         }
 
         // get Http host aka domain name
         public function getHTTPhost() {
-            $host = $_SERVER['HTTP_HOST'];
-            return $host;
+            $http_host = $_SERVER['HTTP_HOST'];
+            return $http_host;
         }
 
         // get page title by paramater
@@ -85,14 +85,28 @@
         }
 
         // get age by birth data input
-        public function getAge($birthDate) {
+        public function getAge($birth_date) {
 
             // explode string data to array
-            $birthDate = explode("/", $birthDate);
+            $birth_date = explode("/", $birth_date);
 
             // calculate age
-            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
+            $age = (date("md", date("U", mktime(0, 0, 0, $birth_date[0], $birth_date[1], $birth_date[2]))) > date("md") ? ((date("Y") - $birth_date[2]) - 1) : (date("Y") - $birth_date[2]));
             return $age;           
+        }
+
+        // handle error msg & code
+        public function handleError($msg, $code) {
+
+            // send response code
+            http_response_code($code);
+
+            // check if site enabled dev-mode
+            if ($this->isSiteDevMode()) {
+                die("[DEV-MODE]: ".$msg);
+            } else {
+                $this->redirectError($code);
+            }
         }
 
         // redirect to error page

@@ -16,17 +16,17 @@
 
 			// init values
 			$username = $escapeUtils->specialCharshStrip($_POST["username"]);
-			$passwordRaw = $escapeUtils->specialCharshStrip($_POST["password"]);
+			$password_raw = $escapeUtils->specialCharshStrip($_POST["password"]);
 
 			// hash password
-			$password = $hashUtils->genBlowFish($passwordRaw);
+			$password = $hashUtils->genBlowFish($password_raw);
 
 			// default save account
-			$saveAccount = false;
+			$save_account = false;
 
 			// save account set true if user send value
 			if (isset($_POST["saveAccount"])) {
-				$saveAccount = true;
+				$save_account = true;
 			} 
 
 			// check if values not empty
@@ -51,17 +51,17 @@
 						$sessionUtils->setSession("role", $mysql->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
 
 						// check if user stay logged in
-						if ($saveAccount) {
+						if ($save_account) {
 							$userManager->setLoginCookies($token);
 						} else {
 							$userManager->unSetLoginCookies();
 						}
 
 						// get user ip
-						$userIP = $mainUtils->getRemoteAdress();
+						$user_ip = $mainUtils->getRemoteAdress();
 
 						// update user ip
-						$mysql->insertQuery("UPDATE users SET remote_addr='$userIP' WHERE username='$username'");
+						$mysql->insertQuery("UPDATE users SET remote_addr='$user_ip' WHERE username='$username'");
 
 						// log to mysql
 						$mysql->logToMysql("authenticator", "user: $username logged in success");
@@ -87,10 +87,10 @@
 					$alertManager->flashError("Incorrect username or password.");
 			
 					// log to mysql
-					if (empty($username) or empty($passwordRaw)) {
+					if (empty($username) or empty($password_raw)) {
 						$mysql->logToMysql("authenticator", "trying to login with empty values");
 					} else {
-						$mysql->logToMysql("authenticator", "trying to login with name: $username:$passwordRaw");				
+						$mysql->logToMysql("authenticator", "trying to login with name: $username:$password_raw");				
 					}
 				}
 			}

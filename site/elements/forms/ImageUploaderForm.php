@@ -7,26 +7,26 @@
 		// check if file is image
         if ($ext == "gif" or $ext == "jpg" or $ext == "jpeg" or $ext == "jfif" or $ext == "pjpeg" or $ext == "pjp" or $ext == "png" or $ext == "webp" or $ext == "bmp" or $ext == "ico") {		
 			
-			// generate imgSpec value
-			$imgSpec = $stringUtils->genRandomStringAll(40);
+			// generate img_spec value
+			$img_spec = $stringUtils->genRandomStringAll(40);
 			
 			// get image file
-			$imageFile = file_get_contents($_FILES['userfile']['tmp_name']);
+			$image_file = file_get_contents($_FILES['userfile']['tmp_name']);
 
 			// escape and encode image
-			$image = $escapeUtils->specialCharshStrip(base64_encode($imageFile));
+			$image = $escapeUtils->specialCharshStrip(base64_encode($image_file));
 
 			// get current data
 			$date = date('d.m.Y H:i:s');
 
 			// insert query to mysql table images
-			$mysql->insertQuery("INSERT INTO `image_uploader`(`imgSpec`, `image`, `date`) VALUES ('$imgSpec', '$image', '$date')");				
+			$mysql->insertQuery("INSERT INTO `image_uploader`(`img_spec`, `image`, `date`) VALUES ('$img_spec', '$image', '$date')");				
 
 			// log to mysql
-			$mysql->logToMysql("image-uploader", "uploaded new image: ".$imgSpec);	
+			$mysql->logToMysql("image-uploader", "uploaded new image: ".$img_spec);	
 
 			// redirect to image view
-			$urlUtils->jsRedirect("?process=image&spec=".$imgSpec);
+			$urlUtils->jsRedirect("?process=image&spec=".$img_spec);
 
 		} else {
 			$alertManager->flashError("Error file have wrong format!", true);

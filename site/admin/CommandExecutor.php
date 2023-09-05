@@ -15,20 +15,20 @@
             $command = $siteManager->getQueryString("command");
 
             // get services path
-            $serviceDir = $config->getValue('serviceDir');
+            $service_dir = $config->getValue('serviceDir');
 
             // get Service name
             $service = str_replace("_Stop", "", $command);
             $service = str_replace("_Start", "", $service);
 
             // init default final command
-            $finalCommand = "pwd";
+            $final_command = "pwd";
 
             // service starter system
             if (str_ends_with($command, "_Start")) {
                 
                 // get final start command
-                $finalCommand = $servicesList->services[$service]["start_cmd"];
+                $final_command = $servicesList->services[$service]["start_cmd"];
             
                 // log to mysql
                 $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." started: $service");
@@ -38,7 +38,7 @@
             elseif (str_ends_with($command, "_Stop")) {
 
                 // get final stop command
-                $finalCommand = $servicesList->services[$service]["stop_cmd"];
+                $final_command = $servicesList->services[$service]["stop_cmd"];
 
                 // log to mysql
                 $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." stoped: $service");
@@ -59,7 +59,7 @@
             }
         
             // execute final command
-            $servicesManager->executeCommand($finalCommand);
+            $servicesManager->executeCommand($final_command);
 
             // redirect back to dashboard
             $urlUtils->jsRedirect("?admin=dashboard");

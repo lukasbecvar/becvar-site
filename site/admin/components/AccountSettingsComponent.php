@@ -6,13 +6,13 @@
         
         // init values from form and escaped
         $password = $escapeUtils->specialCharshStrip($_POST["password"]);
-        $rePassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
+        $re_rassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
 
         // check if values not empty
-        if (!empty($password) or !empty($rePassword)) {
+        if (!empty($password) or !empty($re_rassword)) {
 
             // check if password matches
-            if ($password == $rePassword) {
+            if ($password == $re_rassword) {
 
                 // check if password have 6 characters
                 if (strlen($password) >= 5) {

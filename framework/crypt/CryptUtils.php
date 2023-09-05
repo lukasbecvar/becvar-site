@@ -10,7 +10,8 @@
 		  * Return: Base64 code
 		*/
 		public function genBase64($string) {
-			return base64_encode($string);
+			$base64 = base64_encode($string);
+			return $base64;
 		}
 
 		/*
@@ -19,7 +20,8 @@
 		  * Return: string or file
 		*/
 		public function decodeBase64($base64) {
-			return base64_decode($base64);
+			$decoded_string = base64_decode($base64);
+			return $decoded_string;
 		}
 
 		/*
@@ -27,7 +29,7 @@
 		  * Input: string or file, encrypt key
 		  * Return: encrypted string
 		*/
-		public function encryptAES($plaintext, $password, $method) {
+		public function encryptAES($plain_text, $password, $method) {
 		  
 			$salt = openssl_random_pseudo_bytes(8);
 			$salted = '';
@@ -40,7 +42,7 @@
 		  
 			$key = substr($salted, 0, 32);
 			$iv  = substr($salted, 32,16);
-			$encrypted_data = openssl_encrypt(json_encode($plaintext), $method, $key, true, $iv);
+			$encrypted_data = openssl_encrypt(json_encode($plain_text), $method, $key, true, $iv);
 			$data = array("ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt));
 		  
 			return json_encode($data);
@@ -51,25 +53,26 @@
 		  * Input: string or file, decrypt key
 		  * Return: decrypted string
 		*/
-		public function decryptAES($jsonString, $password, $method) {
+		public function decryptAES($json_string, $password, $method) {
 		  
-			$jsondata = json_decode($jsonString, true);
-			$salt = hex2bin($jsondata["s"]);
-			$ct = base64_decode($jsondata["ct"]);
-			$iv  = hex2bin($jsondata["iv"]);
-			$concatedPassphrase = $password.$salt;
+			$json_data = json_decode($json_string, true);
+			$salt = hex2bin($json_data["s"]);
+			$ct = base64_decode($json_data["ct"]);
+			$iv  = hex2bin($json_data["iv"]);
+			$concated_passphrase = $password.$salt;
 			$md5 = array();
-			$md5[0] = md5($concatedPassphrase, true);
+			$md5[0] = md5($concated_passphrase, true);
 			$result = $md5[0];
 		  
 			for ($i = 1; $i < 3; $i++) {
-				$md5[$i] = md5($md5[$i - 1].$concatedPassphrase, true);
+				$md5[$i] = md5($md5[$i - 1].$concated_passphrase, true);
 				$result .= $md5[$i];
 			}
 		  
 			$key = substr($result, 0, 32);
 			$data = openssl_decrypt($ct, $method, $key, true, $iv);
-			return json_decode($data, true);
+			$decoded_string = json_decode($data, true);
+			return $decoded_string;
 		}
 	}
 ?>

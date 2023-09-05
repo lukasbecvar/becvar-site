@@ -4,10 +4,10 @@
     if ($siteManager->getQueryString("spec") != null) {
 
         // get image spec
-        $imgSpec = $siteManager->getQueryString("spec");
+        $img_spec = $siteManager->getQueryString("spec");
 
         // get image by specID
-        $image = $mysql->fetchValue("SELECT image FROM image_uploader WHERE imgSpec='".$imgSpec."'", "image");
+        $image = $mysql->fetchValue("SELECT image FROM image_uploader WHERE img_spec='".$img_spec."'", "image");
     
         // check if image found
         if ($image == null) {

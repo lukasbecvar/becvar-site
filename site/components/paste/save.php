@@ -4,19 +4,19 @@
 	if (isset($_POST['data'])) {
  
 		// get data from post
-		$contentRaw = $escapeUtils->specialCharshStrip($_POST['data']);
+		$content_raw = $escapeUtils->specialCharshStrip($_POST['data']);
 
 		// get file name
 		$name = $escapeUtils->specialCharshStrip($_POST['file']);
 
 		// select content to write (Escape [XSS Protection])
-		$content = str_replace(array("<", ">"), array("&lt;", "&gt;"), $contentRaw);
+		$content = str_replace(array("<", ">"), array("&lt;", "&gt;"), $content_raw);
 
 		// get date
 		$date = date('d.m.Y H:i:s');
 		
 		// check if maximum lenght reached
-		if (strlen($contentRaw) > 60001) {
+		if (strlen($content_raw) > 60001) {
 
 			// redirect error
 			$siteManager->redirectError(400);

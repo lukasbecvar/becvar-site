@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/assets/css/image-viewer.css" rel="stylesheet">
-        <title>Image: <?php echo $imgSpec; ?></title>
+        <title>Image: <?php echo $img_spec; ?></title>
     </head>
     <body>
         <center>
@@ -14,7 +14,7 @@
             </div>
             <?php 
                 // log image view to database
-                $mysql->logToMysql("image-load", "visitor loaded image: $imgSpec");
+                $mysql->logToMysql("image-load", "visitor loaded image: $img_spec");
             ?>
         <center>
     </body>

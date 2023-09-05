@@ -43,10 +43,10 @@
             $todos = $mysql->fetch("SELECT id FROM todos WHERE status='open'");
 
             // count todos
-            $todosCount = count($todos);
+            $todos_count = count($todos);
 
             // check if logs is empty
-            if ($todosCount == 0) {
+            if ($todos_count == 0) {
                 $state = true;
             }
 

@@ -2,7 +2,7 @@
 <?php // log reader [admin component]
 
 	// default values 
-	$startByRow = 0;
+	$start_by_row = 0;
 
 	// check if user is owner
 	if (!$userManager->isUserOwner()) {
@@ -10,31 +10,31 @@
 	} else {
 
 		// page items limit
-		$limitOnPage = $config->getValue("rowInTableLimit");
+		$limit_on_page = $config->getValue("rowInTableLimit");
 
 		// if limit get seted make this trash part of code xD
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
 
 			// get show limit form url
-			$showLimit = $escapeUtils->specialCharshStrip($_GET["limit"]);
+			$show_limit = $escapeUtils->specialCharshStrip($_GET["limit"]);
 
 			// get start row form url
-			$startByRow = $escapeUtils->specialCharshStrip($_GET["startby"]);
+			$start_by_row = $escapeUtils->specialCharshStrip($_GET["startby"]);
 
 			// set next limit
-			$nextLimit = (int) $showLimit + $limitOnPage;
+			$next_limit = (int) $show_limit + $limit_on_page;
 
 			// set next start by for pages
-			$nextStartByRow = (int) $startByRow + $limitOnPage;
-			$nextLimitBack = (int) $showLimit - $limitOnPage;
-			$nextStartByRowBack = (int) $startByRow - $limitOnPage;	
+			$next_start_by_row = (int) $start_by_row + $limit_on_page;
+			$next_limit_back = (int) $show_limit - $limit_on_page;
+			$next_start_by_row_back = (int) $start_by_row - $limit_on_page;	
 		}
 
         // include navbar
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/VisitorsManagerNavPanel.php');
         
         // get all visitors from table
-        $visitors = $mysql->fetch("SELECT * FROM visitors LIMIT $startByRow, $limitOnPage");
+        $visitors = $mysql->fetch("SELECT * FROM visitors LIMIT $start_by_row, $limit_on_page");
 
         if (empty($_GET["action"])) {
 
@@ -61,29 +61,29 @@
 
                     // get banned status
                     if ($visitorManager->isVisitorBanned($data["ip_adress"])) {
-                        $banStatus = "banned";
+                        $ban_status = "banned";
                     } else {
-                        $banStatus = "unbanned";
+                        $ban_status = "unbanned";
                     }
 
                     // check if client ip not have > 15 characters
                     if (strlen($data["ip_adress"]) > 15) {
-                        $formatedIP = substr($data["ip_adress"], 0, 15)."...";
+                        $formated_ip = substr($data["ip_adress"], 0, 15)."...";
                     } else {
-                        $formatedIP = $data["ip_adress"];
+                        $formated_ip = $data["ip_adress"];
                     }
 
                     // build link to ip log reader
-                    $linkToIPLogs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formatedIP."</a>";
+                    $link_to_ip_logs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formated_ip."</a>";
 
                     // if ip = session ip
                     if ($data["ip_adress"] == $userManager->getUserIPByToken($userManager->getUserToken())) {
                         // check if client ip not have > 15 characters
                         if (strlen($data["ip_adress"]) > 15) {
-                            $linkToIPLogs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
+                            $link_to_ip_logs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
 
                         } else {
-                            $linkToIPLogs = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
+                            $link_to_ip_logs = "<span class='text-warning'>".$data["ip_adress"]."</span> [<span class='text-success'>You</span>]";
                         }                
                     }
 
@@ -107,7 +107,7 @@
                     }
 
                     // check if banned
-                    if ($banStatus == "banned") {
+                    if ($ban_status == "banned") {
                         $banned = "<span class='text-red'>yes</span>";
                     } else {
                         $banned = "<span class='text-success'>no</span>";
@@ -126,7 +126,7 @@
                     }
 
                     // check if visitor is banned
-                    if ($banStatus == "banned") {
+                    if ($ban_status == "banned") {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
                     } else {
                         $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
@@ -142,7 +142,7 @@
                         <td><strong>".$data["os"]."</strong>
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$banned."</strong>
-                        <td><strong>".$linkToIPLogs."</strong>
+                        <td><strong>".$link_to_ip_logs."</strong>
                         <td>".$banLink."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
@@ -216,19 +216,19 @@
 
                             // check if ban reason seted
                             if (!empty($_POST["banReason"])) {
-                                $banReason = $escapeUtils->specialCharshStrip($_POST["banReason"]);
+                                $ban_reason = $escapeUtils->specialCharshStrip($_POST["banReason"]);
                             } else {
-                                $banReason = "no reason";
+                                $ban_reason = "no reason";
                             }
 
                             // check if auto close seted
                             if (isset($_GET["close"])) {
 
                                 // redirect to banned with reason with autoclose
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$banReason&close=yes");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$ban_reason&close=yes");
                             } else {
                                 // redirect to banned with reason
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$banReason");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$ban_reason");
                             }
                         }
 
@@ -262,22 +262,22 @@
         if (isset($_GET["limit"]) and isset($_GET["startby"]) and !isset($_GET["action"])) {
 
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or (count($visitors) == $limitOnPage)) {
+            if (($show_limit > $limit_on_page) or (count($visitors) == $limit_on_page)) {
                 echo '<div class="pageButtonBox">';
             }
         
             // print back button if user in next page
-            if ($showLimit > $limitOnPage) {
-                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$nextLimitBack.'&startby='.$nextStartByRowBack.'>Back</a><br>';
+            if ($show_limit > $limit_on_page) {
+                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
             }
 
             // print next button if user on start page and can see next items
-            if (count($visitors) == $limitOnPage) {
-                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$nextLimit.'&startby='.$nextStartByRow.'>Next</a><br>';	
+            if (count($visitors) == $limit_on_page) {
+                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
             }
     
             // check if page buttons can show
-            if (($showLimit > $limitOnPage) or (count($visitors) == $limitOnPage)) {
+            if (($show_limit > $limit_on_page) or (count($visitors) == $limit_on_page)) {
                 echo '</div><br>';
             }
         }        
