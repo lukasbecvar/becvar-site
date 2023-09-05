@@ -4,7 +4,7 @@
     if ($userManager->isLoggedIn()) {
         
         // check if logging disabled
-        if (empty($_COOKIE[$config->getValue('antiLogCookie')])) {
+        if (empty($_COOKIE[$config->getValue('anti-log-cookie')])) {
 
             // set anti log cookie
             $userManager->setAntiLogCookie(); 
@@ -14,18 +14,14 @@
         } else {
 
             // unset anti log cookie
-            $cookieUtils->unset_cookie($config->getValue("antiLogCookie"));
+            $cookieUtils->unset_cookie($config->getValue("anti-log-cookie"));
 
             // redirect back to admin
             $urlUtils->jsRedirect("?admin=dashboard");
         }    
     } else {
 
-        // check if dev mode enabled
-        if ($siteManager->isSiteDevMode()) {
-            die("[DEV-MODE]:Error: you must log in first");
-        } else {
-            $siteManager->redirectError(403);
-        }
+        // handle error
+        $siteManager->handleError("[DEV-MODE]:Error: you must login first", 403);
     }
 ?>

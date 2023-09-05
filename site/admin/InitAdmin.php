@@ -117,7 +117,7 @@
                 $projectsManager->updateProjectDatabase();
 
                 // redirect back to table
-                $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+                $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 
             // login admin action redirect logged in users
             } elseif ($component == "login") {
@@ -143,10 +143,10 @@
         } else {
 
             // auto login if user have token cookie
-            if (isset($_COOKIE[$config->getValue('loginCookie')]) and isset($_COOKIE["userToken"])) {
+            if (isset($_COOKIE[$config->getValue('login-cookie')]) and isset($_COOKIE["userToken"])) {
 
                 // check if token valid
-                if ($_COOKIE[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
+                if ($_COOKIE[$config->getValue('login-cookie')] == $config->getValue('login-value')) {
 
                     //Auto user login
                     $userManager->autoLogin();

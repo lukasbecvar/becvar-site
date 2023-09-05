@@ -10,7 +10,7 @@
 	} else {
 
 		// page items limit
-		$limit_on_page = $config->getValue("rowInTableLimit");
+		$limit_on_page = $config->getValue("row-in-table-limit");
 
 		// if limit get seted make this trash part of code xD
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
@@ -127,9 +127,9 @@
 
                     // check if visitor is banned
                     if ($ban_status == "banned") {
-                        $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
+                        $ban_link = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
                     } else {
-                        $banLink = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
+                        $ban_link = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
                     }
 
                     // build table row
@@ -143,7 +143,7 @@
                         <td><strong>".$data["location"]."</strong>
                         <td><strong>".$banned."</strong>
                         <td><strong>".$link_to_ip_logs."</strong>
-                        <td>".$banLink."
+                        <td>".$ban_link."
                         <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
 
@@ -193,7 +193,7 @@
                     } else {
 
                         // redirect to visitors
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
                     }
                 } else {
                     
@@ -225,10 +225,10 @@
                             if (isset($_GET["close"])) {
 
                                 // redirect to banned with reason with autoclose
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$ban_reason&close=yes");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("row-in-table-limit")."&startby=0&reason=$ban_reason&close=yes");
                             } else {
                                 // redirect to banned with reason
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("rowInTableLimit")."&startby=0&reason=$ban_reason");
+                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("row-in-table-limit")."&startby=0&reason=$ban_reason");
                             }
                         }
 
@@ -249,7 +249,7 @@
 
                     // redirect to visitors
                     if ((!empty($_GET["reason"])) || (!empty($_POST["banReason"]))) {
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
                     }
                 }
 

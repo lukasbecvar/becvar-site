@@ -38,10 +38,10 @@
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// check if login cookie seted
-			if (isset($_SESSION[$config->getValue('loginCookie')])) {
+			if (isset($_SESSION[$config->getValue('login-cookie')])) {
 				
 				// check if login cookie is valid
-				if ($_SESSION[$config->getValue('loginCookie')] == $config->getValue('loginValue')) {
+				if ($_SESSION[$config->getValue('login-cookie')] == $config->getValue('login-value')) {
 					$state = true; // this is logged in state
 				} 
 			}
@@ -74,7 +74,7 @@
 			global $cookieUtils, $config;
 
 			// unset login key cookie
-			$cookieUtils->unset_cookie($config->getValue("loginCookie"));
+			$cookieUtils->unset_cookie($config->getValue("login-cookie"));
 
 			// unset token
 			$cookieUtils->unset_cookie("userToken");			
@@ -89,7 +89,7 @@
 			$cookieUtils->cookieSet("userToken", $token, time() + (60*60*24*7*365));
 
 			// set token cookie for next login
-			$cookieUtils->cookieSet($config->getValue("loginCookie"), $config->getValue("loginValue"), time() + (60*60*24*7*365));			
+			$cookieUtils->cookieSet($config->getValue("login-cookie"), $config->getValue("login-value"), time() + (60*60*24*7*365));			
 		}
 
 		// set anti log cookie
@@ -98,7 +98,7 @@
 			global $cookieUtils, $config;
 
 			// set antilog cookie
-			$cookieUtils->cookieSet($config->getValue("antiLogCookie"), $config->getValue("antiLogValue"), time() + (60*60*24*7*365));			
+			$cookieUtils->cookieSet($config->getValue("anti-log-cookie"), $config->getValue("anti-log-value"), time() + (60*60*24*7*365));			
 		}
 
 		// set login session
@@ -110,7 +110,7 @@
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// set token session
-			$sessionUtils->setSession($config->getValue("loginCookie"), $config->getValue("loginValue"));		
+			$sessionUtils->setSession($config->getValue("login-cookie"), $config->getValue("login-value"));		
 
 			// set token session
 			$sessionUtils->setSession("userToken", $token);
@@ -128,7 +128,7 @@
 			$sessionUtils->sessionDestroy();
 
 			// unset login key cookie
-			$cookieUtils->unset_cookie($config->getValue("loginCookie"));
+			$cookieUtils->unset_cookie($config->getValue("login-cookie"));
 
 			// unset username
 			$cookieUtils->unset_cookie("userToken");
@@ -294,7 +294,7 @@
 			$sessionUtils->sessionStartedCheckWithStart();
 
 			// set login identify session
-			$sessionUtils->setSession($config->getValue('loginCookie'), $_COOKIE[$config->getValue('loginCookie')]);
+			$sessionUtils->setSession($config->getValue('login-cookie'), $_COOKIE[$config->getValue('login-cookie')]);
  
 			// set token session
 			$sessionUtils->setSession("userToken", $user_token);

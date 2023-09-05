@@ -64,13 +64,13 @@
 			$state = false;
 
             // get service dir from config
-            $serviceDir = $config->getValue('serviceDir');
+            $service_dir = $config->getValue('service-dir');
 
             // minecraft server
             if ($service_name == "minecraft") {
 
                 // check if minecraft installed
-                if (file_exists($serviceDir."/minecraft/")) {
+                if (file_exists($service_dir."/minecraft/")) {
                     $state = true;
                 }
 
@@ -78,7 +78,7 @@
             } elseif ($service_name == "ts3server") {
 
                 // check if teamspeak installed
-                if (file_exists($serviceDir."/teamspeak/")) {
+                if (file_exists($service_dir."/teamspeak/")) {
                     $state = true;
                 } 
 

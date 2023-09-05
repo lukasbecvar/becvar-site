@@ -26,7 +26,7 @@
 			// save paste to mysql table
 			if (!empty($content)) {
 				$mysql->insertQuery("INSERT INTO pastes(spec, content, date) VALUES ('$name', '$content', '$date')");
-			}
+			} 
 
 			// log to mysql
 			$mysql->logToMysql("paste", "saved new paste: ".$name);	

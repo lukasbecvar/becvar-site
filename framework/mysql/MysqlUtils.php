@@ -45,16 +45,8 @@
             // catch connection error
             } catch(\PDOException $e) {
                 
-                // check if dev-mode is enabled
-                if ($config->getValue("dev-mode") == true) {
-                    
-                    // print error to page
-                    die('Database connection error: '.$e->getMessage());
-                } else {
-                    
-                    // redirect to error page
-                    $siteManager->redirectError("400");
-                }
+                // handle error
+                $siteManager->handleError('Database connection error: '.$e->getMessage(), 400);
             }
 
             // return database connection object
@@ -84,16 +76,8 @@
             // catch insert error
             } catch(\PDOException $e) {
 
-                // check if dev-mode is enabled
-                if ($config->getValue("dev-mode") == true) {
-                    
-                    // print error to page
-                    die('SQL query insert error: '.$e->getMessage());
-                } else {
-                    
-                    // redirect to error page
-                    $siteManager->redirectError("400");
-                }
+                // handle error
+                $siteManager->handleError('SQL query insert error: '.$e->getMessage(), 400);
             }
         }
 
@@ -109,7 +93,7 @@
             if ($config->getValue("logs") == true) {
 
                 // check if antilog cookie set
-                if (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
+                if (empty($_COOKIE[$config->getValue("anti-log-cookie")])) {
 
                     // check if name is null
                     if (empty($name)) {
@@ -166,16 +150,8 @@
             // catch fetch error
             } catch(\PDOException $e) {
 
-                // check if dev-mode is enabled
-                if ($config->getValue("dev-mode") == true) {
-                    
-                    // print error to page
-                    die('SQL fetch error: '.$e->getMessage());
-                } else {
-                    
-                    // redirect to error page
-                    $siteManager->redirectError("400");
-                }
+                // handle error
+                $siteManager->handleError('SQL fetch error: '.$e->getMessage(), 400);
             }
         }
 
@@ -213,22 +189,14 @@
                     
                     } else {
                     
-                        // print not found error (only for developer mode)
-                        if ($config->getValue("dev-mode")) {
-                            die("Database select error: '$value' not exist in selected data");
-                        } else {
-                            $siteManager->redirectError(404);
-                        }
+                        // handle error
+                        $siteManager->handleError("Database select error: '$value' not exist in selected data", 404);
                     }
 
                 } else {
 
-                    // print not found error (only for developer mode)
-                    if ($config->getValue("dev-mode") == true) {
-                        die("Database select error: please check if query valid, query:'$query'");
-                    } else {
-                        $siteManager->redirectError(404);
-                    }
+                    // handle error
+                    $siteManager->handleError("Database select error: please check if query valid, query:'$query'", 404);
                 }
 
                 // return value
@@ -237,16 +205,8 @@
             // catch fetch error
             } catch(\PDOException $e) {
 
-                // check if dev-mode is enabled
-                if ($config->getValue("dev-mode") == true) {
-                    
-                    // print error to page
-                    die('SQL fetch error: '.$e->getMessage());
-                } else {
-                    
-                    // redirect to error page
-                    $siteManager->redirectError("400");
-                }
+                // handle error
+                $siteManager->handleError('SQL fetch error: '.$e->getMessage(), 400);
             }
         }
 

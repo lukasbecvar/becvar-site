@@ -77,7 +77,7 @@
                 } else {
 
                     // set main app name
-                    $title = $config->getValue('appName'); 
+                    $title = $config->getValue('app-name'); 
                 }
             }
 

@@ -11,7 +11,7 @@
         <div class="col-lg-6">
                 <ul>
                     <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>28 May 1999</span></li>
-                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><?php echo $config->getValue("appName"); ?></span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><?php echo $config->getValue("app-name"); ?></span></li>
                     <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span><?php echo $config->getValue("email"); ?></span></li>
                 </ul>
             </div>

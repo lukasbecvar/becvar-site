@@ -9,8 +9,8 @@
             */
 
             // print if services dir not exist on the server
-            if (!file_exists($config->getValue('serviceDir'))) {
-                echo '<p class="card-text"><span class="text-red"><strong>Directory: '.$config->getValue('serviceDir').' not exist</strong></span></p>';
+            if (!file_exists($config->getValue('service-dir'))) {
+                echo '<p class="card-text"><span class="text-red"><strong>Directory: '.$config->getValue('service-dir').' not exist</strong></span></p>';
             }
 
             // print if site loaded on non https
@@ -34,13 +34,13 @@
             }
             
             // print anti log warning
-            if (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
+            if (empty($_COOKIE[$config->getValue("anti-log-cookie")])) {
                 echo '<p class="card-text text-warning"><strong>Logging for your browser is enabled you can disable <a href="?process=disableLogsForMe">here</a></strong></p>';
             }
 
             // print new logs warning
-            if (($dashboardManager->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
-                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?admin=logReader&limit='.$config->getValue("rowInTableLimit").'&startby=0">here</a></strong></p>';
+            if (($dashboardManager->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("anti-log-cookie")]))) {
+                echo '<p class="card-text text-warning"><strong>New logs found you can see it <a href="?admin=logReader&limit='.$config->getValue("row-in-table-limit").'&startby=0">here</a></strong></p>';
             }
 
             // print new messages

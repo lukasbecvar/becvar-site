@@ -7,10 +7,10 @@
 		public $config = [
 
 			/* Main config */
-			"appName"     => "Becvar.xyz",        	// define app name
-			"version"     => 7.3,                  	// define app version
+			"app-name"     => "Becvar.xyz",        	// define app name
+			"version"     => 7.4,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
-			"authorLink"  => "becvar.xyz", 	   		// define author site
+			"author-link"  => "becvar.xyz", 	   		// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
@@ -21,15 +21,15 @@
 			"maintenance" => "disabled", // maintenance config (Disable acces to public page)
 
 			/* Site meta values */
-			"googleVerifyToken" => "token",
-			"siteDescription"   => "Lukáš Bečvář AKA Lordbecvold personal website",
-			"siteKeywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
+			"google-verify-token" => "token",
+			"site-description"   => "Lukáš Bečvář AKA Lordbecvold personal website",
+			"site-keywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
 
 			/* Cookie values */
-			"antiLogCookie" => "88d6Z97RJc6gbHn8Ch7ybZbO1Y0bVFYx",	// anti log cookie for disable loging for browser who used this cookie
-			"antiLogValue"  => "3vULvNnBG96Ocm2i9Zbw6S307JkwG1bA",	// balue of anti log cookie
-			"loginCookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",	// login cookie name
-			"loginValue"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",	// value of login cookie
+			"anti-log-cookie" => "88d6Z97RJc6gbHn8Ch7ybZbO1Y0bVFYx",	// anti log cookie for disable loging for browser who used this cookie
+			"anti-log-value"  => "3vULvNnBG96Ocm2i9Zbw6S307JkwG1bA",	// balue of anti log cookie
+			"login-cookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",	// login cookie name
+			"login-value"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",	// value of login cookie
 
 			/* Contact information */
 			"email"     => "lukas@becvar.xyz",
@@ -40,14 +40,14 @@
 			"linkedin"  => "https://www.linkedin.com/in/luk%C3%A1%C5%A1-be%C4%8Dv%C3%A1%C5%99-29900a204/",
 
 			/* Browsers limiters */
-			"rowInTableLimit"      => 100,	// database browser & log reader [table row limit]
-			"imagesInBrowserLimit" => 10,	// images in browser
+			"row-in-table-limit"      => 100,	// database browser & log reader [table row limit]
+			"images-in-browser-limit" => 10,	// images in browser
 
 			/* Server variabiles */
-			"serviceDir" => "/services",    // define services directory
+			"service-dir" => "/services",    // define services directory
 
 			/* Geolocate config */
-			"geoplugin_url" => "http://www.geoplugin.net",
+			"geoplugin-url" => "http://www.geoplugin.net",
 
 			/* Enabled logs */
 			"logs" => true,

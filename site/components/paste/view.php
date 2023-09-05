@@ -8,11 +8,9 @@
 
     // check if content to view is not empty
     if (empty($paste_content)) {
-        if ($siteManager->isSiteDevMode()) {
-            die("[DEV-MODE]:Error: paste content is empty");
-        } else {
-            $siteManager->redirectError(520);
-        }
+
+        // handle error
+        $siteManager->handleError("[DEV-MODE]:Error: paste content is empty", 520);
     }
 ?>
 

@@ -20,11 +20,7 @@
 
     } else {
 
-        // print error
-        if ($siteManager->isSiteDevMode()) {
-            die("[DEV-MODE]:Error: image spec is empty");
-        } else {
-            $siteManager->redirectError(404);
-        }
+        // handle error
+        $siteManager->handleError("[DEV-MODE]:Error: image spec is empty", 404);
     }
 ?>

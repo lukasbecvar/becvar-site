@@ -32,10 +32,10 @@
             }
 
             // print main service dir test
-            if (!file_exists($config->getValue('serviceDir'))) {
-                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>directory: '.$config->getValue('serviceDir').' not exist</strong></span></p>';
+            if (!file_exists($config->getValue('service-dir'))) {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>directory: '.$config->getValue('service-dir').' not exist</strong></span></p>';
             } else {
-                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>directory: '.$config->getValue('serviceDir').' was initialized successfully</strong></span></p>';
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>directory: '.$config->getValue('service-dir').' was initialized successfully</strong></span></p>';
             }
         ?>
     </div>

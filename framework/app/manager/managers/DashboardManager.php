@@ -242,7 +242,7 @@
             $state = true;
 
             // check if service directory exist in system
-            if (!file_exists($config->getValue('serviceDir'))) {
+            if (!file_exists($config->getValue('service-dir'))) {
                 $state = false;
 
             // check if site running on ssl connction
@@ -254,11 +254,11 @@
                 $state = false;
             
             // check if antilog cookie not empty
-            } elseif (empty($_COOKIE[$config->getValue("antiLogCookie")])) {
+            } elseif (empty($_COOKIE[$config->getValue("anti-log-cookie")])) {
                 $state = false;
 
             // check if found new logs
-            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("antiLogCookie")]))) {
+            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("anti-log-cookie")]))) {
                 $state = false;
 
             // check if found new msgs in inbox

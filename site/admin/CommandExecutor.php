@@ -15,7 +15,7 @@
             $command = $siteManager->getQueryString("command");
 
             // get services path
-            $service_dir = $config->getValue('serviceDir');
+            $service_dir = $config->getValue('service-dir');
 
             // get Service name
             $service = str_replace("_Stop", "", $command);

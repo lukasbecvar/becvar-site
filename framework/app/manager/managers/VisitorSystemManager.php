@@ -365,7 +365,7 @@
                 try {
 
                     // get geoplugin url
-                    $geoplugin_url = $config->getValue("geoplugin_url");
+                    $geoplugin_url = $config->getValue("geoplugin-url");
 
                     // get geoplugin data
                     $geoplugin_data = file_get_contents($geoplugin_url."/json.gp?ip=$ip");

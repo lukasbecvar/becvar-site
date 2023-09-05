@@ -56,7 +56,7 @@
 		$start_by_row = 0;
 		
 		// page items limit (read from config)
-		$limit_on_page = $config->getValue("rowInTableLimit");
+		$limit_on_page = $config->getValue("row-in-table-limit");
 
 		// pager system calculator
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) && isset($_GET["startby"]))) {
@@ -298,12 +298,12 @@
 				else {
 					// redirect to log reader
 					if (isset($_GET["reader"])) {
-						$urlUtils->jsRedirect("?admin=logReader&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+						$urlUtils->jsRedirect("?admin=logReader&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 					} 
 					
 					// redirect to visitors system
 					else if (isset($_GET["visitors"])) {
-						$urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+						$urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 					} 
 					
 					// redirect to database browser
@@ -314,11 +314,11 @@
 
 							// check if confirmation is used
 							if ($siteManager->getQueryString("confirm") == "yes") {
-								$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+								$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 							}
 
 						} else {
-							$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+							$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 						}
 					}
 				}
@@ -457,7 +457,7 @@
 				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." add new row to $add_get");
 
 				// redirect back to table reader
-				$urlUtils->jsRedirect("?admin=dbBrowser&name=$add_get&limit=".$config->getValue("rowInTableLimit")."&startby=0");
+				$urlUtils->jsRedirect("?admin=dbBrowser&name=$add_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
 			} 
 			
 			// print add form

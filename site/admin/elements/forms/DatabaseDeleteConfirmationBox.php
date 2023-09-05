@@ -3,7 +3,7 @@
     $table = $siteManager->getQueryString("delete");
 
     // get table row limit
-    $row_limit = $config->getValue("rowInTableLimit");
+    $row_limit = $config->getValue("row-in-table-limit");
 ?>
 
 <div class="confirmation dark-table">

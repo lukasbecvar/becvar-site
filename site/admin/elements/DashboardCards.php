@@ -6,7 +6,7 @@
             <div class="card l-bg-cherry">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=logReader&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0" class="stats-link">Logs</a> <a href="?process=disableLogsForMe">.</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=logReader&limit=<?php echo $config->getValue("row-in-table-limit"); ?>&startby=0" class="stats-link">Logs</a> <a href="?process=disableLogsForMe">.</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
@@ -60,7 +60,7 @@
             <div class="card l-bg-orange-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=mediaBrowser&limit=<?php echo $config->getValue("imagesInBrowserLimit"); ?>&startby=0" class="stats-link">Images</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=mediaBrowser&limit=<?php echo $config->getValue("images-in-browser-limit"); ?>&startby=0" class="stats-link">Images</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
@@ -78,7 +78,7 @@
             <div class="card l-bg-orange-darker">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=dbBrowser&name=pastes&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0" class="stats-link">Pastes</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=dbBrowser&name=pastes&limit=<?php echo $config->getValue("row-in-table-limit"); ?>&startby=0" class="stats-link">Pastes</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">
@@ -96,7 +96,7 @@
             <div class="card l-bg-cyan-darker">
                 <div class="card-statistic-3 p-4">
                     <div class="mb-2">
-                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=visitors&limit=<?php echo $config->getValue("rowInTableLimit"); ?>&startby=0" class="stats-link">Visitors</a></h5>
+                        <h5 class="card-title mb-0"><a class="cardLink" href="?admin=visitors&limit=<?php echo $config->getValue("row-in-table-limit"); ?>&startby=0" class="stats-link">Visitors</a></h5>
                     </div>
                     <div class="row align-items-center mb-0 d-flex">
                         <div class="col-8">

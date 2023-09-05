@@ -11,8 +11,8 @@
     $configOBJ = new becwork\config\PageConfig();
     
     // get config value
-    $session = $configOBJ->config["loginCookie"];
-    $session_value = $configOBJ->config["loginValue"];
+    $session = $configOBJ->config["login-cookie"];
+    $session_value = $configOBJ->config["login-value"];
     
     // check if user logged in
     if (!isset($_SESSION[$session]) || !($_SESSION[$session] == $session_value)) {
