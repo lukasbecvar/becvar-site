@@ -1,40 +1,51 @@
-#!/usr/bin/php
-<?php // test for crypt utils
+<?php // hash function test class
 
-    // import util
+    declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    # link hash utils class
     require_once("framework/crypt/HashUtils.php");
 
-    // init hash funnctions
-    $hashUtils = new becwork\utils\HashUtils();
+    final class HashTest extends TestCase {
 
-    // Blowfish (AKA Bcrypt idk)
-    if ($hashUtils->genBlowFish("test") == "$2y$10$123sbrznvdzvchpj8z5p5eVspVSYEKrDeIU2Rz907rTjDhWl3bCH2") {
-        echo"\033[32mBlowFish hash 'test' -> $2y$10$123sbrznvdzvchpj8z5p5eVspVSYEKrDeIU2Rz907rTjDhWl3bCH2 success\n";
-    } else {
-        echo"\033[31mBlowFish Encode 'test' -> $2y$10$123sbrznvdzvchpj8z5p5eVspVSYEKrDeIU2Rz907rTjDhWl3bCH2 Failed\n";
+        // test blowfish hash
+        public function testBlowFish() {
+            $hashUtils = new \becwork\utils\HashUtils();
+
+            $hash = $hashUtils->genBlowFish("test");
+            $this->assertEquals($hash, "$2y$10$123sbrznvdzvchpj8z5p5eVspVSYEKrDeIU2Rz907rTjDhWl3bCH2");
+        }
+
+        // test sha1 hash
+        public function testSHA1() {
+            $hashUtils = new \becwork\utils\HashUtils();
+
+            $hash = $hashUtils->genSHA1("test");
+            $this->assertEquals($hash, "*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29");
+        }
+
+        // test md5
+        public function testMD5() {
+            $hashUtils = new \becwork\utils\HashUtils();
+
+            $hash = $hashUtils->hashMD5("test");
+            $this->assertEquals($hash, "098f6bcd4621d373cade4e832627b4f6");
+        }
+
+        // test sha 256
+        public function testSHA256() {
+            $hashUtils = new \becwork\utils\HashUtils();
+
+            $hash = $hashUtils->genSHA256("test");
+            $this->assertEquals($hash, "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08");
+        }
+
+        // test custom hash (with md4)
+        public function testCustomHash() {
+            $hashUtils = new \becwork\utils\HashUtils();
+
+            $hash = $hashUtils->customHash("test", "md4");
+            $this->assertEquals($hash, "db346d691d7acc4dc2625db19f9e3f52");
+        }
     }
-
-    // SHA1 hash
-    if ($hashUtils->genSHA1("test") == "*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29") {
-        echo"\033[32mSHA1 hash 'test' -> *94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29 success\n";
-    } else {
-        echo"\033[31mSHA1 Encode 'test' -> *94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29 Failed\n";
-    }
-
-    // MD5 hash
-    if ($hashUtils->hashMD5("test") == "098f6bcd4621d373cade4e832627b4f6") {
-        echo"\033[32mMD5 hash 'test' -> 098f6bcd4621d373cade4e832627b4f6 success\n";
-    } else {
-        echo"\033[31mMD5 Encode 'test' -> 098f6bcd4621d373cade4e832627b4f6 Failed\n";
-    }
-
-    // SHA256 hash
-    if ($hashUtils->genSHA256("test") == "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08") {
-        echo"\033[32mSHA256 hash 'test' -> 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08 success\n";
-    } else {
-        echo"\033[31mSHA256 Encode 'test' -> 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08 Failed\n";
-    }
-
-    // print spacer
-    echo"\033[33m================================================================================\n";
 ?>

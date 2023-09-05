@@ -31,9 +31,7 @@ case $number in
 		sh scripts/build_prod.sh
 	;;
 	3) # run tests
-		php tests/ResponseTest.php
-		php tests/CryptTest.php
-		php tests/HashTest.php
+		./vendor/bin/phpunit tests
 	;;
 	4) # run install components
 		sh scripts/install.sh

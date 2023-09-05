@@ -1,26 +1,43 @@
-#!/usr/bin/php
-<?php // test for crypt utils
+<?php // encryption function test class
 
-    // import util
+    declare(strict_types=1);
+    use PHPUnit\Framework\TestCase;
+
+    # link crypt utils class
     require_once("framework/crypt/CryptUtils.php");
 
-    // init crypter utils
-    $cryptUtils = new becwork\utils\CryptUtils();
-    
-    // base64 encoder
-    if ($cryptUtils->genBase64("test") == "dGVzdA==") {
-        echo"\033[32mBase64 Encode test -> dGVzdA== success\n";
-    } else {
-        echo"\033[31mBase64 Encode test -> dGVzdA== Failed\n";
+    final class CryptTest extends TestCase {
+
+        // test base64 encode
+        public function testBase64Encode() {
+            $cryptUtils = new becwork\utils\CryptUtils();
+
+            $encode = $cryptUtils->genBase64("test");
+            $this->assertEquals($encode, "dGVzdA==");
+        }
+
+        // test base64 decode
+        public function testBase64Decode() {
+            $cryptUtils = new becwork\utils\CryptUtils();
+
+            $decode = $cryptUtils->decodeBase64("dGVzdA==");
+            $this->assertEquals($decode, "test");
+        }
+
+        // test AES-128-CBC encryption
+        public function testAesEncryption() {
+            $cryptUtils = new becwork\utils\CryptUtils();
+
+            // testing string
+            $string = "test";
+
+            // encrypt string
+            $encrypted = $cryptUtils->encryptAES($string, "1234", "aes-128-cbc");
+
+            // decrypt string
+            $decrypted = $cryptUtils->decryptAES($encrypted, "1234", "aes-128-cbc");
+
+            $this->assertEquals($decrypted, $string);
+        }
     }
-
-    // base64 decoder
-    if ($cryptUtils->decodeBase64("dGVzdA==") == "test") {
-        echo"\033[32mBase64 Decode dGVzdA== -> test success\n";
-    } else {
-        echo"\033[31mBase64 Decode dGVzdA== -> test Failed\n";
-    }
-
-    echo"\033[33m================================================================================\n";
-
 ?>
