@@ -6,11 +6,11 @@
 
 		/*
 		  * The function for get website status
-		  * Usage like $status = checkOnline("https://becvar.xyz");
+		  * Usage like $status = is_url_online("https://becvar.xyz");
 		  * Input domain url
 		  * Returned Online or Offline string
 		*/
-		public function checkOnline($domain): string {
+		public function is_url_online($domain): string {
 
 			// default response output
 			$response_output = "Offline";
@@ -39,20 +39,12 @@
 		}
 
         /*
-          * The function for send 404 error
-        */
-        public function send404Header(): void {
-			http_response_code(404);
-            header("HTTP/1.0 404 Not Found");
-        }
-
-        /*
           * The function for get service status
-          * Usage like $status = serviceOnlineCheck("127.0.0.1", 25565);
+          * Usage like $status = is_service_online("127.0.0.1", 25565);
           * Input server ip and port
           * Returned On or Of string
         */
-        public function serviceOnlineCheck($ip, $port): string {
+        public function is_service_online($ip, $port): string {
 
 			// default response output
 			$response_output = "Offline";

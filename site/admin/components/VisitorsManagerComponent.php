@@ -5,21 +5,21 @@
 	$start_by_row = 0;
 
 	// check if user is owner
-	if (!$userManager->isUserOwner()) {
+	if (!$user_manager->is_user_Owner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
 		// page items limit
-		$limit_on_page = $config->getValue("row-in-table-limit");
+		$limit_on_page = $config->get_value("row-in-table-limit");
 
 		// if limit get seted make this trash part of code xD
 		if (isset($_GET["limit"]) && isset($_GET["startby"])) {
 
 			// get show limit form url
-			$show_limit = $escapeUtils->specialCharshStrip($_GET["limit"]);
+			$show_limit = $escape_utils->special_chars_strip($_GET["limit"]);
 
 			// get start row form url
-			$start_by_row = $escapeUtils->specialCharshStrip($_GET["startby"]);
+			$start_by_row = $escape_utils->special_chars_strip($_GET["startby"]);
 
 			// set next limit
 			$next_limit = (int) $show_limit + $limit_on_page;
@@ -60,7 +60,7 @@
                 foreach ($visitors as $data) {
 
                     // get banned status
-                    if ($visitorManager->isVisitorBanned($data["ip_adress"])) {
+                    if ($visitor_manager->is_visitor_banned($data["ip_adress"])) {
                         $ban_status = "banned";
                     } else {
                         $ban_status = "unbanned";
@@ -77,7 +77,7 @@
                     $link_to_ip_logs = "<a href='?admin=logReader&limit=50&startby=0&whereip=".$data["ip_adress"]."' class='log-reader-link'>".$formated_ip."</a>";
 
                     // if ip = session ip
-                    if ($data["ip_adress"] == $userManager->getUserIPByToken($userManager->getUserToken())) {
+                    if ($data["ip_adress"] == $user_manager->get_user_ip_by_token($user_manager->get_token())) {
                         // check if client ip not have > 15 characters
                         if (strlen($data["ip_adress"]) > 15) {
                             $link_to_ip_logs = "<span class='text-warning'>".substr($data["ip_adress"], 0, 15)."...</span> [<span class='text-success'>You</span>]";
@@ -88,7 +88,7 @@
                     }
 
                     // shortify browserID
-                    $data["browser"] = $visitorManager->getShortBrowserID($data["browser"]);
+                    $data["browser"] = $visitor_manager->get_short_browser_id($data["browser"]);
 
                     // check if browser is Unknown
                     if ($data["browser"] == "Unknown") {
@@ -159,7 +159,7 @@
         } else {
 
             // get action
-            $action = $siteManager->getQueryString("action");
+            $action = $site_manager->get_query_string("action");
 
             // if action = delete all
             if ($action == "deleteVisitors") {
@@ -170,19 +170,19 @@
             } elseif ($action == "ban") {
 
                 // get id from query string
-                $id = $escapeUtils->specialCharshStrip($_GET["id"]);
+                $id = $escape_utils->special_chars_strip($_GET["id"]);
 
                 // get visitor ip by id
-                $ip = $visitorManager->getVisitorIPByID($id);
+                $ip = $visitor_manager->get_visitor_ip_by_id($id);
 
                 // check if user banned
-                if ($visitorManager->isVisitorBanned($ip)) {
+                if ($visitor_manager->is_visitor_banned($ip)) {
                     
                     // log unban
-                    $mysql->logToMysql("unban-visitor", "user ".$userManager->getCurrentUsername()." unbanned ip: ".$ip);
+                    $mysql->log("unban-visitor", "user ".$user_manager->get_username()." unbanned ip: ".$ip);
 
                     // unban user by ip
-                    $visitorManager->unbannVisitorByIP($ip);
+                    $visitor_manager->unban_visitor_by_ip($ip);
 
                     // check if auto close seted
                     if (isset($_GET["close"])) {
@@ -193,7 +193,7 @@
                     } else {
 
                         // redirect to visitors
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+                        $url_utils->js_redirect("?admin=visitors&limit=".$config->get_value("row-in-table-limit")."&startby=0");
                     }
                 } else {
                     
@@ -201,13 +201,23 @@
                     if (!empty($_GET["reason"])) {
 
                         // escape ban reason
-                        $reason = $escapeUtils->specialCharshStrip($_GET["reason"]);
+                        $reason = $escape_utils->special_chars_strip($_GET["reason"]);
 
                         // log ban
-                        $mysql->logToMysql("ban-visitor", "user ".$userManager->getCurrentUsername()." banned ip: ".$ip);
+                        $mysql->log("ban-visitor", "user ".$user_manager->get_username()." banned ip: ".$ip);
 
                         // ban user by ip
-                        $visitorManager->bannVisitorByIP($ip, $reason);
+                        $visitor_manager->ban_visitor_by_ip($ip, $reason);
+
+                        // check if ban email require
+                        if (!empty($_GET["email"])) {
+                            
+                            // get email form query string
+                            $email = $site_manager->get_query_string("email");
+                            
+                            // block email
+                            $contact_manager->block_email($email);
+                        }
 
                     } else {
 
@@ -216,7 +226,7 @@
 
                             // check if ban reason seted
                             if (!empty($_POST["banReason"])) {
-                                $ban_reason = $escapeUtils->specialCharshStrip($_POST["banReason"]);
+                                $ban_reason = $escape_utils->special_chars_strip($_POST["banReason"]);
                             } else {
                                 $ban_reason = "no reason";
                             }
@@ -225,10 +235,10 @@
                             if (isset($_GET["close"])) {
 
                                 // redirect to banned with reason with autoclose
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("row-in-table-limit")."&startby=0&reason=$ban_reason&close=yes");
+                                $url_utils->js_redirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->get_value("row-in-table-limit")."&startby=0&reason=$ban_reason&close=yes");
                             } else {
                                 // redirect to banned with reason
-                                $urlUtils->jsRedirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->getValue("row-in-table-limit")."&startby=0&reason=$ban_reason");
+                                $url_utils->js_redirect("?admin=visitors&action=ban&id=".$_GET["id"]."&limit=".$config->get_value("row-in-table-limit")."&startby=0&reason=$ban_reason");
                             }
                         }
 
@@ -249,7 +259,7 @@
 
                     // redirect to visitors
                     if ((!empty($_GET["reason"])) || (!empty($_POST["banReason"]))) {
-                        $urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+                        $url_utils->js_redirect("?admin=visitors&limit=".$config->get_value("row-in-table-limit")."&startby=0");
                     }
                 }
 
@@ -283,7 +293,7 @@
         }        
 
         // log action to mysql database 
-        $mysql->logToMysql("log-reader", "user ".$userManager->getCurrentUsername()." showed visitors");
+        $mysql->log("log-reader", "user ".$user_manager->get_username()." showed visitors");
     }
 ?>
 </div>

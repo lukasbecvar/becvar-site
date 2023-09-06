@@ -7,7 +7,7 @@
             echo '<p class="card-text">SERVER: <strong><span class="online-text">Online</span> <span>[<a href="?admin=form&form=shutdown">SHUTDOWN</a>]</span></strong></p>';
 
             // get services list from /services-list.php file in web root
-            $services = $servicesList;
+            $services = $services_list;
 
             // execute all services
             foreach ($services as $value) {
@@ -21,7 +21,7 @@
                         if ($value["service_name"] == "ufw") {
 
                             // check if UFW running
-                            if ($servicesManager->isUFWRunning()) {
+                            if ($services_manager->is_ufw_running()) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-warning">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';
@@ -32,7 +32,7 @@
                         elseif ($value["service_name"] == "ts3server") {
 
                             // check if Team speak running
-                            if ($servicesManager->ifProcessRunning($value["service_name"])) {
+                            if ($services_manager->is_process_running($value["service_name"])) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-warning">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';
@@ -43,12 +43,12 @@
                         elseif ($value["service_name"] == "minecraft") {
 
                             // check if minecraft server starting
-                            if (($responseUtils->serviceOnlineCheck("127.0.0.1", "25565") == "Offline") && ($servicesManager->checkScreenSession("minecraft"))) {
+                            if (($response_utils->is_service_online("127.0.0.1", "25565") == "Offline") && ($services_manager->is_screen_session_running("minecraft"))) {
                                 echo '<p class="card-text">'.$value["display_name"].': <span class="text-info">starting...</span></p>';
                             } else {
                                 
                                 // check if minecraft server running
-                                if ($responseUtils->serviceOnlineCheck("127.0.0.1", "25565") == "Online") {
+                                if ($response_utils->is_service_online("127.0.0.1", "25565") == "Online") {
                                     echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                                 } else {
                                     echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-warning">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';
@@ -60,7 +60,7 @@
                         else {
 
                             // check if service Online
-                            if ($servicesManager->ifServiceActive($value["service_name"])) {
+                            if ($services_manager->is_service_active($value["service_name"])) {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="online-text">Online</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Stop">STOP</a>]</span></strong></p>';
                             } else {
                                 echo '<p class="card-text">'.$value["display_name"].': <strong><span class="text-red">Offline</span> <span>[<a href="?admin=executeTask&command='.$value["service_name"].'_Start">START</a>]</span></strong></p>';

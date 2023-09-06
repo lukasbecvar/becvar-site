@@ -2,13 +2,13 @@
 
     // check if auto close seted
     if (isset($_GET["close"])) {
-        $form_action = '?admin=visitors&action=ban&id='.$siteManager->getQueryString("id").'&limit=500&startby=0&close=yes';
+        $form_action = '?admin=visitors&action=ban&id='.$site_manager->get_query_string("id").'&limit=500&startby=0&close=yes';
     } else {
-        $form_action = '?admin=visitors&action=ban&id='.$siteManager->getQueryString("id").'&limit=500&startby=0';
+        $form_action = '?admin=visitors&action=ban&id='.$site_manager->get_query_string("id").'&limit=500&startby=0';
     }
 
     // check if get not empty
-    if ($siteManager->getQueryString("id") != null) {
+    if ($site_manager->get_query_string("id") != null) {
         echo '
             <form class="newTodoForm" action="'.$form_action.'" method="post">
                 <textarea class="todoArea" maxlength="120" name="banReason" class="feedback-input" placeholder="Reason"></textarea>

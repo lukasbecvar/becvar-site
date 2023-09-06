@@ -14,7 +14,7 @@
             </div>
             <?php 
                 // log image view to database
-                $mysql->logToMysql("image-load", "visitor loaded image: $img_spec");
+                $mysql->log("image-load", "visitor loaded image: $img_spec");
             ?>
         <center>
     </body>

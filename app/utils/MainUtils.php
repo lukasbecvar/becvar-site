@@ -5,31 +5,11 @@
     class MainUtils { 
 
         /*
-          * The function for get php server infromation
-          * Usage like echo drawPhpInformation()
-          * Returned phpinfo page
-        */
-        public function drawPhpInformation(): void {
-            phpinfo();
-        }
-
-        /*
-          * The function for get date by format
-          * Usage like drawData('m/d/Y h:i:s a')
-          * Input time format
-          * Return actual time in your format
-        */
-        public function drawData($format): ?string {
-            $date = date($format);
-            return $data;
-        }
-
-        /*
           * The function for get user remote adress
-          * Usage like $ip = getRemoteAdress()
+          * Usage like $ip = get_remote_adress()
           * Return remote adress
         */
-        public function getRemoteAdress(): ?string {
+        public function get_remote_adress(): ?string {
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $address = $_SERVER['HTTP_CLIENT_IP'];
           
@@ -47,34 +27,17 @@
           * Usage like redirect("home.php")
           * Input page
         */
-        public static function getRootDoc(): ?string {
+        public static function get_root_doc(): ?string {
             $doc_root = $_SERVER['DOCUMENT_ROOT'];
             return $doc_root;
         }
 
         /*
-          * The function for check if is lampp server
-          * Usage like $lampp = isLampp();
-          * Return true or false
-        */
-        public function isLampp(): bool {
-
-            // default state
-            $state = false;
-
-            if ($this->getRootDoc() == "/opt/lampp/htdocs") {
-                $state = true;
-            }
-
-            return $state;
-        }
-
-        /*
           * The function for get protocol
-          * Usage like $protocol = getProtocol();
+          * Usage like $protocol = get_protocol();
           * Return protocol (http, https)
         */
-        public function getProtocol(): ?string {
+        public function get_protocol(): ?string {
 
             // default protocol
             $protocol = "http://";
@@ -88,20 +51,9 @@
         }
 
         /*
-          * The function for print array
-          * Usage like drawArray($array)
-          * Input array
-        */
-        public function drawArray($array): void {
-            echo '<pre>';
-            print_r($array);
-            echo '</pre>';
-        }
-
-        /*
           * The function for print errors to page
         */
-        public function drawErrors(): void {
+        public function enable_errors(): void {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);         
@@ -112,7 +64,7 @@
           * 
           * @return bool True if it is a secure HTTPS connection, otherwise false.
         */
-        public function isSSL(): bool {
+        public function is_ssl(): bool {
 
             // default state
             $state = false;

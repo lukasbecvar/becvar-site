@@ -1,4 +1,5 @@
 <?php // mysql utils (PDO functions: connect, read, insert, etc...)
+    
     namespace becwork\utils;
 
     class MysqlUtils {
@@ -22,7 +23,7 @@
         */
         public function connect(): \PDO {
             
-            global $config, $siteManager;
+            global $config, $site_manager;
 
             // get mysql connection data form app config
             $address  = $this->db_host;
@@ -31,7 +32,7 @@
             $password = $this->db_password;
 
             // get default database charset
-            $encoding = $config->getValue("encoding");
+            $encoding = $config->get_value("encoding");
             
             // try connect to database
             try {
@@ -46,7 +47,7 @@
             } catch(\PDOException $e) {
                 
                 // handle error
-                $siteManager->handleError('Database connection error: '.$e->getMessage(), 400);
+                $site_manager->handle_error('database connection error: '.$e->getMessage(), 400);
             }
 
             // return database connection object
@@ -55,12 +56,12 @@
 
         /*
           * FUNCTION:  database insert sql query function (Use database name from config.php)
-          * USAGE: like insertQuery("INSERT INTO logs(name, value, date, remote_addr) VALUES('log name', 'log value', 'log date', 'log remote_addr')")
+          * USAGE: like insert("INSERT INTO logs(name, value, date, remote_addr) VALUES('log name', 'log value', 'log date', 'log remote_addr')")
           * INPUT: sql command like string
         */
-        public function insertQuery($query): void {
+        public function insert($query): void {
 
-            global $config, $siteManager;
+            global $config, $site_manager;
 
             // get PDO connection
             $connection = $this->connect();
@@ -77,7 +78,7 @@
             } catch(\PDOException $e) {
 
                 // handle error
-                $siteManager->handleError('SQL query insert error: '.$e->getMessage(), 400);
+                $site_manager->handle_error('sql query insert error: '.$e->getMessage(), 400);
             }
         }
 
@@ -85,15 +86,15 @@
          * FUNCTION: mysql log function (Muste instaled logs table form sql)
          * INPUT: log name and value
         */
-        public function logToMysql($name, $value): void {
+        public function log($name, $value): void {
 
-            global $config, $escapeUtils, $mainUtils, $visitorManager;
+            global $config, $escape_utils, $main_utils, $visitor_manager;
 
             // check if logs enable
-            if ($config->getValue("logs") == true) {
+            if ($config->get_value("logs") == true) {
 
                 // check if antilog cookie set
-                if (empty($_COOKIE[$config->getValue("anti-log-cookie")])) {
+                if (empty($_COOKIE[$config->get_value("anti-log-cookie")])) {
 
                     // check if name is null
                     if (empty($name)) {
@@ -106,17 +107,17 @@
                     }
 
                     // get data & escape
-                    $name = $escapeUtils->specialCharshStrip($name);
-                    $value = $escapeUtils->specialCharshStrip($value);
+                    $name = $escape_utils->special_chars_strip($name);
+                    $value = $escape_utils->special_chars_strip($value);
 
                     // get values
                     $date = date('d.m.Y H:i:s');
-                    $remote_addr = $mainUtils->getRemoteAdress();
+                    $remote_addr = $main_utils->get_remote_adress();
                     $status = "unreaded";
-                    $browser = $visitorManager->getBrowser();
+                    $browser = $visitor_manager->get_browser();
 
                     // insert log to mysql
-                    $this->insertQuery("INSERT INTO logs(name, value, date, remote_addr, browser, status) VALUES('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
+                    $this->insert("INSERT INTO logs(name, value, date, remote_addr, browser, status) VALUES('$name', '$value', '$date', '$remote_addr', '$browser', '$status')");
                 }
             }
         }
@@ -151,7 +152,7 @@
             } catch(\PDOException $e) {
 
                 // handle error
-                $siteManager->handleError('SQL fetch error: '.$e->getMessage(), 400);
+                $site_manager->handle_error('sql fetch error: '.$e->getMessage(), 400);
             }
         }
 
@@ -160,9 +161,9 @@
           * INPUT: sql query & specific value
           * RETURN: selected value
         */
-        public function fetchValue($query, $value): ?string {
+        public function fetch_value($query, $value): ?string {
 
-            global $config, $siteManager;
+            global $config, $site_manager;
 
             // get database connection
             $connection = $this->connect();
@@ -185,37 +186,36 @@
                     if (array_key_exists($value, $fetch[0])) {
 
                         // get value from retrun
-                        $valueOutput = $fetch[0][$value];
+                        $value_output = $fetch[0][$value];
                     
                     } else {
                     
                         // handle error
-                        $siteManager->handleError("Database select error: '$value' not exist in selected data", 404);
+                        $site_manager->handle_error("database select error: '$value' not exist in selected data", 404);
                     }
 
                 } else {
 
                     // handle error
-                    $siteManager->handleError("Database select error: please check if query valid, query:'$query'", 404);
+                    $site_manager->handle_error("database select error: please check if query valid, query:'$query'", 404);
                 }
 
-                // return value
-                return $valueOutput;
+                return $value_output;
 
             // catch fetch error
             } catch(\PDOException $e) {
 
                 // handle error
-                $siteManager->handleError('SQL fetch error: '.$e->getMessage(), 400);
+                $site_manager->handle_error('sql fetch error: '.$e->getMessage(), 400);
             }
         }
 
         /*
           * FUNCTION: get version function
-          * USAGE: $ver = getMySQLVersion();
+          * USAGE: $ver = get_version();
           * RETURN: mysql version in system
         */
-        public function getMySQLVersion(): ?string {
+        public function get_version(): ?string {
             $output = shell_exec('mysql -V');
             preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
             return $version[0];

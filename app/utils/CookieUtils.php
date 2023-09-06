@@ -6,29 +6,29 @@
 
         /*
           * The function for set cookie
-          * Usage like cookieSet("TestCookie", 69, time() + (60*60*24*7));
+          * Usage like set("TestCookie", 69, time() + (60*60*24*7));
           * Input name value and expiration time in seconds
         */
-        public function cookieSet($name, $value, $expiration): void {
+        public function set($name, $value, $expiration): void {
             setcookie($name, $value, $expiration);
         }
 
         /*
           * The function for get cookie
-          * Usage like $cookie = getCookie("cookieName")
+          * Usage like $cookie = get("cookieName")
           * Input cookie name
           * Return cookie value
         */
-        public function getCookie($name): ?string {
+        public function get($name): ?string {
             return $_COOKIE[$name];
         }
 
         /*
           * The function for unset cookie by name
-          * Usage like unset_cookie("name");
+          * Usage like unset("name");
           * Input cookie name (string)
         */
-        public function unset_cookie($name): void {
+        public function unset($name): void {
             
             // get http host
             $host = $_SERVER['HTTP_HOST'];
@@ -66,14 +66,6 @@
                     setcookie($name, '', 1, $cookie_path, $domain);
                 } while (strpos($domain, '.') !== false && $domain = substr($domain, 1 + strpos($domain, '.')));
             }
-        }
-
-        /*
-          * The function for print cookie array
-          * Usage like printCookie()
-        */
-        public function printCookie(): void {
-            print_r($_COOKIE);
         }
     }
 ?>

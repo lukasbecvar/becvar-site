@@ -4,14 +4,52 @@
 
 	class SiteManager {
 
+        // check if loaded url is valid
+        public function is_valid_url(): bool {
+
+            global $config;
+
+            // default state
+            $state = false;
+
+            // get host url
+            $url = $this->get_http_host();
+
+            // check if url valid
+            if ($url == $config->get_value("url")) {
+                $state = true;
+            }
+
+            return $state;
+        }
+
+        // check if ssl running valid
+        public function check_ssl(): bool {
+
+            global $config, $main_utils;
+
+            // default state
+            $state = true;
+
+            // check if only https enabled
+            if ($config->get_value("https")) {
+
+                if (!$main_utils->is_ssl()) {
+                    $state = false;
+                }
+            }
+
+            return $state;
+        }
+
         // get true or false if admin page
-        public function isCurrentPageAdmin(): bool {
+        public function is_admin_site(): bool {
             
             // default state output
 			$state = false;
 
             // check if page is admin
-            if ($this->getQueryString("admin") != null) {
+            if ($this->get_query_string("admin") != null) {
                 $state = true;
             }
 
@@ -19,7 +57,7 @@
         }
 
         // check maintenance mode
-        public function ifMaintenance(): bool {
+        public function is_maintenance(): bool {
 
             global $config;
 
@@ -27,7 +65,7 @@
 			$state = false;
 
             // check if maintenance mode valid
-            if ($config->getValue('maintenance') == "enabled" && $this->isCurrentPageAdmin() == false) {
+            if ($config->get_value('maintenance') == "enabled" && $this->is_admin_site() == false) {
                 $state = true;
             }
 
@@ -35,9 +73,9 @@
         }
 
         // get query string by name
-        public function getQueryString($query): ?string {
+        public function get_query_string($query): ?string {
             
-            global $escapeUtils;
+            global $escape_utils;
 
             // default query string
             $query_string = null;
@@ -46,7 +84,7 @@
             if (!empty($_GET[$query])) {
 
                 // get & escape paramater
-                $query_string = $escapeUtils->specialCharshStrip($_GET[$query]);
+                $query_string = $escape_utils->special_chars_strip($_GET[$query]);
             }
 
             // return final query value
@@ -54,30 +92,30 @@
         }
 
         // get Http host aka domain name
-        public function getHTTPhost() {
+        public function get_http_host() {
             $http_host = $_SERVER['HTTP_HOST'];
             return $http_host;
         }
 
         // get page title by paramater
-        public function getPageTitle() {
+        public function get_page_title() {
 
             global $config;
 
             // check if host is localhost
-            if ($this->getHTTPhost() == "localhost") {
+            if ($this->get_http_host() == "localhost") {
                 
                 $title = "Localhost Testing"; 
             } else {
 
                 // check if admin site
-                if ($this->isCurrentPageAdmin()) { 
+                if ($this->is_admin_site()) { 
                 
                     $title =  "Admin site"; 
                 } else {
 
                     // set main app name
-                    $title = $config->getValue('app-name'); 
+                    $title = $config->get_value('app-name'); 
                 }
             }
 
@@ -85,7 +123,7 @@
         }
 
         // get age by birth data input
-        public function getAge($birth_date) {
+        public function get_age($birth_date) {
 
             // explode string data to array
             $birth_date = explode("/", $birth_date);
@@ -95,29 +133,42 @@
             return $age;           
         }
 
-        // handle error msg & code
-        public function handleError($msg, $code) {
-
-            // send response code
-            http_response_code($code);
-
-            // check if site enabled dev-mode
-            if ($this->isSiteDevMode()) {
-                die("[DEV-MODE]: ".$msg);
-            } else {
-                $this->redirectError($code);
-            }
-        }
-
         // redirect to error page
-        public function redirectError($error) {
+        public function redirect_error($error) {
 
             // redirct loaction header
             header("location: error.php?code=$error");
         }
 
+        // handle error msg & code
+        public function handle_error($msg, $code): void {
+
+            global $config;
+
+            // send response code
+            http_response_code($code);
+
+            // check if error log enabled
+            if ($config->get_value("error-log")) {
+
+                // budil error msg
+                $error_msg = "code: ".$code.", ".$msg."\n";
+
+                // log to error.log
+                error_log($error_msg, 3, __DIR__."../../../../error.log");
+            }
+            
+
+            // check if site enabled dev-mode
+            if ($this->is_dev_mode()) {
+                die("[DEV-MODE]: ".$msg);
+            } else {
+                $this->redirect_error($code);
+            }
+        }
+
         // check if page in dev mode
-        public function isSiteDevMode() {
+        public function is_dev_mode() {
 
             global $config;
 
@@ -125,7 +176,7 @@
 			$state = false;
 
             // check if dev mode enabled
-            if ($config->getValue("dev-mode") == true) {
+            if ($config->get_value("dev-mode") == true) {
                 $state = true;
             }
             
@@ -133,7 +184,7 @@
         }
 
         // check if site running on localhost
-        public function isRunningLocalhost() {
+        public function is_running_localhost() {
 
             global $config;
 
@@ -141,12 +192,12 @@
 			$state = false;
 
             // check if running on url localhost
-            if ($config->getValue("url") == "localhost") {
+            if ($config->get_value("url") == "localhost") {
                 $state = true;
             } 
             
             // check if running on localhost ip
-            if ($config->getValue("url") == "127.0.0.1") {
+            if ($config->get_value("url") == "127.0.0.1") {
                 $state = true;
             }
 

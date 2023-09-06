@@ -8,15 +8,16 @@
 
 			/* Main config */
 			"app-name"     => "Becvar.xyz",        	// define app name
-			"version"     => 7.4,                  	// define app version
+			"version"     => 7.5,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
-			"author-link"  => "becvar.xyz", 	   		// define author site
+			"author-link"  => "becvar.xyz", 	   	// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
 			"https"       => false,				   	// if this = true (Site can run only on https://)
-			
+			"error-log"   => true,					// enable log errors to log file (error.log)
+
 			/* Page config */
 			"maintenance" => "disabled", // maintenance config (Disable acces to public page)
 
@@ -28,8 +29,8 @@
 			/* Cookie values */
 			"anti-log-cookie" => "88d6Z97RJc6gbHn8Ch7ybZbO1Y0bVFYx",	// anti log cookie for disable loging for browser who used this cookie
 			"anti-log-value"  => "3vULvNnBG96Ocm2i9Zbw6S307JkwG1bA",	// balue of anti log cookie
-			"login-cookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",	// login cookie name
-			"login-value"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",	// value of login cookie
+			"login-cookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",		// login cookie name
+			"login-value"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",		// value of login cookie
 
 			/* Contact information */
 			"email"     => "lukas@becvar.xyz",
@@ -44,7 +45,7 @@
 			"images-in-browser-limit" => 10,	// images in browser
 
 			/* Server variabiles */
-			"service-dir" => "/services",    // define services directory
+			"service-dir" => "/services",    	// define services directory
 
 			/* Geolocate config */
 			"geoplugin-url" => "http://www.geoplugin.net",
@@ -53,10 +54,10 @@
 			"logs" => true,
 
 			/* Mysql config */
-			"mysql-address"		=> 	"localhost",	// define mysql server ip
-			"mysql-database" 	=> 	"becvar_site",	// define mysql default db name
-			"mysql-username"	=> 	"root",			// define mysql user 
-			"mysql-password" 	=> 	"root"			// define Mysql password
+			"database-host"		=> 	"localhost",	// define mysql server ip
+			"database-name" 	=> 	"becvar_site",	// define mysql default db name
+			"database-username"	=> 	"root",			// define mysql user 
+			"database-password" => 	"root"			// define Mysql password
 		];
 	}
 ?>

@@ -1,27 +1,27 @@
 <?php // secret Log disable function (Setup antilog cookie to browser..)
 
     // check if user logged in 
-    if ($userManager->isLoggedIn()) {
+    if ($user_manager->is_logged_in()) {
         
         // check if logging disabled
-        if (empty($_COOKIE[$config->getValue('anti-log-cookie')])) {
+        if (empty($_COOKIE[$config->get_value('anti-log-cookie')])) {
 
             // set anti log cookie
-            $userManager->setAntiLogCookie(); 
+            $user_manager->set_anti_log_cookie(); 
 
             // redirect back to admin
-            $urlUtils->jsRedirect("?admin=dashboard");
+            $url_utils->js_redirect("?admin=dashboard");
         } else {
 
             // unset anti log cookie
-            $cookieUtils->unset_cookie($config->getValue("anti-log-cookie"));
+            $cookie_utils->unset($config->get_value("anti-log-cookie"));
 
             // redirect back to admin
-            $urlUtils->jsRedirect("?admin=dashboard");
+            $url_utils->js_redirect("?admin=dashboard");
         }    
     } else {
 
         // handle error
-        $siteManager->handleError("[DEV-MODE]:Error: you must login first", 403);
+        $site_manager->handle_error("[DEV-MODE]:Error: you must login first", 403);
     }
 ?>

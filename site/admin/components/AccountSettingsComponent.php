@@ -5,8 +5,8 @@
     if (isset($_POST["submitPasswordChange"])) {
         
         // init values from form and escaped
-        $password = $escapeUtils->specialCharshStrip($_POST["password"]);
-        $re_rassword = $escapeUtils->specialCharshStrip($_POST["repassword"]);
+        $password = $escape_utils->special_chars_strip($_POST["password"]);
+        $re_rassword = $escape_utils->special_chars_strip($_POST["repassword"]);
 
         // check if values not empty
         if (!empty($password) or !empty($re_rassword)) {
@@ -18,21 +18,21 @@
                 if (strlen($password) >= 5) {
         
                     // get username from session
-                    $username = $userManager->getCurrentUsername();
+                    $username = $user_manager->get_username();
                     
                     // update password
-                    $userManager->updatePassword($username, $password);
+                    $user_manager->update_password($username, $password);
 
                     // show updates msg
-                    $alertManager->flashSuccess("Your password is updated");
+                    $alert_manager->flash_success("Your password is updated");
                 } else {
-                    $alertManager->flashError("Minimal password lenght is 6 characters");
+                    $alert_manager->flash_error("Minimal password lenght is 6 characters");
                 }
             } else {
-                $alertManager->flashError("Password is not matched");
+                $alert_manager->flash_error("Password is not matched");
             }
         } else {
-            $alertManager->flashError("Minimal password lenght is 6 characters");
+            $alert_manager->flash_error("Minimal password lenght is 6 characters");
         }
     }
 
@@ -41,7 +41,7 @@
 
         // check if file not empty
         if (empty($_FILES['fileToUpload']["tmp_name"])) {        
-            $alertManager->flashError("Image file is empty");
+            $alert_manager->flash_error("Image file is empty");
         } else {
 
             // get file from form
@@ -51,13 +51,13 @@
             $base64Final = base64_encode($imageFile);
             
             // get username
-            $username = $userManager->getCurrentUsername();
+            $username = $user_manager->get_username();
 
             // update user avatar
-            $userManager->updateProfileImage($base64Final, $username);
+            $user_manager->update_profile_image($base64Final, $username);
 
             // flash msg
-            $alertManager->flashSuccess("Image updated");
+            $alert_manager->flash_success("Image updated");
         }
     }
 

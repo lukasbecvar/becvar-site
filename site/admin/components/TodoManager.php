@@ -4,17 +4,17 @@
     if (isset($_POST["submitNewTodo"])) {
 
         // get text from for and escape
-        $todo_text = $escapeUtils->specialCharshStrip($_POST["todoText"]);
+        $todo_text = $escape_utils->special_chars_strip($_POST["todoText"]);
 
         // check if text is empty
         if (!empty($todo_text)) {
 
             // check if todo test have < 121 characters
             if (strlen($todo_text) < 121) {
-                $todosManager->addTodo($todo_text);
+                $todos_manager->insert_todo($todo_text);
 
                 // instant refrash after add new todo
-                $urlUtils->jsRedirect("?admin=todos");
+                $url_utils->js_redirect("?admin=todos");
 
             } else {
                 
@@ -35,16 +35,16 @@
     }
 	
     // check if user typed id
-    if ($siteManager->getQueryString("delete") != null) {
+    if ($site_manager->get_query_string("delete") != null) {
 
         // get id form url and escape
-        $id = $siteManager->getQueryString("delete");
+        $id = $site_manager->get_query_string("delete");
 
         // close todo
-        $todosManager->closeTodo($id);
+        $todos_manager->close_todo($id);
 
         // redirect to todos page
-        $urlUtils->jsRedirect("?admin=todos"); 
+        $url_utils->js_redirect("?admin=todos"); 
     }
 ?>
 
@@ -57,7 +57,7 @@
         <?php // print todos to site
 
             // check if todos is empty
-            if ($todosManager->isEmpty()) {
+            if ($todos_manager->is_empty()) {
                 echo"<h2 class=pageTitle>Todolist is empty</h2>";
             } else {
 

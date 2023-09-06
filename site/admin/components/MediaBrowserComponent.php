@@ -5,21 +5,21 @@
 	$start_by_row = 0;
 
     // check if user is owner 
-	if (!$userManager->isUserOwner()) {
+	if (!$user_manager->is_user_Owner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
 		// get page items limit
-		$limit_on_page = $config->getValue("images-in-browser-limit");
+		$limit_on_page = $config->get_value("images-in-browser-limit");
 
 		// if limit get seted make this trash part of code xD
-		if (($siteManager->getQueryString("limit") != null) && ($siteManager->getQueryString("startby") != null)) {
+		if (($site_manager->get_query_string("limit") != null) && ($site_manager->get_query_string("startby") != null)) {
 
 			// get show limit form url
-			$show_limit = $siteManager->getQueryString("limit");
+			$show_limit = $site_manager->get_query_string("limit");
 
 			// get start row form url
-			$start_by_row = $siteManager->getQueryString("startby");
+			$start_by_row = $site_manager->get_query_string("startby");
 
 			// set next limit
 			$next_limit = (int) $show_limit + $limit_on_page;
@@ -52,7 +52,7 @@
 
 
         // pager button box check
-        if (($siteManager->getQueryString("limit") != null) and ($siteManager->getQueryString("startby") != null) and ($siteManager->getQueryString("action") == null)) {
+        if (($site_manager->get_query_string("limit") != null) and ($site_manager->get_query_string("startby") != null) and ($site_manager->get_query_string("action") == null)) {
 
             echo '<div class="pageButtonBox">';
         

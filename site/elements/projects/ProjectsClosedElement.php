@@ -1,7 +1,7 @@
 <?php // closed project site component 
 
     // get projects list object from manager
-    $closedProjects = $projectsManager->getProjectsWhereStatus("closed"); 
+    $closedProjects = $projects_manager->get_projects_list("closed"); 
 
     // print all closed project to element
     foreach ($closedProjects as $data) {

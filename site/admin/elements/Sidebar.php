@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="profile">
-        <img src="data:image/jpeg;base64,<?php echo $userManager->getUserAvatar(); ?>" alt="profile_picture">
-        <h3><?php echo $userManager->getCurrentUsername(); ?></h3>
-        <p><?php echo $userManager->getCurrentRole(); ?></p>
+        <img src="data:image/jpeg;base64,<?php echo $user_manager->get_avatar(); ?>" alt="profile_picture">
+        <h3><?php echo $user_manager->get_username(); ?></h3>
+        <p><?php echo $user_manager->get_role(); ?></p>
     </div>
 
     <ul>
@@ -35,21 +35,21 @@
 		</li>
 	
         <li>
-			<a class="sMenuButton" href="?admin=logReader&limit=<?php echo $config->getValue("row-in-table-limit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=logReader&limit=<?php echo $config->get_value("row-in-table-limit"); ?>&startby=0">
 			    <span class="icon"><i class="fas fa-file"></i></span>
 			    <span class="item">Log reader</span>
 	    	</a>
 		</li>
 
 		<li>
-			<a class="sMenuButton" href="?admin=visitors&limit=<?php echo $config->getValue("row-in-table-limit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=visitors&limit=<?php echo $config->get_value("row-in-table-limit"); ?>&startby=0">
 			    <span class="icon"><i class="fas fa-user"></i></span>
 			    <span class="item">Visitors manager</span>
 	    	</a>
 		</li>
 
         <li>
-			<a class="sMenuButton" href="?admin=mediaBrowser&limit=<?php echo $config->getValue("images-in-browser-limit"); ?>&startby=0">
+			<a class="sMenuButton" href="?admin=mediaBrowser&limit=<?php echo $config->get_value("images-in-browser-limit"); ?>&startby=0">
 	    		<span class="icon"><i class="fas fa-image"></i></span>
 				<span class="item">Media browser</span>
 			</a>

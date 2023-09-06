@@ -22,9 +22,9 @@
                 if (isset($_POST["nickname"])) {
 
                     // init values from form and escape
-                    $name = $escapeUtils->specialCharshStrip($_POST["name"]);
-                    $email = $escapeUtils->specialCharshStrip($_POST["email"]);
-                    $message = $escapeUtils->specialCharshStrip($_POST["message"]);
+                    $name = $escape_utils->special_chars_strip($_POST["name"]);
+                    $email = $escape_utils->special_chars_strip($_POST["email"]);
+                    $message = $escape_utils->special_chars_strip($_POST["message"]);
 
                     // honeypot check
                     if (empty($_POST["website"])) {
@@ -35,7 +35,7 @@
                         } else {
 
                             // save msg to database
-                            $send_msg = $contactManager->sendMessage($name, $email, $message, "open");
+                            $send_msg = $contact_manager->send_message($name, $email, $message, "open");
                     
                             // flash msg with status
                             if ($send_msg) {
@@ -43,8 +43,8 @@
                             } else {
 
                                 // check if email banned
-                                if ($contactManager->getBannedEmailCount($email) > 0) {
-                                    echo '<div class="error-message">You have been blocked by administrator, unban request here: '.$config->getValue("email").'</div>';
+                                if ($contact_manager->get_banned_email_count($email) > 0) {
+                                    echo '<div class="error-message">You have been blocked by administrator, unban request here: '.$config->get_value("email").'</div>';
                                 } else {
                                     echo '<div class="error-message">System error please contact page administrator!</div>';
                                 }

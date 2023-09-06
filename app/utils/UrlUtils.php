@@ -6,22 +6,22 @@
 
 		/*
 		  * The function for get actual url by protocol
-		  * Usage like getActualURLComplete('https://')
+		  * Usage like get_complete('https://')
 		  * Input protocol
 		  * Return actual page complete
 		*/
-		public function getActualURLComplete($protocol): ?string {
+		public function get_complete($protocol): ?string {
 			$out = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 			return $out;
 		}
 
 		/*
 		  * The function for get actual url by protocol
-		  * Usage like getActualURL('https://')
+		  * Usage like get_url('https://')
 		  * Input protocol
 		  * Return actual base page
 		*/
-		public function getActualURL($protocol): ?string {
+		public function get_url($protocol): ?string {
 			$out = $protocol.$_SERVER['HTTP_HOST'];
 			return $out;
 		}
@@ -45,9 +45,9 @@
 
 		/*
 		  * The function for redirect with java script
-		  * Usage like  jsRedirect("index.php")
+		  * Usage like  js_redirect("index.php")
 		*/
-		public function jsRedirect($page): void {
+		public function js_redirect($page): void {
 			print '<script type="text/javascript">window.location.replace("'.$page.'");</script>';
 		}
 	}

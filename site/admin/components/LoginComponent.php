@@ -1,25 +1,25 @@
 <div class="loginPage">
 <?php 
 	// user table is empty print warning
-	if ($userManager->isUserEmpty()) {
-		$alertManager->flashWarning('Users table is empty<br>Please add admin user manually <strong/><a href="?admin=login&action=register">here</a></strong>');
+	if ($user_manager->is_users_empty()) {
+		$alert_manager->flash_warning('Users table is empty<br>Please add admin user manually <strong/><a href="?admin=login&action=register">here</a></strong>');
 	}
 
 	// check if user not logged in and if submit login button
-	if (!$userManager->isLoggedIn() and isset($_POST["submitLogin"])) {
+	if (!$user_manager->is_logged_in() and isset($_POST["submitLogin"])) {
 
 		// honeypot check
 		if (!empty($_POST["website"])) {
-			$siteManager->redirectError(400);
+			$site_manager->redirect_error(400);
 
 		} else {
 
 			// init values
-			$username = $escapeUtils->specialCharshStrip($_POST["username"]);
-			$password_raw = $escapeUtils->specialCharshStrip($_POST["password"]);
+			$username = $escape_utils->special_chars_strip($_POST["username"]);
+			$password_raw = $escape_utils->special_chars_strip($_POST["password"]);
 
 			// hash password
-			$password = $hashUtils->genBlowFish($password_raw);
+			$password = $hash_utils->gen_main_hash($password_raw);
 
 			// default save account
 			$save_account = false;
@@ -31,48 +31,48 @@
 
 			// check if values not empty
 			if (empty($username) or empty($password)) {
-				$alertManager->flashError("Incorrect username or password.");
+				$alert_manager->flash_error("Incorrect username or password.");
 
 			} else {
 
 				// check if user can login with our values
-				if ($userManager->canLogin($username, $password)) {
+				if ($user_manager->can_login($username, $password)) {
 
 					// get user token
-					$token = $mysql->fetchValue("SELECT token FROM users WHERE username = '".$username."'", "token");
+					$token = $mysql->fetch_value("SELECT token FROM users WHERE username = '".$username."'", "token");
 
 					// check if token is seted
 					if (!empty($token)) {
 
 						// set session login
-						$userManager->setLoginSession($token);
+						$user_manager->set_login_session($token);
 
 						// set role session
-						$sessionUtils->setSession("role", $mysql->fetchValue("SELECT role FROM users WHERE token = '".$token."'", "role"));
+						$session_utils->set("role", $mysql->fetch_value("SELECT role FROM users WHERE token = '".$token."'", "role"));
 
 						// check if user stay logged in
 						if ($save_account) {
-							$userManager->setLoginCookies($token);
+							$user_manager->set_login_cookies($token);
 						} else {
-							$userManager->unSetLoginCookies();
+							$user_manager->unset_login_cookies();
 						}
 
 						// get user ip
-						$user_ip = $mainUtils->getRemoteAdress();
+						$user_ip = $main_utils->get_remote_adress();
 
 						// update user ip
-						$mysql->insertQuery("UPDATE users SET remote_addr='$user_ip' WHERE username='$username'");
+						$mysql->insert("UPDATE users SET remote_addr='$user_ip' WHERE username='$username'");
 
 						// log to mysql
-						$mysql->logToMysql("authenticator", "user: $username logged in success");
+						$mysql->log("authenticator", "user: $username logged in success");
 
 						// redirect to admin page
-						$urlUtils->redirect("?admin=dashboard");
+						$url_utils->redirect("?admin=dashboard");
 
 					} else {
 
 						// devmode error print
-						if ($siteManager->isSiteDevMode()) {
+						if ($site_manager->is_dev_mode()) {
 							die("<h2 class=pageTitle>[DEV-MODE]:Login, error user token is empty</h2>");
 						} 
 						
@@ -84,13 +84,13 @@
 				} else {
 
 					// print error msg
-					$alertManager->flashError("Incorrect username or password.");
+					$alert_manager->flash_error("Incorrect username or password.");
 			
 					// log to mysql
 					if (empty($username) or empty($password_raw)) {
-						$mysql->logToMysql("authenticator", "trying to login with empty values");
+						$mysql->log("authenticator", "trying to login with empty values");
 					} else {
-						$mysql->logToMysql("authenticator", "trying to login with name: $username:$password_raw");				
+						$mysql->log("authenticator", "trying to login with name: $username:$password_raw");				
 					}
 				}
 			}

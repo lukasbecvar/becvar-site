@@ -1,21 +1,21 @@
 <?php // main site index
 	
 	// init framework
-	require_once("../framework/config/ConfigUtils.php");
-	require_once("../framework/crypt/HashUtils.php");
-	require_once("../framework/crypt/CryptUtils.php");
-	require_once("../framework/utils/ResponseUtils.php");
-	require_once("../framework/utils/FileUtils.php");
-	require_once("../framework/utils/MainUtils.php");
-	require_once("../framework/utils/StringUtils.php");
-	require_once("../framework/utils/SessionUtils.php");
-	require_once("../framework/utils/UrlUtils.php");
-	require_once("../framework/utils/CookieUtils.php");
-	require_once("../framework/utils/EscapeUtils.php");
-	require_once("../framework/mysql/MysqlUtils.php");
+	require_once("../app/config/ConfigUtils.php");
+	require_once("../app/encryption/HashUtils.php");
+	require_once("../app/encryption/CryptUtils.php");
+	require_once("../app/utils/ResponseUtils.php");
+	require_once("../app/utils/JsonUtils.php");
+	require_once("../app/utils/MainUtils.php");
+	require_once("../app/utils/StringUtils.php");
+	require_once("../app/utils/SessionUtils.php");
+	require_once("../app/utils/UrlUtils.php");
+	require_once("../app/utils/CookieUtils.php");
+	require_once("../app/utils/EscapeUtils.php");
+	require_once("../app/mysql/MysqlUtils.php");
 
 	// init manager system
-	require_once("../framework/app/manager/ManagerList.php");
+	require_once("../app/manager/ManagerList.php");
 
 	// include browser list for visitors manager
 	require_once("../browser-list.php");
@@ -26,42 +26,38 @@
 
 	// init objects
 	$config = new becwork\config\ConfigUtils();
-	$hashUtils = new becwork\utils\HashUtils();
-	$cryptUtils = new becwork\utils\CryptUtils();
-	$responseUtils = new becwork\utils\ResponseUtils();
-	$fileUtils = new becwork\utils\FileUtils();
-	$mainUtils = new becwork\utils\MainUtils();
-	$stringUtils = new becwork\utils\StringUtils();
-	$sessionUtils = new becwork\utils\SessionUtils();
-	$urlUtils = new becwork\utils\UrlUtils();
-	$cookieUtils = new becwork\utils\CookieUtils();
-	$escapeUtils = new becwork\utils\EscapeUtils();
+	$hash_utils = new becwork\utils\HashUtils();
+	$crypt_utils = new becwork\utils\CryptUtils();
+	$response_utils = new becwork\utils\ResponseUtils();
+	$json_utils = new becwork\utils\JsonUtils();
+	$main_utils = new becwork\utils\MainUtils();
+	$string_utils = new becwork\utils\StringUtils();
+	$session_utils = new becwork\utils\SessionUtils();
+	$url_utils = new becwork\utils\UrlUtils();
+	$cookie_utils = new becwork\utils\CookieUtils();
+	$escape_utils = new becwork\utils\EscapeUtils();
 	
 	// visitors manager
-	$browsersList = new becwork\utils\BrowsersList();
-	$servicesList = new becwork\services\ServicesManager();
+	$browsers_list = new becwork\utils\BrowsersList();
+	$services_list = new becwork\services\ServicesManager();
 
 	// database config
-	$db_ip = $config->getValue("mysql-address");
-	$db_name = $config->getValue("mysql-database");
-	$db_username = $config->getValue("mysql-username");
-	$db_password = $config->getValue("mysql-password");
+	$db_ip = $config->get_value("database-host");
+	$db_name = $config->get_value("database-name");
+	$db_username = $config->get_value("database-username");
+	$db_password = $config->get_value("database-password");
 	
 	// init mysql controller
 	$mysql = new becwork\utils\MysqlUtils($db_ip, $db_name, $db_username, $db_password);
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
-	// autoload composer vendor
+	// check if composer installed
 	if(file_exists('../vendor/autoload.php')) {
 		require_once('../vendor/autoload.php');	
 	} else {
 		
-		// redirect to error page if composer components is not installed
-		if ($siteManager->isSiteDevMode()) {
-			die(include_once("../site/errors/VendorNotFound.php"));
-		} else {
-			die(include_once("../site/errors/Maintenance.php"));
-		}
+		// handle error redirect to error page if composer components is not installed
+		$site_manager->handle_error("vendor directory not found, plese run composer install", 520);
 	} 
 	
 	// init detect mobile lib
@@ -69,10 +65,10 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// set default encoding
-	header('Content-type: text/html; charset='.$config->getValue('encoding'));
+	header('Content-type: text/html; charset='.$config->get_value('encoding'));
 
 	// init whoops for error headling
-	if ($siteManager->isSiteDevMode()) {
+	if ($site_manager->is_dev_mode()) {
 		$whoops = new \Whoops\Run;
 		$handlerer = new \Whoops\Handler\PrettyPageHandler();
 		$whoops->pushHandler($handlerer);
@@ -80,25 +76,29 @@
 	}
 
 	// check if page is in maintenance mode
-	if($siteManager->ifMaintenance()) {
+	if($site_manager->is_maintenance()) {
 		include_once("../site/errors/Maintenance.php");
 	} else { 
 		
 		// init visitor system
-		$visitorManager->init();		
+		$visitor_manager->init();		
 		
 		// check if url-check is enabled
-		if ($config->getValue("url-check")) { 
+		if ($config->get_value("url-check")) {
 
-			// check if page loaded with valid url
-			if (($siteManager->getHTTPhost() != $config->getValue("url")) && ($siteManager->getHTTPhost() != "www.".$config->getValue("url")) && $siteManager->getHTTPhost() != "localhost") {
-				$siteManager->redirectError(400);
+			// check if page loaded with valid url 
+			if (!$site_manager->is_valid_url()) {
+
+				// handle invalid url error
+				$site_manager->handle_error("invalid url load, plese check [url-check, url]: values in config.php", 400);
 			}
 		}
 
 		// check if page running on https
-		if ($config->getValue("https") == true && !$mainUtils->isSSL() && $siteManager->getHTTPhost() != "localhost") {
-			$siteManager->redirectError(400);
+		if (!$site_manager->check_ssl()) {
+
+			// handle invalid https error
+			$site_manager->handle_error("this site can run only on https protocol, check your url in browser or config.php", 400);
 		} 
 				
 		// include main page component or process
@@ -106,24 +106,24 @@
 			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// set logs disabler function by process
-			if($siteManager->getQueryString("process") == "disableLogsForMe") {
+			if($site_manager->get_query_string("process") == "disableLogsForMe") {
 				include_once("../site/admin/LogsDisabler.php");
 			}
 			
 			// set image viewer by process
-			else if($siteManager->getQueryString("process") == "image") {
+			else if($site_manager->get_query_string("process") == "image") {
 				include_once("../site/components/ImageViewer.php");
 			}
 
 			// set code paste page
-			else if($siteManager->getQueryString("process") == "paste") {
+			else if($site_manager->get_query_string("process") == "paste") {
 
 				// paste save 
-				if ($siteManager->getQueryString("method") == "save") {
+				if ($site_manager->get_query_string("method") == "save") {
 					include_once("../site/components/paste/save.php");
 				
 				// paste view
-				} else if (($siteManager->getQueryString("method") != null) && $siteManager->getQueryString("method") == "view") {
+				} else if ($site_manager->get_query_string("method") == "view") {
 					include_once("../site/components/paste/view.php");
 				
 				// paste init
@@ -137,7 +137,7 @@
 			else {
 
 				// check if page is admin or normal site
-				if ($siteManager->isCurrentPageAdmin()) {
+				if ($site_manager->is_admin_site()) {
 					include_once("../site/admin/InitAdmin.php");
 				} else {
 					require_once("../site/Main.php");

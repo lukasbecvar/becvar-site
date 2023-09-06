@@ -3,23 +3,23 @@
         <?php // admin inbox component (for show msgs from contact site)
         
             // check if user typed id
-            if ($siteManager->getQueryString("delete") != null) {
+            if ($site_manager->get_query_string("delete") != null) {
 
                 // get and escape string id form url and save to id
-                $id = $siteManager->getQueryString("delete");
+                $id = $site_manager->get_query_string("delete");
 
                 // delete msg by id
-                $contactManager->deleteMsgByID($id);
+                $contact_manager->close_message($id);
 
                 // redirect to messages page
-                $urlUtils->jsRedirect("?admin=inbox");
+                $url_utils->js_redirect("?admin=inbox");
             } 
          
             // print msgs is not empty
-            if ($contactManager->isEmpty()) {
+            if ($contact_manager->is_empty()) {
                 echo"<h2 class=pageTitle>Inbox is empty</h2>";
             } else {
-                $contactManager->printMSGS();
+                $contact_manager->print_messages();
             }
         ?><br>
     </center>

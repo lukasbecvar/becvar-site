@@ -5,7 +5,7 @@
     class ServicesManager {
 
         // method for getting true or false for process id returned running
-        public function ifProcessRunning($process): bool {
+        public function is_process_running($process): bool {
             
             // default state output
 			$state = false;
@@ -22,7 +22,7 @@
         }
 
         // method for getting true or false for service running
-        public function ifServiceActive($service): bool {
+        public function is_service_active($service): bool {
             
             // default state output
 			$state = false;
@@ -39,7 +39,7 @@
         }
 
         // method for getting true or false for ufw running
-        public function isUFWRunning(): bool {
+        public function is_ufw_running(): bool {
 
             // default state output
 			$state = false;
@@ -56,7 +56,7 @@
         }
 
         // method for getting true or false for service running
-        public function isServiceInstalled($service_name): bool {
+        public function is_service_installed($service_name): bool {
             
             global $config;
 
@@ -64,7 +64,7 @@
 			$state = false;
 
             // get service dir from config
-            $service_dir = $config->getValue('service-dir');
+            $service_dir = $config->get_value('service-dir');
 
             // minecraft server
             if ($service_name == "minecraft") {
@@ -98,7 +98,7 @@
         }
         
         // check if screen session running
-        public function checkScreenSession($session_name): bool {
+        public function is_screen_session_running($session_name): bool {
 
             // default state output
 			$state = false;
@@ -115,7 +115,7 @@
         }
 
         // execute system command
-        public function executeCommand($command): void {
+        public function execute_command($command): void {
 
             // execite command
             shell_exec($command);

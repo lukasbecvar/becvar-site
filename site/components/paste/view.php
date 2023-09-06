@@ -1,16 +1,16 @@
 <?php // code paste viewer
 
     // get paste spec
-    $spec = $siteManager->getQueryString("f");
+    $spec = $site_manager->get_query_string("f");
 
     // get paste content
-    $paste_content = $mysql->fetchValue("SELECT content FROM pastes WHERE spec='$spec'", "content");
+    $paste_content = $mysql->fetch_value("SELECT content FROM pastes WHERE spec='$spec'", "content");
 
     // check if content to view is not empty
     if (empty($paste_content)) {
 
         // handle error
-        $siteManager->handleError("[DEV-MODE]:Error: paste content is empty", 520);
+        $site_manager->handle_error("[DEV-MODE]:Error: paste content is empty", 520);
     }
 ?>
 
@@ -35,7 +35,7 @@
     </script>
 
     <?php // select title by file name
-        echo "<title>Viewing".$siteManager->getQueryString("f")."</title>";
+        echo "<title>Viewing".$site_manager->get_query_string("f")."</title>";
     ?>
 </head>
 <body>

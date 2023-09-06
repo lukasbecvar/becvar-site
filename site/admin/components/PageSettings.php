@@ -1,26 +1,26 @@
 <div class="adminPanel">
     <?php 
         // check if config change submited
-        if ($siteManager->getQueryString("config") != null) {
+        if ($site_manager->get_query_string("config") != null) {
 
             // get config action from url
-            $config_value = $siteManager->getQueryString("config");
+            $config_value = $site_manager->get_query_string("config");
  
             //////////////////////////////////////////////////////////
             // maintenance settings change requests
             if ($config_value == "maintenanceDisable") {
-                $config->updateMaintenanceValue("disabled");
+                $config->update_maintenance("disabled");
 
             } elseif ($config_value == "maintenanceEnable") {
-                $config->updateMaintenanceValue("enabled");
+                $config->update_maintenance("enabled");
             
 
             // dev mode settings change requests
             } elseif ($config_value == "devmodeDisable") {
-                $config->updateDevModeValue(false);
+                $config->update_dev_mode(false);
             
             } elseif ($config_value == "devmodeEnable") {
-                $config->updateDevModeValue(true);
+                $config->update_dev_mode(true);
             }
             //////////////////////////////////////////////////////////
             
@@ -28,7 +28,7 @@
             sleep(3);
 
             // refresh page
-            $urlUtils->jsRedirect("?admin=pageSettings"); 
+            $url_utils->js_redirect("?admin=pageSettings"); 
         }
     ?>
     <h1 class="pageTitle display-4">Page settings</h1>

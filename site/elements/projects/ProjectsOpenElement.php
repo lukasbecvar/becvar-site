@@ -1,7 +1,7 @@
 <?php // open project site component 
 
     // get projects list object from manager
-    $openProjects = $projectsManager->getProjectsWhereStatus("open"); 
+    $openProjects = $projects_manager->get_projects_list("open"); 
 
     // print all open project to element
     foreach ($openProjects as $data) {

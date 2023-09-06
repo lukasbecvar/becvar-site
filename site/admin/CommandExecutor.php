@@ -1,21 +1,21 @@
 <?php // command executor (for admin tasks)
 
     // check if command defined
-    if ($siteManager->getQueryString("command") == null) {
+    if ($site_manager->get_query_string("command") == null) {
 
         // redirect to 404 page if command is empty
-        $siteManager->redirectError(404);
+        $site_manager->handle_error("error command is null", 404);
     
     } else {
 
         // check if user logged in
-        if ($userManager->isLoggedIn()) {
+        if ($user_manager->is_logged_in()) {
 
             // get command and escapeit
-            $command = $siteManager->getQueryString("command");
+            $command = $site_manager->get_query_string("command");
 
             // get services path
-            $service_dir = $config->getValue('service-dir');
+            $service_dir = $config->get_value('service-dir');
 
             // get Service name
             $service = str_replace("_Stop", "", $command);
@@ -28,45 +28,46 @@
             if (str_ends_with($command, "_Start")) {
                 
                 // get final start command
-                $final_command = $servicesList->services[$service]["start_cmd"];
+                $final_command = $services_list->services[$service]["start_cmd"];
             
                 // log to mysql
-                $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." started: $service");
+                $mysql->log("service-manager", "user: ".$user_manager->get_username()." started: $service");
             } 
             
             // service stop system
             elseif (str_ends_with($command, "_Stop")) {
 
                 // get final stop command
-                $final_command = $servicesList->services[$service]["stop_cmd"];
+                $final_command = $services_list->services[$service]["stop_cmd"];
 
                 // log to mysql
-                $mysql->logToMysql("service-manager", "user: ".$userManager->getCurrentUsername()." stoped: $service");
+                $mysql->log("service-manager", "user: ".$user_manager->get_username()." stoped: $service");
             }
 
             // emergency shutdown
             elseif ($command == "shutdown") {
 
                 // log to mysql
-                $mysql->logToMysql("emergency-shutdown", "user: ".$userManager->getCurrentUsername()." used emergency server shutdown");
+                $mysql->log("emergency-shutdown", "user: ".$user_manager->get_username()." used emergency server shutdown");
             
                 // execute final command
-                $servicesManager->executeCommand("sudo poweroff");
+                $services_manager->execute_command("sudo poweroff");
 
             // undefind action
             } else {
-                $siteManager->redirectError(403);
+                $site_manager->redirect_error(403);
             }
         
             // execute final command
-            $servicesManager->executeCommand($final_command);
+            $services_manager->execute_command($final_command);
 
             // redirect back to dashboard
-            $urlUtils->jsRedirect("?admin=dashboard");
+            $url_utils->js_redirect("?admin=dashboard");
 
         } else {
             // redirect to 403 page if user not logged in
-            $siteManager->redirectError(403);
+            $site_manager->handle_error("error this component is only for logged users", 404);
+
         }
     }
 ?>

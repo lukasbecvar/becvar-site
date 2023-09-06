@@ -5,7 +5,7 @@
     class VisitorSystemManager {
 
         // get user browser
-        public function getBrowser(): ?string {
+        public function get_browser(): ?string {
 
             // get user agent
             $agent = $_SERVER["HTTP_USER_AGENT"];
@@ -24,9 +24,9 @@
         }
 
         // shortify BrowserID
-        public function getShortBrowserID($raw): ?string {
+        public function get_short_browser_id($raw): ?string {
             
-            global $browsersList;
+            global $browsers_list;
 
             // init default value
             $out = $raw;
@@ -113,7 +113,7 @@
             }
 
             // identify shortify array [ID: str_contains, Value: replacement]
-            $browser_array = $browsersList->browserList;
+            $browser_array = $browsers_list->browser_list;
 
             // check if browser ID not found
             if ($found == "no") {
@@ -132,10 +132,10 @@
         }
 
         // get visitor OS
-        public function getVisitorOS(): ?string { 
+        public function get_visitor_os(): ?string { 
 
             // get user agent
-            $agent = $this->getBrowser();
+            $agent = $this->get_browser();
         
             // define default OS
             $os_platform  = "Unknown OS";
@@ -181,9 +181,9 @@
         }
 
         // first visit site
-        public function firstVisit(): void {
+        public function first_visit(): void {
             
-            global $mysql, $mainUtils, $siteManager, $escapeUtils;
+            global $mysql, $main_utils, $site_manager, $escape_utils;
 
             // default visited value
             $visited_sites = 1;
@@ -196,108 +196,108 @@
             $last_visit = $date;
 
             // get & escape visitor browser ID
-            $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
+            $browser = $escape_utils->special_chars_strip($this->get_browser());
 
             // get & escape visitor IP
-            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+            $ip_adress = $escape_utils->special_chars_strip($main_utils->get_remote_adress());
 
             // get & escape visitor location
-            $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
+            $location = $escape_utils->special_chars_strip($this->get_visitor_location($ip_adress));
 
             // get & escape visitor OS
-            $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
+            $os = $escape_utils->special_chars_strip($this->get_visitor_os());
 
             // check if ip is banned in database
-            if ($this->isVisitorBanned($ip_adress)) {
+            if ($this->is_visitor_banned($ip_adress)) {
                 $banned = "yes";
             } else {
                 $banned = "no";
             }
 
             // insert firt visit
-            $mysql->insertQuery("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
+            $mysql->insert("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
 
             // redirect banned users to banned page
-            if ($this->isVisitorBanned($ip_adress)) {
+            if ($this->is_visitor_banned($ip_adress)) {
 
                 // log trying to access site if user banned
-                $mysql->logToMysql("banned", "banned user with ip: ".$ip_adress." trying to access site");
+                $mysql->log("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                 // redirect to banned page
-                $siteManager->redirectError("banned");
+                $site_manager->redirect_error("banned");
             }
         }
 
         // visit site
-        public function visitSite(): void {
+        public function visit_site(): void {
 
-            global $mysql, $dashboardManager, $mainUtils, $siteManager, $escapeUtils;;
+            global $mysql, $dashboard_manager, $main_utils, $site_manager, $escape_utils;;
 
             // get & escape visitor ip
-            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+            $ip_adress = $escape_utils->special_chars_strip($main_utils->get_remote_adress());
 
             // check if visitors count is zero
-            if ($dashboardManager->getVisitorsCount() == "0") {
-                $this->firstVisit();
+            if ($dashboard_manager->get_visitors_count() == "0") {
+                $this->first_visit();
             } else {
 
                 // check if visitor exist in table
-                if ($this->ifVisitorIsInTable($ip_adress)) {
+                if ($this->is_visitorIs_in_table($ip_adress)) {
 
                     // get key count in db for duplicity check
                     $ip_ids = $mysql->fetch("SELECT id FROM visitors WHERE `ip_adress`='$ip_adress'");
 
                     // check if key is not exist in database
                     if (count($ip_ids) == 0) {
-                        $this->firstVisit();
+                        $this->first_visit();
 
                     } else {
                         // get data from mysql by IP
-                        $visited_sites = intval($mysql->fetchValue("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
+                        $visited_sites = intval($mysql->fetch_value("SELECT visited_sites FROM visitors WHERE `ip_adress` = '".$ip_adress."'", "visited_sites"));
 
                         // new values to update
                         $visited_sites = $visited_sites + 1;
-                        $last_visit = $escapeUtils->specialCharshStrip(date('d.m.Y H:i'));
-                        $browser = $escapeUtils->specialCharshStrip($this->getBrowser());
-                        $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
-                        $os = $escapeUtils->specialCharshStrip($this->getVisitorOS());
+                        $last_visit = $escape_utils->special_chars_strip(date('d.m.Y H:i'));
+                        $browser = $escape_utils->special_chars_strip($this->get_browser());
+                        $ip_adress = $escape_utils->special_chars_strip($main_utils->get_remote_adress());
+                        $os = $escape_utils->special_chars_strip($this->get_visitor_os());
 
                         // update database
-                        $mysql->insertQuery("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
-                        $mysql->insertQuery("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
-                        $mysql->insertQuery("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
-                        $mysql->insertQuery("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
-                        $mysql->insertQuery("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
+                        $mysql->insert("UPDATE visitors SET visited_sites = '$visited_sites' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insert("UPDATE visitors SET last_visit = '$last_visit' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insert("UPDATE visitors SET browser = '$browser' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insert("UPDATE visitors SET ip_adress = '$ip_adress' WHERE `ip_adress` = '$ip_adress'");
+                        $mysql->insert("UPDATE visitors SET os = '$os' WHERE `ip_adress` = '$ip_adress'");  
 
                         // check if ip in database is Unknown
-                        if ($this->getVisitorLocationFromDatabase($this->getVisitorIDByIP($ip_adress)) == "Unknown") {
+                        if ($this->get_visitor_location_from_database($this->get_visitor_id_by_ip($ip_adress)) == "Unknown") {
 
                             // get location 
-                            $location = $escapeUtils->specialCharshStrip($this->getVisitorLocation($ip_adress));
+                            $location = $escape_utils->special_chars_strip($this->get_visitor_location($ip_adress));
 
                             // insert location
-                            $mysql->insertQuery("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
+                            $mysql->insert("UPDATE visitors SET location = '$location' WHERE `ip_adress` = '$ip_adress'");  
                         }
 
                         // show ban page if IP banned
-                        if($this->isVisitorBanned($ip_adress)) {
+                        if($this->is_visitor_banned($ip_adress)) {
 
                             // log trying to access site if user banned
-                            $mysql->logToMysql("banned", "banned user with ip: ".$ip_adress." trying to access site");
+                            $mysql->log("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                             // redirect to banned page
-                            $siteManager->redirectError("banned");
+                            $site_manager->redirect_error("banned");
                         }
                     }
                     
                 } else { // init first visit for new visitors
-                    $this->firstVisit();
+                    $this->first_visit();
                 }
             }
         }
 
         // check if visitor is banned
-        public function isVisitorBanned($ip): bool {
+        public function is_visitor_banned($ip): bool {
 
             global $mysql;
 
@@ -311,7 +311,7 @@
             if (count($ip_ids) > 0) {
 
                 // get banned status
-                $banned_status = $mysql->fetchValue("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
+                $banned_status = $mysql->fetch_value("SELECT status FROM banned WHERE `ip_adress` = '".$ip."'", "status");
 
                 // check if banned status = yes
                 if ($banned_status == "banned") {
@@ -323,7 +323,7 @@
         }
 
         // get visitor location from table
-        public function getVisitorLocationFromDatabase($id): ?string {
+        public function get_visitor_location_from_database($id): ?string {
 
             global $mysql;
 
@@ -337,7 +337,7 @@
             if (count($visitor) > 0) {
 
                 // get visitor location from database
-                $location = $mysql->fetchValue("SELECT location FROM visitors WHERE `id` = '$id'", "location");
+                $location = $mysql->fetch_value("SELECT location FROM visitors WHERE `id` = '$id'", "location");
 
             } else {
                 $location = "Unknown";
@@ -347,15 +347,15 @@
         }
 
         // get visitor location
-        public function getVisitorLocation($ip): ?string {
+        public function get_visitor_location($ip): ?string {
 
-            global $mysql, $config, $siteManager;
+            global $mysql, $config, $site_manager;
 
             // default location value
             $location = null;
 
             // check if site running on localhost
-            if ($siteManager->isRunningLocalhost()) {
+            if ($site_manager->is_running_localhost()) {
                 $country = "HOST";
                 $city = "Location";
             
@@ -365,7 +365,7 @@
                 try {
 
                     // get geoplugin url
-                    $geoplugin_url = $config->getValue("geoplugin-url");
+                    $geoplugin_url = $config->get_value("geoplugin-url");
 
                     // get geoplugin data
                     $geoplugin_data = file_get_contents($geoplugin_url."/json.gp?ip=$ip");
@@ -392,7 +392,7 @@
                     $city = null;
 
                     // log error to mysql
-                    $mysql->logToMysql("geolocate-error", "error to geolocate ip: " . $ip . ", error: " . $e->getMessage());
+                    $mysql->log("geolocate-error", "error to geolocate ip: " . $ip . ", error: " . $e->getMessage());
                 }   
             }
 
@@ -417,7 +417,7 @@
         }
 
         // get user ip by id
-        public function getVisitorIPByID($id): ?string {
+        public function get_visitor_ip_by_id($id): ?string {
 
             global $mysql;
 
@@ -430,7 +430,7 @@
             } else {
 
                 // get visitor ip by key
-                $visitor_ip = $mysql->fetchValue("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
+                $visitor_ip = $mysql->fetch_value("SELECT ip_adress FROM visitors WHERE `id` = '".$id."'", "ip_adress");
 
                 // return ip
                 return $visitor_ip;
@@ -438,7 +438,7 @@
         }
 
         // get user ip by ip
-        public function getVisitorIDByIP($ip): ?int {
+        public function get_visitor_id_by_ip($ip): ?int {
 
             global $mysql;
 
@@ -451,14 +451,14 @@
             } else {
 
                 // get visitor id by ip
-                $visitor_id = $mysql->fetchValue("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
+                $visitor_id = $mysql->fetch_value("SELECT id FROM visitors WHERE `ip_adress` = '".$ip."'", "id");
 
                 return $visitor_id;
             }
         }
 
         // ban user by IP
-        public function bannVisitorByIP($ip, $reason): void {
+        public function ban_visitor_by_ip($ip, $reason): void {
             
             global $mysql;
 
@@ -469,10 +469,10 @@
             if (count($ids) > 0) {
 
                 // update ban status
-                $mysql->insertQuery("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
+                $mysql->insert("UPDATE banned SET status = 'banned' WHERE `ip_adress` = '$ip'");
 
                 // update reason
-                $mysql->insertQuery("UPDATE banned SET reason = '$reason' WHERE `ip_adress` = '$ip'");
+                $mysql->insert("UPDATE banned SET reason = '$reason' WHERE `ip_adress` = '$ip'");
 
             } else {
                 // default banned status
@@ -482,21 +482,21 @@
                 $banned_date = date("d.m.Y");
 
                 // insert ban users
-                $mysql->insertQuery("INSERT INTO `banned`(`ip_adress`, `reason`, `banned_date`, `status`) VALUES ('$ip', '$reason', '$banned_date', '$status')");
+                $mysql->insert("INSERT INTO `banned`(`ip_adress`, `reason`, `banned_date`, `status`) VALUES ('$ip', '$reason', '$banned_date', '$status')");
             }
         }
  
         // un-ban user by IP
-        public function unbannVisitorByIP($ip): void {
+        public function unban_visitor_by_ip($ip): void {
             
             global $mysql;
 
             // update ban status
-            $mysql->insertQuery("UPDATE banned SET status = 'unbanned' WHERE `ip_adress` = '$ip'");
+            $mysql->insert("UPDATE banned SET status = 'unbanned' WHERE `ip_adress` = '$ip'");
         }
 
         // check if visitor is in table
-        public function ifVisitorIsInTable($ip): bool {
+        public function is_visitorIs_in_table($ip): bool {
 
             global $mysql;
 
@@ -517,18 +517,18 @@
         // call visit or first visit function
         public function init(): void {
 
-            global $mysql, $config, $mainUtils, $siteManager, $escapeUtils;
+            global $mysql, $config, $main_utils, $site_manager, $escape_utils;
 
             // get & escape user ip
-            $ip_adress = $escapeUtils->specialCharshStrip($mainUtils->getRemoteAdress());
+            $ip_adress = $escape_utils->special_chars_strip($main_utils->get_remote_adress());
 
             // check if visitor found in database by IP
-            if ($this->ifVisitorIsInTable($ip_adress)) {
-                $this->visitSite();
+            if ($this->is_visitorIs_in_table($ip_adress)) {
+                $this->visit_site();
             
             // insert new visitor to database
             } else {
-                $this->firstVisit();
+                $this->first_visit();
             }
         }
     }

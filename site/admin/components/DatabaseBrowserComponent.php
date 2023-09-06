@@ -2,7 +2,7 @@
 <?php // admin database table browser
 
 	// check if user is owner
-	if (!$userManager->isUserOwner()) {
+	if (!$user_manager->is_user_Owner()) {
 		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
 	} else {
 
@@ -12,35 +12,35 @@
 		if (isset($_GET["id"])) {
 
 			// get id from query string
-			$id_get = $escapeUtils->specialCharshStrip($_GET["id"]);
+			$id_get = $escape_utils->special_chars_strip($_GET["id"]);
 		}
 
 		// check if delete seted
 		if (isset($_GET["delete"])) {
 
 			// get delete from query string
-			$delete_get = $escapeUtils->specialCharshStrip($_GET["delete"]);
+			$delete_get = $escape_utils->special_chars_strip($_GET["delete"]);
 		}
 
 		// check if editor seted
 		if (isset($_GET["editor"])) {
 
 			// get editor from query string
-			$editor_get = $escapeUtils->specialCharshStrip($_GET["editor"]);
+			$editor_get = $escape_utils->special_chars_strip($_GET["editor"]);
 		}
 
 		// check if add seted
 		if (isset($_GET["add"])) {
 
 			// get add from query string
-			$add_get = $escapeUtils->specialCharshStrip($_GET["add"]);
+			$add_get = $escape_utils->special_chars_strip($_GET["add"]);
 		}
 
 		// check if browse table
 		if (isset($_GET["name"])) {
 
 			// get escaped table name
-			$table_name = $escapeUtils->specialCharshStrip($_GET["name"]);
+			$table_name = $escape_utils->special_chars_strip($_GET["name"]);
 		}
 
 		// check if browse table
@@ -56,16 +56,16 @@
 		$start_by_row = 0;
 		
 		// page items limit (read from config)
-		$limit_on_page = $config->getValue("row-in-table-limit");
+		$limit_on_page = $config->get_value("row-in-table-limit");
 
 		// pager system calculator
 		if (isset($_GET["name"]) && (isset($_GET["limit"]) && isset($_GET["startby"]))) {
  
 			// get show limit form url
-			$show_limit = $escapeUtils->specialCharshStrip($_GET["limit"]);
+			$show_limit = $escape_utils->special_chars_strip($_GET["limit"]);
  
 			// get start row form url
-			$start_by_row = $escapeUtils->specialCharshStrip($_GET["startby"]);
+			$start_by_row = $escape_utils->special_chars_strip($_GET["startby"]);
  
 			// calculate next limit
 			$next_limit = (int) $show_limit + $limit_on_page;
@@ -248,7 +248,7 @@
 			}
 
 			// log action to database 
-			$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." viewed table $table_name");
+			$mysql->log("database", "user ".$user_manager->get_username()." viewed table $table_name");
 		} 
 		
 		// delete function //////////////////////////////////////////////////////////////
@@ -261,19 +261,19 @@
 				if ($id_get == "all") {
 
 					// include delete all confirmation
-					if ($siteManager->getQueryString("confirm") != "yes") {
+					if ($site_manager->get_query_string("confirm") != "yes") {
 						include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/DatabaseDeleteConfirmationBox.php');
 					} 
 					
 					// delete all
 					else {
 						// check if confirm selected (only for delete all)
-						if ($siteManager->getQueryString("confirm") == "yes") {
+						if ($site_manager->get_query_string("confirm") == "yes") {
 							// delete all rows
-							$mysql->insertQuery("DELETE FROM $delete_get WHERE id=id");
+							$mysql->insert("DELETE FROM $delete_get WHERE id=id");
 
 							// reset auto increment
-							$mysql->insertQuery("ALTER TABLE $delete_get AUTO_INCREMENT = 1");
+							$mysql->insert("ALTER TABLE $delete_get AUTO_INCREMENT = 1");
 						}
 					}
 				} 
@@ -282,11 +282,11 @@
 				else {
 
 					// delete one row
-					$mysql->insertQuery("DELETE FROM $delete_get WHERE id='$id_get'"); 
+					$mysql->insert("DELETE FROM $delete_get WHERE id='$id_get'"); 
 				}
 
 				// log action to database
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." deleted item $id_get form table $delete_get");
+				$mysql->log("database", "user ".$user_manager->get_username()." deleted item $id_get form table $delete_get");
 
 
 				// check if delete auto close
@@ -298,12 +298,12 @@
 				else {
 					// redirect to log reader
 					if (isset($_GET["reader"])) {
-						$urlUtils->jsRedirect("?admin=logReader&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+						$url_utils->js_redirect("?admin=logReader&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 					} 
 					
 					// redirect to visitors system
 					else if (isset($_GET["visitors"])) {
-						$urlUtils->jsRedirect("?admin=visitors&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+						$url_utils->js_redirect("?admin=visitors&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 					} 
 					
 					// redirect to database browser
@@ -313,12 +313,12 @@
 						if ($id_get == "all") {
 
 							// check if confirmation is used
-							if ($siteManager->getQueryString("confirm") == "yes") {
-								$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+							if ($site_manager->get_query_string("confirm") == "yes") {
+								$url_utils->js_redirect("?admin=dbBrowser&name=$delete_get&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 							}
 
 						} else {
-							$urlUtils->jsRedirect("?admin=dbBrowser&name=$delete_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+							$url_utils->js_redirect("?admin=dbBrowser&name=$delete_get&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 						}
 					}
 				}
@@ -326,7 +326,7 @@
 			} else {
 
 				// check if site dev mode enabled
-				if ($siteManager->isSiteDevMode()) {
+				if ($site_manager->is_dev_mode()) {
 
 					// print error
 					die("<h2 class=pageTitle>[DEV-MODE]:Error: query string id not found.<h2>");
@@ -334,7 +334,7 @@
 				} else {
 
 					// redirect to browser main page
-					$urlUtils->jsRedirect("?admin=dbBrowser");
+					$url_utils->js_redirect("?admin=dbBrowser");
 				}
 			}
 		}
@@ -352,21 +352,21 @@
 				foreach($result_edit as $rowOK) { 
 
 					// insert query
-					$mysql->insertQuery("UPDATE $editor_get SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$id_get'");
+					$mysql->insert("UPDATE $editor_get SET ".$rowOK["Field"]."='".$_POST[$rowOK["Field"]]."' WHERE id='$id_get'");
 				} 
 
 				// log action to mysql dsatabase 
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." edited item $id_get in table $editor_get");
+				$mysql->log("database", "user ".$user_manager->get_username()." edited item $id_get in table $editor_get");
 
 				// flash status msg
-				$alertManager->flashSuccess("Row has saved!");
+				$alert_manager->flash_success("Row has saved!");
 				
 				// set final action
 				if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
 					// close editor after save
 					echo "<script>window.close();</script>";
 				} else {
-					$urlUtils->jsRedirect("?admin=dbBrowser&name=".$editor_get."&limit=".$limit_on_page."&startby=0");
+					$url_utils->js_redirect("?admin=dbBrowser&name=".$editor_get."&limit=".$limit_on_page."&startby=0");
 				}
 			}
 
@@ -448,16 +448,16 @@
 				$query = "INSERT INTO `".$add_get."`(".$columns_builder.") VALUES (".$values_builder.")";
 
 				// insert query to database
-				$mysql->insertQuery($query);
+				$mysql->insert($query);
 
 				// flash alert
-				$alertManager->flashSuccess("New item has saved!");
+				$alert_manager->flash_success("New item has saved!");
 
 				// log to database
-				$mysql->logToMysql("database", "user ".$userManager->getCurrentUsername()." add new row to $add_get");
+				$mysql->log("database", "user ".$user_manager->get_username()." add new row to $add_get");
 
 				// redirect back to table reader
-				$urlUtils->jsRedirect("?admin=dbBrowser&name=$add_get&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+				$url_utils->js_redirect("?admin=dbBrowser&name=$add_get&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 			} 
 			
 			// print add form
@@ -499,14 +499,14 @@
 			// print all tables links
 			foreach ($tables as $row) {
 
-				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->getValue("mysql-database")]."&limit=".$limit_on_page."&startby=0>".$row["Tables_in_".$config->getValue("mysql-database")]."</a><br><br>";
+				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->get_value("database-name")]."&limit=".$limit_on_page."&startby=0>".$row["Tables_in_".$config->get_value("database-name")]."</a><br><br>";
 			}
 
 			// end of select box element
 			echo '</ol></div>';
 
 			// log action to database 
-			$mysql->logToMysql("database", "User ".$userManager->getCurrentUsername()." viewed database list");
+			$mysql->log("database", "User ".$user_manager->get_username()." viewed database list");
 		}
 
 		///////////////////////////////////////PAGER-BUTTONS///////////////////////////////////////

@@ -5,7 +5,7 @@
     class DashboardManager {
 
         // get server uptime
-        public function getUpTime(): string {
+        public function get_uptime(): string {
 
             // get data
             $ut = strtok(exec("cat /proc/uptime"), ".");
@@ -24,7 +24,7 @@
         }
         
         // get CPU usage %
-        public function getCPUProc(): float {
+        public function get_cpu_usage(): float {
             
             // default load value
             $load = 100;
@@ -43,7 +43,7 @@
         }
 
         // get memory (RAM) usage
-        public function getMemoryInfo(): array {
+        public function get_ram_usage(): array {
             exec('cat /proc/meminfo', $memory_raw);
             $memory_free = 0;
             $memory_total = 0;
@@ -67,13 +67,13 @@
         }
         
         // get hard drive space usage in %
-        public function getDrivesInfo(): string {
+        public function get_drive_usage(): string {
             $output = exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
             return $output;
         }
 
         // get software / kernal information
-        public function getSoftwareInfo(): array {
+        public function get_software_info(): array {
             $softwares = array();
             $software = array();
             $iteration = 0;
@@ -104,7 +104,7 @@
         }
 
         // get pastes count
-        public function getPastesCount(): ?int {
+        public function get_pastes_count(): ?int {
 
             global $mysql;
 
@@ -117,7 +117,7 @@
         }
 
         // get log count
-        public function getLogsCount(): ?int {
+        public function get_logs_count(): ?int {
 
             global $mysql;
 
@@ -130,7 +130,7 @@
         }
 
         // get login logs count
-        public function getLoginLogsCount(): ?int {
+        public function get_login_logs_count(): ?int {
 
             global $mysql;
 
@@ -143,7 +143,7 @@
         }
 
         // get unreaded logs count
-        public function getUnreadedLogs(): ?int {
+        public function get_unreaded_logs(): ?int {
 
             global $mysql;
         
@@ -156,7 +156,7 @@
         }
 
         // get page visitors count
-        public function getVisitorsCount(): ?int {
+        public function get_visitors_count(): ?int {
 
             global $mysql;
         
@@ -169,7 +169,7 @@
         }
 
         // get MSGS in inbox count
-        public function getMSGSCount(): ?int {
+        public function get_messages_count(): ?int {
 
             global $mysql;
 
@@ -182,7 +182,7 @@
         }
 
         // get todos count in todos table
-        public function getTodosCount(): ?int {
+        public function get_todos_count(): ?int {
 
             global $mysql;
 
@@ -195,7 +195,7 @@
         }
         
         // get images count in gallery
-        public function getImagesCount(): ?int {
+        public function get_images_count(): ?int {
 
             global $mysql;
         
@@ -208,7 +208,7 @@
         }
 
         // get banned visitors count 
-        public function getBannedCount(): ?int { 
+        public function get_banned_count(): ?int { 
 
             global $mysql;
         
@@ -221,7 +221,7 @@
         }
 
         // check if system is linux
-        public function isSystemLinux(): bool {
+        public function is_system_linux(): bool {
 
             // default state value
             $state = false;
@@ -234,43 +234,43 @@
         }
 
         // check if warnings box empty
-        public function isWarninBoxEmpty(): bool {
+        public function is_warnin_box_empty(): bool {
 
-            global $config, $mainUtils, $siteManager, $servicesManager;
+            global $config, $main_utils, $site_manager, $services_manager;
 
             // default state value
             $state = true;
 
             // check if service directory exist in system
-            if (!file_exists($config->getValue('service-dir'))) {
+            if (!file_exists($config->get_value('service-dir'))) {
                 $state = false;
 
             // check if site running on ssl connction
-            } elseif (!$mainUtils->isSSL()) {
+            } elseif (!$main_utils->is_ssl()) {
                 $state = false;
 
             // check if hard drive is not full
-            } elseif ($this->getDrivesInfo() > 89) {
+            } elseif ($this->get_drive_usage() > 89) {
                 $state = false;
             
             // check if antilog cookie not empty
-            } elseif (empty($_COOKIE[$config->getValue("anti-log-cookie")])) {
+            } elseif (empty($_COOKIE[$config->get_value("anti-log-cookie")])) {
                 $state = false;
 
             // check if found new logs
-            } elseif (($this->getUnreadedLogs()) != "0" && (!empty($_COOKIE[$config->getValue("anti-log-cookie")]))) {
+            } elseif (($this->get_unreaded_logs()) != "0" && (!empty($_COOKIE[$config->get_value("anti-log-cookie")]))) {
                 $state = false;
 
             // check if found new msgs in inbox
-            } elseif ($this->getMSGSCount() != "0") {
+            } elseif ($this->get_messages_count() != "0") {
                 $state = false;
 
             // check if maintenance is enabled
-            } elseif ($config->getValue("maintenance") == "enabled") {
+            } elseif ($config->get_value("maintenance") == "enabled") {
                 $state = false;
 
             // check if dev-mode is enabled
-            } elseif ($siteManager->isSiteDevMode()) {
+            } elseif ($site_manager->is_dev_mode()) {
                 $state = false;
             }
 

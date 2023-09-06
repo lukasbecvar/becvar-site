@@ -15,11 +15,11 @@
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <div class="social-links">
-            <a href="<?php echo $config->getValue("instagram"); ?>" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="<?php echo $config->getValue("twitter"); ?>" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="<?php echo $config->getValue("github"); ?>" target="_blank" class="github"><i class="bi bi-github"></i></a>
-            <a href="<?php echo $config->getValue("telegram"); ?>" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
-            <a href="<?php echo $config->getValue("linkedin"); ?>" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="<?php echo $config->get_value("instagram"); ?>" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="<?php echo $config->get_value("twitter"); ?>" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="<?php echo $config->get_value("github"); ?>" target="_blank" class="github"><i class="bi bi-github"></i></a>
+            <a href="<?php echo $config->get_value("telegram"); ?>" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+            <a href="<?php echo $config->get_value("linkedin"); ?>" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
     </div>
 </header>

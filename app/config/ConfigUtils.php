@@ -5,31 +5,31 @@
 	class ConfigUtils {
 
 		// get config value by name
-		public function getValue($name): string {
+		public function get_value($name): string {
 
-			global $siteManager;
+			global $site_manager;
 
 			// link config file
 			require_once(__DIR__."./../../config.php");
 
 			// init config instance
-			$config = new \becwork\config\PageConfig();
+			$config_OBJ = new \becwork\config\PageConfig();
 			
 			// get config value
-			$value = $config->config[$name];
+			$value = $config_OBJ->config[$name];
 
 			// check if value return valid
 			if ($value === null) {
-				$siteManager->handleError("error to get config value: ".$name." please check config file", 520);
+				$site_manager->handle_error("error to get config value: ".$name." please check config file", 520);
 			} else {
 				return $value;
 			}
 		}	
 
 		// update maintenance config value
-		public function updateMaintenanceValue($value): void {
+		public function update_maintenance($value): void {
 		
-			global $siteManager, $mysql, $userManager;
+			global $site_manager, $mysql, $user_manager;
 
 			// set enabled
 			if ($value == "enabled") {
@@ -38,7 +38,7 @@
 				file_put_contents("../config.php", str_replace("disabled", "enabled", file_get_contents("../config.php")));
 			
 				// log to mysql
-				$mysql->logToMysql("config-update", $userManager->getCurrentUsername()." activated maintenance mode");
+				$mysql->log("config-update", $user_manager->get_username()." activated maintenance mode");
 
 			// set disabled
 			} else {
@@ -47,14 +47,14 @@
 				file_put_contents("../config.php", str_replace("enabled", "disabled", file_get_contents("../config.php")));
 
 				// log to mysql
-				$mysql->logToMysql("config-update", $userManager->getCurrentUsername()." deactivated maintenance mode");
+				$mysql->log("config-update", $user_manager->get_username()." deactivated maintenance mode");
 			}
 		}
 
 		// update dev-mode config value
-		public function updateDevModeValue($value): void {
+		public function update_dev_mode($value): void {
 		
-			global $siteManager, $mysql, $userManager;
+			global $site_manager, $mysql, $user_manager;
 
 			// set true
 			if ($value == true) {
@@ -63,7 +63,7 @@
 				file_put_contents("../config.php", str_replace('"dev-mode"    => false', '"dev-mode"    => true', file_get_contents("../config.php")));
 			
 				// log to mysql
-				$mysql->logToMysql("config-update", $userManager->getCurrentUsername()." activated maintenance mode");
+				$mysql->log("config-update", $user_manager->get_username()." activated maintenance mode");
 
 			// set false
 			} else {
@@ -72,7 +72,7 @@
 				file_put_contents("../config.php", str_replace('"dev-mode"    => true', '"dev-mode"    => false', file_get_contents("../config.php")));
 
 				// log to mysql
-				$mysql->logToMysql("config-update", $userManager->getCurrentUsername()." deactivated maintenance mode");
+				$mysql->log("config-update", $user_manager->get_username()." deactivated maintenance mode");
 			}
 		}
 	}

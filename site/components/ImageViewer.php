@@ -1,17 +1,17 @@
 <?php // image viewer component
 
     // check if image specified
-    if ($siteManager->getQueryString("spec") != null) {
+    if ($site_manager->get_query_string("spec") != null) {
 
         // get image spec
-        $img_spec = $siteManager->getQueryString("spec");
+        $img_spec = $site_manager->get_query_string("spec");
 
         // get image by specID
-        $image = $mysql->fetchValue("SELECT image FROM image_uploader WHERE img_spec='".$img_spec."'", "image");
+        $image = $mysql->fetch_value("SELECT image FROM image_uploader WHERE img_spec='".$img_spec."'", "image");
     
         // check if image found
         if ($image == null) {
-            $siteManager->redirectError(404);
+            $site_manager->redirect_error(404);
         } else {
 
             // page View
@@ -21,6 +21,6 @@
     } else {
 
         // handle error
-        $siteManager->handleError("[DEV-MODE]:Error: image spec is empty", 404);
+        $site_manager->handle_error("[DEV-MODE]:Error: image spec is empty", 404);
     }
 ?>

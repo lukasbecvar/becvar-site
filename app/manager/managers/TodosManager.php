@@ -5,34 +5,34 @@
     class TodosManager {
 
         // new todo to mysql
-        public function addTodo($text): void {
+        public function insert_todo($text): void {
 
-            global $mysql, $userManager;
+            global $mysql, $user_manager;
 
             // insert to mysql
-            $mysql->insertQuery("INSERT INTO `todos`(`text`, `status`) VALUES ( '$text', 'open')");    
+            $mysql->insert("INSERT INTO `todos`(`text`, `status`) VALUES ( '$text', 'open')");    
             
             // log action to mysql database 
-            $mysql->logToMysql("todo-manager", "user ".$userManager->getCurrentUsername()." added new todo $text");
+            $mysql->log("todo-manager", "user ".$user_manager->get_username()." added new todo $text");
 
             // refrsh window aftre add todo
             print '<script type="text/javascript">window.location.replace("?admin=todos");</script>';
         }
     
         // close todo
-        public function closeTodo($id): void {
+        public function close_todo($id): void {
     
-            global $mysql, $userManager;
+            global $mysql, $user_manager;
             
             // log action to mysql database 
-            $mysql->logToMysql("todo-manager", "user ".$userManager->getCurrentUsername()." closed todo $id");
+            $mysql->log("todo-manager", "user ".$user_manager->get_username()." closed todo $id");
     
             // update todos for close 
-            $mysql->insertQuery("UPDATE todos SET status='closed' WHERE id='$id'");
+            $mysql->insert("UPDATE todos SET status='closed' WHERE id='$id'");
         }
         
         // check if todos empty
-        public function isEmpty(): bool {
+        public function is_empty(): bool {
 
             global $mysql;
 

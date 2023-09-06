@@ -5,14 +5,14 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<title>
 		<?php // print page title 
-			echo $siteManager->getPageTitle();
+			echo $site_manager->get_page_title();
 		?>
 	</title>
     <?php // google token
-        echo '<meta name="google-site-verification" content="'.$config->getValue("google-verify-token").'"/>';  
+        echo '<meta name="google-site-verification" content="'.$config->get_value("google-verify-token").'"/>';  
     ?>
-    <meta content="<?php echo $config->getValue("site-description"); ?>" name="description">
-    <meta content="<?php echo $config->getValue("site-keywords"); ?>" name="keywords">
+    <meta content="<?php echo $config->get_value("site-description"); ?>" name="description">
+    <meta content="<?php echo $config->get_value("site-keywords"); ?>" name="keywords">
 
     <!-------------------- import assets ------------------------>
     <link href="/assets/img/favicon.png" rel="icon">

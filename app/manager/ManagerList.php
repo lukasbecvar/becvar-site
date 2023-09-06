@@ -12,13 +12,13 @@
 	require_once(__DIR__."/managers/ProjectsManager.php");
 
 	// init all managers objects
-	$userManager = new becwork\managers\UserManager();
-	$dashboardManager = new becwork\managers\DashboardManager();
-	$visitorManager = new becwork\managers\VisitorSystemManager();
-	$contactManager = new becwork\managers\ContactManager();
-	$todosManager = new becwork\managers\TodosManager();
-	$siteManager = new becwork\managers\SiteManager();
-	$servicesManager = new becwork\managers\ServicesManager();
-	$projectsManager = new becwork\managers\ProjectsManager();
-	$alertManager = new becwork\managers\AlertManager();
+	$user_manager = new becwork\managers\UserManager();
+	$dashboard_manager = new becwork\managers\DashboardManager();
+	$visitor_manager = new becwork\managers\VisitorSystemManager();
+	$contact_manager = new becwork\managers\ContactManager();
+	$todos_manager = new becwork\managers\TodosManager();
+	$site_manager = new becwork\managers\SiteManager();
+	$services_manager = new becwork\managers\ServicesManager();
+	$projects_manager = new becwork\managers\ProjectsManager();
+	$alert_manager = new becwork\managers\AlertManager();
 ?>

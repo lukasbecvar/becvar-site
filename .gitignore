@@ -4,4 +4,4 @@ dump/
 /.vscode
 /vendor
 composer.lock
-GalleryDump.tar.gz
+error.log

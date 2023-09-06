@@ -4,7 +4,7 @@
 
     class BrowsersList {
 
-        public $browserList = [
+        public $browser_list = [
             
             // becvold service identifier
             "Cloudflare-SSLDetector" => "Cloudflare",

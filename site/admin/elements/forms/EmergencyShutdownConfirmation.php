@@ -2,27 +2,27 @@
 <?php // confirmation to server shutdown
 
     // generate confirmation code
-    $confirm_code = $stringUtils->genRandomStringAll(15);
+    $confirm_code = $string_utils->gen_random_sring(15);
 
     // check if form submited
     if (isset($_POST["submitShutdown"])) {
 
         // init values
-        $code = $escapeUtils->specialCharshStrip($_POST["confirmCode"]);
-        $shutdown_code = $escapeUtils->specialCharshStrip($_POST["shutdownCode"]);
+        $code = $escape_utils->special_chars_strip($_POST["confirmCode"]);
+        $shutdown_code = $escape_utils->special_chars_strip($_POST["shutdownCode"]);
 
         // check if code is valid
         if ($shutdown_code == $code) {
 
             // redirect to cmd executor
-            $urlUtils->jsRedirect("?admin=executeTask&command=shutdown");
+            $url_utils->js_redirect("?admin=executeTask&command=shutdown");
 
         } else {
-            $alertManager->flashError("Incorrect confirmation code.");
+            $alert_manager->flash_error("Incorrect confirmation code.");
         }
     } else {
         // flash warning msg
-        $alertManager->flashWarning("Warning this action will completely <strong>shutdown</strong> your server, it can only be started physically or from the administration");
+        $alert_manager->flash_warning("Warning this action will completely <strong>shutdown</strong> your server, it can only be started physically or from the administration");
     }
 ?>
 

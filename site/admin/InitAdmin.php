@@ -1,7 +1,7 @@
 <?php // main admin initor
 
     // get admin component name
-    $component = $siteManager->getQueryString("admin");
+    $component = $site_manager->get_query_string("admin");
 
 
 ?>
@@ -26,7 +26,7 @@
     <!-------------------- end of assets import ------------------------>
 	<title>
 		<?php // print page title 
-			echo $siteManager->getPageTitle();
+			echo $site_manager->get_page_title();
 		?>
 	</title>
 </head>
@@ -57,17 +57,17 @@
 <?php // main site redirector
 
 	// check if user send logout request
-	if ($siteManager->getQueryString("action") == "logout") {
-        $userManager->logout();
+	if ($site_manager->get_query_string("action") == "logout") {
+        $user_manager->logout();
 
     // check if user send register action
-    } else if ($siteManager->getQueryString("action") == "register") {
+    } else if ($site_manager->get_query_string("action") == "register") {
         include_once("components/AdminAccountRegisterComponent.php");
 
     } else {    
 
         // check if user logged in
-        if ($userManager->isLoggedIn()) {	
+        if ($user_manager->is_logged_in()) {	
 
             // admin top nav bar
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/TopPanel.php');
@@ -114,14 +114,14 @@
             } elseif ($component == "projectsReload") {
 
                 // update project list by github
-                $projectsManager->updateProjectDatabase();
+                $projects_manager->update_project_list();
 
                 // redirect back to table
-                $urlUtils->jsRedirect("?admin=dbBrowser&name=projects&limit=".$config->getValue("row-in-table-limit")."&startby=0");
+                $url_utils->js_redirect("?admin=dbBrowser&name=projects&limit=".$config->get_value("row-in-table-limit")."&startby=0");
 
             // login admin action redirect logged in users
             } elseif ($component == "login") {
-                $urlUtils->jsRedirect("/?admin=dashboard");
+                $url_utils->js_redirect("/?admin=dashboard");
 
             // task executor
             } elseif ($component == "executeTask") {
@@ -133,23 +133,19 @@
 
             // redirect to 404 if process not found or print error for dev mode
             } else {
-                if ($siteManager->isSiteDevMode()) {
-                    die("<h2 class=pageTitle>[DEV-MODE]:Error: process: ".$component." not found<h2>");
-                } else {
-                    $siteManager->redirectError(404);
-                }
+                $site_manager->handle_error("error: process: ".$component." not found", 404);
             }
 
         } else {
 
             // auto login if user have token cookie
-            if (isset($_COOKIE[$config->getValue('login-cookie')]) and isset($_COOKIE["userToken"])) {
+            if (isset($_COOKIE[$config->get_value('login-cookie')]) and isset($_COOKIE["user-token"])) {
 
                 // check if token valid
-                if ($_COOKIE[$config->getValue('login-cookie')] == $config->getValue('login-value')) {
+                if ($_COOKIE[$config->get_value('login-cookie')] == $config->get_value('login-value')) {
 
                     //Auto user login
-                    $userManager->autoLogin();
+                    $user_manager->auto_login();
 
                 } else {
                     // set login action if user not logged in

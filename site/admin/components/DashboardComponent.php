@@ -2,7 +2,7 @@
 <?php // main admin component for include all dashboard elements
 
     // warnning box
-    if (!$dashboardManager->isWarninBoxEmpty()) {
+    if (!$dashboard_manager->is_warnin_box_empty()) {
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/WarningBox.php');
     }
 
