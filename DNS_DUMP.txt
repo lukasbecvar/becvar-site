@@ -35,7 +35,6 @@ becvar.xyz.	1	IN	A	127.0.0.1
 
 ;; CNAME Records
 *.becvar.xyz.	1	IN	CNAME	becvar.xyz.
-www.becvar.xyz.	1	IN	CNAME	becvar.xyz.
 
 ;; MX Records
 becvar.xyz.	1	IN	MX	20 52589ddb9774d027.mx1.emailprofi.seznam.cz.
