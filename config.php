@@ -22,7 +22,7 @@
 			"maintenance" => "disabled", // maintenance config (Disable acces to public page)
 
 			/* Site meta values */
-			"google-verify-token" => "token",
+			"google-verify-token" => "jMlpAWwv_dJg52eZ-Q8-BwO_RZhewfS2E3GSq7uJAKI",
 			"site-description"   => "Lukáš Bečvář AKA Lordbecvold personal website",
 			"site-keywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
 

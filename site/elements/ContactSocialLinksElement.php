@@ -4,10 +4,10 @@
             <i class="bx bx-share-alt"></i>
             <h3>Social sites</h3>
             <div class="social-links">
-                <a href="<?php echo $config->get_value("instagram"); ?>" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="<?php echo $config->get_value("telegram"); ?>" class="telegram"><i class="bi bi-telegram"></i></a>
-                <a href="<?php echo $config->get_value("twitter"); ?>" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="<?php echo $config->get_value("linkedin"); ?>" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                <a href="<?= $config->get_value("instagram") ?>" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="<?= $config->get_value("telegram") ?>" class="telegram"><i class="bi bi-telegram"></i></a>
+                <a href="<?= $config->get_value("twitter") ?>" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="<?= $config->get_value("linkedin") ?>" class="linkedin"><i class="bi bi-linkedin"></i></a>
             </div>
         </div>
     </div>
@@ -15,7 +15,7 @@
         <div class="info-box">
             <i class="bx bx-envelope"></i>
              <h3>Email Me</h3>
-            <p><?php echo $config->get_value("email"); ?></p>
+            <p><?= $config->get_value("email") ?></p>
         </div>
     </div>
 </div>

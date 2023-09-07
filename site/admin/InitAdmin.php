@@ -2,8 +2,6 @@
 
     // get admin component name
     $component = $site_manager->get_query_string("admin");
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +22,7 @@
 		}
 	?>
     <!-------------------- end of assets import ------------------------>
-	<title>
-		<?php // print page title 
-			echo $site_manager->get_page_title();
-		?>
-	</title>
+	<title><?= $site_manager->get_page_title() ?></title>
 </head>
 <body>
 
