@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
     <center>
         <?php // admin inbox component (for show msgs from contact site)
         
@@ -17,7 +17,7 @@
          
             // print msgs is not empty
             if ($contact_manager->is_empty()) {
-                echo"<h2 class=pageTitle>Inbox is empty</h2>";
+                echo"<h2 class=page-title>Inbox is empty</h2>";
             } else {
                 $contact_manager->print_messages();
             }

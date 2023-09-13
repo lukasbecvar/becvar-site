@@ -1,4 +1,4 @@
-<form class="newTodoForm" action="?admin=todos" method="post">
-    <textarea class="todoArea" maxlength="119" name="todoText" class="feedback-input" placeholder="Todo"></textarea>
-    <input class="inputButton todoButton" type="submit" name="submitNewTodo" value="Save">
+<form class="new-todo-form" action="?admin=todos" method="post">
+    <textarea class="todo-area" maxlength="119" name="todoText" class="feedback-input" placeholder="Todo"></textarea>
+    <input class="input-button todo-button" type="submit" name="submitNewTodo" value="Save">
 </form>

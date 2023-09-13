@@ -29,9 +29,6 @@
         // include projects component
         include_once("components/ProjectsComponent.php");
 
-        // include services element
-        include_once("elements/ServicesElement.php");
-
         // include contact component
         include_once("components/ContactComponent.php");
 

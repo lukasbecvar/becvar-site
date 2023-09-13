@@ -1,10 +1,10 @@
-<p class="settingsValueBox">
-    Maintenance [<?php echo $config->get_value('maintenance');?>]
-    <a class="settingsButton" href="?admin=pageSettings&config=maintenanceDisable">Disable</a>
-    <a class="settingsButton" href="?admin=pageSettings&config=maintenanceEnable">Enable</a>
+<p class="settings-value-box">
+    Maintenance [<?= $config->get_value('maintenance') ?>]
+    <a class="settings-button" href="?admin=pageSettings&config=maintenanceDisable">Disable</a>
+    <a class="settings-button" href="?admin=pageSettings&config=maintenanceEnable">Enable</a>
 </p>
 
-<p class="settingsValueBox">
+<p class="settings-value-box">
     Dev mode [<?php
         if ($config->get_value('dev-mode')) {
             echo "enabled";
@@ -12,6 +12,6 @@
             echo "disabled";
         }
     ?>]
-    <a class="settingsButton" href="?admin=pageSettings&config=devmodeDisable">Disable</a>
-    <a class="settingsButton" href="?admin=pageSettings&config=devmodeEnable">Enable</a>
+    <a class="settings-button" href="?admin=pageSettings&config=devmodeDisable">Disable</a>
+    <a class="settings-button" href="?admin=pageSettings&config=devmodeEnable">Enable</a>
 </p>

@@ -4,16 +4,16 @@
 
 	class ContactManager {
 
-		// get messages from database
 		public function get_messages(): ?array {
 
 			global $mysql;
 
+			// fetch messages
 			$messages = $mysql->fetch("SELECT * from messages WHERE status = 'open' ORDER BY id DESC"); 
+			
 			return $messages;
 		}
 
-		// get banned email count
 		public function get_banned_email_count($email): ?string {
 
 			global $mysql;
@@ -21,27 +21,25 @@
 			// get banned emails
 			$banned_emails = $mysql->fetch("SELECT * FROM banned_emails WHERE email = '$email'");
 			
-			// get emails count
+			// count
 			$banned_email_count = count($banned_emails);
 
 			return $banned_email_count;
 		}
 
-		// send message to database
 		public function send_message($name, $email, $message, $status): bool {
 
 			global $mysql, $main_utils, $escape_utils;
 
-			// default state value
 			$state = false;
 
 			// check if email banned
 			if ($this->get_banned_email_count($email) > 0) {
 
-				// log to mysql
 				$mysql->log("message-block", "blocked email: $email");
 				
 			} else {
+				
 				// get & escape values
 				$name = $escape_utils->special_chars_strip(trim($name));
 				$email = $escape_utils->special_chars_strip(trim($email));
@@ -60,9 +58,7 @@
 				// check if message inserted
 				if (!$query_insert) {
 
-					// log to mysql
 					$mysql->log("recived-message", "by sender $name");
-					
 					$state = true;
 				}
 			}
@@ -79,22 +75,19 @@
 			$mysql->insert("INSERT INTO `banned_emails`(`email`) VALUES ('$email')");
 		}
 
-		// close message by id
 		public function close_message($id): void {
 
 			global $mysql, $user_manager;
 
-			// log process to mysql database 
 			$mysql->log("close-message", "user ".$user_manager->get_username()." closed message id: $id");
 
-			// update message status = close 
+			// close message
 			$mysql->insert("UPDATE messages SET status='closed' WHERE id='$id'");
 		}
 		
         // check if inbox empty
         public function is_empty(): bool {
 
-			// default state output
 			$state = false;
 
             // get messages from database
@@ -141,51 +134,16 @@
 				if ($user_id == null) {
 
 					# unknow user msg
-					echo "
-						<div class='card text-white mb-3' style='max-width: 95%;'>
-							<div class=card-body>
-								<h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") 
-									<span class='text-success phoneNone'>[".$row["time"]."]</span>, 
-									<span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span>
-									<a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a>
-								</h5>
-								<p class=leftCenter class=card-text>".$row["message"]."</p>
-							</div>
-						</div>
-					";
+					include_once __DIR__."/../../../site/admin/elements/inbox/MsgBoxUserNull.php";
 				} else {
 
 					// check if sender banned
 					if ($visitor_manager->is_visitor_banned($row["remote_addr"])) {
-						echo "
-							<div class='card text-white mb-3' style='max-width: 95%;'>
-								<div class=card-body>
-									<h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") 
-										<span class='text-success phoneNone'>[".$row["time"]."]</span>, 
-										<span class='text-red phoneNone'>[".$row["remote_addr"]."]</span>
-										<a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a>
-										<a class='deleteLink text-warning' href=".$ban_link." target='blank_'>".$ban_state."</a>
-									</h5>
-									<p class=leftCenter class=card-text>".$row["message"]."</p>
-								</div>
-							</div>
-						";
+						include_once __DIR__."/../../../site/admin/elements/inbox/MsgBoxUserBanned.php";
 
 					# non banned user msg
 					} else {
-						echo "
-							<div class='card text-white mb-3' style='max-width: 95%;'>
-								<div class=card-body>
-									<h5 class=leftCenter class=card-title>".$row["name"]." (".$row["email"].") 
-										<span class='text-success phoneNone'>[".$row["time"]."]</span>, 
-										<span class='text-warning phoneNone'>[".$row["remote_addr"]."]</span>
-										<a class='deleteLink' href='?admin=inbox&delete=".$row["id"]."'>X</a>
-										<a class='deleteLink text-warning' href=".$ban_link." target='blank_'>".$ban_state."</a>
-									</h5>
-									<p class=leftCenter class=card-text>".$row["message"]."</p>
-								</div>
-							</div>
-						";
+						include_once __DIR__."/../../../site/admin/elements/inbox/MsgBox.php";
 					}
 				}
             }

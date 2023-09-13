@@ -11,7 +11,7 @@
     <title>Error 403, Forbidden</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			You do not have permission to access this page
 			<br><br>

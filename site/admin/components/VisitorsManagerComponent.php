@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
 <?php // log reader [admin component]
 
 	// default values 
@@ -6,7 +6,7 @@
 
 	// check if user is owner
 	if (!$user_manager->is_user_Owner()) {
-		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
+		echo"<h2 class=page-title>Sorry you dont have permission to this page</h2>";
 	} else {
 
 		// page items limit
@@ -42,7 +42,7 @@
             if (count($visitors) != 0) {
 
                 // default table structure
-                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr class="lineItem">
+                echo '<div class="table-responsive"><table class="table table-dark"><thead><tr class="line-item">
                     <th scope="col">#</th>
                     <th scope="col">Visited</th>
                     <th scope="col">First visit</th>
@@ -127,13 +127,13 @@
 
                     // check if visitor is banned
                     if ($ban_status == "banned") {
-                        $ban_link = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
+                        $ban_link = "<a class='delete-link-todos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>UNBAN</strong></a>";
                     } else {
-                        $ban_link = "<a class='deleteLinkTodos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
+                        $ban_link = "<a class='delete-link-todos text-warning' href='?admin=visitors&action=ban&id=".$data["id"]."&limit=500&startby=0'><strong>BAN</strong></a>";
                     }
 
                     // build table row
-                    $row = "<tr class='lineItem'>
+                    $row = "<tr class='line-item'>
                         <th scope='row'><strong>".$data["id"]."</strong>
                         <td><strong>".$data["visited_sites"]."</strong>
                         <td><strong>".$data["first_visit"]."</strong>
@@ -144,7 +144,7 @@
                         <td><strong>".$banned."</strong>
                         <td><strong>".$link_to_ip_logs."</strong>
                         <td>".$ban_link."
-                        <td><a class='deleteLinkTodos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
+                        <td><a class='delete-link-todos' href='?admin=dbBrowser&delete=visitors&id=".$data["id"]."&visitors=yes'><strong>X</strong></a></td></td></th>
                     </tr>";
 
                     // print row to page
@@ -154,7 +154,7 @@
                 // end of table
                 echo '</tbody></table></div>';
             } else {
-                echo"<h2 class=pageTitle>No visitors were found</h2>";
+                echo"<h2 class=page-title>No visitors were found</h2>";
             }
         } else {
 
@@ -264,7 +264,7 @@
                 }
 
             } else {
-                echo "<br><h2 class=pageTitle>Error action: $action not found!</h2>";
+                echo "<br><h2 class=page-title>Error action: $action not found!</h2>";
             }
         }
 
@@ -273,17 +273,17 @@
 
             // check if page buttons can show
             if (($show_limit > $limit_on_page) or (count($visitors) == $limit_on_page)) {
-                echo '<div class="pageButtonBox">';
+                echo '<div class="page-button-box">';
             }
         
             // print back button if user in next page
             if ($show_limit > $limit_on_page) {
-                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
+                echo '<br><a class="back-page-button" href=?admin=visitors&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
             }
 
             // print next button if user on start page and can see next items
             if (count($visitors) == $limit_on_page) {
-                echo '<br><a class="backPageButton" href=?admin=visitors&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
+                echo '<br><a class="back-page-button" href=?admin=visitors&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
             }
     
             // check if page buttons can show

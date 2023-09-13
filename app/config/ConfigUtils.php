@@ -4,7 +4,6 @@
 
 	class ConfigUtils {
 
-		// get config value by name
 		public function get_value($name): string {
 
 			global $site_manager;
@@ -26,7 +25,6 @@
 			}
 		}	
 
-		// update maintenance config value
 		public function update_maintenance($value): void {
 		
 			global $site_manager, $mysql, $user_manager;
@@ -37,7 +35,6 @@
 				// edit value in config file
 				file_put_contents("../config.php", str_replace("disabled", "enabled", file_get_contents("../config.php")));
 			
-				// log to mysql
 				$mysql->log("config-update", $user_manager->get_username()." activated maintenance mode");
 
 			// set disabled
@@ -46,12 +43,10 @@
 				// edit value in config file
 				file_put_contents("../config.php", str_replace("enabled", "disabled", file_get_contents("../config.php")));
 
-				// log to mysql
 				$mysql->log("config-update", $user_manager->get_username()." deactivated maintenance mode");
 			}
 		}
 
-		// update dev-mode config value
 		public function update_dev_mode($value): void {
 		
 			global $site_manager, $mysql, $user_manager;
@@ -62,7 +57,6 @@
 				// edit value in config file
 				file_put_contents("../config.php", str_replace('"dev-mode"    => false', '"dev-mode"    => true', file_get_contents("../config.php")));
 			
-				// log to mysql
 				$mysql->log("config-update", $user_manager->get_username()." activated maintenance mode");
 
 			// set false
@@ -71,7 +65,6 @@
 				// edit value in config file
 				file_put_contents("../config.php", str_replace('"dev-mode"    => true', '"dev-mode"    => false', file_get_contents("../config.php")));
 
-				// log to mysql
 				$mysql->log("config-update", $user_manager->get_username()." deactivated maintenance mode");
 			}
 		}

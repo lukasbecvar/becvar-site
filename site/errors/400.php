@@ -11,7 +11,7 @@
     <title>Error 400, Bad request</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			Request error
 			<br><br>

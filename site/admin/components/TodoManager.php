@@ -20,7 +20,7 @@
                 
                 // flash custom error msg for todo manager
                 echo '
-                    <center><div class="alert alert-danger todoErrorAlert alert-dismissible fade show" role="alert">
+                    <center><div class="alert alert-danger todo-error-alert alert-dismissible fade show" role="alert">
                         Maximum todo characters is 120
                         <a href="?admin=todos" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></a>
                     </div></center>
@@ -48,7 +48,7 @@
     }
 ?>
 
-<div class="adminPanel">
+<div class="admin-panel">
     <?php
         // new todo from
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/NewTodoForm.php');
@@ -58,11 +58,11 @@
 
             // check if todos is empty
             if ($todos_manager->is_empty()) {
-                echo"<h2 class=pageTitle>Todolist is empty</h2>";
+                echo"<h2 class=page-title>Todolist is empty</h2>";
             } else {
 
                 // print table struct
-                echo '<table class="todoTable table table-dark"><thead><tr class="lineItem">
+                echo '<table class="todo-table table table-dark"><thead><tr class="line-item">
                     <th scope="col">#</th>
                     <th scope="col">Todo</th>
                     <th scope="col">X</th>
@@ -74,7 +74,7 @@
 
                 // print todos to table
                 foreach ($final_todos as $row) { 
-                    echo "<tr class='lineItem'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='deleteLinkTodos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning deleteLinkTodos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
+                    echo "<tr class='line-item'><th scope='row'>".$row["id"]."<td>".$row["text"]."<td><a class='delete-link-todos' href='?admin=todos&delete=".$row["id"]."'>X</a></td><td><a class='text-warning delete-link-todos' href='?admin=dbBrowser&editor=todos&id=".$row["id"]."&postby=todomanager' target='_blank'>Edit</a></td></td></th></tr>";
                 }
 
                 // end of table struct

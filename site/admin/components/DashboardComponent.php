@@ -1,4 +1,4 @@
-<div class="adminPanel ooverflow-x-hiden">
+<div class="admin-panel ooverflow-x-hiden">
 <?php // main admin component for include all dashboard elements
 
     // warnning box
@@ -16,7 +16,7 @@
     include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/DashboardCards.php');
 ?>
 <style>
-    .wrapper .section .top_navbar {
+    .wrapper .section .top-navbar {
         width: calc(100% - 240px);
     }
 </style>

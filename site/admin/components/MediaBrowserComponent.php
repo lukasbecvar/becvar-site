@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
 <?php // private media browser component in admin
     
 	// default values 
@@ -6,7 +6,7 @@
 
     // check if user is owner 
 	if (!$user_manager->is_user_Owner()) {
-		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
+		echo"<h2 class=page-title>Sorry you dont have permission to this page</h2>";
 	} else {
 
 		// get page items limit
@@ -41,10 +41,10 @@
             
             // print all images to gallery box
             foreach ($images_upload as $row) {
-                echo '<span data-src="data:image/jpg;base64,'.$row["image"].'" data-sub-html="Image <a class=imgEditButton href=?process=image&spec='.$row["img_spec"].' target=blank_>'.$row["img_spec"].'</a> | <a class=imgEditButton href=?admin=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery_images" src="data:image/jpg;base64,'.$row["image"].'"></span>'; 
+                echo '<span data-src="data:image/jpg;base64,'.$row["image"].'" data-sub-html="Image <a class=img-edit-button href=?process=image&spec='.$row["img_spec"].' target=blank_>'.$row["img_spec"].'</a> | <a class=img-edit-button href=?admin=dbBrowser&delete=image_uploader&id='.$row["id"].'&close=y target=blank_>Delete</a>"><img class="gallery-images" src="data:image/jpg;base64,'.$row["image"].'"></span>'; 
             } 
         } else {
-            echo"<h2 class=pageTitle>Image database is empty!</h2>";
+            echo"<h2 class=page-title>Image database is empty!</h2>";
         }
     
         //End of gallery list
@@ -54,16 +54,16 @@
         // pager button box check
         if (($site_manager->get_query_string("limit") != null) and ($site_manager->get_query_string("startby") != null) and ($site_manager->get_query_string("action") == null)) {
 
-            echo '<div class="pageButtonBox">';
+            echo '<div class="page-button-box">';
         
             // print back button if user in next page
             if ($show_limit > $limit_on_page) {
-                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
+                echo '<br><a class="back-page-button" href=?admin=mediaBrowser&limit='.$next_limit_back.'&startby='.$next_start_by_row_back.'>Back</a><br>';
             }
 
             // print next button if user on start page and can see next items
             if (count($images_upload) == $limit_on_page) {
-                echo '<br><a class="backPageButton" href=?admin=mediaBrowser&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
+                echo '<br><a class="back-page-button" href=?admin=mediaBrowser&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
             }
     
             echo '</div>';

@@ -1,4 +1,4 @@
-<div class="cardPhone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
+<div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
     <div class="card-header">Service status</div>
     <div class="card-body"> 
         <?php // main page of admin with server status

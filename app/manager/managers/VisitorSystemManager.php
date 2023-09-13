@@ -220,7 +220,6 @@
             // redirect banned users to banned page
             if ($this->is_visitor_banned($ip_adress)) {
 
-                // log trying to access site if user banned
                 $mysql->log("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                 // redirect to banned page
@@ -282,7 +281,6 @@
                         // show ban page if IP banned
                         if($this->is_visitor_banned($ip_adress)) {
 
-                            // log trying to access site if user banned
                             $mysql->log("banned", "banned user with ip: ".$ip_adress." trying to access site");
 
                             // redirect to banned page
@@ -391,7 +389,6 @@
                     $country = null;
                     $city = null;
 
-                    // log error to mysql
                     $mysql->log("geolocate-error", "error to geolocate ip: " . $ip . ", error: " . $e->getMessage());
                 }   
             }

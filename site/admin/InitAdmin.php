@@ -46,7 +46,7 @@
     }
 ?>
 
-<main class="adminPage"> 
+<main class="admin-page"> 
 <div class="wrapper">
 <?php // main site redirector
 

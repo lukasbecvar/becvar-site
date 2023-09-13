@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
     <?php // system/site Diagnostics component (for check all system/server components)
         
         // system diag card

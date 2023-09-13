@@ -11,7 +11,7 @@
     <title>Error: 503, page is unavailable</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			The service is temporarily unavailable due to maintenance
 		</strong>

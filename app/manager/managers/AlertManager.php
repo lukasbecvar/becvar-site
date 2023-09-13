@@ -4,50 +4,21 @@
 
     class AlertManager { 
 
-        // flash success alert
         public function flash_success($msg): void {
-            echo '
-                <center>
-                    <div class="alert alert-success alert-dismissible fade show alert-dismissible fade show" role="alert">'.$msg.'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div><center>
-            ';
+            include_once __DIR__."/../../../site/common/alerts/SuccessAlert.php";
         }
 
-        // flash warning alert
         public function flash_warning($msg): void {
-
-            echo '
-                <center><div class="alert alert-warning" role="alert">
-                
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                '.$msg.'
-                </div><center>';
+            include_once __DIR__."/../../../site/common/alerts/WarninAlert.php";
         }
 
-        // flash error alert
         public function flash_error($msg, $without_close = false): void {
 
-            // check if closeble
+            // check if alert can be closable
             if ($without_close) {
-                echo 
-                    '<center><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        '.$msg.'
-                    </div></center><br>' 
-                ;  
+                include_once __DIR__."/../../../site/common/alerts/ErrorAlert.php"; 
             } else {
-                echo 
-                    '<center><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        '.$msg.'
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div></center><br>' 
-                ;  
+                include_once __DIR__."/../../../site/common/alerts/ErrorAlertClosable.php"; 
             }            
         }
     }

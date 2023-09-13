@@ -136,7 +136,6 @@
 			// log logout to mysql dsatabase 
 			if (!empty($username)) {
 
-				// log logout action
 				$mysql->log("authenticator", "user ".$username." logout out of admin site");
 			}
 
@@ -155,7 +154,6 @@
 			// update password
 			$mysql->insert("UPDATE users SET password = '$password' WHERE username = '$username'");
 
-			// log to mysql
 			$mysql->log("profile-update", "update password for user: $username");
 		}
 
@@ -167,7 +165,6 @@
 			// update image in mysql
 			$mysql->insert("UPDATE users SET image_base64 = '$base64_final' WHERE username = '$username'");
         
-			// log to mysql
 			$mysql->log("profile-update", "user: $username updated avatar image");
 		}
 

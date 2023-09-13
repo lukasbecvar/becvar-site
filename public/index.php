@@ -112,7 +112,7 @@
 			
 			// set image viewer by process
 			else if($site_manager->get_query_string("process") == "image") {
-				include_once("../site/components/ImageViewer.php");
+				include_once("../site/public/components/ImageViewer.php");
 			}
 
 			// set code paste page
@@ -120,15 +120,15 @@
 
 				// paste save 
 				if ($site_manager->get_query_string("method") == "save") {
-					include_once("../site/components/paste/save.php");
+					include_once("../site/paste/save.php");
 				
 				// paste view
 				} else if ($site_manager->get_query_string("method") == "view") {
-					include_once("../site/components/paste/view.php");
+					include_once("../site/paste/view.php");
 				
 				// paste init
 				} else {
-					include_once("../site/components/paste/index.php");
+					include_once("../site/paste/index.php");
 				}	
 			}
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +140,7 @@
 				if ($site_manager->is_admin_site()) {
 					include_once("../site/admin/InitAdmin.php");
 				} else {
-					require_once("../site/Main.php");
+					require_once("../site/public/Main.php");
 				}
 			}		
 		}

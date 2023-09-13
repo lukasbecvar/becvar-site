@@ -7,7 +7,7 @@
 ?>
 
 <div class="confirmation dark-table">
-    <p class="loginFormTitle">Are you sure you want to delete <?php echo $table ?> ?</p>
-    <a class="confirmationButton" href="?admin=dbBrowser&delete=<?php echo $_GET["delete"]; ?>&id=all&confirm=yes">Yes</a>
-    <a class="confirmationButton" href="?admin=dbBrowser&name=<?php echo $table ?>&limit=<?php echo $row_limit ?>&startby=0">No</a>
+    <p class="login-form-title">Are you sure you want to delete <?= $table ?> ?</p>
+    <a class="confirmation-button" href="?admin=dbBrowser&delete=<?= $_GET["delete"]; ?>&id=all&confirm=yes">Yes</a>
+    <a class="confirmation-button" href="?admin=dbBrowser&name=<?= $table ?>&limit=<?= $row_limit ?>&startby=0">No</a>
 </div>

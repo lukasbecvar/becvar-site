@@ -15,7 +15,7 @@
     <title>You are banned</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			You are permanently banned on this site.
 			<br><br>

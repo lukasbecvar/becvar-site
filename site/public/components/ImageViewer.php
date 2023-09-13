@@ -15,7 +15,7 @@
         } else {
 
             // page View
-            include($_SERVER['DOCUMENT_ROOT'].'/../site/elements/ImageViewPage.php');
+            include($_SERVER['DOCUMENT_ROOT'].'/../site/public/elements/ImageViewPage.php');
         }
 
     } else {

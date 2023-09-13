@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
 <?php // confirmation to server shutdown
 
     // generate confirmation code
@@ -26,19 +26,19 @@
     }
 ?>
 
-<form class="loginForm dark-table" style="top: 28%;" action="?admin=form&form=shutdown" method="post">
-    <p class="loginFormTitle">Confirmation</p>
-    <p class="loginFormTitle loginFormSubTitle">please repeat the verification code</p>
-    <input class="textInput" type="text" name="confirmCode" value=<?php echo $confirm_code;?> readonly><br>
-    <input class="textInput" type="text" name="shutdownCode" placeholder="Confirmation code"><br>
-    <div class="rightPosition"><input class="inputButton" type="submit" name="submitShutdown" value="Shutdown"></div>
+<form class="login-form dark-table" style="top: 28%;" action="?admin=form&form=shutdown" method="post">
+    <p class="login-form-title">Confirmation</p>
+    <p class="login-form-title login-form-sub-title">please repeat the verification code</p>
+    <input class="text-input" type="text" name="confirmCode" value=<?= $confirm_code;?> readonly><br>
+    <input class="text-input" type="text" name="shutdownCode" placeholder="Confirmation code"><br>
+    <div class="right-position"><input class="input-button" type="submit" name="submitShutdown" value="Shutdown"></div>
 </form>
 <style>
 @media screen and (max-width: 800px) { 
 	.alert {
 		top: 14% !important;
 	}
-    .loginForm {
+    .login-form {
         top: 42% !important;
     }
 }

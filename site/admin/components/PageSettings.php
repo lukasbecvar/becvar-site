@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
     <?php 
         // check if config change submited
         if ($site_manager->get_query_string("config") != null) {
@@ -31,7 +31,7 @@
             $url_utils->js_redirect("?admin=pageSettings"); 
         }
     ?>
-    <h1 class="pageTitle display-4">Page settings</h1>
+    <h1 class="page-title display-4">Page settings</h1>
     <?php
         // settings box
         include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/PageSettingsBox.php');

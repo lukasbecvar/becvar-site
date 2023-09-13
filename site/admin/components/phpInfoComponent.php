@@ -1,4 +1,4 @@
-<div class="adminPanel">
+<div class="admin-panel">
 <style>
     .wrapper {
         color: white;

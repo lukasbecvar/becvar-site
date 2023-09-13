@@ -1,4 +1,4 @@
-<main class="registerPage">
+<main class="register-page">
     <?php // admin account register (for new site setup)
 
         // check if register submited
@@ -6,7 +6,7 @@
             
             // check if user table is empty
             if (!$user_manager->is_users_empty()) {
-                echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";
+                echo "<br><h2 class=page-title>This feature can be used only to create an admin account</h2>";
             } else {
                
                 // get data from post and escapeit
@@ -48,7 +48,7 @@
                             $url_utils->redirect("?admin=login");
                        
                         } else {
-                            echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";
+                            echo "<br><h2 class=page-title>This feature can be used only to create an admin account</h2>";
                         }
                     }
                 }
@@ -57,7 +57,7 @@
 
         // check if users table is realy empty
         if (!$user_manager->is_users_empty()) {
-            echo "<br><h2 class=pageTitle>This feature can be used only to create an admin account</h2>";
+            echo "<br><h2 class=page-title>This feature can be used only to create an admin account</h2>";
         } else {
             include($_SERVER['DOCUMENT_ROOT'].'/../site/admin/elements/forms/RegisterForm.php');
         }

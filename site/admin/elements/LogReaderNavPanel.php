@@ -1,15 +1,18 @@
+<?php 
+    $limit = $config->get_value("row-in-table-limit");
+?>
 <ul class="breadcrumb"> 
     <li>
-        <a class="selectorButton btn-small" href="?admin=dbBrowser&name=logs&limit=<?php echo $config->get_value("row-in-table-limit"); ?>&startby=0"><strong>Unfiltered</strong></a>
+        <a class="selector-button btn-small" href="?admin=dbBrowser&name=logs&limit=<?= $limit ?>&startby=0"><strong>Unfiltered</strong></a>
     </li>  
  
     <li>
-        <a class="selectorButton btn-small" href="?admin=logReader&action=setReaded&limit=<?php echo $config->get_value("row-in-table-limit"); ?>&startby=0"><strong>Readed all</strong></a>
+        <a class="selector-button btn-small" href="?admin=logReader&action=setReaded&limit=<?= $limit ?>&startby=0"><strong>Readed all</strong></a>
     </li> 
     
     <li>
-        <a class="selectorButton btn-small" href="?admin=logReader&action=deleteLogs&limit=<?php echo $config->get_value("row-in-table-limit"); ?>&startby=0"><strong>Delete all</strong></a>
+        <a class="selector-button btn-small" href="?admin=logReader&action=deleteLogs&limit=<?= $limit ?>&startby=0"><strong>Delete all</strong></a>
     </li>    
     
-    <li class="countTextInMenuR">Logs reader</li>
+    <li class="count-text-in-menuR">Logs reader</li>
 </ul>

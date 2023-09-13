@@ -11,7 +11,7 @@
     <title>Error: 404, Page not found</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			Error this page was not found
 			<br><br>

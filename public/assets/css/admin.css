@@ -115,7 +115,7 @@ a:hover {
 	transition: all 0.5s ease;
 }
 
-.wrapper .section .top_navbar {
+.wrapper .section .top-navbar {
 	background-color: #242424;
 	height: 40px;
 	display: flex;
@@ -128,19 +128,19 @@ a:hover {
 	text-decoration: none;
 }
 
-.wrapper .section .top_navbar {
+.wrapper .section .top-navbar {
 	position: fixed; 
 	z-index: 1000; 
 	width: calc(100% - 15px);
 }
 
-.wrapper .section .top_navbar .hamburger a {
+.wrapper .section .top-navbar .hamburger a {
 	font-size: 28px;
 	color: #f4fbff;
 	text-decoration: none;
  }
   
-.wrapper .section .top_navbar .hamburger a:hover {
+.wrapper .section .top-navbar .hamburger a:hover {
 	color: #79d5ec;
 	text-decoration: none;
 }
@@ -161,7 +161,7 @@ body.active .wrapper .section {
 	width: 100%;
 }
 
-.registerPage {
+.register-page {
 	position: fixed;
 	height: 100%;
 	width: 100%;
@@ -180,6 +180,10 @@ button {
 
 form { 
 	margin: 50px auto; 
+}
+
+.msg-box {
+	max-width: 95%;
 }
 
 .feedback-input {
@@ -214,14 +218,14 @@ textarea {
 	z-index: 2;
 }
 
-.pageTitle {
+.page-title {
 	text-align: center; 
 	color: white;
 	font-size: 30px;
 	margin-top: 1%;
 }
 
-.loginPage {
+.login-page {
 	position: fixed;
 	height: 100%;
 	width: 100%;
@@ -229,7 +233,7 @@ textarea {
     background-size: cover;
 }
 
-.loginForm {
+.login-form {
 	margin-top: 4%;
 	padding: 0.5%;
 	background: rgba(0, 0, 0, 0.596);
@@ -243,21 +247,21 @@ textarea {
 	background-color: #303030 !important;
 }
 
-.loginForm .textInput:-webkit-autofill, .loginForm .textInput:-webkit-autofill:hover , .loginForm .textInput:-webkit-autofill:focus {
+.login-form .text-input:-webkit-autofill, .login-form .text-input:-webkit-autofill:hover , .login-form .text-input:-webkit-autofill:focus {
     border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.loginFormPosY {
+.login-form-pos-y {
 	padding: 1%;
 	top: 27%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
-.dbEditForm {
+.db-edit-form {
 	text-align: center;
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	padding: 10px;
@@ -268,7 +272,7 @@ textarea {
 	background: rgba(0, 0, 0, 0.877);
 }
 
-.imageUploadForm {
+.image-upload-form {
 	padding: 2%;
 	background: rgba(0, 0, 0, 0.596);
 	position: absolute;
@@ -282,17 +286,17 @@ textarea {
 	background-color: rgba(0, 0, 0, 0.596) !important;
 }
 
-.loginFormTitle {
+.login-form-title {
 	color: white;
 	text-align: center;
 }
 
-.loginFormSubTitle {
+.login-form-sub-title {
 	font-size: 15px;
 	font-weight: bold;
 }
 
-.textInput {
+.text-input {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 	text-align: center;
@@ -305,7 +309,7 @@ textarea {
 	width: 98.5%;
 }
 
-.textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus, .textInput:-webkit-autofill, .textInput:-webkit-autofill:hover, .textInput:-webkit-autofill:focus {
+.text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus {
     border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;
 	background: rgba(255, 255, 255, 0.062);
@@ -313,13 +317,13 @@ textarea {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.textInputTitle {
+.text-input-title {
 	color: white;
 	margin-top: 10px;
 	margin-bottom: -5px;
 }
 
-.dbBrowserSelectLink {
+.db-browser-select-link {
 	position: absolute;
 	border: 1px solid white;
 	left: 50%;
@@ -331,28 +335,28 @@ textarea {
 	margin-bottom: 3px;
 }
 
-.dbBrowserSelectLink:hover {
+.db-browser-select-link:hover {
 	color: #fada28;
 	border: 1px solid #fada28;
 }
 
-.textInput:focus {
+.text-input:focus {
 	color: white;
 }
 
-.textInput::-moz-placeholder { 
+.text-input::-moz-placeholder { 
 	color: lightgrey;
 }
 
-.textInput:-ms-input-placeholder {
+.text-input:-ms-input-placeholder {
 	color: lightgrey;
 }
 
-.textInput::placeholder { 
+.text-input::placeholder { 
 	color: lightgrey;
 }
 
-.inputButton {
+.input-button {
 	padding: 5px;
 	margin-top: 7px;
 	border: 2px solid rgba(255, 255, 255, 0.24);
@@ -368,12 +372,12 @@ textarea {
 	padding-right: 8px;
 }
 
-.inputButton:hover {
+.input-button:hover {
 	border: 2px solid rgba(255, 255, 255, 0.2419);
 	background: rgba(255, 255, 255, 0.103);
 }
 
-.rightPosition {
+.right-position {
 	text-align: right;
 }
 
@@ -386,29 +390,22 @@ textarea {
 	top: 5px;
 }
 
-.checkboxText { 
+.checkbox-text { 
 	color: white;
 	font-family: arial;
 	font-size: 20px;
 }
 
-.sMenuButton {
+.s-menu-button {
 	text-decoration: none;
 }	
 
-.dashboardBox {
-	position: fixed;
-	background-color: #242424;
-	width: 100%;
-	height: 100%;
-}
-
-.logoutLink {
+.logout-link {
 	position: fixed;
 	right: 25px;
 }
 
-.leftCenter {
+.left-center {
 	text-align: left;
 	padding-left: 1%;
 }
@@ -421,7 +418,7 @@ textarea {
 	margin-top: 10px;
 }
 
-.deleteLink {
+.delete-link {
 	float: right;
 	color: rgb(207, 39, 39);
 	text-decoration: none;
@@ -430,12 +427,12 @@ textarea {
 	margin-right: 8px;
 }
 
-.deleteLink:hover {
+.delete-link:hover {
 	color: rgb(33, 248, 97);
 	text-decoration: none;
 }
 
-.adminPanel {
+.admin-panel {
 	background-color: #242424;
 	width: 100%;
 	height: 100%;
@@ -443,7 +440,7 @@ textarea {
 	top: 40px;
 }
 
-.adminPage {
+.admin-page {
 	position: absolute;
 	background-color: #242424;
 	width: 100%;
@@ -459,7 +456,7 @@ textarea {
 	overflow-x: scroll;
  }
 
-.todoArea {
+.todo-area {
 	width: calc(100% - 6.5%);
 	color:white;
 	padding: 4px;
@@ -470,7 +467,7 @@ textarea {
 	background: rgba(255, 255, 255, 0.062);
 }
 
-.newTodoForm {
+.new-todo-form {
 	padding: 5px;
 	background: rgba(0, 0, 0, 0.596);
 	position: relative; 
@@ -482,7 +479,7 @@ textarea {
 	border: 2px solid rgba(255, 255, 255, 0.356);
 }
 
-.todoButton {
+.todo-button {
 	position: absolute;
 	right: 3px;
 	margin: 2px;
@@ -491,7 +488,7 @@ textarea {
 	width: 6%;
 }
 
-.settingsValueBox {
+.settings-value-box {
 	color: white;
 	position: relative;
 	width: 45%;
@@ -505,7 +502,7 @@ textarea {
 	margin-bottom: 0;
 }
 
-.settingsButton {
+.settings-button {
 	color: white;
 	border: 1px solid white;
 	padding: 4px;
@@ -516,7 +513,7 @@ textarea {
 	margin-left: 5px;
 }
 
-.settingsButton:hover {
+.settings-button:hover {
 	color: #fada28;
 	border: 1px solid #fada28;
 	text-decoration: none;
@@ -534,14 +531,14 @@ textarea {
 	background-color: rgb(41, 41, 41) !important;
 }
 
-.deleteLinkTodos {
+.delete-link-todos {
 	color: rgb(207, 28, 28);
 	text-decoration: none;
 	font-size: 22px;
 	transition: all 0.2s ease;	
 }
 
-.deleteLinkTodos:hover {
+.delete-link-todos:hover {
 	color: rgb(33, 248, 97);
 	text-decoration: none;
 }
@@ -553,7 +550,7 @@ textarea {
 	margin: 0;
 }
 
-.selectorButton {
+.selector-button {
 	margin-left: 3px;
 	margin-right: 3px;
 	padding: 5px;
@@ -561,45 +558,45 @@ textarea {
 	border: 1px solid white;
 }
 
-.selectorButton:hover {
+.selector-button:hover {
 	color: #fada28;
 	border: 1px solid #fada28;
 }
 
-.countTextInMenu {
+.count-text-in-menu {
 	color: white;
 	left: 1%;
 }
 
-.countTextInMenuR {
+.count-text-in-menuR {
 	color: white;
 	position: absolute;
 	right: 1%;
 }
 
-.pageButtonBox {
+.page-button-box {
 	border-top: 1px solid rgba(255, 255, 255, 0.24);
 	text-align: center;
 }
 
-.backPageButton {
+.back-page-button {
 	color: white;
 	border: 1px solid white;
 	font-size: 25px;
 	padding: 8px;
 }
 
-.backPageButton:hover {
+.back-page-button:hover {
 	color: #fada28;
 	border: 1px solid #fada28;
 }
 
-.imgEditButton { 
+.img-edit-button { 
 	color: white;
 	text-decoration: underline;
 }
 
-.gallery_images {
+.gallery-images {
 	margin: 10px;
 	max-height: 400px;
 	max-width: 80%;
@@ -607,7 +604,7 @@ textarea {
 	transition: all 0.2s ease;
 }
 
-.gallery_images:hover {
+.gallery-images:hover {
 	border: 1px solid rgb(241, 53, 53);
 }
 
@@ -632,13 +629,13 @@ textarea {
     font-size: 110px;
 }
 
-.cardLink {
+.card-link {
 	color: white;
 	font-size: 26px;
 	font-weight: bold;
 }
 
-.cardLink:hover {
+.card-link:hover {
 	color: #79d5ec;
 }
 
@@ -652,14 +649,8 @@ textarea {
     top: 20px;
     opacity: 0.1;
 }
-  
-.formTitle {
-	color: white;
-	font-size: 25px;
-	text-align: center;
-}
 
-.todoErrorAlert {
+.todo-error-alert {
 	margin-bottom: 3%;
 }
 
@@ -679,7 +670,7 @@ textarea {
 	font-size: 20px;
 }
 
-.confirmationButton {
+.confirmation-button {
 	position: relative;
 	background-color: #242424;
 	border: 2px solid rgba(255, 255, 255, 0.24);
@@ -689,7 +680,7 @@ textarea {
 	width: 100px;
 }
 
-.confirmationButton:hover {
+.confirmation-button:hover {
 	color: #fada28;
 	border: 1px solid #fada28;
 }
@@ -740,22 +731,22 @@ textarea {
 	color: #FFFFFF !important;
 }
 
-.todoTable {
+.todo-table {
 	position: absolute;
 	top: 60px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
-.lineItem {
+.line-item {
 	border-top: 2px solid #242627;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
-.lineItem:hover {
+.line-item:hover {
 	background-color: rgba(87, 87, 87, 0.397);
 }
 
-.cardSubTitle {
+.card-sub-title {
 	font-size: 28px;
 	margin-bottom: 0;
 }
@@ -781,32 +772,32 @@ textarea {
 		width: 10px;
 		height: 10px;
 	} 
-	.phoneNone {
+	.phone-none {
 		display: none;
 	}
-	.pageTitle {
+	.page-title {
 		font-size: 23px;
 	}
-	.menuText {
+	.menu-text {
 		display: none;
 	}
-	.deleteLink {
+	.delete-link {
 		margin-bottom: 20px;
 	}
-	.loginFormTitle {
+	.login-form-title {
 		font-size: 20px;
 	}
-	.todoButton {
+	.todo-button {
 		position: absolute;
 		width: 18%;
 	}	
 	.table {
 		font-size: 13px;
 	}
-	.deleteLinkTodos {
+	.delete-link-todos {
 		font-size: 15px;
 	}
-	.settingsValueBox {
+	.settings-value-box {
 		width: 98%;
 		padding: 1.5px;
 		padding-left: 4px;
@@ -814,7 +805,7 @@ textarea {
 		top: 5%;
 		left: 50%;
 	}
-	.settingsButton {
+	.settings-button {
 		padding: 1px;
 		font-size: 13px;
 		padding-left: 3px;
@@ -835,31 +826,31 @@ textarea {
 	.text-danger {
 		padding-bottom: 1px;
 	}
-	.backPageButton {
+	.back-page-button {
 		font-size: 17px;
 	}
-	.loginForm {
+	.login-form {
 		margin-top: 18%;
 		padding: 0.5%;
 		left: 50%;
 		width: 90%;
 	}
-	.loginFormPosY {
+	.login-form-pos-y {
 		padding: 10px;
 	}
-	.countTextInMenu {
+	.count-text-in-menu {
 		display: none;
 	}
-	.countTextInMenuR {
+	.count-text-in-menuR {
 		display: none;
 	}
-	.selectorButton {
+	.selector-button {
 		margin-left: 2px;
 		margin-right: 2px;
 		padding: 3px;
 		font-size: 16px;
 	}
-	.dbBrowserSelectLink {
+	.db-browser-select-link {
 		width: 200px;
 		margin-bottom: 3px;
 	}
@@ -869,33 +860,33 @@ textarea {
 	.settings {
 		font-size: 15px;
 	}
-	.imageUploadForm {
+	.image-upload-form {
 		padding: 2%;
 		top: 17%;
 		left: 50%;
 		width: 90%;
 	}
-	.cardPhone {
+	.card-phone {
 		margin-left: 10px;
 		width: 90%;
 	}
-	.diagCardPhone {
+	.diag-card-phone {
 		margin-left: 4%;
 		width: calc(100% - 3%);	
 	}
-	.todoArea {
+	.todo-area {
 		width: calc(100% - 20%);
 	}
-	.logReaderInfo {
+	.log-reader-info {
 		font-size: 16px;
 	}
-	.todoErrorAlert {
+	.todo-error-alert {
 		margin-top: 11%;
 	}
 	.close {
 		margin-top: -7px;
 	}
-	.dbEditForm { 
+	.db-edit-form { 
 		width: 95%;
 		top: -13%;
 	}
@@ -905,10 +896,10 @@ textarea {
 	.diagnostics-large-title {
 		font-size: 18px;
 	}
-	.logoutLink {
+	.logout-link {
 		right: 15px;
 	}
-	.wrapper .section .top_navbar {
+	.wrapper .section .top-navbar {
 		width: calc(100% - 10px) !important;
 	}
 }
@@ -918,7 +909,7 @@ textarea {
 		top: 16.3%;
 		height: 100%;
 	}	
-	.todoTable {
+	.todo-table {
 		top: 60px;
 	}
 }

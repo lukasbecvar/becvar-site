@@ -2,18 +2,15 @@
 
 becvar site is my personal website builded with becwork
 
-## WARNING
-This application does not serve as an example of my work, it is my personal site, for testing functions and controlling the basic components of the server and services, the application is not built on any Front-end or Back-end framework.
-
 ## Installation
  - Set apache root dir to public/
  - Run install in panel.sh
- - Configure mysql and import db.sql to database
+ - Configure mysql and import structure.sql to database
  - Set service path in scripts (if not same /services/)
  - Disable apache autoindex module
 
  ## Public site
- - Components: about, projects, services list, contact, etc...
+ - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader
  - Code paste site
@@ -34,8 +31,8 @@ This application does not serve as an example of my work, it is my personal site
  - System/Services tester component
  - Server Emergency shutdown
 
-## Becwork required
- - php-8 or <
+## Required
+ - php-8.1 or <
  - mysql8 or <
  - php-cli
  - php-curl
@@ -43,7 +40,7 @@ This application does not serve as an example of my work, it is my personal site
 
 ## Dependencies
 * Becwork
-   * Version: **2.0**
+   * Version: **4.3**
    * [Github](https://github.com/lordbecvold/Becwork)
 * Boxicons
    * Version: **2.1.2**

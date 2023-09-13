@@ -1,4 +1,4 @@
-<div class="loginPage">
+<div class="login-page">
 <?php 
 	// user table is empty print warning
 	if ($user_manager->is_users_empty()) {
@@ -73,7 +73,7 @@
 
 						// devmode error print
 						if ($site_manager->is_dev_mode()) {
-							die("<h2 class=pageTitle>[DEV-MODE]:Login, error user token is empty</h2>");
+							die("<h2 class=page-title>[DEV-MODE]:Login, error user token is empty</h2>");
 						} 
 						
 						// error redirect

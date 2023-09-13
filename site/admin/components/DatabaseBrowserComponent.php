@@ -1,9 +1,9 @@
-<div class="adminPanel">
-<?php // admin database table browser
+<div class="admin-panel">
+<?php // admin database table browser (NEEDS A REFACTOR!!!)
 
 	// check if user is owner
 	if (!$user_manager->is_user_Owner()) {
-		echo"<h2 class=pageTitle>Sorry you dont have permission to this page</h2>";
+		echo"<h2 class=page-title>Sorry you dont have permission to this page</h2>";
 	} else {
 
 		////////////////////////////////PAGE-SITES-VALUES////////////////////////////////
@@ -88,14 +88,14 @@
 				// table selector button to panel
 				echo '
 					<li>
-						<a class="selectorButton btn-small" href="?admin=dbBrowser"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+						<a class="selector-button btn-small" href="?admin=dbBrowser"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
 					</li>';
 
 				// delete all button to panel
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&delete='.$table_name.'&id=all"><strong><i class="fa fa-trash" aria-hidden="true"></i> '.$table_name.'</strong></a>
+							<a class="selector-button btn-small" href="?admin=dbBrowser&delete='.$table_name.'&id=all"><strong><i class="fa fa-trash" aria-hidden="true"></i> '.$table_name.'</strong></a>
 						</li>';
 				}
  
@@ -103,7 +103,7 @@
 				if (!empty($_GET["name"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&add='.$table_name.'"><strong>NEW</strong></a>
+							<a class="selector-button btn-small" href="?admin=dbBrowser&add='.$table_name.'"><strong>NEW</strong></a>
 						</li>';
 				}
 
@@ -112,7 +112,7 @@
 					if ($_GET["name"] == "projects") {
 						echo '
 							<li>
-								<a class="selectorButton btn-small" href="?admin=projectsReload"><strong><i class="fas fa-sync"></i></strong></a>
+								<a class="selector-button btn-small" href="?admin=projectsReload"><strong><i class="fas fa-sync"></i></strong></a>
 							</li>';
 					}
 				}
@@ -121,28 +121,28 @@
 				if (!empty($_GET["add"])) {
 					echo '
 						<li> 
-							<a class="selectorButton btn-small" href="?admin=dbBrowser&name='.$_GET["add"].'"><strong>BACK</strong></a>
+							<a class="selector-button btn-small" href="?admin=dbBrowser&name='.$_GET["add"].'"><strong>BACK</strong></a>
 						</li>';
 				}
 
 				// row count
 				if (!empty($_GET["name"])) {
-					echo '<li class="countTextInMenuR">'.$_GET["name"].' = '.count($rows_count).' rows</li>';	
+					echo '<li class="count-text-in-menuR">'.$_GET["name"].' = '.count($rows_count).' rows</li>';	
 				} else {
 
 					// editor title
 					if (isset($_GET["editor"])) {
-						echo '<li class="countTextInMenuR">Row editor</li>';	
+						echo '<li class="count-text-in-menuR">Row editor</li>';	
 					} 
 					
 					// addition title
 					elseif (isset($_GET["add"])) {
-						echo '<li class="countTextInMenuR">New row</li>';
+						echo '<li class="count-text-in-menuR">New row</li>';
 					} 
 					
 					// default titile
 					else {
-						echo '<li class="countTextInMenuR">Database browser</li>';
+						echo '<li class="count-text-in-menuR">Database browser</li>';
 					}
 				}
 			echo '</ul>';
@@ -160,7 +160,7 @@
  
 			// check if table empty
 			if (count($table_data) == 0) {
-				echo"<h2 class=pageTitle>Table is empty</h2>";
+				echo"<h2 class=page-title>Table is empty</h2>";
 			} 
 			
 			// table data
@@ -168,7 +168,7 @@
 
 				// create table element
 				echo '<div class="table-responsive"><table class="table table-dark">';
-				echo '<thead><tr class="lineItem">'; 
+				echo '<thead><tr class="line-item">'; 
 
 				// mysql fields to table
 				foreach($table_columns as $row) {
@@ -225,7 +225,7 @@
 					// transfrom associative array to indexed array
 					$data_ok = array_values($data);
 
-					echo '<tbody><tr class="lineItem">';
+					echo '<tbody><tr class="line-item">';
 					
 					// table data
 					for ($id = 0; $id <= 50; $id++) {
@@ -235,11 +235,11 @@
 					}
 			
 					if(empty($data["base64"])) {
-						echo '<td><a class="deleteLinkTodos" href="?admin=dbBrowser&delete='.$table_name.'&id='.$data_ok[0].'">X</a></td>';
+						echo '<td><a class="delete-link-todos" href="?admin=dbBrowser&delete='.$table_name.'&id='.$data_ok[0].'">X</a></td>';
 						
 						// edit link to row
 						if ($table_name != "visitors" && $table_name != "pastes" && $table_name != "hash_gen" && $table_name != "users") {
-							echo '<td><a class="text-warning deleteLinkTodos" href="?admin=dbBrowser&editor='.$table_name.'&id='.$data_ok[0].'">Edit</a></td>';
+							echo '<td><a class="text-warning delete-link-todos" href="?admin=dbBrowser&editor='.$table_name.'&id='.$data_ok[0].'">Edit</a></td>';
 						}
 					}
 					echo '</tr></tbody>';
@@ -329,7 +329,7 @@
 				if ($site_manager->is_dev_mode()) {
 
 					// print error
-					die("<h2 class=pageTitle>[DEV-MODE]:Error: query string id not found.<h2>");
+					die("<h2 class=page-title>[DEV-MODE]:Error: query string id not found.<h2>");
 
 				} else {
 
@@ -383,21 +383,21 @@
 
 			// create form
 			if (isset($_GET["postby"]) and $_GET["postby"] == "todomanager") {
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'&postby=todomanager" method="post">';
+				echo '<form class="db-edit-form dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'&postby=todomanager" method="post">';
 			} else {
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'" method="post">';
+				echo '<form class="db-edit-form dark-table" action="?admin=dbBrowser&editor='.$editor_get.'&id='.$id_get.'" method="post">';
 			}
-			echo '<p style="color: white; font-size: 20px;" class="loginFormTitle">Edit row with '.$id_get.'<p>';
+			echo '<p style="color: white; font-size: 20px;" class="login-form-title">Edit row with '.$id_get.'<p>';
 
 
 				// print Fields
 				foreach($result as $row) {
-					echo '<p class="textInputTitle">'.$row['Field'].'</p>';
-					echo '<input class="textInput" type="text" name="'.$row['Field'].'" value="'.$row_all[0][$row['Field']].'"><br>';
+					echo '<p class="text-input-title">'.$row['Field'].'</p>';
+					echo '<input class="text-input" type="text" name="'.$row['Field'].'" value="'.$row_all[0][$row['Field']].'"><br>';
 				}
 
 			// end form
-			echo '<input class="inputButton" type="submit" name="submitEdit" value="Edit"></form>';
+			echo '<input class="input-button" type="submit" name="submitEdit" value="Edit"></form>';
 		}
 		
 		// addition function /////////////////////////////////////////////////////////////
@@ -464,20 +464,20 @@
 			else {
 
 				// create add form
-				echo '<form class="dbEditForm dark-table" action="?admin=dbBrowser&add='.$add_get.'" method="post">';
+				echo '<form class="db-edit-form dark-table" action="?admin=dbBrowser&add='.$add_get.'" method="post">';
 
 				// print from title
-				echo '<p class="textInputTitle">New item</p><br>';
+				echo '<p class="text-input-title">New item</p><br>';
 
 				// fields
 				foreach($selected_columns as $row) {
 					if (strtolower($row["Field"]) != "id") {
-						echo '<input class="textInput" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
+						echo '<input class="text-input" type="text" name="'.$row["Field"].'" placeholder="'.$row["Field"].'"><br>';
 					}
 				}
 
 				// form submit button
-				echo '<input class="inputButton" type="submit" name="submitSave" value="SAVE">';
+				echo '<input class="input-button" type="submit" name="submitSave" value="SAVE">';
 
 				// form end
 				echo '</form>';
@@ -488,7 +488,7 @@
 		else {
 
 			// page title
-			echo '<h2 class="pageTitle">Select table</h2>';
+			echo '<h2 class="page-title">Select table</h2>';
  
 			// select box element
 			echo '<div><ol><br>';
@@ -499,7 +499,7 @@
 			// print all tables links
 			foreach ($tables as $row) {
 
-				echo "<a class='dbBrowserSelectLink' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->get_value("database-name")]."&limit=".$limit_on_page."&startby=0>".$row["Tables_in_".$config->get_value("database-name")]."</a><br><br>";
+				echo "<a class='db-browser-select-link' href=?admin=dbBrowser&name=".$row["Tables_in_".$config->get_value("database-name")]."&limit=".$limit_on_page."&startby=0>".$row["Tables_in_".$config->get_value("database-name")]."</a><br><br>";
 			}
 
 			// end of select box element
@@ -514,17 +514,17 @@
  
 			// check if page buttons can show
 			if (($show_limit > $limit_on_page) or (count($table_data) == $limit_on_page)) {
-				echo '<div class="pageButtonBox">'; //Create buttons element area
+				echo '<div class="page-button-box">'; //Create buttons element area
 			}
 		
 			// print back button if user in next page
 			if ($show_limit > $limit_on_page) {
-				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit_Back.'&startby='.$next_start_by_rowBack.'>Back</a><br>';
+				echo '<br><a class="back-page-button" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit_Back.'&startby='.$next_start_by_rowBack.'>Back</a><br>';
 			}
 
 			// print next button if user on start page and can see next items
 			if (count($table_data) == $limit_on_page) {
-				echo '<br><a class="backPageButton" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
+				echo '<br><a class="back-page-button" href=?admin=dbBrowser&name='.$_GET["name"].'&limit='.$next_limit.'&startby='.$next_start_by_row.'>Next</a><br>';	
 			}
 	
 			// check if page buttons can show

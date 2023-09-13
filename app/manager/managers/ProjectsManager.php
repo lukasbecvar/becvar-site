@@ -73,7 +73,6 @@
                 }
             }
 
-            // log action to mysql
             $mysql->log("project-update", "project list updated!");
         }
     }

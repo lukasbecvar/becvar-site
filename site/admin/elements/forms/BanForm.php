@@ -10,12 +10,12 @@
     // check if get not empty
     if ($site_manager->get_query_string("id") != null) {
         echo '
-            <form class="newTodoForm" action="'.$form_action.'" method="post">
-                <textarea class="todoArea" maxlength="120" name="banReason" class="feedback-input" placeholder="Reason"></textarea>
-                <input class="inputButton todoButton" type="submit" name="submitBan" value="Submit">
+            <form class="new-todo-form" action="'.$form_action.'" method="post">
+                <textarea class="todo-area" maxlength="120" name="banReason" class="feedback-input" placeholder="Reason"></textarea>
+                <input class="input-button todo-button" type="submit" name="submitBan" value="Submit">
             </form>
         ';
     } else {
-        echo"<h2 class=pageTitle>Error by id not identified</h2>";
+        echo"<h2 class=page-title>Error by id not identified</h2>";
     }
 ?>

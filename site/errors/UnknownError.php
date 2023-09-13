@@ -11,7 +11,7 @@
     <title>Error: 520, unknown error</title>
 </head>
 <body>    
-	<p class="errorPageMSG">
+	<p class="error-page-msg">
 		<strong>
 			Unknown error, please contact the service administrator.
 		</strong>
