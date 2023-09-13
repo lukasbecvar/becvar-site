@@ -4,7 +4,7 @@
     use PHPUnit\Framework\TestCase;
     use becwork\utils\CryptUtils;
     
-    # link crypt utils class
+    // link crypt utils class
     require_once("app/encryption/CryptUtils.php");
 
     final class CryptTest extends TestCase {

@@ -4,7 +4,7 @@
     use PHPUnit\Framework\TestCase;
     use becwork\utils\HashUtils;
 
-    # link hash utils class
+    // link hash utils class
     require_once("app/encryption/HashUtils.php");
 
     final class HashTest extends TestCase {
