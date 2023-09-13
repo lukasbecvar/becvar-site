@@ -7,10 +7,10 @@
 		public $config = [
 
 			/* Main config */
-			"app-name"     => "Becvar.xyz",        	// define app name
+			"app-name"    => "Becvar.xyz",        	// define app name
 			"version"     => 7.6,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
-			"author-link"  => "becvar.xyz", 	   	// define author site
+			"author-link" => "becvar.xyz", 	   	// define author site
 			"url-check"   => true,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
@@ -23,14 +23,14 @@
 
 			/* Site meta values */
 			"google-verify-token" => "token",
-			"site-description"   => "Lukáš Bečvář AKA Lordbecvold personal website",
-			"site-keywords"      => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
+			"site-description"    => "Lukáš Bečvář AKA Lordbecvold personal website",
+			"site-keywords"       => "developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář",
 
 			/* Cookie values */
 			"anti-log-cookie" => "88d6Z97RJc6gbHn8Ch7ybZbO1Y0bVFYx",	// anti log cookie for disable loging for browser who used this cookie
 			"anti-log-value"  => "3vULvNnBG96Ocm2i9Zbw6S307JkwG1bA",	// balue of anti log cookie
-			"login-cookie"   => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",		// login cookie name
-			"login-value"    => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",		// value of login cookie
+			"login-cookie"    => "d1dRhG2L0lVufOgtWm02kZ1Z27NUYs85",		// login cookie name
+			"login-value"     => "0ZQHj24pyMSzAHDh123w4Pwj9Sl27mgJ",		// value of login cookie
 
 			/* Contact information */
 			"email"     => "lukas@becvar.xyz",
