@@ -6,6 +6,7 @@ becvar site is my personal website builded with becwork
  - Set apache root dir to public/
  - Run install in panel.sh
  - Configure mysql and import structure.sql to database
+ - Enable php output buffering
  - Set service path in scripts (if not same /services/)
  - Disable apache autoindex module
 
