@@ -80,4 +80,3 @@
 <script>lightGallery(document.getElementById('lightgallery'));</script>
 <!-------------------- end of import scripts ------------------------>
 </div>
- 
