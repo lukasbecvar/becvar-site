@@ -13,6 +13,11 @@
                 echo '<p class="card-text"><span class="text-red"><strong>Directory: '.$config->get_value('service-dir').' not exist</strong></span></p>';
             }
 
+            // print sudo permissions error
+            if (!$services_manager->is_web_user_sudo()) {
+                echo '<p class="card-text"><span class="text-red"><strong>Permissions error: please add "'.$services_manager->get_service_username().'   ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>';
+            }
+
             // print if site loaded on non https
             if (!$main_utils->is_ssl()) {
                 echo '<p class="card-text"><span class="text-red"><strong>Your session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>';

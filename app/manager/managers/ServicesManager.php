@@ -114,6 +114,35 @@
             return $state;
         }
 
+        // get webserver username
+        public function get_service_username(): ?string {
+
+            // get username
+            $exec = exec("whoami");
+
+            return $exec;
+        }
+
+        // check if webserver (apache) can execute sudo
+        public function is_web_user_sudo(): bool {
+
+            $state = false;
+
+            // testing sudo exec
+            $exec = exec("sudo echo test");
+   
+            // count output length
+            $len = strlen($exec);
+   
+            // check if length is valid
+            if ($len == 4) {
+                $state = true;
+            }
+
+            return $state;
+       }
+   
+
         // execute system command
         public function execute_command($command): void {
 

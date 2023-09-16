@@ -249,6 +249,10 @@
             } elseif (!$main_utils->is_ssl()) {
                 $state = false;
 
+            // check if web server can execute sudo
+            } elseif (!$services_manager->is_web_user_sudo()) {
+                $state = false;
+
             // check if hard drive is not full
             } elseif ($this->get_drive_usage() > 89) {
                 $state = false;

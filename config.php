@@ -11,7 +11,7 @@
 			"version"     => 7.6,                  	// define app version
 			"author"      => "Lukáš Bečvář",       	// define app author
 			"author-link" => "becvar.xyz", 	   	// define author site
-			"url-check"   => true,				    // check if url valid
+			"url-check"   => false,				    // check if url valid
 			"url"         => "localhost",        	// define main app url
 			"dev-mode"    => true,					// define devmode value
 			"encoding"    => "utf8",               	// define default charset
