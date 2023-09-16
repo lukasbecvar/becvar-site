@@ -98,7 +98,7 @@
 		if (!$site_manager->check_ssl()) {
 
 			// handle invalid https error
-			$site_manager->handle_error("this site can run only on https protocol, check your url in browser or config.php", 400);
+			$site_manager->handle_error("this site can run only on https protocol, check your url in browser or config.php, warning: ssl can run only with valid full strict protection and server side certificates", 400);
 		} 
 				
 		// include main page component or process
