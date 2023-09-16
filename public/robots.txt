@@ -1,4 +1,4 @@
 User-agent: *
 Allow: *
 
-Sitemap: https://becvold.xyz/sitemap.xml
+Sitemap: https://becvar.xyz/sitemap.xml
