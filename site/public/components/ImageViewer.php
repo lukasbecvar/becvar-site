@@ -23,4 +23,3 @@
         // handle error
         $site_manager->handle_error("[DEV-MODE]:Error: image spec is empty", 404);
     }
-?>

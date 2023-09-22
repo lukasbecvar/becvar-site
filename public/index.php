@@ -77,72 +77,49 @@
 
 	// check if page is in maintenance mode
 	if($site_manager->is_maintenance()) {
-		include_once("../site/errors/Maintenance.php");
+		$url_utils->js_redirect("error.php?code=maintenance");
 	} else { 
 		
 		// init visitor system
 		$visitor_manager->init();		
 		
-		// check if url-check is enabled
-		if ($config->get_value("url-check")) {
-
-			// check if page loaded with valid url 
-			if (!$site_manager->is_valid_url()) {
-
-				// handle invalid url error
-				$site_manager->handle_error("invalid url load, plese check [url-check, url]: values in config.php", 400);
-			}
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// set logs disabler function by process
+		if($site_manager->get_query_string("process") == "disableLogsForMe") {
+			include_once("../site/admin/LogsDisabler.php");
+		}
+			
+		// set image viewer by process
+		else if($site_manager->get_query_string("process") == "image") {
+			include_once("../site/public/components/ImageViewer.php");
 		}
 
-		// check if page running on https
-		if (!$site_manager->check_ssl()) {
+		// set code paste page
+		else if($site_manager->get_query_string("process") == "paste") {
 
-			// handle invalid https error
-			$site_manager->handle_error("this site can run only on https protocol, check your url in browser or config.php, warning: ssl can run only with valid full strict protection and server side certificates", 400);
-		} 
+			// paste save 
+			if ($site_manager->get_query_string("method") == "save") {
+				include_once("../site/paste/save.php");
 				
-		// include main page component or process
+			// paste view
+			} else if ($site_manager->get_query_string("method") == "view") {
+				include_once("../site/paste/view.php");
+				
+			// paste init
+			} else {
+				include_once("../site/paste/index.php");
+			}	
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		// set main page component in process is empty
 		else {
-			
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			// set logs disabler function by process
-			if($site_manager->get_query_string("process") == "disableLogsForMe") {
-				include_once("../site/admin/LogsDisabler.php");
+
+			// check if page is admin or normal site
+			if ($site_manager->is_admin_site()) {
+				include_once("../site/admin/InitAdmin.php");
+			} else {
+				require_once("../site/public/InitPublic.php");
 			}
-			
-			// set image viewer by process
-			else if($site_manager->get_query_string("process") == "image") {
-				include_once("../site/public/components/ImageViewer.php");
-			}
-
-			// set code paste page
-			else if($site_manager->get_query_string("process") == "paste") {
-
-				// paste save 
-				if ($site_manager->get_query_string("method") == "save") {
-					include_once("../site/paste/save.php");
-				
-				// paste view
-				} else if ($site_manager->get_query_string("method") == "view") {
-					include_once("../site/paste/view.php");
-				
-				// paste init
-				} else {
-					include_once("../site/paste/index.php");
-				}	
-			}
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			// set main page component in process is empty
-			else {
-
-				// check if page is admin or normal site
-				if ($site_manager->is_admin_site()) {
-					include_once("../site/admin/InitAdmin.php");
-				} else {
-					require_once("../site/public/Main.php");
-				}
-			}		
-		}
+		}		
 	}
-?>

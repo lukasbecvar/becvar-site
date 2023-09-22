@@ -73,4 +73,3 @@
             $this->assertEquals($hash, "db346d691d7acc4dc2625db19f9e3f52");
         }
     }
-?>

@@ -55,4 +55,3 @@
 			session_destroy();
 		}
 	}
-?>

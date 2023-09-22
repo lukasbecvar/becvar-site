@@ -60,4 +60,3 @@
 			return $response_output;
         }
 	}
-?>

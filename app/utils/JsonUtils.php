@@ -29,7 +29,7 @@
 
                 // get data
                 $data = file_get_contents($target, false, $context);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $data = null;
             }
 
@@ -38,4 +38,3 @@
             return $data;
         }
     }
-?>

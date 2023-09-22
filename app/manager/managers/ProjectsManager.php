@@ -76,4 +76,3 @@
             $mysql->log("project-update", "project list updated!");
         }
     }
-?>

@@ -23,7 +23,7 @@ cd public/
 sudo systemctl start mysql
 
 # print mysql status
-sudo systemctl --no-pager status mysql
+systemctl --no-pager status mysql
 
 # run php dev server
-sudo php -S localhost:80
+php -S localhost:8060

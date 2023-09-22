@@ -43,4 +43,3 @@
         // print element
         echo $element;
     }
-?>

@@ -1,4 +1,13 @@
-<?php // error site handlerer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/css/error-page.css" rel="stylesheet">
+	<link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>
+</head>
+<body> 
+<?php // error site handlerer 
     if (isset($_GET["code"])) {
 
         // get error code form url
@@ -26,6 +35,12 @@
         } else if ($code == "banned") {
             include_once("../site/errors/BannedPage.php");
 
+        } else if ($code == "maintenance") {
+            include_once("../site/errors/Maintenance.php");
+
+        } else if ($code == "unknown") {
+            include_once("../site/errors/UnknownError.php");
+
         // not found code
         } else {
             include_once("../site/errors/UnknownError.php");
@@ -36,3 +51,8 @@
         include_once("../site/errors/404.php");
     }
 ?>
+<!-- init fluid animation -->
+<canvas></canvas>
+<script src="/assets/js/fluid-animation.js"></script>
+</body>
+</html>

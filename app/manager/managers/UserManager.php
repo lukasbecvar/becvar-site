@@ -329,4 +329,3 @@
 			return $avatar;
 		}
 	}
-?>

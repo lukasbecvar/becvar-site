@@ -21,4 +21,3 @@
 	$services_manager = new becwork\managers\ServicesManager();
 	$projects_manager = new becwork\managers\ProjectsManager();
 	$alert_manager = new becwork\managers\AlertManager();
-?>

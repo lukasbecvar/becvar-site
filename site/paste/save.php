@@ -33,4 +33,3 @@
 			$mysql->log("paste", "saved new paste: ".$name);	
 		}
 	}
-?>

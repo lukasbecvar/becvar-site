@@ -4,44 +4,6 @@
 
 	class SiteManager {
 
-        // check if loaded url is valid
-        public function is_valid_url(): bool {
-
-            global $config;
-
-            // default state
-            $state = false;
-
-            // get host url
-            $url = $this->get_http_host();
-
-            // check if url valid
-            if ($url == $config->get_value("url")) {
-                $state = true;
-            }
-
-            return $state;
-        }
-
-        // check if ssl running valid
-        public function check_ssl(): bool {
-
-            global $config, $main_utils;
-
-            // default state
-            $state = true;
-
-            // check if only https enabled
-            if ($config->get_value("https")) {
-
-                if (!$main_utils->is_ssl()) {
-                    $state = false;
-                }
-            }
-
-            return $state;
-        }
-
         // get true or false if admin page
         public function is_admin_site(): bool {
             
@@ -103,7 +65,7 @@
             global $config;
 
             // check if host is localhost
-            if ($this->get_http_host() == "localhost") {
+            if ($this->is_running_localhost()) {
                 
                 $title = "Localhost Testing"; 
             } else {
@@ -186,22 +148,22 @@
         // check if site running on localhost
         public function is_running_localhost() {
 
-            global $config;
-
             // default state output
 			$state = false;
 
+            // get http host
+            $host = $this->get_http_host();
+            
             // check if running on url localhost
-            if ($config->get_value("url") == "localhost") {
+            if (str_starts_with($host, "localhost")) {
                 $state = true;
             } 
             
             // check if running on localhost ip
-            if ($config->get_value("url") == "127.0.0.1") {
+            if (str_starts_with($host, "127.0.0.1")) {
                 $state = true;
             }
 
             return $state;
         }
 	}
-?>

@@ -95,4 +95,3 @@
 			return $final_hash;
 		}
 	}
-?>

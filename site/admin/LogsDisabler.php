@@ -24,4 +24,3 @@
         // handle error
         $site_manager->handle_error("[DEV-MODE]:Error: you must login first", 403);
     }
-?>

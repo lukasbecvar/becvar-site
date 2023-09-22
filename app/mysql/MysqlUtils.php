@@ -129,7 +129,7 @@
         */
         public function fetch($query): ?array {
 
-            global $config;
+            global $site_manager;
 
             // get database connection
             $connection = $this->connect();
@@ -221,4 +221,3 @@
             return $version[0];
         }
     }
-?>

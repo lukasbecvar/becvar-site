@@ -157,4 +157,3 @@
             shell_exec("sudo runuser -l root -c 'sh ".$_SERVER['DOCUMENT_ROOT']."/../scripts/".$script_name."'");
         }
     }
-?>

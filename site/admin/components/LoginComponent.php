@@ -78,7 +78,7 @@
 						
 						// error redirect
 						else {
-							include_once("errors/UnknownError.php");
+							$url_utils->js_redirect("error.php?code=unknown");
 						}						
 					}
 				} else {

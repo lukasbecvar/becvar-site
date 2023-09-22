@@ -44,7 +44,7 @@
 
             // exeption handle
             if ($uri && !filter_var('file://' . $uri, FILTER_VALIDATE_URL)) {
-                throw new Exception('invalid uri: ' . $uri);
+                throw new \Exception('invalid uri: ' . $uri);
             }
 
             // explode parts array
@@ -68,4 +68,3 @@
             }
         }
     }
-?>
