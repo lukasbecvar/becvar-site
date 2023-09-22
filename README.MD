@@ -1,6 +1,5 @@
 ## About becvar site
-- becvar site is my personal website builded with becwork
-- this project does not use any backend framework because it is my private website designed exactly for my use
+My personal website app, this project does not use any backend framework because it is my private website designed exactly for my use
 
 ## Installation
  - Set apache root dir to public/
