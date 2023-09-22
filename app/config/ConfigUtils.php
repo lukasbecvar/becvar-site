@@ -27,7 +27,7 @@
 
 		public function update_maintenance($value): void {
 		
-			global $site_manager, $mysql, $user_manager;
+			global $mysql, $user_manager;
 
 			// set enabled
 			if ($value == "enabled") {
@@ -49,7 +49,7 @@
 
 		public function update_dev_mode($value): void {
 		
-			global $site_manager, $mysql, $user_manager;
+			global $mysql, $user_manager;
 
 			// set true
 			if ($value == true) {

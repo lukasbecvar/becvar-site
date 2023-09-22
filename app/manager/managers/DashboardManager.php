@@ -76,7 +76,6 @@
         public function get_software_info(): array {
             $softwares = array();
             $software = array();
-            $iteration = 0;
             $software_key = '';
             $distro = array();
             exec('rpm -qai | grep "Name        :\|Version     :\|Release     :\|Install Date:\|Group       :\|Size        :"', $software_raw);

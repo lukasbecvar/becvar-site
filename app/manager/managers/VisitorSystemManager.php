@@ -198,13 +198,6 @@
             // get & escape visitor OS
             $os = $escape_utils->special_chars_strip($this->get_visitor_os());
 
-            // check if ip is banned in database
-            if ($this->is_visitor_banned($ip_adress)) {
-                $banned = "yes";
-            } else {
-                $banned = "no";
-            }
-
             // insert firt visit
             $mysql->insert("INSERT INTO `visitors`(`visited_sites`, `first_visit`, `last_visit`, `browser`, `os`, `location`, `ip_adress`) VALUES ('$visited_sites', '$first_visit', '$last_visit', '$browser', '$os', '$location', '$ip_adress')");   
 
@@ -505,7 +498,7 @@
         // call visit or first visit function
         public function init(): void {
 
-            global $mysql, $config, $main_utils, $site_manager, $escape_utils;
+            global $main_utils, $escape_utils;
 
             // get & escape user ip
             $ip_adress = $escape_utils->special_chars_strip($main_utils->get_remote_adress());

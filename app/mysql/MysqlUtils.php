@@ -61,7 +61,7 @@
         */
         public function insert($query): void {
 
-            global $config, $site_manager;
+            global $site_manager;
 
             // get PDO connection
             $connection = $this->connect();
@@ -163,7 +163,7 @@
         */
         public function fetch_value($query, $value): ?string {
 
-            global $config, $site_manager;
+            global $site_manager;
 
             // get database connection
             $connection = $this->connect();
