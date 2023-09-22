@@ -10,7 +10,7 @@
     if (empty($paste_content)) {
 
         // handle error
-        $site_manager->handle_error("[DEV-MODE]:Error: paste content is empty", 520);
+        $site_manager->handle_error("[DEV-MODE]:Error: paste content is empty", 400);
     }
 ?>
 

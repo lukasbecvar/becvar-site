@@ -4,19 +4,6 @@
 
     class MysqlUtils {
 
-        private $db_host;
-        private $db_name;
-        private $db_username;
-        private $db_password;
-
-        // init constructor
-        public function __construct($db_ip, $database_name, $username, $password) {
-            $this->db_host = $db_ip;
-            $this->db_name = $database_name;
-            $this->db_username = $username;
-            $this->db_password = $password;
-        }
-
         /* 
           * FUNCTION: database connection (use PDO)
           * RETURN: database connection
@@ -26,10 +13,10 @@
             global $config, $site_manager;
 
             // get mysql connection data form app config
-            $address  = $this->db_host;
-            $database = $this->db_name;
-            $username = $this->db_username;
-            $password = $this->db_password;
+            $address  = $config->get_value("database-host");
+            $database = $config->get_value("database-name");
+            $username = $config->get_value("database-username");
+            $password = $config->get_value("database-password");
 
             // get default database charset
             $encoding = $config->get_value("encoding");

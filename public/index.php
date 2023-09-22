@@ -17,8 +17,6 @@
 	// init manager system
 	require_once("../app/manager/ManagerList.php");
 
-	/////////////////////////////////////////////////////////////////////////////////////////////
-
 	// init objects
 	$config = new becwork\config\ConfigUtils();
 	$hash_utils = new becwork\utils\HashUtils();
@@ -32,15 +30,8 @@
 	$cookie_utils = new becwork\utils\CookieUtils();
 	$escape_utils = new becwork\utils\EscapeUtils();
 	
-	// database config
-	$db_ip = $config->get_value("database-host");
-	$db_name = $config->get_value("database-name");
-	$db_username = $config->get_value("database-username");
-	$db_password = $config->get_value("database-password");
-	
 	// init mysql controller
-	$mysql = new becwork\utils\MysqlUtils($db_ip, $db_name, $db_username, $db_password);
-	/////////////////////////////////////////////////////////////////////////////////////////////
+	$mysql = new becwork\utils\MysqlUtils();
 
 	// check if composer installed
 	if(file_exists('../vendor/autoload.php')) {
@@ -48,7 +39,7 @@
 	} else {
 		
 		// handle error redirect to error page if composer components is not installed
-		$site_manager->handle_error("vendor directory not found, plese run composer install", 520);
+		$site_manager->handle_error("vendor directory not found, plese run composer install", 500);
 	} 
 
 	// init whoops for error headling
@@ -59,54 +50,8 @@
 	}	
 
 	// init detect mobile lib
-	$mobileDetector = new Detection\MobileDetect;
-	/////////////////////////////////////////////////////////////////////////////////////////////
+	$mobileDetector = new Detection\MobileDetect;	
 
-	// check if page is in maintenance mode
-	if($site_manager->is_maintenance()) {
-		$url_utils->js_redirect("error.php?code=maintenance");
-	} else { 
-		
-		// init visitor system
-		$visitor_manager->init();		
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// set logs disabler function by process
-		if($site_manager->get_query_string("process") == "disableLogsForMe") {
-			include_once("../site/admin/LogsDisabler.php");
-		}
-			
-		// set image viewer by process
-		else if($site_manager->get_query_string("process") == "image") {
-			include_once("../site/public/components/ImageViewer.php");
-		}
-
-		// set code paste page
-		else if($site_manager->get_query_string("process") == "paste") {
-
-			// paste save 
-			if ($site_manager->get_query_string("method") == "save") {
-				include_once("../site/paste/save.php");
-				
-			// paste view
-			} else if ($site_manager->get_query_string("method") == "view") {
-				include_once("../site/paste/view.php");
-				
-			// paste init
-			} else {
-				include_once("../site/paste/index.php");
-			}	
-		}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		// set main page component in process is empty
-		else {
-
-			// check if page is admin or normal site
-			if ($site_manager->is_admin_site()) {
-				include_once("../site/admin/InitAdmin.php");
-			} else {
-				require_once("../site/public/InitPublic.php");
-			}
-		}		
-	}
+	// include main site component
+	include_once("../site/Main.php");
+	
