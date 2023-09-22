@@ -34,7 +34,6 @@ My personal website app, this project does not use any backend framework because
 ## Required
  - php-8.1 or <
  - mysql8 or <
- - php-cli
  - php-curl
  - php-pdo
 
