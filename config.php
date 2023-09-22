@@ -7,9 +7,10 @@
 		public $config = [
 
 			/* main config */
-			"app-name"    => "Becvar.xyz",	// define app name
-			"dev-mode"    => true,			// define devmode value
-			"encoding"    => "utf8",		// define default charset
+			"app-name"   => "Becvar.xyz",	// define app name
+			"version"    => 7.7,			// define app version
+			"dev-mode"   => true,			// define devmode value
+			"encoding"   => "utf8",			// define default charset
 
 			/* page config */
 			"maintenance" => "disabled", // maintenance config (Disable acces to public page)
