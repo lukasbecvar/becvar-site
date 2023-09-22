@@ -33,6 +33,16 @@
                 echo '<p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>';
             }
 
+            // not exist browser-list.json warning
+            if (!file_exists(__DIR__."/../../../browser-list.json")) {
+                echo '<p class="card-text text-red"><strong>error to load file browser-list.json in app root</strong></p>';
+            } 
+
+            // not exist services-list.json warning
+            if (!file_exists(__DIR__."/../../../services-list.json")) {
+                echo '<p class="card-text text-red"><strong>error to load file services-list.json in app root</strong></p>';
+            }
+
             // print Used disk space == 90%
             if ($dashboard_manager->get_drive_usage() > 89) {
                 echo '<p class="card-text"><span class="text-red"><strong>Used disk space is more than 90% please try clean the file system</strong></span></p>';

@@ -9,7 +9,7 @@
           * USAGE $json = get_json_from_url("https://www.becvar.xyz/api/becwork.json")
           * RETURN json object
         */
-        public function get_json_from_url($target): ?array {
+        public function get_json_from($target): ?array {
 
             // requst options
             $opts = [

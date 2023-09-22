@@ -26,105 +26,96 @@
         // shortify BrowserID
         public function get_short_browser_id($raw): ?string {
             
-            global $browsers_list;
+            global $json_utils, $mysql;
 
             // init default value
-            $out = $raw;
-
-            // default found in browser list
-            $found = "no";
-
-            // identify Internet explorer
-            if(preg_match('/MSIE (\d+\.\d+);/', $raw)) {
-                $out = "Internet Explore";
-                $found = "yes";
-
-            } else if (str_contains($raw, 'MSIE')) {
-                $out = "Internet Explore";   
-                $found = "yes"; 
-
-            // identify Google chrome
-            } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $raw) ) {
-                $out = "Chrome";
-                $found = "yes";
-            
-            // identify Internet edge
-            } else if (preg_match('/Edge\/\d+/', $raw)) {
-                $out = "Edge";
-                $found = "yes";
-            
-            // identify Firefox
-            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw)) {
-                $out = "Firefox";
-                $found = "yes";
-
-            } else if (str_contains($raw, 'Firefox/96')) {
-                $out = "Firefox/96";  
-                $found = "yes";          
-                
-            // identify Safari
-            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw)) {
-                $out = "Safari";
-                $found = "yes";
-                
-            // identify UC Browser
-            } else if (str_contains($raw, 'UCWEB')) {
-                $out = "UC Browser";
-                $found = "yes";
-  
-            // identify UCBrowser Browser
-            } else if (str_contains($raw, 'UCBrowser')) {
-                $out = "UC Browser";
-                $found = "yes";
-
-            // identify IceApe Browser
-            } else if (str_contains($raw, 'Iceape')) {
-                $out = "IceApe Browser";
-                $found = "yes";
-
-            // identify Maxthon Browser
-            } else if (str_contains($raw, 'maxthon')) {
-                $out = "Maxthon Browser";
-                $found = "yes";
-
-            // identify Konqueror Browser
-            } else if (str_contains($raw, 'konqueror')) {
-                $out = "Konqueror Browser";
-                $found = "yes";
-
-            // identify NetFront Browser
-            } else if (str_contains($raw, 'NetFront')) {
-                $out = "NetFront Browser";
-                $found = "yes";
-
-            // identify Midori Browser
-            } else if (str_contains($raw, 'Midori')) {
-                $out = "Midori Browser";
-                $found = "yes";
-
-            // identify Opera
-            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw)) {
-                $out = "Opera";
-                $found = "yes";
-
-            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw)) {
-                $out = "Opera";
-                $found = "yes";
-            }
+            $out = null;
 
             // identify shortify array [ID: str_contains, Value: replacement]
-            $browser_array = $browsers_list->browser_list;
+            $browser_list = $json_utils->get_json_from(__DIR__."/../../../browser-list.json");
 
-            // check if browser ID not found
-            if ($found == "no") {
+            // check if browser list found
+            if ($browser_list != NULL) {
 
                 // get short output from browser list
-                foreach ($browser_array as $index => $value) {
+                foreach ($browser_list as $index => $value) {
                     if (str_contains($raw, $index)) {
                         $out = $value;
-                        $found = "yes";
                     }
                 }
+            } else {
+
+                // log error
+                $mysql->log("app-error", "error to get browser-list.json file, try check app root if file exist");
+            } 
+
+            if ($out == null) {
+                // identify Internet explorer
+                if(preg_match('/MSIE (\d+\.\d+);/', $raw)) {
+                    $out = "Internet Explore";
+
+                } else if (str_contains($raw, 'MSIE')) {
+                    $out = "Internet Explore";   
+
+                // identify Google chrome
+                } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $raw) ) {
+                    $out = "Chrome";
+                
+                // identify Internet edge
+                } else if (preg_match('/Edge\/\d+/', $raw)) {
+                    $out = "Edge";
+                
+                // identify Firefox
+                } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $raw)) {
+                    $out = "Firefox";
+
+                } else if (str_contains($raw, 'Firefox/96')) {
+                    $out = "Firefox/96";  
+                    
+                // identify Safari
+                } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $raw)) {
+                    $out = "Safari";
+                    
+                // identify UC Browser
+                } else if (str_contains($raw, 'UCWEB')) {
+                    $out = "UC Browser";
+
+                // identify UCBrowser Browser
+                } else if (str_contains($raw, 'UCBrowser')) {
+                    $out = "UC Browser";
+
+                // identify IceApe Browser
+                } else if (str_contains($raw, 'Iceape')) {
+                    $out = "IceApe Browser";
+
+                // identify Maxthon Browser
+                } else if (str_contains($raw, 'maxthon')) {
+                    $out = "Maxthon Browser";
+
+                // identify Konqueror Browser
+                } else if (str_contains($raw, 'konqueror')) {
+                    $out = "Konqueror Browser";
+
+                // identify NetFront Browser
+                } else if (str_contains($raw, 'NetFront')) {
+                    $out = "NetFront Browser";
+
+                // identify Midori Browser
+                } else if (str_contains($raw, 'Midori')) {
+                    $out = "Midori Browser";
+
+                // identify Opera
+                } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $raw)) {
+                    $out = "Opera";
+
+                } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $raw)) {
+                    $out = "Opera";
+                }
+            }
+
+            // if notfound
+            if ($out == null) {
+                $out = $raw;
             }
 
             // return output

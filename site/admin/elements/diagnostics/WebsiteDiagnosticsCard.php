@@ -30,6 +30,20 @@
             } else {
                 echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>maintenance is disabled, page is available</strong></span></p>';
             }
+
+            // print services-list.json exist test
+            if (!file_exists(__DIR__."/../../../../services-list.json")) {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>error to load file services-list.json in app root</strong></span></p>';
+            } else {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>services-list.json successfully loaded</strong></span></p>';
+            }
+
+            // print browser-list.json exist test
+            if (!file_exists(__DIR__."/../../../../browser-list.json")) {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-red"><i class="fa fa-exclamation-triangle"></i> </span>error to load file browser-list.json in app root</strong></span></p>';
+            } else {
+                echo '<p class="card-text"><span class="text-warning"><strong><span class="text-light-green"><i class="fa fa-check"></i> </span>browser-list.jsonsuccessfully loaded</strong></span></p>';
+            }
         ?>
     </div>
 </div>

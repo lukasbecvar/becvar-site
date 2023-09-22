@@ -273,11 +273,17 @@
             } elseif ($config->get_value("maintenance") == "enabled") {
                 $state = false;
 
+            } elseif (!file_exists(__DIR__."/../../../services-list.json")) {
+                $state = false;
+            
+            } elseif (!file_exists(__DIR__."/../../../browser-list.json")) {
+                $state = false;
+
             // check if dev-mode is enabled
             } elseif ($site_manager->is_dev_mode()) {
                 $state = false;
             }
-
+            
             return $state;
         }
     }

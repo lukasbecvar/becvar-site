@@ -41,7 +41,7 @@
             $github_user = str_replace("/", "", $github_user);
 
             // get repos form github
-            $repos = $json_utils->get_json_from_url("https://api.github.com/users/$github_user/repos");
+            $repos = $json_utils->get_json_from("https://api.github.com/users/$github_user/repos");
 
             // delete all projects from table
             $mysql->insert("DELETE FROM projects WHERE id=id");

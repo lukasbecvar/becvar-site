@@ -17,11 +17,6 @@
 	// init manager system
 	require_once("../app/manager/ManagerList.php");
 
-	// include browser list for visitors manager
-	require_once("../browser-list.php");
-
-	// include services list for dashboard system
-	require_once("../services-list.php");
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// init objects
@@ -37,10 +32,6 @@
 	$cookie_utils = new becwork\utils\CookieUtils();
 	$escape_utils = new becwork\utils\EscapeUtils();
 	
-	// visitors manager
-	$browsers_list = new becwork\utils\BrowsersList();
-	$services_list = new becwork\services\ServicesManager();
-
 	// database config
 	$db_ip = $config->get_value("database-host");
 	$db_name = $config->get_value("database-name");
@@ -59,21 +50,17 @@
 		// handle error redirect to error page if composer components is not installed
 		$site_manager->handle_error("vendor directory not found, plese run composer install", 520);
 	} 
-	
-	// init detect mobile lib
-	$mobileDetector = new Detection\MobileDetect;
-	/////////////////////////////////////////////////////////////////////////////////////////////
-
-	// set default encoding
-	header('Content-type: text/html; charset='.$config->get_value('encoding'));
 
 	// init whoops for error headling
 	if ($site_manager->is_dev_mode()) {
 		$whoops = new \Whoops\Run;
-		$handlerer = new \Whoops\Handler\PrettyPageHandler();
-		$whoops->pushHandler($handlerer);
+		$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 		$whoops->register();
-	}
+	}	
+
+	// init detect mobile lib
+	$mobileDetector = new Detection\MobileDetect;
+	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// check if page is in maintenance mode
 	if($site_manager->is_maintenance()) {

@@ -98,31 +98,22 @@
         // redirect to error page
         public function redirect_error($error) {
 
+            global $url_utils;
+
             // redirct loaction header
-            header("location: error.php?code=$error");
+            $url_utils->js_redirect("error.php?code=$error");
         }
 
         // handle error msg & code
         public function handle_error($msg, $code): void {
 
-            global $config;
-
-            // send response code
-            http_response_code($code);
-
-            // check if error log enabled
-            if ($config->get_value("error-log")) {
-
-                // budil error msg
-                $error_msg = "code: ".$code.", ".$msg."\n";
-
-                // log to error.log
-                error_log($error_msg, 3, __DIR__."../../../../error.log");
-            }
-            
-
             // check if site enabled dev-mode
             if ($this->is_dev_mode()) {
+
+                // send response code
+                http_response_code($code);
+
+                // print error msg & die app
                 die("[DEV-MODE]: ".$msg);
             } else {
                 $this->redirect_error($code);
