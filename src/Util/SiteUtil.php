@@ -8,12 +8,12 @@ namespace App\Util;
 
 class SiteUtil
 {
-    public static function getHttpHost(): ?string
+    public function getHttpHost(): ?string
     {
         return $_SERVER['HTTP_HOST'];
     }
 
-    public static function isRunningLocalhost(): bool 
+    public function isRunningLocalhost(): bool 
     {
 		$state = false;
 

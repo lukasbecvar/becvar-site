@@ -3,8 +3,8 @@
 namespace App\Helper;
 
 use App\Entity\Log;
-use App\Util\EscapeUtil;
-use App\Util\VisitorInfoUtil;
+use App\Util\SecurityUtil;
+use App\Util\VisitorUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -14,12 +14,20 @@ use Doctrine\ORM\EntityManagerInterface;
 class LogHelper
 {
 
+    private $visitorUtil;
     private $errorHelper;
+    private $securityUtil;
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, ErrorHelper $errorHelper)
-    {
+    public function __construct(
+        VisitorUtil $visitorUtil,
+        ErrorHelper $errorHelper,
+        SecurityUtil $securityUtil, 
+        EntityManagerInterface $entityManager
+    ) {
+        $this->visitorUtil = $visitorUtil;
         $this->errorHelper = $errorHelper;
+        $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
 
@@ -33,16 +41,16 @@ class LogHelper
             $date = date('d.m.Y H:i:s');
 
             // get visitor browser agent
-            $browser = VisitorInfoUtil::getBrowser();
+            $browser = $this->visitorUtil->getBrowser();
 
             // get visitor ip address
-            $ip_address = VisitorInfoUtil::getIP();
+            $ip_address = $this->visitorUtil->getIP();
 
             // xss escape inputs
-            $name = EscapeUtil::special_chars_strip($name);
-            $value = EscapeUtil::special_chars_strip($value);
-            $browser = EscapeUtil::special_chars_strip($browser);
-            $ip_address = EscapeUtil::special_chars_strip($ip_address);
+            $name = $this->securityUtil->escapeString($name);
+            $value = $this->securityUtil->escapeString($value);
+            $browser = $this->securityUtil->escapeString($browser);
+            $ip_address = $this->securityUtil->escapeString($ip_address);
             
             // create new log enity
             $LogEntity = new Log();

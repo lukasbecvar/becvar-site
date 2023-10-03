@@ -4,10 +4,10 @@ namespace App\Middleware;
 
 use App\Util\SiteUtil;
 use App\Entity\Visitor;
-use App\Util\EscapeUtil;
+use App\Util\SecurityUtil;
 use App\Helper\LogHelper;
 use App\Helper\ErrorHelper;
-use App\Util\VisitorInfoUtil;
+use App\Util\VisitorUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -17,17 +17,26 @@ use Doctrine\ORM\EntityManagerInterface;
 class VisitorSystemMiddleware
 { 
 
+    private $siteUtil;
     private $logHelper;
     private $errorHelper;
+    private $visitorUtil;
+    private $securityUtil;
     private $entityManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         LogHelper $logHelper,
+        VisitorUtil $visitorUtil,
         ErrorHelper $errorHelper,
+        SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager 
     ) {
+        $this->siteUtil = $siteUtil;
         $this->logHelper = $logHelper;
+        $this->visitorUtil = $visitorUtil;
         $this->errorHelper = $errorHelper;
+        $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
 
@@ -35,18 +44,18 @@ class VisitorSystemMiddleware
     {
         // get data to insert
         $date = date('d.m.Y H:i:s');
-        $os = VisitorInfoUtil::getOS();
-        $ipAddress = VisitorInfoUtil::getIP();
-        $browser = VisitorInfoUtil::getBrowser();
+        $os = $this->visitorUtil->getOS();
+        $ipAddress =  $this->visitorUtil->getIP();
+        $browser =  $this->visitorUtil->getBrowser();
         $location = $this->getLocation($ipAddress);
 
         // escape inputs
-        $ipAddress = EscapeUtil::special_chars_strip($ipAddress);
-        $browser = EscapeUtil::special_chars_strip($browser);
-        $location = EscapeUtil::special_chars_strip($location);
+        $ipAddress = $this->securityUtil->escapeString($ipAddress);
+        $browser = $this->securityUtil->escapeString($browser);
+        $location = $this->securityUtil->escapeString($location);
 
         // get visitor ip address
-        $address = VisitorInfoUtil::getIP();
+        $address = $this->visitorUtil->getIP();
 
         // check if visitor found in database
         if (!$this->isVisitorExist($address)) {
@@ -139,7 +148,7 @@ class VisitorSystemMiddleware
         $location = null;
 
         // check if site running on localhost
-        if (SiteUtil::isRunningLocalhost()) {
+        if ($this->siteUtil->isRunningLocalhost()) {
             $country = 'HOST';
             $city = 'Location';
         } else {

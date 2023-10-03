@@ -3,13 +3,13 @@
 namespace App\Util;
 
 /*
-    Visitor info util provides visitor info getters
+    Visitor util provides visitor info getters
 */
 
-class VisitorInfoUtil
+class VisitorUtil
 {
     
-    public static function getIP(): ?string 
+    public function getIP(): ?string 
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $address = $_SERVER['HTTP_CLIENT_IP'];
@@ -23,7 +23,7 @@ class VisitorInfoUtil
         return $address;
     }
 
-    public static function getBrowser(): ?string 
+    public function getBrowser(): ?string 
     {
         $agent = $_SERVER['HTTP_USER_AGENT'];
         $browser = 'Unknown';
@@ -35,9 +35,9 @@ class VisitorInfoUtil
         return $browser;
     }
 
-    public static function getOS(): ?string 
+    public function getOS(): ?string 
     { 
-        $agent = VisitorInfoUtil::getBrowser();
+        $agent = $this->getBrowser();
         
         $os = 'Unknown OS';
         
