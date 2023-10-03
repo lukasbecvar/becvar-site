@@ -2,11 +2,10 @@
 
 ## TODOS
 - [ ] check if visitor banned & banned error page
+- [ ] create basic master twig for components (public, admin, error)
 - [ ] login/register function
 - [ ] separata admin/public parts of app
-- [ ] create basic master twig for components (public, admin, error)
 - [ ] port public pages this app
-- [ ] remove site switcher from main js (separata all public sites to own controllers)
 - [ ] port contact form
 - [ ] port image uploader
 - [ ] port code paste
