@@ -1,0 +1,41 @@
+/*Custom scroolbar design (Not working on mobile divices)*/
+::-webkit-scrollbar { /*Own page scroolbar design*/
+	width: 12px;
+} 
+
+::-webkit-scrollbar-track { /*Own scroolbar bacground*/
+	background: rgb(20,20,20);
+}
+ 
+::-webkit-scrollbar-thumb { /*Own scrollbar button*/
+	background: #40444b;
+	-webkit-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+} 
+
+::-webkit-scrollbar-thumb:hover { /*Own scrollbar button hover*/
+	background: #5c646b;
+}
+/*End of Custom scrollBar*/
+
+* {
+    background-color: #282c34;
+}
+
+/* for block of numbers */
+td.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    vertical-align: top;
+    padding-right: 5px;
+    color: lightgray;
+}
+
+code {
+    position: absolute;
+}
