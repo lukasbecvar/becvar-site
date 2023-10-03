@@ -19,3 +19,23 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    # resources build checker
+    App\Middleware\AssetsCheckMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request' }
+
+    # maintenance mode checker
+    App\Middleware\MaintenanceMiddleware:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    # database online checker
+    App\Middleware\DatabaseOnlineMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request' }
+
+    # visitor system service
+    App\Middleware\VisitorSystemMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request' }
