@@ -7,6 +7,7 @@
 - [ ] port contact form
 - [ ] port image uploader
 - [ ] port code paste
+- [ ] create sitemap.xml
 - [ ] install symfony-webpack-encore and move old assets structure to webpack builder
 - [ ] port admin navigation panel
 - [ ] port admin components

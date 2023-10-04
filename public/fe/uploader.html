@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>site-name</title>
+    <meta name="google-site-verification" content="token"/>
+    <meta content="description" name="description">
+    <meta content="keywords" name="keywords">
+    <link href="../build/img/favicon.png" rel="icon">
+    <link href="../build/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../build/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../build/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../build/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="../build/css/public.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <header id="header" class="header-top">
+        <div class="container">
+            <h1><a href="/admin">Lukáš Bečvář</a></h1>
+            <h2>I'm a <span>full stack developer</span></h2>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link" href="#header">Home</a></li>
+                    <li><a class="nav-link" href="#about">About</a></li>
+                    <li><a class="nav-link" href="#projects">Projects</a></li>
+                    <li><a class="nav-link" href="#contact">Contact</a></li>
+                    <li><a class="nav-link active" href="#uploader">Uploader</a></li>
+                    <li><a class="nav-link" href="#">Paste</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <div class="social-links">
+                <a href="https://www.instagram.com/lordbecvold" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="https://twitter.com/Lordbecvold" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://github.com/lordbecvold" target="_blank" class="github"><i class="bi bi-github"></i></a>
+                <a href="https://t.me/lordbecvold" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+                <a href="https://www.linkedin.com/in/luk%C3%A1%C5%A1-be%C4%8Dv%C3%A1%C5%99-29900a204/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </header>
+
+
+
+
+   
+
+
+
+    <section id="uploader" class="uploader section-show">
+        <div class="container">
+            <div class="section-title">
+                <h2>Image uploader</h2>
+            </div>
+    
+            
+    <form class="form-limiterr" action="/#uploader" method="post" enctype="multipart/form-data">
+        <div class="file-upload">
+            <p class="form-title">Image upload</p>
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" type="file" name="userfile" onchange="readURL(this);" accept="image/*">
+                <div class="drag-text">
+                    <h3>Drag and drop a file or select add Image</h3>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image">
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                </div>
+            </div><br>
+            <input class="file-upload-btn" type="submit" value="Upload Image" name="submitUpload">
+        </div>
+    </form>
+        </div>
+    </section>
+
+
+
+    <script src="../build/js/image-uploader.js"></script>
+
+
+    <script src="../build/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../build/vendor/jquery/jquery-3.6.0.min.js"></script>
+    <script src="../build/js/public.js"></script> 
+</body>
+</html>
