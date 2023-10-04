@@ -31,6 +31,9 @@ class Log
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    #[ORM\Column]
+    private ?int $visitor_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Log
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getVisitorId(): ?int
+    {
+        return $this->visitor_id;
+    }
+
+    public function setVisitorId(int $visitor_id): static
+    {
+        $this->visitor_id = $visitor_id;
 
         return $this;
     }

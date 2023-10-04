@@ -2,6 +2,10 @@
 
 namespace App\Util;
 
+use App\Entity\Visitor;
+use App\Helper\ErrorHelper;
+use Doctrine\ORM\EntityManagerInterface;
+
 /*
     Visitor util provides visitor info getters
 */
@@ -9,6 +13,15 @@ namespace App\Util;
 class VisitorUtil
 {
     
+    private $errorHelper;
+    private $entityManager;
+
+    public function __construct(ErrorHelper $errorHelper, EntityManagerInterface $entityManager)
+    {
+        $this->errorHelper = $errorHelper;
+        $this->entityManager = $entityManager;
+    }
+
     public function getIP(): ?string 
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -79,5 +92,24 @@ class VisitorUtil
         }
         
         return $os;
+    }
+
+    public function getVisitorID(string $ip_address): ?int {
+
+        $repository = $this->entityManager->getRepository(Visitor::class);
+
+        // try to get visitor data
+        try {
+            $result = $repository->findOneBy(['ip_address' => $ip_address]);
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        if ($result === null) {
+            return 0;
+        } else {
+            return $result->getID();
+        }
+
     }
 }

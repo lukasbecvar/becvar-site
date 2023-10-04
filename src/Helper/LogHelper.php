@@ -46,6 +46,9 @@ class LogHelper
             // get visitor ip address
             $ip_address = $this->visitorUtil->getIP();
 
+            // get visitor id
+            $visitor_id = $this->visitorUtil->getVisitorID($ip_address);
+
             // xss escape inputs
             $name = $this->securityUtil->escapeString($name);
             $value = $this->securityUtil->escapeString($value);
@@ -62,6 +65,7 @@ class LogHelper
             $LogEntity->setIpAddress($ip_address); 
             $LogEntity->setBrowser($browser); 
             $LogEntity->setStatus('unreaded'); 
+            $LogEntity->setVisitorId($visitor_id);
             
             // try insert row
             try {
