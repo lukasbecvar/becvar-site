@@ -8,6 +8,7 @@ use App\Util\SecurityUtil;
 use App\Helper\LogHelper;
 use App\Helper\ErrorHelper;
 use App\Util\VisitorUtil;
+use Twig\Environment;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -17,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class VisitorSystemMiddleware
 { 
 
+    private $twig;
     private $siteUtil;
     private $logHelper;
     private $errorHelper;
@@ -25,6 +27,7 @@ class VisitorSystemMiddleware
     private $entityManager;
 
     public function __construct(
+        Environment $twig,
         SiteUtil $siteUtil,
         LogHelper $logHelper,
         VisitorUtil $visitorUtil,
@@ -32,6 +35,7 @@ class VisitorSystemMiddleware
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager 
     ) {
+        $this->twig = $twig;
         $this->siteUtil = $siteUtil;
         $this->logHelper = $logHelper;
         $this->visitorUtil = $visitorUtil;
@@ -45,27 +49,35 @@ class VisitorSystemMiddleware
         // get data to insert
         $date = date('d.m.Y H:i:s');
         $os = $this->visitorUtil->getOS();
-        $ipAddress =  $this->visitorUtil->getIP();
+        $ip_address =  $this->visitorUtil->getIP();
         $browser =  $this->visitorUtil->getBrowser();
-        $location = $this->getLocation($ipAddress);
+        $location = $this->getLocation($ip_address);
 
         // escape inputs
-        $ipAddress = $this->securityUtil->escapeString($ipAddress);
+        $ip_address = $this->securityUtil->escapeString($ip_address);
         $browser = $this->securityUtil->escapeString($browser);
         $location = $this->securityUtil->escapeString($location);
 
         // get visitor ip address
-        $address = $this->visitorUtil->getIP();
+        $ip_address = $this->visitorUtil->getIP();
 
         // check if visitor found in database
-        if (!$this->isVisitorExist($address)) {
+        if (!$this->isVisitorExist($ip_address)) {
 
             // insert new visitor
-            $this->insertNewVisitor($date, $ipAddress, $browser, $os, $location);
+            $this->insertNewVisitor($date, $ip_address, $browser, $os, $location);
         } else {
 
-            // update exist visitor
-            $this->updateVisitor($date, $ipAddress, $browser, $os);
+            // check if visitor banned
+            if ($this->isVisitorBanned($ip_address)) {
+                die($this->twig->render('errors/error-banned.html.twig', 
+                    ['message' => $this->visitorUtil->getBanReason($ip_address)
+                ]));
+
+            } else {   
+                // update exist visitor
+                $this->updateVisitor($date, $ip_address, $browser, $os);
+            }
         }
     }
 
@@ -83,7 +95,7 @@ class VisitorSystemMiddleware
         $visitorEntity->setLocation($location);
         $visitorEntity->setIpAddress($ipAddress);
         $visitorEntity->setBannedStatus('no');
-        $visitorEntity->setBanReason('none');
+        $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setEmail('unknown');
     
         // set new entity row
@@ -141,6 +153,32 @@ class VisitorSystemMiddleware
         } 
 
         return $state;
+    }
+
+    public function isVisitorBanned(string $ip_address) {
+
+        $repository = $this->entityManager->getRepository(Visitor::class);
+        
+        // get visitor data
+        try {
+            $result = $repository->findOneBy(['ip_address' => $ip_address]);
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+        }
+        
+        // check if data found
+        if ($result === null) {
+            return false;
+        } else {
+
+            // check if user banned
+            if ($result->getBannedStatus() == 'banned') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
 
     public function getLocation(string $ipAddress): ?string

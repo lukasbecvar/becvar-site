@@ -1,7 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] check if visitor banned & banned error page
 - [ ] create basic master twig for components (public, admin, error)
 - [ ] login/register function
 - [ ] separata admin/public parts of app
