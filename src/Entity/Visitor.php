@@ -41,7 +41,10 @@ class Visitor
     private ?string $ban_reason = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null; 
+    private ?string $banned_time = null; 
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
 
     public function getId(): ?int
     {
@@ -152,6 +155,18 @@ class Visitor
     public function setBanReason(string $ban_reason): static
     {
         $this->ban_reason = $ban_reason;
+
+        return $this;
+    }
+
+    public function getBannedTime(): ?string
+    {
+        return $this->banned_time;
+    }
+
+    public function setBannedTime(string $banned_time): static
+    {
+        $this->banned_time = $banned_time;
 
         return $this;
     }

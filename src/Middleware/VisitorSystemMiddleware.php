@@ -4,6 +4,7 @@ namespace App\Middleware;
 
 use App\Util\SiteUtil;
 use App\Entity\Visitor;
+use App\Helper\BanHelper;
 use App\Util\SecurityUtil;
 use App\Helper\LogHelper;
 use App\Helper\ErrorHelper;
@@ -20,6 +21,7 @@ class VisitorSystemMiddleware
 
     private $twig;
     private $siteUtil;
+    private $banHelper;
     private $logHelper;
     private $errorHelper;
     private $visitorUtil;
@@ -29,6 +31,7 @@ class VisitorSystemMiddleware
     public function __construct(
         Environment $twig,
         SiteUtil $siteUtil,
+        BanHelper $banHelper,
         LogHelper $logHelper,
         VisitorUtil $visitorUtil,
         ErrorHelper $errorHelper,
@@ -37,6 +40,7 @@ class VisitorSystemMiddleware
     ) {
         $this->twig = $twig;
         $this->siteUtil = $siteUtil;
+        $this->banHelper = $banHelper;
         $this->logHelper = $logHelper;
         $this->visitorUtil = $visitorUtil;
         $this->errorHelper = $errorHelper;
@@ -69,9 +73,17 @@ class VisitorSystemMiddleware
         } else {
 
             // check if visitor banned
-            if ($this->isVisitorBanned($ip_address)) {
+            if ($this->banHelper->isVisitorBanned($ip_address)) {
+
+                // get ban reason 
+                $reason = $this->banHelper->getBanReason($ip_address);
+
+                // log access to database
+                $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
+
+                // render banned page
                 die($this->twig->render('errors/error-banned.html.twig', 
-                    ['message' => $this->visitorUtil->getBanReason($ip_address)
+                    ['message' => $reason
                 ]));
 
             } else {   
@@ -94,8 +106,9 @@ class VisitorSystemMiddleware
         $visitorEntity->setOs($os);
         $visitorEntity->setLocation($location);
         $visitorEntity->setIpAddress($ipAddress);
-        $visitorEntity->setBannedStatus('no');
+        $visitorEntity->setBannedStatus('non-banned');
         $visitorEntity->setBanReason('non-banned');
+        $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');
     
         // set new entity row
@@ -153,32 +166,6 @@ class VisitorSystemMiddleware
         } 
 
         return $state;
-    }
-
-    public function isVisitorBanned(string $ip_address) {
-
-        $repository = $this->entityManager->getRepository(Visitor::class);
-        
-        // get visitor data
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
-        
-        // check if data found
-        if ($result === null) {
-            return false;
-        } else {
-
-            // check if user banned
-            if ($result->getBannedStatus() == 'banned') {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
     }
 
     public function getLocation(string $ipAddress): ?string

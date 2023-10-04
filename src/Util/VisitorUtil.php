@@ -12,12 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorUtil
 {
-    
     private $errorHelper;
     private $entityManager;
 
-    public function __construct(ErrorHelper $errorHelper, EntityManagerInterface $entityManager)
-    {
+    public function __construct (
+        ErrorHelper $errorHelper, 
+        EntityManagerInterface $entityManager
+    ) {
         $this->errorHelper = $errorHelper;
         $this->entityManager = $entityManager;
     }
@@ -109,25 +110,6 @@ class VisitorUtil
             return 0;
         } else {
             return $result->getID();
-        }
-
-    }
-
-    public function getBanReason(string $ip_address): ?string {
-
-        $repository = $this->entityManager->getRepository(Visitor::class);
-
-        // try to get visitor data
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        if ($result === null) {
-            return 0;
-        } else {
-            return $result->getBanReason();
         }
 
     }
