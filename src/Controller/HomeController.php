@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Helper\BanHelper;
-use App\Util\VisitorUtil;
+use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,17 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
 
-    private $banHelper;
-
-    public function __construct(BanHelper  $banHelper)
+    private $test;
+    public function __construct(BanHelper $test)
     {
-        $this->banHelper = $banHelper;
+        $this->test = $test;
     }
 
     #[Route(['/', '/home'], name: 'home')]
     public function index(): Response
     {
-
         return $this->render('home.html.twig');
     }
 }

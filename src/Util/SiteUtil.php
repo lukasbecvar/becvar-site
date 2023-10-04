@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /*
     Site util provides basic site get, set etc methods
 */
@@ -10,7 +12,8 @@ class SiteUtil
 {
     public function getHttpHost(): ?string
     {
-        return $_SERVER['HTTP_HOST'];
+        $request = Request::createFromGlobals();
+        return $request->getHost();
     }
 
     public function isRunningLocalhost(): bool 
@@ -19,7 +22,7 @@ class SiteUtil
 
         // get http host
         $host = SiteUtil::getHttpHost();
-            
+
         // check if running on url localhost
         if (str_starts_with($host, 'localhost')) {
             $state = true;

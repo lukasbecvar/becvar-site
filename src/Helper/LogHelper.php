@@ -4,7 +4,7 @@ namespace App\Helper;
 
 use App\Entity\Log;
 use App\Util\SecurityUtil;
-use App\Util\VisitorUtil;
+use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -14,21 +14,21 @@ use Doctrine\ORM\EntityManagerInterface;
 class LogHelper
 {
 
-    private $visitorUtil;
     private $errorHelper;
     private $securityUtil;
     private $entityManager;
-
+    private $visitorInfoUtil;
+    
     public function __construct(
-        VisitorUtil $visitorUtil,
         ErrorHelper $errorHelper,
         SecurityUtil $securityUtil, 
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
-        $this->visitorUtil = $visitorUtil;
         $this->errorHelper = $errorHelper;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     public function log(string $name, string $value): void 
@@ -41,13 +41,13 @@ class LogHelper
             $date = date('d.m.Y H:i:s');
 
             // get visitor browser agent
-            $browser = $this->visitorUtil->getBrowser();
+            $browser = $this->visitorInfoUtil->getBrowser();
 
             // get visitor ip address
-            $ip_address = $this->visitorUtil->getIP();
+            $ip_address = $this->visitorInfoUtil->getIP();
 
             // get visitor id
-            $visitor_id = $this->visitorUtil->getVisitorID($ip_address);
+            $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
             // xss escape inputs
             $name = $this->securityUtil->escapeString($name);

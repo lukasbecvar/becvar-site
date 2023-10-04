@@ -2,8 +2,8 @@
 
 namespace App\Helper;
 
-use App\Entity\Visitor;
 use App\Helper\ErrorHelper;
+use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -16,41 +16,40 @@ class BanHelper
     private $logHelper;
     private $errorHelper;
     private $entityManager;
-
+    private $visitorInfoUtil;
+    
     public function __construct(
         LogHelper $logHelper,
         ErrorHelper $errorHelper,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->logHelper = $logHelper;
         $this->errorHelper = $errorHelper;
         $this->entityManager = $entityManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    public function banVisitor(string $ip_address, string $reason) {
+    public function banVisitor(string $ip_address, string $reason): void {
 
         // get current date
         $date = date('d.m.Y H:i:s');
 
-        $repository = $this->entityManager->getRepository(Visitor::class);
+        // get visitor data
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
 
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        if ($result !== null) {
+        // check if visitor found
+        if ($visitor != null) {
 
             // update ban data
-            $result->setBannedStatus('banned');
-            $result->setBanReason($reason);
-            $result->setBannedTime($date);
+            $visitor->setBannedStatus('banned');
+            $visitor->setBanReason($reason);
+            $visitor->setBannedTime($date);
             
             // log ban action to database
             $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' banned for reason: "'.$reason.'" by [[username-here]]');
 
-            // update visitor ban status
+            // update entity data
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
@@ -59,28 +58,23 @@ class BanHelper
         } else {
             $this->errorHelper->handleError('error to ban visitor with ip: '.$ip_address.', visitor not found in table', 400);
         }
-
     }
 
-    public function unbanVisitor(string $ip_address) {
+    public function unbanVisitor(string $ip_address): void {
 
-        $repository = $this->entityManager->getRepository(Visitor::class);
+        // get visitor data
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
 
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        if ($result !== null) {
+        // check if visitor found
+        if ($visitor != null) {
 
             // update ban status
-            $result->setBannedStatus('un-banned');
+            $visitor->setBannedStatus('un-banned');
             
             // log ban action to database
             $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' unbanned by [[username-here]]');
 
-            // update visitor ban status
+            // update visitor data
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
@@ -93,46 +87,35 @@ class BanHelper
 
     public function getBanReason(string $ip_address): ?string {
 
-        $repository = $this->entityManager->getRepository(Visitor::class);
+        // get visitor data
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
 
-        // try to get visitor data
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        if ($result === null) {
+        // check if visitor found
+        if ($visitor == null) {
             return 0;
         } else {
-            return $result->getBanReason();
-        }
 
+            // return ban reason string
+            return $visitor->getBanReason();
+        }
     }
 
-    public function isVisitorBanned(string $ip_address) {
+    public function isVisitorBanned(string $ip_address): bool {
 
-        $repository = $this->entityManager->getRepository(Visitor::class);
-        
         // get visitor data
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
         
-        // check if data found
-        if ($result === null) {
+        // check if visitor found
+        if ($visitor === null) {
             return false;
         } else {
 
-            // check if user banned
-            if ($result->getBannedStatus() == 'banned') {
+            // check if visitor banned
+            if ($visitor->getBannedStatus() == 'banned') {
                 return true;
             } else {
                 return false;
             }
         }
-
     }
 }

@@ -31,7 +31,7 @@ class ErrorController extends AbstractController
     #[Route('/error/{code}', methods: ['GET'], name: 'error_by_code')]
     public function errorHandle(string $code): void
     {
-        // block maintenance handeling (maintenance, banned use only from app logic)
+        // block handeling (maintenance, banned use only from app logic)
         if ($code == 'maintenance' or $code == 'banned') {
             $this->errorHelper->handleErrorView('unknown');
         } else {

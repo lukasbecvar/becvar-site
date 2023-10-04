@@ -7,18 +7,22 @@ use App\Helper\ErrorHelper;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
-    Visitor util provides visitor info getters
+    Visitorinfo util provides visitor info getters
 */
 
-class VisitorUtil
+class VisitorInfoUtil
 {
+
+    private $siteUtil;
     private $errorHelper;
     private $entityManager;
 
     public function __construct (
+        SiteUtil $siteUtil,
         ErrorHelper $errorHelper, 
         EntityManagerInterface $entityManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->errorHelper = $errorHelper;
         $this->entityManager = $entityManager;
     }
@@ -95,6 +99,26 @@ class VisitorUtil
         return $os;
     }
 
+    public function getVisitorRepository(string $ip_address): ?object {
+        
+        // get visitor repo
+        $repository = $this->entityManager->getRepository(Visitor::class);
+
+        // try to find visitor in database
+        try {
+            $result = $repository->findOneBy(['ip_address' => $ip_address]);
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        // return result
+        if ($result !== null) {
+            return $result;
+        } else {
+            return null;
+        }
+    }
+
     public function getVisitorID(string $ip_address): ?int {
 
         $repository = $this->entityManager->getRepository(Visitor::class);
@@ -112,5 +136,62 @@ class VisitorUtil
             return $result->getID();
         }
 
+    }
+
+    public function getLocation(string $ip_address): ?string
+    {
+        $location = null;
+
+        // check if site running on localhost
+        if ($this->siteUtil->isRunningLocalhost()) {
+            $country = 'HOST';
+            $city = 'Location';
+        } else {
+ 
+            try {
+                // geoplugin url
+                $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
+
+                // geoplugin data
+                $geoplugin_data = file_get_contents($geoplugin_url.'/json.gp?ip='.$ip_address);
+
+                // decode data
+                $details = json_decode($geoplugin_data);
+        
+                // get country and site from API data
+                $country = $details->geoplugin_countryCode;
+
+                // check if city name defined
+                if (!empty(explode('/', $details->geoplugin_timezone)[1])) {
+                        
+                    // get city name from timezone (explode /)
+                    $city = explode('/', $details->geoplugin_timezone)[1];
+                } else {
+                    $city = null;
+                }
+            } catch (\Exception) {
+
+                // set null if data not getted
+                $country = null;
+                $city = null;
+            }   
+        }
+
+        // empty set to null
+        if (empty($country)) {
+            $country = null;
+        }
+        if (empty($city)) {
+            $city = null;
+        }
+
+        // final return
+        if  ($country == null or $city == null) {
+            $location = 'Unknown';
+        } else {
+            $location = $country.'/'.$city;
+        }
+
+        return $location;
     }
 }
