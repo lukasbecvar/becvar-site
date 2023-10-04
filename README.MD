@@ -1,7 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] create basic master twig for components (public, admin, error)
 - [ ] login/register function
 - [ ] separata admin/public parts of app
 - [ ] port public pages this app

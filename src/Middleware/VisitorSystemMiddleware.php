@@ -75,8 +75,9 @@ class VisitorSystemMiddleware
                 $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
 
                 // render banned page
-                die($this->twig->render('errors/error-banned.html.twig', 
-                    ['message' => $reason
+                die($this->twig->render('errors/error-banned.html.twig', [
+                    'message' => $reason,
+                    'contact_email' => $_ENV['CONTACT_EMAIL']
                 ]));
 
             } else {   

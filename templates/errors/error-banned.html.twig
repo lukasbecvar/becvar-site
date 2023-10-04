@@ -1,3 +1,16 @@
-Error 403, Banned
+{% extends 'common/bases/error-base.html.twig' %}
 
-for reason {{ message }}
+{% block title %}
+    You are banned
+{% endblock %}
+
+
+{% block body %}
+<p class="error-page-msg">
+	<strong>
+		You are permanently banned on this site for reason: '{{message}}'.
+		<br><br>
+		Please direct unban requests to {{contact_email}}
+	</strong>
+</p>
+{% endblock %}

@@ -1,1 +1,16 @@
-Error 429, Too Many Requests
+{% extends 'common/bases/error-base.html.twig' %}
+
+{% block title %}
+    Error 429, Too Many Requests
+{% endblock %}
+
+
+{% block body %}
+<p class="error-page-msg">
+    <strong>
+        Too Many Requests 
+        <br><br>
+        Please try to wait and try again later
+    </strong>
+</p>
+{% endblock %}
