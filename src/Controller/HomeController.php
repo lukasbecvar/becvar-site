@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\BanHelper;
-use App\Util\VisitorInfoUtil;
+use App\Manager\BanManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +15,7 @@ class HomeController extends AbstractController
 {
 
     private $test;
-    public function __construct(BanHelper $test)
+    public function __construct(BanManager $test)
     {
         $this->test = $test;
     }

@@ -4,10 +4,10 @@ namespace App\Middleware;
 
 use Twig\Environment;
 use App\Entity\Visitor;
-use App\Helper\BanHelper;
 use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Helper\ErrorHelper;
+use App\Manager\BanManager;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -19,7 +19,7 @@ class VisitorSystemMiddleware
 { 
 
     private $twig;
-    private $banHelper;
+    private $banManager;
     private $logHelper;
     private $errorHelper;
     private $securityUtil;
@@ -29,14 +29,14 @@ class VisitorSystemMiddleware
     public function __construct(
         Environment $twig,
         LogHelper $logHelper,
-        BanHelper $banHelper,
+        BanManager $banManager,
         ErrorHelper $errorHelper,
         SecurityUtil $securityUtil,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager 
     ) {
         $this->twig = $twig;
-        $this->banHelper = $banHelper;
+        $this->banManager = $banManager;
         $this->logHelper = $logHelper;
         $this->errorHelper = $errorHelper;
         $this->securityUtil = $securityUtil;
@@ -66,10 +66,10 @@ class VisitorSystemMiddleware
         } else {
 
             // check if visitor banned
-            if ($this->banHelper->isVisitorBanned($ip_address)) {
+            if ($this->banManager->isVisitorBanned($ip_address)) {
 
                 // get ban reason 
-                $reason = $this->banHelper->getBanReason($ip_address);
+                $reason = $this->banManager->getBanReason($ip_address);
 
                 // log access to database
                 $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);

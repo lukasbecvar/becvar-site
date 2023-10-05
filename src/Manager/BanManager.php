@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Helper;
+namespace App\Manager;
 
 use App\Helper\ErrorHelper;
+use App\Helper\LogHelper;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
-    Ban helper provides all ban/unban methods
+    Ban manager provides all ban/unban methods
 */
 
-class BanHelper
+class BanManager
 {
 
     private $logHelper;
