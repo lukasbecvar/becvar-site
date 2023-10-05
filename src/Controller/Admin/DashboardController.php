@@ -25,7 +25,6 @@ class DashboardController extends AbstractController
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            dd($this->authManager->isUserLogedin());
             return $this->render('admin/dashboard.html.twig');
         } else {
             return $this->redirectToRoute('login');

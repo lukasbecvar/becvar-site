@@ -5,6 +5,7 @@ namespace App\Middleware;
 use App\Entity\User;
 use App\Manager\AuthManager;
 use App\Manager\CookieManager;
+use App\Manager\SessionManager;
 
 /*
     This middleware check if requird autologin function
@@ -14,11 +15,16 @@ class AutoLoginMiddleware
 {
     private $authManager;
     private $cookieManager;
+    private $sessionManager;
 
-    public function __construct(AuthManager $authManager, CookieManager $cookieManager) 
-    {
+    public function __construct(
+        AuthManager $authManager, 
+        CookieManager $cookieManager,
+        SessionManager $sessionManager
+    ) {
         $this->authManager = $authManager;
         $this->cookieManager = $cookieManager;
+        $this->sessionManager = $sessionManager;
     }
 
     public function onKernelRequest(): void
@@ -40,10 +46,8 @@ class AutoLoginMiddleware
             } else {
                 $this->cookieManager->unset('login-token-cookie');
         
-                // start session (for destroy xDDDDD)
-                $this->authManager->startSession();
-                // destroy all sessions
-                session_destroy();
+                // destory session is cookie token is invalid
+                $this->sessionManager->destroySession();
             }
         }
     }

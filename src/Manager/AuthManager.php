@@ -17,23 +17,20 @@ class AuthManager
     private $errorHelper;
     private $entityManager;
     private $cookieManager;
+    private $sessionManager;
 
     public function __construct(
         LogHelper $logHelper, 
         ErrorHelper $errorHelper, 
         CookieManager $cookieManager,
+        SessionManager $sessionManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logHelper = $logHelper;
         $this->errorHelper = $errorHelper;
         $this->entityManager = $entityManager;
         $this->cookieManager = $cookieManager;
-    }
-
-    public function startSession(): void {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->sessionManager = $sessionManager;
     }
 
     public function getUserRepository(array $array): ?object 
@@ -87,15 +84,15 @@ class AuthManager
         // init user entity
         $userEntity = new User();
 
-        // start session
-        $this->startSession();
-
         // check if session exist
-        if (isset($_SESSION['login-token'])) {
+        if ($this->sessionManager->checkSession('login-token')) {
+
+            // get login token form session
+            $login_token = $this->sessionManager->getSessionValue('login-token');
 
             // check if token exist in database
-            if ($this->getUserRepository(['token' => $_SESSION['login-token']], $userEntity) != null) {
-                $token = $_SESSION['login-token'];
+            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
+                $token = $login_token;
             }
         }
 
@@ -110,14 +107,14 @@ class AuthManager
         // init user entity
         $userEntity = new User();
 
-        // start session
-        $this->startSession();
-
         // check if session exist
-        if (isset($_SESSION['login-token'])) {
+        if ($this->sessionManager->checkSession('login-token')) {
+
+            // get login token form session
+            $login_token = $this->sessionManager->getSessionValue('login-token');
 
             // check if token exist in database
-            if ($this->getUserRepository(['token' => $_SESSION['login-token']], $userEntity) != null) {
+            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
                 $state = true;
             }
         }
@@ -142,16 +139,15 @@ class AuthManager
 
     public function login(string $username, string $userToken, bool $remember): void {
 
-        // start session
-        $this->startSession();
-
         // check if user token is valid
         if (!empty($userToken)) {
-            $_SESSION['login-token'] = $userToken;
+            $this->sessionManager->setSession('login-token', $userToken);
 
             // check if remember set
             if ($remember) {
-                $this->cookieManager->set("login-token-cookie", $userToken, time() + (60*60*24*7*365));
+                if (!isset($_COOKIE['login-token-cookie'])) {
+                    $this->cookieManager->set("login-token-cookie", $userToken, time() + (60*60*24*7*365));
+                }
             }
 
             // update last login time
@@ -166,8 +162,6 @@ class AuthManager
     }
 
     public function logout(): void {
-        
-        $this->startSession();
 
         // init user entity
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
@@ -179,7 +173,7 @@ class AuthManager
         $this->logHelper->log('authenticator', 'user: '.$user->getUsername().' logout');
 
         // destroy all sessions
-        session_destroy();
+        $this->sessionManager->destroySession();    
     }
 
     public function isUsersEmpty(): bool
