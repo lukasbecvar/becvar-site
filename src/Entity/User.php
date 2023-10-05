@@ -26,8 +26,8 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
 
-    #[ORM\Column]
-    private ?int $visitor_id = null;
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
 
     #[ORM\Column(length: 255)]
     private ?string $registed_time = null;
@@ -37,6 +37,9 @@ class User
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $profile_pic = null;
+
+    #[ORM\Column]
+    private ?int $visitor_id = null;
 
     public function getId(): ?int
     {
@@ -91,14 +94,14 @@ class User
         return $this;
     }
 
-    public function getVisitorId(): ?int
+    public function getToken(): ?string
     {
-        return $this->visitor_id;
+        return $this->token;
     }
 
-    public function setVisitorId(int $visitor_id): static
+    public function setToken(string $token): static
     {
-        $this->visitor_id = $visitor_id;
+        $this->token = $token;
 
         return $this;
     }
@@ -135,6 +138,18 @@ class User
     public function setProfilePic(string $profile_pic): static
     {
         $this->profile_pic = $profile_pic;
+
+        return $this;
+    }
+
+    public function getVisitorId(): ?int
+    {
+        return $this->visitor_id;
+    }
+
+    public function setVisitorId(int $visitor_id): static
+    {
+        $this->visitor_id = $visitor_id;
 
         return $this;
     }
