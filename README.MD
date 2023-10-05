@@ -1,8 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] register only if table empty
-- [ ] login function 
 - [ ] separata admin/public parts of app
 - [ ] port public pages this app
 - [ ] port contact form
@@ -14,4 +12,5 @@
 - [ ] port admin components
 - [ ] port adminer to this app
 - [ ] final refactor
+- [ ] deep testing
 - [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST)

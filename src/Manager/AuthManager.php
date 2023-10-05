@@ -62,10 +62,10 @@ class AuthManager
         $date = date('d.m.Y H:i:s');
 
         // user repository
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['token' => $this->getUserToken()]);
+        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
         // check if user repo found
-        if ($user) {
+        if ($user != null) {
 
             // update values
             $user->setLastLoginTime($date);
@@ -170,8 +170,7 @@ class AuthManager
         $this->startSession();
 
         // init user entity
-        $userEntity = new User();
-        $user = $this->getUserRepository(['token' => $this->getUserToken()], $userEntity);
+        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
         // unset user-token cookie
         $this->cookieManager->unset("login-token-cookie");
@@ -181,5 +180,21 @@ class AuthManager
 
         // destroy all sessions
         session_destroy();
+    }
+
+    public function isUsersEmpty(): bool
+    {
+        // get user repos
+        $repository = $this->entityManager->getRepository(User::class);
+
+        // get count
+        $count = $repository->createQueryBuilder('p')->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
+
+        // check if count is zero
+        if ($count == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

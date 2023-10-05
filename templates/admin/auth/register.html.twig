@@ -1,12 +1,12 @@
 {% extends 'common/bases/admin-base.html.twig' %}
 
 {% block wrapper %}
-<main class="register-page">
+<main class="register-page color-white">
 
-    {% if errorMSG != null %}
+    {% if error_msg != null %}
         <center>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error</strong>: {{ errorMSG }}
+                <strong>Error</strong>: {{ error_msg }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,14 +17,14 @@
     <div class="login-form-pos-y login-form">
         <h2 class="login-form-title">Register admin account</h2>
         
-        {{ form_start(registrationForm) }}
+        {{ form_start(registration_form) }}
 
-            {{ form_widget(registrationForm) }}
+            {{ form_widget(registration_form) }}
             <div class="right-position" style="margin-right: 3px;">
                 <button type="submit" class="input-button">Register</button>
             </div>
     
-        {{ form_end(registrationForm) }}
+        {{ form_end(registration_form) }}
     </div>
 </main>
 {% endblock %}
