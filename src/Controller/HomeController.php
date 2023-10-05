@@ -13,8 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-
     private $test;
+    
     public function __construct(BanManager $test)
     {
         $this->test = $test;

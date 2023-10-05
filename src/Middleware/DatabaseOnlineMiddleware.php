@@ -11,7 +11,6 @@ use \Doctrine\DBAL\Connection as Connection;
 
 class DatabaseOnlineMiddleware
 {
-    
     private $errorHelper;
     private $doctrineConnection;
 

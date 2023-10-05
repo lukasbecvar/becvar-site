@@ -9,8 +9,7 @@ use App\Helper\ErrorHelper;
 */
 
 class MaintenanceMiddleware
-{ 
-
+{
     private $errorHelper;
 
     public function __construct(ErrorHelper $errorHelper)

@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorInfoUtil
 {
-
     private $siteUtil;
     private $errorHelper;
     private $entityManager;

@@ -16,8 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 */
 
 class VisitorSystemMiddleware
-{ 
-
+{
     private $twig;
     private $banManager;
     private $logHelper;

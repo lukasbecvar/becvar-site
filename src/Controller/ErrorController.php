@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ErrorController extends AbstractController
 {
-
     private $errorHelper;
 
     public function __construct(ErrorHelper $errorHelper) 

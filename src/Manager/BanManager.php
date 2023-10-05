@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BanManager
 {
-
     private $logHelper;
     private $errorHelper;
     private $entityManager;

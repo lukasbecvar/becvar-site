@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class LogHelper
 {
-
     private $errorHelper;
     private $securityUtil;
     private $entityManager;

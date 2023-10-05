@@ -10,7 +10,6 @@ use Twig\Environment;
 
 class ErrorHelper
 {
-
     private $twig;
 
     public function __construct(Environment $twig)
