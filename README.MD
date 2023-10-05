@@ -1,7 +1,8 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] login/register function
+- [ ] register only if table empty
+- [ ] login function 
 - [ ] separata admin/public parts of app
 - [ ] port public pages this app
 - [ ] port contact form
