@@ -89,7 +89,6 @@ class VisitorSystemMiddleware
 
     public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, string $location): void 
     {
-        
         // log geolocate error
         if ($location == 'Unknown') {
             $this->logHelper->log('geolocate-error', 'error to geolocate ip: '.$ip_address);

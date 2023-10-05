@@ -61,31 +61,31 @@ class VisitorInfoUtil
         
         // OS list
         $os_array = array (
-            '/windows/i'            =>  'Windows',
-            '/windows nt 10/i'      =>  'Windows 10',
-            '/windows nt 6.3/i'     =>  'Windows 8.1',
-            '/windows nt 6.2/i'     =>  'Windows 8',
-            '/windows nt 6.1/i'     =>  'Windows 7',
-            '/windows nt 6.0/i'     =>  'Windows Vista',
             '/windows nt 5.2/i'     =>  'Windows Server_2003',
+            '/windows nt 6.0/i'     =>  'Windows Vista',
+            '/windows nt 5.0/i'     =>  'Windows 2000',
+            '/win16/i'              =>  'Windows 3.11',
+            '/windows nt 6.3/i'     =>  'Windows 8.1',
+            '/windows nt 10/i'      =>  'Windows 10',
             '/windows nt 5.1/i'     =>  'Windows XP',
             '/windows xp/i'         =>  'Windows XP',
-            '/windows nt 5.0/i'     =>  'Windows 2000',
             '/windows me/i'         =>  'Windows ME',
             '/win98/i'              =>  'Windows 98',
             '/win95/i'              =>  'Windows 95',
-            '/win16/i'              =>  'Windows 3.11',
-            '/linux/i'              =>  'Linux',
-            '/ubuntu/i'             =>  'Ubuntu',
+            '/blackberry/i'         =>  'BlackBerry',
+            '/windows nt 6.2/i'     =>  'Windows 8',
+            '/windows nt 6.1/i'     =>  'Windows 7',
             '/macintosh|mac os x/i' =>  'Mac OS X',
             '/mac_powerpc/i'        =>  'Mac OS 9',
-            '/iphone/i'             =>  'iPhone',
-            '/ipod/i'               =>  'iPod',
-            '/ipad/i'               =>  'iPad',
+            '/SMART-TV/i'           =>  'Smart TV',
+            '/windows/i'            =>  'Windows',
+            '/iphone/i'             =>  'Mac IOS',
             '/android/i'            =>  'Android',
-            '/blackberry/i'         =>  'BlackBerry',
             '/webos/i'              =>  'Mobile',
-            '/SMART-TV/i'           =>  'Smart TV'
+            '/ubuntu/i'             =>  'Ubuntu',
+            '/linux/i'              =>  'Linux',
+            '/ipod/i'               =>  'iPod',
+            '/ipad/i'               =>  'iPad'
         );
         
         foreach ($os_array as $regex => $value) {
@@ -99,14 +99,14 @@ class VisitorInfoUtil
         return $os;
     }
 
-    public function getVisitorRepository(string $ip_address): ?object {
-        
-        // get visitor repo
-        $repository = $this->entityManager->getRepository(Visitor::class);
+    public function getVisitorRepository(string $ip_address): ?object 
+    {
+        // get visitor repository
+        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
 
         // try to find visitor in database
         try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
+            $result = $visitorRepository->findOneBy(['ip_address' => $ip_address]);
         } catch (\Exception $e) {
             $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
         }
@@ -119,16 +119,10 @@ class VisitorInfoUtil
         }
     }
 
-    public function getVisitorID(string $ip_address): ?int {
-
-        $repository = $this->entityManager->getRepository(Visitor::class);
-
+    public function getVisitorID(string $ip_address): ?int 
+    {
         // try to get visitor data
-        try {
-            $result = $repository->findOneBy(['ip_address' => $ip_address]);
-        } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
-        }
+        $result = $this->getVisitorRepository($ip_address);
 
         if ($result === null) {
             return 0;
@@ -144,21 +138,19 @@ class VisitorInfoUtil
 
         // check if site running on localhost
         if ($this->siteUtil->isRunningLocalhost()) {
-            $country = 'HOST';
-            $city = 'Location';
+            return 'localhost';
         } else {
  
             try {
-                // geoplugin url
                 $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
 
-                // geoplugin data
+                // get data from geoplugin
                 $geoplugin_data = file_get_contents($geoplugin_url.'/json.gp?ip='.$ip_address);
 
                 // decode data
                 $details = json_decode($geoplugin_data);
         
-                // get country and site from API data
+                // get country
                 $country = $details->geoplugin_countryCode;
 
                 // check if city name defined

@@ -31,8 +31,8 @@ class BanManager
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    public function banVisitor(string $ip_address, string $reason): void {
-
+    public function banVisitor(string $ip_address, string $reason): void 
+    {
         // get current date
         $date = date('d.m.Y H:i:s');
 
@@ -61,8 +61,8 @@ class BanManager
         }
     }
 
-    public function unbanVisitor(string $ip_address): void {
-
+    public function unbanVisitor(string $ip_address): void 
+    {
         // get visitor data
         $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
 
@@ -86,8 +86,8 @@ class BanManager
         }
     }
 
-    public function getBanReason(string $ip_address): ?string {
-
+    public function getBanReason(string $ip_address): ?string 
+    {
         // get visitor data
         $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
 
@@ -101,8 +101,8 @@ class BanManager
         }
     }
 
-    public function isVisitorBanned(string $ip_address): bool {
-
+    public function isVisitorBanned(string $ip_address): bool 
+    {
         // get visitor data
         $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
         
