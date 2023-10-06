@@ -1,7 +1,10 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] frontend function & variables get
+- [ ] image uploader & viewer
+- [ ] paste save & viewer
+- [ ] projects table get from github repos
+
 - [ ] port public pages this app
 - [ ] port contact form
 - [ ] port image uploader

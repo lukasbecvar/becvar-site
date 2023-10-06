@@ -3,20 +3,48 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
     <link href="/build/img/favicon.png" rel="icon">
     <link href="/build/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/build/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="/build/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="/build/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/build/css/public.css" rel="stylesheet">
+
     <meta content="Lukáš Bečvář AKA Lordbecvold personal website" name="description">
     <meta content="developer, lordbecvold, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář" name="keywords">
 	<title>Lukáš Bečvář</title>
 </head>
 <body>
+    <header id="header" class={% block header_class %}{% endblock %}>
+        <div class="container">
+            <h1><a href="/admin">Lukáš Bečvář</a></h1>
+            <h2>I'm a <span>full stack developer</span></h2>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link" href="/">Home</a></li>
+                    <li><a class="nav-link" href="/about">About</a></li>
+                    <li><a class="nav-link" href="/projects">Projects</a></li>
+                    <li><a class="nav-link" href="/contact">Contact</a></li>
+                    <li><a class="nav-link" href="/image/uploader">Uploader</a></li>
+                    <li><a class="nav-link" href="/paste">Paste</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <div class="social-links">
+                <a href="{{instagram_link}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="{{twitter_link}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="{{github_link}}" target="_blank" class="github"><i class="bi bi-github"></i></a>
+                <a href="{{telegram_link}}" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+                <a href="{{linkedin_link}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </header>
     {% block body %}{% endblock %}
+
     <script src="/build/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/build/vendor/jquery/jquery-3.6.0.min.js"></script>
     <script src="/build/js/public.js"></script> 
+    
 </body>
 </html>

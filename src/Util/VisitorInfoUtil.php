@@ -185,4 +185,21 @@ class VisitorInfoUtil
 
         return $location;
     }
+
+    public function updateVisitorEmail(string $ip_address, string $email): void
+    {
+        $visitor = $this->getVisitorRepository($ip_address);
+
+        // check visitor found
+        if ($visitor !== null) {
+            $visitor->setEmail($email);
+
+            // try to update email
+            try {
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+            }           
+        }
+    }
 }

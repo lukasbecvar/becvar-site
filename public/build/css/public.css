@@ -611,7 +611,7 @@ section .container {
 .contact .msg-from .error-message {
     background: rgba(255, 255, 255, 0.08);
     background: #a02f10;
-    text-align: left;
+    text-align: center;
     padding: 15px;
     font-weight: 600;
 }
