@@ -3,7 +3,6 @@
 ## TODOS
 - [ ] image uploader & viewer
 - [ ] paste save & viewer
-- [ ] projects table get from github repos
 
 
 - [ ] create sitemap.xml

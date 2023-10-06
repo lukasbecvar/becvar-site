@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectRepository;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -23,7 +23,7 @@ class Project
     private ?string $technology = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $github_link = null;
+    private ?string $link = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -69,14 +69,14 @@ class Project
         return $this;
     }
 
-    public function getGithubLink(): ?string
+    public function getLink(): ?string
     {
-        return $this->github_link;
+        return $this->link;
     }
 
-    public function setGithubLink(string $github_link): static
+    public function setLink(string $link): static
     {
-        $this->github_link = $github_link;
+        $this->link = $link;
 
         return $this;
     }

@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
 <section id="projects" class="projects section-show">
     <div class="container">
         <div class="section-title">
@@ -13,118 +12,32 @@
         <div class="row">
             <div class="col-lg-6">
                 <h3 class="projects-title">Open</h3>
-                
-                <div class="projects-item">
-                    <h4>becvar-site</h4>
-                    <p><em>My personal website.</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/becvar-site" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>becvold-core</h4>
-                    <p><em>Basic survival core plugin</em></p>
-                    <p></p><ul>
-                        <li>Technology: Java</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/becvold-core" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>ssh-hammer</h4>
-                    <p><em>SSH dictionary attack tool</em></p>
-                    <p></p><ul>
-                        <li>Technology: Java</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/ssh-hammer" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>website-scanner</h4>
-                    <p><em>Java website scanner</em></p>
-                    <p></p><ul>
-                        <li>Technology: Java</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/website-scanner" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-                        </div>
+                {% for project in open_projects %}
+                    <div class="projects-item">
+                        <h4>{{project.name}}</h4>
+                        <p><em>{{project.description}}</em></p>
+                        <p></p><ul>
+                            <li>Technology: {{project.technology}}</li>
+                            <li>Source: <a href="{{project.link}}" target="_blank">source </a>on github</li>
+                        </ul><p></p>
+                    </div>
+                {% endfor %}                    
+            </div>
             <div class="col-lg-6">
                 <h3 class="projects-title">Closed</h3>
-                
-                <div class="projects-item">
-                    <h4>becwork</h4>
-                    <p><em>PHP framework for all web developers.</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/becwork" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>discord-bot</h4>
-                    <p><em>Java Discord bot base.</em></p>
-                    <p></p><ul>
-                        <li>Technology: Java</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/discord-bot" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>dubinek-bot</h4>
-                    <p><em>My own discord bot.</em></p>
-                    <p></p><ul>
-                        <li>Technology: Java</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/dubinek-bot" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>engal</h4>
-                    <p><em>Self-hosted end-to-end encryption gallery</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/engal" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>file-share</h4>
-                    <p><em>Simple file sharing app</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/file-share" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>image-uploader</h4>
-                    <p><em>Image uploader page, stores images in a database encoded in base64</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/image-uploader" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>media-api</h4>
-                    <p><em>API for storing images, videos and gif on the web space.</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/media-api" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
-            
-                <div class="projects-item">
-                    <h4>my-docker-services</h4>
-                    <p><em>My testing docker service</em></p>
-                    <p></p><ul>
-                        <li>Technology: PHP</li>
-                        <li>Source: <a href="https://github.com/lordbecvold/my-docker-services" target="_blank">source </a>on github</li>
-                    </ul><p></p>
-                </div>
+                {% for project in closed_projects %}
+                    <div class="projects-item">
+                        <h4>{{project.name}}</h4>
+                        <p><em>{{project.description}}</em></p>
+                        <p></p><ul>
+                            <li>Technology: {{project.technology}}</li>
+                            <li>Source: <a href="{{project.link}}" target="_blank">source </a>on github</li>
+                        </ul><p></p>
                     </div>
-        <p>You can find all my projects here: <a href="https://github.com/lordbecvold" target="_blank">github </a></p>    </div>
-</div></section>
+                {% endfor %}   
+            </div>
+        <p>You can find all my projects here: <a href="{{github_link}}" target="_blank">github </a></p>    
+    </div>
+</div>
+</section>
 {% endblock %}
