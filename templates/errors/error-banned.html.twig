@@ -8,7 +8,11 @@
 {% block body %}
 <p class="error-page-msg">
 	<strong>
-		You are permanently banned on this site for reason: '{{message}}'.
+		{% if message != 'non-banned' %}
+			You are permanently banned on this site for reason: '{{message}}'.
+		{% else %}
+			You are permanently banned on this site.
+		{% endif %}
 		<br><br>
 		Please direct unban requests to {{contact_email}}
 	</strong>
