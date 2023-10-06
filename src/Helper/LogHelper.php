@@ -32,7 +32,6 @@ class LogHelper
 
     public function log(string $name, string $value): void 
     {
-
         // check if logs enabled in config
         if ($this->isLogsEnabled()) {
 
@@ -71,7 +70,7 @@ class LogHelper
                 $this->entityManager->persist($LogEntity);
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorHelper->handleError('log flush error: '.$e->getMessage(), 500);
             }
         }
     }

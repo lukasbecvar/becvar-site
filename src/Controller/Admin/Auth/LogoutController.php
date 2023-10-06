@@ -20,14 +20,14 @@ class LogoutController extends AbstractController
         $this->authManager = $authManager;
     }
 
-    #[Route('/logout', name: 'app_logout')]
+    #[Route('/logout', name: 'logout')]
     public function logout(): Response
     {
-        // logout user (is session found)
+        // logout user (if session found)
         if ($this->authManager->isUserLogedin()) {
             $this->authManager->logout();
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('public_home');
     }
 }

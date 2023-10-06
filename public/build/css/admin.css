@@ -12,6 +12,7 @@ html {
 
 body {
 	background-color: #242424;
+	zoom: 80%;
 }
 
 a:hover {
@@ -765,6 +766,9 @@ textarea {
 }
 
 @media screen and (max-width: 800px) { 
+	body {
+		zoom: 100%;
+	}
 	::-webkit-scrollbar {
 		width: 10px;
 		height: 10px;

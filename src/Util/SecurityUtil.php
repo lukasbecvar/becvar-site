@@ -28,7 +28,6 @@ class SecurityUtil
 		$options = [
 			'cost' => $cost
 		];
-		$hash_final = password_hash($plain_text, PASSWORD_BCRYPT, $options);
-		return $hash_final;
+		return password_hash($plain_text, PASSWORD_BCRYPT, $options);
 	}
 }

@@ -3,9 +3,9 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Entity\User;
+use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Form\LoginFormType;
-use App\Helper\LogHelper;
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +22,11 @@ class LoginController extends AbstractController
     private $authManager;
     private $securityUtil;
 
-    public function __construct(LogHelper $logHelper, AuthManager $authManager, SecurityUtil $securityUtil) 
-    {
+    public function __construct(
+        LogHelper $logHelper, 
+        AuthManager $authManager, 
+        SecurityUtil $securityUtil
+    ) {
         $this->logHelper = $logHelper;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -42,9 +45,11 @@ class LoginController extends AbstractController
 
             // create register form
             $form = $this->createForm(LoginFormType::class, $user);
+
+            // processing an HTTP request
             $form->handleRequest($request);
 
-            // check if submited
+            // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
                 // get form data
@@ -87,13 +92,14 @@ class LoginController extends AbstractController
                     ]);  
                 }
 
-                // redirect to homepage
+                // redirect to admin
                 return $this->redirectToRoute('admin_dashboard');
             }
 
             // get if users empty value
             $users_empty = $this->authManager->isUsersEmpty();
 
+            // render default login view
             return $this->render('admin/auth/login.html.twig', [
                 'error_msg' => null,
                 'is_users_empty' => $users_empty,

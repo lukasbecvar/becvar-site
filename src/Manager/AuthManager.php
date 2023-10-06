@@ -53,8 +53,8 @@ class AuthManager
         }
     }
 
-    public function setLastLoginDate() {
-
+    public function setLastLoginDate(): void 
+    {
         // get current date
         $date = date('d.m.Y H:i:s');
 
@@ -76,8 +76,8 @@ class AuthManager
         }     
     }
 
-    public function getUserToken(): string {
-
+    public function getUserToken(): ?string 
+    {
         // default token value
         $token = null;
 
@@ -99,8 +99,23 @@ class AuthManager
         return $token;
     }
 
-    public function isUserLogedin(): bool {
+    public function getUsername(): ?string 
+    {
+        $username = null;
 
+        // user repository
+        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+
+        // check if user repo found
+        if ($user != null) {
+            $username = $user->getUsername();
+        } 
+
+        return $username;
+    }
+
+    public function isUserLogedin(): bool 
+    {
         // default state
         $state = false;
 
@@ -122,58 +137,50 @@ class AuthManager
         return $state;
     }
 
-    public function getUsername(): string {
+    public function login(string $username, string $userToken, bool $remember): void 
+    {
+        // check if user not logged in
+        if (!$this->isUserLogedin()) {
 
-        $username = null;
+            // check if user token is valid
+            if (!empty($userToken)) {
+                $this->sessionManager->setSession('login-token', $userToken);
 
-        // user repository
-        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
-
-        // check if user repo found
-        if ($user != null) {
-            $username = $user->getUsername();
-        } 
-
-        return $username;
-    }
-
-    public function login(string $username, string $userToken, bool $remember): void {
-
-        // check if user token is valid
-        if (!empty($userToken)) {
-            $this->sessionManager->setSession('login-token', $userToken);
-
-            // check if remember set
-            if ($remember) {
-                if (!isset($_COOKIE['login-token-cookie'])) {
-                    $this->cookieManager->set("login-token-cookie", $userToken, time() + (60*60*24*7*365));
+                // check if remember set
+                if ($remember) {
+                    if (!isset($_COOKIE['login-token-cookie'])) {
+                        $this->cookieManager->set("login-token-cookie", $userToken, time() + (60*60*24*7*365));
+                    }
                 }
+
+                // update last login time
+                $this->setLastLoginDate();
+
+                // log to mysql
+                $this->logHelper->log('authenticator', 'user: '.$username.' logged in');
+
+            } else {
+                $this->errorHelper->handleError('error to login user with token: '.$userToken, 500);
             }
-
-            // update last login time
-            $this->setLastLoginDate();
-
-            // log to mysql
-            $this->logHelper->log('authenticator', 'user: '.$username.' logged in');
-
-        } else {
-            $this->errorHelper->handleError('error to login user with token: '.$userToken, 500);
         }
     }
 
-    public function logout(): void {
+    public function logout(): void 
+    {
+        // check if user logged in
+        if ($this->isUserLogedin()) {
+            // init user entity
+            $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
-        // init user entity
-        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
-
-        // unset user-token cookie
-        $this->cookieManager->unset("login-token-cookie");
-
-        // log action to mysql
-        $this->logHelper->log('authenticator', 'user: '.$user->getUsername().' logout');
-
-        // destroy all sessions
-        $this->sessionManager->destroySession();    
+            // unset user-token cookie
+            $this->cookieManager->unset("login-token-cookie");
+        
+            // log action to mysql
+            $this->logHelper->log('authenticator', 'user: '.$user->getUsername().' logout');
+        
+            // destroy all sessions
+            $this->sessionManager->destroySession();   
+        } 
     }
 
     public function isUsersEmpty(): bool
