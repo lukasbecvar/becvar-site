@@ -5,10 +5,7 @@
 - [ ] paste save & viewer
 - [ ] projects table get from github repos
 
-- [ ] port public pages this app
-- [ ] port contact form
-- [ ] port image uploader
-- [ ] port code paste
+
 - [ ] create sitemap.xml
 - [ ] port admin navigation panel
 - [ ] port admin components
