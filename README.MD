@@ -1,7 +1,7 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] separata admin/public parts of app
+- [ ] frontend function & variables get
 - [ ] port public pages this app
 - [ ] port contact form
 - [ ] port image uploader
