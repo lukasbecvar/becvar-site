@@ -137,19 +137,19 @@ class AuthManager
         return $state;
     }
 
-    public function login(string $username, string $userToken, bool $remember): void 
+    public function login(string $username, string $user_token, bool $remember): void 
     {
         // check if user not logged in
         if (!$this->isUserLogedin()) {
 
             // check if user token is valid
-            if (!empty($userToken)) {
-                $this->sessionManager->setSession('login-token', $userToken);
+            if (!empty($user_token)) {
+                $this->sessionManager->setSession('login-token', $user_token);
 
                 // check if remember set
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieManager->set("login-token-cookie", $userToken, time() + (60*60*24*7*365));
+                        $this->cookieManager->set("login-token-cookie", $user_token, time() + (60*60*24*7*365));
                     }
                 }
 
@@ -160,7 +160,7 @@ class AuthManager
                 $this->logHelper->log('authenticator', 'user: '.$username.' logged in');
 
             } else {
-                $this->errorHelper->handleError('error to login user with token: '.$userToken, 500);
+                $this->errorHelper->handleError('error to login user with token: '.$user_token, 500);
             }
         }
     }
