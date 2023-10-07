@@ -1,7 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] paste save & viewer
 
 
 - [ ] create sitemap.xml
