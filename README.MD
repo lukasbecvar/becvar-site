@@ -1,7 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] image uploader & viewer
 - [ ] paste save & viewer
 
 
