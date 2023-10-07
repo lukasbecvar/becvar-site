@@ -2,12 +2,20 @@
 
 namespace App\Manager;
 
+use App\Util\SecurityUtil;
+
 /*
     Session manager provides session managment
 */
 
 class SessionManager
 {
+    private $securityUtil;
+
+    public function __construct(SecurityUtil $securityUtil)
+    {
+        $this->securityUtil = $securityUtil;
+    }
 
     public function startSession(): void 
     {
@@ -33,12 +41,12 @@ class SessionManager
     public function setSession(string $session_name, string $session_value): void 
     {
         $this->startSession();
-        $_SESSION[$session_name] = $session_value;
+        $_SESSION[$session_name] = $this->securityUtil->encrypt_aes($session_value);
     }
 
     public function getSessionValue(string $session_name): ?string 
     {
         $this->startSession();
-        return $_SESSION[$session_name];
+        return $this->securityUtil->decrypt_aes($_SESSION[$session_name]);
     }
 }
