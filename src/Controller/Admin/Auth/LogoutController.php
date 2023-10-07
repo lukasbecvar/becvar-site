@@ -28,6 +28,6 @@ class LogoutController extends AbstractController
             $this->authManager->logout();
         }
 
-        return $this->redirectToRoute('public_home');
+        return $this->redirectToRoute('login');
     }
 }
