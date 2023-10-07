@@ -33,7 +33,7 @@ class AutoLoginMiddleware
         if (isset($_COOKIE['login-token-cookie'])) {
             
             $user = new User();
-            $user_token = $_COOKIE['login-token-cookie'];
+            $user_token = $this->cookieManager->get('login-token-cookie');
 
             // check if token exist in database
             if ($this->authManager->getUserRepository(['token' => $user_token]) != null) {

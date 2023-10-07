@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
+use App\Manager\CookieManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,10 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardController extends AbstractController
 {
     private $authManager;
+    private $cookieManager;
 
-    public function __construct(AuthManager $authManager)
+    public function __construct(AuthManager $authManager, CookieManager $cookieManager)
     {
         $this->authManager = $authManager;
+        $this->cookieManager = $cookieManager;
     }
 
     #[Route('/admin', name: 'admin_dashboard')]

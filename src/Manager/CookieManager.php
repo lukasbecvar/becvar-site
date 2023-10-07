@@ -2,23 +2,36 @@
 
 namespace App\Manager;
 
+use App\Util\SecurityUtil;
+
 /*
     Cookie manager provides cookies managment
 */
 
 class CookieManager
 {
-    public static function set($name, $value, $expiration): void 
+    private $securityUtil;
+
+    public function __construct(SecurityUtil $securityUtil)
     {
+        $this->securityUtil = $securityUtil;
+    }
+
+    public function set($name, $value, $expiration): void 
+    {
+        $value = base64_encode($value);
+        dd(strlen($value));
         setcookie($name, $value, $expiration);
     }
 
-    public static function get($name): ?string 
+    public function get($name): ?string 
     {
-        return $_COOKIE[$name];
+        $value = base64_decode($_COOKIE[$name]);
+        $value = $this->securityUtil->decrypt_aes($value);
+        return $value;
     }
 
-    public static function unset($name): void 
+    public function unset($name): void 
     {   
         $host = $_SERVER['HTTP_HOST'];   
         $domain = explode(':', $host)[0];
