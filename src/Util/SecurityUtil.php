@@ -8,7 +8,6 @@ namespace App\Util;
 
 class SecurityUtil
 {
-    // replace html tags with secure chars
     public function escapeString(string $string): ?string 
     {
         return htmlspecialchars($string, ENT_QUOTES);
