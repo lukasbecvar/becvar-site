@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\PasteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PasteRepository;
 
 #[ORM\Entity(repositoryClass: PasteRepository::class)]
 class Paste

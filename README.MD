@@ -1,9 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-
-
-- [ ] create sitemap.xml
 - [ ] port admin navigation panel
 - [ ] port admin components
 - [ ] port adminer to this app

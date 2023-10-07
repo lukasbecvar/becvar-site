@@ -84,7 +84,7 @@ class PasteController extends AbstractController
     }
 
     #[Route('/paste/view/{token}', name: 'public_code_paste_view')]
-    public function viewer($token)
+    public function viewer($token): Response
     {
         $content = null;
      
@@ -101,7 +101,7 @@ class PasteController extends AbstractController
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array("&lt;", "&gt;"), array("<", ">"), $content);
         } else {
-            $this->errorHelper->handleError('error paste content is empty!', 404);
+            $this->errorHelper->handleError('error paste not found', 404);
         }
 
         return $this->render('public/paste/paste-view.html.twig', ['file' => $token, 'paste_content' => $content]);

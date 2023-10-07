@@ -3,15 +3,15 @@
 namespace App\Controller\Public;
 
 use App\Entity\Message;
-use App\Form\ContactFormType;
 use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
+use App\Form\ContactFormType;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
     Contact controller provides contact links & contact form

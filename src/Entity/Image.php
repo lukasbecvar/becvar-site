@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImageRepository;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
