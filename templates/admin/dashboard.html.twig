@@ -1,6 +1,12 @@
 {% extends 'common/bases/admin-base.html.twig' %}
 
 {% block component %}
-    admin dashboard
-    <a href="/logout">logout</a>
+<div class="admin-panel">
+    {% if is_warnings_empty == false %}
+        {% include 'admin/elements/dashboard/warning-box.html.twig' %}
+    {% endif %}
+    {% include 'admin/elements/dashboard/service-status.html.twig' %}
+    {% include 'admin/elements/dashboard/system-info.html.twig' %}
+    {% include 'admin/elements/dashboard/counter-cards.html.twig' %}
+</div>
 {% endblock %}

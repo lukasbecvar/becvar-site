@@ -1,0 +1,44 @@
+<div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
+    <div class="card-header">Warnings</div>
+    <div class="card-body"> 
+        {% if service_dir_exist == false %}
+            <p class="card-text"><span class="text-red"><strong>Directory: {{service_dir}} not exist</strong></span></p>
+        {% endif %}
+
+        {% if is_web_user_sudo == false %}
+            <p class="card-text"><span class="text-red"><strong>Permissions error: please add "{{web_service_username}} ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>
+        {% endif %}
+        
+        {% if is_ssl == false %}
+            <p class="card-text"><span class="text-red"><strong>Your session is running on http [non secure connction] please contact web admin for fix it</strong></span></p>
+        {% endif %}
+
+        {% if is_maintenance == true %}
+            <p class="card-text"><span class="text-red"><strong>Maintenance is enabled!</strong></span></p>
+        {% endif %}
+
+        {% if is_dev_mode == true %}
+            <p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>
+        {% endif %}
+        
+        {% if is_services_list_exist == false %}
+            <p class="card-text text-red"><strong>error to load file services.json in app root</strong></p>
+        {% endif %}
+
+        {% if drive_usage > 89 %}
+            <p class="card-text"><span class="text-red"><strong>Used disk space is more than 90% please try clean the file system</strong></span></p>
+        {% endif %}
+
+        {% if anti_log_enabled == false %}
+            <p class="card-text text-warning"><strong>Logging for your browser is enabled you can disable <a href="#">here</a></strong></p>
+        {% endif %}
+        
+        {% if unreaded_logs_count != 0 %}
+            <p class="card-text text-warning"><strong>New logs found you can see it <a href="#">here</a></strong></p>
+        {% endif %}
+
+        {% if messages_count != 0 %}
+            <p class="card-text text-warning"><strong>New messages found you can see it <a href="#">here</a></strong></p>
+        {% endif %}
+    </div>
+</div>

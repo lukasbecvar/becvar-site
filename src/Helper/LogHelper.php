@@ -84,4 +84,9 @@ class LogHelper
             return false;
         }
     }
+
+    public function isEnabledAntiLog(): bool
+    {
+        return false;
+    } 
 }

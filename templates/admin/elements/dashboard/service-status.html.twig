@@ -1,0 +1,39 @@
+<div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
+    <div class="card-header">Service status</div>
+    <div class="card-body"> 
+        <p class="card-text">
+            SERVER: 
+            <strong>
+                <span class="online-text">Online</span> 
+                <span>
+                    [<a href="#">SHUTDOWN</a>]
+                </span>
+            </strong>
+        </p>
+        {% if services != null %}
+            {% for service in services %}
+                {% if service.status == 'online' %}
+                    <p class="card-text">
+                        {{service.display_name}}: 
+                        <strong>
+                            <span class="online-text">Online</span> 
+                            <span>
+                                [<a href="#">STOP</a>]
+                            </span>
+                        </strong>
+                    </p>
+                {% else %}
+                    <p class="card-text">
+                        {{service.display_name}}: 
+                        <strong>
+                            <span class="text-red">Offline</span> 
+                            <span>
+                                [<a href="#">START</a>]
+                            </span>
+                        </strong>
+                    </p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

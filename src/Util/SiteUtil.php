@@ -34,4 +34,38 @@ class SiteUtil
         
         return $localhost;
     }
+
+    public function isSsl(): bool 
+    {
+        // default state
+        $state = false;
+        // ssl check
+        if (isset($_SERVER['HTTPS'])) {
+            if ($_SERVER['HTTPS'] == 1) {
+                $state = true;
+            } elseif ($_SERVER['HTTPS'] == 'on') {
+                $state = true;
+            }
+        }
+    
+        return $state;
+    }
+
+    public function isMaintenance(): bool 
+    {
+        if ($_ENV['MAINTENANCE_MODE'] == 'true') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isDevMode(): bool 
+    {
+        if ($_ENV['APP_ENV'] == 'dev') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

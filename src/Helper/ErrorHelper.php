@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Util\SiteUtil;
 use Twig\Environment;
 
 /*
@@ -11,16 +12,18 @@ use Twig\Environment;
 class ErrorHelper
 {
     private $twig;
+    private $siteUtil;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, SiteUtil $siteUtil)
     {
         $this->twig = $twig;
+        $this->siteUtil = $siteUtil;
     }
 
     public function handleError(string $msg, int $code): void
     {
         // check if app in devmode
-        if ($_ENV['APP_ENV'] == 'dev') {
+        if ($this->siteUtil->isDevMode()) {
 
             // build app error msg
             $data = [
