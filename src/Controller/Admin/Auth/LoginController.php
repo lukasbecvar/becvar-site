@@ -7,6 +7,7 @@ use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Form\LoginFormType;
 use App\Manager\AuthManager;
+use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,15 +22,18 @@ class LoginController extends AbstractController
     private $logHelper;
     private $authManager;
     private $securityUtil;
+    private $visitorInfoUtil;
 
     public function __construct(
         LogHelper $logHelper, 
         AuthManager $authManager, 
-        SecurityUtil $securityUtil
+        SecurityUtil $securityUtil,
+        VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->logHelper = $logHelper;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/login', name: 'login')]
@@ -39,6 +43,9 @@ class LoginController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');   
         } else {
+
+            // default error msg
+            $error_msg = null;
 
             // create user entity
             $user = new User();
@@ -77,23 +84,17 @@ class LoginController extends AbstractController
 
                     } else { // invalid password error
                         $this->logHelper->log('authenticator', 'trying to login with: '.$username.':'.$password);
-                        return $this->render('admin/auth/login.html.twig', [
-                            'error_msg' => 'Incorrect username or password.',
-                            'is_users_empty' => false,
-                            'login_form' => $form->createView(),
-                        ]);  
+                        $error_msg = 'Incorrect username or password.';
                     }
                 } else { // user not exist error
                     $this->logHelper->log('authenticator', 'trying to login with: '.$username.':'.$password);
-                    return $this->render('admin/auth/login.html.twig', [
-                        'error_msg' => 'Incorrect username or password.',
-                        'is_users_empty' => false,
-                        'login_form' => $form->createView(),
-                    ]);  
+                    $error_msg = 'Incorrect username or password.';
                 }
 
                 // redirect to admin
-                return $this->redirectToRoute('admin_dashboard');
+                if ($error_msg == null) {
+                    return $this->redirectToRoute('admin_dashboard');
+                }
             }
 
             // get if users empty value
@@ -101,9 +102,9 @@ class LoginController extends AbstractController
 
             // render default login view
             return $this->render('admin/auth/login.html.twig', [
-                'error_msg' => null,
+                'error_msg' => $error_msg,
                 'is_users_empty' => $users_empty,
-                'login_form' => $form->createView(),
+                'login_form' => $form->createView()
             ]);
         }
     }

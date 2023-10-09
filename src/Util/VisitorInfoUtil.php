@@ -4,6 +4,7 @@ namespace App\Util;
 
 use App\Entity\Visitor;
 use App\Helper\ErrorHelper;
+use Detection\MobileDetect;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -200,6 +201,17 @@ class VisitorInfoUtil
             } catch (\Exception $e) {
                 $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
             }           
+        }
+    }
+
+    public function isMobile(): bool {
+        $detect = new MobileDetect();
+
+        // check if mobile device
+        if ($detect->isMobile()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -114,6 +114,36 @@ class AuthManager
         return $username;
     }
 
+    public function getUserRole(): ?string 
+    {
+        $role = null;
+
+        // user repository
+        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+
+        // check if user repo found
+        if ($user != null) {
+            $role = $user->getRole();
+        } 
+
+        return $role;
+    }
+
+    public function getUserProfilePic(): ?string 
+    {
+        $avatar = null;
+
+        // user repository
+        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+
+        // check if user repo found
+        if ($user != null) {
+            $avatar = $user->getProfilePic();
+        } 
+
+        return $avatar;
+    }
+
     public function isUserLogedin(): bool 
     {
         // default state

@@ -52,6 +52,9 @@ class RegisterController extends AbstractController
         if (!$this->authManager->isUsersEmpty()) {
             return $this->redirectToRoute('login');   
         } else {
+            // default error msg
+            $error_msg = null;
+
             // create user entity
             $user = new User();
 
@@ -79,18 +82,12 @@ class RegisterController extends AbstractController
 
                 // check if username used
                 if ($this->authManager->getUserRepository(['username' => $username]) != null) {
-                    return $this->render('admin/auth/register.html.twig', [
-                        'error_msg' => 'This username is already in use',
-                        'registration_form' => $form->createView(),
-                    ]);
+                    $error_msg = 'This username is already in use';
                 }
 
                 // check if passwords not match
                 if ($password != $repassword) {
-                    return $this->render('admin/auth/register.html.twig', [
-                        'error_msg' => 'Your passwords dont match',
-                        'registration_form' => $form->createView(),
-                    ]);
+                    $error_msg = 'Your passwords dont match';
                 }
 
                 // get user ip
@@ -139,8 +136,8 @@ class RegisterController extends AbstractController
 
             // render default register view
             return $this->render('admin/auth/register.html.twig', [
-                'error_msg' => null,
-                'registration_form' => $form->createView(),
+                'error_msg' => $error_msg,
+                'registration_form' => $form->createView()
             ]);
         }
     }

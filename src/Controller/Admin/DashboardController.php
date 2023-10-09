@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
-use App\Manager\CookieManager;
+use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,20 +15,40 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardController extends AbstractController
 {
     private $authManager;
-    private $cookieManager;
+    private $visitorInfoUtil;
 
-    public function __construct(AuthManager $authManager, CookieManager $cookieManager)
+    public function __construct(AuthManager $authManager, VisitorInfoUtil $visitorInfoUtil)
     {
         $this->authManager = $authManager;
-        $this->cookieManager = $cookieManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    #[Route('/admin', name: 'admin_dashboard')]
-    public function index(): Response
+    #[Route('/admin', name: 'admin_init')]
+    public function admin(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/dashboard.html.twig');
+            return $this->redirectToRoute('admin_dashboard');
+        } else {
+            return $this->redirectToRoute('login');
+        }
+    }
+
+    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    public function dashboard(): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+            return $this->render('admin/dashboard.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => true,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+            ]);
         } else {
             return $this->redirectToRoute('login');
         }
