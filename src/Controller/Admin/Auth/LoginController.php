@@ -7,7 +7,6 @@ use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Form\LoginFormType;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,18 +21,15 @@ class LoginController extends AbstractController
     private $logHelper;
     private $authManager;
     private $securityUtil;
-    private $visitorInfoUtil;
 
     public function __construct(
         LogHelper $logHelper, 
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
-        VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->logHelper = $logHelper;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/login', name: 'login')]
