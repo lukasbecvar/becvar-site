@@ -26,12 +26,7 @@ class DashboardController extends AbstractController
     #[Route('/admin', name: 'admin_init')]
     public function admin(): Response
     {
-        // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
-            return $this->redirectToRoute('admin_dashboard');
-        } else {
-            return $this->redirectToRoute('login');
-        }
+        return $this->redirectToRoute('admin_dashboard');
     }
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
