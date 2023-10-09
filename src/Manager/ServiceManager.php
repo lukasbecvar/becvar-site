@@ -105,9 +105,11 @@ class ServiceManager
                         ];
 
                         // get minecraft status
-                        if ($this->isSocktOpen("127.0.0.1", "25565") == "Online") {
+                        if (($this->isSocktOpen("127.0.0.1", "25565") == "Offline") && ($this->isScreenSessionRunning("minecraft"))) {
+                            $minecraft += ['status' => 'starting'];
+                        } elseif ($this->isSocktOpen("127.0.0.1", "25565") == "Online") {
                             $minecraft += ['status' => 'online'];
-                        }  else {
+                        } else {
                             $minecraft += ['status' => 'offline'];
                         }
 

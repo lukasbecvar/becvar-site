@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Entity\Log;
+use App\Manager\CookieManager;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,16 +17,19 @@ class LogHelper
     private $errorHelper;
     private $securityUtil;
     private $entityManager;
+    private $cookieManager;
     private $visitorInfoUtil;
     
     public function __construct(
         ErrorHelper $errorHelper,
         SecurityUtil $securityUtil, 
+        CookieManager $cookieManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->errorHelper = $errorHelper;
         $this->securityUtil = $securityUtil;
+        $this->cookieManager = $cookieManager;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -85,8 +89,27 @@ class LogHelper
         }
     }
 
+    public function setAntiLogCookie(): void
+    {
+        $this->cookieManager->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
+    }
+
+    public function unsetAntiLogCookie(): void
+    {
+        $this->cookieManager->unset('anti-log-cookie');
+    }
+
     public function isEnabledAntiLog(): bool
     {
-        return false;
+        if (isset($_COOKIE['anti-log-cookie'])) {
+            $token = $this->cookieManager->get('anti-log-cookie');
+            if ($token == $_ENV['ANTI_LOG_COOKIE']) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     } 
 }

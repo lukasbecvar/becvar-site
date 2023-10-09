@@ -2,8 +2,6 @@
 
 ## TODOS
 - [ ] Service status (start, stop executor)   
-- [ ] antilog
-- [ ] test warning box
 
 - [ ] port adminer to this app
 - [ ] port admin components

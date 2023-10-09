@@ -12,7 +12,12 @@
         </p>
         {% if services != null %}
             {% for service in services %}
-                {% if service.status == 'online' %}
+                {% if service.status == 'starting' %}
+                    <p class="card-text">
+                        {{service.display_name}}: 
+                        <span class="text-info">starting...</span>
+                    </p>
+                {% elseif service.status == 'online' %}
                     <p class="card-text">
                         {{service.display_name}}: 
                         <strong>
