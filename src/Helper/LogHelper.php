@@ -39,42 +39,46 @@ class LogHelper
         // check if logs enabled in config
         if ($this->isLogsEnabled()) {
 
-            // get current date
-            $date = date('d.m.Y H:i:s');
+            // check if antilog is disabled
+            if (!$this->isEnabledAntiLog()) {
 
-            // get visitor browser agent
-            $browser = $this->visitorInfoUtil->getBrowser();
+                // get current date
+                $date = date('d.m.Y H:i:s');
 
-            // get visitor ip address
-            $ip_address = $this->visitorInfoUtil->getIP();
+                // get visitor browser agent
+                $browser = $this->visitorInfoUtil->getBrowser();
 
-            // get visitor id
-            $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
+                // get visitor ip address
+                $ip_address = $this->visitorInfoUtil->getIP();
 
-            // xss escape inputs
-            $name = $this->securityUtil->escapeString($name);
-            $value = $this->securityUtil->escapeString($value);
-            $browser = $this->securityUtil->escapeString($browser);
-            $ip_address = $this->securityUtil->escapeString($ip_address);
-            
-            // create new log enity
-            $LogEntity = new Log();
+                // get visitor id
+                $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
-            // set log entity values
-            $LogEntity->setName($name); 
-            $LogEntity->setValue($value); 
-            $LogEntity->setDate($date); 
-            $LogEntity->setIpAddress($ip_address); 
-            $LogEntity->setBrowser($browser); 
-            $LogEntity->setStatus('unreaded'); 
-            $LogEntity->setVisitorId($visitor_id);
-            
-            // try insert row
-            try {
-                $this->entityManager->persist($LogEntity);
-                $this->entityManager->flush();
-            } catch (\Exception $e) {
-                $this->errorHelper->handleError('log flush error: '.$e->getMessage(), 500);
+                // xss escape inputs
+                $name = $this->securityUtil->escapeString($name);
+                $value = $this->securityUtil->escapeString($value);
+                $browser = $this->securityUtil->escapeString($browser);
+                $ip_address = $this->securityUtil->escapeString($ip_address);
+                
+                // create new log enity
+                $LogEntity = new Log();
+
+                // set log entity values
+                $LogEntity->setName($name); 
+                $LogEntity->setValue($value); 
+                $LogEntity->setDate($date); 
+                $LogEntity->setIpAddress($ip_address); 
+                $LogEntity->setBrowser($browser); 
+                $LogEntity->setStatus('unreaded'); 
+                $LogEntity->setVisitorId($visitor_id);
+                
+                // try insert row
+                try {
+                    $this->entityManager->persist($LogEntity);
+                    $this->entityManager->flush();
+                } catch (\Exception $e) {
+                    $this->errorHelper->handleError('log flush error: '.$e->getMessage(), 500);
+                }
             }
         }
     }
@@ -101,8 +105,13 @@ class LogHelper
 
     public function isEnabledAntiLog(): bool
     {
+        // check if cookie set
         if (isset($_COOKIE['anti-log-cookie'])) {
+
+            // get cookie token
             $token = $this->cookieManager->get('anti-log-cookie');
+
+            // check if token is valid
             if ($token == $_ENV['ANTI_LOG_COOKIE']) {
                 return true;
             } else {

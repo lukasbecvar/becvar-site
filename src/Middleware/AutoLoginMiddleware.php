@@ -29,25 +29,28 @@ class AutoLoginMiddleware
 
     public function onKernelRequest(): void
     {
-        // check if cookie set
-        if (isset($_COOKIE['login-token-cookie'])) {
-            
-            $user = new User();
-            $user_token = $this->cookieManager->get('login-token-cookie');
-
-            // check if token exist in database
-            if ($this->authManager->getUserRepository(['token' => $user_token]) != null) {
+        // check if user not logged
+        if (!$this->authManager->isUserLogedin()) {
+            // check if cookie set
+            if (isset($_COOKIE['login-token-cookie'])) {
                 
-                // get user data
-                $user = $this->authManager->getUserRepository(['token' => $user_token]);
+                $user = new User();
+                $user_token = $this->cookieManager->get('login-token-cookie');
 
-                // autologin user
-                $this->authManager->login($user->getUsername(), $user_token, true);
-            } else {
-                $this->cookieManager->unset('login-token-cookie');
-        
-                // destory session is cookie token is invalid
-                $this->sessionManager->destroySession();
+                // check if token exist in database
+                if ($this->authManager->getUserRepository(['token' => $user_token]) != null) {
+                    
+                    // get user data
+                    $user = $this->authManager->getUserRepository(['token' => $user_token]);
+
+                    // autologin user
+                    $this->authManager->login($user->getUsername(), $user_token, true);
+                } else {
+                    $this->cookieManager->unset('login-token-cookie');
+            
+                    // destory session is cookie token is invalid
+                    $this->sessionManager->destroySession();
+                }
             }
         }
     }
