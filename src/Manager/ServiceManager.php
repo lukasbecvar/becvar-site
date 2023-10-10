@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Helper\ErrorHelper;
 use App\Helper\LogHelper;
 use App\Util\JsonUtil;
 
@@ -13,28 +14,117 @@ class ServiceManager
 {
     private $jsonUtil;
     private $logHelper;
+    private $errorHelper;
+    private $authManager;
 
-    public function __construct(JsonUtil $jsonUtil, LogHelper $logHelper)
-    {
+    public function __construct(
+        JsonUtil $jsonUtil, 
+        LogHelper $logHelper,
+        ErrorHelper $errorHelper,
+        AuthManager $authManager
+    ) {
         $this->jsonUtil = $jsonUtil;
         $this->logHelper = $logHelper;
+        $this->errorHelper = $errorHelper;
+        $this->authManager = $authManager;
+    }
+
+    public function getServicesJson() {
+        return $services_list = $this->jsonUtil->getJson(__DIR__.'/../../services.json');
     }
 
     public function isServicesListExist(): bool 
     {
-        $services_list = $this->jsonUtil->getJson(__DIR__.'/../../services.json');
-
         // check if list is null
-        if ($services_list != null) {
+        if ($this->getServicesJson() != null) {
             return true;
         } else {
             return false;
         }
     }
 
+    public function isServiceRunning(string $service): bool 
+    {
+        // execute cmd
+        $output = shell_exec("systemctl is-active $service");
+        
+        // check if service running
+        if (trim($output) == "active") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isScreenSessionRunning(string $session_name): bool {
+
+        // execite cmd
+        $exec = shell_exec("sudo screen -S $session_name -Q select . ; echo $?");
+    
+        // check if exec get output
+        if ($exec == "0") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isSocktOpen(string $ip, int $port): string {
+
+        // default response output
+        $response_output = "Offline";
+
+        // open service socket
+        $service = @fsockopen($ip, $port);
+
+        // check is service online
+        if($service >= 1) {
+            $response_output = 'Online';
+        }
+
+        return $response_output;
+    }
+
+    public function isProcessRunning(string $process): bool 
+    {
+        // execute cmd
+        exec("pgrep ".$process, $pids);
+        
+        // check if outputed pid
+        if(empty($pids)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isUfwRunning(): bool 
+    {
+        // execute cmd
+        $output = shell_exec("sudo ufw status");
+    
+        // check if ufw running
+        if (str_starts_with($output, "Status: active")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function executeCommand($command): void {
+
+        // execute command
+        shell_exec('sudo '.$command);
+    }
+
+    public function emergencyShutdown() {
+        $this->logHelper->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
+        dd('shtudown');
+    }
+
     public function getServices(): ?array 
     {
-        $services_list = $this->jsonUtil->getJson(__DIR__.'/../../services.json');
+        $services_list = $this->getServicesJson();
         $services = [];  
 
         // check if services list load valid
@@ -148,71 +238,37 @@ class ServiceManager
         return $services;
     }
 
-    public function isServiceRunning(string $service): bool 
+    public function runAction(string $service_name, string $action): void
     {
-        // execute cmd
-        $output = shell_exec("systemctl is-active $service");
-        
-        // check if service running
-        if (trim($output) == "active") {
-            return true;
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            $services_list = $this->getServicesJson();
+            $username = $this->authManager->getUsername();
+
+            // check if action is emergency shutdown
+            if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
+                $this->emergencyShutdown();
+            } else {
+
+                // start action
+                if ($action == 'start') {
+                    $command = $services_list[$service_name]['start_cmd'];
+                    $this->logHelper->log('action-runner', $username.' started '.$service_name);
+
+                // stop action
+                } elseif ($action == 'stop') {
+                    $command = $services_list[$service_name]['stop_cmd'];
+                    $this->logHelper->log('action-runner', $username.' stoped '.$service_name);
+                } else {
+                    $this->errorHelper->handleError('action runner error: action: '.$action.' not supported', 400);
+                }
+
+                // executed final command
+                $this->executeCommand($command);
+            }
         } else {
-            return false;
-        }
-    }
-
-    public function isScreenSessionRunning(string $session_name): bool {
-
-        // execite cmd
-        $exec = shell_exec("sudo screen -S $session_name -Q select . ; echo $?");
-    
-        // check if exec get output
-        if ($exec == "0") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function isSocktOpen(string $ip, int $port): string {
-
-        // default response output
-        $response_output = "Offline";
-
-        // open service socket
-        $service = @fsockopen($ip, $port);
-
-        // check is service online
-        if($service >= 1) {
-            $response_output = 'Online';
-        }
-
-        return $response_output;
-    }
-
-    public function isProcessRunning(string $process): bool 
-    {
-        // execute cmd
-        exec("pgrep ".$process, $pids);
-        
-        // check if outputed pid
-        if(empty($pids)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function isUfwRunning(): bool 
-    {
-        // execute cmd
-        $output = shell_exec("sudo ufw status");
-    
-        // check if ufw running
-        if (str_starts_with($output, "Status: active")) {
-            return true;
-        } else {
-            return false;
+            $this->errorHelper->handleError('error action runner is only for authentificated users', 401);
         }
     }
 }

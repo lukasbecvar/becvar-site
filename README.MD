@@ -1,7 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] Service status (start, stop executor)   
 
 - [ ] port adminer to this app
 - [ ] port admin components
