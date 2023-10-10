@@ -119,7 +119,7 @@ class ServiceManager
 
     public function emergencyShutdown() {
         $this->logHelper->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
-        dd('shtudown');
+        shell_exec('sudo poweroff');
     }
 
     public function getServices(): ?array 
