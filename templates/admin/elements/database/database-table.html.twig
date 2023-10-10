@@ -1,0 +1,42 @@
+{% if table_exist %}
+
+<ul class="breadcrumb">
+    <li>
+        <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+    </li>
+        <li> 
+            <a class="selector-button btn-small" href="#"><strong><i class="fa fa-trash" aria-hidden="true"></i> logs</strong></a>
+        </li>
+    <li> 
+    <a class="selector-button btn-small" href="#"><strong>NEW</strong></a>
+</li>
+    <li class="count-text-in-menuR">{{table_name}} = {{rows_count}} rows</li>
+</ul>
+
+<div class="table-responsive">
+    <table class="table table-dark">
+        <thead>
+            <tr class="line-item">  
+                {% for column in table_columns %}
+                    <th scope='col'>{{column}}</th>
+                {% endfor %}
+                <th cope='col'>Edit</th>
+                <th cope='col'>X</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+                <tr class="line-item">
+                    {% for column in table_columns %}
+                        <th scope='row'>{{ row[column] }}</th>
+                    {% endfor %}
+                    <td><a class="text-warning delete-link-todos" href="#">Edit</a></td>
+                    <td><a class="delete-link-todos" href="#">X</a></td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <h2 class=page-title>table: '{{table_name}}' not exist in database</h2>
+{% endif %}

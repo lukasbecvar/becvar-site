@@ -126,7 +126,7 @@ class AuthManager
             $role = $user->getRole();
         } 
 
-        return $role;
+        return strtolower($role);
     }
 
     public function getUserProfilePic(): ?string 

@@ -1,0 +1,6 @@
+<h2 class="page-title">Select table</h2>
+<br>
+{% for table in tables %}
+    <a class='db-browser-select-link' href="/admin/database/{{table}}">{{table}}</a>
+    <br><br>
+{% endfor %}

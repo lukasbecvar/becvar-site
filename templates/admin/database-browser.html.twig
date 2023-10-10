@@ -1,7 +1,19 @@
 {% extends 'common/bases/admin-base.html.twig' %}
 
+{% block title %}
+    database
+{% endblock %}
+
 {% block component %}
 <div class="admin-panel">
-    database
+    {% if user_role != 'owner' %}
+        <h2 class=page-title>Sorry you dont have permission to this page</h2>
+    {% else %}
+        {% if tables != null %}
+            {% include 'admin/elements/database/database-list.html.twig' %}
+        {% elseif table_data != null %}
+            {% include 'admin/elements/database/database-table.html.twig' %}
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}

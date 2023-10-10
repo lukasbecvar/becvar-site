@@ -1,5 +1,9 @@
 {% extends 'common/bases/admin-base.html.twig' %}
 
+{% block title %}
+    dashboard
+{% endblock %}
+
 {% block component %}
 <div class="admin-panel">
     {% if is_warnings_empty == false %}
