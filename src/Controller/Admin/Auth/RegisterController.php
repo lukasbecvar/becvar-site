@@ -45,7 +45,7 @@ class RegisterController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    #[Route('/register', name: 'register')]
+    #[Route('/register', name: 'auth_register')]
     public function register(Request $request): Response
     {
         // check if user table is empty (register only for first account)

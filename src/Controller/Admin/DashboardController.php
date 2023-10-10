@@ -56,6 +56,11 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/runner/{service_name}/{action}', name: 'admin_service_manager')]
     public function serviceRunner(string $service_name, string $action): Response
     {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+        } else {
+            $this->redirectToRoute('auth_login');
+        }
         return die($service_name.' '.$action);
     }
 
@@ -106,7 +111,7 @@ class DashboardController extends AbstractController
                 'drive_usage' => $this->dashboardUtil->getDriveUsage()
             ]);
         } else {
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('auth_login');
         }
     }
 }

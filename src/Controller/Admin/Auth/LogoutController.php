@@ -20,7 +20,7 @@ class LogoutController extends AbstractController
         $this->authManager = $authManager;
     }
 
-    #[Route('/logout', name: 'logout')]
+    #[Route('/logout', name: 'auth_logout')]
     public function logout(): Response
     {
         // logout user (if session found)

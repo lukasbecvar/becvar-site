@@ -32,7 +32,7 @@ class LoginController extends AbstractController
         $this->securityUtil = $securityUtil;
     }
 
-    #[Route('/login', name: 'login')]
+    #[Route('/login', name: 'auth_login')]
     public function login(Request $request): Response
     {
         // check if user logged in
