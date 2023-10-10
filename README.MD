@@ -1,8 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-
-- [ ] port adminer to this app
 - [ ] port admin components
 - [ ] separata css to files (scroll, admin, public, etc)
 - [ ] install symfony-webpack-encore and move old assets structure to webpack builder

@@ -50,7 +50,7 @@ class RegisterController extends AbstractController
     {
         // check if user table is empty (register only for first account)
         if (!$this->authManager->isUsersEmpty()) {
-            return $this->redirectToRoute('login');   
+            return $this->redirectToRoute('auth_login');   
         } else {
             // default error msg
             $error_msg = null;
