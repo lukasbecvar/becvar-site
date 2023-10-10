@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Helper\ErrorHelper;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManagerInterface;
 
 /*
     Database manager provides methods for get/edit database data
@@ -13,13 +14,16 @@ class DatabaseManager
 {
     private $connection;
     private $errorHelper;
+    private $entityManager;
         
     public function __construct(
         Connection $connection,
-        ErrorHelper $errorHelper
+        ErrorHelper $errorHelper,
+        EntityManagerInterface $entityManager
     ) {
         $this->connection = $connection;
         $this->errorHelper = $errorHelper;
+        $this->entityManager = $entityManager;
     }
 
     public function getTables(): ?array
@@ -82,8 +86,21 @@ class DatabaseManager
         return $data;
     }
 
-    public function countTableData(string $table_name): int {
+    public function countTableData(string $table_name): int 
+    {
         $table_data = $this->getTableData($table_name);
         return count($table_data);
     }
-}
+
+    public function deleteRowFromTable(string $table_name, string $id): void
+    {
+        if ($id == 'all') {
+            $sql = 'DELETE FROM '.$table_name.' WHERE id=id';
+            $this->connection->executeStatement($sql);
+        } else {
+            $sql = 'DELETE FROM '.$table_name.' WHERE id = :id';
+            $params = ['id' => $id];
+            $this->connection->executeStatement($sql, $params);
+        }
+    }
+}   

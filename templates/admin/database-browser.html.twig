@@ -7,12 +7,16 @@
 {% block component %}
 <div class="admin-panel">
     {% if user_role != 'owner' %}
-        <h2 class=page-title>Sorry you dont have permission to this page</h2>
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
-        {% if tables != null %}
-            {% include 'admin/elements/database/database-list.html.twig' %}
-        {% elseif table_data != null %}
-            {% include 'admin/elements/database/database-table.html.twig' %}
+        {% if table_to_delete == null %}
+            {% if tables != null %}
+                {% include 'admin/elements/database/database-list.html.twig' %}
+            {% elseif table_data != 'empty' %}
+                {% include 'admin/elements/database/database-table.html.twig' %}
+            {% endif %}
+        {% else %}
+            {% include 'admin/elements/database/database-delete.html.twig' %}
         {% endif %}
     {% endif %}
 </div>
