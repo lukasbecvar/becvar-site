@@ -6,7 +6,7 @@
             <strong>
                 <span class="online-text">Online</span> 
                 <span>
-                    [<a href="#">SHUTDOWN</a>]
+                    [<a href="/admin/dashboard/runner/emergency/shutdown">SHUTDOWN</a>]
                 </span>
             </strong>
         </p>
@@ -23,7 +23,7 @@
                         <strong>
                             <span class="online-text">Online</span> 
                             <span>
-                                [<a href="#">STOP</a>]
+                                [<a href="/admin/dashboard/runner/{{service.service_name}}/stop">STOP</a>]
                             </span>
                         </strong>
                     </p>
@@ -33,7 +33,7 @@
                         <strong>
                             <span class="text-red">Offline</span> 
                             <span>
-                                [<a href="#">START</a>]
+                                [<a href="/admin/dashboard/runner/{{service.service_name}}/start">START</a>]
                             </span>
                         </strong>
                     </p>

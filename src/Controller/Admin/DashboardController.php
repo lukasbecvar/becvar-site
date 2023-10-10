@@ -12,7 +12,6 @@ use App\Helper\LogHelper;
 use App\Manager\AuthManager;
 use App\Manager\ServiceManager;
 use App\Util\DashboardUtil;
-use App\Util\JsonUtil;
 use App\Util\SiteUtil;
 use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +51,12 @@ class DashboardController extends AbstractController
     public function admin(): Response
     {
         return $this->redirectToRoute('admin_dashboard');
+    }
+
+    #[Route('/admin/dashboard/runner/{service_name}/{action}', name: 'admin_service_manager')]
+    public function serviceRunner(string $service_name, string $action): Response
+    {
+        return die($service_name.' '.$action);
     }
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]

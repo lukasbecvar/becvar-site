@@ -29,7 +29,7 @@ class AntilogController extends AbstractController
         $this->authManager = $authManager;
     }
 
-    #[Route('/antilog/5369362536', name: 'app_antilog')]
+    #[Route('/antilog/5369362536', name: 'antilog')]
     public function index(): Response
     {
         // check if user logged in
