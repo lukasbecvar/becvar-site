@@ -3,8 +3,8 @@
 namespace App\Manager;
 
 use App\Helper\ErrorHelper;
+use App\Helper\LogHelper;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManagerInterface;
 
 /*
     Database manager provides methods for get/edit database data
@@ -12,18 +12,21 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DatabaseManager
 {
+    private $logHelper;
     private $connection;
     private $errorHelper;
-    private $entityManager;
+    private $authManager;
         
     public function __construct(
+        LogHelper $logHelper,
         Connection $connection,
         ErrorHelper $errorHelper,
-        EntityManagerInterface $entityManager
+        AuthManager $authManager
     ) {
+        $this->logHelper = $logHelper;
         $this->connection = $connection;
         $this->errorHelper = $errorHelper;
-        $this->entityManager = $entityManager;
+        $this->authManager = $authManager;
     }
 
     public function getTables(): ?array
@@ -42,6 +45,10 @@ class DatabaseManager
         foreach ($tables as $value) {
             array_push($tables_list, $value['Tables_in_'.$_ENV['DATABASE_NAME']]);
         }
+
+        // log to database
+        $this->logHelper->log('database-browser', $this->authManager->getUsername().' viewed database list');
+
         return $tables_list;
     }
 
@@ -83,6 +90,9 @@ class DatabaseManager
             $this->errorHelper->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
         }
         
+        // log to database
+        $this->logHelper->log('database-browser', $this->authManager->getUsername().' viewed database table: '.$table_name);
+
         return $data;
     }
 
@@ -94,6 +104,9 @@ class DatabaseManager
 
     public function deleteRowFromTable(string $table_name, string $id): void
     {
+        // log to database
+        $this->logHelper->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
+
         if ($id == 'all') {
             $sql = 'DELETE FROM '.$table_name.' WHERE id=id';
             $this->connection->executeStatement($sql);
