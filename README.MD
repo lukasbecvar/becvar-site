@@ -10,8 +10,7 @@
 ## Dependencies
 * Symfony
    * Version: **6.3**
-   * [Website](https://symfony.com/)
-
+   * [Website](https://symfony.com/)   
 * Mobile-Detect
    * Version: **3.74.0**
    * [Github](https://github.com/serbanghita/Mobile-Detect)
