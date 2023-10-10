@@ -1,4 +1,4 @@
-/* Main css file of admin component becvar_site [Coded by lukas becvar] */ 
+/* main css style of admin component becvar_site */ 
 * {
 	padding: 0px;
 	margin: 0px;
@@ -18,27 +18,6 @@ body {
 a:hover {
 	text-decoration: none;
 }
-
-/*Custom scroolbar design (Not working on mobile divices)*/
-::-webkit-scrollbar { /*Own page scroolbar design*/
-	width: 15px;
-	height: 15px;
-} 
-
-::-webkit-scrollbar-track { /*Own scroolbar bacground*/
-	background: rgb(17, 17, 17);
-}
- 
-::-webkit-scrollbar-thumb { /*Own scrollbar button*/
-	background: #40444b;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
-} 
-
-::-webkit-scrollbar-thumb:hover { /*Own scrollbar button hover*/
-	background: #5c646b;
-}
-/*End of Custom scrollBar*/
 
 .lg {
 	z-index: 9999; 

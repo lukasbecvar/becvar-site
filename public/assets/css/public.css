@@ -1,25 +1,4 @@
-/* Main style of public web */
-
-/* ============== Custom scroolbar ============== */
-::-webkit-scrollbar {
-	width: 12px;
-} 
-
-::-webkit-scrollbar-track {
-	background: rgb(20,20,20);
-}
- 
-::-webkit-scrollbar-thumb { 
-	background: #2b2d2e;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
-} 
-
-::-webkit-scrollbar-thumb:hover { 
-    background: #5c646b;
-}
-
-
+/* main style of public becvar_site */
 
 /* ============== Common style ============== */
 body {

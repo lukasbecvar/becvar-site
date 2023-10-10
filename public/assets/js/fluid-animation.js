@@ -1265,5 +1265,4 @@ if (!self.__WB_pmw) {
 		let pixelRatio = window.devicePixelRatio || 1;
 		return Math.floor(input * pixelRatio);
 	}
-
 }
