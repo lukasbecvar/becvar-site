@@ -1,8 +1,7 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] database edit
-- [ ] new row
+- [ ] database new row
 
 - [ ] port admin components
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}

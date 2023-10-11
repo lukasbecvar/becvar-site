@@ -129,7 +129,7 @@ class VisitorSystemMiddleware
         } else {
 
             // get current visited_sites value from database
-            $visitedSites = $visitor->getVisitedSites();
+            $visitedSites = intval($visitor->getVisitedSites());
 
             // update values
             $visitor->setVisitedSites($visitedSites + 1);

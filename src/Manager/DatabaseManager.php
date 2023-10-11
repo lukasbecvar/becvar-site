@@ -127,6 +127,41 @@ class DatabaseManager
         return count($table_data);
     }
 
+    public function selectRowData(string $table_name, int $id): array
+    {
+        $data = [];
+        try {
+            $queryBuilder = $this->connection->createQueryBuilder();
+            $queryBuilder
+                ->select('*')
+                ->from($table_name)
+                ->where('id = :id')
+                ->setParameter('id', $id);
+    
+            $statement = $queryBuilder->execute();
+            $data = $statement->fetchAllAssociative();
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
+        }
+        return $data[0];
+    }
+
+    public function updateValue(string $table_name, string $row, string $value, int $id): void
+    {
+        // query builder
+        $query = "UPDATE $table_name SET $row = :value WHERE id = :id";
+
+        try {
+            $this->connection->executeStatement($query, [
+                'value' => $value,
+                'id' => $id,
+            ]);
+            $this->logHelper->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('error to update value: '.$value.' in: '.$table_name.' id: '.$id.', error: '.$e->getMessage(), 500);
+        }
+    }
+
     public function deleteRowFromTable(string $table_name, string $id): void
     {
         // log to database

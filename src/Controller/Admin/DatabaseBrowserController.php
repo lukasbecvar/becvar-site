@@ -60,7 +60,15 @@ class DatabaseBrowserController extends AbstractController
                 'table_data_count' => null,
                 'table_columns' => null,
                 'limit' => null,
-                'page' => null
+                'page' => null,
+
+                // row editor data
+                'editor_table' => null,
+                'editor_id' => null,
+                'editor_field' => null,
+                'editor_values' => null,
+                'editor_page' => null,
+                'editor_error_msg' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -97,11 +105,98 @@ class DatabaseBrowserController extends AbstractController
                 'table_data_count' => count($this->databaseManager->getTableDataByPage($table, $page)),
                 'table_columns' => $this->databaseManager->getTableColumns($table),
                 'limit' => $_ENV['ITEMS_PER_PAGE'],
-                'page' => $page
+                'page' => $page,
+
+                // row editor data
+                'editor_table' => null,
+                'editor_id' => null,
+                'editor_field' => null,
+                'editor_values' => null,
+                'editor_page' => null,
+                'editor_error_msg' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
         }
+    }
+    
+    #[Route('/admin/database/edit/{page}/{table}/{id}', name: 'admin_database_edit')]
+    public function edit(string $table, int $page, int $id): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+            
+            $error_msg = null;
+
+            // escape table name
+            $table = $this->securityUtil->escapeString($table);
+            
+            // get table columns
+            $columns = $this->databaseManager->getTableColumns($table);
+
+			// check if user submit edit form
+			if (isset($_POST["submitEdit"])) {
+
+                // update values
+                foreach($columns as $row) { 
+
+                    // check if form value is empty
+                    if (empty($_POST[$row])) {
+                        if ($row != 'id') {
+                            $error_msg = $row.' is empty';
+                        }
+                    } else {
+                        // get value & escape
+                        $value = $this->securityUtil->escapeString($_POST[$row]);
+
+                        // update value
+                        $this->databaseManager->updateValue($table, $row, $value, $id);
+                    }
+                }
+
+                // redirect back to browser
+                if ($error_msg == null) {
+                    return $this->redirectToRoute('admin_database_browser', [
+                        'table' => $table,
+                        'page' => $page
+                    ]);
+                }
+            }            
+
+            return $this->render('admin/database-browser.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => false,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                // tables list data
+                'tables' => null,
+
+                // table browser data
+                'table_name' => null,
+                'table_exist' => null,
+                'table_data' => null,
+                'table_data_count_all' => null,
+                'table_data_count' => null,
+                'table_columns' => null,
+                'limit' => null,
+                'page' => null,
+
+                // row editor data
+                'editor_table' => $table,
+                'editor_id' => $id,
+                'editor_field' => $columns,
+                'editor_values' => $this->databaseManager->selectRowData($table, $id),
+                'editor_page' => $page,
+                'editor_error_msg' => $error_msg
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }     
     }
 
     #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]

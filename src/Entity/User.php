@@ -39,7 +39,7 @@ class User
     private ?string $profile_pic = null;
 
     #[ORM\Column]
-    private ?int $visitor_id = null;
+    private ?string $visitor_id = null;
 
     public function getId(): ?int
     {
@@ -142,12 +142,12 @@ class User
         return $this;
     }
 
-    public function getVisitorId(): ?int
+    public function getVisitorId(): ?string
     {
         return $this->visitor_id;
     }
 
-    public function setVisitorId(int $visitor_id): static
+    public function setVisitorId(string $visitor_id): static
     {
         $this->visitor_id = $visitor_id;
 

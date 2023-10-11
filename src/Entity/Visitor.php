@@ -14,7 +14,7 @@ class Visitor
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $visited_sites = null;
+    private ?string $visited_sites = null;
 
     #[ORM\Column(length: 255)]
     private ?string $first_visit = null;
@@ -51,12 +51,12 @@ class Visitor
         return $this->id;
     }
 
-    public function getVisitedSites(): ?int
+    public function getVisitedSites(): ?string
     {
         return $this->visited_sites;
     }
 
-    public function setVisitedSites(int $visited_sites): static
+    public function setVisitedSites(string $visited_sites): static
     {
         $this->visited_sites = $visited_sites;
 
