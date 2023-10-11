@@ -96,6 +96,31 @@ class DatabaseManager
         return $data;
     }
 
+    public function getTableDataByPage(string $table_name, int $page = 1): array
+    {
+        $data = [];
+        $itemsPerPage = $_ENV['ITEMS_PER_PAGE'];
+    
+        // escape name from sql query
+        $table_name = $this->connection->quoteIdentifier($table_name);
+    
+        // Calculate the offset based on the page number
+        $offset = ($page - 1) * $itemsPerPage;
+    
+        // get data with LIMIT and OFFSET
+        try {
+            $query = 'SELECT * FROM ' . $table_name . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
+            $data = $this->connection->executeQuery($query)->fetchAll();
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+        }
+        
+        // log to database
+        $this->logHelper->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+    
+        return $data;
+    }
+
     public function countTableData(string $table_name): int 
     {
         $table_data = $this->getTableData($table_name);
@@ -110,6 +135,9 @@ class DatabaseManager
         if ($id == 'all') {
             $sql = 'DELETE FROM '.$table_name.' WHERE id=id';
             $this->connection->executeStatement($sql);
+
+            $sql_index_reset = 'ALTER TABLE '.$table_name.' AUTO_INCREMENT = 1';
+            $this->connection->executeStatement($sql_index_reset);
         } else {
             $sql = 'DELETE FROM '.$table_name.' WHERE id = :id';
             $params = ['id' => $id];

@@ -33,8 +33,8 @@ class DatabaseBrowserController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    #[Route('/admin/database', name: 'admin_database_browser')]
-    public function databaseList(): Response
+    #[Route('/admin/database', name: 'admin_database_list')]
+    public function list(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -49,23 +49,31 @@ class DatabaseBrowserController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // database browser data
+                // tables list data
                 'tables' => $this->databaseManager->getTables(),
+
+                // table browser data
+                'table_name' => null,
+                'table_exist' => null,
                 'table_data' => null,
-                'table_to_delete' => null
+                'table_data_count_all' => null,
+                'table_data_count' => null,
+                'table_columns' => null,
+                'limit' => null,
+                'page' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
         }
     }
 
-    #[Route('/admin/database/{table}', name: 'admin_database_table')]
-    public function databaseTable(string $table): Response
+    #[Route('/admin/database/{table}/{page}', name: 'admin_database_browser')]
+    public function tableBrowser(string $table, int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
-            // get table name & escape
+            // escape table name
             $table = $this->securityUtil->escapeString($table);
 
             return $this->render('admin/database-browser.html.twig', [
@@ -78,63 +86,42 @@ class DatabaseBrowserController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // database browser data
+                // tables list data
                 'tables' => null,
+
+                // table browser data
                 'table_name' => $table,
-                'rows_count' => $this->databaseManager->countTableData($table),
                 'table_exist' => $this->databaseManager->isTableExist($table),
+                'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
+                'table_data_count_all' => $this->databaseManager->countTableData($table),
+                'table_data_count' => count($this->databaseManager->getTableDataByPage($table, $page)),
                 'table_columns' => $this->databaseManager->getTableColumns($table),
-                'table_data' => $this->databaseManager->getTableData($table),
-                'table_to_delete' => null
+                'limit' => $_ENV['ITEMS_PER_PAGE'],
+                'page' => $page
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
         }
     }
 
-    #[Route('/admin/database/delete_all/{table}', name: 'admin_database_table_delete_all')]
-    public function databaseTableDeleteAll(string $table): Response
+    #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]
+    public function delete(string $table, int $page, $id): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
-            // get table name & escape
+            // escape table name
             $table = $this->securityUtil->escapeString($table);
-
-            return $this->render('admin/database-browser.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // database browser data
-                'table_to_delete' => $table
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
-    }
-
-    #[Route('/admin/database/delete/{table}/{id}', name: 'admin_database_table_delete')]
-    public function databaseTableDelete(string $table, string $id): Response
-    {
-        // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
-
-            // get & escape values
-            $table = $this->securityUtil->escapeString($table);
-            $id = $this->securityUtil->escapeString($id);
 
             // delete row
             $this->databaseManager->deleteRowFromTable($table, $id);
 
-            return $this->redirectToRoute('admin_database_table', [
-                'table' => $table
+            return $this->redirectToRoute('admin_database_browser', [
+                'table' => $table,
+                'page' => $page
             ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
         }
     }
 }

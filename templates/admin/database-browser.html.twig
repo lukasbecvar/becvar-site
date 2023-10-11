@@ -9,66 +9,71 @@
     {% if user_role != 'owner' %}
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
-        {% if table_to_delete == null %}
-            {% if tables != null %}
-                <h2 class="page-title">Select table</h2>
-                <br>
-                {% for table in tables %}
-                    <a class='db-browser-select-link' href="/admin/database/{{table}}">{{table}}</a>
-                    <br><br>
-                {% endfor %}
-            {% elseif table_data != 'empty' %}
-                {% if table_exist %}
-                    <ul class="breadcrumb">
-                        <li>
-                            <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
-                        </li>
-                            <li> 
-                                <a class="selector-button btn-small" href="/admin/database/delete_all/{{table_name}}"><strong><i class="fa fa-trash" aria-hidden="true"></i> logs</strong></a>
-                            </li>
-                        <li>    
-                        <a class="selector-button btn-small" href="#"><strong>NEW</strong></a>
+        {#================================= TABLES-LIST =================================#}
+        {% if tables != null %}
+            <h2 class="page-title">Select table</h2>
+            <br>
+            {% for table in tables %}
+                <a class='db-browser-select-link' href="/admin/database/{{table}}/1">{{table}}</a>
+                <br><br>
+            {% endfor %}
+        {% endif %}
+        {#================================= TABLES-BROWSER =================================#}
+        {% if table_name != null %}
+            <ul class="breadcrumb">
+                <li>
+                    <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+                </li>
+                    <li> 
+                        <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name}}</strong></a>
                     </li>
-                        <li class="count-text-in-menuR">{{table_name}} = {{rows_count}} rows</li>
-                    </ul>
-                    {% if rows_count != 0 %}
-                        <div class="table-responsive">
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr class="line-item">  
-                                        {% for column in table_columns %}
-                                            <th scope='col'>{{column}}</th>
-                                        {% endfor %}
-                                        <th cope='col'>Edit</th>
-                                        <th cope='col'>X</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for row in table_data %}
-                                        <tr class="line-item">
-                                            {% for column in table_columns %}
-                                                <th scope='row'>{{ row[column] }}</th>
-                                            {% endfor %}
-                                            <td><a class="text-warning delete-link-todos" href="#">Edit</a></td>
-                                            <td><a class="delete-link-todos" href="/admin/database/delete/{{table_name}}/{{row.id}}">X</a></td>
-                                        </tr>
-                                    {% endfor %} 
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <h2 class="page-title">table: '{{table_name}}' is empty</h2>
+                <li>    
+                <a class="selector-button btn-small" href="#"><strong>NEW</strong></a>
+            </li>
+                <li class="count-text-in-menuR">{{table_name}} = {{table_data_count_all}} rows</li>
+            </ul>
+            {% if table_data_count == 0 %}
+                <h2 class="page-title">table: '{{table_name}}' is empty</h2>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr class="line-item">  
+                                {% for column in table_columns %}
+                                    <th scope='col'>{{column}}</th>
+                                {% endfor %}
+                                <th cope='col'>Edit</th>
+                                <th cope='col'>X</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in table_data %}
+                                <tr class="line-item">
+                                    {% for column in table_columns %}
+                                        <th scope='row'>
+                                            {% set content = row[column] | slice(0, 60) %}
+                                            {{ content ~ (row[column] | length > 60 ? '...' : '') }}
+                                        </th>
+                                    {% endfor %}
+                                    <td><a class="text-warning delete-link-todos" href="#">Edit</a></td>
+                                    <td><a class="delete-link-todos" href="/admin/database/delete/{{page}}/{{table_name}}/{{row.id}}">X</a></td>
+                                </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-button-box">
+                    {% if page != 1 %}
+                        <a class="back-page-button" href="/admin/database/{{table_name}}/{{page - 1}}">Back</a>
                     {% endif %}
-                {% else %}
-                    <h2 class="page-title">table: '{{table_name}}' not exist in database</h2>
+                    {% if limit == table_data_count %}
+                        <a class="back-page-button" href="/admin/database/{{table_name}}/{{page + 1}}">Next</a>
+                    {% endif %}
+                </div>
+                {% if page != 1 or limit == table_data_count %}
+                    <br>
                 {% endif %}
             {% endif %}
-        {% else %}
-            <div class="confirmation dark-table">
-                <p class="login-form-title">Are you sure you want to delete {{table_to_delete}} ?</p>
-                <a class="confirmation-button" href="/admin/database/delete/{{table_to_delete}}/all">Yes</a>
-                <a class="confirmation-button" href="/admin/database/{{table_to_delete}}">No</a>
-            </div>        
         {% endif %}
     {% endif %}
 </div>
