@@ -18,7 +18,12 @@
 <main class="admin-page"> 
     <div class="wrapper">
         <div class="section">
-            {% include 'admin/elements/top-panel.html.twig' %}
+            <div class="top-navbar">
+                <div class="hamburger">
+                    <a href="#"><span class="menu-text">Menu</span><i class="fas fa-bars"></i></a>
+                    <a class="logout-link" href="/logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
             {% include 'admin/elements/sidebar.html.twig' %}
 
             {% block component %}{% endblock %}
