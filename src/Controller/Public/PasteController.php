@@ -100,6 +100,8 @@ class PasteController extends AbstractController
 
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array("&lt;", "&gt;"), array("<", ">"), $content);
+
+            $this->logManager->log("paste", "visitor viewed paste: ".$name);
         } else {
             $this->errorManager->handleError('error paste not found', 404);
         }

@@ -56,6 +56,7 @@ class ImageUploaderController extends AbstractController
         if ($image_content == null) {
             $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         } else {
+            $this->logManager->log("image-uploader", "visitor viewed paste: ".$token);
             return $this->render('public/image/image-viewer.html.twig', [
                 'token' => $token,
                 'image' => $image_content
