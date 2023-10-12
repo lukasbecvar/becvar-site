@@ -140,7 +140,7 @@ class VisitorInfoUtil
 
         // if notfound
         if ($out == null) {
-            $out = 'Unknown';
+            $out = $user_agent;
         }
         return $out;
     }

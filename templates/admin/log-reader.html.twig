@@ -57,7 +57,7 @@
                                     <td>
                                         {% set result = row.visitorId / limit_value %}
                                         {% set visitor_page = result | round(0, 'ceil') %}
-                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{ visitor_page }}/#{{ row.visitorId }}">VISIT</a>
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{visitor_page}}/#{{row.visitorId}}">VISIT</a>
                                     </td>
                                     <td>
                                         <a class="delete-link-todos" href="/admin/database/delete/{{reader_page}}/log/{{row.id}}?referer=log_reader">X</a>
