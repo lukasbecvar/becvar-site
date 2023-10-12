@@ -50,29 +50,7 @@ class DatabaseBrowserController extends AbstractController
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
                 // tables list data
-                'tables' => $this->databaseManager->getTables(),
-
-                // table browser data
-                'table_name' => null,
-                'table_exist' => null,
-                'table_data' => null,
-                'table_data_count_all' => null,
-                'table_data_count' => null,
-                'table_columns' => null,
-                'limit' => null,
-                'page' => null,
-
-                // row editor data
-                'editor_table' => null,
-                'editor_id' => null,
-                'editor_field' => null,
-                'editor_values' => null,
-                'editor_page' => null,
-                'editor_error_msg' => null,
-
-                // new row data
-                'new_row_table' => null,
-                'new_row_error' => null
+                'tables' => $this->databaseManager->getTables()
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -98,8 +76,10 @@ class DatabaseBrowserController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // tables list data
+                // disable not used components
                 'tables' => null,
+                'editor_table' => null,
+                'new_row_table' => null,
 
                 // table browser data
                 'table_name' => $table,
@@ -109,19 +89,7 @@ class DatabaseBrowserController extends AbstractController
                 'table_data_count' => count($this->databaseManager->getTableDataByPage($table, $page)),
                 'table_columns' => $this->databaseManager->getTableColumns($table),
                 'limit' => $_ENV['ITEMS_PER_PAGE'],
-                'page' => $page,
-
-                // row editor data
-                'editor_table' => null,
-                'editor_id' => null,
-                'editor_field' => null,
-                'editor_values' => null,
-                'editor_page' => null,
-                'editor_error_msg' => null,
-
-                // new row data
-                'new_row_table' => null,
-                'new_row_error' => null
+                'page' => $page
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -182,18 +150,10 @@ class DatabaseBrowserController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // tables list data
+                // disable not used components
                 'tables' => null,
-
-                // table browser data
                 'table_name' => null,
-                'table_exist' => null,
-                'table_data' => null,
-                'table_data_count_all' => null,
-                'table_data_count' => null,
-                'table_columns' => null,
-                'limit' => null,
-                'page' => null,
+                'new_row_table' => null,
 
                 // row editor data
                 'editor_table' => $table,
@@ -201,11 +161,7 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => $columns,
                 'editor_values' => $this->databaseManager->selectRowData($table, $id),
                 'editor_page' => $page,
-                'editor_error_msg' => $error_msg,
-
-                // new row data
-                'new_row_table' => null,
-                'new_row_error' => null
+                'editor_error_msg' => $error_msg
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -268,26 +224,10 @@ class DatabaseBrowserController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // tables list data
+                // disable not used components
                 'tables' => null,
-
-                // table browser data
                 'table_name' => null,
-                'table_exist' => null,
-                'table_data' => null,
-                'table_data_count_all' => null,
-                'table_data_count' => null,
-                'table_columns' => null,
-                'limit' => null,
-                'page' => null,
-
-                // row editor data
                 'editor_table' => null,
-                'editor_id' => null,
-                'editor_field' => null,
-                'editor_values' => null,
-                'editor_page' => null,
-                'editor_error_msg' => null,
 
                 // new row data
                 'new_row_table' => $table,
