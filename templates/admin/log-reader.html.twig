@@ -9,7 +9,6 @@
     {% if user_role != 'owner' %}
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
-
         <ul class="breadcrumb"> 
             <li>
                 <a class="selector-button btn-small" href="/admin/database/log/1"><strong>Unfiltered</strong></a>
@@ -22,7 +21,6 @@
             </li>    
             <li class="count-text-in-menuR">Logs reader</li>
         </ul>
-
         <div class="card text-white mb-0 log-reader-info-card">
             <div class="card-header">Basic info</div>
             <div class="card-body">
@@ -30,8 +28,6 @@
                 <p class="card-text"><strong>Login, Logout: <span class="text-primary">{{login_logs_count}}</span></strong></p>
             </div>
         </div>
-
-
         {% if logs_count == 0 %}
             <h2 class="page-title">No relative logs were found</h2>
         {% else %}
@@ -46,7 +42,6 @@
                             <th scope='col'>ip</th>
                             <th scope='col'>browser</th>
                             <th scope='col'>visitor</th>
-                            <th cope='col'>BAN</th>
                             <th cope='col'>X</th>
                         </tr>
                         </thead>
@@ -60,10 +55,9 @@
                                     <th scope='row'>{{row.ipAddress}}</th>
                                     <th scope='row'>{{row.browser}}</th>
                                     <td>
-                                        <a class="delete-link-todos text-warning" href="#/{{row.visitorId}}">VISIT</a>
-                                    </td>
-                                    <td>
-                                        <a class="delete-link-todos text-warning" href="#">BAN</a>
+                                        {% set result = row.visitorId / limit_value %}
+                                        {% set visitor_page = result | round(0, 'ceil') %}
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{ visitor_page }}/#{{ row.visitorId }}">VISIT</a>
                                     </td>
                                     <td>
                                         <a class="delete-link-todos" href="/admin/database/delete/{{reader_page}}/log/{{row.id}}?referer=log_reader">X</a>

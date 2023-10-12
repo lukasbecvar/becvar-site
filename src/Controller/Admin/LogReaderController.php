@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
+use App\Manager\BanManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +60,9 @@ class LogReaderController extends AbstractController
                 'logs_count' => count($logs),
                 'logs_all_count' => $this->databaseManager->countTableData('log'),
                 'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
-                'login_logs_count' => $this->logManager->getLoginLogsCount()
+                'login_logs_count' => $this->logManager->getLoginLogsCount(),
+                'visitor_data' => $this->databaseManager->getTableData('visitor', false),
+                'limit_value' => $_ENV['ITEMS_PER_PAGE']
             ]);
         } else {
             return $this->redirectToRoute('auth_login');

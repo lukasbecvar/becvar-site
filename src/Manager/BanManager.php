@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Entity\Visitor;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -29,6 +30,27 @@ class BanManager
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
+    }
+
+    public function getVisitorIP(int $id): string
+    {
+        $repo = $this->visitorInfoUtil->getVisitorRepositoryByID($id);
+        return $repo->getIpAddress();
+    }
+
+    public function getBannedCount(): ?int
+    {
+        // get visitor repository
+        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+
+        // try to find visitor in database
+        try {
+            $result = $visitorRepository->findBy(['banned_status' => 'yes']);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        return count($result);
     }
 
     public function getBanReason(string $ip_address): ?string 
@@ -77,12 +99,12 @@ class BanManager
         if ($visitor != null) {
 
             // update ban data
-            $visitor->setBannedStatus('banned');
+            $visitor->setBannedStatus('yes');
             $visitor->setBanReason($reason);
             $visitor->setBannedTime($date);
             
             // log ban action to database
-            $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' banned for reason: "'.$reason.'" by '.$this->authManager->getUsername());
+            $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' banned for reason: '.$reason.' by '.$this->authManager->getUsername());
 
             // update entity data
             try {
@@ -104,7 +126,7 @@ class BanManager
         if ($visitor != null) {
 
             // update ban status
-            $visitor->setBannedStatus('un-banned');
+            $visitor->setBannedStatus('no');
             
             // log ban action to database
             $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' unbanned by '.$this->authManager->getUsername());

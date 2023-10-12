@@ -19,14 +19,14 @@
             <li class="count-text-in-menuR">Banned visitors: <strong>{{banned_count}}</strong></li>
         </ul>
 
-        <div class="table-responsive">
+        <div class="table-responsive center">
             <table class="table table-dark">
                 <thead>
                     <tr class="line-item">  
                         <th scope='col'>#</th>
                         <th scope='col'>Visited</th>
-                        <th scope='col'>Visit[first]</th>
-                        <th scope='col'>Visit[last]</th>
+                        <th scope='col'>Visit(first)</th>
+                        <th scope='col'>Visit(last)</th>
                         <th scope='col'>Browser</th>
                         <th scope='col'>OS</th>
                         <th scope='col'>Location</th>
@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                         {% for row in visitors_data %}
-                            <tr class="line-item">
+                            <tr class="line-item" id="{{row.id}}">
                                 <th scope='row'>{{row.id}}</th>
                                 <th scope='row'>{{row.visitedSites}}</th>
                                 <th scope='row'>{{row.firstVisit}}</th>
@@ -49,7 +49,11 @@
                                 <th scope='row'>{{row.ipAddress}}</th>
                                 <th scope='row'>{{row.bannedStatus}}</th>
                                 <td>
-                                    <a class="delete-link-todos text-warning" href="#">BAN</a>
+                                    {% if row.bannedStatus == 'yes' %}
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/unban/{{row.id}}/{{page}}">UNBAN</a>
+                                    {% else %}
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/ban/{{row.id}}/{{page}}">BAN</a>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <a class="delete-link-todos" href="/admin/database/delete/{{page}}/visitor/{{row.id}}?referer=visitor_manager">X</a>
@@ -74,5 +78,24 @@
 
 
     {% endif %}
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var url = window.location.href;
+            var hash = window.location.hash;
+        
+            if (hash) {
+                var elementId = hash.substring(1); // Odstraníme '#' ze začátku hashu
+                var targetElement = document.getElementById(elementId);
+        
+                if (targetElement) {
+                    targetElement.classList.add("highlight");
+                }
+
+                var targetElement = document.getElementById(elementId);
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
 </div>
 {% endblock %}

@@ -140,7 +140,7 @@ class VisitorInfoUtil
 
         // if notfound
         if ($out == null) {
-            $out = $user_agent;
+            $out = 'Unknown';
         }
         return $out;
     }
@@ -191,14 +191,14 @@ class VisitorInfoUtil
         return $os;
     }
 
-    public function getVisitorRepository(string $ip_address): ?object 
+    public function getRepositoryByArray(array $search): ?object
     {
         // get visitor repository
         $visitorRepository = $this->entityManager->getRepository(Visitor::class);
 
         // try to find visitor in database
         try {
-            $result = $visitorRepository->findOneBy(['ip_address' => $ip_address]);
+            $result = $visitorRepository->findOneBy($search);
         } catch (\Exception $e) {
             $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
         }
@@ -211,6 +211,16 @@ class VisitorInfoUtil
         }
     }
 
+    public function getVisitorRepositoryByID(int $id): ?object 
+    {
+        return $this->getRepositoryByArray(['id' => $id]);
+    }
+
+    public function getVisitorRepository(string $ip_address): ?object 
+    {
+        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
+    }
+
     public function getVisitorID(string $ip_address): ?int 
     {
         // try to get visitor data
@@ -221,7 +231,6 @@ class VisitorInfoUtil
         } else {
             return $result->getID();
         }
-
     }
 
     public function getLocation(string $ip_address): ?string
@@ -326,7 +335,7 @@ class VisitorInfoUtil
 
         return $visitors;
     }
-
+    
     public function getVisitorsCount(int $page): int
     {
         return count($this->getVisitors($page));

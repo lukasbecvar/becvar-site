@@ -1,0 +1,18 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    confirmation
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel">
+    {% if user_role != 'owner' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+        <form class="new-todo-form" action="/admin/visitors/ban/{{ban_id}}/{{return_page}}" method="post">
+            <textarea class="todo-area" maxlength="120" name="banReason" class="feedback-input" placeholder="Reason"></textarea>
+            <input class="input-button todo-button" type="submit" name="submitBan" value="Submit">
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
