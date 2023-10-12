@@ -30,7 +30,11 @@
                 {% if is_dev_mode == true %}
                     <p class="card-text"><span class="text-red"><strong>Developer mode is enabled!</strong></span></p>
                 {% endif %}
-                
+
+                {% if is_browser_list_exist == false %}
+                    <p class="card-text text-red"><strong>error to load file browser-list.json in app root</strong></p>
+                {% endif %}
+
                 {% if is_services_list_exist == false %}
                     <p class="card-text text-red"><strong>error to load file services.json in app root</strong></p>
                 {% endif %}

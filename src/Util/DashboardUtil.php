@@ -12,15 +12,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DashboardUtil
 {
+    private $jsonUtil;
     private $siteUtil;
     private $errorManager;
     private $entityManager;
     
     public function __construct(
+        JsonUtil $jsonUtil,
         SiteUtil $siteUtil,
         ErrorManager $errorManager,
         EntityManagerInterface $entityManager
     ) {
+        $this->jsonUtil = $jsonUtil;
         $this->siteUtil = $siteUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
@@ -146,6 +149,16 @@ class DashboardUtil
         }
    }
 
+   public function isBrowserListFound(): bool 
+   {
+       // check if list is null
+       if ($this->jsonUtil->getJson(__DIR__.'/../../browser-list.json') != null) {
+           return true;
+       } else {
+           return false;
+       }
+   }
+
     public function isWarninBoxEmpty(): bool 
     {
         // default state value
@@ -183,9 +196,14 @@ class DashboardUtil
         } elseif ($this->siteUtil->isMaintenance()) {
             $state = false;
 
+        // check if services list file found
         } elseif (!file_exists(__DIR__."/../../services.json")) {
             $state = false;
-        
+ 
+        // check if found browser-list (for translate user-agents)
+        } elseif (!file_exists(__DIR__."/../../browser-list.json")) {
+            $state = false;
+
         // check if dev-mode is enabled
         } elseif ($this->siteUtil->isDevMode()) {
             $state = false;

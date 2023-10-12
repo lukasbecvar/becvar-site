@@ -28,7 +28,7 @@ class ServiceManager
     }
 
     public function getServicesJson() {
-        return $services_list = $this->jsonUtil->getJson(__DIR__.'/../../services.json');
+        return $this->jsonUtil->getJson(__DIR__.'/../../services.json');
     }
 
     public function isServicesListExist(): bool 

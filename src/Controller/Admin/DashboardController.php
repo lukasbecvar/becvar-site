@@ -76,6 +76,7 @@ class DashboardController extends AbstractController
                 'is_maintenance' => $this->siteUtil->isMaintenance(),   
                 'is_dev_mode' => $this->siteUtil->isDevMode(),
                 'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
+                'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound(),
                 'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
 
                 // dashboard (services controller)
