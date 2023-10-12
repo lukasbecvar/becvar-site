@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use UAParser\Parser;
 use App\Entity\Visitor;
 use Detection\MobileDetect;
 use App\Manager\ErrorManager;
@@ -43,14 +44,24 @@ class VisitorInfoUtil
 
     public function getBrowser(): ?string 
     {
-        $agent = $_SERVER['HTTP_USER_AGENT'];
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
         $browser = 'Unknown';
 
-        if ($agent != null) {
-            $browser = $agent;
+        if ($user_agent != null) {
+            $browser = $user_agent;
         }
             
         return $browser;
+    }
+
+    public function getBrowserShortify(): ?string 
+    {
+        $parser = Parser::create();
+        $result = $parser->parse($this->getBrowser());
+    
+        $name = $result->ua->family;
+        $version = $result->ua->toVersion();   
+        return $name.' '.$version;
     }
 
     public function getOS(): ?string 

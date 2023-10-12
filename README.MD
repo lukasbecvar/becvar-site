@@ -17,6 +17,9 @@
 * Mobile-Detect
    * Version: **3.74.0**
    * [Github](https://github.com/serbanghita/Mobile-Detect)
+* UA-Parser/UAP-PHP
+   * Version: **3.9**
+   * [Github](https://github.com/ua-parser/uap-php)
 * Adminer
    * Version: **4.8.1**
    * [Website](https://www.adminer.org/)
