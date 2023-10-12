@@ -68,7 +68,11 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => null,
                 'editor_values' => null,
                 'editor_page' => null,
-                'editor_error_msg' => null
+                'editor_error_msg' => null,
+
+                // new row data
+                'new_row_table' => null,
+                'new_row_error' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -113,7 +117,11 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => null,
                 'editor_values' => null,
                 'editor_page' => null,
-                'editor_error_msg' => null
+                'editor_error_msg' => null,
+
+                // new row data
+                'new_row_table' => null,
+                'new_row_error' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -144,6 +152,7 @@ class DatabaseBrowserController extends AbstractController
                     if (empty($_POST[$row])) {
                         if ($row != 'id') {
                             $error_msg = $row.' is empty';
+                            break;
                         }
                     } else {
                         // get value & escape
@@ -192,11 +201,104 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => $columns,
                 'editor_values' => $this->databaseManager->selectRowData($table, $id),
                 'editor_page' => $page,
-                'editor_error_msg' => $error_msg
+                'editor_error_msg' => $error_msg,
+
+                // new row data
+                'new_row_table' => null,
+                'new_row_error' => null
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
         }     
+    }
+
+    #[Route('/admin/database/add/{page}/{table}', name: 'admin_database_add')]
+    public function add(string $table, int $page): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            $error_msg = null;
+
+            // escape table name
+            $table = $this->securityUtil->escapeString($table);
+
+            $columns = $this->databaseManager->getTableColumns($table);
+
+            // check if form submited
+            if (isset($_POST['submitSave'])) {
+
+                $columnsBuilder = [];
+                $valuesBuilder = [];
+            
+                // Build columns and values list
+                foreach ($columns as $column) {
+                    if ($column != 'id') {
+                        if (!empty($_POST[$column])) {
+                            $columnsBuilder[] = $column;
+                            $valuesBuilder[] = $this->securityUtil->escapeString($_POST[$column]);
+                        } else {
+                            $error_msg = 'value: '.$column.' is empty';
+                            break;
+                        }
+                    }
+                }
+                
+                // execute new row insert
+                if ($error_msg == null) {
+                    $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
+                }
+
+                // redirect back to browser
+                if ($error_msg == null) {
+                    return $this->redirectToRoute('admin_database_browser', [
+                        'table' => $table,
+                        'page' => $page
+                    ]);
+                }
+            }
+
+            return $this->render('admin/database-browser.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => false,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                // tables list data
+                'tables' => null,
+
+                // table browser data
+                'table_name' => null,
+                'table_exist' => null,
+                'table_data' => null,
+                'table_data_count_all' => null,
+                'table_data_count' => null,
+                'table_columns' => null,
+                'limit' => null,
+                'page' => null,
+
+                // row editor data
+                'editor_table' => null,
+                'editor_id' => null,
+                'editor_field' => null,
+                'editor_values' => null,
+                'editor_page' => null,
+                'editor_error_msg' => null,
+
+                // new row data
+                'new_row_table' => $table,
+                'new_row_page' => $page,
+                'new_row_columns' => $columns,
+                'new_row_error' => $error_msg
+            ]);
+
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
     }
 
     #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]

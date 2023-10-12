@@ -146,6 +146,25 @@ class DatabaseManager
         return $data[0];
     }
 
+    public function addNew(string $table_name, array $columns, array $values): void
+    {
+        // create placeholders for prepared statement
+        $columnPlaceholders = array_fill(0, count($columns), '?');
+        $columnList = implode(', ', $columns);
+        $columnPlaceholderList = implode(', ', $columnPlaceholders);
+    
+        // construct the SQL query
+        $sql = "INSERT INTO `$table_name` ($columnList) VALUES ($columnPlaceholderList)";
+    
+        // execute the prepared statement
+        try {
+            $this->connection->executeQuery($sql, $values);        
+        } catch (\Exception $e) {
+            $this->errorHelper->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
+        }
+            
+    }
+
     public function updateValue(string $table_name, string $row, string $value, int $id): void
     {
         // query builder
