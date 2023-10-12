@@ -158,7 +158,8 @@ class DatabaseManager
     
         // execute the prepared statement
         try {
-            $this->connection->executeQuery($sql, $values);        
+            $this->connection->executeQuery($sql, $values); 
+            $this->logHelper->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
         } catch (\Exception $e) {
             $this->errorHelper->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
         }
