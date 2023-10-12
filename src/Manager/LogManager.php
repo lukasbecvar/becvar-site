@@ -99,10 +99,9 @@ class LogManager
     public function getLogs(string $status, $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);
-    
         $per_page = $_ENV['ITEMS_PER_PAGE'];
         
-        // calculate offsetu
+        // calculate offset
         $offset = ($page - 1) * $per_page;
     
         // get logs from database

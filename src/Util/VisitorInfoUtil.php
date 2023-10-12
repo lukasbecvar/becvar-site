@@ -2,7 +2,6 @@
 
 namespace App\Util;
 
-use UAParser\Parser;
 use App\Entity\Visitor;
 use Detection\MobileDetect;
 use App\Manager\ErrorManager;
@@ -14,15 +13,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorInfoUtil
 {
+    private $jsonUtil;
     private $siteUtil;
     private $errorManager;
     private $entityManager;
 
     public function __construct (
+        JsonUtil $jsonUtil,
         SiteUtil $siteUtil,
         ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
+        $this->jsonUtil = $jsonUtil;
         $this->siteUtil = $siteUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
@@ -56,17 +58,91 @@ class VisitorInfoUtil
 
     public function getBrowserShortify(string $user_agent): ?string 
     {
-        $parser = Parser::create();
-        $result = $parser->parse($user_agent);
-    
-        $name = $result->ua->family;
-        $version = $result->ua->toVersion();   
-        
-        if (empty($version)) {
-            return $name;
-        } else {
-            return $name.' '.$version;
+        $out = null;
+
+        // identify shortify array [ID: str_contains, Value: replacement]
+        $browser_list = $this->jsonUtil->getJson(__DIR__."/../../browser-list.json");
+
+        // check if browser list found
+        if ($browser_list != NULL) {
+
+            // get short output from browser list
+            foreach ($browser_list as $index => $value) {
+                if (str_contains($user_agent, $index)) {
+                    $out = $value;
+                }
+            }
         }
+
+        if ($out == null) {
+            // identify Internet explorer
+            if(preg_match('/MSIE (\d+\.\d+);/', $user_agent)) {
+                $out = "Internet Explore";
+
+            } else if (str_contains($user_agent, 'MSIE')) {
+                $out = "Internet Explore";   
+
+            // identify Google chrome
+            } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent) ) {
+                $out = "Chrome";
+            
+            // identify Internet edge
+            } else if (preg_match('/Edge\/\d+/', $user_agent)) {
+                $out = "Edge";
+            
+            // identify Firefox
+            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent)) {
+                $out = "Firefox";
+
+            } else if (str_contains($user_agent, 'Firefox/96')) {
+                $out = "Firefox/96";  
+                
+            // identify Safari
+            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent)) {
+                $out = "Safari";
+                
+            // identify UC Browser
+            } else if (str_contains($user_agent, 'UCWEB')) {
+                $out = "UC Browser";
+
+            // identify UCBrowser Browser
+            } else if (str_contains($user_agent, 'UCBrowser')) {
+                $out = "UC Browser";
+
+            // identify IceApe Browser
+            } else if (str_contains($user_agent, 'Iceape')) {
+                $out = "IceApe Browser";
+
+            // identify Maxthon Browser
+            } else if (str_contains($user_agent, 'maxthon')) {
+                $out = "Maxthon Browser";
+
+            // identify Konqueror Browser
+            } else if (str_contains($user_agent, 'konqueror')) {
+                $out = "Konqueror Browser";
+
+            // identify NetFront Browser
+            } else if (str_contains($user_agent, 'NetFront')) {
+                $out = "NetFront Browser";
+
+            // identify Midori Browser
+            } else if (str_contains($user_agent, 'Midori')) {
+                $out = "Midori Browser";
+
+            // identify Opera
+            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent)) {
+                $out = "Opera";
+
+            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent)) {
+                $out = "Opera";
+            }
+        }
+
+        // if notfound
+        if ($out == null) {
+            $out = $user_agent;
+        }
+        return $out;
     }
 
     public function getOS(): ?string 
@@ -218,6 +294,42 @@ class VisitorInfoUtil
                 $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
             }           
         }
+    }
+
+    public function getVisitors(int $page): ?array
+    {
+        $repo = $this->entityManager->getRepository(Visitor::class);
+        $per_page = $_ENV['ITEMS_PER_PAGE'];
+        
+        // calculate offset
+        $offset = ($page - 1) * $per_page;
+    
+        // get visitors from database
+        try {
+            $queryBuilder = $repo->createQueryBuilder('l')
+                ->setFirstResult($offset)  
+                ->setMaxResults($per_page);
+    
+            $visitors = $queryBuilder->getQuery()->getResult();
+
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get visitors: ' . $e->getMessage(), 500);
+            $visitors = [];
+        }
+    
+        // replace browser with formated value for log reader
+        foreach ($visitors as $visitor) {
+            $user_agent = $visitor->getBrowser();   
+            $formated_browser = $this->getBrowserShortify($user_agent);
+            $visitor->setBrowser($formated_browser);
+        }
+
+        return $visitors;
+    }
+
+    public function getVisitorsCount(int $page): int
+    {
+        return count($this->getVisitors($page));
     }
 
     public function isMobile(): bool {

@@ -57,7 +57,7 @@ class BanManager
         } else {
 
             // check if visitor banned
-            if ($visitor->getBannedStatus() == 'banned') {
+            if ($visitor->getBannedStatus() == 'yes') {
                 return true;
             } else {
                 return false;

@@ -104,7 +104,7 @@ class VisitorSystemMiddleware
         $visitorEntity->setOs($os);
         $visitorEntity->setLocation($location);
         $visitorEntity->setIpAddress($ip_address);
-        $visitorEntity->setBannedStatus('non-banned');
+        $visitorEntity->setBannedStatus('no');
         $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');

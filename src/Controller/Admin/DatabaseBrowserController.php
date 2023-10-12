@@ -257,7 +257,14 @@ class DatabaseBrowserController extends AbstractController
             // check if deleted by log-reader
             if ($request->query->get('referer') == 'log_reader') {
                 return $this->redirectToRoute('admin_log_list', [
-                        'page' => $page
+                    'page' => $page
+                ]);              
+            }
+
+            // check if deleted by visitors-manager
+            if ($request->query->get('referer') == 'visitor_manager') {
+                return $this->redirectToRoute('admin_visitor_manager', [
+                    'page' => $page
                 ]);              
             }
 
