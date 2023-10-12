@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Helper;
+namespace App\Manager;
 
-use App\Util\SiteUtil;
 use Twig\Environment;
+use App\Util\SiteUtil;
 
 /*
-    Error helper provides error handle operations
+    Error manager provides error handle operations
 */
 
-class ErrorHelper
+class ErrorManager
 {
     private $twig;
     private $siteUtil;

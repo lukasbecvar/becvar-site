@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # check if app can run (installed requirements)
 symfony check:requirements
 

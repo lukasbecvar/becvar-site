@@ -3,11 +3,11 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Entity\User;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
-use App\Helper\ErrorHelper;
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
+use App\Manager\ErrorManager;
 use App\Form\RegisterFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
@@ -22,24 +22,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegisterController extends AbstractController
 {
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
     private $authManager;
+    private $errorManager;
     private $securityUtil;
     private $entityManager;
     private $visitorInfoUtil;  
 
     public function __construct(
-        LogHelper $logHelper, 
-        ErrorHelper $errorHelper,
+        LogManager $logManager, 
         AuthManager $authManager, 
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -117,14 +117,14 @@ class RegisterController extends AbstractController
                 $user->setVisitorId($visitor_id); // set visitor id
 
                 // log regstration event
-                $this->logHelper->log('authenticator', 'registration new user: '.$username.' registred');
+                $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
 
                 // insert new user
                 try {
                     $this->entityManager->persist($user);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorHelper->handleError('error to insert new user: '.$e->getMessage(), 400);
+                    $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
                 }
 
                 // set user token (login-token session)

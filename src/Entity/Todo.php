@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TodoRepository;
 
 #[ORM\Entity(repositoryClass: TodoRepository::class)]
 class Todo

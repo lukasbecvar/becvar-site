@@ -2,8 +2,6 @@
 
 namespace App\Manager;
 
-use App\Helper\ErrorHelper;
-use App\Helper\LogHelper;
 use Doctrine\DBAL\Connection;
 
 /*
@@ -12,21 +10,21 @@ use Doctrine\DBAL\Connection;
 
 class DatabaseManager
 {
-    private $logHelper;
+    private $logManager;
     private $connection;
-    private $errorHelper;
+    private $errorManager;
     private $authManager;
         
     public function __construct(
-        LogHelper $logHelper,
+        LogManager $logManager,
         Connection $connection,
-        ErrorHelper $errorHelper,
-        AuthManager $authManager
+        AuthManager $authManager,
+        ErrorManager $errorManager
     ) {
-        $this->logHelper = $logHelper;
+        $this->logManager = $logManager;
         $this->connection = $connection;
-        $this->errorHelper = $errorHelper;
         $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
     }
 
     public function getTables(): ?array
@@ -38,7 +36,7 @@ class DatabaseManager
             $sql = $platform->getListTablesSQL();
             $tables = $this->connection->executeQuery($sql)->fetchAll();   
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get tables list: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get tables list: '.$e->getMessage(), 500);
         }
 
         // build tables list
@@ -47,7 +45,7 @@ class DatabaseManager
         }
 
         // log to database
-        $this->logHelper->log('database-browser', $this->authManager->getUsername().' viewed database list');
+        $this->logManager->log('database-browser', $this->authManager->getUsername().' viewed database list');
 
         return $tables_list;
     }
@@ -66,7 +64,7 @@ class DatabaseManager
         try {
             $table = $schema->getTable($table_name);
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get columns from table: '.$table_name.', '.$e->getMessage(), 404);
+            $this->errorManager->handleError('error to get columns from table: '.$table_name.', '.$e->getMessage(), 404);
         }
 
         foreach ($table->getColumns() as $column) {
@@ -87,11 +85,11 @@ class DatabaseManager
         try {
             $data = $this->connection->executeQuery('SELECT * FROM '.$table_name)->fetchAll();
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
         }
         
         // log to database
-        $this->logHelper->log('database-browser', $this->authManager->getUsername().' viewed database table: '.$table_name);
+        $this->logManager->log('database-browser', $this->authManager->getUsername().' viewed database table: '.$table_name);
 
         return $data;
     }
@@ -112,11 +110,11 @@ class DatabaseManager
             $query = 'SELECT * FROM ' . $table_name . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
             $data = $this->connection->executeQuery($query)->fetchAll();
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
         }
         
         // log to database
-        $this->logHelper->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+        $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
     
         return $data;
     }
@@ -141,7 +139,7 @@ class DatabaseManager
             $statement = $queryBuilder->execute();
             $data = $statement->fetchAllAssociative();
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
         }
         return $data[0];
     }
@@ -160,10 +158,10 @@ class DatabaseManager
         try {
             $this->connection->executeQuery($sql, $values); 
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
         }
 
-        $this->logHelper->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
+        $this->logManager->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
     }
 
     public function updateValue(string $table_name, string $row, string $value, int $id): void
@@ -177,15 +175,15 @@ class DatabaseManager
                 'id' => $id,
             ]);
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to update value: '.$value.' in: '.$table_name.' id: '.$id.', error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to update value: '.$value.' in: '.$table_name.' id: '.$id.', error: '.$e->getMessage(), 500);
         }
-        $this->logHelper->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
+        $this->logManager->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
     }
 
     public function deleteRowFromTable(string $table_name, string $id): void
     {
         // log to database
-        $this->logHelper->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
+        $this->logManager->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
 
         if ($id == 'all') {
             $sql = 'DELETE FROM '.$table_name.' WHERE id=id';

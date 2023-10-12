@@ -2,8 +2,6 @@
 
 namespace App\Manager;
 
-use App\Helper\ErrorHelper;
-use App\Helper\LogHelper;
 use App\Util\JsonUtil;
 
 /*
@@ -13,20 +11,20 @@ use App\Util\JsonUtil;
 class ServiceManager
 {
     private $jsonUtil;
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
     private $authManager;
+    private $errorManager;
 
     public function __construct(
         JsonUtil $jsonUtil, 
-        LogHelper $logHelper,
-        ErrorHelper $errorHelper,
-        AuthManager $authManager
+        LogManager $logManager,
+        AuthManager $authManager,
+        ErrorManager $errorManager
     ) {
         $this->jsonUtil = $jsonUtil;
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
     }
 
     public function getServicesJson() {
@@ -118,7 +116,7 @@ class ServiceManager
     }
 
     public function emergencyShutdown() {
-        $this->logHelper->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
+        $this->logManager->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
         shell_exec('sudo poweroff');
     }
 
@@ -232,7 +230,7 @@ class ServiceManager
                 }
             }
         } else {
-            $this->logHelper->log('app-error', 'error to get services-list.json file, try check app root if file exist');
+            $this->logManager->log('app-error', 'error to get services-list.json file, try check app root if file exist');
         }
 
         return $services;
@@ -254,21 +252,21 @@ class ServiceManager
                 // start action
                 if ($action == 'start') {
                     $command = $services_list[$service_name]['start_cmd'];
-                    $this->logHelper->log('action-runner', $username.' started '.$service_name);
+                    $this->logManager->log('action-runner', $username.' started '.$service_name);
 
                 // stop action
                 } elseif ($action == 'stop') {
                     $command = $services_list[$service_name]['stop_cmd'];
-                    $this->logHelper->log('action-runner', $username.' stoped '.$service_name);
+                    $this->logManager->log('action-runner', $username.' stoped '.$service_name);
                 } else {
-                    $this->errorHelper->handleError('action runner error: action: '.$action.' not supported', 400);
+                    $this->errorManager->handleError('action runner error: action: '.$action.' not supported', 400);
                 }
 
                 // executed final command
                 $this->executeCommand($command);
             }
         } else {
-            $this->errorHelper->handleError('error action runner is only for authentificated users', 401);
+            $this->errorManager->handleError('error action runner is only for authentificated users', 401);
         }
     }
 }

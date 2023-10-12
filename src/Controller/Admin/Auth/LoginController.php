@@ -3,9 +3,9 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Entity\User;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Form\LoginFormType;
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,16 +18,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LoginController extends AbstractController
 {
-    private $logHelper;
+    private $logManager;
     private $authManager;
     private $securityUtil;
 
     public function __construct(
-        LogHelper $logHelper, 
+        LogManager $logManager, 
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
     ) {
-        $this->logHelper = $logHelper;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
     }
@@ -79,11 +79,11 @@ class LoginController extends AbstractController
                         $this->authManager->login($username, $user->getToken(), $remember);
 
                     } else { // invalid password error
-                        $this->logHelper->log('authenticator', 'trying to login with: '.$username.':'.$password);
+                        $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
                         $error_msg = 'Incorrect username or password.';
                     }
                 } else { // user not exist error
-                    $this->logHelper->log('authenticator', 'trying to login with: '.$username.':'.$password);
+                    $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
                     $error_msg = 'Incorrect username or password.';
                 }
 

@@ -3,8 +3,8 @@
 namespace App\Util;
 
 use App\Entity\Visitor;
-use App\Helper\ErrorHelper;
 use Detection\MobileDetect;
+use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -14,16 +14,16 @@ use Doctrine\ORM\EntityManagerInterface;
 class VisitorInfoUtil
 {
     private $siteUtil;
-    private $errorHelper;
+    private $errorManager;
     private $entityManager;
 
     public function __construct (
         SiteUtil $siteUtil,
-        ErrorHelper $errorHelper, 
+        ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
 
@@ -108,7 +108,7 @@ class VisitorInfoUtil
         try {
             $result = $visitorRepository->findOneBy(['ip_address' => $ip_address]);
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
         }
 
         // return result
@@ -199,7 +199,7 @@ class VisitorInfoUtil
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
             }           
         }
     }

@@ -4,11 +4,11 @@ namespace App\Middleware;
 
 use Twig\Environment;
 use App\Entity\Visitor;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
-use App\Helper\ErrorHelper;
 use App\Manager\BanManager;
+use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
+use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -19,25 +19,25 @@ class VisitorSystemMiddleware
 {
     private $twig;
     private $banManager;
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
+    private $errorManager;
     private $securityUtil;
     private $entityManager;
     private $visitorInfoUtil;
 
     public function __construct(
         Environment $twig,
-        LogHelper $logHelper,
+        LogManager $logManager,
         BanManager $banManager,
-        ErrorHelper $errorHelper,
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager 
     ) {
         $this->twig = $twig;
         $this->banManager = $banManager;
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
+        $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -71,7 +71,7 @@ class VisitorSystemMiddleware
                 $reason = $this->banManager->getBanReason($ip_address);
 
                 // log access to database
-                $this->logHelper->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
+                $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
 
                 // render banned page
                 die($this->twig->render('errors/error-banned.html.twig', [
@@ -90,7 +90,7 @@ class VisitorSystemMiddleware
     {
         // log geolocate error
         if ($location == 'Unknown') {
-            $this->logHelper->log('geolocate-error', 'error to geolocate ip: '.$ip_address);
+            $this->logManager->log('geolocate-error', 'error to geolocate ip: '.$ip_address);
         }
 
         // create new visitor entity
@@ -114,7 +114,7 @@ class VisitorSystemMiddleware
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
         }
     }
 
@@ -125,7 +125,7 @@ class VisitorSystemMiddleware
 
         // check if visitor data found
         if (!$visitor != null) {
-            $this->errorHelper->handleError('unexpected visitor with ip: '.$ip_address.' update error, please check database structure', 500);
+            $this->errorManager->handleError('unexpected visitor with ip: '.$ip_address.' update error, please check database structure', 500);
         } else {
 
             // get current visited_sites value from database
@@ -141,7 +141,7 @@ class VisitorSystemMiddleware
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
             }
         }
     }

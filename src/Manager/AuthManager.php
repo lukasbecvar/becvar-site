@@ -3,8 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\User;
-use App\Helper\LogHelper;
-use App\Helper\ErrorHelper;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -13,21 +11,21 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AuthManager
 {
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
+    private $errorManager;
     private $entityManager;
     private $cookieManager;
     private $sessionManager;
 
     public function __construct(
-        LogHelper $logHelper, 
-        ErrorHelper $errorHelper, 
+        LogManager $logManager, 
+        ErrorManager $errorManager, 
         CookieManager $cookieManager,
         SessionManager $sessionManager,
         EntityManagerInterface $entityManager
     ) {
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
+        $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
         $this->cookieManager = $cookieManager;
         $this->sessionManager = $sessionManager;
@@ -42,7 +40,7 @@ class AuthManager
         try {
             $result = $userRepository->findOneBy($array);
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
         }
 
         // return result
@@ -71,7 +69,7 @@ class AuthManager
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorHelper->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
             }
         }     
     }
@@ -187,10 +185,10 @@ class AuthManager
                 $this->setLastLoginDate();
 
                 // log to mysql
-                $this->logHelper->log('authenticator', 'user: '.$username.' logged in');
+                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
 
             } else {
-                $this->errorHelper->handleError('error to login user with token: '.$user_token, 500);
+                $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
             }
         }
     }
@@ -206,7 +204,7 @@ class AuthManager
             $this->cookieManager->unset("login-token-cookie");
         
             // log action to mysql
-            $this->logHelper->log('authenticator', 'user: '.$user->getUsername().' logout');
+            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
         
             // destroy all sessions
             $this->sessionManager->destroySession();   

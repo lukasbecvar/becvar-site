@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Helper\ErrorHelper;
+use App\Manager\ErrorManager;
 use App\Util\SiteUtil;
 
 /*
@@ -12,19 +12,19 @@ use App\Util\SiteUtil;
 class MaintenanceMiddleware
 {
     private $siteUtil;
-    private $errorHelper;
+    private $errorManager;
 
-    public function __construct(SiteUtil $siteUtil, ErrorHelper $errorHelper)
+    public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager)
     {
         $this->siteUtil = $siteUtil;
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
     }
 
     public function onKernelRequest(): void
     {
         // check if MAINTENANCE_MODE enabled
         if ($this->siteUtil->isMaintenance()) {
-            $this->errorHelper->handleErrorView('maintenance');            
+            $this->errorManager->handleErrorView('maintenance');            
         }
     }
 }

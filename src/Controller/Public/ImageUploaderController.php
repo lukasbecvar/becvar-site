@@ -3,9 +3,9 @@
 namespace App\Controller\Public;
 
 use App\Entity\Image;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
-use App\Helper\ErrorHelper;
+use App\Manager\LogManager;
+use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,19 +18,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ImageUploaderController extends AbstractController
 {
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
+    private $errorManager;
     private $secutityUtil;
     private $entityManager;
 
     public function __construct(
-        LogHelper $logHelper,
-        ErrorHelper $errorHelper,
+        LogManager $logManager,
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         EntityManagerInterface $entityManager
     ) {
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
+        $this->errorManager = $errorManager;
         $this->secutityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
@@ -54,7 +54,7 @@ class ImageUploaderController extends AbstractController
 
         // check if image found
         if ($image_content == null) {
-            $this->errorHelper->handleError('not found error, image: '.$token.', not found in database', 404);
+            $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         } else {
             return $this->render('public/image/image-viewer.html.twig', [
                 'token' => $token,
@@ -116,11 +116,11 @@ class ImageUploaderController extends AbstractController
                     $this->entityManager->persist($image);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorHelper->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
+                    $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
                 }
 
                 // log to database
-                $this->logHelper->log('image-uploader', 'uploaded new image: '.$token);	
+                $this->logManager->log('image-uploader', 'uploaded new image: '.$token);	
 
                 return $this->redirectToRoute('public_image_viewer', ['token' => $token]);
 

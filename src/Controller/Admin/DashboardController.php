@@ -9,9 +9,9 @@ use App\Entity\Paste;
 use App\Util\SiteUtil;
 use App\Entity\Message;
 use App\Entity\Visitor;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
 use App\Util\DashboardUtil;
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ServiceManager;
@@ -27,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardController extends AbstractController
 {
     private $siteUtil;
-    private $logHelper;
+    private $logManager;
     private $authManager;
     private $securityUtil;
     private $dashboardUtil;
@@ -36,7 +36,7 @@ class DashboardController extends AbstractController
 
     public function __construct(
         SiteUtil $siteUtil,
-        LogHelper $logHelper,
+        LogManager $logManager,
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
         DashboardUtil $dashboardUtil,
@@ -44,7 +44,7 @@ class DashboardController extends AbstractController
         VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->siteUtil = $siteUtil;
-        $this->logHelper = $logHelper;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->dashboardUtil = $dashboardUtil;
@@ -52,10 +52,55 @@ class DashboardController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    #[Route('/admin', name: 'admin_init')]
-    public function admin(): Response
+    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    public function dashboard(): Response
     {
-        return $this->redirectToRoute('admin_dashboard');
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+            return $this->render('admin/dashboard.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => true,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                // warning system
+                'is_warnings_empty' => $this->dashboardUtil->isWarninBoxEmpty(),
+                'service_dir_exist' => file_exists($_ENV['SERVICES_DIR']),
+                'service_dir' => $_ENV['SERVICES_DIR'],
+                'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
+                'is_ssl' => $this->siteUtil->isSsl(),
+                'is_maintenance' => $this->siteUtil->isMaintenance(),   
+                'is_dev_mode' => $this->siteUtil->isDevMode(),
+                'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
+                'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
+
+                // dashboard (services controller)
+                'services' => $this->serviceManager->getServices(),
+                
+                // dashboard data (System info)
+                'operating_system' => str_replace("DISTRIB_ID=", "", $this->dashboardUtil->getSoftwareInfo()["distro"]["operating_system"]),
+                'kernal_version' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_version"],
+                'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_arch"],
+
+                // dashboard data (counters)
+                'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log, ['status' => 'unreaded']),
+                'messages_count' => $this->dashboardUtil->getDatabaseEntityCount(new Message, ['status' => 'open']),
+                'todos_count' => $this->dashboardUtil->getDatabaseEntityCount(new Todo, ['status' => 'non-completed']),
+                'images_count' => $this->dashboardUtil->getDatabaseEntityCount(new Image),
+                'pastest_count' => $this->dashboardUtil->getDatabaseEntityCount(new Paste),
+                'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
+                'server_uptime' => $this->dashboardUtil->getHostUptime(),   
+                'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
+                'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   
+                'drive_usage' => $this->dashboardUtil->getDriveUsage()
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
     }
 
     #[Route('/admin/dashboard/emergency/shutdown', name: 'admin_emergency_shutdown')]
@@ -126,56 +171,5 @@ class DashboardController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_dashboard');
-    }
-
-    #[Route('/admin/dashboard', name: 'admin_dashboard')]
-    public function dashboard(): Response
-    {
-        // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/dashboard.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => true,
-
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // warning system
-                'is_warnings_empty' => $this->dashboardUtil->isWarninBoxEmpty(),
-                'service_dir_exist' => file_exists($_ENV['SERVICES_DIR']),
-                'service_dir' => $_ENV['SERVICES_DIR'],
-                'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
-                'is_ssl' => $this->siteUtil->isSsl(),
-                'is_maintenance' => $this->siteUtil->isMaintenance(),   
-                'is_dev_mode' => $this->siteUtil->isDevMode(),
-                'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
-                'anti_log_enabled' => $this->logHelper->isEnabledAntiLog(),
-
-                // dashboard (services controller)
-                'services' => $this->serviceManager->getServices(),
-                
-                // dashboard data (System info)
-                'operating_system' => str_replace("DISTRIB_ID=", "", $this->dashboardUtil->getSoftwareInfo()["distro"]["operating_system"]),
-                'kernal_version' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_version"],
-                'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_arch"],
-
-                // dashboard data (counters)
-                'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log, ['status' => 'unreaded']),
-                'messages_count' => $this->dashboardUtil->getDatabaseEntityCount(new Message, ['status' => 'open']),
-                'todos_count' => $this->dashboardUtil->getDatabaseEntityCount(new Todo, ['status' => 'non-completed']),
-                'images_count' => $this->dashboardUtil->getDatabaseEntityCount(new Image),
-                'pastest_count' => $this->dashboardUtil->getDatabaseEntityCount(new Paste),
-                'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
-                'server_uptime' => $this->dashboardUtil->getHostUptime(),   
-                'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
-                'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   
-                'drive_usage' => $this->dashboardUtil->getDriveUsage()
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
     }
 }

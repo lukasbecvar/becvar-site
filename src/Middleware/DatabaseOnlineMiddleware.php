@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Helper\ErrorHelper;
+use App\Manager\ErrorManager;
 use \Doctrine\DBAL\Connection as Connection;
 
 /*
@@ -11,14 +11,14 @@ use \Doctrine\DBAL\Connection as Connection;
 
 class DatabaseOnlineMiddleware
 {
-    private $errorHelper;
+    private $errorManager;
     private $doctrineConnection;
 
     public function __construct(
-        ErrorHelper $errorHelper,
+        ErrorManager $errorManager,
         Connection $doctrineConnection
     ) {
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
         $this->doctrineConnection = $doctrineConnection;
     }
 
@@ -30,7 +30,7 @@ class DatabaseOnlineMiddleware
         } catch (\Exception $e) {
 
             // return error if not connected
-            $this->errorHelper->handleError('database connection error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('database connection error: '.$e->getMessage(), 500);
         }
     }
 }

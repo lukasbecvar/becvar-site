@@ -3,7 +3,7 @@
 namespace App\Util;
 
 use App\Entity\Log;
-use App\Helper\ErrorHelper;
+use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -13,16 +13,16 @@ use Doctrine\ORM\EntityManagerInterface;
 class DashboardUtil
 {
     private $siteUtil;
-    private $errorHelper;
+    private $errorManager;
     private $entityManager;
     
     public function __construct(
         SiteUtil $siteUtil,
-        ErrorHelper $errorHelper,
+        ErrorManager $errorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
 
@@ -39,7 +39,7 @@ class DashboardUtil
                 $result = $repository->findBy($search);
             }
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('find error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
         }
 
         return count($result);

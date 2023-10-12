@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\ErrorHelper;
+use App\Manager\ErrorManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -12,18 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ErrorController extends AbstractController
 {
-    private $errorHelper;
+    private $errorManager;
 
-    public function __construct(ErrorHelper $errorHelper) 
+    public function __construct(ErrorManager $errorManager) 
     {
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
     }
 
     // handle unknow error if code not used
     #[Route('/error', name: 'error_unknown')]
     public function unknownError(): void
     {
-        $this->errorHelper->handleErrorView('unknown');
+        $this->errorManager->handleErrorView('unknown');
     }
 
     // handle error by code
@@ -32,9 +32,9 @@ class ErrorController extends AbstractController
     {
         // block handeling (maintenance, banned use only from app logic)
         if ($code == 'maintenance' or $code == 'banned') {
-            $this->errorHelper->handleErrorView('unknown');
+            $this->errorManager->handleErrorView('unknown');
         } else {
-            $this->errorHelper->handleErrorView($code);
+            $this->errorManager->handleErrorView($code);
         }
     }
 }

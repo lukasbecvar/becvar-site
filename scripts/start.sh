@@ -1,10 +1,10 @@
 #!/bin/bash
 
+# start server script for development use -> php, database server
+
 # color codes.
 red_echo () { echo "$(tput setaf 9)$1"; }
 die() { echo "$*" 1>&2 ; exit 1; }
-
-# start server script for development use -> php, database server
 
 # check if vendor installed
 if [ ! -d "vendor/" ]

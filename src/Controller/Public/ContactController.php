@@ -3,10 +3,10 @@
 namespace App\Controller\Public;
 
 use App\Entity\Message;
-use App\Helper\LogHelper;
 use App\Util\SecurityUtil;
-use App\Form\ContactFormType;
+use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
+use App\Form\ContactFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,18 +19,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {   
-    private $logHelper;
+    private $logManager;
     private $securityUtil;
     private $entityManager;
     private $visitorInfoUtil;
 
     public function __construct(
-        LogHelper $logHelper, 
+        LogManager $logManager, 
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
-        $this->logHelper = $logHelper;
+        $this->logManager = $logManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -92,7 +92,7 @@ class ContactController extends AbstractController
             } elseif (isset($honeypot)) {
                 $error_msg = 'Your message has been blocked';
                 $found_error = true;
-                $this->logHelper->log('message-sender', 'message: '.$message_input.', has been blocked: honeypot used');
+                $this->logManager->log('message-sender', 'message: '.$message_input.', has been blocked: honeypot used');
             } else {
 
                 // escape values (XSS protection)

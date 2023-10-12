@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Manager\AuthManager;
+use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,10 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LogoutController extends AbstractController
 {
     private $authManager;
+    private $errorManager;
 
-    public function __construct(AuthManager $authManager)
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager)
     {
         $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
     }
 
     #[Route('/logout', name: 'auth_logout')]
@@ -28,6 +31,11 @@ class LogoutController extends AbstractController
             $this->authManager->logout();
         }
 
-        return $this->redirectToRoute('auth_login');
+        // check if logged out
+        if (!$this->authManager->isUserLogedin()) {
+            return $this->redirectToRoute('auth_login');
+        } else {
+            $this->errorManager->handleError('logout error: unknown error in logout function', 500);
+        }
     }
 }

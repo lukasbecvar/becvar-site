@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Helper;
+namespace App\Manager;
 
 use App\Entity\Log;
-use App\Manager\CookieManager;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
+use App\Manager\CookieManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
-    Log helper provides log functions for save events to database table
+    Log manager provides log functions for save events to database table
 */
 
-class LogHelper
+class LogManager
 {
-    private $errorHelper;
+    private $errorManager;
     private $securityUtil;
     private $entityManager;
     private $cookieManager;
     private $visitorInfoUtil;
     
     public function __construct(
-        ErrorHelper $errorHelper,
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         CookieManager $cookieManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
-        $this->errorHelper = $errorHelper;
+        $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->cookieManager = $cookieManager;
         $this->entityManager = $entityManager;
@@ -77,7 +77,7 @@ class LogHelper
                     $this->entityManager->persist($LogEntity);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorHelper->handleError('log flush error: '.$e->getMessage(), 500);
+                    $this->errorManager->handleError('log flush error: '.$e->getMessage(), 500);
                 }
             }
         }

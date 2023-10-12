@@ -3,8 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\Project;
-use App\Helper\ErrorHelper;
-use App\Helper\LogHelper;
 use App\Util\JsonUtil;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,21 +14,21 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProjectsManager
 {
     private $jsonUtil;
-    private $logHelper;
-    private $errorHelper;
+    private $logManager;
+    private $errorManager;
     private $securityUtil;
     private $entityManager;
 
     public function __construct(
         JsonUtil $jsonUtil, 
-        LogHelper $logHelper, 
-        ErrorHelper $errorHelper,
+        LogManager $logManager, 
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->jsonUtil = $jsonUtil;
-        $this->logHelper = $logHelper;
-        $this->errorHelper = $errorHelper;
+        $this->logManager = $logManager;
+        $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
@@ -41,7 +39,7 @@ class ProjectsManager
         try {
             return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
         } catch (\Exception $e) {
-            $this->errorHelper->handleError('error to get projects list: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
             return [];
         }
     }
@@ -121,12 +119,12 @@ class ProjectsManager
                     $this->entityManager->persist($project);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorHelper->handleError('error to save project: '.$e->getMessage(), 500);
+                    $this->logManager->log("project-update", "error to update project list");
+                    $this->errorManager->handleError('error to save project: '.$e->getMessage(), 500);
                 }
             }
         }
 
-        // log update to database
-        $this->logHelper->log("project-update", "project list updated!");
+        $this->logManager->log("project-update", "project list updated!");
     }
 }

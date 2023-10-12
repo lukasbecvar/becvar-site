@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Helper\ErrorHelper;
-use App\Helper\LogHelper;
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Antilog controller provides function for set antilog cookie
@@ -15,18 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AntilogController extends AbstractController
 {
-    private $logHelper;
-    private $errorHeler;
+    private $logManager;
     private $authManager;
+    private $errorManager;
 
     public function __construct(
-        LogHelper $logHelper,
-        ErrorHelper $errorHeler, 
+        LogManager $logManager,
         AuthManager $authManager,
+        ErrorManager $errorManager, 
     ) {
-        $this->logHelper = $logHelper;
-        $this->errorHeler = $errorHeler;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
     }
 
     #[Route('/antilog/5369362536', name: 'antilog')]
@@ -38,14 +38,14 @@ class AntilogController extends AbstractController
             $username = $this->authManager->getUsername();
 
             if (isset($_COOKIE['anti-log-cookie'])) {
-                $this->logHelper->unsetAntiLogCookie();
-                $this->logHelper->log('anti-log', 'user: '.$username.' set antilog');
+                $this->logManager->unsetAntiLogCookie();
+                $this->logManager->log('anti-log', 'user: '.$username.' set antilog');
             } else {
-                $this->logHelper->setAntiLogCookie();
-                $this->logHelper->log('anti-log', 'user: '.$username.' unset antilog');
+                $this->logManager->setAntiLogCookie();
+                $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
             }
         } else {
-            $this->errorHeler->handleError('error to set anti-log-cookie for non authentificated users!', 401);
+            $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
         }
         return $this->redirectToRoute('admin_dashboard');
     }
