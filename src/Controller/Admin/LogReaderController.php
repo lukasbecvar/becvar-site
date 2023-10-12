@@ -65,4 +65,41 @@ class LogReaderController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
     }
+
+    #[Route('/admin/logs/delete/{page}', name: 'admin_log_delete')]
+    public function delete(int $page): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+            return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => false,
+    
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+    
+                // delete confirmation data
+                'page' => $page
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    } 
+
+    #[Route('/admin/logs/readed/all', name: 'admin_log_readed')]
+    public function setReaded(): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            $this->logManager->setReaded();
+
+            return $this->redirectToRoute('admin_dashboard');    
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    } 
 }

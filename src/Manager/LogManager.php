@@ -139,6 +139,14 @@ class LogManager
         return count($logs);
     }
 
+    public function setReaded(): void
+    {
+        $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
+
+        $query = $this->entityManager->createQuery($dql);
+        $query->execute();
+    }
+
     public function isLogsEnabled(): bool 
     {
         // check if logs enabled

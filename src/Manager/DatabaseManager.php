@@ -192,9 +192,6 @@ class DatabaseManager
 
     public function deleteRowFromTable(string $table_name, string $id): void
     {
-        // log to database
-        $this->logManager->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
-
         if ($id == 'all') {
             $sql = 'DELETE FROM '.$table_name.' WHERE id=id';
             $this->connection->executeStatement($sql);
@@ -206,5 +203,8 @@ class DatabaseManager
             $params = ['id' => $id];
             $this->connection->executeStatement($sql, $params);
         }
+    
+        // log to database
+        $this->logManager->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
     }
 }   

@@ -1,0 +1,15 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    confirmation
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel">
+    <div class="confirmation dark-table">
+        <p class="login-form-title">Are you sure you want to delete logs?</p>
+        <a class="confirmation-button" href="/admin/database/delete/{{page}}/log/all?referer=log_reader">Yes</a>
+        <a class="confirmation-button" href="/admin/logs/{{page}}">No</a>
+    </div>
+</div>
+{% endblock %}
