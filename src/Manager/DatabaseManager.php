@@ -159,11 +159,11 @@ class DatabaseManager
         // execute the prepared statement
         try {
             $this->connection->executeQuery($sql, $values); 
-            $this->logHelper->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
         } catch (\Exception $e) {
             $this->errorHelper->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
         }
-            
+
+        $this->logHelper->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
     }
 
     public function updateValue(string $table_name, string $row, string $value, int $id): void
@@ -176,10 +176,10 @@ class DatabaseManager
                 'value' => $value,
                 'id' => $id,
             ]);
-            $this->logHelper->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
         } catch (\Exception $e) {
             $this->errorHelper->handleError('error to update value: '.$value.' in: '.$table_name.' id: '.$id.', error: '.$e->getMessage(), 500);
         }
+        $this->logHelper->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
     }
 
     public function deleteRowFromTable(string $table_name, string $id): void

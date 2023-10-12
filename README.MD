@@ -1,8 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] database new row
-
 - [ ] port admin components
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}
 - [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST)
