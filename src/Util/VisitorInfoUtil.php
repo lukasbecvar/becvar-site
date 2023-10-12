@@ -54,14 +54,19 @@ class VisitorInfoUtil
         return $browser;
     }
 
-    public function getBrowserShortify(): ?string 
+    public function getBrowserShortify(string $user_agent): ?string 
     {
         $parser = Parser::create();
-        $result = $parser->parse($this->getBrowser());
+        $result = $parser->parse($user_agent);
     
         $name = $result->ua->family;
         $version = $result->ua->toVersion();   
-        return $name.' '.$version;
+        
+        if (empty($version)) {
+            return $name;
+        } else {
+            return $name.' '.$version;
+        }
     }
 
     public function getOS(): ?string 
