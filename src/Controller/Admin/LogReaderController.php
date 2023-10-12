@@ -57,7 +57,7 @@ class LogReaderController extends AbstractController
                 'reader_limit' => $_ENV['ITEMS_PER_PAGE'],
                 'logs_data' => $logs,
                 'logs_count' => count($logs),
-                'logs_all_count' => $this->databaseManager->countTableDataCount('log'),
+                'logs_all_count' => $this->databaseManager->countTableData('log'),
                 'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
                 'login_logs_count' => $this->logManager->getLoginLogsCount()
             ]);

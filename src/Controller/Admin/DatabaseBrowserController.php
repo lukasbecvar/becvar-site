@@ -86,8 +86,8 @@ class DatabaseBrowserController extends AbstractController
                 'table_name' => $table,
                 'table_exist' => $this->databaseManager->isTableExist($table),
                 'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
-                'table_data_count_all' => $this->databaseManager->countTableDataCount($table),
-                'table_data_count' => count($this->databaseManager->getTableDataByPage($table, $page)),
+                'table_data_count_all' => $this->databaseManager->countTableData($table),
+                'table_data_count' => $this->databaseManager->countTableDataByPage($table, $page),
                 'table_columns' => $this->databaseManager->getTableColumns($table),
                 'limit' => $_ENV['ITEMS_PER_PAGE'],
                 'page' => $page

@@ -74,7 +74,7 @@ class DatabaseManager
         return $columns;
     }
 
-    public function getTableData(string $table_name): array
+    public function getTableData(string $table_name, bool $log = true): array
     {
         $data = [];
 
@@ -89,12 +89,14 @@ class DatabaseManager
         }
         
         // log to database
-        $this->logManager->log('database-browser', $this->authManager->getUsername().' viewed database table: '.$table_name);
+        if ($log) {
+            $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+        }
 
         return $data;
     }
 
-    public function getTableDataByPage(string $table_name, int $page = 1): array
+    public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true): array
     {
         $data = [];
         $itemsPerPage = $_ENV['ITEMS_PER_PAGE'];
@@ -114,14 +116,22 @@ class DatabaseManager
         }
         
         // log to database
-        $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+        if ($log) {
+            $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+        }
     
         return $data;
     }
 
-    public function countTableDataCount(string $table_name): int 
+    public function countTableData(string $table_name): int 
     {
-        $table_data = $this->getTableData($table_name);
+        $table_data = $this->getTableData($table_name, false);
+        return count($table_data);
+    }
+
+    public function countTableDataByPage(string $table_name, int $page): int 
+    {
+        $table_data = $this->getTableDataByPage($table_name, $page, false);
         return count($table_data);
     }
 

@@ -108,7 +108,7 @@ class LogManager
     
         $this->log('database', 'user: ' . $username . ' viewed logs');
     
-        return $logs;
+        return array_reverse($logs);
     }
 
     public function getLogsCount(string $status): int
