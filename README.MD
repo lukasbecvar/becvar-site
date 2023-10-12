@@ -1,8 +1,11 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
+- [ ] log reader browser shortify
 - [ ] port admin components
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}
+
+- [ ] colored log reader rows
 - [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST)
 - [ ] final refactor
 - [ ] deep testing

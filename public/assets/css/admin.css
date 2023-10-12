@@ -744,6 +744,12 @@ textarea {
 	text-decoration: underline;
 }
 
+.log-reader-info-card {
+	margin: 0; 
+	border-top: 1px solid rgba(255, 255, 255, 0.24); 
+	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
 @media screen and (max-width: 800px) { 
 	body {
 		zoom: 100%;

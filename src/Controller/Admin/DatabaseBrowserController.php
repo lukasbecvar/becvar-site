@@ -6,6 +6,7 @@ use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -85,7 +86,7 @@ class DatabaseBrowserController extends AbstractController
                 'table_name' => $table,
                 'table_exist' => $this->databaseManager->isTableExist($table),
                 'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
-                'table_data_count_all' => $this->databaseManager->countTableData($table),
+                'table_data_count_all' => $this->databaseManager->countTableDataCount($table),
                 'table_data_count' => count($this->databaseManager->getTableDataByPage($table, $page)),
                 'table_columns' => $this->databaseManager->getTableColumns($table),
                 'limit' => $_ENV['ITEMS_PER_PAGE'],
@@ -242,7 +243,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]
-    public function delete(string $table, int $page, $id): Response
+    public function delete(string $table, int $page, $id, Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -252,6 +253,13 @@ class DatabaseBrowserController extends AbstractController
 
             // delete row
             $this->databaseManager->deleteRowFromTable($table, $id);
+            
+            // check if deleted by log-reader
+            if ($request->query->get('referer') == 'log_reader') {
+                return $this->redirectToRoute('admin_log_list', [
+                        'page' => $page
+                ]);              
+            }
 
             return $this->redirectToRoute('admin_database_browser', [
                 'table' => $table,

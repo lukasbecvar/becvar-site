@@ -83,6 +83,62 @@ class LogManager
         }
     }
 
+    public function getLogs(string $status, $username, int $page): array
+    {
+        $repo = $this->entityManager->getRepository(Log::class);
+    
+        $perPage = $_ENV['ITEMS_PER_PAGE'];
+        
+        // calculate offsetu
+        $offset = ($page - 1) * $perPage;
+    
+        // get logs from database
+        try {
+            $queryBuilder = $repo->createQueryBuilder('l')
+                ->where('l.status = :status')
+                ->setParameter('status', $status)
+                ->setFirstResult($offset)  
+                ->setMaxResults($perPage);
+    
+            $logs = $queryBuilder->getQuery()->getResult();
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $logs = [];
+        }
+    
+        $this->log('database', 'user: ' . $username . ' viewed logs');
+    
+        return $logs;
+    }
+
+    public function getLogsCount(string $status): int
+    {
+        $repo = $this->entityManager->getRepository(Log::class);
+
+        try {
+            $logs = $repo->findBy(['status' => $status]);   
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $logs = [];
+        } 
+
+        return count($logs);
+    }
+
+    public function getLoginLogsCount(): int
+    {
+        $repo = $this->entityManager->getRepository(Log::class);
+
+        try {
+            $logs = $repo->findBy(['name' => 'authenticator']);   
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $logs = [];
+        } 
+
+        return count($logs);
+    }
+
     public function isLogsEnabled(): bool 
     {
         // check if logs enabled

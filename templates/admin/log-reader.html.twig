@@ -1,0 +1,90 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    logs
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel">
+    {% if user_role != 'owner' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+
+        <ul class="breadcrumb"> 
+            <li>
+                <a class="selector-button btn-small" href="/admin/database/log/1"><strong>Unfiltered</strong></a>
+            </li>  
+            <li>
+                <a class="selector-button btn-small" href="#"><strong>Readed all</strong></a>
+            </li> 
+            <li>
+                <a class="selector-button btn-small" href="#"><strong>Delete all</strong></a>
+            </li>    
+            <li class="count-text-in-menuR">Logs reader</li>
+        </ul>
+
+        <div class="card text-white mb-0 log-reader-info-card">
+            <div class="card-header">Basic info</div>
+            <div class="card-body">
+            <p class="card-text"><strong>Logs count: <span class="text-primary">{{logs_all_count}}</span> / unreaded: <span class="text-primary">{{unreeaded_count}}</span></strong></p>
+                <p class="card-text"><strong>Login, Logout: <span class="text-primary">{{login_logs_count}}</span></strong></p>
+            </div>
+        </div>
+
+
+        {% if logs_count == 0 %}
+            <h2 class="page-title">No relative logs were found</h2>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead>
+                        <tr class="line-item">  
+                            <th scope='col'>id</th>
+                            <th scope='col'>name</th>
+                            <th scope='col'>value</th>
+                            <th scope='col'>date</th>
+                            <th scope='col'>ip</th>
+                            <th scope='col'>browser</th>
+                            <th scope='col'>visitor</th>
+                            <th cope='col'>BAN</th>
+                            <th cope='col'>X</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in logs_data %}
+                                <tr class="line-item">
+                                    <th scope='row'>{{row.id}}</th>
+                                    <th scope='row'>{{row.name}}</th>
+                                    <th scope='row'>{{row.value}}</th>
+                                    <th scope='row'>{{row.date}}</th>
+                                    <th scope='row'>{{row.ipAddress}}</th>
+                                    <th scope='row'>{{row.browser}}</th>
+                                    <td>
+                                        <a class="delete-link-todos text-warning" href="#/{{row.visitorId}}">VISIT</a>
+                                    </td>
+                                    <td>
+                                        <a class="delete-link-todos text-warning" href="#">BAN</a>
+                                    </td>
+                                    <td>
+                                        <a class="delete-link-todos" href="/admin/database/delete/{{reader_page}}/log/{{row.id}}?referer=log_reader">X</a>
+                                    </td>
+                                </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-button-box">
+                    {% if reader_page != 1 %}
+                        <a class="back-page-button" href="/admin/logs/{{reader_page - 1}}">Back</a>
+                    {% endif %}
+                    {% if reader_limit == logs_count %}
+                        <a class="back-page-button" href="/admin/logs/{{reader_page + 1}}">Next</a>
+                    {% endif %}
+                </div>
+            {% if reader_page != 1 or reader_limit == logs_count %}
+                <br>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

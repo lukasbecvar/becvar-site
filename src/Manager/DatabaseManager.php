@@ -119,7 +119,7 @@ class DatabaseManager
         return $data;
     }
 
-    public function countTableData(string $table_name): int 
+    public function countTableDataCount(string $table_name): int 
     {
         $table_data = $this->getTableData($table_name);
         return count($table_data);
