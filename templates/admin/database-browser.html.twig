@@ -20,21 +20,9 @@
         {% else %}
             {#=================================== ROW-EDITOR ===================================#}
             {% if editor_table != null %}
-            <ul class="breadcrumb">
-                <li>
-                    <a class="selector-button btn-small" href="/admin/database/{{editor_table}}/{{editor_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
-                </li>
-                <li class="count-text-in-menuR">Row editor</li>
-            </ul>
-            {% if editor_error_msg != null %}
-                <center>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Error</strong>: {{ editor_error_msg }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </center>
+            {% include "admin/elements/database-navigation.html.twig" %}
+            {% if error_msg != null %}
+                {% include "admin/elements/alerts/error-alert.html.twig" %}
             {% endif %}
             <center>
                 <form class="db-edit-form dark-table" action="/admin/database/edit/{{editor_page}}/{{editor_table}}/{{editor_id}}" method="post">
@@ -49,22 +37,11 @@
                 </form>
             </center>
             {% else %}
+                {#================================= NEW-ROW =================================#}
                 {% if new_row_table != null %}
-                    <ul class="breadcrumb">
-                        <li>
-                            <a class="selector-button btn-small" href="/admin/database/{{new_row_table}}/{{new_row_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
-                        </li>
-                        <li class="count-text-in-menuR">New row</li>
-                    </ul>
-                    {% if new_row_error != null %}
-                        <center>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error</strong>: {{ new_row_error }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </center>
+                    {% include "admin/elements/database-navigation.html.twig" %}
+                    {% if error_msg != null %}
+                        {% include "admin/elements/alerts/error-alert.html.twig" %}
                     {% endif %}
                     <center>
                         <form class="db-edit-form dark-table" action="/admin/database/add/{{new_row_page}}/{{new_row_table}}" method="post">
@@ -81,18 +58,7 @@
                 {% else %}
                     {#================================= TABLES-BROWSER =================================#}
                     {% if table_name != null %}
-                        <ul class="breadcrumb">
-                            <li>
-                                <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
-                            </li>
-                                <li> 
-                                    <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name}}</strong></a>
-                                </li>
-                            <li>    
-                            <a class="selector-button btn-small" href="/admin/database/add/{{page}}/{{table_name}}"><strong>NEW</strong></a>
-                        </li>
-                            <li class="count-text-in-menuR">{{table_name}} = {{table_data_count_all}} rows</li>
-                        </ul>
+                        {% include "admin/elements/database-navigation.html.twig" %}
                         {% if table_data_count == 0 %}
                             <h2 class="page-title">table: '{{table_name}}' is empty</h2>
                         {% else %}

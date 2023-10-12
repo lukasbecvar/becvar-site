@@ -1,0 +1,24 @@
+<ul class="breadcrumb">
+    {% if editor_table != null %}
+        <li>
+            <a class="selector-button btn-small" href="/admin/database/{{editor_table}}/{{editor_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+        </li>
+        <li class="count-text-in-menuR">Row editor</li>
+    {% elseif new_row_table != null %}
+        <li>
+            <a class="selector-button btn-small" href="/admin/database/{{new_row_table}}/{{new_row_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+        </li>
+        <li class="count-text-in-menuR">New row</li>
+    {% elseif table_name != null %}
+        <li>
+            <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+        </li>
+            <li> 
+                <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name}}</strong></a>
+            </li>
+        <li>    
+            <a class="selector-button btn-small" href="/admin/database/add/{{page}}/{{table_name}}"><strong>NEW</strong></a>
+        </li>
+        <li class="count-text-in-menuR">{{table_name}} = {{table_data_count_all}} rows</li>
+    {% endif %}
+</ul>

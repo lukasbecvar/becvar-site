@@ -161,7 +161,7 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => $columns,
                 'editor_values' => $this->databaseManager->selectRowData($table, $id),
                 'editor_page' => $page,
-                'editor_error_msg' => $error_msg
+                'error_msg' => $error_msg
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -233,7 +233,7 @@ class DatabaseBrowserController extends AbstractController
                 'new_row_table' => $table,
                 'new_row_page' => $page,
                 'new_row_columns' => $columns,
-                'new_row_error' => $error_msg
+                'error_msg' => $error_msg
             ]);
 
         } else {
