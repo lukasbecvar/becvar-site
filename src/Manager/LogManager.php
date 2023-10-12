@@ -42,6 +42,19 @@ class LogManager
             // check if antilog is disabled
             if (!$this->isEnabledAntiLog()) {
 
+                // get log level
+                $level = $this->getLogLevel();
+
+                // disable database log for level 1 & 2
+                if ($name == 'database' && $level < 3) {
+                    return;
+                }
+
+                // disable paste, image-uploader log for level 1
+                if (($name == 'paste' || 'image-uploader') && $level < 2) {
+                    return;
+                }
+
                 // get current date
                 $date = date('d.m.Y H:i:s');
 
@@ -173,6 +186,11 @@ class LogManager
     public function unsetAntiLogCookie(): void
     {
         $this->cookieManager->unset('anti-log-cookie');
+    }
+
+    public function getLogLevel(): int
+    {
+        return $_ENV['LOG_LEVEL'];
     }
 
     public function isEnabledAntiLog(): bool

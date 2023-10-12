@@ -45,7 +45,7 @@ class DatabaseManager
         }
 
         // log to database
-        $this->logManager->log('database-browser', $this->authManager->getUsername().' viewed database list');
+        $this->logManager->log('database', $this->authManager->getUsername().' viewed database list');
 
         return $tables_list;
     }
@@ -90,7 +90,7 @@ class DatabaseManager
         
         // log to database
         if ($log) {
-            $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
         }
 
         return $data;
@@ -117,7 +117,7 @@ class DatabaseManager
         
         // log to database
         if ($log) {
-            $this->logManager->log('database-browser', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
         }
     
         return $data;
@@ -205,6 +205,6 @@ class DatabaseManager
         }
     
         // log to database
-        $this->logManager->log('database-browser', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
+        $this->logManager->log('database', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
     }
 }   
