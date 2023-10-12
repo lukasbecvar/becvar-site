@@ -39,20 +39,72 @@
                     <tbody>
                         {% for row in visitors_data %}
                             <tr class="line-item" id="{{row.id}}">
+                                {############# ID #############}
                                 <th scope='row'>{{row.id}}</th>
+                                {########## VISITED ###########}
                                 <th scope='row'>{{row.visitedSites}}</th>
-                                <th scope='row'>{{row.firstVisit}}</th>
-                                <th scope='row'>{{row.lastVisit}}</th>
-                                {% if row.browser == 'Unknown' %}
-                                    <th scope='row'><span class='text-red'>{{row.browser}}</span></th>
+                                {########### DATES ############}
+                                {% if row.firstVisit == row.lastVisit %}
+                                    <th scope='row'>
+                                        <span class='text-red'>
+                                            {{row.firstVisit}}
+                                        </span>
+                                    </th>
+                                    <th scope='row'>
+                                        <span class='text-red'>
+                                            {{row.lastVisit}}
+                                        </span>
+                                    </th>
                                 {% else %}
-                                    <th scope='row'>{{row.browser}}</th>
+                                    <th scope='row'>{{row.firstVisit}}</th>
+                                    <th scope='row'>{{row.lastVisit}}</th>
                                 {% endif %}
-                                
-                                <th scope='row'>{{row.os}}</th>
-                                <th scope='row'>{{row.location}}</th>
-                                <th scope='row'>{{row.ipAddress}}</th>
-                                <th scope='row'>{{row.bannedStatus}}</th>
+                                {########### BROWSER ############}
+                                {% if row.browser == 'Unknown' %}
+                                    <th scope='row'>
+                                        <span class='text-red'>{{row.browser}}</span>
+                                    </th>
+                                    {% else %}
+                                        <th scope='row'>{{row.browser}}</th>
+                                    {% endif %}
+                                {########### OS ############}  
+                                {% if row.os == 'Unknown OS' %}
+                                    <th scope='row'>
+                                        <span class='text-red'>{{row.os}}</span>
+                                    </th>
+                                {% else %}
+                                    <th scope='row'>{{row.os}}</th>
+                                {% endif %}
+                                {########### LOCATION ############}
+                                {% if row.location|slice(0, 2)|lower == 'cz' %}
+                                    <th scope='row'>
+                                        <span class='text-warning'>{{row.location}}</span>
+                                    </th>
+                                {% else %}
+                                    {% if row.location == 'Unknown' %}
+                                    <th scope='row'>
+                                        <span class='text-red'>{{row.location}}</span>
+                                    </th>
+                                    {% else %}
+                                        <th scope='row'>{{row.location}}</th>
+                                    {% endif %}
+                                {% endif %}
+                                {########### IP-ADDRESS ############}
+                                {% if row.ipAddress == current_ip %}
+                                    <th scope='row'>
+                                        <span class='text-warning'>{{row.ipAddress}}</span> [<span class='text-success'>You</span>]
+                                    </th>
+                                {% else %}
+                                    <th scope='row'>{{row.ipAddress}}</th>
+                                {% endif %}
+                                {########### BANNED-STATUS ############}
+                                {% if row.bannedStatus == 'yes' %}
+                                    <th scope='row'>
+                                        <span class='text-red'>{{row.bannedStatus}}</span></th>
+                                {% else %}
+                                    <th scope='row'><span class='text-success'>{{row.bannedStatus}}</span></th>
+                                {% endif %}
+                                {########### BUTTONS ############}
                                 <td>
                                     {% if row.bannedStatus == 'yes' %}
                                         <a class="delete-link-todos text-warning" href="/admin/visitors/unban/{{row.id}}/{{page}}">UNBAN</a>
