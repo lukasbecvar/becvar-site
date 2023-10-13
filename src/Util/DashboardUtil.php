@@ -149,6 +149,15 @@ class DashboardUtil
         }
    }
 
+    public function isSystemLinux(): bool 
+    {
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'lin') {
+            return true;
+        } else {
+            return false;
+        }       
+    }
+
    public function isBrowserListFound(): bool 
    {
        // check if list is null
