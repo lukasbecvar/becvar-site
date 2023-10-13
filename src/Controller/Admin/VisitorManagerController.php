@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Visitor;
+use App\Form\BanFormType;
 use App\Manager\AuthManager;
 use App\Manager\BanManager;
 use App\Util\SecurityUtil;
@@ -92,10 +94,24 @@ class VisitorManagerController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
-            // check if ban submited
-            if (isset($_POST['submitBan'])) {
-                if (!empty($_POST['banReason'])) {
-                    $reason = $this->securityUtil->escapeString($_POST['banReason']);
+            // create user entity
+            $visitor = new Visitor();
+
+            // create register form
+            $form = $this->createForm(BanFormType::class, $visitor);
+
+            // processing an HTTP request
+            $form->handleRequest($request);
+
+            // check form if submited
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                // get reason
+                $ban_reason = $form->get('ban_reason')->getData();
+
+                // check if reason set
+                if (!empty($ban_reason)) {
+                    $reason = $this->securityUtil->escapeString($ban_reason);
                 } else {
                     $reason = 'no-reason';
                 }
@@ -106,6 +122,7 @@ class VisitorManagerController extends AbstractController
                 // ban visitor
                 $this->banManager->banVisitor($ip_address, $reason);
 
+                // redirect back to visitor page
                 return $this->redirectToRoute('admin_visitor_manager', [
                     'page' => $page
                 ]);
@@ -123,6 +140,7 @@ class VisitorManagerController extends AbstractController
     
                 // ban form data
                 'ban_id' => $id,
+                'ban_form' => $form,
                 'return_page' => $page
             ]);
         } else {

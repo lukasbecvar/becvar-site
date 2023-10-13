@@ -451,7 +451,8 @@ textarea {
 	padding: 4px;
 	padding-left: 10px;
 	height: 98%;
-	margin-top: 1px;
+	margin-top: -3.5px;
+	margin-left: -3.5px;
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 }
@@ -470,11 +471,11 @@ textarea {
 
 .todo-button {
 	position: absolute;
-	right: 3px;
+	right: 1px;
 	margin: 2px;
-	top: 4px;
-	height: 81%;
-	width: 6%;
+	top: -1px;
+	height: 95%;
+	width: 6.6%;
 }
 
 .settings-value-box {
@@ -873,7 +874,9 @@ textarea {
 		width: calc(100% - 3%);	
 	}
 	.todo-area {
-		width: calc(100% - 20%);
+		width: calc(100% - 18%);
+		margin-top: -4px;
+		height: 56px;
 	}
 	.log-reader-info {
 		font-size: 16px;
@@ -899,6 +902,9 @@ textarea {
 	}
 	.wrapper .section .top-navbar {
 		width: calc(100% - 10px) !important;
+	}
+	.new-todo-form {
+		height: 62px;
 	}
 }
 
