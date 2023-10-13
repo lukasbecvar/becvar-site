@@ -48,12 +48,35 @@
                         <tbody>
                             {% for row in logs_data %}
                                 <tr class="line-item">
-                                    <th scope='row'>{{row.id}}</th>
-                                    <th scope='row'>{{row.name}}</th>
-                                    <th scope='row'>{{row.value}}</th>
-                                    <th scope='row'>{{row.time}}</th>
-                                    <th scope='row'>{{row.ipAddress}}</th>
-                                    <th scope='row'>{{row.browser}}</th>
+                                    {% if row.name == 'action-runner' or row.name == 'ban-system' or row.name == 'authenticator' or row.name == 'geolocate-error' %}
+                                        <th scope='row' class='text-red'>{{row.id}}</th>
+                                        <th scope='row' class='text-red'>{{row.name}}</th>
+                                        <th scope='row' class='text-red'>{{row.value}}</th>
+                                        <th scope='row' class='text-red'>{{row.time}}</th>
+                                        <th scope='row' class='text-red'>{{row.ipAddress}}</th>
+                                        <th scope='row' class='text-red'>{{row.browser}}</th>
+                                    {% elseif row.name == 'database' %}
+                                        <th scope='row' class='text-primary'>{{row.id}}</th>
+                                        <th scope='row' class='text-primary'>{{row.name}}</th>
+                                        <th scope='row' class='text-primary'>{{row.value}}</th>
+                                        <th scope='row' class='text-primary'>{{row.time}}</th>
+                                        <th scope='row' class='text-primary'>{{row.ipAddress}}</th>
+                                        <th scope='row' class='text-primary'>{{row.browser}}</th>
+                                    {% elseif row.name == 'code-paste' or row.name == 'image-uploader' or row.name == 'message-sender' %}
+                                        <th scope='row' class='text-warning'>{{row.id}}</th>
+                                        <th scope='row' class='text-warning'>{{row.name}}</th>
+                                        <th scope='row' class='text-warning'>{{row.value}}</th>
+                                        <th scope='row' class='text-warning'>{{row.time}}</th>
+                                        <th scope='row' class='text-warning'>{{row.ipAddress}}</th>
+                                        <th scope='row' class='text-warning'>{{row.browser}}</th>
+                                    {% else %}
+                                        <th scope='row'>{{row.id}}</th>
+                                        <th scope='row'>{{row.name}}</th>
+                                        <th scope='row'>{{row.value}}</th>
+                                        <th scope='row'>{{row.time}}</th>
+                                        <th scope='row'>{{row.ipAddress}}</th>
+                                        <th scope='row'>{{row.browser}}</th>
+                                    {% endif %}
                                     <td>
                                         {% set result = row.visitorId / limit_value %}
                                         {% set visitor_page = result | round(0, 'ceil') %}
