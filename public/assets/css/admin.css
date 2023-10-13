@@ -23,6 +23,10 @@ a:hover {
 	z-index: 9999; 
 }
 
+#wrarning-box {
+    display: none;
+}
+
 .highlight {
     background-color: #a72e2e;	
 }

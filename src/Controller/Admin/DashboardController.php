@@ -68,7 +68,6 @@ class DashboardController extends AbstractController
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
                 // warning system
-                'is_warnings_empty' => $this->dashboardUtil->isWarninBoxEmpty(),
                 'service_dir_exist' => file_exists($_ENV['SERVICES_DIR']),
                 'service_dir' => $_ENV['SERVICES_DIR'],
                 'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
