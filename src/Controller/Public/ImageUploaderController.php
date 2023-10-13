@@ -110,7 +110,7 @@ class ImageUploaderController extends AbstractController
                 // set image data
                 $image->setToken($token);
                 $image->setImage($image_file);
-                $image->setDate($date);
+                $image->setTime($date);
 
                 // try to upload image
                 try {

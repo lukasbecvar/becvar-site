@@ -21,7 +21,7 @@ class Image
     private ?string $image = null;
 
     #[ORM\Column(length: 2555)]
-    private ?string $date = null;
+    private ?string $time = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Image
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getTime(): ?string
     {
-        return $this->date;
+        return $this->time;
     }
 
-    public function setDate(string $date): static
+    public function setTime(string $time): static
     {
-        $this->date = $date;
+        $this->time = $time;
 
         return $this;
     }

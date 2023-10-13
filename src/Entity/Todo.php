@@ -17,10 +17,10 @@ class Todo
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $added_date = null;
+    private ?string $added_time = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $completed_date = null;
+    private ?string $completed_time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -42,26 +42,26 @@ class Todo
         return $this;
     }
 
-    public function getAddedDate(): ?string
+    public function getAddedTime(): ?string
     {
-        return $this->added_date;
+        return $this->added_time;
     }
 
-    public function setAddedDate(string $added_date): static
+    public function setAddedTime(string $added_time): static
     {
-        $this->added_date = $added_date;
+        $this->added_time = $added_time;
 
         return $this;
     }
 
-    public function getCompletedDate(): ?string
+    public function getCompletedTime(): ?string
     {
-        return $this->completed_date;
+        return $this->completed_time;
     }
 
-    public function setCompletedDate(string $completed_date): static
+    public function setCompletedTime(string $completed_time): static
     {
-        $this->completed_date = $completed_date;
+        $this->completed_time = $completed_time;
 
         return $this;
     }

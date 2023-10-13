@@ -79,7 +79,7 @@ class LogManager
                 // set log entity values
                 $LogEntity->setName($name); 
                 $LogEntity->setValue($value); 
-                $LogEntity->setDate($date); 
+                $LogEntity->setTime($date); 
                 $LogEntity->setIpAddress($ip_address); 
                 $LogEntity->setBrowser($browser); 
                 $LogEntity->setStatus('unreaded'); 

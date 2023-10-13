@@ -20,7 +20,7 @@ class Log
     private ?string $value = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $date = null;
+    private ?string $time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
@@ -63,14 +63,14 @@ class Log
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getTime(): ?string
     {
-        return $this->date;
+        return $this->time;
     }
 
-    public function setDate(string $date): static
+    public function setTime(string $time): static
     {
-        $this->date = $date;
+        $this->time = $time;
 
         return $this;
     }

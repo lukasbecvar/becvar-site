@@ -64,7 +64,7 @@ class PasteController extends AbstractController
                     // set paste data
                     $paste->setName($name);
                     $paste->setContent($content);
-                    $paste->setDate($date);
+                    $paste->setTime($date);
 
                     // insert new paste
                     try {
