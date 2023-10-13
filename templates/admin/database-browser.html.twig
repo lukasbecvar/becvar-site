@@ -67,8 +67,15 @@
                                     <thead>
                                         <tr class="line-item">  
                                             {% for column in table_columns %}
-                                                <th scope='col'>{{column}}</th>
+                                                {% if column == 'id' %}
+                                                    <th scope='col'>#</th>
+                                                {% else %}                                                 
+                                                    <th scope='col'>{{column}}</th>
+                                                {% endif %}
                                             {% endfor %}
+                                            {% if table_name == 'paste' %}
+                                                <th cope='col'>Link</th>
+                                            {% endif %}
                                             <th cope='col'>Edit</th>
                                             <th cope='col'>X</th>
                                         </tr>
@@ -82,6 +89,9 @@
                                                         {{ content ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
+                                                {% if table_name == 'paste' %}
+                                                    <th cope='col'><a href="/paste/view/{{row.name}}" target="_blank">{{row.name}}</a></th>
+                                                {% endif %}
                                                 <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{page}}/{{table_name}}/{{row.id}}">Edit</a></td>
                                                 <td><a class="delete-link-todos" href="/admin/database/delete/{{page}}/{{table_name}}/{{row.id}}">X</a></td>
                                             </tr>
