@@ -1,11 +1,9 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
+- [ ] port account settings
 - [ ] encrypted image uploader, paste todos
-- [ ] port admin components
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}
-
-- [ ] colored log reader rows
 - [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST, config doc)
 - [ ] final refactor
 - [ ] deep testing
