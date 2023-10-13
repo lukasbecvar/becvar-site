@@ -71,6 +71,7 @@ class DashboardController extends AbstractController
                 'service_dir_exist' => file_exists($_ENV['SERVICES_DIR']),
                 'service_dir' => $_ENV['SERVICES_DIR'],
                 'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
+                'web_service_username' => $this->dashboardUtil->getWebUsername(),
                 'is_ssl' => $this->siteUtil->isSsl(),
                 'is_maintenance' => $this->siteUtil->isMaintenance(),   
                 'is_dev_mode' => $this->siteUtil->isDevMode(),

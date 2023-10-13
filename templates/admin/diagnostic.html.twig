@@ -108,6 +108,27 @@
                     </span>
                 </p>
             {% endif %}
+
+            {% if is_web_user_sudo %}
+                <p class="card-text">
+                    <span class="text-warning">
+                        <span class="text-light-green">
+                            <i class="fa fa-check"></i> 
+                        </span>
+                        site permissions is root
+                    </span>
+                </p>
+            {% else %}
+                <p class="card-text">
+                    <span class="text-warning">
+                        <span class="text-red">
+                            <i class="fa fa-exclamation-triangle"></i> 
+                        </span>
+                        Permissions error: please add "{{web_service_username}} ALL=NOPASSWD: ALL" to /etc/sudoers
+                    </span>
+                </p>                
+            {% endif %}
+            
         </div>
     </div>
 
