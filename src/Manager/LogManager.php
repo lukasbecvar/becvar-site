@@ -51,7 +51,7 @@ class LogManager
                 }
 
                 // disable paste, image-uploader log for level 1
-                if (($name == 'paste' || $name == 'image-uploader' || $name == 'message-sender') && $level < 2) {
+                if (($name == 'code-paste' || $name == 'image-uploader' || $name == 'message-sender') && $level < 2) {
                     return;
                 }
 

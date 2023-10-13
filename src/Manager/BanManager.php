@@ -112,6 +112,10 @@ class BanManager
             } catch (\Exception $e) {
                 $this->errorManager->handleError('error to update ban status of visitor-ip: '.$ip_address.', message: '.$e->getMessage(), 500);
             }
+
+            // close banned visitor messages
+            $this->closeAllVisitorMessages($ip_address);
+
         } else {
             $this->errorManager->handleError('error to ban visitor with ip: '.$ip_address.', visitor not found in table', 400);
         }
@@ -140,5 +144,29 @@ class BanManager
         } else {
             $this->errorManager->handleError('error to update ban status of visitor with ip: '.$ip_address.', visitor not found in table', 400);
         }
+    }
+
+    public function closeAllVisitorMessages(string $ip_address)
+    {
+        // sql query builder
+        $query = $this->entityManager->createQuery(
+            'UPDATE App\Entity\Message m
+             SET m.status = :status
+             WHERE m.ip_address = :ip_address'
+        );
+    
+        // set closed message
+        $query->setParameter('status', 'closed');
+        $query->setParameter('ip_address', $ip_address);
+    
+        // execute query
+        try {
+            $query->execute();
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to close all visitor messages: '.$e->getMessage(), 500);
+        }
+    
+        // update messages
+        $this->entityManager->flush();
     }
 }

@@ -7,6 +7,7 @@ use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
+use App\Manager\DatabaseManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,16 +24,19 @@ class ContactController extends AbstractController
     private $securityUtil;
     private $entityManager;
     private $visitorInfoUtil;
+    private $databaseManager;
 
     public function __construct(
         LogManager $logManager, 
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
+        DatabaseManager $databaseManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
+        $this->databaseManager = $databaseManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
@@ -106,28 +110,37 @@ class ContactController extends AbstractController
                     // get others data
                     $date = date('d.m.Y H:i:s');
                     $ip_address = $this->visitorInfoUtil->getIP();
+                    $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
-                    // update visitor email
-                    $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
+                    // check if user have unclosed messages
+                    if ($this->databaseManager->getMessageCountByIpAddress($ip_address) >= 5) {
+                        $error_msg = 'error you have 5 unreaded messages, please wait for the response to the first messags';
+                        $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
+                    } else {
 
-                    // set message entity values
-                    $message->setName($name);
-                    $message->setEmail($email);
-                    $message->setMessage($message_input);
-                    $message->setTime($date);
-                    $message->setIpAddress($ip_address);
-                    $message->setStatus('open');
+                        // update visitor email
+                        $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
 
-                    // insert new message
-                    try {
-                        $this->entityManager->persist($message);
-                        $this->entityManager->flush();
-                        
-                        // redirect back to from & handle success status
-                        return $this->redirectToRoute('public_contact', ['status' => 'ok', 'final' => 'yes']);
-                    } catch (\Exception) {
-                        // redirect back to from & handle error status
-                        return $this->redirectToRoute('public_contact', ['status' => 'ko', 'final' => 'yes']);
+                        // set message entity values
+                        $message->setName($name);
+                        $message->setEmail($email);
+                        $message->setMessage($message_input);
+                        $message->setTime($date);
+                        $message->setIpAddress($ip_address);
+                        $message->setStatus('open');
+                        $message->setVisitorID($visitor_id);
+
+                        // insert new message
+                        try {
+                            $this->entityManager->persist($message);
+                            $this->entityManager->flush();
+                            
+                            // redirect back to from & handle success status
+                            return $this->redirectToRoute('public_contact', ['status' => 'ok', 'final' => 'yes']);
+                        } catch (\Exception) {
+                            // redirect back to from & handle error status
+                            return $this->redirectToRoute('public_contact', ['status' => 'ko', 'final' => 'yes']);
+                        }
                     }
                 }
             }

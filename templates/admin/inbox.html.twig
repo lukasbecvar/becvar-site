@@ -1,0 +1,44 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    inbox
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel">
+    {% if user_role != 'owner' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+        {% if inbox_data != null %}
+            <center>
+                {% for message in inbox_data %}
+                    <div class='card text-white mb-3 msg-box'>
+                        <div class="card-body">
+                            <h5 class="left-center" class="card-title">{{message.name}} ({{message.email}}) 
+                                <span class='text-success phone-none'>[{{message.time}}]</span>, 
+                                <span class='text-warning phone-none'>[{{message.ipAddress}}]</span>
+                                <a class='delete-link' href='/admin/inbox/close/{{message.id}}/{{page}}'>X</a>
+                                <a class='delete-link text-warning' href="/admin/visitors/ban/{{message.visitorId}}/{{page}}?referer=inbox">
+                                    BAN
+                                </a>
+                            </h5>
+                            <p class="left-center card-text">{{message.message}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </center>
+            <div class="page-button-box">
+                {% if page != 1 %}
+                    <a class="back-page-button" href="/admin/inbox/{{page - 1}}">Back</a>
+                {% endif %}
+                {% if message_limit == message_count %}
+                    <a class="back-page-button" href="/admin/inbox/{{page + 1}}">Next</a>
+                {% endif %}
+            </div>
+            <br>
+        {% else %}
+            <h2 class="page-title">no messages found</h2>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

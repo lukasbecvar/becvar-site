@@ -31,6 +31,9 @@ class Message
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $visitor_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Message
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getVisitorID(): ?string
+    {
+        return $this->visitor_id;
+    }
+
+    public function setVisitorID(string $visitor_id): static
+    {
+        $this->visitor_id = $visitor_id;
 
         return $this;
     }
