@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Message;
+use App\Entity\Todo;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -227,6 +228,27 @@ class DatabaseManager
         }
     }
 
+    public function closeTodo(int $id): void
+    {
+        // get current date
+        $date = date('d.m.Y H:i:s');
+
+        // get todo repository
+        $todo = $this->entityManager->getRepository(Todo::class)->find($id);
+
+        // check if todo found
+        if ($todo !== null) {
+            // close todo
+            $todo->setStatus('completed');
+
+            // update closed time
+            $todo->setCompletedTime($date);
+
+            // update todo
+            $this->entityManager->flush();
+        }  
+    }
+
     public function getMessageCountByIpAddress(string $ip_address): int
     {
         // build query
@@ -244,6 +266,23 @@ class DatabaseManager
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get messages count: '.$e->getMessage(), 500);
             return 0;
+        }
+    }
+
+    public function getTodos(string $status): ?array
+    {
+        $repository = $this->entityManager->getRepository(Todo::class);
+
+        // check if repository found
+        if ($repository !== null) {
+            try {
+                $todos = $repository->findBy(['status' => $status]);
+                return array_reverse($todos);
+            } catch (\Exception $e) {
+                $this->errorManager->handleError('error to get todos: '.$e->getMessage(), 500);
+            }
+        } else {
+            return [];
         }
     }
 

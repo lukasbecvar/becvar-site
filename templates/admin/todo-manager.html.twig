@@ -1,0 +1,46 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    todos
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel">
+    <div class="new-todo-form">
+        {{ form_start(new_todo_form) }}
+            {{ form_widget(new_todo_form) }}
+                <button type="submit" class="input-button todo-button">Add</button>
+        {{ form_end(new_todo_form) }}
+    </div>
+    {% if todos_data != null %}
+        <div class="table-responsive">
+            <table class="todo-table table table-dark">
+                <thead>
+                    <tr class="line-item">
+                        <th scope="col">#</th>
+                        <th scope="col">Todo</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">X</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in todos_data %}
+                        <tr class="line-item">
+                            <th scope='row'>{{todo.id}}</th>
+                            <th scope='row'>{{todo.text}}</th>
+                            <th scope='row'>
+                                <a class='text-warning delete-link-todos' href='#'>Edit</a>
+                            </th>
+                            <th scope='row'>
+                                <a class='delete-link-todos' href='/admin/todos/close/{{todo.id}}'>X</a>
+                            </th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <h2 class="page-title">todo list is empty</h2>
+    {% endif %}
+</div>
+{% endblock %}
