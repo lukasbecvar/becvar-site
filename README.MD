@@ -1,6 +1,7 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
+- [ ] encrypted image uploader, paste todos
 - [ ] port admin components
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}
 
