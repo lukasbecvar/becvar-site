@@ -268,6 +268,13 @@ class DatabaseBrowserController extends AbstractController
                 ]);              
             }
 
+            // check if deleted by media-browser
+            if ($request->query->get('referer') == 'media_browser') {
+                return $this->redirectToRoute('admin_media_browser', [
+                    'page' => $page
+                ]);              
+            }
+
             return $this->redirectToRoute('admin_database_browser', [
                 'table' => $table,
                 'page' => $page

@@ -12,7 +12,23 @@
         <center>
             <div id="lightgallery">
                 {% for image in media_data %}                    
-                    <span data-src="data:image/jpg;base64,{{image.image}}">
+                    <span 
+                        data-src="data:image/jpg;base64,{{image.image}}" 
+                        data-sub-html="
+                            Image 
+                            <a class='img-edit-button' 
+                                href='/image/view/{{image.token}}' 
+                                target=_blank
+                                >
+                                {{image.token}}
+                            </a> 
+                            | 
+                            <a class='img-edit-button' 
+                                href='/admin/database/delete/{{page}}/image/{{image.id}}?referer=media_browser'
+                                >
+                                Delete
+                            </a>"
+                        >
                         <img class="gallery-images" src="data:image/jpg;base64,{{image.image}}">
                     </span>
                 {% endfor %}
