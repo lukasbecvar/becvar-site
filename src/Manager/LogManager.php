@@ -96,6 +96,41 @@ class LogManager
         }
     }
 
+    public function getLogsWhereIP(string $ip_address, $username, int $page): ?array
+    {
+        $repo = $this->entityManager->getRepository(Log::class);
+        $per_page = $_ENV['ITEMS_PER_PAGE'];
+        
+        // calculate offset
+        $offset = ($page - 1) * $per_page;
+    
+        // get logs from database
+        try {
+            $queryBuilder = $repo->createQueryBuilder('l')
+                ->where('l.ip_address = :ip_address')
+                ->orderBy('l.id', 'DESC')
+                ->setParameter('ip_address', $ip_address)
+                ->setFirstResult($offset)  
+                ->setMaxResults($per_page);
+    
+            $logs = $queryBuilder->getQuery()->getResult();
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $logs = [];
+        }
+    
+        $this->log('database', 'user: ' . $username . ' viewed logs');
+
+        // replace browser with formated value for log reader
+        foreach ($logs as $log) {
+            $user_agent = $log->getBrowser();
+            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
+            $log->setBrowser($formated_browser);
+        }
+
+        return $logs;
+    }
+
     public function getLogs(string $status, $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);

@@ -69,10 +69,18 @@
                 </div>
                 <div class="page-button-box">
                     {% if reader_page != 1 %}
-                        <a class="back-page-button" href="/admin/logs/{{reader_page - 1}}">Back</a>
+                        {% if where_ip != null %}
+                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip}}/{{reader_page - 1}}">Back</a>
+                        {% else %}
+                            <a class="back-page-button" href="/admin/logs/{{reader_page - 1}}">Back</a>
+                        {% endif %}
                     {% endif %}
                     {% if reader_limit == logs_count %}
-                        <a class="back-page-button" href="/admin/logs/{{reader_page + 1}}">Next</a>
+                        {% if where_ip != null %}
+                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip}}/{{reader_page + 1}}">Next</a>
+                        {% else %}
+                            <a class="back-page-button" href="/admin/logs/{{reader_page + 1}}">Next</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% if reader_page != 1 or reader_limit == logs_count %}

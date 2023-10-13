@@ -7,6 +7,7 @@ use App\Manager\AuthManager;
 use App\Manager\BanManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
+use App\Util\SecurityUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,17 +20,20 @@ class LogReaderController extends AbstractController
 {
     private $logManager;
     private $authManager;
+    private $securityUtil;
     private $visitorInfoUtil;
     private $databaseManager;
 
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager,
+        SecurityUtil $securityUtil,
         VisitorInfoUtil $visitorInfoUtil,
         DatabaseManager $databaseManager
     ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
+        $this->securityUtil = $securityUtil;
         $this->visitorInfoUtil = $visitorInfoUtil;
         $this->databaseManager = $databaseManager;
     }
@@ -62,7 +66,47 @@ class LogReaderController extends AbstractController
                 'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
                 'login_logs_count' => $this->logManager->getLoginLogsCount(),
                 'visitor_data' => $this->databaseManager->getTableData('visitor', false),
-                'limit_value' => $_ENV['ITEMS_PER_PAGE']
+                'limit_value' => $_ENV['ITEMS_PER_PAGE'],
+                'where_ip' => null
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    }
+
+    #[Route('/admin/logs/whereip/{ip_address}/{page}', name: 'admin_log_list_where_ip')]
+    public function whereip(string $ip_address, int $page): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            // get & escape ip
+            $ip_address = $this->securityUtil->escapeString($ip_address);
+
+            // get logs
+            $logs = $this->logManager->getLogsWhereIP($ip_address, $this->authManager->getUsername(), $page);
+
+            return $this->render('admin/log-reader.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => false,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                // log reader data
+                'reader_page' => $page,
+                'reader_limit' => $_ENV['ITEMS_PER_PAGE'],
+                'logs_data' => $logs,
+                'logs_count' => count($logs),
+                'logs_all_count' => $this->databaseManager->countTableData('log'),
+                'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
+                'login_logs_count' => $this->logManager->getLoginLogsCount(),
+                'visitor_data' => $this->databaseManager->getTableData('visitor', false),
+                'limit_value' => $_ENV['ITEMS_PER_PAGE'],
+                'where_ip' => $ip_address
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
