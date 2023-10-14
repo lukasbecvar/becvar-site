@@ -21,15 +21,15 @@ My personal website app build with symfony framework
  - Included adminer in admin page
 
 ## Installation (with apache)
- - Set apache root dir to public/
- - Install dependencies (scripts/install.sh)
- - Migrate database structure (scripts/migrate.sh)
- - Set service path in scripts (if not same /services/)
- - Set custom error pages (ErrorDocument 400 /error/400, etc)
- - Configure all values (mysql app secret etc)
- - For production use only APP_ENV=prod! (in .env)
- - Configure app enviroment in .env.prod
- - Disable apache autoindex module
+ - install apache2, mysql8, composer, php, php-pdo, php-mysqli, php-xml, php-dom
+ - clone repository to your /www dir
+ - disable apache autoindex module
+ - configure apache config like [apache-site.conf](./apache-site.conf)
+ - for production use only APP_ENV=prod! (in .env)
+ - configure app enviroment in .env.prod
+ - configure all values (mysql app secret etc)
+ - install dependencies (scripts/install.sh)
+ - migrate database structure (scripts/migrate.sh)
 
 ## Required
  - php-8.1 or <
