@@ -19,3 +19,7 @@ composer.lock
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> config-files ###
+.env.prod
+###< config-files ###
