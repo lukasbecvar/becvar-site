@@ -1,9 +1,41 @@
-# BECVAR-SITE REWORK
+## About becvar-site
+My personal website app build with symfony framework
 
-## TODOS
-- [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST, config doc)
-- [ ] final refactor
-- [ ] deep testing
+## Public site
+ - Main components: about, projects list, contact, etc...
+ - Projects component gets repos from github (closed, open / Archived, Unarchived)
+ - Image uploader / view
+ - Code paste site
+
+## Admin site
+ - Account system with permissions
+ - Warning system
+ - Server dashboard
+ - Services manager
+ - Custom database viewer
+ - Private todo manager
+ - Media browser (Image uploader)
+ - Inbox for contact form
+ - Advanced log system
+ - Server Emergency shutdown
+ - Included adminer in admin page
+
+## Installation (with apache)
+ - Set apache root dir to public/
+ - Install dependencies (scripts/install.sh)
+ - Migrate database structure (scripts/migrate.sh)
+ - Set service path in scripts (if not same /services/)
+ - Set custom error pages (ErrorDocument 400 /error/400, etc)
+ - Configure all values (mysql app secret etc)
+ - For production use only APP_ENV=prod! (in .env)
+ - Configure app enviroment in .env.prod
+ - Disable apache autoindex module
+
+## Required
+ - php-8.1 or <
+ - mysql8 or <
+ - php-curl
+ - php-pdo
 
 ## Dependencies
 * Symfony
