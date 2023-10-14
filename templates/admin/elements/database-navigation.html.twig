@@ -19,6 +19,11 @@
         <li>    
             <a class="selector-button btn-small" href="/admin/database/add/{{page|e}}/{{table_name|e}}"><strong>NEW</strong></a>
         </li>
+        {% if table_name == 'projects' %}
+            <li>
+                <a class="selector-button btn-small" href="/projects/update"><i class="project-update fas fa-sync"></i></a>
+            </li>        
+        {% endif %}
         <li class="count-text-in-menuR">{{table_name|e}} = {{table_data_count_all|e}} rows</li>
     {% endif %}
 </ul>

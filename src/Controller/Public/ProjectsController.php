@@ -2,6 +2,8 @@
 
 namespace App\Controller\Public;
 
+use App\Manager\AuthManager;
+use App\Manager\ErrorManager;
 use App\Manager\ProjectsManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectsController extends AbstractController
 {
+    private $authManager;
+    private $errorManager;
     private $projectsManager;
 
-    public function __construct(ProjectsManager $projectsManager)
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager, ProjectsManager $projectsManager)
     {
+        $this->authManager = $authManager;    
+        $this->errorManager = $errorManager;    
         $this->projectsManager = $projectsManager;    
     }
 
@@ -34,5 +40,20 @@ class ProjectsController extends AbstractController
             'open_projects' => $this->projectsManager->getProjectsList('open'),
             'closed_projects' => $this->projectsManager->getProjectsList('closed'),
         ]);
+    }
+
+    #[Route('/projects/update', name: 'public_projects_update')]
+    public function update(): Response
+    {
+        // check if user logged
+        if ($this->authManager->isUserLogedin()) {
+            $this->projectsManager->updateProjectList();
+            return $this->redirectToRoute('admin_database_browser', [
+                'table' => 'projects',
+                'page' => 1
+            ]);
+        } else {
+            $this->errorManager->handleError('error to update project list: please login first', 401);
+        }
     }
 }

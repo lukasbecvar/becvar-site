@@ -772,6 +772,10 @@ textarea {
 	max-width: 40px;
 }
 
+.project-update {
+	margin: 0;
+}
+
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
 		max-width: 100%;
