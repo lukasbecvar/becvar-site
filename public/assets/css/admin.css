@@ -265,7 +265,7 @@ textarea {
 	padding: 2%;
 	background: rgba(0, 0, 0, 0.596);
 	position: absolute;
-	top: 17%;
+	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border: 2px solid rgba(255, 255, 255, 0.24);
@@ -763,7 +763,19 @@ textarea {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
+.account-settings-table {
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	max-width: 50%;
+}
+
+.profile-pics-admin-settings {
+	max-width: 40px;
+}
+
 @media screen and (max-width: 800px) { 
+	.account-settings-table {
+		max-width: 100%;
+	}
 	body {
 		zoom: 100%;
 	}
@@ -860,8 +872,8 @@ textarea {
 		font-size: 15px;
 	}
 	.image-upload-form {
-		padding: 2%;
-		top: 17%;
+		padding: 4%;
+		top: 40%;
 		left: 50%;
 		width: 90%;
 	}

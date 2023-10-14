@@ -1,6 +1,9 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
+- [ ] image uploader form type
+- [ ] .env.prod .env.dev
+- [ ] change database table names
 - [ ] port account settings
 - [ ] encrypted image uploader, paste todos
 - [ ] escape for all vars print in twig templates with |e  => {{ var|e }}

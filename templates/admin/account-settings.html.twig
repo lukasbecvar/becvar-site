@@ -6,6 +6,91 @@
 
 {% block component %}
 <div class="admin-panel">
-    settngs
+    {% if error_msg != null %}
+        {% include "admin/elements/alerts/error-alert.html.twig" %}
+    {% endif %}
+    {#============================== PIC CHANGER ==============================#}
+    {% if profile_pic_change_form != null %}
+        <center>
+            <h2 class="page-title">Change profile picture</h2>
+
+            <div class="image-upload-form dark-table">
+                <h2 class="login-form-title">Change profile image</h2>
+                <div class="custom-file">
+                    {{ form_start(profile_pic_change_form) }}
+    
+                        {{ form_widget(profile_pic_change_form) }}                
+                        <div class="text-center mb-3">
+                            <div class="right-position">
+                                <button class="input-button" type="submit">Upload Image</button>
+                            </div>
+                        </div>
+                
+                    {{ form_end(profile_pic_change_form) }}      
+                </div>   
+            </div>
+        </center>
+    {#============================== USERNAME CHANGER ==============================#}
+    {% elseif username_change_form != null %}
+        <center>
+            <h2 class="page-title">Change username</h2>
+
+            <div class="image-upload-form dark-table">
+                <h2 class="login-form-title">Change username</h2>
+                <div class="custom-file">
+                    {{ form_start(username_change_form) }}
+
+                        {{ form_widget(username_change_form) }}                
+                        <div class="text-center mb-3">
+                            <button class="input-button" type="submit">Change username</button>
+                        </div>
+                
+                    {{ form_end(username_change_form) }}      
+                </div>   
+            </div>
+        </center> 
+    {#============================== PASSWORD CHANGER ==============================#}
+    {% elseif password_change_form != null %}
+        <center>
+            <h2 class="page-title">Change username</h2>
+
+            <div class="image-upload-form dark-table">
+                <h2 class="login-form-title">Change username</h2>
+                <div class="custom-file">
+                    {{ form_start(password_change_form) }}
+
+                        {{ form_widget(password_change_form) }}                
+                        <div class="text-center mb-3">
+                            <button class="input-button" type="submit">Change password</button>
+                        </div>
+                
+                    {{ form_end(password_change_form) }}      
+                </div>   
+            </div>
+        </center>         
+    {#============================== VALUES TABLE ==============================#}
+    {% else %}
+        <center>
+            <h2 class="page-title">Account settings</h2>
+            <div class="table-responsive account-settings-table">
+                <table class="table table-dark">
+                    <tbody>
+                        <tr class="line-item">
+                            <th scope='row'>profile-pic: <img class="profile-pics-admin-settings" src="data:image/jpeg;base64,{{user_pic}}" alt="profile-pic"></th>
+                            <th scope='row'><a href="/admin/account/settings/pic">change</a></th>
+                        </tr>
+                        <tr class="line-item">
+                            <th scope='row'>username: {{user_name}}</th>
+                            <th scope='row'><a href="/admin/account/settings/username">change</a></th>
+                        </tr>
+                        <tr class="line-item">
+                            <th scope='row'>password: **********</th>
+                            <th scope='row'><a href="/admin/account/settings/password">change</a></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </center>
+    {% endif %}
 </div>
 {% endblock %}
