@@ -32,61 +32,6 @@ class BanManager
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    public function getVisitorIP(int $id): string
-    {
-        $repo = $this->visitorInfoUtil->getVisitorRepositoryByID($id);
-        return $repo->getIpAddress();
-    }
-
-    public function getBannedCount(): ?int
-    {
-        // get visitor repository
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
-
-        // try to find visitor in database
-        try {
-            $result = $visitorRepository->findBy(['banned_status' => 'yes']);
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        return count($result);
-    }
-
-    public function getBanReason(string $ip_address): ?string 
-    {
-        // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
-
-        // check if visitor found
-        if ($visitor == null) {
-            return 0;
-        } else {
-
-            // return ban reason string
-            return $visitor->getBanReason();
-        }
-    }
-
-    public function isVisitorBanned(string $ip_address): bool 
-    {
-        // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
-        
-        // check if visitor found
-        if ($visitor === null) {
-            return false;
-        } else {
-
-            // check if visitor banned
-            if ($visitor->getBannedStatus() == 'yes') {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
     public function banVisitor(string $ip_address, string $reason): void 
     {
         // get current date
@@ -146,6 +91,54 @@ class BanManager
         }
     }
 
+    public function isVisitorBanned(string $ip_address): bool 
+    {
+        // get visitor data
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        
+        // check if visitor found
+        if ($visitor === null) {
+            return false;
+        } else {
+
+            // check if visitor banned
+            if ($visitor->getBannedStatus() == 'yes') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function getBannedCount(): ?int
+    {
+        $repository = $this->entityManager->getRepository(Visitor::class);
+
+        // try to find visitor in database
+        try {
+            $result = $repository->findBy(['banned_status' => 'yes']);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        return count($result);
+    }
+
+    public function getBanReason(string $ip_address): ?string 
+    {
+        // get visitor data
+        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+
+        // check if visitor found
+        if ($visitor == null) {
+            return 0;
+        } else {
+
+            // return ban reason string
+            return $visitor->getBanReason();
+        }
+    }
+
     public function closeAllVisitorMessages(string $ip_address)
     {
         // sql query builder
@@ -165,8 +158,11 @@ class BanManager
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to close all visitor messages: '.$e->getMessage(), 500);
         }
-    
-        // update messages
-        $this->entityManager->flush();
+    }
+
+    public function getVisitorIP(int $id): string
+    {
+        $repo = $this->visitorInfoUtil->getVisitorRepositoryByID($id);
+        return $repo->getIpAddress();
     }
 }

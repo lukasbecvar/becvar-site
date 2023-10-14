@@ -5,8 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LogRepository;
 
-#[ORM\Entity(repositoryClass: LogRepository::class)]
 #[ORM\Table(name: 'logs')]
+#[ORM\Entity(repositoryClass: LogRepository::class)]
 class Log
 {
     #[ORM\Id]

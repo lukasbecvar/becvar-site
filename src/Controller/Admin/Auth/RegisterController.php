@@ -17,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    Register controller provides register function
+    Register controller provides user register function
+    This function is enabled only if users table is empty!
 */
 
 class RegisterController extends AbstractController

@@ -11,11 +11,11 @@
         <div class="card-header">Warnings</div>
         <div class="card-body" id="wraning-elements"> 
             {% if service_dir_exist == false %}
-                <p class="card-text"><span class="text-red"><strong>Directory: {{service_dir|e}} not exist</strong></span></p>
+                <p class="card-text"><span class="text-red"><strong>Directory: {{ service_dir }} not exist</strong></span></p>
             {% endif %}
 
             {% if is_web_user_sudo == false %}
-                <p class="card-text"><span class="text-red"><strong>Permissions error: please add "{{web_service_username|e}} ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>
+                <p class="card-text"><span class="text-red"><strong>Permissions error: please add "{{ web_service_username }} ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>
             {% endif %}
             
             {% if is_ssl == false %}
@@ -72,26 +72,26 @@
                 {% for service in services %}
                     {% if service.status == 'starting' %}
                         <p class="card-text">
-                            {{service.display_name|e}}: 
+                            {{ service.display_name }}: 
                             <span class="text-info">starting...</span>
                         </p>
                     {% elseif service.status == 'online' %}
                         <p class="card-text">
-                            {{service.display_name|e}}: 
+                            {{ service.display_name }}: 
                             <strong>
                                 <span class="online-text">Online</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{service.service_name|e}}/stop">STOP</a>]
+                                    [<a href="/admin/dashboard/runner/{{ service.service_name }}/stop">STOP</a>]
                                 </span>
                             </strong>
                         </p>
                     {% else %}
                         <p class="card-text">
-                            {{service.display_name|e}}: 
+                            {{ service.display_name|e }}: 
                             <strong>
                                 <span class="text-red">Offline</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{service.service_name|e}}/start">START</a>]
+                                    [<a href="/admin/dashboard/runner/{{ service.service_name }}/start">START</a>]
                                 </span>
                             </strong>
                         </p>
@@ -104,14 +104,14 @@
     <div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
         <div class="card-header">System info</div>
         <div class="card-body">
-            <p class="card-text">OS: {{operating_system|e}}</p>
-            <p class="card-text">Kernel: {{kernal_version|e}}</p>
-            <p class="card-text">Arch: {{kernal_arch|e}}</p>
+            <p class="card-text">OS: {{ operating_system }}</p>
+            <p class="card-text">Kernel: {{ kernal_version }}</p>
+            <p class="card-text">Arch: {{ kernal_arch }}</p>
         </div>
     </div>
     <div class="col-md-10 ">
         <div class="row ">
-            <!-- logs counter -->
+            {# <===== logs counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-cherry">
                     <div class="card-statistic-3 p-4">
@@ -121,14 +121,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{unreaded_logs_count|e}}
+                                    {{ unreaded_logs_count }}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- inbox counter -->
+            {# <===== inbox counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-blue-dark">
                     <div class="card-statistic-3 p-4">
@@ -138,14 +138,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{messages_count|e}}
+                                    {{ messages_count }}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- todos counter -->
+            {# <===== todos counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-green-dark">
                     <div class="card-statistic-3 p-4">
@@ -155,14 +155,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{todos_count|e}}
+                                    {{ todos_count }}
                                 </h2>
                              </div>
                          </div>
                     </div>
                 </div>
             </div>            
-            <!-- images counter -->
+            {# <===== images counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-orange-dark">
                     <div class="card-statistic-3 p-4">
@@ -172,14 +172,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{images_count|e}}
+                                    {{ images_count }}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>          
-            <!-- pastes counter -->
+            {# <===== pastes counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-orange-darker">
                     <div class="card-statistic-3 p-4">
@@ -189,14 +189,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{pastest_count|e}}
+                                    {{ pastest_count }}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>   
-            <!-- visitors counter -->
+            {# <===== visitors counter =====> #}
             <div class="col-xl-2 col-lg-6">
                 <div class="card l-bg-cyan-darker">
                     <div class="card-statistic-3 p-4">
@@ -206,14 +206,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{visitors_count|e}}
+                                    {{ visitors_count }}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>   
-            <!-- server uptime -->
+            {# <===== server uptime =====> #}
             <div class="col-xl-3 col-lg-6">
                 <div class="card l-bg-blue-dark">
                     <div class="card-statistic-3 p-4">
@@ -223,14 +223,14 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-3">
-                                    {{server_uptime|e}}
+                                    {{ server_uptime }}
                                 </h5>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>   
-            <!-- cpu usage -->
+            {# <===== cpu usage =====> #}
             <div class="col-xl-3 col-lg-6">
                 <div class="card l-bg-blue-dark">
                     <div class="card-statistic-3 p-4">
@@ -240,23 +240,23 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{cpu_usage|e}}%</span>
+                                    <span>{{ cpu_usage }}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{cpu_usage|e}}%" 
-                                aria-valuenow="{{cpu_usage|e}}" 
+                                data-width="{{ cpu_usage }}%" 
+                                aria-valuenow="{{ cpu_usage }}" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{cpu_usage|e}}%;">
+                                style="width: {{ cpu_usage }}%;">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>     
-            <!-- ram usage -->
+            {# <===== ram usage =====> #}
             <div class="col-xl-3 col-lg-6">
                 <div class="card l-bg-blue-dark">
                     <div class="card-statistic-3 p-4">
@@ -266,23 +266,23 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{ram_usage|e}}%</span>
+                                    <span>{{ ram_usage }}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{ram_usage|e}}%" 
-                                aria-valuenow="{{ram_usage|e}}" 
+                                data-width="{{ ram_usage }}%" 
+                                aria-valuenow="{{ ram_usage }}" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{ram_usage|e}}%;">
+                                style="width: {{ ram_usage }}%;">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>    
-            <!-- used disk space card -->
+            {# <===== used disk space card =====> #}
             <div class="col-xl-3 col-lg-6">
                 <div class="card l-bg-blue-dark">
                     <div class="card-statistic-3 p-4">
@@ -292,17 +292,17 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{drive_usage|e}}%</span>
+                                    <span>{{ drive_usage }}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{drive_usage|e}}%" 
-                                aria-valuenow="{{drive_usage|e}}%" 
+                                data-width="{{ drive_usage }}%" 
+                                aria-valuenow="{{ drive_usage }}%" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{drive_usage|e}}%;">
+                                style="width: {{ drive_usage }}%;">
                             </div>
                         </div>
                     </div>

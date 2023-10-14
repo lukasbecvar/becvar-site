@@ -198,8 +198,12 @@ class LogManager
     {
         $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
 
-        $query = $this->entityManager->createQuery($dql);
-        $query->execute();
+        try {
+            $query = $this->entityManager->createQuery($dql);
+            $query->execute();
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to set readed logs: '.$e->getMessage(), 500);
+        }
     }
 
     public function isLogsEnabled(): bool 
@@ -210,21 +214,6 @@ class LogManager
         } else {
             return false;
         }
-    }
-
-    public function setAntiLogCookie(): void
-    {
-        $this->cookieManager->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
-    }
-
-    public function unsetAntiLogCookie(): void
-    {
-        $this->cookieManager->unset('anti-log-cookie');
-    }
-
-    public function getLogLevel(): int
-    {
-        return $_ENV['LOG_LEVEL'];
     }
 
     public function isEnabledAntiLog(): bool
@@ -245,4 +234,19 @@ class LogManager
             return false;
         }
     } 
+
+    public function setAntiLogCookie(): void
+    {
+        $this->cookieManager->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
+    }
+
+    public function unsetAntiLogCookie(): void
+    {
+        $this->cookieManager->unset('anti-log-cookie');
+    }
+
+    public function getLogLevel(): int
+    {
+        return $_ENV['LOG_LEVEL'];
+    }
 }

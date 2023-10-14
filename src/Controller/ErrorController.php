@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Error controller is a handler for visitors redirect
+    Main controller what shows error pages by error code
 */
 
 class ErrorController extends AbstractController

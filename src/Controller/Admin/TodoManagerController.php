@@ -3,17 +3,17 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Todo;
-use App\Form\NewTodoFormType;
-use App\Manager\AuthManager;
-use App\Manager\DatabaseManager;
-use App\Manager\ErrorManager;
 use App\Util\SecurityUtil;
+use App\Manager\AuthManager;
+use App\Form\NewTodoFormType;
+use App\Manager\ErrorManager;
+use App\Manager\TodosManager;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
     Todo manager controller provides view/add/delete todos
@@ -22,36 +22,36 @@ use Symfony\Component\HttpFoundation\Request;
 class TodoManagerController extends AbstractController
 {
     private $authManager;
+    private $todosManager;
     private $errorManager;
     private $securityUtil;
     private $entityManager;
-    private $databaseManager;
     private $visitorInfoUtil;
 
     public function __construct(
         AuthManager $authManager,
+        TodosManager $todosManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        DatabaseManager $databaseManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->authManager = $authManager;
+        $this->todosManager = $todosManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->databaseManager = $databaseManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/todos', name: 'admin_todos')]
-    public function todos(Request $request): Response
+    public function todosTable(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
             // get todos data
-            $todos = $this->databaseManager->getTodos('non-completed');
+            $todos = $this->todosManager->getTodos('non-completed');
 
             // create user entity
             $todo = new Todo();
@@ -114,13 +114,13 @@ class TodoManagerController extends AbstractController
     }
 
     #[Route('/admin/todos/close/{id}', name: 'admin_todo_close')]
-    public function close(int $id): Response
+    public function closeTodo(int $id): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
             // close todo
-            $this->databaseManager->closeTodo($id);
+            $this->todosManager->closeTodo($id);
 
             // redirect to todo page
             return $this->redirectToRoute('admin_todos');

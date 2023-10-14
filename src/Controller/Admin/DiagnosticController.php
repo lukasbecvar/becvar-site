@@ -2,11 +2,11 @@
 
 namespace App\Controller\Admin;
 
-use App\Manager\AuthManager;
-use App\Manager\ServiceManager;
-use App\Util\DashboardUtil;
 use App\Util\SiteUtil;
+use App\Util\DashboardUtil;
+use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
+use App\Manager\ServiceManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +20,8 @@ class DiagnosticController extends AbstractController
     private $siteUtil;
     private $authManager;
     private $dashboardUtil;
-    private $visitorInfoUtil;
     private $serviceManager;
+    private $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,

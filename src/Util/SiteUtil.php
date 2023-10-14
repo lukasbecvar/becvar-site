@@ -12,8 +12,7 @@ class SiteUtil
 {
     public function getHttpHost(): ?string
     {
-        $request = Request::createFromGlobals();
-        return $request->getHost();
+        return Request::createFromGlobals()->getHost();
     }
 
     public function isRunningLocalhost(): bool 
@@ -37,18 +36,17 @@ class SiteUtil
 
     public function isSsl(): bool 
     {
-        // default state
-        $state = false;
-        // ssl check
         if (isset($_SERVER['HTTPS'])) {
             if ($_SERVER['HTTPS'] == 1) {
-                $state = true;
+                return true;
             } elseif ($_SERVER['HTTPS'] == 'on') {
-                $state = true;
+                return true;
+            } else {
+                return false;   
             }
+        } else {
+            return false;   
         }
-    
-        return $state;
     }
 
     public function isMaintenance(): bool 

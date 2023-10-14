@@ -8,12 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     About controller provides basic public about page
+    Page with information about me
 */
 
 class AboutController extends AbstractController
 {
     #[Route('/about', name: 'public_about')]
-    public function index(): Response
+    public function aboutPage(): Response
     {
         // calculate lukas becvar age xD
         $birth_date = explode("/", '05/28/1999');

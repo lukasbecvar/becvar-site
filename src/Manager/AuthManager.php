@@ -31,41 +31,79 @@ class AuthManager
         $this->sessionManager = $sessionManager;
     }
 
-    public function getUserRepository(array $array): ?object 
+    public function isUserLogedin(): bool 
     {
-        // get user repository
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $userEntity = new User();
 
-        // try to find user in database
-        try {
-            $result = $userRepository->findOneBy($array);
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
-        }
+        // check if session exist
+        if ($this->sessionManager->checkSession('login-token')) {
 
-        // return result
-        if ($result !== null) {
-            return $result;
+            // get login token form session
+            $login_token = $this->sessionManager->getSessionValue('login-token');
+
+            // check if token exist in database
+            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return null;
+            return false;
         }
+    }
+
+    public function login(string $username, string $user_token, bool $remember): void 
+    {
+        // check if user not logged in
+        if (!$this->isUserLogedin()) {
+
+            // check if user token is valid
+            if (!empty($user_token)) {
+                $this->sessionManager->setSession('login-token', $user_token);
+
+                // check if remember set
+                if ($remember) {
+                    if (!isset($_COOKIE['login-token-cookie'])) {
+                        $this->cookieManager->set("login-token-cookie", $user_token, time() + (60*60*24*7*365));
+                    }
+                }
+
+                // update last login time
+                $this->setLastLoginDate();
+
+                // log to mysql
+                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
+
+            } else {
+                $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
+            }
+        }
+    }
+
+    public function logout(): void 
+    {
+        // check if user logged in
+        if ($this->isUserLogedin()) {
+            // init user
+            $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+
+            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
+            $this->cookieManager->unset("login-token-cookie");
+            $this->sessionManager->destroySession();   
+        } 
     }
 
     public function setLastLoginDate(): void 
     {
-        // get current date
         $date = date('d.m.Y H:i:s');
-
-        // user repository
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
         // check if user repo found
         if ($user != null) {
 
-            // update values
             $user->setLastLoginTime($date);
 
-            // try to flush updated data
+            // update last login time
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
@@ -142,78 +180,8 @@ class AuthManager
         return $avatar;
     }
 
-    public function isUserLogedin(): bool 
-    {
-        // default state
-        $state = false;
-
-        // init user entity
-        $userEntity = new User();
-
-        // check if session exist
-        if ($this->sessionManager->checkSession('login-token')) {
-
-            // get login token form session
-            $login_token = $this->sessionManager->getSessionValue('login-token');
-
-            // check if token exist in database
-            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
-                $state = true;
-            }
-        }
-
-        return $state;
-    }
-
-    public function login(string $username, string $user_token, bool $remember): void 
-    {
-        // check if user not logged in
-        if (!$this->isUserLogedin()) {
-
-            // check if user token is valid
-            if (!empty($user_token)) {
-                $this->sessionManager->setSession('login-token', $user_token);
-
-                // check if remember set
-                if ($remember) {
-                    if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieManager->set("login-token-cookie", $user_token, time() + (60*60*24*7*365));
-                    }
-                }
-
-                // update last login time
-                $this->setLastLoginDate();
-
-                // log to mysql
-                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
-
-            } else {
-                $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
-            }
-        }
-    }
-
-    public function logout(): void 
-    {
-        // check if user logged in
-        if ($this->isUserLogedin()) {
-            // init user entity
-            $user = $this->getUserRepository(['token' => $this->getUserToken()]);
-
-            // unset user-token cookie
-            $this->cookieManager->unset("login-token-cookie");
-        
-            // log action to mysql
-            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
-        
-            // destroy all sessions
-            $this->sessionManager->destroySession();   
-        } 
-    }
-
     public function isUsersEmpty(): bool
     {
-        // get user repos
         $repository = $this->entityManager->getRepository(User::class);
 
         // get count
@@ -224,6 +192,25 @@ class AuthManager
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function getUserRepository(array $array): ?object 
+    {
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        // try to find user in database
+        try {
+            $result = $userRepository->findOneBy($array);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        // return result
+        if ($result !== null) {
+            return $result;
+        } else {
+            return null;
         }
     }
 }

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Database browser controller provides database tables browser/editor
+    Database browser components: table list, table view, edit row, insert row, update projects list
 */
 
 class DatabaseBrowserController extends AbstractController
@@ -35,7 +36,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     #[Route('/admin/database', name: 'admin_database_list')]
-    public function list(): Response
+    public function databaseList(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -59,7 +60,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     #[Route('/admin/database/{table}/{page}', name: 'admin_database_browser')]
-    public function tableBrowser(string $table, int $page): Response
+    public function tableView(string $table, int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -98,7 +99,7 @@ class DatabaseBrowserController extends AbstractController
     }
     
     #[Route('/admin/database/edit/{page}/{table}/{id}', name: 'admin_database_edit')]
-    public function edit(string $table, int $page, int $id): Response
+    public function rowEdit(string $table, int $page, int $id): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -170,7 +171,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     #[Route('/admin/database/add/{page}/{table}', name: 'admin_database_add')]
-    public function add(string $table, int $page): Response
+    public function rowAdd(string $table, int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -243,7 +244,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]
-    public function delete(string $table, int $page, $id, Request $request): Response
+    public function rowDelete(string $table, int $page, $id, Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

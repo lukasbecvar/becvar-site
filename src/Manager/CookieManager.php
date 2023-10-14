@@ -27,8 +27,7 @@ class CookieManager
     public function get($name): ?string 
     {
         $value = base64_decode($_COOKIE[$name]);
-        $value = $this->securityUtil->decrypt_aes($value);
-        return $value;
+        return $this->securityUtil->decrypt_aes($value);
     }
 
     public function unset($name): void 

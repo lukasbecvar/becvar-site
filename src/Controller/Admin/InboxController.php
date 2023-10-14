@@ -3,29 +3,29 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
-use App\Manager\DatabaseManager;
 use App\Util\VisitorInfoUtil;
+use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    Inbox controller provides contact form message reader
+    Inbox controller provides contact form message reader/ban/close messages
 */
 
 class InboxController extends AbstractController
 {
     private $authManager;
-    private $databaseManager;
+    private $messagesManager;
     private $visitorInfoUtil;
 
     public function __construct(
         AuthManager $authManager,
-        DatabaseManager $databaseManager,
+        MessagesManager $messagesManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->authManager = $authManager;
-        $this->databaseManager = $databaseManager;
+        $this->messagesManager = $messagesManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
     
@@ -35,7 +35,7 @@ class InboxController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
-            $messages = $this->databaseManager->getMessages('open', $page);
+            $messages = $this->messagesManager->getMessages('open', $page);
 
             return $this->render('admin/inbox.html.twig', [
                 // component properties
@@ -66,7 +66,7 @@ class InboxController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
 
             // close message
-            $this->databaseManager->closeMessage($id);
+            $this->messagesManager->closeMessage($id);
 
             // redirect back to inbox
             return $this->redirectToRoute('admin_inbox', [

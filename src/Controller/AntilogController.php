@@ -10,7 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    Antilog controller provides function for set antilog cookie
+    Antilog controller provides function block database logs
+    Antilog for admin users disables logging via browser cookie
 */
 
 class AntilogController extends AbstractController
@@ -30,7 +31,7 @@ class AntilogController extends AbstractController
     }
 
     #[Route('/antilog/5369362536', name: 'antilog')]
-    public function index(): Response
+    public function antilog(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -47,6 +48,6 @@ class AntilogController extends AbstractController
         } else {
             $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
         }
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->redirectToRoute('auth_login');
     }
 }

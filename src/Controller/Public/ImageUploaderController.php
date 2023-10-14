@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Image uploader/view controller provides image upload/view component
+    Page for storing images in database and sharing via url
 */
 
 class ImageUploaderController extends AbstractController
@@ -36,7 +37,7 @@ class ImageUploaderController extends AbstractController
     }
 
     #[Route('/image/view/{token}', name: 'public_image_viewer')]
-    public function viewer($token): Response
+    public function imageView($token): Response
     {
         // escape image token
         $token = $this->secutityUtil->escapeString($token);
@@ -65,7 +66,7 @@ class ImageUploaderController extends AbstractController
     }
 
     #[Route('/image/uploader', name: 'public_image_uploader')]
-    public function uploader(): Response
+    public function uploadImage(): Response
     {
         // default error msg
         $error_msg = null;
@@ -77,18 +78,8 @@ class ImageUploaderController extends AbstractController
             $ext = substr(strrchr($_FILES['userfile']['name'], '.'), 1);      
             
             // check if file is image
-            if (
-                $ext == 'gif' or 
-                $ext == 'jpg' or 
-                $ext == 'jpeg' or 
-                $ext == 'jfif' or 
-                $ext == 'pjpeg' or 
-                $ext == 'pjp' or 
-                $ext == 'png' or 
-                $ext == 'webp' or 
-                $ext == 'bmp' or 
-                $ext == 'ico'
-            ) {		
+            if ($ext == 'gif' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'png') {		
+                
                 // generate img_spec value
                 $token = ByteString::fromRandom(32)->toByteString();
                 
@@ -123,6 +114,7 @@ class ImageUploaderController extends AbstractController
                 // log to database
                 $this->logManager->log('image-uploader', 'uploaded new image: '.$token);	
 
+                // redirect to image view
                 return $this->redirectToRoute('public_image_viewer', ['token' => $token]);
 
             } else {

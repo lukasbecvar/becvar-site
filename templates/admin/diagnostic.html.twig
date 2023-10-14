@@ -95,7 +95,7 @@
                         <span class="text-red">
                             <i class="fa fa-exclamation-triangle"></i> 
                         </span>
-                        directory: {{service_dir_path|e}} not exist
+                        directory: {{ service_dir_path }} not exist
                     </span>
                 </p>
             {% else %}
@@ -104,7 +104,7 @@
                         <span class="text-light-green">
                             <i class="fa fa-check"></i> 
                         </span>
-                        directory: {{service_dir_path|e}} was initialized successfully
+                        directory: {{ service_dir_path }} was initialized successfully
                     </span>
                 </p>
             {% endif %}
@@ -124,7 +124,7 @@
                         <span class="text-red">
                             <i class="fa fa-exclamation-triangle"></i> 
                         </span>
-                        Permissions error: please add "{{web_service_username|e}} ALL=NOPASSWD: ALL" to /etc/sudoers
+                        Permissions error: please add "{{ web_service_username }} ALL=NOPASSWD: ALL" to /etc/sudoers
                     </span>
                 </p>                
             {% endif %}

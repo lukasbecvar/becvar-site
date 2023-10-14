@@ -1,29 +1,52 @@
 <ul class="breadcrumb">
+    {# <===== ROW EDITOR =====> #}
     {% if editor_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{editor_table|e}}/{{editor_page|e}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+            <a class="selector-button btn-small" href="/admin/database/{{ editor_table }}/{{ editor_page }}">
+                <strong>
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                </strong>
+            </a>
         </li>
         <li class="count-text-in-menuR">Row editor</li>
+    {# <===== ROW ADD =====> #}
     {% elseif new_row_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{new_row_table|e}}/{{new_row_page|e}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+            <a class="selector-button btn-small" href="/admin/database/{{ new_row_table }}/{{ new_row_page }}">
+                <strong>
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                </strong>
+            </a>
         </li>
         <li class="count-text-in-menuR">New row</li>
+    {# <===== TABLE VIEWER =====> #}
     {% elseif table_name != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+            <a class="selector-button btn-small" href="/admin/database">
+                <strong>
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                </strong>
+            </a>
         </li>
             <li> 
-                <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name|e}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name|e}}</strong></a>
+                <a class="selector-button btn-small" href="/admin/database/delete/1/{{ table_name }}/all">
+                    <strong>
+                        <i class="fa fa-trash" aria-hidden="true"></i> 
+                        {{ table_name }}
+                    </strong>
+                </a>
             </li>
         <li>    
-            <a class="selector-button btn-small" href="/admin/database/add/{{page|e}}/{{table_name|e}}"><strong>NEW</strong></a>
+            <a class="selector-button btn-small" href="/admin/database/add/{{ page }}/{{ table_name }}">
+                <strong>NEW</strong>
+            </a>
         </li>
+        {# <===== PROJECTS UPDATE BUTTON =====> #}
         {% if table_name == 'projects' %}
             <li>
                 <a class="selector-button btn-small" href="/projects/update"><i class="project-update fas fa-sync"></i></a>
             </li>        
         {% endif %}
-        <li class="count-text-in-menuR">{{table_name|e}} = {{table_data_count_all|e}} rows</li>
+        <li class="count-text-in-menuR">{{ table_name }} = {{ table_data_count_all }} rows</li>
     {% endif %}
 </ul>

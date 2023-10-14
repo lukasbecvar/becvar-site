@@ -3,35 +3,35 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\PasswordChangeFormType;
-use App\Form\ProfilePicChangeFormType;
-use App\Form\ProfilePicChangeType;
-use App\Form\UsernameChangeFormType;
-use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
 use App\Util\SecurityUtil;
+use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
+use App\Manager\ErrorManager;
+use App\Form\PasswordChangeFormType;
+use App\Form\UsernameChangeFormType;
+use App\Form\ProfilePicChangeFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
-    Account settings controller provides user account changes (username, password, profile pic)
+    Account settings controller provides user account changes
+    Configurable values: username, password, profile-pic
 */
 
 class AccountSettingsController extends AbstractController
 {
     private $authManager;
+    private $securityUtil;
     private $errorManager;
     private $entityManager;
     private $visitorInfoUtil;
-    private $securityUtil;
 
     public function __construct(
-        SecurityUtil $securityUtil,
         AuthManager $authManager, 
+        SecurityUtil $securityUtil,
         ErrorManager $errorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
@@ -44,7 +44,7 @@ class AccountSettingsController extends AbstractController
     }
 
     #[Route('/admin/account/settings', name: 'admin_account_settings')]
-    public function accountSettings(): Response
+    public function accountSettingsTable(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -70,14 +70,13 @@ class AccountSettingsController extends AbstractController
     }
 
     #[Route('/admin/account/settings/pic', name: 'admin_account_settings_pic')]
-    public function accountSettingsPic(Request $request): Response
+    public function accountSettingsPicChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
             $error_msg = null;
 
-            // init user entity
             $user = new User();
 
             // create pic form change
@@ -109,6 +108,9 @@ class AccountSettingsController extends AbstractController
                     try {
                         $userRepo->setProfilePic($image_code);
                         $this->entityManager->flush();
+
+                        // redirect back to values table
+                        return $this->redirectToRoute('admin_account_settings');
                     } catch (\Exception $e) {
                         $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
@@ -117,6 +119,7 @@ class AccountSettingsController extends AbstractController
                 }
             }
 
+            // render profile pic change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
                 'is_mobile' => $this->visitorInfoUtil->isMobile(),
@@ -139,14 +142,13 @@ class AccountSettingsController extends AbstractController
     }
 
     #[Route('/admin/account/settings/username', name: 'admin_account_settings_username')]
-    public function accountSettingsUsername(Request $request): Response
+    public function accountSettingsUsernameChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
             $error_msg = null;
 
-            // init user entity
             $user = new User();
 
             // create username form change
@@ -174,7 +176,8 @@ class AccountSettingsController extends AbstractController
                     $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                 }  
             }
-
+            
+            // render username change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
                 'is_mobile' => $this->visitorInfoUtil->isMobile(),
@@ -204,7 +207,6 @@ class AccountSettingsController extends AbstractController
             
             $error_msg = null;
 
-            // init user entity
             $user = new User();
 
             // create username form change
@@ -214,7 +216,7 @@ class AccountSettingsController extends AbstractController
             // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get passwords
+                // get passwords & escape XSS
                 $password = $this->securityUtil->escapeString($form->get('password')->getData());
                 $repassword = $this->securityUtil->escapeString($form->get('repassword')->getData());
 
@@ -239,6 +241,7 @@ class AccountSettingsController extends AbstractController
                 }
             }
 
+            // render password change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
                 'is_mobile' => $this->visitorInfoUtil->isMobile(),

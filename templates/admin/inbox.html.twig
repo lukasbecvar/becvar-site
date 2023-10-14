@@ -14,11 +14,11 @@
                 {% for message in inbox_data %}
                     <div class='card text-white mb-3 msg-box'>
                         <div class="card-body">
-                            <h5 class="left-center" class="card-title">{{message.name|e}} ({{message.email|e}}) 
-                                <span class='text-success phone-none'>[{{message.time|e}}]</span>, 
-                                <span class='text-warning phone-none'>[{{message.ipAddress|e}}]</span>
-                                <a class='delete-link' href='/admin/inbox/close/{{message.id|e}}/{{page|e}}'>X</a>
-                                <a class='delete-link text-warning' href="/admin/visitors/ban/{{message.visitorId|e}}/{{page|e}}?referer=inbox">
+                            <h5 class="left-center" class="card-title">{{ message.name|e }} ({{ message.email|e }}) 
+                                <span class='text-success phone-none'>[{{ message.time|e }}]</span>, 
+                                <span class='text-warning phone-none'>[{{ message.ipAddress|e }}]</span>
+                                <a class='delete-link' href='/admin/inbox/close/{{ message.id|e }}/{{ page }}'>X</a>
+                                <a class='delete-link text-warning' href="/admin/visitors/ban/{{ message.visitorId|e }}/{{ page }}?referer=inbox">
                                     BAN
                                 </a>
                             </h5>
@@ -29,10 +29,10 @@
             </center>
             <div class="page-button-box">
                 {% if page != 1 %}
-                    <a class="back-page-button" href="/admin/inbox/{{page|e - 1}}">Back</a>
+                    <a class="back-page-button" href="/admin/inbox/{{ page - 1 }}">Back</a>
                 {% endif %}
                 {% if message_limit == message_count %}
-                    <a class="back-page-button" href="/admin/inbox/{{page|e + 1}}">Next</a>
+                    <a class="back-page-button" href="/admin/inbox/{{ page + 1 }}">Next</a>
                 {% endif %}
             </div>
             <br>

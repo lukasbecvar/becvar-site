@@ -34,10 +34,8 @@ class VisitorInfoUtil
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $address = $_SERVER['HTTP_CLIENT_IP'];
-      
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-
         } else {
             $address = $_SERVER['REMOTE_ADDR'];
         }
@@ -341,14 +339,9 @@ class VisitorInfoUtil
         return count($this->getVisitors($page));
     }
 
-    public function isMobile(): bool {
+    public function isMobile(): bool 
+    {
         $detect = new MobileDetect();
-
-        // check if mobile device
-        if ($detect->isMobile()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $detect->isMobile();
     }
 }

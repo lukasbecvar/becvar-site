@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route(['/', '/home'], name: 'public_home')]
-    public function index(): Response
+    public function homePage(): Response
     {
         return $this->render('public/home.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],

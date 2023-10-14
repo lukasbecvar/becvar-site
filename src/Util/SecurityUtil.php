@@ -13,21 +13,14 @@ class SecurityUtil
         return htmlspecialchars($string, ENT_QUOTES);
     }
 
-    public function hash_validate(string $plain_text, string $hash): bool {
-        
-		// check if password verified
-		if (password_verify($plain_text, $hash)) {
-			return true;
-		} else {
-            return false;
-        }
+    public function hash_validate(string $plain_text, string $hash): bool 
+	{
+		return password_verify($plain_text, $hash);
 	}
 
-	public function gen_bcrypt(string $plain_text, int $cost): string {
-		$options = [
-			'cost' => $cost
-		];
-		return password_hash($plain_text, PASSWORD_BCRYPT, $options);
+	public function gen_bcrypt(string $plain_text, int $cost): string 
+	{
+		return password_hash($plain_text, PASSWORD_BCRYPT, ['cost' => $cost]);
 	}
 
 	public static function encrypt_aes(string $plain_text, string $method = 'AES-128-CBC'): string {

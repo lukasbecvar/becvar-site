@@ -5,8 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VisitorRepository;
 
-#[ORM\Entity(repositoryClass: VisitorRepository::class)]
 #[ORM\Table(name: 'visitors')]
+#[ORM\Entity(repositoryClass: VisitorRepository::class)]
 class Visitor
 {
     #[ORM\Id]

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    Logout controller provides logout function
+    Logout controller provides user logout function
 */
 
 class LogoutController extends AbstractController

@@ -7,7 +7,7 @@ use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
-use App\Manager\DatabaseManager;
+use App\Manager\MessagesManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Contact controller provides contact links & contact form
+    Page to display contact information and a form that stores messages in the database
 */
 
 class ContactController extends AbstractController
@@ -24,24 +25,24 @@ class ContactController extends AbstractController
     private $securityUtil;
     private $entityManager;
     private $visitorInfoUtil;
-    private $databaseManager;
+    private $messagesManager;
 
     public function __construct(
         LogManager $logManager, 
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
-        DatabaseManager $databaseManager,
+        MessagesManager $messagesManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
-        $this->databaseManager = $databaseManager;
+        $this->messagesManager = $messagesManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/contact', name: 'public_contact')]
-    public function index(Request $request): Response
+    public function contactPage(Request $request): Response
     {
         // default msg state
         $error_msg = null;
@@ -113,7 +114,7 @@ class ContactController extends AbstractController
                     $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
                     // check if user have unclosed messages
-                    if ($this->databaseManager->getMessageCountByIpAddress($ip_address) >= 5) {
+                    if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
                         $error_msg = 'error you have 5 unreaded messages, please wait for the response to the first messags';
                         $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
                     } else {

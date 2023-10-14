@@ -15,12 +15,12 @@ body {
 	zoom: 80%;
 }
 
-a:hover {
-	text-decoration: none;
+.overflow-x-hiden {
+	overflow-x: hidden;
 }
 
-.lg {
-	z-index: 9999; 
+a:hover {
+	text-decoration: none;
 }
 
 #wrarning-box {
@@ -33,10 +33,6 @@ a:hover {
 
 .center {
 	text-align: center;
-}
-
-.overflow-x-hiden {
-	overflow-x: hidden;
 }
 
 .wrapper .sidebar {
@@ -598,6 +594,10 @@ textarea {
 	border: 1px solid rgb(241, 53, 53);
 }
 
+.lg {
+	z-index: 9999; 
+}
+
 .fas {
 	margin-left: 5px;
 }
@@ -776,6 +776,7 @@ textarea {
 	margin: 0;
 }
 
+/* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
 		max-width: 100%;
@@ -924,6 +925,7 @@ textarea {
 	}
 }
 
+/* fix for mobile todo table */
 @media screen and (max-height: 500px) {
 	.table {
 		top: 16.3%;

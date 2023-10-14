@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Paste controller provides save/view code paste component
+    Page for storing code in database and sharing via url
 */
 
 class PasteController extends AbstractController
@@ -35,7 +36,7 @@ class PasteController extends AbstractController
     }
 
     #[Route('/paste', name: 'public_code_paste')]
-    public function new(): Response
+    public function pasteInsert(): Response
     {
         // check if paste submited
         if (isset($_POST['data'])) {
@@ -84,7 +85,7 @@ class PasteController extends AbstractController
     }
 
     #[Route('/paste/view/{token}', name: 'public_code_paste_view')]
-    public function viewer($token): Response
+    public function pasteView($token): Response
     {
         $content = null;
      

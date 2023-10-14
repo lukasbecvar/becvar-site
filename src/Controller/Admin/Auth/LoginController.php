@@ -13,7 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    Login controller provides login function
+    Login controller provides user login function
+    Login uses its own Authenticator not symfony auth
 */
 
 class LoginController extends AbstractController
@@ -39,17 +40,12 @@ class LoginController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');   
         } else {
-
-            // default error msg
             $error_msg = null;
 
-            // create user entity
             $user = new User();
 
             // create register form
             $form = $this->createForm(LoginFormType::class, $user);
-
-            // processing an HTTP request
             $form->handleRequest($request);
 
             // check form if submited
@@ -58,8 +54,6 @@ class LoginController extends AbstractController
                 // get form data
                 $username = $form->get('username')->getData();
                 $password = $form->get('password')->getData();
-
-                // get remember status
                 $remember = $form->get('remember')->getData();
 
                 // escape values (XSS protection)
@@ -86,20 +80,16 @@ class LoginController extends AbstractController
                     $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
                     $error_msg = 'Incorrect username or password.';
                 }
-
-                // redirect to admin
+                // redirect to admin (if login OK)
                 if ($error_msg == null) {
                     return $this->redirectToRoute('admin_dashboard');
                 }
             }
 
-            // get if users empty value
-            $users_empty = $this->authManager->isUsersEmpty();
-
-            // render default login view
+            // render login view
             return $this->render('admin/auth/login.html.twig', [
                 'error_msg' => $error_msg,
-                'is_users_empty' => $users_empty,
+                'is_users_empty' => $this->authManager->isUsersEmpty(),
                 'login_form' => $form->createView()
             ]);
         }

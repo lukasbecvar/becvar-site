@@ -31,11 +31,7 @@ class SessionManager
 
     public function checkSession(string $session_name): bool {
         $this->startSession();
-        if (isset($_SESSION[$session_name])) {
-            return true;
-        } else {
-            return false;
-        }
+        return isset($_SESSION[$session_name]);
     }
 
     public function setSession(string $session_name, string $session_value): void 

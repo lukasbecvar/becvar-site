@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Projects controller provides public projects list
+    Project page shows projects from the database that are downloaded from the github api
 */
 
 class ProjectsController extends AbstractController
@@ -19,8 +20,11 @@ class ProjectsController extends AbstractController
     private $errorManager;
     private $projectsManager;
 
-    public function __construct(AuthManager $authManager, ErrorManager $errorManager, ProjectsManager $projectsManager)
-    {
+    public function __construct(
+        AuthManager $authManager, 
+        ErrorManager $errorManager, 
+        ProjectsManager $projectsManager
+    ) {
         $this->authManager = $authManager;    
         $this->errorManager = $errorManager;    
         $this->projectsManager = $projectsManager;    
@@ -43,7 +47,7 @@ class ProjectsController extends AbstractController
     }
 
     #[Route('/projects/update', name: 'public_projects_update')]
-    public function update(): Response
+    public function projectsUpdate(): Response
     {
         // check if user logged
         if ($this->authManager->isUserLogedin()) {

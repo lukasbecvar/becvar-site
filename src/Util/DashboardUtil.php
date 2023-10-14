@@ -2,7 +2,6 @@
 
 namespace App\Util;
 
-use App\Entity\Log;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -13,28 +12,24 @@ use Doctrine\ORM\EntityManagerInterface;
 class DashboardUtil
 {
     private $jsonUtil;
-    private $siteUtil;
     private $errorManager;
     private $entityManager;
     
     public function __construct(
         JsonUtil $jsonUtil,
-        SiteUtil $siteUtil,
         ErrorManager $errorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->jsonUtil = $jsonUtil;
-        $this->siteUtil = $siteUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
 
     public function getDatabaseEntityCount(object $entity, array $search = null): int 
     {
-        // get entity repo
         $repository = $this->entityManager->getRepository($entity::class);
 
-        // try to find visitor in database
+        // find visitor in database
         try {
             if ($search == null) {
                 $result = $repository->findAll();
@@ -99,12 +94,17 @@ class DashboardUtil
         );	
     }
 
-    public function getDriveUsage(): string {
-        $output = exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
-        return $output;
+    public function getDriveUsage(): ?string 
+    {
+        try {
+            return exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get drive usage: '.$e->getMessage(), 500);
+        }
     }
 
-    public function getSoftwareInfo(): array {
+    public function getSoftwareInfo(): array 
+    {
         $softwares = array();
         $software = array();
         $software_key = '';
@@ -158,12 +158,13 @@ class DashboardUtil
         }       
     }
 
-    public function getWebUsername(): ?string {
-
-        // get username
-        $exec = exec("whoami");
-
-        return $exec;
+    public function getWebUsername(): ?string 
+    {
+        try {
+            return exec("whoami");
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get web username: '.$e->getMessage(), 500);
+        }
     }
 
     public function isBrowserListFound(): bool 

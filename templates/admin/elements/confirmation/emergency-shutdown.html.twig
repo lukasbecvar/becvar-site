@@ -7,10 +7,11 @@
 {% block component %}
 <div class="admin-panel">
     
+    {# <===== ERROR MSG BOX =====> #}
     {% if error_msg != null %}
         <center>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error</strong>: {{ error_msg|e }}
+                <strong>Error</strong>: {{ error_msg }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -18,22 +19,24 @@
         </center>
     {% endif %}
 
+    {# <===== SHUTDOWN CONFIRMATION FORM =====> #}
     <form class="login-form dark-table" style="top: 28%;" action="/admin/dashboard/emergency/shutdown" method="post">
         <p class="login-form-title">Confirmation</p>
         <p class="login-form-title login-form-sub-title">please repeat the verification code</p>
-        <input class="text-input" type="text" name="confirmCode" value={{confirm_code|e}} readonly><br>
+        <input class="text-input" type="text" name="confirmCode" value={{ confirm_code }} readonly><br>
         <input class="text-input" type="text" name="shutdownCode" placeholder="Confirmation code"><br>
         <div class="right-position"><input class="input-button" type="submit" name="submitShutdown" value="Shutdown"></div>
     </form>
+
     <style>
-    @media screen and (max-width: 800px) { 
-        .alert {
-            top: 14% !important;
+        @media screen and (max-width: 800px) { 
+            .alert {
+                top: 14% !important;
+            }
+            .login-form {
+                top: 42% !important;
+            }
         }
-        .login-form {
-            top: 42% !important;
-        }
-    }
     </style>
 </div>
 {% endblock %}

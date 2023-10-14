@@ -2,12 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Manager\BanManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
-use App\Util\SecurityUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +38,7 @@ class LogReaderController extends AbstractController
     }
 
     #[Route('/admin/logs/{page}', name: 'admin_log_list')]
-    public function view(int $page): Response
+    public function logsTable(int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -75,7 +74,7 @@ class LogReaderController extends AbstractController
     }
 
     #[Route('/admin/logs/whereip/{ip_address}/{page}', name: 'admin_log_list_where_ip')]
-    public function whereip(string $ip_address, int $page): Response
+    public function logsWhereIp(string $ip_address, int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -114,7 +113,7 @@ class LogReaderController extends AbstractController
     }
 
     #[Route('/admin/logs/delete/{page}', name: 'admin_log_delete')]
-    public function delete(int $page): Response
+    public function deleteAllLogs(int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -137,7 +136,7 @@ class LogReaderController extends AbstractController
     } 
 
     #[Route('/admin/logs/readed/all', name: 'admin_log_readed')]
-    public function setReaded(): Response
+    public function setReadedAllLogs(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

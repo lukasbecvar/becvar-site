@@ -2,8 +2,8 @@
 
 namespace App\Manager;
 
-use App\Entity\Project;
 use App\Util\JsonUtil;
+use App\Entity\Project;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -31,40 +31,6 @@ class ProjectsManager
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
-    }
-
-    public function getProjectsList(string $status): ?array 
-    {
-        // get projects list where status
-        try {
-            return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
-            return [];
-        }
-    }
-
-    public function dropProjects(): void 
-    {
-        // get data
-        $repository = $this->entityManager->getRepository(Project::class);
-        $data = $repository->findAll();
-
-        // delete all projects
-        foreach ($data as $item) {
-            $this->entityManager->remove($item);
-        }
-
-        // update table
-        $this->entityManager->flush();
-    }
-
-    public function resetIndex(): void 
-    {
-        // reset table AUTO_INCREMENT
-        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
-        $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
-        $this->entityManager->getConnection()->executeQuery($sql);
     }
 
     public function updateProjectList(): void 
@@ -126,5 +92,47 @@ class ProjectsManager
         }
 
         $this->logManager->log("project-update", "project list updated!");
+    }
+
+    public function dropProjects(): void 
+    {
+        $repository = $this->entityManager->getRepository(Project::class);
+        
+        // get projects entitys
+        $data = $repository->findAll();
+
+        // delete all projects
+        foreach ($data as $item) {
+            $this->entityManager->remove($item);
+        }
+
+        // update table
+        try {
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to delete projects list: '.$e->getMessage(), 500);
+        }
+    }
+
+    public function getProjectsList(string $status): ?array 
+    {
+        try {
+            return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
+            return [];
+        }
+    }
+
+    public function resetIndex(): void 
+    {
+        // reset table AUTO_INCREMENT
+        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
+        $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
+        try {
+            $this->entityManager->getConnection()->executeQuery($sql);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to reset projects index: '.$e->getMessage(), 500);
+        }
     }
 }

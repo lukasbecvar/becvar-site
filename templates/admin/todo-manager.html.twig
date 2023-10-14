@@ -26,13 +26,13 @@
                 <tbody>
                     {% for todo in todos_data %}
                         <tr class="line-item">
-                            <th scope='row'>{{todo.id|e}}</th>
-                            <th scope='row'>{{todo.text|e}}</th>
+                            <th scope='row'>{{ todo.id|e }}</th>
+                            <th scope='row'>{{ todo.text|e }}</th>
                             <th scope='row'>
                                 <a class='text-warning delete-link-todos' href='#'>Edit</a>
                             </th>
                             <th scope='row'>
-                                <a class='delete-link-todos' href='/admin/todos/close/{{todo.id|e}}'>X</a>
+                                <a class='delete-link-todos' href='/admin/todos/close/{{ todo.id|e }}'>X</a>
                             </th>
                         </tr>
                     {% endfor %}

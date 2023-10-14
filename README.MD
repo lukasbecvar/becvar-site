@@ -37,6 +37,12 @@ My personal website app build with symfony framework
  - php-curl
  - php-pdo
 
+## TODOS
+- [ ] Login antibot
+- [ ] Build assets with webpack-encore
+- [ ] PHPUnit tests
+- [ ] Cloudflare dashboard (use cloudflare API)
+
 ## Dependencies
 * Symfony
    * Version: **6.3**

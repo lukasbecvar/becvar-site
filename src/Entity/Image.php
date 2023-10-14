@@ -6,8 +6,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImageRepository;
 
-#[ORM\Entity(repositoryClass: ImageRepository::class)]
 #[ORM\Table(name: 'images')]
+#[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
 {
     #[ORM\Id]

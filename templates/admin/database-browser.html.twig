@@ -14,7 +14,7 @@
             <h2 class="page-title">Select table</h2>
             <br>
             {% for table in tables %}
-                <a class='db-browser-select-link' href="/admin/database/{{table|e}}/1">{{table}}</a>
+                <a class='db-browser-select-link' href="/admin/database/{{ table }}/1">{{ table }}</a>
                 <br><br>
             {% endfor %}
         {% else %}
@@ -22,15 +22,15 @@
             {% if editor_table != null %}
             {% include "admin/elements/database-navigation.html.twig" %}
             {% if error_msg != null %}
-                {% include "admin/elements/alerts/error-alert.html.twig" %}
+                {% include "common/alerts/error-alert.html.twig" %}
             {% endif %}
             <center>
-                <form class="db-edit-form dark-table" action="/admin/database/edit/{{editor_page|e}}/{{editor_table|e}}/{{editor_id|e}}" method="post">
-                    <p class="title">Edit {{editor_table|e}}, row: {{editor_id|e}}<p></p>
+                <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}" method="post">
+                    <p class="title">Edit {{ editor_table|e }}, row: {{ editor_id|e }}<p></p>
                     {% for field in editor_field %}
                         {% if field != 'id' %}
-                            <p class="text-input-title">{{field|e}}</p>
-                            <input class="text-input" type="text" name="{{field|e}}" value="{{editor_values[field]|e}}"><br>
+                            <p class="text-input-title">{{ field|e }}</p>
+                            <input class="text-input" type="text" name="{{ field|e }}" value="{{ editor_values[field]|e }}"><br>
                         {% endif %}
                     {% endfor %}
                     <input class="input-button" type="submit" name="submitEdit" value="Edit">
@@ -41,15 +41,15 @@
                 {% if new_row_table != null %}
                     {% include "admin/elements/database-navigation.html.twig" %}
                     {% if error_msg != null %}
-                        {% include "admin/elements/alerts/error-alert.html.twig" %}
+                        {% include "common/alerts/error-alert.html.twig" %}
                     {% endif %}
                     <center>
-                        <form class="db-edit-form dark-table" action="/admin/database/add/{{new_row_page|e}}/{{new_row_table|e}}" method="post">
-                            <p class="title">Add new: {{new_row_table|e}}<p></p>
+                        <form class="db-edit-form dark-table" action="/admin/database/add/{{ new_row_page|e }}/{{ new_row_table|e }}" method="post">
+                            <p class="title">Add new: {{ new_row_table|e }}<p></p>
                             {% for field in new_row_columns %}
                                 {% if field != 'id' %}
-                                    <p class="text-input-title">{{field|e}}</p>
-                                    <input class="text-input" type="text" name="{{field|e}}" placeholder="{{field|e}}"><br>
+                                    <p class="text-input-title">{{ field|e }}</p>
+                                    <input class="text-input" type="text" name="{{ field|e }}" placeholder="{{ field|e }}"><br>
                                 {% endif %}
                             {% endfor %}
                             <input class="input-button" type="submit" name="submitSave" value="SAVE">
@@ -60,7 +60,7 @@
                     {% if table_name != null %}
                         {% include "admin/elements/database-navigation.html.twig" %}
                         {% if table_data_count == 0 %}
-                            <h2 class="page-title">table: '{{table_name|e}}' is empty</h2>
+                            <h2 class="page-title">table: '{{ table_name }}' is empty</h2>
                         {% else %}
                             <div class="table-responsive">
                                 <table class="table table-dark">
@@ -70,7 +70,7 @@
                                                 {% if column == 'id' %}
                                                     <th scope='col'>#</th>
                                                 {% else %}                                                 
-                                                    <th scope='col'>{{column|e}}</th>
+                                                    <th scope='col'>{{ column|e }}</th>
                                                 {% endif %}
                                             {% endfor %}
                                             {% if table_name == 'code_paste' %}
@@ -90,10 +90,10 @@
                                                     </th>
                                                 {% endfor %}
                                                 {% if table_name == 'code_paste' %}
-                                                    <th cope='col'><a href="/paste/view/{{row.name|e}}" target="_blank">{{row.name|e}}</a></th>
+                                                    <th cope='col'><a href="/paste/view/{{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
                                                 {% endif %}
-                                                <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{page|e}}/{{table_name|e}}/{{row.id|e}}">Edit</a></td>
-                                                <td><a class="delete-link-todos" href="/admin/database/delete/{{page|e}}/{{table_name|e}}/{{row.id|e}}">X</a></td>
+                                                <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{ page }}/{{ table_name }}/{{ row.id|e }}">Edit</a></td>
+                                                <td><a class="delete-link-todos" href="/admin/database/delete/{{ page }}/{{ table_name }}/{{ row.id|e }}">X</a></td>
                                             </tr>
                                         {% endfor %} 
                                     </tbody>
@@ -101,10 +101,10 @@
                             </div>
                             <div class="page-button-box">
                                 {% if page != 1 %}
-                                    <a class="back-page-button" href="/admin/database/{{table_name|e}}/{{page|e - 1}}">Back</a>
+                                    <a class="back-page-button" href="/admin/database/{{ table_name }}/{{ page - 1 }}">Back</a>
                                 {% endif %}
                                 {% if limit == table_data_count %}
-                                    <a class="back-page-button" href="/admin/database/{{table_name|e}}/{{page|e + 1}}">Next</a>
+                                    <a class="back-page-button" href="/admin/database/{{ table_name }}/{{ page + 1 }}">Next</a>
                                 {% endif %}
                             </div>
                             {% if page != 1 or limit == table_data_count %}

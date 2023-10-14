@@ -6,8 +6,9 @@
 
 {% block component %}
 <div class="admin-panel">
+    {# <===== ERROR BOX =====> #}
     {% if error_msg != null %}
-        {% include "admin/elements/alerts/error-alert.html.twig" %}
+        {% include "common/alerts/error-alert.html.twig" %}
     {% endif %}
     {#============================== PIC CHANGER ==============================#}
     {% if profile_pic_change_form != null %}
@@ -76,11 +77,13 @@
                 <table class="table table-dark">
                     <tbody>
                         <tr class="line-item">
-                            <th scope='row'>profile-pic: <img class="profile-pics-admin-settings" src="data:image/jpeg;base64,{{user_pic}}" alt="profile-pic"></th>
+                            <th scope='row'>profile-pic: 
+                                <img class="profile-pics-admin-settings" src="data:image/jpeg;base64,{{ user_pic|e }}" alt="profile-pic">
+                            </th>
                             <th scope='row'><a href="/admin/account/settings/pic">change</a></th>
                         </tr>
                         <tr class="line-item">
-                            <th scope='row'>username: {{user_name|e}}</th>
+                            <th scope='row'>username: {{ user_name|e }}</th>
                             <th scope='row'><a href="/admin/account/settings/username">change</a></th>
                         </tr>
                         <tr class="line-item">

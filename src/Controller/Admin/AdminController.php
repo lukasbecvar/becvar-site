@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Admin controller provides init admin site
+    Controller redirect users to login or dashboard component
 */
 
 class AdminController extends AbstractController

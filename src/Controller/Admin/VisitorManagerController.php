@@ -4,14 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Visitor;
 use App\Form\BanFormType;
-use App\Manager\AuthManager;
-use App\Manager\BanManager;
 use App\Util\SecurityUtil;
+use App\Manager\BanManager;
+use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
     Visitor manager controller provides view/ban/delete visitor
@@ -37,7 +37,7 @@ class VisitorManagerController extends AbstractController
     }
 
     #[Route('/admin/visitors/{page}', name: 'admin_visitor_manager')]
-    public function view(int $page): Response
+    public function visitorsTable(int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -66,7 +66,7 @@ class VisitorManagerController extends AbstractController
     }
 
     #[Route('/admin/visitors/delete/{page}', name: 'admin_visitor_delete')]
-    public function delete(int $page): Response
+    public function deleteAllVisitors(int $page): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -89,7 +89,7 @@ class VisitorManagerController extends AbstractController
     } 
 
     #[Route('/admin/visitors/ban/{id}/{page}', name: 'admin_visitor_ban')]
-    public function ban(int $id, int $page, Request $request): Response
+    public function banVisitor(int $id, int $page, Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -156,7 +156,7 @@ class VisitorManagerController extends AbstractController
     }
 
     #[Route('/admin/visitors/unban/{id}/{page}', name: 'admin_visitor_unban')]
-    public function unban(int $id, int $page, Request $request): Response
+    public function unbanVisitor(int $id, int $page, Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

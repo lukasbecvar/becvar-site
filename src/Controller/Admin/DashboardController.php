@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Dashboard controller provides homepage of admin site
+    Dashboard components: warning box, services controller, host info, server/database counters
 */
 
 class DashboardController extends AbstractController
@@ -107,47 +108,52 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/emergency/shutdown', name: 'admin_emergency_shutdown')]
     public function emergencyShutdown (): Response
     {
-        $error_msg = null;
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+            $error_msg = null;
 
-        // generate configmation code
-        $confirm_code = ByteString::fromRandom(16)->toString();
-
-        // check if form submited
-        if (isset($_POST['submitShutdown'])) {
-
-            // check if data is empty
-            if (empty($_POST['confirmCode']) or empty($_POST['shutdownCode'])) {
-                $error_msg = 'You must enter all values';
-            } else {
-                // get form data & escape
-                $code_1 = $this->securityUtil->escapeString($_POST['confirmCode']);
-                $code_2 = $this->securityUtil->escapeString($_POST['shutdownCode']);
-
-                // check if codes is valid
-                if ($code_1 == $code_2) {
-
-                    // execute shutdown
-                    $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
+            // generate configmation code
+            $confirm_code = ByteString::fromRandom(16)->toString();
+    
+            // check if form submited
+            if (isset($_POST['submitShutdown'])) {
+    
+                // check if data is empty
+                if (empty($_POST['confirmCode']) or empty($_POST['shutdownCode'])) {
+                    $error_msg = 'You must enter all values';
                 } else {
-                    $error_msg = 'confirmation codes is not matched';
+                    // get form data & escape
+                    $code_1 = $this->securityUtil->escapeString($_POST['confirmCode']);
+                    $code_2 = $this->securityUtil->escapeString($_POST['shutdownCode']);
+    
+                    // check if codes is valid
+                    if ($code_1 == $code_2) {
+    
+                        // execute shutdown
+                        $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
+                    } else {
+                        $error_msg = 'confirmation codes is not matched';
+                    }
                 }
             }
+    
+            return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_dashboard' => false,
+    
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+    
+                // form data
+                'error_msg' => $error_msg,
+                'confirm_code' => $confirm_code
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
         }
-
-        return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
-            // component properties
-            'is_mobile' => $this->visitorInfoUtil->isMobile(),
-            'is_dashboard' => false,
-
-            // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
-
-            // form data
-            'error_msg' => $error_msg,
-            'confirm_code' => $confirm_code
-        ]);
     } 
 
     #[Route('/admin/dashboard/runner/{service_name}/{action}', name: 'admin_service_manager')]
@@ -167,10 +173,9 @@ class DashboardController extends AbstractController
                 // run normal action
                 $this->serviceManager->runAction($service_name, $action);
             }
+            return $this->redirectToRoute('admin_dashboard');
         } else {
             return $this->redirectToRoute('auth_login');
         }
-
-        return $this->redirectToRoute('admin_dashboard');
     }
 }

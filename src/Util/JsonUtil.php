@@ -13,10 +13,10 @@ class JsonUtil
         // requst options
         $opts = [
             'http' => [
-                    'method' => 'GET',
-                    'header' => [
-                        'User-Agent: PHP'
-                    ]
+                'method' => 'GET',
+                'header' => [
+                    'User-Agent: PHP'
+                ]
             ]
         ];
 
@@ -32,8 +32,7 @@ class JsonUtil
             $data = null;
         }
 
-        // decode data
-        $data = json_decode(utf8_encode($data), true);
-        return $data;
+        // decode & return json
+        return json_decode(utf8_encode($data), true);
     }
 }
