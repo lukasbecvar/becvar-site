@@ -1,9 +1,6 @@
 # BECVAR-SITE REWORK
 
 ## TODOS
-- [ ] .env.prod .env.dev
-- [ ] encrypted image uploader, paste todos
-- [ ] escape for all vars print in twig templates with |e  => {{ var|e }}
 - [ ] NEW README.MD (BASIC INFO, INSTALLATION GUIDE, DEPENDENCY LIST, REQUIREMENTS LIST, config doc)
 - [ ] final refactor
 - [ ] deep testing

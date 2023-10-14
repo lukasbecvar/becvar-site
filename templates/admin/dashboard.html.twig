@@ -11,11 +11,11 @@
         <div class="card-header">Warnings</div>
         <div class="card-body" id="wraning-elements"> 
             {% if service_dir_exist == false %}
-                <p class="card-text"><span class="text-red"><strong>Directory: {{service_dir}} not exist</strong></span></p>
+                <p class="card-text"><span class="text-red"><strong>Directory: {{service_dir|e}} not exist</strong></span></p>
             {% endif %}
 
             {% if is_web_user_sudo == false %}
-                <p class="card-text"><span class="text-red"><strong>Permissions error: please add "{{web_service_username}} ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>
+                <p class="card-text"><span class="text-red"><strong>Permissions error: please add "{{web_service_username|e}} ALL=NOPASSWD: ALL" to /etc/sudoers</strong></span></p>
             {% endif %}
             
             {% if is_ssl == false %}
@@ -72,26 +72,26 @@
                 {% for service in services %}
                     {% if service.status == 'starting' %}
                         <p class="card-text">
-                            {{service.display_name}}: 
+                            {{service.display_name|e}}: 
                             <span class="text-info">starting...</span>
                         </p>
                     {% elseif service.status == 'online' %}
                         <p class="card-text">
-                            {{service.display_name}}: 
+                            {{service.display_name|e}}: 
                             <strong>
                                 <span class="online-text">Online</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{service.service_name}}/stop">STOP</a>]
+                                    [<a href="/admin/dashboard/runner/{{service.service_name|e}}/stop">STOP</a>]
                                 </span>
                             </strong>
                         </p>
                     {% else %}
                         <p class="card-text">
-                            {{service.display_name}}: 
+                            {{service.display_name|e}}: 
                             <strong>
                                 <span class="text-red">Offline</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{service.service_name}}/start">START</a>]
+                                    [<a href="/admin/dashboard/runner/{{service.service_name|e}}/start">START</a>]
                                 </span>
                             </strong>
                         </p>
@@ -104,9 +104,9 @@
     <div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
         <div class="card-header">System info</div>
         <div class="card-body">
-            <p class="card-text">OS: {{operating_system}}</p>
-            <p class="card-text">Kernel: {{kernal_version}}</p>
-            <p class="card-text">Arch: {{kernal_arch}}</p>
+            <p class="card-text">OS: {{operating_system|e}}</p>
+            <p class="card-text">Kernel: {{kernal_version|e}}</p>
+            <p class="card-text">Arch: {{kernal_arch|e}}</p>
         </div>
     </div>
     <div class="col-md-10 ">
@@ -121,7 +121,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{unreaded_logs_count}}
+                                    {{unreaded_logs_count|e}}
                                 </h2>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{messages_count}}
+                                    {{messages_count|e}}
                                 </h2>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{todos_count}}
+                                    {{todos_count|e}}
                                 </h2>
                              </div>
                          </div>
@@ -172,7 +172,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{images_count}}
+                                    {{images_count|e}}
                                 </h2>
                             </div>
                         </div>
@@ -189,7 +189,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{pastest_count}}
+                                    {{pastest_count|e}}
                                 </h2>
                             </div>
                         </div>
@@ -206,7 +206,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h2 class="text-white d-flex align-items-center mb-0">
-                                    {{visitors_count}}
+                                    {{visitors_count|e}}
                                 </h2>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-3">
-                                    {{server_uptime}}
+                                    {{server_uptime|e}}
                                 </h5>
                             </div>
                         </div>
@@ -240,17 +240,17 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{cpu_usage}}%</span>
+                                    <span>{{cpu_usage|e}}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{cpu_usage}}%" 
-                                aria-valuenow="{{cpu_usage}}" 
+                                data-width="{{cpu_usage|e}}%" 
+                                aria-valuenow="{{cpu_usage|e}}" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{cpu_usage}}%;">
+                                style="width: {{cpu_usage|e}}%;">
                             </div>
                         </div>
                     </div>
@@ -266,17 +266,17 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{ram_usage}}%</span>
+                                    <span>{{ram_usage|e}}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{ram_usage}}%" 
-                                aria-valuenow="{{ram_usage}}" 
+                                data-width="{{ram_usage|e}}%" 
+                                aria-valuenow="{{ram_usage|e}}" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{ram_usage}}%;">
+                                style="width: {{ram_usage|e}}%;">
                             </div>
                         </div>
                     </div>
@@ -292,17 +292,17 @@
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-12">
                                 <h5 class="text-white d-flex align-items-center mb-0">
-                                    <span>{{drive_usage}}%</span>
+                                    <span>{{drive_usage|e}}%</span>
                                 </h5>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div 
                                 class="progress-bar bg-red-custom" role="progressbar" 
-                                data-width="{{drive_usage}}%" 
-                                aria-valuenow="{{drive_usage}}%" 
+                                data-width="{{drive_usage|e}}%" 
+                                aria-valuenow="{{drive_usage|e}}%" 
                                 aria-valuemin="0" aria-valuemax="100" 
-                                style="width: {{drive_usage}}%;">
+                                style="width: {{drive_usage|e}}%;">
                             </div>
                         </div>
                     </div>

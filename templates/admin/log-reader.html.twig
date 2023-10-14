@@ -24,8 +24,8 @@
         <div class="card text-white mb-0 log-reader-info-card">
             <div class="card-header">Basic info</div>
             <div class="card-body">
-            <p class="card-text"><strong>Logs count: <span class="text-primary">{{logs_all_count}}</span> / unreaded: <span class="text-primary">{{unreeaded_count}}</span></strong></p>
-                <p class="card-text"><strong>Login, Logout: <span class="text-primary">{{login_logs_count}}</span></strong></p>
+            <p class="card-text"><strong>Logs count: <span class="text-primary">{{logs_all_count|e}}</span> / unreaded: <span class="text-primary">{{unreeaded_count|e}}</span></strong></p>
+                <p class="card-text"><strong>Login, Logout: <span class="text-primary">{{login_logs_count|e}}</span></strong></p>
             </div>
         </div>
         {% if logs_count == 0 %}
@@ -49,41 +49,41 @@
                             {% for row in logs_data %}
                                 <tr class="line-item">
                                     {% if row.name == 'action-runner' or row.name == 'ban-system' or row.name == 'authenticator' or row.name == 'geolocate-error' %}
-                                        <th scope='row' class='text-red'>{{row.id}}</th>
-                                        <th scope='row' class='text-red'>{{row.name}}</th>
-                                        <th scope='row' class='text-red'>{{row.value}}</th>
-                                        <th scope='row' class='text-red'>{{row.time}}</th>
-                                        <th scope='row' class='text-red'>{{row.ipAddress}}</th>
-                                        <th scope='row' class='text-red'>{{row.browser}}</th>
+                                        <th scope='row' class='text-red'>{{row.id|e}}</th>
+                                        <th scope='row' class='text-red'>{{row.name|e}}</th>
+                                        <th scope='row' class='text-red'>{{row.value|e}}</th>
+                                        <th scope='row' class='text-red'>{{row.time|e}}</th>
+                                        <th scope='row' class='text-red'>{{row.ipAddress|e}}</th>
+                                        <th scope='row' class='text-red'>{{row.browser|e}}</th>
                                     {% elseif row.name == 'database' %}
-                                        <th scope='row' class='text-primary'>{{row.id}}</th>
-                                        <th scope='row' class='text-primary'>{{row.name}}</th>
-                                        <th scope='row' class='text-primary'>{{row.value}}</th>
-                                        <th scope='row' class='text-primary'>{{row.time}}</th>
-                                        <th scope='row' class='text-primary'>{{row.ipAddress}}</th>
-                                        <th scope='row' class='text-primary'>{{row.browser}}</th>
+                                        <th scope='row' class='text-primary'>{{row.id|e}}</th>
+                                        <th scope='row' class='text-primary'>{{row.name|e}}</th>
+                                        <th scope='row' class='text-primary'>{{row.value|e}}</th>
+                                        <th scope='row' class='text-primary'>{{row.time|e}}</th>
+                                        <th scope='row' class='text-primary'>{{row.ipAddress|e}}</th>
+                                        <th scope='row' class='text-primary'>{{row.browser|e}}</th>
                                     {% elseif row.name == 'code-paste' or row.name == 'image-uploader' or row.name == 'message-sender' %}
-                                        <th scope='row' class='text-warning'>{{row.id}}</th>
-                                        <th scope='row' class='text-warning'>{{row.name}}</th>
-                                        <th scope='row' class='text-warning'>{{row.value}}</th>
-                                        <th scope='row' class='text-warning'>{{row.time}}</th>
-                                        <th scope='row' class='text-warning'>{{row.ipAddress}}</th>
-                                        <th scope='row' class='text-warning'>{{row.browser}}</th>
+                                        <th scope='row' class='text-warning'>{{row.id|e}}</th>
+                                        <th scope='row' class='text-warning'>{{row.name|e}}</th>
+                                        <th scope='row' class='text-warning'>{{row.value|e}}</th>
+                                        <th scope='row' class='text-warning'>{{row.time|e}}</th>
+                                        <th scope='row' class='text-warning'>{{row.ipAddress|e}}</th>
+                                        <th scope='row' class='text-warning'>{{row.browser|e}}</th>
                                     {% else %}
-                                        <th scope='row'>{{row.id}}</th>
-                                        <th scope='row'>{{row.name}}</th>
-                                        <th scope='row'>{{row.value}}</th>
-                                        <th scope='row'>{{row.time}}</th>
-                                        <th scope='row'>{{row.ipAddress}}</th>
-                                        <th scope='row'>{{row.browser}}</th>
+                                        <th scope='row'>{{row.id|e}}</th>
+                                        <th scope='row'>{{row.name|e}}</th>
+                                        <th scope='row'>{{row.value|e}}</th>
+                                        <th scope='row'>{{row.time|e}}</th>
+                                        <th scope='row'>{{row.ipAddress|e}}</th>
+                                        <th scope='row'>{{row.browser|e}}</th>
                                     {% endif %}
                                     <td>
                                         {% set result = row.visitorId / limit_value %}
                                         {% set visitor_page = result | round(0, 'ceil') %}
-                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{visitor_page}}/#{{row.visitorId}}">VISIT</a>
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{visitor_page|e}}/#{{row.visitorId|e}}">VISIT</a>
                                     </td>
                                     <td>
-                                        <a class="delete-link-todos" href="/admin/database/delete/{{reader_page}}/log/{{row.id}}?referer=log_reader">X</a>
+                                        <a class="delete-link-todos" href="/admin/database/delete/{{reader_page|e}}/log/{{row.id|e}}?referer=log_reader">X</a>
                                     </td>
                                 </tr>
                             {% endfor %} 
@@ -93,16 +93,16 @@
                 <div class="page-button-box">
                     {% if reader_page != 1 %}
                         {% if where_ip != null %}
-                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip}}/{{reader_page - 1}}">Back</a>
+                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip|e}}/{{reader_page|e - 1}}">Back</a>
                         {% else %}
-                            <a class="back-page-button" href="/admin/logs/{{reader_page - 1}}">Back</a>
+                            <a class="back-page-button" href="/admin/logs/{{reader_page|e - 1}}">Back</a>
                         {% endif %}
                     {% endif %}
                     {% if reader_limit == logs_count %}
                         {% if where_ip != null %}
-                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip}}/{{reader_page + 1}}">Next</a>
+                            <a class="back-page-button" href="/admin/logs/whereip/{{where_ip|e}}/{{reader_page|e + 1}}">Next</a>
                         {% else %}
-                            <a class="back-page-button" href="/admin/logs/{{reader_page + 1}}">Next</a>
+                            <a class="back-page-button" href="/admin/logs/{{reader_page|e + 1}}">Next</a>
                         {% endif %}
                     {% endif %}
                 </div>

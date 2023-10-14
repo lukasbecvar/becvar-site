@@ -1,12 +1,12 @@
 <ul class="breadcrumb">
     {% if editor_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{editor_table}}/{{editor_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+            <a class="selector-button btn-small" href="/admin/database/{{editor_table|e}}/{{editor_page|e}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
         </li>
         <li class="count-text-in-menuR">Row editor</li>
     {% elseif new_row_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{new_row_table}}/{{new_row_page}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
+            <a class="selector-button btn-small" href="/admin/database/{{new_row_table|e}}/{{new_row_page|e}}"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
         </li>
         <li class="count-text-in-menuR">New row</li>
     {% elseif table_name != null %}
@@ -14,11 +14,11 @@
             <a class="selector-button btn-small" href="/admin/database"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong></a>
         </li>
             <li> 
-                <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name}}</strong></a>
+                <a class="selector-button btn-small" href="/admin/database/delete/1/{{table_name|e}}/all"><strong><i class="fa fa-trash" aria-hidden="true"></i> {{table_name|e}}</strong></a>
             </li>
         <li>    
-            <a class="selector-button btn-small" href="/admin/database/add/{{page}}/{{table_name}}"><strong>NEW</strong></a>
+            <a class="selector-button btn-small" href="/admin/database/add/{{page|e}}/{{table_name|e}}"><strong>NEW</strong></a>
         </li>
-        <li class="count-text-in-menuR">{{table_name}} = {{table_data_count_all}} rows</li>
+        <li class="count-text-in-menuR">{{table_name|e}} = {{table_data_count_all|e}} rows</li>
     {% endif %}
 </ul>

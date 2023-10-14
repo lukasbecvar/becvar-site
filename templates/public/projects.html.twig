@@ -16,8 +16,8 @@
                         <h4>{{project.name}}</h4>
                         <p><em>{{project.description}}</em></p>
                         <p></p><ul>
-                            <li>Technology: {{project.technology}}</li>
-                            <li>Source: <a href="{{project.link}}" target="_blank">source </a>on github</li>
+                            <li>Technology: {{project.technology|e}}</li>
+                            <li>Source: <a href="{{project.link|e}}" target="_blank">source </a>on github</li>
                         </ul><p></p>
                     </div>
                 {% endfor %}                    
@@ -29,13 +29,13 @@
                         <h4>{{project.name}}</h4>
                         <p><em>{{project.description}}</em></p>
                         <p></p><ul>
-                            <li>Technology: {{project.technology}}</li>
-                            <li>Source: <a href="{{project.link}}" target="_blank">source </a>on github</li>
+                            <li>Technology: {{project.technology|e}}</li>
+                            <li>Source: <a href="{{project.link|e}}" target="_blank">source </a>on github</li>
                         </ul><p></p>
                     </div>
                 {% endfor %}   
             </div>
-        <p>You can find all my projects here: <a href="{{github_link}}" target="_blank">github </a></p>    
+        <p>You can find all my projects here: <a href="{{github_link|e}}" target="_blank">github </a></p>    
     </div>
 </div>
 </section>

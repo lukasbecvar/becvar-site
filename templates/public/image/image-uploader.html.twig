@@ -10,7 +10,7 @@
         </div>
         <form action="/image/uploader" method="post" enctype="multipart/form-data">
             {% if error_msg != null %}
-                <div class="error-message">{{error_msg}}</div>
+                <div class="error-message">{{error_msg|e}}</div>
             {% endif %}
             <div class="file-upload">
                 <p class="form-title">Image upload</p>

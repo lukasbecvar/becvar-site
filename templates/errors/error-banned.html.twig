@@ -9,12 +9,12 @@
 <p class="error-page-msg">
 	<strong>
 		{% if message != 'non-banned' and message != 'no-reason' %}
-			You are permanently banned on this site for reason: '{{message}}'.
+			You are permanently banned on this site for reason: '{{message|e}}'.
 		{% else %}
 			You are permanently banned on this site.
 		{% endif %}
 		<br><br>
-		Please direct unban requests to {{contact_email}}
+		Please direct unban requests to {{contact_email|e}}
 	</strong>
 </p>
 {% endblock %}

@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/assets/img/favicon.png" rel="icon">
         <link href="/assets/css/image-viewer.css" rel="stylesheet">
-        <title>Image: {{token}}</title>
+        <title>Image: {{token|e}}</title>
     </head>
     <body class="image-view">
         <center>
             <div>
-                <img src="data:image/jpg;base64,{{image}}"/> 
+                <img src="data:image/jpg;base64,{{image|e}}"/> 
             </div>
         <center>
     </body>
