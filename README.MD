@@ -72,3 +72,6 @@ My personal website app build with symfony framework
 * Light-Gallery
    * Version: **1.10.0**
    * [Github](https://github.com/sachinchoolur/lightGallery)
+
+## License
+The framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
