@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VisitorRepository;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
+#[ORM\Table(name: 'visitors')]
 class Visitor
 {
     #[ORM\Id]

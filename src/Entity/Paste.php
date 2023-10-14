@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PasteRepository;
 
 #[ORM\Entity(repositoryClass: PasteRepository::class)]
+#[ORM\Table(name: 'code_paste')]
 class Paste
 {
     #[ORM\Id]

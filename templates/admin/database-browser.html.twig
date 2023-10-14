@@ -73,7 +73,7 @@
                                                     <th scope='col'>{{column}}</th>
                                                 {% endif %}
                                             {% endfor %}
-                                            {% if table_name == 'paste' %}
+                                            {% if table_name == 'code_paste' %}
                                                 <th cope='col'>Link</th>
                                             {% endif %}
                                             <th cope='col'>Edit</th>
@@ -89,7 +89,7 @@
                                                         {{ content ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
-                                                {% if table_name == 'paste' %}
+                                                {% if table_name == 'code_paste' %}
                                                     <th cope='col'><a href="/paste/view/{{row.name}}" target="_blank">{{row.name}}</a></th>
                                                 {% endif %}
                                                 <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{page}}/{{table_name}}/{{row.id}}">Edit</a></td>

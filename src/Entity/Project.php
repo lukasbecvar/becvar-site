@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProjectRepository;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[ORM\Table(name: 'projects')]
 class Project
 {
     #[ORM\Id]
