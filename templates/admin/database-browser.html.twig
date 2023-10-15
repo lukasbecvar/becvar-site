@@ -36,7 +36,7 @@
                     {% for field in editor_field %}
                         {% if field != 'id' %}
                             <p class="text-input-title">{{ field|e }}</p>
-                            <input class="text-input" type="text" name="{{ field|e }}" value="{{ editor_values[field]|e }}"><br>
+                            <input class="text-input" type="text" name="{{ field|e }}" value="{{ editor_values[field]|e }}" maxlength="200"><br>
                         {% endif %}
                     {% endfor %}
                     <input class="input-button" type="submit" name="submitEdit" value="Edit">
@@ -55,7 +55,7 @@
                             {% for field in new_row_columns %}
                                 {% if field != 'id' %}
                                     <p class="text-input-title">{{ field|e }}</p>
-                                    <input class="text-input" type="text" name="{{ field|e }}" placeholder="{{ field|e }}"><br>
+                                    <input class="text-input" type="text" name="{{ field|e }}" placeholder="{{ field|e }}" maxlength="200"><br>
                                 {% endif %}
                             {% endfor %}
                             <input class="input-button" type="submit" name="submitSave" value="SAVE">
