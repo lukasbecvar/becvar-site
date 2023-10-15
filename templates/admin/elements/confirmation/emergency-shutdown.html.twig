@@ -20,7 +20,7 @@
     {% endif %}
 
     {# <===== SHUTDOWN CONFIRMATION FORM =====> #}
-    <form class="login-form dark-table" style="top: 28%;" action="/admin/dashboard/emergency/shutdown" method="post">
+    <form class="login-form dark-table shutdown-form" action="/admin/dashboard/emergency/shutdown" method="post">
         <p class="login-form-title">Confirmation</p>
         <p class="login-form-title login-form-sub-title">please repeat the verification code</p>
         <input class="text-input" type="text" name="confirmCode" value={{ confirm_code }} readonly><br>

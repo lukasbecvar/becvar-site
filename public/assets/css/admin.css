@@ -788,6 +788,16 @@ textarea {
 	margin-left: 0px;
 }
 
+.diagnostic-card {
+	margin-left: 1% !important; 
+	margin-right: 1% !important;
+	margin-bottom: 1% !important;
+}
+
+.shutdown-form {
+	top: 28%;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
