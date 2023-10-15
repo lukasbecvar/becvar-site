@@ -36,7 +36,7 @@ class ContactFormType extends AbstractType
             'attr' => [
                 'class' => 'form-control resize-disable mt-3',
                 'placeholder' => 'Message',
-                'maxlength' => 200
+                'maxlength' => 1024
             ],
             'mapped' => true
         ])
