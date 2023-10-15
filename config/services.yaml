@@ -23,24 +23,24 @@ services:
     # resources build checker
     App\Middleware\AssetsCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request' }
-
-    # maintenance mode checker
-    App\Middleware\MaintenanceMiddleware:
-        tags:
-            - { name: kernel.event_listener, event: kernel.request }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
 
     # database online checker
     App\Middleware\DatabaseOnlineMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request' }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
+
+    # maintenance mode checker
+    App\Middleware\MaintenanceMiddleware:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 3 }
 
     # visitor system service
     App\Middleware\VisitorSystemMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request' }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
     # auto login service
     App\Middleware\AutoLoginMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request' }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }
