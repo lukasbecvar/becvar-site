@@ -188,7 +188,7 @@ class ServiceManager
 
     public function isServiceRunning(string $service): bool 
     {
-        $output = shell_exec('systemctl is-active'.$service);
+        $output = shell_exec('systemctl is-active '.$service);
         
         // check if service running
         if (trim($output) == 'active') {
