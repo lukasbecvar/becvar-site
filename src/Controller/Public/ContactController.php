@@ -89,8 +89,8 @@ class ContactController extends AbstractController
             } else if (empty($message_input)) {
                 $error_msg = 'Please enter your message';
                 $found_error = true;
-            } else if (strlen($message_input) > 200) {
-                $error_msg = 'Maximal message lenght is 200 characters';
+            } else if (strlen($message_input) > 2000) {
+                $error_msg = 'Maximal message lenght is 2000 characters';
                 $found_error = true;
 
             // check if honeypot is empty
