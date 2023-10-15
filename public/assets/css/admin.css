@@ -784,6 +784,10 @@ textarea {
 	margin: 0;
 }
 
+.email-line {
+	margin-left: 0px;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
@@ -807,6 +811,7 @@ textarea {
 	}
 	.delete-link {
 		margin-bottom: 20px;
+		font-size: 18px;
 	}
 	.login-form-title {
 		font-size: 20px;

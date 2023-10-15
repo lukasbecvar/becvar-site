@@ -14,13 +14,14 @@
                 {% for message in inbox_data %}
                     <div class='card text-white mb-3 msg-box'>
                         <div class="card-body">
-                            <h5 class="left-center" class="card-title">{{ message.name|e }} ({{ message.email|e }}) 
-                                <span class='text-success phone-none'>[{{ message.time|e }}]</span>, 
+                            <a class='delete-link' href='/admin/inbox/close/{{ message.id|e }}/{{ page }}'>X</a>
+                            <a class='delete-link text-warning' href="/admin/visitors/ban/{{ message.visitorId|e }}/{{ page }}?referer=inbox">
+                                BAN
+                            </a>
+                            <h5 class="left-center card-title">{{ message.name|e }}
+                                <span class='text-success phone-none'>[{{ message.time|e }}]</span><span class="phone-none">, </span>
                                 <span class='text-warning phone-none'>[{{ message.ipAddress|e }}]</span>
-                                <a class='delete-link' href='/admin/inbox/close/{{ message.id|e }}/{{ page }}'>X</a>
-                                <a class='delete-link text-warning' href="/admin/visitors/ban/{{ message.visitorId|e }}/{{ page }}?referer=inbox">
-                                    BAN
-                                </a>
+                                <p class="left-centers email-line text-warning">Email: {{ message.email|e }}</p>
                             </h5>
                             <p class="left-center card-text">{{message.message|e}}</p>
                         </div>
