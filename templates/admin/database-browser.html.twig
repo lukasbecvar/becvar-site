@@ -27,7 +27,11 @@
                 {% include "common/alerts/error-alert.html.twig" %}
             {% endif %}
             <center>
-                <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}" method="post">
+                {% if editor_referer != null %}
+                    <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}?referer={{ editor_referer }}" method="post">
+                {% else %}
+                    <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}" method="post">
+                {% endif %}
                     <p class="title">Edit {{ editor_table|e }}, row: {{ editor_id|e }}<p></p>
                     {% for field in editor_field %}
                         {% if field != 'id' %}

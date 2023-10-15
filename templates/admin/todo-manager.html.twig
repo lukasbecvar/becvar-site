@@ -29,7 +29,7 @@
                             <th scope='row'>{{ todo.id|e }}</th>
                             <th scope='row'>{{ todo.text|e }}</th>
                             <th scope='row'>
-                                <a class='text-warning delete-link-todos' href='#'>Edit</a>
+                                <a class='text-warning delete-link-todos' href='/admin/database/edit/1/todos/{{ todo.id|e }}?referer=todo_manager'>Edit</a>
                             </th>
                             <th scope='row'>
                                 <a class='delete-link-todos' href='/admin/todos/close/{{ todo.id|e }}'>X</a>

@@ -99,7 +99,7 @@ class DatabaseBrowserController extends AbstractController
     }
     
     #[Route('/admin/database/edit/{page}/{table}/{id}', name: 'admin_database_edit')]
-    public function rowEdit(string $table, int $page, int $id): Response
+    public function rowEdit(string $table, int $page, int $id, Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -111,6 +111,8 @@ class DatabaseBrowserController extends AbstractController
             
             // get table columns
             $columns = $this->databaseManager->getTableColumns($table);
+
+            $referer = $request->query->get('referer');
 
 			// check if user submit edit form
 			if (isset($_POST["submitEdit"])) {
@@ -135,10 +137,17 @@ class DatabaseBrowserController extends AbstractController
 
                 // redirect back to browser
                 if ($error_msg == null) {
-                    return $this->redirectToRoute('admin_database_browser', [
-                        'table' => $table,
-                        'page' => $page
-                    ]);
+                 
+                    // check if edited by todo manager
+                    if ($referer == 'todo_manager') {
+                        return $this->redirectToRoute('admin_todos');              
+                    } else {
+
+                        return $this->redirectToRoute('admin_database_browser', [
+                            'table' => $table,
+                            'page' => $page
+                        ]);
+                    }
                 }
             }            
 
@@ -163,6 +172,7 @@ class DatabaseBrowserController extends AbstractController
                 'editor_field' => $columns,
                 'editor_values' => $this->databaseManager->selectRowData($table, $id),
                 'editor_page' => $page,
+                'editor_referer' => $referer,
                 'error_msg' => $error_msg
             ]);
         } else {
