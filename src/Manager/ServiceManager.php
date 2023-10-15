@@ -200,7 +200,7 @@ class ServiceManager
     
     public function isScreenSessionRunning(string $session_name): bool 
     {
-        $exec = shell_exec("sudo screen -S $session_name -Q select . ; echo $?");
+        $exec = shell_exec("sudo su - ".$_ENV['LINUX_RUNNER_USER']." -c 'screen -S $session_name -Q select . ; echo $?'");
     
         // check if exec get output
         if ($exec == "0") {
@@ -258,7 +258,7 @@ class ServiceManager
     public function executeCommand($command): void 
     {
         try {
-            shell_exec('sudo '.$command);
+            shell_exec($command);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to executed command: '.$e->getMessage(), 500);
         }
@@ -267,7 +267,7 @@ class ServiceManager
     public function emergencyShutdown(): void
     {
         $this->logManager->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
-        $this->executeCommand('poweroff');
+        $this->executeCommand('sudo poweroff');
     }
 
     public function getServicesJson(): ?array
