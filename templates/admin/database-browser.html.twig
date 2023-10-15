@@ -14,8 +14,10 @@
             <h2 class="page-title">Select table</h2>
             <br>
             {% for table in tables %}
-                <a class='db-browser-select-link' href="/admin/database/{{ table }}/1">{{ table }}</a>
-                <br><br>
+                {% if table != 'doctrine_migration_versions' %}
+                    <a class='db-browser-select-link' href="/admin/database/{{ table }}/1">{{ table }}</a>
+                    <br><br>
+                {% endif %}
             {% endfor %}
         {% else %}
             {#=================================== ROW-EDITOR ===================================#}
