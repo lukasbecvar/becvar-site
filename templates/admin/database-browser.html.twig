@@ -82,7 +82,9 @@
                                             {% if table_name == 'code_paste' %}
                                                 <th cope='col'>Link</th>
                                             {% endif %}
-                                            <th cope='col'>Edit</th>
+                                            {% if table_name != 'code_paste' and table_name != 'images' %}
+                                                <th cope='col'>Edit</th>
+                                            {% endif %}
                                             <th cope='col'>X</th>
                                         </tr>
                                     </thead>
@@ -98,7 +100,9 @@
                                                 {% if table_name == 'code_paste' %}
                                                     <th cope='col'><a href="/paste/view/{{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
                                                 {% endif %}
-                                                <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{ page }}/{{ table_name }}/{{ row.id|e }}">Edit</a></td>
+                                                {% if table_name != 'code_paste' and table_name != 'images' %}
+                                                    <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{ page }}/{{ table_name }}/{{ row.id|e }}">Edit</a></td>
+                                                {% endif %}
                                                 <td><a class="delete-link-todos" href="/admin/database/delete/{{ page }}/{{ table_name }}/{{ row.id|e }}">X</a></td>
                                             </tr>
                                         {% endfor %} 

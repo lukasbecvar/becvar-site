@@ -37,9 +37,11 @@
                 </a>
             </li>
         <li>    
-            <a class="selector-button btn-small" href="/admin/database/add/{{ page }}/{{ table_name }}">
-                <strong>NEW</strong>
-            </a>
+            {% if table_name != 'code_paste' and table_name != 'images' %}
+                <a class="selector-button btn-small" href="/admin/database/add/{{ page }}/{{ table_name }}">
+                    <strong>NEW</strong>
+                </a>
+            {% endif %}
         </li>
         {# <===== PROJECTS UPDATE BUTTON =====> #}
         {% if table_name == 'projects' %}
