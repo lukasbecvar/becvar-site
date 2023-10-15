@@ -56,7 +56,7 @@ class DiagnosticController extends AbstractController
                 'is_system_linux' => $this->dashboardUtil->isSystemLinux(),
                 'drive_usage' => $this->dashboardUtil->getDriveUsage(),
                 'cpu_usage' => $this->dashboardUtil->getCpuUsage(),
-                'ram_usage' => $this->dashboardUtil->getRamUsage()["used"],
+                'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],
                 'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
                 'web_service_username' => $this->dashboardUtil->getWebUsername(),
                 'service_dir_exist' => file_exists($_ENV['SERVICES_DIR']),
@@ -64,7 +64,7 @@ class DiagnosticController extends AbstractController
                 
                 // web diagnostics
                 'is_ssl' => $this->siteUtil->isSsl(),
-                'is_www_subdomain' => str_starts_with($_SERVER['HTTP_HOST'], "www"),
+                'is_www_subdomain' => str_starts_with($_SERVER['HTTP_HOST'], 'www'),
                 'is_dev_mode' => $this->siteUtil->isDevMode(),
                 'is_maintenance' => $this->siteUtil->isMaintenance(),   
                 'is_services_list_exist' => $this->serviceManager->isServicesListExist(),

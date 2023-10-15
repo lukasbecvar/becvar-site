@@ -65,11 +65,11 @@ class RegisterFormType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password "again"',
+                        'message' => 'Please enter a password again',
                     ]),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Your password "again" should be at least {{ limit }} characters',
+                        'minMessage' => 'Your password again should be at least {{ limit }} characters',
                         'max' => 80,
                     ]),
                 ],

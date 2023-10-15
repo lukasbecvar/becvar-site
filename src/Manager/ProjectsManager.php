@@ -39,11 +39,11 @@ class ProjectsManager
         $github_link = $_ENV['GITHUB_LINK'];
 
         // strip link
-        $github_user = str_replace("https://github.com/", "", $github_link);
-        $github_user = str_replace("/", "", $github_user);
+        $github_user = str_replace('https://github.com/', '', $github_link);
+        $github_user = str_replace('/', '', $github_user);
 
         // get repos form github
-        $repos = $this->jsonUtil->getJson("https://api.github.com/users/$github_user/repos");
+        $repos = $this->jsonUtil->getJson('https://api.github.com/users/'.$github_user.'/repos');
 
         // delete all projects from table
         $this->dropProjects();
@@ -64,10 +64,10 @@ class ProjectsManager
             if ($name != $github_user) {
 
                 // check if repo archived
-                if ($repo["archived"] == true) {
-                    $status = "closed";
+                if ($repo['archived'] == true) {
+                    $status = 'closed';
                 } else {
-                    $status = "open";
+                    $status = 'open';
                 }
 
                 // init project entity
@@ -85,13 +85,13 @@ class ProjectsManager
                     $this->entityManager->persist($project);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->logManager->log("project-update", "error to update project list");
+                    $this->logManager->log('project-update', 'error to update project list');
                     $this->errorManager->handleError('error to save project: '.$e->getMessage(), 500);
                 }
             }
         }
 
-        $this->logManager->log("project-update", "project list updated!");
+        $this->logManager->log('project-update', 'project list updated!');
     }
 
     public function dropProjects(): void 

@@ -84,9 +84,9 @@ class DashboardController extends AbstractController
                 'services' => $this->serviceManager->getServices(),
                 
                 // dashboard data (System info)
-                'operating_system' => str_replace("DISTRIB_ID=", "", $this->dashboardUtil->getSoftwareInfo()["distro"]["operating_system"]),
-                'kernal_version' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_version"],
-                'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()["distro"]["kernal_arch"],
+                'operating_system' => str_replace('DISTRIB_ID=', '', $this->dashboardUtil->getSoftwareInfo()['distro']['operating_system']),
+                'kernal_version' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_version'],
+                'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_arch'],
 
                 // dashboard data (counters)
                 'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log, ['status' => 'unreaded']),

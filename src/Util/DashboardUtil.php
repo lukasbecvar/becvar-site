@@ -45,10 +45,10 @@ class DashboardUtil
 
     public function getHostUptime(): string 
     {
-        $ut = strtok(exec("cat /proc/uptime"), ".");
-        $days = sprintf("%2d", ($ut/(3600*24)));
-        $hours = sprintf("%2d", (($ut % (3600*24))/3600));
-        $min = sprintf("%2d", ($ut % (3600*24) % 3600)/60);
+        $ut = strtok(exec('cat /proc/uptime'), '.');
+        $days = sprintf('%2d', ($ut/(3600*24)));
+        $hours = sprintf('%2d', (($ut % (3600*24))/3600));
+        $min = sprintf('%2d', ($ut % (3600*24) % 3600)/60);
 
         // format output
         return 'Days: '.$days.', Hours: '.$hours.', Min: '.$min;
@@ -136,7 +136,7 @@ class DashboardUtil
     public function isWebUserSudo(): bool 
     {
         // testing sudo exec
-        $exec = exec("sudo echo test");
+        $exec = exec('sudo echo test');
 
         // count output length
         $len = strlen($exec);
@@ -161,7 +161,7 @@ class DashboardUtil
     public function getWebUsername(): ?string 
     {
         try {
-            return exec("whoami");
+            return exec('whoami');
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get web username: '.$e->getMessage(), 500);
         }

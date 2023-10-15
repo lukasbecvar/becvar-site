@@ -59,7 +59,7 @@ class VisitorInfoUtil
         $out = null;
 
         // identify shortify array [ID: str_contains, Value: replacement]
-        $browser_list = $this->jsonUtil->getJson(__DIR__."/../../browser-list.json");
+        $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../browser-list.json');
 
         // check if browser list found
         if ($browser_list != NULL) {
@@ -75,64 +75,64 @@ class VisitorInfoUtil
         if ($out == null) {
             // identify Internet explorer
             if(preg_match('/MSIE (\d+\.\d+);/', $user_agent)) {
-                $out = "Internet Explore";
+                $out = 'Internet Explore';
 
             } else if (str_contains($user_agent, 'MSIE')) {
-                $out = "Internet Explore";   
+                $out = 'Internet Explore';   
 
             // identify Google chrome
             } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent) ) {
-                $out = "Chrome";
+                $out = 'Chrome';
             
             // identify Internet edge
             } else if (preg_match('/Edge\/\d+/', $user_agent)) {
-                $out = "Edge";
+                $out = 'Edge';
             
             // identify Firefox
             } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = "Firefox";
+                $out = 'Firefox';
 
             } else if (str_contains($user_agent, 'Firefox/96')) {
-                $out = "Firefox/96";  
+                $out = 'Firefox/96';  
                 
             // identify Safari
             } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = "Safari";
+                $out = 'Safari';
                 
             // identify UC Browser
             } else if (str_contains($user_agent, 'UCWEB')) {
-                $out = "UC Browser";
+                $out = 'UC Browser';
 
             // identify UCBrowser Browser
             } else if (str_contains($user_agent, 'UCBrowser')) {
-                $out = "UC Browser";
+                $out = 'UC Browser';
 
             // identify IceApe Browser
             } else if (str_contains($user_agent, 'Iceape')) {
-                $out = "IceApe Browser";
+                $out = 'IceApe Browser';
 
             // identify Maxthon Browser
             } else if (str_contains($user_agent, 'maxthon')) {
-                $out = "Maxthon Browser";
+                $out = 'Maxthon Browser';
 
             // identify Konqueror Browser
             } else if (str_contains($user_agent, 'konqueror')) {
-                $out = "Konqueror Browser";
+                $out = 'Konqueror Browser';
 
             // identify NetFront Browser
             } else if (str_contains($user_agent, 'NetFront')) {
-                $out = "NetFront Browser";
+                $out = 'NetFront Browser';
 
             // identify Midori Browser
             } else if (str_contains($user_agent, 'Midori')) {
-                $out = "Midori Browser";
+                $out = 'Midori Browser';
 
             // identify Opera
             } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = "Opera";
+                $out = 'Opera';
 
             } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = "Opera";
+                $out = 'Opera';
             }
         }
 

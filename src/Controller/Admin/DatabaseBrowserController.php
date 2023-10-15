@@ -115,7 +115,7 @@ class DatabaseBrowserController extends AbstractController
             $referer = $request->query->get('referer');
 
 			// check if user submit edit form
-			if (isset($_POST["submitEdit"])) {
+			if (isset($_POST['submitEdit'])) {
 
                 // update values
                 foreach($columns as $row) { 

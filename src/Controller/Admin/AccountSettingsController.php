@@ -93,7 +93,7 @@ class AccountSettingsController extends AbstractController
                 $extension = $image->getClientOriginalExtension();
 
                 // check if file is image
-                if ($extension == "jpg" or $extension == "jpeg" or $extension == "png") {
+                if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
 
                     // get image content
                     $fileContents = file_get_contents($image);

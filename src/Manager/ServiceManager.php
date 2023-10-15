@@ -46,11 +46,11 @@ class ServiceManager
 
                         // build ufw service
                         $ufw = [
-                            'service_name' => $services_list[$index]["service_name"],
-                            'display_name' => $services_list[$index]["display_name"],
-                            'start_cmd' => $services_list[$index]["start_cmd"],
-                            'stop_cmd' => $services_list[$index]["stop_cmd"],
-                            'enable' => $services_list[$index]["enable"]
+                            'service_name' => $services_list[$index]['service_name'],
+                            'display_name' => $services_list[$index]['display_name'],
+                            'start_cmd' => $services_list[$index]['start_cmd'],
+                            'stop_cmd' => $services_list[$index]['stop_cmd'],
+                            'enable' => $services_list[$index]['enable']
                         ];
 
                         // get ufw status
@@ -69,15 +69,15 @@ class ServiceManager
 
                         // build teamSpeak service
                         $team_speak = [
-                            'service_name' => $services_list[$index]["service_name"],
-                            'display_name' => $services_list[$index]["display_name"],
-                            'start_cmd' => $services_list[$index]["start_cmd"],
-                            'stop_cmd' => $services_list[$index]["stop_cmd"],
-                            'enable' => $services_list[$index]["enable"]
+                            'service_name' => $services_list[$index]['service_name'],
+                            'display_name' => $services_list[$index]['display_name'],
+                            'start_cmd' => $services_list[$index]['start_cmd'],
+                            'stop_cmd' => $services_list[$index]['stop_cmd'],
+                            'enable' => $services_list[$index]['enable']
                         ];
 
                         // get team-speak status
-                        if ($this->isProcessRunning($services_list[$index]["service_name"])) {
+                        if ($this->isProcessRunning($services_list[$index]['service_name'])) {
                             $team_speak += ['status' => 'online'];
                         } else {
                             $team_speak += ['status' => 'offline'];
@@ -92,17 +92,17 @@ class ServiceManager
 
                         // build minecraft service
                         $minecraft = [
-                            'service_name' => $services_list[$index]["service_name"],
-                            'display_name' => $services_list[$index]["display_name"],
-                            'start_cmd' => $services_list[$index]["start_cmd"],
-                            'stop_cmd' => $services_list[$index]["stop_cmd"],
-                            'enable' => $services_list[$index]["enable"]
+                            'service_name' => $services_list[$index]['service_name'],
+                            'display_name' => $services_list[$index]['display_name'],
+                            'start_cmd' => $services_list[$index]['start_cmd'],
+                            'stop_cmd' => $services_list[$index]['stop_cmd'],
+                            'enable' => $services_list[$index]['enable']
                         ];
 
                         // get minecraft status
-                        if (($this->isSocktOpen("127.0.0.1", "25565") == "Offline") && ($this->isScreenSessionRunning("minecraft"))) {
+                        if (($this->isSocktOpen('127.0.0.1', '25565') == 'Offline') && ($this->isScreenSessionRunning('minecraft'))) {
                             $minecraft += ['status' => 'starting'];
-                        } elseif ($this->isSocktOpen("127.0.0.1", "25565") == "Online") {
+                        } elseif ($this->isSocktOpen('127.0.0.1', '25565') == 'Online') {
                             $minecraft += ['status' => 'online'];
                         } else {
                             $minecraft += ['status' => 'offline'];
@@ -117,15 +117,15 @@ class ServiceManager
 
                         // build service array
                         $service_array = [
-                            'service_name' => $services_list[$index]["service_name"],
-                            'display_name' => $services_list[$index]["display_name"],
-                            'start_cmd' => $services_list[$index]["start_cmd"],
-                            'stop_cmd' => $services_list[$index]["stop_cmd"],
-                            'enable' => $services_list[$index]["enable"]
+                            'service_name' => $services_list[$index]['service_name'],
+                            'display_name' => $services_list[$index]['display_name'],
+                            'start_cmd' => $services_list[$index]['start_cmd'],
+                            'stop_cmd' => $services_list[$index]['stop_cmd'],
+                            'enable' => $services_list[$index]['enable']
                         ];
 
                         // get service status
-                        if ($this->isServiceRunning($services_list[$index]["service_name"])) {
+                        if ($this->isServiceRunning($services_list[$index]['service_name'])) {
                             $service_array += ['status' => 'online'];
                         } else {
                             $service_array += ['status' => 'offline'];
@@ -188,10 +188,10 @@ class ServiceManager
 
     public function isServiceRunning(string $service): bool 
     {
-        $output = shell_exec("systemctl is-active $service");
+        $output = shell_exec('systemctl is-active'.$service);
         
         // check if service running
-        if (trim($output) == "active") {
+        if (trim($output) == 'active') {
             return true;
         } else {
             return false;
@@ -203,7 +203,7 @@ class ServiceManager
         $exec = shell_exec("sudo su - ".$_ENV['LINUX_RUNNER_USER']." -c 'screen -S $session_name -Q select . ; echo $?'");
     
         // check if exec get output
-        if ($exec == "0") {
+        if ($exec == '0') {
             return true;
         } else {
             return false;
@@ -213,7 +213,7 @@ class ServiceManager
     public function isSocktOpen(string $ip, int $port): string 
     {
         // default response output
-        $response_output = "Offline";
+        $response_output = 'Offline';
 
         // open service socket
         $service = @fsockopen($ip, $port);
@@ -228,7 +228,7 @@ class ServiceManager
 
     public function isProcessRunning(string $process): bool 
     {
-        exec("pgrep ".$process, $pids);
+        exec('pgrep '.$process, $pids);
         
         // check if outputed pid
         if(empty($pids)) {
@@ -242,10 +242,10 @@ class ServiceManager
     {
         try {
             // execute cmd
-            $output = shell_exec("sudo ufw status");
+            $output = shell_exec('sudo ufw status');
     
             // check if ufw running
-            if (str_starts_with($output, "Status: active")) {
+            if (str_starts_with($output, 'Status: active')) {
                 return true;
             } else {
                 return false;

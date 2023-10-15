@@ -64,7 +64,7 @@ class AuthManager
                 // check if remember set
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieManager->set("login-token-cookie", $user_token, time() + (60*60*24*7*365));
+                        $this->cookieManager->set('login-token-cookie', $user_token, time() + (60*60*24*7*365));
                     }
                 }
 
@@ -88,7 +88,7 @@ class AuthManager
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
             $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
-            $this->cookieManager->unset("login-token-cookie");
+            $this->cookieManager->unset('login-token-cookie');
             $this->sessionManager->destroySession();   
         } 
     }

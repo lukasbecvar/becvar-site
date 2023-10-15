@@ -26,7 +26,7 @@ class DatabaseOnlineMiddleware
     {
         try {
             // select for connection try
-            $this->doctrineConnection->executeQuery("SELECT 1");
+            $this->doctrineConnection->executeQuery('SELECT 1');
         } catch (\Exception $e) {
 
             // return error if not connected

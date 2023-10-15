@@ -61,10 +61,10 @@ class LoginController extends AbstractController
                 $password = $this->securityUtil->escapeString($password);
 
                 // check if user exist
-                if ($this->authManager->getUserRepository(["username" => $username]) != null) {
+                if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                     
                     // get user data
-                    $user = $this->authManager->getUserRepository(["username" => $username]);
+                    $user = $this->authManager->getUserRepository(['username' => $username]);
 
                     // check if password valid
                     if ($this->securityUtil->hash_validate($password , $user->getPassword())) {

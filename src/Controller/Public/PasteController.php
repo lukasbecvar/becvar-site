@@ -77,7 +77,7 @@ class PasteController extends AbstractController
                 } 
 
                 // log new paste
-                $this->logManager->log("code-paste", "saved new paste: ".$name);
+                $this->logManager->log('code-paste', 'saved new paste: '.$name);
             }
         }
 
@@ -100,9 +100,9 @@ class PasteController extends AbstractController
             $content = $pasteContent->getContent();
 
             // replace xss (Escape [XSS Protection])
-            $content = str_replace(array("&lt;", "&gt;"), array("<", ">"), $content);
+            $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);
 
-            $this->logManager->log("code-paste", "visitor viewed paste: ".$name);
+            $this->logManager->log('code-paste', 'visitor viewed paste: '.$name);
         } else {
             $this->errorManager->handleError('error paste not found', 404);
         }
