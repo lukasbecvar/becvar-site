@@ -28,7 +28,7 @@ class PasswordChangeFormType extends AbstractType
                     'message' => 'Please enter a username',
                 ]),
                 new Length([
-                    'min' => 4,
+                    'min' => 8,
                     'minMessage' => 'Your username should be at least {{ limit }} characters',
                     'max' => 50,
                 ]),
@@ -47,7 +47,7 @@ class PasswordChangeFormType extends AbstractType
                     'message' => 'Please enter a username',
                 ]),
                 new Length([
-                    'min' => 4,
+                    'min' => 8,
                     'minMessage' => 'Your username should be at least {{ limit }} characters',
                     'max' => 50,
                 ]),
