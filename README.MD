@@ -1,5 +1,5 @@
 ## About becvar-site
-My personal website app build with symfony framework
+Personal website builded with symfony framework
 
 ## Public site
  - Main components: about, projects list, contact, etc...
@@ -42,6 +42,8 @@ My personal website app build with symfony framework
 - [ ] Build assets with webpack-encore
 - [ ] PHPUnit tests
 - [ ] Cloudflare dashboard (use cloudflare API)
+- [ ] Terminal in admin
+- [ ] File manager & config editor
 
 ## Dependencies
 * Symfony
