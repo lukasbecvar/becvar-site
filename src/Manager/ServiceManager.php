@@ -36,22 +36,20 @@ class ServiceManager
         if ($services_list != null) {
            
             // execute separate service row
-            foreach ($services_list as $index => $value) {
+            foreach ($services_list as $value) {
                 
                 // check if service is enabled
-                if ($services_list[$index]['enable']) {
+                if ($value['enable']) {
 
                     // build service array
                     $service_array = [
-                        'service_name' => $services_list[$index]['service_name'],
-                        'display_name' => $services_list[$index]['display_name'],
-                        'start_cmd' => $services_list[$index]['start_cmd'],
-                        'stop_cmd' => $services_list[$index]['stop_cmd'],
-                        'enable' => $services_list[$index]['enable']
+                        'service_name' => $value['service_name'],
+                        'display_name' => $value['display_name'],
+                        'enable' => $value['enable']
                     ];
 
                     // get service status
-                    if ($this->isServiceRunning($services_list[$index]['service_name'])) {
+                    if ($this->isServiceRunning($value['service_name'])) {
                         $service_array += ['status' => 'online'];
                     } else {
                         $service_array += ['status' => 'offline'];
@@ -73,31 +71,15 @@ class ServiceManager
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
-            $services_list = $this->getServicesJson();
-
             // check if action is emergency shutdown
             if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
                 $this->emergencyShutdown();
             
             } elseif ($service_name == 'ufw') {
-                if ($action == 'start') {
-                    $command = 'sudo ufw enable';
-                } elseif ($action == 'stop') {
-                    $command = 'sudo ufw disable';
-                } else {
-                    $this->errorManager->handleError('error ufw action: '.$action.' not found', 500);
-                }
+                $command = 'sudo ufw '.$action;
             } else {
-                // start action
-                if ($action == 'start') {
-                    $command = $services_list[$service_name]['start_cmd'];
-
-                // stop action
-                } elseif ($action == 'stop') {
-                    $command = $services_list[$service_name]['stop_cmd'];
-                } else {
-                    $this->errorManager->handleError('action runner error: action: '.$action.' not supported', 400);
-                }
+                // build action
+                $command = 'sudo systemctl '.$action.' '.$service_name;
             }
 
             // log action
