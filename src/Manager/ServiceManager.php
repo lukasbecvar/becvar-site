@@ -41,99 +41,24 @@ class ServiceManager
                 // check if service is enabled
                 if ($services_list[$index]['enable']) {
 
-                    // UFW service service
-                    if ($services_list[$index]['service_name'] == 'ufw') {
+                    // build service array
+                    $service_array = [
+                        'service_name' => $services_list[$index]['service_name'],
+                        'display_name' => $services_list[$index]['display_name'],
+                        'start_cmd' => $services_list[$index]['start_cmd'],
+                        'stop_cmd' => $services_list[$index]['stop_cmd'],
+                        'enable' => $services_list[$index]['enable']
+                    ];
 
-                        // build ufw service
-                        $ufw = [
-                            'service_name' => $services_list[$index]['service_name'],
-                            'display_name' => $services_list[$index]['display_name'],
-                            'start_cmd' => $services_list[$index]['start_cmd'],
-                            'stop_cmd' => $services_list[$index]['stop_cmd'],
-                            'enable' => $services_list[$index]['enable']
-                        ];
-
-                        // get ufw status
-                        if ($this->isUfwRunning()) {
-                            $ufw += ['status' => 'online'];
-                        } else {
-                            $ufw += ['status' => 'offline'];
-                        }
-
-                        // add ufw array to services
-                        array_push($services, $ufw);
-                    } 
-                    
-                    // teamSpeak server service
-                    elseif ($services_list[$index]['service_name'] == 'ts3server') {
-
-                        // build teamSpeak service
-                        $team_speak = [
-                            'service_name' => $services_list[$index]['service_name'],
-                            'display_name' => $services_list[$index]['display_name'],
-                            'start_cmd' => $services_list[$index]['start_cmd'],
-                            'stop_cmd' => $services_list[$index]['stop_cmd'],
-                            'enable' => $services_list[$index]['enable']
-                        ];
-
-                        // get team-speak status
-                        if ($this->isProcessRunning($services_list[$index]['service_name'])) {
-                            $team_speak += ['status' => 'online'];
-                        } else {
-                            $team_speak += ['status' => 'offline'];
-                        }
-
-                        // add team-speak array to services
-                        array_push($services, $team_speak);
+                    // get service status
+                    if ($this->isServiceRunning($services_list[$index]['service_name'])) {
+                        $service_array += ['status' => 'online'];
+                    } else {
+                        $service_array += ['status' => 'offline'];
                     }
 
-                    // minecraft server service
-                    elseif ($services_list[$index]['service_name'] == 'minecraft') {
-
-                        // build minecraft service
-                        $minecraft = [
-                            'service_name' => $services_list[$index]['service_name'],
-                            'display_name' => $services_list[$index]['display_name'],
-                            'start_cmd' => $services_list[$index]['start_cmd'],
-                            'stop_cmd' => $services_list[$index]['stop_cmd'],
-                            'enable' => $services_list[$index]['enable']
-                        ];
-
-                        // get minecraft status
-                        if (($this->isSocktOpen('127.0.0.1', '25565') == 'Offline') && ($this->isScreenSessionRunning('minecraft'))) {
-                            $minecraft += ['status' => 'starting'];
-                        } elseif ($this->isSocktOpen('127.0.0.1', '25565') == 'Online') {
-                            $minecraft += ['status' => 'online'];
-                        } else {
-                            $minecraft += ['status' => 'offline'];
-                        }
-
-                        // add minecraft array to services
-                        array_push($services, $minecraft);
-                    }
-
-                    // others services
-                    else {
-
-                        // build service array
-                        $service_array = [
-                            'service_name' => $services_list[$index]['service_name'],
-                            'display_name' => $services_list[$index]['display_name'],
-                            'start_cmd' => $services_list[$index]['start_cmd'],
-                            'stop_cmd' => $services_list[$index]['stop_cmd'],
-                            'enable' => $services_list[$index]['enable']
-                        ];
-
-                        // get service status
-                        if ($this->isServiceRunning($services_list[$index]['service_name'])) {
-                            $service_array += ['status' => 'online'];
-                        } else {
-                            $service_array += ['status' => 'offline'];
-                        }
-
-                        // add service_array array to services
-                        array_push($services, $service_array);
-                    }
+                    // add service_array array to services
+                    array_push($services, $service_array);
                 }
             }
         } else {
@@ -149,29 +74,37 @@ class ServiceManager
         if ($this->authManager->isUserLogedin()) {
 
             $services_list = $this->getServicesJson();
-            $username = $this->authManager->getUsername();
 
             // check if action is emergency shutdown
             if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
                 $this->emergencyShutdown();
+            
+            } elseif ($service_name == 'ufw') {
+                if ($action == 'start') {
+                    $command = 'sudo ufw enable';
+                } elseif ($action == 'stop') {
+                    $command = 'sudo ufw disable';
+                } else {
+                    $this->errorManager->handleError('error ufw action: '.$action.' not found', 500);
+                }
             } else {
-
                 // start action
                 if ($action == 'start') {
                     $command = $services_list[$service_name]['start_cmd'];
-                    $this->logManager->log('action-runner', $username.' started '.$service_name);
 
                 // stop action
                 } elseif ($action == 'stop') {
                     $command = $services_list[$service_name]['stop_cmd'];
-                    $this->logManager->log('action-runner', $username.' stoped '.$service_name);
                 } else {
                     $this->errorManager->handleError('action runner error: action: '.$action.' not supported', 400);
                 }
-
-                // executed final command
-                $this->executeCommand($command);
             }
+
+            // log action
+            $this->logManager->log('action-runner', $this->authManager->getUsername().' '.$action.'ed '.$service_name);
+
+            // executed final command
+            $this->executeCommand($command);
         } else {
             $this->errorManager->handleError('error action runner is only for authentificated users', 401);
         }
@@ -186,24 +119,23 @@ class ServiceManager
         }
     }
 
+    public function isServiceInstalled(string $service_name): bool
+    {
+        exec('dpkg -l | grep '.escapeshellarg($service_name), $output, $returnCode);
+        
+        if ($returnCode === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function isServiceRunning(string $service): bool 
     {
         $output = shell_exec('systemctl is-active '.$service);
         
         // check if service running
         if (trim($output) == 'active') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public function isScreenSessionRunning(string $session_name): bool 
-    {
-        $exec = shell_exec("sudo su - ".$_ENV['LINUX_RUNNER_USER']." -c 'screen -S $session_name -Q select . ; echo $?'");
-    
-        // check if exec get output
-        if ($exec == '0') {
             return true;
         } else {
             return false;

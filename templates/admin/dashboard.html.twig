@@ -68,6 +68,24 @@
                     </span>
                 </strong>
             </p>
+            {% if is_ufw_installed %}
+                <p class="card-text">
+                    UFW Firewall: 
+                    <strong>
+                        {% if is_ufw_running %}
+                            <span class="online-text">Online</span> 
+                            <span>
+                                [<a href="/admin/dashboard/runner/ufw/stop">STOP</a>]
+                            </span>                   
+                        {% else %}
+                            <span class="text-red">Offline</span> 
+                            <span>
+                                [<a href="/admin/dashboard/runner/ufw/start">START</a>]
+                            </span>                       
+                        {% endif %}
+                    </strong>
+                </p>
+            {% endif %}
             {% if services != null %}
                 {% for service in services %}
                     {% if service.status == 'starting' %}

@@ -82,6 +82,8 @@ class DashboardController extends AbstractController
 
                 // dashboard (services controller)
                 'services' => $this->serviceManager->getServices(),
+                'is_ufw_installed' => $this->serviceManager->isServiceInstalled('ufw'),
+                'is_ufw_running' => $this->serviceManager->isUfwRunning(),
                 
                 // dashboard data (System info)
                 'operating_system' => str_replace('DISTRIB_ID=', '', $this->dashboardUtil->getSoftwareInfo()['distro']['operating_system']),

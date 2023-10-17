@@ -3,14 +3,13 @@
 # start server script for development use -> php, database server
 
 # color codes.
-red_echo () { echo '$(tput setaf 9)$1'; }
-die() { echo '$*' 1>&2 ; exit 1; }
+red_echo () { echo "\033[31m\033[1m$1\033[0m"; }
 
 # check if vendor installed
 if [ ! -d 'vendor/' ]
 then
     red_echo 'Build-error: vendor not found, please install composer'
-    die
+    exit
 fi
 
 # clear console

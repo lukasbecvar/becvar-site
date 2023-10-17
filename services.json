@@ -6,15 +6,7 @@
         "stop_cmd": "sudo systemctl stop sshd",
         "enable": true 
     },
-
-    "ufw": {
-        "service_name": "ufw",
-        "display_name": "UFW-[Firewall]",
-        "start_cmd": "sudo ufw enable",
-        "stop_cmd": "sudo ufw disable",
-        "enable": true 
-    },
-
+    
     "mysql": {
         "service_name": "mysql",
         "display_name": "Mysql",
