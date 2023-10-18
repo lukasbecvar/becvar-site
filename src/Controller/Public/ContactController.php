@@ -150,7 +150,6 @@ class ContactController extends AbstractController
         // render contact page
         return $this->render('public/contact.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
-            'linkedin_link' => $_ENV['LINKEDIN_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],
             'twitter_link' => $_ENV['TWITTER_LINK'],
