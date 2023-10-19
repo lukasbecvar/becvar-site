@@ -38,11 +38,10 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
-- [ ] Build assets with webpack-encore
-- [ ] PHPUnit tests
-- [ ] Cloudflare dashboard (use cloudflare API)
 - [ ] Terminal in admin
 - [ ] File manager & config editor
+- [ ] PHPUnit tests
+- [ ] Cloudflare dashboard (use cloudflare API)
 
 ## Dependencies
 * Symfony
