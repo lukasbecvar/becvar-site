@@ -77,6 +77,7 @@ class AccountSettingsController extends AbstractController
             
             $error_msg = null;
 
+            // init user entity
             $user = new User();
 
             // create pic form change

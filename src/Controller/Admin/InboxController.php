@@ -35,6 +35,7 @@ class InboxController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
+            // get messages data
             $messages = $this->messagesManager->getMessages('open', $page);
 
             return $this->render('admin/inbox.html.twig', [

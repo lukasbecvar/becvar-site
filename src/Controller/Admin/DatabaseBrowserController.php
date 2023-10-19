@@ -112,6 +112,7 @@ class DatabaseBrowserController extends AbstractController
             // get table columns
             $columns = $this->databaseManager->getTableColumns($table);
 
+            // get referer query string
             $referer = $request->query->get('referer');
 
 			// check if user submit edit form
@@ -191,6 +192,7 @@ class DatabaseBrowserController extends AbstractController
             // escape table name
             $table = $this->securityUtil->escapeString($table);
 
+            // get table columns
             $columns = $this->databaseManager->getTableColumns($table);
 
             // check if form submited

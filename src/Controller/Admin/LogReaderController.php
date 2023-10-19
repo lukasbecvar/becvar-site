@@ -141,6 +141,7 @@ class LogReaderController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
+            // set readed all logs
             $this->logManager->setReaded();
 
             return $this->redirectToRoute('admin_dashboard');    
