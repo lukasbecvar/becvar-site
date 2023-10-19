@@ -89,26 +89,6 @@
                 </p>
             {% endif %}
 
-            {% if service_dir_exist == false %}
-                <p class="card-text">
-                    <span class="text-warning">
-                        <span class="text-red">
-                            <i class="fa fa-exclamation-triangle"></i> 
-                        </span>
-                        directory: {{ service_dir_path }} not exist
-                    </span>
-                </p>
-            {% else %}
-                <p class="card-text">
-                    <span class="text-warning">
-                        <span class="text-light-green">
-                            <i class="fa fa-check"></i> 
-                        </span>
-                        directory: {{ service_dir_path }} was initialized successfully
-                    </span>
-                </p>
-            {% endif %}
-
             {% if is_web_user_sudo %}
                 <p class="card-text">
                     <span class="text-warning">
@@ -132,11 +112,9 @@
         </div>
     </div>
 
-
     <div class="card-phone card diag-card-phone text-white mb-3 diagnostic-card">
         <div class="card-header diagnostics-large-title">Website diagnostics</div>
         <div class="card-body diagnostics-large">
-
             {% if is_ssl == false %}
                 <p class="card-text">
                     <span class="text-warning">

@@ -39,11 +39,11 @@
                     <tbody>
                         {% for row in visitors_data %}
                             <tr class="line-item" id="{{ row.id|e }}">
-                                {############# ID #############}
+                                {# <===== ID =====> #}
                                 <th scope='row'>{{ row.id|e }}</th>
-                                {########## VISITED ###########}
+                                {# <===== VISITED =====> #}
                                 <th scope='row'>{{ row.visitedSites|e }}</th>
-                                {########### DATES ############}
+                                {# <===== DATES =====> #}
                                 {% if row.firstVisit == row.lastVisit %}
                                     <th scope='row' class='text-red'>{{ row.firstVisit|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.lastVisit|e }}</th>
@@ -51,19 +51,19 @@
                                     <th scope='row'>{{ row.firstVisit|e }}</th>
                                     <th scope='row'>{{ row.lastVisit|e }}</th>
                                 {% endif %}
-                                {########### BROWSER ############}
+                                {# <===== BROWSER =====> #}
                                 {% if row.browser == 'Unknown' %}
                                     <th scope='row' class='text-red'>{{ row.browser|e }}</th>
                                 {% else %}
                                     <th scope='row'>{{ row.browser|e }}</th>
                                 {% endif %}
-                                {########### OS ############}  
+                                {# <===== OS =====> #}
                                 {% if row.os == 'Unknown OS' %}
                                     <th scope='row' lass='text-red'>{{ row.os|e }}</th>
                                 {% else %}
                                     <th scope='row'>{{ row.os }}</th>
                                 {% endif %}
-                                {########### LOCATION ############}
+                                {# <===== LOCATION =====> #}
                                 {% if row.location|slice(0, 2)|lower == 'cz' %}
                                     <th scope='row' class='text-warning'>{{ row.location|e }}</th>
                                 {% else %}
@@ -73,7 +73,7 @@
                                         <th scope='row'>{{ row.location|e }}</th>
                                     {% endif %}
                                 {% endif %}
-                                {########### IP-ADDRESS ############}
+                                {# <===== IP-ADDRESS =====> #}
                                 {% if row.ipAddress == current_ip %}
                                     <th scope='row'class='text-warning'>{{ row.ipAddress|e }}
                                         <span class="text-light">[</span><span class='text-success'>You</span><span class="text-light">]</span>
@@ -83,13 +83,13 @@
                                         <a href="/admin/logs/whereip/{{ row.ipAddress|e }}/1" class="log-reader-link">{{ row.ipAddress|e }}</a>
                                     </th>
                                 {% endif %}
-                                {########### BANNED-STATUS ############}
+                                {# <===== BANNED-STATUS =====> #}
                                 {% if row.bannedStatus == 'yes' %}
                                     <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
                                 {% else %}
                                     <th scope='row' class='text-success'>{{ row.bannedStatus|e }}</th>
                                 {% endif %}
-                                {########### BUTTONS ############}
+                                {# <===== BUTTONS =====> #}
                                 <td>
                                     {% if row.bannedStatus == 'yes' %}
                                         <a class="delete-link-todos text-warning" href="/admin/visitors/unban/{{ row.id|e }}/{{ page }}">UNBAN</a>

@@ -11,8 +11,10 @@
     {% else %}
         <div class="new-todo-form">
             {{ form_start(ban_form) }}
+
                 {{ form_widget(ban_form) }}
                     <button type="submit" class="input-button todo-button">Ban</button>
+                    
             {{ form_end(ban_form) }}
         </div>
     {% endif %}
