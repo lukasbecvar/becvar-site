@@ -38,7 +38,6 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
-- [ ] Login antibot
 - [ ] Build assets with webpack-encore
 - [ ] PHPUnit tests
 - [ ] Cloudflare dashboard (use cloudflare API)
