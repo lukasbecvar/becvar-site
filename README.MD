@@ -38,10 +38,14 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
+- [ ] Links (todo list, inbox)
+- [ ] Escape fix (todos, inbox)
+- [ ] Webpack assets builder
+- [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
+- [ ] Complte refactor & code format
 - [ ] PHPUnit tests
-- [ ] Cloudflare dashboard (use cloudflare API)
 
 ## Dependencies
 * Symfony
