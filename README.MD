@@ -41,6 +41,7 @@ Personal website builded with symfony framework
 - [ ] Links (todo list, inbox)
 - [ ] Escape fix (todos, inbox)
 - [ ] Webpack assets builder
+- [ ] Database encryption
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
