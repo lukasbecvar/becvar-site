@@ -39,7 +39,7 @@ Personal website builded with symfony framework
 
 ## TODOS
 - [ ] Links (todo list, inbox)
-- [ ] Escape fix (todos, inbox)
+- [ ] Escape fix (todos, inbox, db browser (value.text|raw))
 - [ ] Webpack assets builder
 - [ ] Database encryption
 - [ ] Admin chat
