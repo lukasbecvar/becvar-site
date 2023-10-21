@@ -72,6 +72,9 @@
                                 <table class="table table-dark">
                                     <thead>
                                         <tr class="line-item">  
+                                            {% if table_name == 'code_paste' %}
+                                                <th cope='col'>Link</th>
+                                            {% endif %}
                                             {% for column in table_columns %}
                                                 {% if column == 'id' %}
                                                     <th scope='col'>#</th>
@@ -79,9 +82,6 @@
                                                     <th scope='col'>{{ column|e }}</th>
                                                 {% endif %}
                                             {% endfor %}
-                                            {% if table_name == 'code_paste' %}
-                                                <th cope='col'>Link</th>
-                                            {% endif %}
                                             {% if table_name != 'code_paste' and table_name != 'images' %}
                                                 <th cope='col'>Edit</th>
                                             {% endif %}
@@ -91,15 +91,15 @@
                                     <tbody>
                                         {% for row in table_data %}
                                             <tr class="line-item">
+                                                {% if table_name == 'code_paste' %}
+                                                    <th cope='col'><a href="/paste/view/{{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
+                                                {% endif %}
                                                 {% for column in table_columns %}
                                                     <th scope='row'>
                                                         {% set content = row[column] | slice(0, 200) %}
                                                         {{ content ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
-                                                {% if table_name == 'code_paste' %}
-                                                    <th cope='col'><a href="/paste/view/{{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
-                                                {% endif %}
                                                 {% if table_name != 'code_paste' and table_name != 'images' %}
                                                     <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{ page }}/{{ table_name }}/{{ row.id|e }}">Edit</a></td>
                                                 {% endif %}
