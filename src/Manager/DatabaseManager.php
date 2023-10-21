@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Util\SecurityUtil;
 use Doctrine\DBAL\Connection;
 
 /*
@@ -14,17 +15,20 @@ class DatabaseManager
     private $logManager;
     private $connection;
     private $authManager;
+    private $securityUtil;
     private $errorManager;
         
     public function __construct(
         LogManager $logManager,
         Connection $connection,
         AuthManager $authManager,
+        SecurityUtil $securityUtil,
         ErrorManager $errorManager,
     ) {
         $this->logManager = $logManager;
         $this->connection = $connection;
         $this->authManager = $authManager;
+        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
     }
 
@@ -205,5 +209,24 @@ class DatabaseManager
     public function countTableDataByPage(string $table_name, int $page): int 
     {
         return count($this->getTableDataByPage($table_name, $page, false));
+    }
+
+    public function getImages(int $page): ?array
+    {
+        $images_list = $this->getTableDataByPage('images', $page);
+
+        $images = [];
+
+        foreach ($images_list as $image) {
+            $image_item = [
+                'id' => $image['id'],
+                'token' => $image['token'],
+                'image' => $this->securityUtil->decrypt_aes($image['image'])
+            ];
+
+            array_push($images, $image_item);
+        }
+
+        return $images;
     }
 }   

@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Todo;
+use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -11,13 +12,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TodosManager
 {
+    private $securityUtil;
     private $errorManager;
     private $entityManager;
 
     public function __construct(
+        SecurityUtil $securityUtil,
         ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
+        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
@@ -30,7 +34,21 @@ class TodosManager
         if ($repository !== null) {
             try {
                 $todos = $repository->findBy(['status' => $status]);
-                return array_reverse($todos);
+                
+                $todo_data = [];
+
+                foreach ($todos as $todo) {
+                    $todo_item = [
+                        'id' => $todo->getId(),
+                        'text' => $this->securityUtil->decrypt_aes($todo->getText()),
+                        'added_time' => $todo->getAddedTime(),
+                        'completed_time' => $todo->getCompletedTime(),
+                        'status' => $todo->getStatus()
+                    ];
+                    array_push($todo_data, $todo_item);
+                }
+                
+                return array_reverse($todo_data);
             } catch (\Exception $e) {
                 $this->errorManager->handleError('error to get todos: '.$e->getMessage(), 500);
             }

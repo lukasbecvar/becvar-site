@@ -39,7 +39,6 @@ Personal website builded with symfony framework
 
 ## TODOS
 - [ ] Webpack assets builder
-- [ ] Database encryption
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor

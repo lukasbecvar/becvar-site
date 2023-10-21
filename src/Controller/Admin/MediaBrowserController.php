@@ -35,7 +35,7 @@ class MediaBrowserController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
      
-            $media = $this->databaseManager->getTableDataByPage('images', $page);
+            $media = $this->databaseManager->getImages($page);
 
             return $this->render('admin/media-browser.html.twig', [
                 // component properties

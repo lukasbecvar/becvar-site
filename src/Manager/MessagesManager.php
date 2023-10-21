@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Message;
+use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -11,11 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MessagesManager
 {
+    private $securityUtil;
     private $errorManager;
     private $entityManager;
 
-    public function __construct(ErrorManager $errorManager, EntityManagerInterface $entityManager)
+    public function __construct(SecurityUtil $securityUtil, ErrorManager $errorManager, EntityManagerInterface $entityManager)
     {
+        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
@@ -40,7 +43,7 @@ class MessagesManager
         }
     }
 
-    public function getMessages(string $status, int $page)
+    public function getMessages(string $status, int $page): ?array
     {
         $repository = $this->entityManager->getRepository(Message::class);
         $limit = $_ENV['ITEMS_PER_PAGE'];
@@ -50,7 +53,34 @@ class MessagesManager
     
         // get messages entity from database
         try {
-            return $repository->findBy(['status' => $status], null, $limit, $offset);
+            $inbox = $repository->findBy(['status' => $status], null, $limit, $offset);
+            $messages = [];
+
+            foreach ($inbox as $inbox_message) {
+
+                // decrypt message
+                $message_decrypted = $this->securityUtil->decrypt_aes($inbox_message->getMessage());
+
+                // build message content
+                $message = [
+                    'id' => $inbox_message->getId(),
+                    'name' => $inbox_message->getName(),
+                    'email' => $inbox_message->getEmail(),
+                    'message' => $message_decrypted,
+                    'time' => $inbox_message->getTime(),
+                    'ip_address' => $inbox_message->getIpAddress(),
+                    'email' => $inbox_message->getEmail(),
+                    'status' => $inbox_message->getStatus(),
+                    'visitor_id' => $inbox_message->getVisitorId()
+                ];  
+
+                // add message to final list
+                array_push($messages, $message);
+            }
+            
+            return $messages;
+        
+        
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get messages: ' . $e->getMessage(), 500);
             return null;

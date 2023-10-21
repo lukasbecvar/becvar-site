@@ -77,6 +77,9 @@ class TodoManagerController extends AbstractController
                     // escape text
                     $text = $this->securityUtil->escapeString($text);
                     
+                    // encrypt todo text
+                    $text = $this->securityUtil->encrypt_aes($text);
+
                     // set todo data
                     $todo->setText($text);
                     $todo->setStatus('non-completed');

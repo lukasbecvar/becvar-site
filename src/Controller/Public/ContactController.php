@@ -122,6 +122,9 @@ class ContactController extends AbstractController
                         // update visitor email
                         $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
 
+                        // ecrypt message
+                        $message_input = $this->securityUtil->encrypt_aes($message_input);
+
                         // set message entity values
                         $message->setName($name);
                         $message->setEmail($email);

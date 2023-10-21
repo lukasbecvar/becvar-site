@@ -50,18 +50,18 @@ class ImageUploaderController extends AbstractController
         
         // check if image found
         if ($imageRepo !== null) {
-            $image_content = $imageRepo->getImage();
-        }
 
-        // check if image found
-        if ($image_content == null) {
-            $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
-        } else {
+            // get image & decrypt
+            $image_content = $this->secutityUtil->decrypt_aes($imageRepo->getImage());
+
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
             return $this->render('public/image/image-viewer.html.twig', [
                 'token' => $token,
                 'image' => $image_content
             ]);
+
+        } else {
+            $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         }
     }
 
@@ -97,6 +97,9 @@ class ImageUploaderController extends AbstractController
     
                 // init image entity
                 $image = new Image();
+
+                // encrypt image
+                $image_file = $this->secutityUtil->encrypt_aes($image_file);
 
                 // set image data
                 $image->setToken($token);

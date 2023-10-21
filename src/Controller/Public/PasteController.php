@@ -62,6 +62,9 @@ class PasteController extends AbstractController
                     // init paste entity
                     $paste = new Paste();
 
+                    // encrypt paste content
+                    $content = $this->securityUtil->encrypt_aes($content);
+
                     // set paste data
                     $paste->setName($name);
                     $paste->setContent($content);
@@ -97,7 +100,9 @@ class PasteController extends AbstractController
         
         // check if paste found
         if ($pasteContent !== null) {
-            $content = $pasteContent->getContent();
+
+            // get content & decrypt
+            $content = $this->securityUtil->decrypt_aes($pasteContent->getContent());
 
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);
