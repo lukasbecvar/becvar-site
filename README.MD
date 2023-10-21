@@ -38,7 +38,6 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
-- [ ] Links (todo list, inbox)
 - [ ] Webpack assets builder
 - [ ] Database encryption
 - [ ] Admin chat

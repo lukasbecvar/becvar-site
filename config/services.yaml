@@ -20,6 +20,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # twig extension (link detect & replace with |linkify)
+    App\Twig\LinkifyExtension:
+        tags:
+            - { name: 'twig.extension' }
+
     # resources build checker
     App\Middleware\AssetsCheckMiddleware:
         tags:

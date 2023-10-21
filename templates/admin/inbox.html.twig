@@ -23,7 +23,7 @@
                                 <span class='text-warning phone-none'>[{{ message.ipAddress|e }}]</span>
                                 <p class="left-centers email-line text-warning">Email: {{ message.email|e }}</p>
                             </h5>
-                            <p class="left-center card-text">{{message.message|raw}}</p>
+                            <p class="left-center card-text">{{message.message|linkify|raw}}</p>
                         </div>
                     </div>
                 {% endfor %}
