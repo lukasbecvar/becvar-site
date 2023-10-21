@@ -27,7 +27,7 @@
                     {% for todo in todos_data %}
                         <tr class="line-item">
                             <th scope='row'>{{ todo.id|e }}</th>
-                            <th scope='row'>{{ todo.text|e }}</th>
+                            <th scope='row'>{{ todo.text|raw }}</th>
                             <th scope='row'>
                                 <a class='text-warning delete-link-todos' href='/admin/database/edit/1/todos/{{ todo.id|e }}?referer=todo_manager'>Edit</a>
                             </th>
