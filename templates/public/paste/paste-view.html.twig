@@ -2,16 +2,11 @@
 <html>
 <head>
     <title>Code paste</title>
-    <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon"/>    
-    <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
-    <script src="/assets/js/jshighlightjs-line-numbers.min.js"></script>
-    <script>
-        hljs.highlightAll();
-        hljs.initLineNumbersOnLoad();
-    </script>
-    <link rel="stylesheet" href="/assets/css/atom-one-dark.css">
-    <link rel="stylesheet" href="/assets/css/paste-view.css">
-
+    <link rel="icon" href="{{ asset('build/images/favicon.png') }}" type="image/x-icon"/>    
+    {{ encore_entry_script_tags('code-paste-js') }}
+    {{ encore_entry_link_tags('atom-one-dark-css') }}
+    {{ encore_entry_link_tags('paste-view-css') }}
+    {{ encore_entry_link_tags('scrollbar-css') }}
     <title>Viewing {{ file|e }}</title>
 </head>
 <body>

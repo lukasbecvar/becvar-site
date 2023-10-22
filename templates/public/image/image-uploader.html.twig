@@ -33,5 +33,29 @@
         </form>
     </div>
 </section>
-<script src="/assets/js/image-uploader.js"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function(e) {
+                document.querySelector('.image-upload-wrap').style.display = 'none';
+                document.querySelector('.file-upload-image').src = e.target.result;
+                document.querySelector('.file-upload-content').style.display = 'block';
+                document.querySelector('.image-title').textContent = input.files[0].name;
+            };
+    
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            removeUpload();
+        }
+    }
+    
+    function removeUpload() {
+        var fileInput = document.querySelector('.file-upload-input');
+        fileInput.parentNode.replaceChild(fileInput.cloneNode(true), fileInput);
+        document.querySelector('.file-upload-content').style.display = 'none';
+        document.querySelector('.image-upload-wrap').style.display = 'block';
+    }
+</script>
 {% endblock %}

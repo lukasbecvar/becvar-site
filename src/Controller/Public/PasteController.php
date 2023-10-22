@@ -42,7 +42,7 @@ class PasteController extends AbstractController
         if (isset($_POST['data'])) {
         
             // get data from post & escape
-            $content = $this->securityUtil->escapeString($_POST['data']);
+            $content = $_POST['data'];
             $name = $this->securityUtil->escapeString($_POST['file']);
 
             // get upload date

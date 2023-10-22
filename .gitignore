@@ -20,6 +20,14 @@ composer.lock
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+package-lock.json
+###< symfony/webpack-encore-bundle ###
+
 ###> config-files ###
 .env.prod
 ###< config-files ###

@@ -33,23 +33,21 @@
 
         {# <===== CONTACT-FORM =====> #}
         <div class="msg-from mt-4">
-            <div class="row">
-                {{ form_start(contact_form) }}
+            {{ form_start(contact_form) }}
 
-                    {% if error_msg != null %}
-                        <div class="error-message">{{ error_msg }}</div>
-                    {% endif %}
-                    {% if success_msg != null %}
-                        <div class="sent-message">{{ success_msg }}</div>
-                    {% endif %}
+                {% if error_msg != null %}
+                    <div class="error-message">{{ error_msg }}</div>
+                {% endif %}
+                {% if success_msg != null %}
+                    <div class="sent-message">{{ success_msg }}</div>
+                {% endif %}
 
-                    {{ form_widget(contact_form) }}                
-                    <div class="text-center mt-3">
-                        <button type="submit">Submit message</button>
-                    </div>
+                {{ form_widget(contact_form) }}                
+                <div class="text-center mt-3">
+                    <button type="submit">Submit message</button>
+                </div>
             
-                {{ form_end(contact_form) }}      
-            </div>   
+            {{ form_end(contact_form) }}      
         </div>
     </div>
 </section>

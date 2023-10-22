@@ -38,7 +38,7 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
-- [ ] Webpack builder
+- [#] Webpack builder
 - [ ] Public page translate (CZ)
 - [ ] Admin chat
 - [ ] Terminal in admin
@@ -46,7 +46,7 @@ Personal website builded with symfony framework
 - [ ] Complte refactor & code format
 - [ ] PHPUnit tests
 
-## Dependencies
+## Dependencies 
 * Symfony
    * Version: **6.3**
    * [Website](https://symfony.com/)   
@@ -58,11 +58,8 @@ Personal website builded with symfony framework
    * [Website](https://www.adminer.org/)
 * Geo-Plugin
    * [Website](http://www.geoplugin.net/)
-* Jquery
-   * Version: **3.6.0**
-   * [Website](https://jquery.com/)
 * Bootstrap
-   * Version: **5.1.3**
+   * Version: **4.0.0**
    * [Website](https://getbootstrap.com/)
 * Boxicons
    * Version: **2.1.2**
@@ -70,9 +67,6 @@ Personal website builded with symfony framework
 * Font-awesome
    * Version: **5.8.1 - FREE**
    * [Website](https://fontawesome.com)
-* Remixicon
-   * Version: **2.5.0**
-   * [Website](https://remixicon.com/)
 * Waypoints
    * Version: **4.0.1**
    * [Github](https://github.com/imakewebthings/waypoints)
