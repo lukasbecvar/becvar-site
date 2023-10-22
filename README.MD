@@ -38,7 +38,7 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
-- [#] Webpack builder
+- [X] Webpack builder
 - [ ] Public page translate (CZ)
 - [ ] Admin chat
 - [ ] Terminal in admin
