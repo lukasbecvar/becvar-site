@@ -38,6 +38,8 @@ Personal website builded with symfony framework
  - php-pdo
 
 ## TODOS
+- [ ] Webpack builder
+- [ ] Public page translate (CZ)
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
