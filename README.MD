@@ -1,5 +1,5 @@
 ## About becvar-site
-Personal website builded with symfony framework
+Personal website builded with symfony framework, bootstrap & webpack-encore
 
 ## Public site
  - Main components: about, projects list, contact, etc...
