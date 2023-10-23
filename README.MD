@@ -45,8 +45,6 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - php-pdo
 
 ## TODOS
-- [X] Webpack builder
-- [ ] Public page translate (CZ)
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
