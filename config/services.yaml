@@ -25,6 +25,11 @@ services:
         tags:
             - { name: 'twig.extension' }
 
+    # translations set checker
+    App\Middleware\TranslationsMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
+
     # resources build checker
     App\Middleware\AssetsCheckMiddleware:
         tags:
