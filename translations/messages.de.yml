@@ -1,0 +1,89 @@
+# html language specification
+en: 'cs'
+
+# coon messages
+Please check the address bar or contact your administrator: 'Bitte überprüfen Sie die Adressleiste oder kontaktieren Sie Ihren Administrator'
+here: 'hier'
+
+# error messages
+Error 400, Bad request: 'Fehler 400, Ungültige Anforderung'
+Request error: 'Anforderungsfehler'
+Error 401, Unauthorized: 'Fehler 401, Nicht autorisiert'
+You do not have permission to access this page: 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen'
+Error 403, Forbidden: 'Fehler 403, Verboten'
+Error 404, Page not found: 'Fehler 404, Seite nicht gefunden'
+Error this page was not found: 'Fehler Diese Seite wurde nicht gefunden'
+Error 429, Too Many Requests: 'Fehler 429, Zu viele Anfragen'
+Too Many Requests: 'Zu viele Anfragen'
+Please try to wait and try again later: 'Bitte versuchen Sie zu warten und später erneut zu versuchen'
+Error 500, Internal Server Error: 'Fehler 500, Interner Serverfehler'
+The server encountered an unexpected condition that prevented it from fulfilling the request: 'Der Server hat einen unerwarteten Zustand festgestellt, der ihn daran hinderte, die Anfrage zu erfüllen'
+You are banned: 'Sie sind gesperrt'
+You are permanently banned on this site for reason: 'Sie sind dauerhaft auf dieser Seite gesperrt aus folgendem Grund'
+You are permanently banned on this site: 'Sie sind auf dieser Seite dauerhaft gesperrt'
+Please direct unban requests to: 'Bitte leiten Sie Anfragen zur Aufhebung der Sperrung weiter an'
+Error 503, page is unavailable: 'Fehler 503, Seite ist nicht verfügbar'
+The service is temporarily unavailable due to maintenance: 'Der Dienst ist aufgrund von Wartungsarbeiten vorübergehend nicht verfügbar'
+Error 520, unknown error: 'Fehler 520, Unbekannter Fehler'
+Unknown error, please contact the service administrator: 'Unbekannter Fehler, kontaktieren Sie bitte den Dienstadministrator'
+
+# main web navigation
+Home: 'Startseite'
+About: 'Über mich'
+Projects: 'Projekte'
+Contact: 'Kontakt'
+Uploader: 'Bild hochladen'
+Paste: 'Einfügen'
+
+# home page
+I'm a: 'Ich bin ein'
+full stack developer: 'Full-Stack-Entwickler'
+
+# about page
+Developer: 'Entwickler'
+I am a full stack web & server solutions developer: 'Ich bin ein Full-Stack-Web- und Serverlösungs-Entwickler'
+Birthday: 'Geburtstag'
+May: 'Mai'
+Age: 'Alter'
+All my public projects available: 'Alle meine öffentlichen Projekte verfügbar'
+My first programming language was Pascal I started learning it in 2012: 'Meine erste Programmiersprache war Pascal, ich habe 2012 damit begonnen, sie zu lernen'
+My main programming languages are "currently" Java and PHP: 'Meine Hauptprogrammiersprachen sind "derzeit" Java und PHP'
+Clients: 'Kunden'
+Lines of code: 'Codezeilen'
+Coding langs: 'Programmiersprachen'
+My skills: 'Meine Fähigkeiten'
+
+# projects page
+The project list is loaded from my github: 'Die Projektliste wird von meinem GitHub geladen'
+Open: 'Offen'
+Closed: 'Geschlossen'
+You can find all my projects here: 'Alle meine Projekte finden Sie hier'
+Technology: 'Technologie'
+Source: 'Quellcode'
+on github: 'auf GitHub'
+Project list is empty: 'Projektliste ist leer'
+
+# contact page
+Contact me: 'Kontaktiere mich'
+Social sites: 'Soziale Netzwerke'
+Email Me: 'Schreib mir eine E-Mail'
+Submit message: 'Nachricht senden'
+Your message has been sent, Lukáš replies within 24 hours at most: 'Ihre Nachricht wurde gesendet, Lukáš antwortet in der Regel innerhalb von 24 Stunden'
+Your message was not sent due to an error, please try again later, or check your message inputs: 'Ihre Nachricht wurde aufgrund eines Fehlers nicht gesendet. Bitte versuchen Sie es später erneut oder überprüfen Sie Ihre Nachrichteneingaben'
+error you have 5 unreaded messages, please wait for the response to the first messags: 'Fehler, Sie haben 5 ungelesene Nachrichten, bitte warten Sie auf die Antwort auf die erste Nachricht'
+Your name: 'Ihr Name'
+Your email: 'Ihre E-Mail'
+Message: 'Nachricht'
+
+# image uploader
+Image uploader: 'Bild-Uploader'
+Image upload: 'Bild hochladen'
+Drag/drop or select image: 'Ziehen/ablegen oder Bild auswählen'
+Remove: 'Entfernen'
+Upload Image: 'Bild hochladen'
+Error file have wrong format!: 'Fehler, Datei hat das falsche Format!'
+Image: 'Bild'
+
+# Code paste
+Code paste: 'Code einfügen'
+Viewing: 'Ansehen'

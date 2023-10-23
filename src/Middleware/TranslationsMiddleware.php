@@ -26,8 +26,12 @@ class TranslationsMiddleware
     {
         // get visitor language
         $language = $this->visitorInfoUtil->getVisitorLanguage();
-    
-        // set visitor locale
-        $this->translator->setLocale($language);
+
+        if ($language == null) {
+            $this->translator->setLocale('en');
+        } else {
+            // set visitor locale
+            $this->translator->setLocale($language);
+        }
     }
 }
