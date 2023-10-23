@@ -1,12 +1,6 @@
 ## About becvar-site
 Personal website builded with symfony framework, bootstrap & webpack-encore
 
-## Translations
-Public page is automatically translated into Czech language (geolocation with ip address)
-
-## Assets builder
-Webpack (symfony-encore), scripts/build.sh
-
 ## Public site
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
@@ -36,6 +30,13 @@ Webpack (symfony-encore), scripts/build.sh
  - configure all values (mysql app secret etc)
  - install dependencies (scripts/install.sh)
  - migrate database structure (scripts/migrate.sh)
+
+## Translations
+ - Public page is automatically translated into visitor language (geolocation with ip address)
+ - to add a new language, create a file in translations/ and add fallbacks in config/packages translation.yaml
+
+## Assets builder
+ - Webpack (symfony-encore), scripts/build.sh
 
 ## Required
  - php-8.1 or <

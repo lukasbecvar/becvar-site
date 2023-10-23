@@ -24,12 +24,15 @@ class TranslationsMiddleware
 
     public function onKernelRequest()
     {
+        // get list of available translations
+        $availableLocales = $this->translator->getFallbackLocales();
+    
         // get visitor language
         $language = $this->visitorInfoUtil->getVisitorLanguage();
-
-        // set language for czech visitors
-        if ($language == 'cz') {
-            $this->translator->setLocale('cz');
+    
+        // set language for visitors
+        if (in_array($language, $availableLocales)) {
+            $this->translator->setLocale($language);
         } else {
             $this->translator->setLocale('en');
         }
