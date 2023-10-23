@@ -33,7 +33,6 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
 
 ## Translations
  - Public page is automatically translated into visitor language (geolocation with ip address)
- - to add a new language, create a file in translations/ and add fallbacks in config/packages translation.yaml
 
 ## Assets builder
  - Webpack (symfony-encore), scripts/build.sh
