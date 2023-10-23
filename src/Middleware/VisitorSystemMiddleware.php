@@ -55,7 +55,6 @@ class VisitorSystemMiddleware
         // escape inputs
         $ip_address = $this->securityUtil->escapeString($ip_address);
         $browser = $this->securityUtil->escapeString($browser);
-        $location = $this->securityUtil->escapeString($location);
 
         // check if visitor found in database
         if ($this->visitorInfoUtil->getVisitorRepository($ip_address) == null) {
@@ -86,7 +85,7 @@ class VisitorSystemMiddleware
         }
     }
 
-    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, string $location): void 
+    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, array $location): void 
     {
         // log geolocate error
         if ($location == 'Unknown') {
@@ -102,7 +101,8 @@ class VisitorSystemMiddleware
         $visitorEntity->setLastVisit($date);
         $visitorEntity->setBrowser($browser);
         $visitorEntity->setOs($os);
-        $visitorEntity->setLocation($location);
+        $visitorEntity->setCity($location['city']);
+        $visitorEntity->setCountry($location['country']);
         $visitorEntity->setIpAddress($ip_address);
         $visitorEntity->setBannedStatus('no');
         $visitorEntity->setBanReason('non-banned');

@@ -231,13 +231,13 @@ class VisitorInfoUtil
         }
     }
 
-    public function getLocation(string $ip_address): ?string
+    public function getLocation(string $ip_address): ?array
     {
         $location = null;
 
         // check if site running on localhost
         if ($this->siteUtil->isRunningLocalhost()) {
-            return 'localhost';
+            return ['city' => 'locale', 'country' => 'host'];
         } else {
  
             try {
@@ -270,20 +270,13 @@ class VisitorInfoUtil
 
         // empty set to null
         if (empty($country)) {
-            $country = null;
+            $country = 'Unknown';
         }
         if (empty($city)) {
-            $city = null;
+            $city = 'Unknown';
         }
 
-        // final return
-        if  ($country == null or $city == null) {
-            $location = 'Unknown';
-        } else {
-            $location = $country.'/'.$city;
-        }
-
-        return $location;
+        return ['city' => $city, 'country' => $country];
     }
 
     public function updateVisitorEmail(string $ip_address, string $email): void

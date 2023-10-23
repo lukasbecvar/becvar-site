@@ -29,7 +29,8 @@
                         <th scope='col'>Visit(last)</th>
                         <th scope='col'>Browser</th>
                         <th scope='col'>OS</th>
-                        <th scope='col'>Location</th>
+                        <th scope='col'>City</th>
+                        <th scope='col'>Country</th>
                         <th scope='col'>Address</th>
                         <th scope='col'>Banned</th>
                         <th scope='col'>BAN</th>
@@ -63,14 +64,24 @@
                                 {% else %}
                                     <th scope='row'>{{ row.os }}</th>
                                 {% endif %}
-                                {# <===== LOCATION =====> #}
-                                {% if row.location|slice(0, 2)|lower == 'cz' %}
-                                    <th scope='row' class='text-warning'>{{ row.location|e }}</th>
+                                {# <===== CITY =====> #}
+                                {% if row.country|slice(0, 2)|lower == 'cz' %}
+                                    <th scope='row' class='text-warning'>{{ row.city|e }}</th>
                                 {% else %}
-                                    {% if row.location == 'Unknown' %}
-                                        <th scope='row' class='text-red'>{{ row.location|e }}</th>
+                                    {% if row.city == 'Unknown' %}
+                                        <th scope='row' class='text-red'>{{ row.city|e }}</th>
                                     {% else %}
-                                        <th scope='row'>{{ row.location|e }}</th>
+                                        <th scope='row'>{{ row.city|e }}</th>
+                                    {% endif %}
+                                {% endif %}
+                                {# <===== COUNTRY =====> #}
+                                {% if row.country|slice(0, 2)|lower == 'cz' %}
+                                    <th scope='row' class='text-warning'>{{ row.country|e }}</th>
+                                {% else %}
+                                    {% if row.country == 'Unknown' %}
+                                        <th scope='row' class='text-red'>{{ row.country|e }}</th>
+                                    {% else %}
+                                        <th scope='row'>{{ row.country|e }}</th>
                                     {% endif %}
                                 {% endif %}
                                 {# <===== IP-ADDRESS =====> #}
