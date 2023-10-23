@@ -30,7 +30,10 @@ class Visitor
     private ?string $os = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $country = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
@@ -112,14 +115,26 @@ class Visitor
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getCity(): ?string
     {
-        return $this->location;
+        return $this->city;
     }
 
-    public function setLocation(string $location): static
+    public function setCity(string $city): static
     {
-        $this->location = $location;
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }
