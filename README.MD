@@ -42,6 +42,8 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - mysql8 or <
  - php-curl
  - php-pdo
+ - nodejs 18 or <
+ - npm 9 or <
 
 ## TODOS
 - [ ] Admin chat
