@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Code paste</title>
     <link rel="icon" href="{{ asset('build/images/favicon.png') }}" type="image/x-icon"/>    
     {{ encore_entry_script_tags('code-paste-js') }}
     {{ encore_entry_link_tags('atom-one-dark-css') }}
     {{ encore_entry_link_tags('paste-view-css') }}
     {{ encore_entry_link_tags('scrollbar-css') }}
-    <title>Viewing {{ file|e }}</title>
+    <title>{{ 'Viewing'|trans }} {{ file|e }}</title>
 </head>
 <body>
     <pre>

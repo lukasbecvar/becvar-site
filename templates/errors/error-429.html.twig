@@ -1,15 +1,15 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    Error 429, Too Many Requests
+    {{ 'Error 429, Too Many Requests'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
     <strong>
-        Too Many Requests 
+        {{ 'Too Many Requests'|trans }} 
         <br><br>
-        Please try to wait and try again later
+        {{ 'Please try to wait and try again later'|trans }}
     </strong>
 </p>
 {% endblock %}

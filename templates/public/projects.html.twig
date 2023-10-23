@@ -6,20 +6,22 @@
 <section id="projects" class="projects section-show">
     <div class="container">
         <div class="section-title">
-            <h2>Projects</h2>
+            <h2>{{ 'Projects'|trans }}</h2>
         </div>
-        <div class="row">
+        {% if projects_count != 0 %}
+            <span>{{ 'The project list is loaded from my github'|trans }}</span>
+            <div class="row">
 
             {# <===== OPEN-PROJECTS =====> #}
             <div class="col-lg-6">
-                <h3 class="projects-title">Open</h3>
+                <h3 class="projects-title">{{ 'Open'|trans }}</h3>
                 {% for project in open_projects %}
                     <div class="projects-item">
                         <h4>{{ project.name|e }}</h4>
                         <p><em>{{ project.description|e }}</em></p>
                         <p></p><ul>
-                            <li>Technology: {{ project.technology|e }}</li>
-                            <li>Source: <a href="{{ project.link|e }}" target="_blank">source </a>on github</li>
+                            <li>{{ 'Technology'|trans }}: {{ project.technology|e }}</li>
+                            <li>{{ 'Source'|trans }}: <a href="{{ project.link|e }}" target="_blank">{{ 'here'|trans }} </a>{{ 'on github'|trans }}</li>
                         </ul><p></p>
                     </div>
                 {% endfor %}                    
@@ -27,19 +29,22 @@
 
             {# <===== CLOSED-PROJECTS =====> #}
             <div class="col-lg-6">
-                <h3 class="projects-title">Closed</h3>
+                <h3 class="projects-title">{{ 'Closed'|trans }}</h3>
                 {% for project in closed_projects %}
                     <div class="projects-item">
                         <h4>{{ project.name|e }}</h4>
                         <p><em>{{ project.description|e }}</em></p>
                         <p></p><ul>
-                            <li>Technology: {{ project.technology|e }}</li>
-                            <li>Source: <a href="{{ project.link|e }}" target="_blank">source </a>on github</li>
+                            <li>{{ 'Technology'|trans }}: {{ project.technology|e }}</li>
+                            <li>{{ 'Source'|trans }}: <a href="{{ project.link|e }}" target="_blank">{{ 'here'|trans }} </a>{{ 'on github'|trans }}</li>
                         </ul><p></p>
                     </div>
                 {% endfor %}   
             </div>
-        <p>You can find all my projects here: <a href="{{ github_link|e }}" target="_blank">github </a></p>    
+        {% else %} 
+            <center><p>{{ 'Project list is empty'|trans }}</p></center>
+        {% endif %}
+        <p class="m-3">{{ 'You can find all my projects here'|trans }}: <a href="{{ github_link|e }}" target="_blank">github </a></p>    
     </div>
 </div>
 </section>

@@ -1,1 +1,89 @@
-full stack developer: 'piča'
+# html language specification
+en: 'cs'
+
+# common messages
+Please check the address bar or contact your administrator: 'Zkontrolujte adresní řádek nebo se obraťte na správce služby'
+here: 'zde'
+
+# error messages
+Error 400, Bad request: 'Chyba 400, chybný dotaz'
+Request error: 'Chybný dotaz'
+Error 401, Unauthorized: 'Chyba 401, Neautorizovaný přístup'
+You do not have permission to access this page: 'Nemáte oprávnění k přístupu na tuto stránku'
+Error 403, Forbidden: 'Chyba 403, přístup odepřen'
+Error 404, Page not found: 'Chyba 404, stránka nebyla nalezena'
+Error this page was not found: 'Chyba tato stránka nebyla nalezena'
+Error 429, Too Many Requests: 'Chyba 429, příliš mnoho požadavků'
+Too Many Requests: 'Příliš mnoho požadavků'
+Please try to wait and try again later: 'Zkuste prosím počkat a zkuste to později'
+Error 500, Internal Server Error: 'Chyba: 500, vnitřní chyba serveru'
+The server encountered an unexpected condition that prevented it from fulfilling the request: 'Server narazil na neočekávanou chybu, která mu znemožnila splnit požadavek'
+You are banned: 'Byl jsi zablokován'
+You are permanently banned on this site for reason: 'Byl jsi zablokován z důvodu'
+You are permanently banned on this site: 'Na této stránce máte trvalý zákaz vstupu'
+Please direct unban requests to: 'Žádosti o zrušení zákazu směřujte na'
+Error 503, page is unavailable: 'Chyba 503, stránka je nedostupná'
+The service is temporarily unavailable due to maintenance: 'Služba je dočasně nedostupná z důvodu údržby'
+Error 520, unknown error: 'Chyba 520, neznámá chyba'
+Unknown error, please contact the service administrator: 'Neznámá chyba, obraťte se na správce služby'
+
+# main web navigation
+Home: 'Domů'
+About: 'O mně'
+Projects: 'Projekty'
+Contact: 'Kontakt'
+Uploader: 'Nahrát obrázek'
+Paste: 'Vložit code'
+
+# home page
+I'm a: 'Jsem'
+full stack developer: 'full stack developer'
+
+# about page
+Developer: 'Programátor'
+I am a full stack web & server solutions developer: 'Jsem vývojář webových aplikací a serverových řešení'
+Birthday: 'Datum narození'
+May: 'Května'
+Age: 'Věk'
+All my public projects available: 'Všechny mé veřejné projekty jsou k dispozici'
+My first programming language was Pascal I started learning it in 2012: 'Můj první programovací jazyk byl Pascal a začal jsem se ho učit v roce 2012'
+My main programming languages are "currently" Java and PHP: 'Mé hlavní programovací jazyky jsou v současné době Java a PHP'
+Clients: 'Klienti'
+Lines of code: 'Řádky kódu'
+Coding langs: 'Programovací jazyky'
+My skills: 'Moje dovednosti'
+
+# projects page
+The project list is loaded from my github: 'Seznam projektů je načten z mého githubu'
+Open: 'Otevřené'
+Closed: 'Ukončené'
+You can find all my projects here: 'Všechny mé projekty najdete zde'
+Technology: 'Použitá technologie'
+Source: 'Kód'
+on github: 'na githubu'
+Project list is empty: 'Seznam projektů je prázdný'
+
+# contact page
+Contact me: 'Kontaktujte mě'
+Social sites: 'Sociální sítě'
+Email Me: 'Napište mi email'
+Submit message: 'Odeslat'
+Your message has been sent, Lukáš replies within 24 hours at most: 'Vaše zpráva byla odeslána, Lukáš odpoví nejpozději do 24 hodin'
+Your message was not sent due to an error, please try again later, or check your message inputs: 'Vaše zpráva nebyla odeslána z důvodu chyby, zkuste to prosím později nebo zkontrolujte vstupy zprávy'
+error you have 5 unreaded messages, please wait for the response to the first messags: 'chyba máte 5 nepřečtených zpráv, počkejte prosím na odpověď na první zprávu'
+Your name: 'Vaše jméno'
+Your email: 'Váš email'
+Message: 'Zpráva'
+
+# image uploader
+Image uploader: 'Nahrávač obrázků'
+Image upload: 'Nahrát obrázek'
+Drag/drop or select image: 'Vložte obrázek'
+Remove: 'Odstranit'
+Upload Image: 'Nahrát obrázek'
+Error file have wrong format!: 'Chyba váš subor není obrázek'
+Image: 'Obrázek'
+
+# Code paste
+Code paste: 'Code paste'
+Viewing: 'Prolížení'

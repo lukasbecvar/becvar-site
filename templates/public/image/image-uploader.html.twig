@@ -6,29 +6,29 @@
 <section id="uploader" class="uploader section-show">
     <div class="container">
         <div class="section-title">
-            <h2>Image uploader</h2>
+            <h2>{{ 'Image uploader'|trans }}</h2>
         </div>
         <form action="/image/uploader" method="post" enctype="multipart/form-data">
             
             {% if error_msg != null %}
-                <div class="error-message">{{ error_msg }}</div>
+                <div class="error-message">{{ error_msg|trans }}</div>
             {% endif %}
             
             <div class="file-upload">
-                <p class="form-title">Image upload</p>
+                <p class="form-title">{{ 'Image upload'|trans }}</p>
                 <div class="image-upload-wrap">
                     <input class="file-upload-input" type="file" name="userfile" onchange="readURL(this);" accept="image/*">
                     <div class="drag-text">
-                        <h3>Drag/drop or select image</h3>
+                        <h3>{{ 'Drag/drop or select image'|trans }}</h3>
                     </div>
                 </div>
                 <div class="file-upload-content">
                     <img class="file-upload-image" src="#" alt="your image">
                     <div class="image-title-wrap">
-                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                        <button type="button" onclick="removeUpload()" class="remove-image">{{ 'Remove'|trans }}</button>
                     </div>
                 </div><br>
-                <input class="file-upload-btn" type="submit" value="Upload Image" name="submitUpload">
+                <input class="file-upload-btn" type="submit" value="{{ 'Upload Image'|trans }}" name="submitUpload">
             </div>
         </form>
     </div>

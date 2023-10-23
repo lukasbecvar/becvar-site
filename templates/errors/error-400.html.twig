@@ -1,15 +1,15 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    Error 400, Bad request
+    {{ 'Error 400, Bad request'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
 	<strong>
-		Request error
+		{{ 'Request error'|trans }}
 		<br><br>
-		Please check the address bar or contact your administrator
+		{{ 'Please check the address bar or contact your administrator'|trans }}
 	</strong>
 </p>
 {% endblock %}

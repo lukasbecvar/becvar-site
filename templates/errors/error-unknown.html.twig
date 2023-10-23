@@ -1,13 +1,13 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    Error: 520, unknown error
+    {{ 'Error 520, unknown error'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
 	<strong>
-		Unknown error, please contact the service administrator.
+		{{ 'Unknown error, please contact the service administrator'|trans }}
 	</strong>
 </p>
 {% endblock %}

@@ -1,13 +1,13 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    Error: 503, page is unavailable
+    {{ 'Error 503, page is unavailable'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
 	<strong>
-		The service is temporarily unavailable due to maintenance
+		{{ 'The service is temporarily unavailable due to maintenance'|trans }}
 	</strong>
 </p>
 {% endblock %}

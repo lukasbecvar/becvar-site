@@ -40,6 +40,7 @@ class ProjectsController extends AbstractController
             'contact_email' => $_ENV['CONTACT_EMAIL'],
             'twitter_link' => $_ENV['TWITTER_LINK'],
             'github_link' => $_ENV['GITHUB_LINK'],
+            'projects_count' => $this->projectsManager->getProjectsCount(),
             'open_projects' => $this->projectsManager->getProjectsList('open'),
             'closed_projects' => $this->projectsManager->getProjectsList('closed'),
         ]);

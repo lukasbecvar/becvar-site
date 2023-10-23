@@ -124,6 +124,16 @@ class ProjectsManager
         }
     }
 
+    public function getProjectsCount(): int
+    {
+        try {
+            return count($this->entityManager->getRepository(Project::class)->findAll());
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
+            return [];
+        }   
+    }
+
     public function resetIndex(): void 
     {
         // reset table AUTO_INCREMENT
