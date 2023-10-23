@@ -337,4 +337,16 @@ class VisitorInfoUtil
         $detect = new MobileDetect();
         return $detect->isMobile();
     }
+
+    public function getVisitorLanguage(): ?string
+    {
+        $repo = $this->getVisitorRepository($this->getIP());
+    
+        // check visitor found
+        if ($repo !== null) {
+            return strtolower($repo->getCountry());      
+        } else {
+            return null;
+        }
+    }
 }

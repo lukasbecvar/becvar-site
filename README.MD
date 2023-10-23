@@ -1,6 +1,12 @@
 ## About becvar-site
 Personal website builded with symfony framework, bootstrap & webpack-encore
 
+## Translations
+Public page is automatically translated into Czech language (geolocation with ip address)
+
+## Assets builder
+Webpack (symfony-encore), scripts/build.sh
+
 ## Public site
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
