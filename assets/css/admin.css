@@ -44,16 +44,17 @@ form {
 }
 
 .wrapper .sidebar {
-	background-color: #242424;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 225px;
-	height: 100%;
-	padding: 5px 0;
-	transition: all 0.5s ease;
-	z-index: 1;
-	border-right: 1px solid rgba(255, 255, 255, 0.24);
+    background-color: #242424;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 5px 0;
+    transition: all 0.5s ease;
+    z-index: 1;
+    border-right: 1px solid rgba(255, 255, 255, 0.24);
+    overflow-y: auto;
 }
   
 .wrapper .sidebar .profile {
