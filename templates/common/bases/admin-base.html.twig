@@ -8,9 +8,9 @@
     {{ encore_entry_link_tags('scrollbar-css') }}
     {{ encore_entry_link_tags('bootstrap-css') }}
     {{ encore_entry_link_tags('fontawesome-css') }}
-    {{ encore_entry_link_tags('lightgallery-css') }}
-    {{ encore_entry_link_tags('lg-transitions-css') }}
     {{ encore_entry_link_tags('admin-css') }}
+    {# <===== INIT COMPONENT ASSETS (if defined) =====> #}
+    {% block component_assets %}{% endblock %}
 	<title>Admin | {% block title %}{% endblock %}</title>
 </head>
 <body>

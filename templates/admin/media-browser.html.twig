@@ -1,5 +1,10 @@
 {% extends 'common/bases/admin-base.html.twig' %}
 
+{% block component_assets %}
+    {{ encore_entry_link_tags('lightgallery-css') }}
+    {{ encore_entry_link_tags('lg-transitions-css') }}
+{% endblock %}
+
 {% block title %}
     images
 {% endblock %}
