@@ -54,13 +54,12 @@ Coding langs: 'Programovacie jazyky'
 My skills: 'Moje zručnosti'
 
 # projects page
-The project list is loaded from my github: 'Zoznam projektov je načítaný z mojeho githubu'
 Open: 'Otvorené'
 Closed: 'Uzavreté'
 You can find all my projects here: 'Všetky moje projekty nájdete tu'
-Technology: 'Použitá technológia'
+Language: 'Použitá technológia'
 Source: 'Zdroj'
-on github: 'na githubu'
+github: 'gitHub'
 Project list is empty: 'Zoznam projektov je prázdny'
 
 # contact page

@@ -54,13 +54,12 @@ Coding langs: 'Programmiersprachen'
 My skills: 'Meine Fähigkeiten'
 
 # projects page
-The project list is loaded from my github: 'Die Projektliste wird von meinem GitHub geladen'
 Open: 'Offen'
 Closed: 'Geschlossen'
 You can find all my projects here: 'Alle meine Projekte finden Sie hier'
-Technology: 'Technologie'
+Language: 'Technologie'
 Source: 'Quellcode'
-on github: 'auf GitHub'
+github: 'gitHub'
 Project list is empty: 'Projektliste ist leer'
 
 # contact page

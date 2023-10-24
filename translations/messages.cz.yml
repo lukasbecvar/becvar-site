@@ -24,7 +24,7 @@ You are permanently banned on this site: 'Na této stránce máte trvalý zákaz
 Please direct unban requests to: 'Žádosti o zrušení zákazu směřujte na'
 Error 503, page is unavailable: 'Chyba 503, stránka je nedostupná'
 The service is temporarily unavailable due to maintenance: 'Služba je dočasně nedostupná z důvodu údržby'
-Error 520, unknown error: 'Chyba 520, neznámá chyba'
+Error 520, unknown error: 'Chyba 520, neznámá chyba'  
 Unknown error, please contact the service administrator: 'Neznámá chyba, obraťte se na správce služby'
 
 # main web navigation
@@ -54,13 +54,12 @@ Coding langs: 'Programovací jazyky'
 My skills: 'Moje dovednosti'
 
 # projects page
-The project list is loaded from my github: 'Seznam projektů je načten z mého githubu'
 Open: 'Otevřené'
 Closed: 'Ukončené'
 You can find all my projects here: 'Všechny mé projekty najdete zde'
-Technology: 'Použitá technologie'
+Language: 'Jazyk'
 Source: 'Kód'
-on github: 'na githubu'
+github: 'gitHub'
 Project list is empty: 'Seznam projektů je prázdný'
 
 # contact page
