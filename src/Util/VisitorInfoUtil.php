@@ -344,8 +344,7 @@ class VisitorInfoUtil
     
         // check visitor found
         if ($repo !== null) {
-            //return strtolower($repo->getCountry());   
-            return 'de';
+            return strtolower($repo->getCountry());   
         } else {
             return null;
         }
