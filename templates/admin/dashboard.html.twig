@@ -7,7 +7,7 @@
 {% block component %}
 <div class="admin-panel">
     {#================================= WARNINGS =================================#}
-    <div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%" id="wrarning-box">
+    <div class="card-phone card text-white mb-3 dashbord-card" id="wrarning-box">
         <div class="card-header">Warnings</div>
         <div class="card-body" id="wraning-elements"> 
             {% if is_web_user_sudo == false %}
@@ -52,7 +52,7 @@
         </div>
     </div>
     {#================================= SERVICES =================================#}
-    <div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
+    <div class="card-phone card text-white mb-3 dashbord-card">
         <div class="card-header">Service status</div>
         <div class="card-body"> 
             <p class="card-text">
@@ -116,7 +116,7 @@
         </div>
     </div>
     {#================================= SYSTEM INFO =================================#}
-    <div class="card-phone card text-white mb-3" style="margin-left: 13px; margin-right: 17.5%">
+    <div class="card-phone card text-white mb-3 dashbord-card">
         <div class="card-header">System info</div>
         <div class="card-body">
             <p class="card-text">OS: {{ operating_system }}</p>
@@ -124,11 +124,11 @@
             <p class="card-text">Arch: {{ kernal_arch }}</p>
         </div>
     </div>
-    <div class="col-md-10 ">
-        <div class="row ">
+    <div class="card-phone card text-white mb-3 dashbord-card counter-container">
+        <div class="row">
             {# <===== logs counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-cherry">
+                <div class="card l-bg-cherry counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/logs/1" class="stats-link">Logs</a> <a href="/antilog/5369362536">.</a></h5>
@@ -145,7 +145,7 @@
             </div>
             {# <===== inbox counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/inbox/1" class="stats-link">Messages</a></h5>
@@ -162,7 +162,7 @@
             </div>
             {# <===== todos counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-green-dark">
+                <div class="card l-bg-green-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/todos" class="stats-link">Todos</a></h5>
@@ -179,7 +179,7 @@
             </div>            
             {# <===== images counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-orange-dark">
+                <div class="card l-bg-orange-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/media/browser/1" class="stats-link">Images</a></h5>
@@ -196,7 +196,7 @@
             </div>          
             {# <===== pastes counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-orange-darker">
+                <div class="card l-bg-orange-darker counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/database/code_paste/1" class="stats-link">Pastes</a></h5>
@@ -213,7 +213,7 @@
             </div>   
             {# <===== visitors counter =====> #}
             <div class="col-xl-2 col-lg-6">
-                <div class="card l-bg-cyan-darker">
+                <div class="card l-bg-cyan-darker counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
                             <h5 class="card-title mb-0"><a class="card-link" href="/admin/visitors/1" class="stats-link">Visitors</a></h5>
@@ -230,7 +230,7 @@
             </div>   
             {# <===== server uptime =====> #}
             <div class="col-xl-3 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-3">
                             <h5 class="card-title mb-0 text-white">Server uptime</h5>
@@ -247,7 +247,7 @@
             </div>   
             {# <===== cpu usage =====> #}
             <div class="col-xl-3 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-3">
                             <h5 class="card-title mb-0 text-white">CPU usage [CORE/AVG]</h5>
@@ -273,7 +273,7 @@
             </div>     
             {# <===== ram usage =====> #}
             <div class="col-xl-3 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-3">
                             <h5 class="card-title mb-0 text-white">Memory usage [RAM]</h5>
@@ -299,7 +299,7 @@
             </div>    
             {# <===== used disk space card =====> #}
             <div class="col-xl-3 col-lg-6">
-                <div class="card l-bg-blue-dark">
+                <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-3">
                             <h5 class="card-title mb-0 text-white">Disk space</h5>

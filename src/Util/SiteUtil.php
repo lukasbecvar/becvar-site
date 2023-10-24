@@ -31,6 +31,11 @@ class SiteUtil
             $localhost = true;
         }
         
+        // check if running on private ip
+        if (str_starts_with($host, '10.0.0.93')) {
+            $localhost = true;
+        }
+
         return $localhost;
     }
 
