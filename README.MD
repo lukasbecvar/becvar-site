@@ -46,6 +46,9 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
+- [ ] Assets loading reduce
+- [ ] Fix projects page translations
+- [ ] Security middleware (scurity headers, ssl)
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
