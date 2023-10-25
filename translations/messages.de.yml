@@ -1,106 +1,106 @@
-config.lang: 'de'
+config.lang: "de"
 
 # common
-common.here: 'hier'
+common.here: "hier"
 
 # common error messages
-error.url.check.message: 'Bitte überprüfen Sie die Adressleiste oder kontaktieren Sie Ihren Administrator'
+error.url.check.message: "Bitte überprüfen Sie die Adressleiste oder kontaktieren Sie Ihren Administrator"
 # error 400
-error.400.title: 'Fehler: Schlechte Anfrage'
-error.400.message: 'Anfragefehler'
+error.400.title: "Fehler: Schlechte Anfrage"
+error.400.message: "Anfragefehler"
 # error 401
-error.401.title: 'Fehler: Nicht autorisiert'
-error.401.message: 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen'
+error.401.title: "Fehler: Nicht autorisiert"
+error.401.message: "Sie haben keine Berechtigung, auf diese Seite zuzugreifen"
 # error 403
-error.403.title: 'Fehler: Verboten'
-error.403.message: 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen'
+error.403.title: "Fehler: Verboten"
+error.403.message: "Sie haben keine Berechtigung, auf diese Seite zuzugreifen"
 # error 404
-error.404.title: 'Fehler: Seite nicht gefunden'
-error.404.message: 'Fehler, diese Seite wurde nicht gefunden'
+error.404.title: "Fehler: Seite nicht gefunden"
+error.404.message: "Fehler, diese Seite wurde nicht gefunden"
 # error 429
-error.429.title: 'Fehler: Zu viele Anfragen'
-error.429.message: 'Zu viele Anfragen'
-error.429.submessage: 'Bitte warten Sie und versuchen Sie es später erneut'
+error.429.title: "Fehler: Zu viele Anfragen"
+error.429.message: "Zu viele Anfragen"
+error.429.submessage: "Bitte warten Sie und versuchen Sie es später erneut"
 # error 500
-error.500.title: 'Fehler: Interner Serverfehler'
-error.500.message: 'Der Server hat auf unerwartete Bedingungen gestoßen, die ihn daran gehindert haben, die Anfrage zu erfüllen'
+error.500.title: "Fehler: Interner Serverfehler"
+error.500.message: "Der Server hat auf unerwartete Bedingungen gestoßen, die ihn daran gehindert haben, die Anfrage zu erfüllen"
 # error unknown
-error.unknown.title: 'Fehler: Unbekannter Fehler'
-error.unknown.message: 'Unbekannter Fehler, bitte kontaktieren Sie den Dienstadministrator'
+error.unknown.title: "Fehler: Unbekannter Fehler"
+error.unknown.message: "Unbekannter Fehler, bitte kontaktieren Sie den Dienstadministrator"
 # error maintenance
-error.maintenance.title: 'Fehler: Seite nicht verfügbar'
-error.maintenance.message: 'Der Dienst ist aufgrund von Wartungsarbeiten vorübergehend nicht verfügbar'
+error.maintenance.title: "Fehler: Seite nicht verfügbar"
+error.maintenance.message: "Der Dienst ist aufgrund von Wartungsarbeiten vorübergehend nicht verfügbar"
 # error banned
-error.banned.title: 'Sie sind gesperrt'
-error.banned.message: 'Sie sind auf dieser Seite dauerhaft gesperrt'
-error.banned.message.reason: 'Sie sind auf dieser Seite dauerhaft gesperrt aus folgendem Grund'
-error.banned.unban.email: 'Bitte richten Sie Aufhebungsanfragen an'
+error.banned.title: "Sie sind gesperrt"
+error.banned.message: "Sie sind auf dieser Seite dauerhaft gesperrt"
+error.banned.message.reason: "Sie sind auf dieser Seite dauerhaft gesperrt aus folgendem Grund"
+error.banned.unban.email: "Bitte richten Sie Aufhebungsanfragen an"
 
 # main navigation
-navigation.home.link: 'Startseite'
-navigation.about.link: 'Über uns'
-navigation.projects.link: 'Projekte'
-navigation.contact.link: 'Kontakt'
-navigation.uploader.link: 'Hochlader'
-navigation.paste.link: 'Einfügen'
+navigation.home.link: "Startseite"
+navigation.about.link: "Über uns"
+navigation.projects.link: "Projekte"
+navigation.contact.link: "Kontakt"
+navigation.uploader.link: "Hochlader"
+navigation.paste.link: "Einfügen"
 
 # home
-home.im : 'Ich bin ein'
-home.main.text: 'Full-Stack-Entwickler'
+home.im : "Ich bin ein"
+home.main.text: "Full-Stack-Entwickler"
 
 # about
-about.title: 'Über uns'
-about.description: 'JAVA, PHP Entwickler'
-about.subdescription: 'Ich bin ein Full-Stack-Web- und Serverlösungsentwickler'
-about.birthday: 'Geburtstag'
-about.may: 'Mai'
-about.age: 'Alter'
-about.nationality: 'Nationalität: Tschechisch'
-about.projects.link.description: 'Alle meine öffentlichen Projekte sind verfügbar'
-about.funfact.1: 'Meine erste Programmiersprache war Pascal. Ich habe 2012 begonnen, sie zu lernen'
-about.funfact.2: 'Meine Hauptprogrammiersprachen sind derzeit Java und PHP'
-about.counter.clients: 'Kunden'
-about.counter.projects: 'Projekte'
-about.counter.code.lines: 'Codezeilen'
-about.counter.coding.langs: 'Programmiersprachen'
-about.my.skills.title: 'Meine Fähigkeiten'
+about.title: "Über uns"
+about.description: "JAVA, PHP Entwickler"
+about.subdescription: "Ich bin ein Full-Stack-Web- und Serverlösungsentwickler"
+about.birthday: "Geburtstag"
+about.may: "Mai"
+about.age: "Alter"
+about.nationality: "Nationalität: Tschechisch"
+about.projects.link.description: "Alle meine öffentlichen Projekte sind verfügbar"
+about.funfact.1: "Meine erste Programmiersprache war Pascal. Ich habe 2012 begonnen, sie zu lernen"
+about.funfact.2: "Meine Hauptprogrammiersprachen sind derzeit Java und PHP"
+about.counter.clients: "Kunden"
+about.counter.projects: "Projekte"
+about.counter.code.lines: "Codezeilen"
+about.counter.coding.langs: "Programmiersprachen"
+about.my.skills.title: "Meine Fähigkeiten"
 
 # projects
-projects.title: 'Projekte'
-projects.open.title: 'Offen'
-projects.closed.title: 'Geschlossen'
-projects.project.language: 'Sprache'
-projects.project.source: 'Quelle'
-projects.list.empty.message: 'Projektliste ist leer'
-projects.repos.link.description: 'Alle meine Projekte finden Sie hier'
+projects.title: "Projekte"
+projects.open.title: "Offen"
+projects.closed.title: "Geschlossen"
+projects.project.language: "Sprache"
+projects.project.source: "Quelle"
+projects.list.empty.message: "Projektliste ist leer"
+projects.repos.link.description: "Alle meine Projekte finden Sie hier"
 
 # contact
-contact.title: 'Kontaktieren Sie mich'
-contact.social.sites.title: 'Soziale Medien'
-contact.email.me.title: 'E-Mail an mich'
-contact.form.name.input: 'Ihr Name'
-contact.form.email.input: 'Ihre E-Mail'
-contact.from.message.input: 'Nachricht'
-contact.from.website.input: 'Webseite'
-contact.form.submit.button: 'Nachricht senden'
-contact.error.username.empty: 'Bitte geben Sie Ihren Benutzernamen ein'
-contact.error.email.empty: 'Bitte geben Sie Ihre E-Mail-Adresse ein'
-contact.error.message.empty: 'Bitte geben Sie Ihre Nachricht ein'
-contact.error.characters.limit.reached: 'Maximale Nachrichtenlänge beträgt 2000 Zeichen'
-contact.error.ko.message: 'Ihre Nachricht wurde aufgrund eines Fehlers nicht gesendet. Versuchen Sie es später erneut oder überprüfen Sie Ihre Eingaben'
-contact.error.blocked.message: 'Ihre Nachricht wurde blockiert'
-contact.error.limit.reached.message: 'Fehler: Sie haben 5 ungelesene Nachrichten. Bitte warten Sie auf die Antwort auf die ersten Nachrichten'
-contact.success.message: 'Ihre Nachricht wurde gesendet. Lukáš antwortet innerhalb von maximal 24 Stunden'
+contact.title: "Kontaktieren Sie mich"
+contact.social.sites.title: "Soziale Medien"
+contact.email.me.title: "E-Mail an mich"
+contact.form.name.input: "Ihr Name"
+contact.form.email.input: "Ihre E-Mail"
+contact.from.message.input: "Nachricht"
+contact.from.website.input: "Webseite"
+contact.form.submit.button: "Nachricht senden"
+contact.error.username.empty: "Bitte geben Sie Ihren Benutzernamen ein"
+contact.error.email.empty: "Bitte geben Sie Ihre E-Mail-Adresse ein"
+contact.error.message.empty: "Bitte geben Sie Ihre Nachricht ein"
+contact.error.characters.limit.reached: "Maximale Nachrichtenlänge beträgt 2000 Zeichen"
+contact.error.ko.message: "Ihre Nachricht wurde aufgrund eines Fehlers nicht gesendet. Versuchen Sie es später erneut oder überprüfen Sie Ihre Eingaben"
+contact.error.blocked.message: "Ihre Nachricht wurde blockiert"
+contact.error.limit.reached.message: "Fehler: Sie haben 5 ungelesene Nachrichten. Bitte warten Sie auf die Antwort auf die ersten Nachrichten"
+contact.success.message: "Ihre Nachricht wurde gesendet. Lukáš antwortet innerhalb von maximal 24 Stunden"
 
 # image uploade
-image.uploader.title: 'Bildhochlader'
-image.uploader.form.title: 'Bild hochladen'
-image.uploader.form.description: 'Bild ziehen/ablegen oder auswählen'
-image.uploader.form.remove.button: 'Entfernen'
-image.uploader.form.submit.button: 'Bild hochladen'
-image.uploader.file.format.error: 'Fehler: Die Datei hat das falsche Format!'
-image.viewer.title: 'Bild'
+image.uploader.title: "Bildhochlader"
+image.uploader.form.title: "Bild hochladen"
+image.uploader.form.description: "Bild ziehen/ablegen oder auswählen"
+image.uploader.form.remove.button: "Entfernen"
+image.uploader.form.submit.button: "Bild hochladen"
+image.uploader.file.format.error: "Fehler: Die Datei hat das falsche Format!"
+image.viewer.title: "Bild"
 
 # code paste
-code.paste.title: 'Code einfügen'
-code.view.title: 'Anzeigen'
+code.paste.title: "Code einfügen"
+code.view.title: "Anzeigen"

@@ -1,106 +1,106 @@
-config.lang: 'en'
+config.lang: "en"
 
 # common
-common.here: 'here'
+common.here: "here"
 
 # common error messages
-error.url.check.message: 'Please check the address bar or contact your administrator'
+error.url.check.message: "Please check the address bar or contact your administrator"
 # error 400
-error.400.title: 'Error: Bad request'
-error.400.message: 'Request error'
+error.400.title: "Error: Bad request"
+error.400.message: "Request error"
 # error 401
-error.401.title: 'Error: Unauthorized'
-error.401.message: 'You do not have permission to access this page'
+error.401.title: "Error: Unauthorized"
+error.401.message: "You do not have permission to access this page"
 # error 403
-error.403.title: 'Error: Forbidden'
-error.403.message: 'You do not have permission to access this page'
+error.403.title: "Error: Forbidden"
+error.403.message: "You do not have permission to access this page"
 # error 404
-error.404.title: 'Error: Page not found'
-error.404.message: 'Error this page was not found'
+error.404.title: "Error: Page not found"
+error.404.message: "Error this page was not found"
 # error 429
-error.429.title: 'Error: Too Many Requests'
-error.429.message: 'Too Many Requests'
-error.429.submessage: 'Please try to wait and try again later'
+error.429.title: "Error: Too Many Requests"
+error.429.message: "Too Many Requests"
+error.429.submessage: "Please try to wait and try again later"
 # error 500
-error.500.title: 'Error: Internal Server Error'
-error.500.message: 'The server encountered an unexpected condition that prevented it from fulfilling the request'
+error.500.title: "Error: Internal Server Error"
+error.500.message: "The server encountered an unexpected condition that prevented it from fulfilling the request"
 # error unknown
-error.unknown.title: 'Error: unknown error'
-error.unknown.message: 'Unknown error, please contact the service administrator'
+error.unknown.title: "Error: unknown error"
+error.unknown.message: "Unknown error, please contact the service administrator"
 # error maintenance
-error.maintenance.title: 'Error: page is unavailable'
-error.maintenance.message: 'The service is temporarily unavailable due to maintenance'
+error.maintenance.title: "Error: page is unavailable"
+error.maintenance.message: "The service is temporarily unavailable due to maintenance"
 # error banned
-error.banned.title: 'You are banned'
-error.banned.message: 'You are permanently banned on this site'
-error.banned.message.reason: 'You are permanently banned on this site for reason'
-error.banned.unban.email: 'Please direct unban requests to'
+error.banned.title: "You are banned"
+error.banned.message: "You are permanently banned on this site"
+error.banned.message.reason: "You are permanently banned on this site for reason"
+error.banned.unban.email: "Please direct unban requests to"
 
 # main navigation
-navigation.home.link: 'Home'
-navigation.about.link: 'About'
-navigation.projects.link: 'Projects'
-navigation.contact.link: 'Contact'
-navigation.uploader.link: 'Uploader'
-navigation.paste.link: 'Paste'
+navigation.home.link: "Home"
+navigation.about.link: "About"
+navigation.projects.link: "Projects"
+navigation.contact.link: "Contact"
+navigation.uploader.link: "Uploader"
+navigation.paste.link: "Paste"
 
 # home
 home.im : "I'm a"
-home.main.text: 'full stack developer'
+home.main.text: "full stack developer"
 
 # about
-about.title: 'About'
-about.description: 'JAVA, PHP Developer'
-about.subdescription: 'I am a full stack web & server solutions developer'
-about.birthday: 'Birthday'
-about.may: 'May'
-about.age: 'Age'
-about.nationality: 'Nationality: czech'
-about.projects.link.description: 'All my public projects available'
-about.funfact.1: 'My first programming language was Pascal I started learning it in 2012'
-about.funfact.2: 'My main programming languages are "currently" Java and PHP'
-about.counter.clients: 'Clients'
-about.counter.projects: 'Projects'
-about.counter.code.lines: 'Lines of code'
-about.counter.coding.langs: 'Coding langs'
-about.my.skills.title: 'My skills'
+about.title: "About"
+about.description: "JAVA, PHP Developer"
+about.subdescription: "I am a full stack web & server solutions developer"
+about.birthday: "Birthday"
+about.may: "May"
+about.age: "Age"
+about.nationality: "Nationality: czech"
+about.projects.link.description: "All my public projects available"
+about.funfact.1: "My first programming language was Pascal I started learning it in 2012"
+about.funfact.2: "My main programming languages are 'currently' Java and PHP"
+about.counter.clients: "Clients"
+about.counter.projects: "Projects"
+about.counter.code.lines: "Lines of code"
+about.counter.coding.langs: "Coding langs"
+about.my.skills.title: "My skills"
 
 # projects
-projects.title: 'Projects'
-projects.open.title: 'Open'
-projects.closed.title: 'Closed'
-projects.project.language: 'Language'
-projects.project.source: 'Source'
-projects.list.empty.message: 'Project list is empty'
-projects.repos.link.description: 'You can find all my projects here'
+projects.title: "Projects"
+projects.open.title: "Open"
+projects.closed.title: "Closed"
+projects.project.language: "Language"
+projects.project.source: "Source"
+projects.list.empty.message: "Project list is empty"
+projects.repos.link.description: "You can find all my projects here"
 
 # contact
-contact.title: 'Contact me'
-contact.social.sites.title: 'Social sites'
-contact.email.me.title: 'Email Me'
-contact.form.name.input: 'Your name'
-contact.form.email.input: 'Your email'
-contact.from.message.input: 'Message'
-contact.from.website.input: 'Website'
-contact.form.submit.button: 'Submit message'
-contact.error.username.empty: 'Please enter your username'
-contact.error.email.empty: 'Please enter your email'
-contact.error.message.empty: 'Please enter your message'
-contact.error.characters.limit.reached: 'Maximal message lenght is 2000 characters'
-contact.error.ko.message: 'Your message was not sent due to an error, please try again later, or check your message inputs'
-contact.error.blocked.message: 'Your message has been blocked'
-contact.error.limit.reached.message: 'error you have 5 unreaded messages, please wait for the response to the first messags'
-contact.success.message: 'Your message has been sent, Lukáš replies within 24 hours at most'
+contact.title: "Contact me"
+contact.social.sites.title: "Social sites"
+contact.email.me.title: "Email Me"
+contact.form.name.input: "Your name"
+contact.form.email.input: "Your email"
+contact.from.message.input: "Message"
+contact.from.website.input: "Website"
+contact.form.submit.button: "Submit message"
+contact.error.username.empty: "Please enter your username"
+contact.error.email.empty: "Please enter your email"
+contact.error.message.empty: "Please enter your message"
+contact.error.characters.limit.reached: "Maximal message lenght is 2000 characters"
+contact.error.ko.message: "Your message was not sent due to an error, please try again later, or check your message inputs"
+contact.error.blocked.message: "Your message has been blocked"
+contact.error.limit.reached.message: "error you have 5 unreaded messages, please wait for the response to the first messags"
+contact.success.message: "Your message has been sent, Lukáš replies within 24 hours at most"
 
 # image uploaded
-image.uploader.title: 'Image uploader'
-image.uploader.form.title: 'Image upload'
-image.uploader.form.description: 'Drag/drop or select image'
-image.uploader.form.remove.button: 'Remove'
-image.uploader.form.submit.button: 'Upload Image'
-image.uploader.file.format.error: 'Error file have wrong format!'
-image.viewer.title: 'Image'
+image.uploader.title: "Image uploader"
+image.uploader.form.title: "Image upload"
+image.uploader.form.description: "Drag/drop or select image"
+image.uploader.form.remove.button: "Remove"
+image.uploader.form.submit.button: "Upload Image"
+image.uploader.file.format.error: "Error file have wrong format!"
+image.viewer.title: "Image"
 
 # code paste
-code.paste.title: Code paste'
-code.view.title: 'Viewing'
+code.paste.title: Code paste"
+code.view.title: "Viewing"

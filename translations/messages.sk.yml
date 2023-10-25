@@ -1,105 +1,105 @@
-config.lang: 'cs'
+config.lang: "cs"
 
 # common
-common.here: 'tu'
+common.here: "tu"
 
 # common error messages
-error.url.check.message: 'Prosím skontrolujte adresný riadok alebo kontaktujte vášho administrátora'
+error.url.check.message: "Prosím skontrolujte adresný riadok alebo kontaktujte vášho administrátora"
 # error 400
-error.400.title: 'Chyba: Zlý požiadavok'
-error.400.message: 'Chyba požiadavku'
+error.400.title: "Chyba: Zlý požiadavok"
+error.400.message: "Chyba požiadavku"
 # error 401
-error.401.title: 'Chyba: Neoprávnený prístup'
-error.401.message: 'Nemáte oprávnenie na prístup k tejto stránke'
+error.401.title: "Chyba: Neoprávnený prístup"
+error.401.message: "Nemáte oprávnenie na prístup k tejto stránke"
 # error 403
-error.403.title: 'Chyba: Zakázaný prístup'
-error.403.message: 'Nemáte oprávnenie na prístup k tejto stránke'
+error.403.title: "Chyba: Zakázaný prístup"
+error.403.message: "Nemáte oprávnenie na prístup k tejto stránke"
 # error 404
-error.404.title: 'Chyba: Stránka sa nenašla'
-error.404.message: 'Chyba, táto stránka sa nenašla'
+error.404.title: "Chyba: Stránka sa nenašla"
+error.404.message: "Chyba, táto stránka sa nenašla"
 # error 429
-error.429.title: 'Chyba: Príliš veľa požiadaviek'
-error.429.message: 'Príliš veľa požiadaviek'
-error.429.submessage: 'Skúste počkať a skúsiť to neskôr'
+error.429.title: "Chyba: Príliš veľa požiadaviek"
+error.429.message: "Príliš veľa požiadaviek"
+error.429.submessage: "Skúste počkať a skúsiť to neskôr"
 # error 500
-error.500.title: 'Chyba: Interná chyba servera'
-error.500.message: 'Server narazil na neočakávanú podmienku, ktorá mu zabránila splniť požiadavku'
+error.500.title: "Chyba: Interná chyba servera"
+error.500.message: "Server narazil na neočakávanú podmienku, ktorá mu zabránila splniť požiadavku"
 # error unknown
-error.unknown.title: 'Chyba: neznáma chyba'
-error.unknown.message: 'Neznáma chyba, kontaktujte prosím správcu služby'
+error.unknown.title: "Chyba: neznáma chyba"
+error.unknown.message: "Neznáma chyba, kontaktujte prosím správcu služby"
 # error maintenance
-error.maintenance.title: 'Chyba: stránka je nedostupná'
-error.maintenance.message: 'Služba je dočasne nedostupná kvôli údržbe'
+error.maintenance.title: "Chyba: stránka je nedostupná"
+error.maintenance.message: "Služba je dočasne nedostupná kvôli údržbe"
 # error banned
-error.banned.title: 'Ste zakázaný'
-error.banned.message: 'Ste trvalo zakázaný na tejto stránke'
-error.banned.message.reason: 'Ste trvalo zakázaný na tejto stránke z dôvodu'
+error.banned.title: "Ste zakázaný"
+error.banned.message: "Ste trvalo zakázaný na tejto stránke"
+error.banned.message.reason: "Ste trvalo zakázaný na tejto stránke z dôvodu"
 
 # main navigation
-navigation.home.link: 'Domov'
-navigation.about.link: 'O mně'
-navigation.projects.link: 'Projekty'
-navigation.contact.link: 'Kontakt'
-navigation.uploader.link: 'Nahrávač obrázkov'
-navigation.paste.link: 'Vložiť kód'
+navigation.home.link: "Domov"
+navigation.about.link: "O mně"
+navigation.projects.link: "Projekty"
+navigation.contact.link: "Kontakt"
+navigation.uploader.link: "Nahrávač obrázkov"
+navigation.paste.link: "Vložiť kód"
 
 # home
-home.im : 'Som'
-home.main.text: 'full stack developer'
+home.im : "Som"
+home.main.text: "full stack developer"
 
 # about
-about.title: 'O mně'
-about.description: 'JAVA, PHP developer'
-about.subdescription: 'Som vývojár webu a serverových riešení'
-about.birthday: 'Narodeniny'
-about.may: 'Máj'
-about.age: 'Vek'
-about.nationality: 'Národnosť: česká'
-about.projects.link.description: 'Všetky moje verejné projekty sú k dispozícii'
-about.funfact.1: 'Môj prvý programovací jazyk bol Pascal, začal som sa učiť v roku 2012'
-about.funfact.2: 'Moje hlavné programovacie jazyky sú "v súčasnosti" Java a PHP'
-about.counter.clients: 'Klienti'
-about.counter.projects: 'Projekty'
-about.counter.code.lines: 'Riadky kódu'
-about.counter.coding.langs: 'Programovacie jazyky'
-about.my.skills.title: 'Moje zručnosti'
+about.title: "O mně"
+about.description: "JAVA, PHP developer"
+about.subdescription: "Som vývojár webu a serverových riešení"
+about.birthday: "Narodeniny"
+about.may: "Máj"
+about.age: "Vek"
+about.nationality: "Národnosť: česká"
+about.projects.link.description: "Všetky moje verejné projekty sú k dispozícii"
+about.funfact.1: "Môj prvý programovací jazyk bol Pascal, začal som sa učiť v roku 2012"
+about.funfact.2: "Moje hlavné programovacie jazyky sú v súčasnosti Java a PHP"
+about.counter.clients: "Klienti"
+about.counter.projects: "Projekty"
+about.counter.code.lines: "Riadky kódu"
+about.counter.coding.langs: "Programovacie jazyky"
+about.my.skills.title: "Moje zručnosti"
 
 # projects
-projects.title: 'Projekty'
-projects.open.title: 'Otvorené'
-projects.closed.title: 'Zatvorené'
-projects.project.language: 'Jazyk'
-projects.project.source: 'Zdroj'
-projects.list.empty.message: 'Zoznam projektov je prázdny'
-projects.repos.link.description: 'Všetky moje projekty nájdete tu'
+projects.title: "Projekty"
+projects.open.title: "Otvorené"
+projects.closed.title: "Zatvorené"
+projects.project.language: "Jazyk"
+projects.project.source: "Zdroj"
+projects.list.empty.message: "Zoznam projektov je prázdny"
+projects.repos.link.description: "Všetky moje projekty nájdete tu"
 
 # contact
-contact.title: 'Kontaktujte ma'
-contact.social.sites.title: 'Sociálne siete'
-contact.email.me.title: 'Napíšte mi e-mail'
-contact.form.name.input: 'Vaše meno'
-contact.form.email.input: 'Váš e-mail'
-contact.from.message.input: 'Správa'
-contact.from.website.input: 'Webová stránka'
-contact.form.submit.button: 'Odoslať správu'
-contact.error.username.empty: 'Prosím, zadajte svoje užívateľské meno'
-contact.error.email.empty: 'Prosím, zadajte svoj e-mail'
-contact.error.message.empty: 'Prosím, zadajte svoju správu'
-contact.error.characters.limit.reached: 'Maximálna dĺžka správy je 2000 znakov'
-contact.error.ko.message: 'Vaša správa nebola odoslaná kvôli chybe. Skúste to neskôr alebo skontrolujte svoje vstupy'
-contact.error.blocked.message: 'Vaša správa bola zablokovaná'
-contact.error.limit.reached.message: 'chyba: máte 5 neprečítaných správ. Počkajte na odpoveď na prvé správy.'
-contact.success.message: 'Vaša správa bola odoslaná. Lukáš odpovie najneskôr do 24 hodín'
+contact.title: "Kontaktujte ma"
+contact.social.sites.title: "Sociálne siete"
+contact.email.me.title: "Napíšte mi e-mail"
+contact.form.name.input: "Vaše meno"
+contact.form.email.input: "Váš e-mail"
+contact.from.message.input: "Správa"
+contact.from.website.input: "Webová stránka"
+contact.form.submit.button: "Odoslať správu"
+contact.error.username.empty: "Prosím, zadajte svoje užívateľské meno"
+contact.error.email.empty: "Prosím, zadajte svoj e-mail"
+contact.error.message.empty: "Prosím, zadajte svoju správu"
+contact.error.characters.limit.reached: "Maximálna dĺžka správy je 2000 znakov"
+contact.error.ko.message: "Vaša správa nebola odoslaná kvôli chybe. Skúste to neskôr alebo skontrolujte svoje vstupy"
+contact.error.blocked.message: "Vaša správa bola zablokovaná"
+contact.error.limit.reached.message: "chyba: máte 5 neprečítaných správ. Počkajte na odpoveď na prvé správy."
+contact.success.message: "Vaša správa bola odoslaná. Lukáš odpovie najneskôr do 24 hodín"
 
 # image uploader
-image.uploader.title: 'Nahrávač obrázkov'
-image.uploader.form.title: 'Nahrať obrázok'
-image.uploader.form.description: 'Potiahnite/upustite alebo vyberte obrázok'
-image.uploader.form.remove.button: 'Odstrániť'
-image.uploader.form.submit.button: 'Nahrať obrázok'
-image.uploader.file.format.error: 'Chyba: súbor má nesprávny formát!'
-image.viewer.title: 'Obrázok'
+image.uploader.title: "Nahrávač obrázkov"
+image.uploader.form.title: "Nahrať obrázok"
+image.uploader.form.description: "Potiahnite/upustite alebo vyberte obrázok"
+image.uploader.form.remove.button: "Odstrániť"
+image.uploader.form.submit.button: "Nahrať obrázok"
+image.uploader.file.format.error: "Chyba: súbor má nesprávny formát!"
+image.viewer.title: "Obrázok"
 
 # code paste
-code.paste.title: 'Vložiť kód'
-code.view.title: 'Kód'
+code.paste.title: "Vložiť kód"
+code.view.title: "Kód"

@@ -1,105 +1,105 @@
-config.lang: 'cs'
+config.lang: "cs"
 
 # common
-common.here: 'zde'
+common.here: "zde"
 
 # common error messages
-error.url.check.message: 'Prosím zkontrolujte adresní řádek nebo kontaktujte svého správce'
+error.url.check.message: "Prosím zkontrolujte adresní řádek nebo kontaktujte svého správce"
 # error 400
-error.400.title: 'Chyba: Špatný požadavek'
-error.400.message: 'Chyba požadavku'
+error.400.title: "Chyba: Špatný požadavek"
+error.400.message: "Chyba požadavku"
 # error 401
-error.401.title: 'Chyba: Přístup odepřen'
-error.401.message: 'Nemáte oprávnění k přístupu na tuto stránku'
+error.401.title: "Chyba: Přístup odepřen"
+error.401.message: "Nemáte oprávnění k přístupu na tuto stránku"
 # error 403
-error.403.title: 'Chyba: Vstup zakázán'
-error.403.message: 'Nemáte oprávnění k přístupu na tuto stránku'
+error.403.title: "Chyba: Vstup zakázán"
+error.403.message: "Nemáte oprávnění k přístupu na tuto stránku"
 # error 404
-error.404.title: 'Chyba: Stránka nenalezena'
-error.404.message: 'Chyba, tato stránka nebyla nalezena'
+error.404.title: "Chyba: Stránka nenalezena"
+error.404.message: "Chyba, tato stránka nebyla nalezena"
 # error 429
-error.429.title: 'Chyba: Příliš mnoho požadků'
-error.429.message: 'Příliš mnoho požadavků'
-error.429.submessage: 'Zkuste počkat a zkuste to znovu později'
+error.429.title: "Chyba: Příliš mnoho požadků"
+error.429.message: "Příliš mnoho požadavků"
+error.429.submessage: "Zkuste počkat a zkuste to znovu později"
 # chyba 500
-error.500.title: 'Chyba: Interní serverová chyba'
-error.500.message: 'Server narazil na neočekávanou chybu, která mu brání ve splnění požadavku'
+error.500.title: "Chyba: Interní serverová chyba"
+error.500.message: "Server narazil na neočekávanou chybu, která mu brání ve splnění požadavku"
 # unknown chyba
-error.unknown.title: 'Chyba: neznámá chyba'
-error.unknown.message: 'Neznámá chyba, kontaktujte prosím správce služby'
+error.unknown.title: "Chyba: neznámá chyba"
+error.unknown.message: "Neznámá chyba, kontaktujte prosím správce služby"
 # maintenance error
-error.maintenance.title: 'Chyba: stránka není k dispozici'
-error.maintenance.message: 'Služba je dočasně nedostupná z důvodu údržby'
+error.maintenance.title: "Chyba: stránka není k dispozici"
+error.maintenance.message: "Služba je dočasně nedostupná z důvodu údržby"
 # banned
-error.banned.title: 'Jste zablokován'
-error.banned.message: 'Jste na této stránce trvale zablokován'
-error.banned.message.reason: 'Jste na této stránce trvale zablokován z důvodu'
+error.banned.title: "Jste zablokován"
+error.banned.message: "Jste na této stránce trvale zablokován"
+error.banned.message.reason: "Jste na této stránce trvale zablokován z důvodu"
 
 # main navigation
-navigation.home.link: 'Domů'
-navigation.about.link: 'O mně'
-navigation.projects.link: 'Projekty'
-navigation.contact.link: 'Kontakt'
-navigation.uploader.link: 'Nahrát obrázek'
-navigation.paste.link: 'Vložit code'
+navigation.home.link: "Domů"
+navigation.about.link: "O mně"
+navigation.projects.link: "Projekty"
+navigation.contact.link: "Kontakt"
+navigation.uploader.link: "Nahrát obrázek"
+navigation.paste.link: "Vložit code"
 
 # home
-home.im: 'Jsem'
-home.main.text: 'full stack developer'
+home.im: "Jsem"
+home.main.text: "full stack developer"
 
 # about
-about.title: 'O mně'
-about.description: 'JAVĚ a PHP Vývojář'
-about.subdescription: 'Jsem vývojář webů a serverových řešení'
-about.birthday: 'Datum narození'
-about.may: 'Květen'
-about.age: 'Věk'
-about.nationality: 'Národnost: česká'
-about.projects.link.description: 'Všechny mé veřejné projekty jsou dostupné'
-about.funfact.1: 'Můj první programovací jazyk byl Pascal, začal jsem se učit v roce 2012'
-about.funfact.2: 'Mými hlavními programovacími jazyky jsou v současné době Java a PHP'
-about.counter.clients: 'Klienti'
-about.counter.projects: 'Projekty'
-about.counter.code.lines: 'Řádky kódu'
-about.counter.coding.langs: 'Programovací jazyky'
-about.my.skills.title: 'Mé dovednosti'
+about.title: "O mně"
+about.description: "JAVĚ a PHP Vývojář"
+about.subdescription: "Jsem vývojář webů a serverových řešení"
+about.birthday: "Datum narození"
+about.may: "Květen"
+about.age: "Věk"
+about.nationality: "Národnost: česká"
+about.projects.link.description: "Všechny mé veřejné projekty jsou dostupné"
+about.funfact.1: "Můj první programovací jazyk byl Pascal, začal jsem se učit v roce 2012"
+about.funfact.2: "Mými hlavními programovacími jazyky jsou v současné době Java a PHP"
+about.counter.clients: "Klienti"
+about.counter.projects: "Projekty"
+about.counter.code.lines: "Řádky kódu"
+about.counter.coding.langs: "Programovací jazyky"
+about.my.skills.title: "Mé dovednosti"
 
 # projects
-projects.title: 'Projekty'
-projects.open.title: 'Otevřené'
-projects.closed.title: 'Uzavřené'
-projects.project.language: 'Jazyk'
-projects.project.source: 'Repozitář'
-projects.list.empty.message: 'Seznam projektů je prázdný'
-projects.repos.link.description: 'Všechny mé projekty najdete zde'
+projects.title: "Projekty"
+projects.open.title: "Otevřené"
+projects.closed.title: "Uzavřené"
+projects.project.language: "Jazyk"
+projects.project.source: "Repozitář"
+projects.list.empty.message: "Seznam projektů je prázdný"
+projects.repos.link.description: "Všechny mé projekty najdete zde"
 
 # contact
-contact.title: 'Kontaktujte mě'
-contact.social.sites.title: 'Sociální sítě'
-contact.email.me.title: 'Napište mi e-mail'
-contact.form.name.input: 'Vaše jméno'
-contact.form.email.input: 'Váš e-mail'
-contact.from.message.input: 'Zpráva'
-contact.from.website.input: 'Webová stránka'
-contact.form.submit.button: 'Odeslat zprávu'
-contact.error.username.empty: 'Prosím, zadejte své uživatelské jméno'
-contact.error.email.empty: 'Prosím, zadejte svůj e-mail'
-contact.error.message.empty: 'Prosím, zadejte svou zprávu'
-contact.error.characters.limit.reached: 'Maximální délka zprávy je 2000 znaků'
-contact.error.ko.message: 'Vaše zpráva nebyla odeslána kvůli chybě. Zkuste to později nebo zkontrolujte své údaje'
-contact.error.blocked.message: 'Vaše zpráva byla zablokována'
-contact.error.limit.reached.message: 'Chyba: Máte 5 nepřečtených zpráv. Počkejte na odpověď na první zprávy.'
-contact.success.message: 'Vaše zpráva byla odeslána. Lukáš odpoví nejpozději do 24 hodin'
+contact.title: "Kontaktujte mě"
+contact.social.sites.title: "Sociální sítě"
+contact.email.me.title: "Napište mi e-mail"
+contact.form.name.input: "Vaše jméno"
+contact.form.email.input: "Váš e-mail"
+contact.from.message.input: "Zpráva"
+contact.from.website.input: "Webová stránka"
+contact.form.submit.button: "Odeslat zprávu"
+contact.error.username.empty: "Prosím, zadejte své uživatelské jméno"
+contact.error.email.empty: "Prosím, zadejte svůj e-mail"
+contact.error.message.empty: "Prosím, zadejte svou zprávu"
+contact.error.characters.limit.reached: "Maximální délka zprávy je 2000 znaků"
+contact.error.ko.message: "Vaše zpráva nebyla odeslána kvůli chybě. Zkuste to později nebo zkontrolujte své údaje"
+contact.error.blocked.message: "Vaše zpráva byla zablokována"
+contact.error.limit.reached.message: "Chyba: Máte 5 nepřečtených zpráv. Počkejte na odpověď na první zprávy."
+contact.success.message: "Vaše zpráva byla odeslána. Lukáš odpoví nejpozději do 24 hodin"
 
 # nahrávač obrázků
-image.uploader.title: 'Nahrávač obrázků'
-image.uploader.form.title: 'Nahrát obrázek'
-image.uploader.form.description: 'Přetáhněte nebo vyberte obrázek'
-image.uploader.form.remove.button: 'Odebrat'
-image.uploader.form.submit.button: 'Nahrát obrázek'
-image.uploader.file.format.error: 'Chyba, soubor má nesprávný formát!'
-image.viewer.title: 'Obrázek'
+image.uploader.title: "Nahrávač obrázků"
+image.uploader.form.title: "Nahrát obrázek"
+image.uploader.form.description: "Přetáhněte nebo vyberte obrázek"
+image.uploader.form.remove.button: "Odebrat"
+image.uploader.form.submit.button: "Nahrát obrázek"
+image.uploader.file.format.error: "Chyba, soubor má nesprávný formát!"
+image.viewer.title: "Obrázek"
 
 # vložení kódu
-code.paste.title: 'Vložení kódu'
-code.view.title: 'Čtení'
+code.paste.title: "Vložení kódu"
+code.view.title: "Čtení"
