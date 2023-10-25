@@ -51,6 +51,7 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
+- [ ] add more translations
 - [ ] Complte refactor & code format
 - [ ] PHPUnit tests
 
