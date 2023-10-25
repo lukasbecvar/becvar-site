@@ -71,6 +71,8 @@ class ServiceManager
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
+            $command = null;
+
             // check if action is emergency shutdown
             if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
                 $this->emergencyShutdown();

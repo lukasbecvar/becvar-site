@@ -27,6 +27,7 @@ class DashboardUtil
 
     public function getDatabaseEntityCount(object $entity, array $search = null): int 
     {
+        $result = null;
         $repository = $this->entityManager->getRepository($entity::class);
 
         // find visitor in database
@@ -59,7 +60,7 @@ class DashboardUtil
         $load = 100;
         $loads = sys_getloadavg();
         $core_nums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-        $load = round($loads[0]/($core_nums + 1)*100, 2);
+        $load = round($loads[0]/(intval($core_nums) + 1)*100, 2);
         
         if ($load > 100) {
             $load = 100;

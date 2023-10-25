@@ -197,6 +197,7 @@ class AuthManager
 
     public function getUserRepository(array $array): ?object 
     {
+        $result = null;
         $userRepository = $this->entityManager->getRepository(User::class);
 
         // try to find user in database

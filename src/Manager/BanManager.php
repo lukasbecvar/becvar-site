@@ -112,6 +112,7 @@ class BanManager
 
     public function getBannedCount(): ?int
     {
+        $result = null;
         $repository = $this->entityManager->getRepository(Visitor::class);
 
         // try to find visitor in database
@@ -131,7 +132,7 @@ class BanManager
 
         // check if visitor found
         if ($visitor == null) {
-            return 0;
+            return null;
         } else {
 
             // return ban reason string

@@ -35,6 +35,7 @@ class DatabaseManager
     public function getTables(): ?array
     {
         $tables_list = [];
+        $tables = null;
 
         try {
             $platform = $this->connection->getDatabasePlatform();
@@ -57,6 +58,7 @@ class DatabaseManager
 
     public function getTableColumns(string $table_name): array
     {
+        $table = null;
         $columns = [];
         $schema = $this->connection->getSchemaManager()->createSchema();
         

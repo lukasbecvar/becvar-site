@@ -53,6 +53,7 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
 - [ ] File manager & config editor
 - [ ] add more translations
 - [ ] Complte refactor & code format
+- [ ] bash panel
 - [ ] PHPUnit tests
 
 ## Dependencies 

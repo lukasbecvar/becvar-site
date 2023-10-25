@@ -191,6 +191,8 @@ class VisitorInfoUtil
 
     public function getRepositoryByArray(array $search): ?object
     {
+        $result = null;
+        
         // get visitor repository
         $visitorRepository = $this->entityManager->getRepository(Visitor::class);
 

@@ -130,7 +130,7 @@ class ProjectsManager
             return count($this->entityManager->getRepository(Project::class)->findAll());
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
-            return [];
+            return 0;
         }   
     }
 
