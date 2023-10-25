@@ -1,0 +1,106 @@
+config.lang: "ja"
+
+# common
+common.here: "ここ"
+
+# common error messages
+error.url.check.message: "アドレスバーを確認するか、管理者に連絡してください"
+# error 400
+error.400.title: "エラー：不正なリクエスト"
+error.400.message: "リクエストエラー"
+# error 401
+error.401.title: "エラー：認証されていません"
+error.401.message: "このページへのアクセス許可がありません"
+# error 403
+error.403.title: "エラー：アクセスが拒否されました"
+error.403.message: "このページへのアクセス許可がありません"
+# error 404
+error.404.title: "エラー：ページが見つかりません"
+error.404.message: "エラー、このページは見つかりませんでした"
+# error 429
+error.429.title: "エラー：リクエストが多すぎます"
+error.429.message: "リクエストが多すぎます"
+error.429.submessage: "お待ちいただいてからもう一度お試しください"
+# error 500
+error.500.title: "エラー：内部サーバーエラー"
+error.500.message: "サーバーが予期しない状況に遭遇し、リクエストを処理できませんでした"
+# error unknown
+error.unknown.title: "エラー：未知のエラー"
+error.unknown.message: "未知のエラーです。サービスの管理者に連絡してください"
+# error maintenance
+error.maintenance.title: "エラー：ページが利用できません"
+error.maintenance.message: "メンテナンスのため、サービスが一時的に利用できません"
+# error banned
+error.banned.title: "アカウントが禁止されています"
+error.banned.message: "このサイトで永久にアカウントが禁止されています"
+error.banned.message.reason: "このサイトでのアカウント禁止の理由"
+error.banned.unban.email: "解除リクエストを送信してください"
+
+# main navigation
+navigation.home.link: "ホーム"
+navigation.about.link: "紹介"
+navigation.projects.link: "プロジェクト"
+navigation.contact.link: "お問い合わせ"
+navigation.uploader.link: "アップローダー"
+navigation.paste.link: "ペースト"
+
+# home
+home.im: "私は"
+home.main.text: "フルスタック開発者です"
+
+# about
+about.title: "紹介"
+about.description: "JAVA、PHP 開発者"
+about.subdescription: "私はフルスタックウェブおよびサーバーソリューションの開発者です"
+about.birthday: "誕生日"
+about.may: "5月"
+about.age: "年齢"
+about.nationality: "国籍：チェコ"
+about.projects.link.description: "私のすべてのパブリックプロジェクトが利用可能です"
+about.funfact.1: "私の最初のプログラミング言語はPascalで、2012年に学び始めました"
+about.funfact.2: "私の主要なプログラミング言語は現在JavaとPHPです"
+about.counter.clients: "クライアント"
+about.counter.projects: "プロジェクト"
+about.counter.code.lines: "コードの行数"
+about.counter.coding.langs: "プログラミング言語"
+about.my.skills.title: "私のスキル"
+
+# projects
+projects.title: "プロジェクト"
+projects.open.title: "オープン"
+projects.closed.title: "クローズ"
+projects.project.language: "言語"
+projects.project.source: "ソースコード"
+projects.list.empty.message: "プロジェクトリストは空です"
+projects.repos.link.description: "すべてのプロジェクトはこちらで見つけることができます"
+
+# contact
+contact.title: "お問い合わせ"
+contact.social.sites.title: "ソーシャルサイト"
+contact.email.me.title: "メールを送信"
+contact.form.name.input: "お名前"
+contact.form.email.input: "メールアドレス"
+contact.from.message.input: "メッセージ"
+contact.from.website.input: "ウェブサイト"
+contact.form.submit.button: "メッセージを送信"
+contact.error.username.empty: "ユーザー名を入力してください"
+contact.error.email.empty: "メールアドレスを入力してください"
+contact.error.message.empty: "メッセージを入力してください"
+contact.error.characters.limit.reached: "メッセージの最大文字数は2000文字です"
+contact.error.ko.message: "エラーが発生したため、メッセージは送信されませんでした。後で再試行するか、メッセージ入力を確認してください"
+contact.error.blocked.message: "メッセージはブロックされました"
+contact.error.limit.reached.message: "エラー：未読のメッセージが5つあります。最初のメッセージへの返信をお待ちください"
+contact.success.message: "メッセージは送信されました。Lukášは最大で24時間以内に返信します"
+
+# image uploader
+image.uploader.title: "画像アップローダー"
+image.uploader.form.title: "画像をアップロード"
+image.uploader.form.description: "画像をドラッグ＆ドロップまたは選択してください"
+image.uploader.form.remove.button: "削除"
+image.uploader.form.submit.button: "画像をアップロード"
+image.uploader.file.format.error: "エラー：ファイル形式が正しくありません"
+image.viewer.title: "画像"
+
+# code paste
+code.paste.title: "コードをペースト"
+code.view.title: "表示"

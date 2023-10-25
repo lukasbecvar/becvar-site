@@ -1,0 +1,106 @@
+config.lang: "mn"
+
+# common
+common.here: "Энд"
+
+# common error messages
+error.url.check.message: "Алдааны хаягийг шалгах эсвэл танай админтай холбогдоно уу"
+# error 400
+error.400.title: "Алдаа: Зөв алдаа"
+error.400.message: "Хүсэлтийн алдаа"
+# error 401
+error.401.title: "Алдаа: Зөвшөөрөлгүй"
+error.401.message: "Танд энэ хуудас рүү хандах эрх алга"
+# error 403
+error.403.title: "Алдаа: Хориглосон"
+error.403.message: "Танд энэ хуудас рүү хандах эрх алга"
+# error 404
+error.404.title: "Алдаа: Хуудас олдсонгүй"
+error.404.message: "Алдаа: Энэ хуудас олдсонгүй байна"
+# error 429
+error.429.title: "Алдаа: Их хүсэлт"
+error.429.message: "Их хүсэлт"
+error.429.submessage: "Та түр хүлээгээр дахин оролдоод үзээрэй"
+# error 500
+error.500.title: "Алдаа: Дотоод серверийн алдаа"
+error.500.message: "Сервер нийтэд аргагүй үүрэг хүлээж хүлээгээгүй гэсэн алдаа гарчээ"
+# error unknown
+error.unknown.title: "Алдаа: тодорхойгүй алдаа"
+error.unknown.message: "Тодорхойгүй алдаа, тусламжийн админд холбогдоно уу"
+# error maintenance
+error.maintenance.title: "Алдаа: хуудас идэвхтэйгүй"
+error.maintenance.message: "Үйлчилгээг өөрчлөх төлбөрийн тусламжийн хувьд үйлчилгээ цагийн өнгөрүүлж байна"
+# error banned
+error.banned.title: "Та хориглосон байна"
+error.banned.message: "Та энэ сайтад хүчинтэй хориглосон байна"
+error.banned.message.reason: "Та энэ сайтад хүчинтэй хориглосон байна"
+error.banned.unban.email: "Гаргалт хүсэлтээ дарж илгээнэ үү"
+
+# main navigation
+navigation.home.link: "Нүүр"
+navigation.about.link: "Тухай"
+navigation.projects.link: "Төслүүд"
+navigation.contact.link: "Холбоо барих"
+navigation.uploader.link: "Хуулаагч"
+navigation.paste.link: "Таг"
+
+# home
+home.im : "Би нь"
+home.main.text: "бүтэн стэк хөгжүүлэгч"
+
+# about
+about.title: "Тухай"
+about.description: "JAVA, PHP хөгжүүлэгч"
+about.subdescription: "Би бүтэн стэк вэб болон серверийн шийдэгч"
+about.birthday: "Төрсөн өдөр"
+about.may: "Май"
+about.age: "Нас"
+about.nationality: "Хүнс"
+about.projects.link.description: "Бүх намрын төслүүд минийх"
+about.funfact.1: "Миний нэгдүгээр програмчлалын хэл нь Паскал бөгөөд би 2012 онд сурахыг эхэлсэн"
+about.funfact.2: "Миний гол програмчлал хэлнүүд нь 'одоо' Java болон PHP байна"
+about.counter.clients: "Үйл явчид"
+about.counter.projects: "Төслүүд"
+about.counter.code.lines: "Кодын мөр"
+about.counter.coding.langs: "Кодчилол хэлнүүд"
+about.my.skills.title: "Миний ур чадвар"
+
+# projects
+projects.title: "Төслүүд"
+projects.open.title: "Нээлттэй"
+projects.closed.title: "Хаагдсан"
+projects.project.language: "Хэл"
+projects.project.source: "Ингэснээр"
+projects.list.empty.message: "Төсөлийн жагсаалт хоосон байна"
+projects.repos.link.description: "Та бүх намрын төслүүдийг энд олох боломжтой"
+
+# contact
+contact.title: "Надтай холбогдох"
+contact.social.sites.title: "Нийтийн сайтууд"
+contact.email.me.title: "Имэйл илгээх"
+contact.form.name.input: "Таны нэр"
+contact.form.email.input: "Таны имэйл"
+contact.from.message.input: "Зурвас"
+contact.from.website.input: "Вэбсайт"
+contact.form.submit.button: "Зурвас илгээх"
+contact.error.username.empty: "Таны нэрийг оруулна уу"
+contact.error.email.empty: "Таны имэйлийг оруулна уу"
+contact.error.message.empty: "Таны зурвасыг оруулна уу"
+contact.error.characters.limit.reached: "Маш их зурвасын урт 2000 тэмдэгттэй байна"
+contact.error.ko.message: "Таны зурвас алдаатай байна, дахин оролдоод эсвэл зурвасыг шалгана уу"
+contact.error.blocked.message: "Таны зурвас цуглуулсан байна"
+contact.error.limit.reached.message: "Алдаа: Танд 5 уншигдангүй зурвас байна, эхний зурвасны хариуг хүлээж хүлээнэ үү"
+contact.success.message: "Таны зурвас илгээгдлээ, Лукас хамтдаа хариулна уу 24 цагийн дараа хамгийн их"
+
+# image uploader
+image.uploader.title: "Зургийн хуулаагч"
+image.uploader.form.title: "Зураг оруулах"
+image.uploader.form.description: "Зургийг цуглаа, сонгоод оруулна уу"
+image.uploader.form.remove.button: "Арилгах"
+image.uploader.form.submit.button: "Зураг оруулах"
+image.uploader.file.format.error: "Алдаа: Зургийн формат буруу байна!"
+image.viewer.title: "Зураг үзэх"
+
+# code paste
+code.paste.title: "Код оруулах"
+code.view.title: "Харах"

@@ -1,0 +1,106 @@
+config.lang: "pt"
+
+# common
+common.here: "aqui"
+
+# common error messages
+error.url.check.message: "Por favor, verifique a barra de endereço ou entre em contato com o administrador"
+# error 400
+error.400.title: "Erro: Solicitação inválida"
+error.400.message: "Erro na solicitação"
+# error 401
+error.401.title: "Erro: Não autorizado"
+error.401.message: "Você não tem permissão para acessar esta página"
+# error 403
+error.403.title: "Erro: Proibido"
+error.403.message: "Você não tem permissão para acessar esta página"
+# error 404
+error.404.title: "Erro: Página não encontrada"
+error.404.message: "Erro, esta página não foi encontrada"
+# error 429
+error.429.title: "Erro: Muitas solicitações"
+error.429.message: "Muitas solicitações"
+error.429.submessage: "Por favor, tente esperar e tentar novamente mais tarde"
+# error 500
+error.500.title: "Erro: Erro interno do servidor"
+error.500.message: "O servidor encontrou uma condição inesperada que o impediu de atender à solicitação"
+# error unknown
+error.unknown.title: "Erro: erro desconhecido"
+error.unknown.message: "Erro desconhecido, entre em contato com o administrador do serviço"
+# error maintenance
+error.maintenance.title: "Erro: página indisponível"
+error.maintenance.message: "O serviço está temporariamente indisponível devido a manutenção"
+# error banned
+error.banned.title: "Você está banido"
+error.banned.message: "Você está permanentemente banido neste site"
+error.banned.message.reason: "Você está permanentemente banido neste site por motivo"
+error.banned.unban.email: "Por favor, direcione solicitações de desbanimento para"
+
+# main navigation
+navigation.home.link: "Início"
+navigation.about.link: "Sobre"
+navigation.projects.link: "Projetos"
+navigation.contact.link: "Contato"
+navigation.uploader.link: "Carregador"
+navigation.paste.link: "Colar"
+
+# home
+home.im: "Eu sou um"
+home.main.text: "desenvolvedor full stack"
+
+# about
+about.title: "Sobre"
+about.description: "Desenvolvedor JAVA, PHP"
+about.subdescription: "Eu sou um desenvolvedor de soluções web e servidor full stack"
+about.birthday: "Data de Nascimento"
+about.may: "Maio"
+about.age: "Idade"
+about.nationality: "Nacionalidade: tcheca"
+about.projects.link.description: "Todos os meus projetos públicos disponíveis"
+about.funfact.1: "Minha primeira linguagem de programação foi Pascal, comecei a aprender em 2012"
+about.funfact.2: "Minhas principais linguagens de programação são atualmente Java e PHP"
+about.counter.clients: "Clientes"
+about.counter.projects: "Projetos"
+about.counter.code.lines: "Linhas de código"
+about.counter.coding.langs: "Linguagens de programação"
+about.my.skills.title: "Minhas habilidades"
+
+# projects
+projects.title: "Projetos"
+projects.open.title: "Abertos"
+projects.closed.title: "Fechados"
+projects.project.language: "Idioma"
+projects.project.source: "Fonte"
+projects.list.empty.message: "A lista de projetos está vazia"
+projects.repos.link.description: "Você pode encontrar todos os meus projetos aqui"
+
+# contact
+contact.title: "Contate-me"
+contact.social.sites.title: "Redes sociais"
+contact.email.me.title: "Enviar e-mail"
+contact.form.name.input: "Seu nome"
+contact.form.email.input: "Seu e-mail"
+contact.from.message.input: "Mensagem"
+contact.from.website.input: "Site"
+contact.form.submit.button: "Enviar mensagem"
+contact.error.username.empty: "Por favor, insira seu nome de usuário"
+contact.error.email.empty: "Por favor, insira seu e-mail"
+contact.error.message.empty: "Por favor, insira sua mensagem"
+contact.error.characters.limit.reached: "Limite máximo de caracteres da mensagem é 2000"
+contact.error.ko.message: "Sua mensagem não foi enviada devido a um erro, tente novamente mais tarde ou verifique as informações da mensagem"
+contact.error.blocked.message: "Sua mensagem foi bloqueada"
+contact.error.limit.reached.message: "Erro: Você tem 5 mensagens não lidas, aguarde a resposta para a primeira mensagem"
+contact.success.message: "Sua mensagem foi enviada, Lukáš responderá em até 24 horas"
+
+# image uploader
+image.uploader.title: "Carregador de Imagens"
+image.uploader.form.title: "Carregar Imagem"
+image.uploader.form.description: "Arraste e solte ou selecione uma imagem"
+image.uploader.form.remove.button: "Remover"
+image.uploader.form.submit.button: "Enviar Imagem"
+image.uploader.file.format.error: "Erro: Formato de arquivo incorreto!"
+image.viewer.title: "Imagem"
+
+# code paste
+code.paste.title: "Colar Código"
+code.view.title: "Visualizando"

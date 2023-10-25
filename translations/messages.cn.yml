@@ -1,0 +1,106 @@
+config.lang: "zh"
+
+# common
+common.here: "这里"
+
+# common error messages
+error.url.check.message: "请检查地址栏或联系管理员"
+# error 400
+error.400.title: "错误：错误请求"
+error.400.message: "请求错误"
+# error 401
+error.401.title: "错误：未授权"
+error.401.message: "您没有权限访问此页面"
+# error 403
+error.403.title: "错误：禁止访问"
+error.403.message: "您没有权限访问此页面"
+# error 404
+error.404.title: "错误：页面未找到"
+error.404.message: "错误，找不到此页面"
+# error 429
+error.429.title: "错误：请求过多"
+error.429.message: "请求过多"
+error.429.submessage: "请尝试等待并稍后再试"
+# error 500
+error.500.title: "错误：内部服务器错误"
+error.500.message: "服务器遇到了意外的条件，阻止它完成请求"
+# error unknown
+error.unknown.title: "错误：未知错误"
+error.unknown.message: "未知错误，请联系服务管理员"
+# error maintenance
+error.maintenance.title: "错误：页面不可用"
+error.maintenance.message: "由于维护工作，服务暂时不可用"
+# error banned
+error.banned.title: "您被封禁"
+error.banned.message: "您在本网站被永久封禁"
+error.banned.message.reason: "您在本网站被永久封禁的原因"
+error.banned.unban.email: "请将解封请求发送至"
+
+# main navigation
+navigation.home.link: "首页"
+navigation.about.link: "关于"
+navigation.projects.link: "项目"
+navigation.contact.link: "联系"
+navigation.uploader.link: "上传者"
+navigation.paste.link: "粘贴"
+
+# home
+home.im: "我是一名"
+home.main.text: "全栈开发者"
+
+# about
+about.title: "关于"
+about.description: "JAVA、PHP开发者"
+about.subdescription: "我是一名全栈Web和服务器解决方案开发者"
+about.birthday: "出生日期"
+about.may: "五月"
+about.age: "年龄"
+about.nationality: "国籍：捷克"
+about.projects.link.description: "所有我公开的项目都在这里"
+about.funfact.1: "我的第一种编程语言是Pascal，我从2012年开始学习"
+about.funfact.2: "我目前的主要编程语言是Java和PHP"
+about.counter.clients: "客户"
+about.counter.projects: "项目"
+about.counter.code.lines: "代码行数"
+about.counter.coding.langs: "编程语言"
+about.my.skills.title: "我的技能"
+
+# projects
+projects.title: "项目"
+projects.open.title: "已打开"
+projects.closed.title: "已关闭"
+projects.project.language: "语言"
+projects.project.source: "源代码"
+projects.list.empty.message: "项目列表为空"
+projects.repos.link.description: "您可以在这里找到我所有的项目"
+
+# contact
+contact.title: "联系我"
+contact.social.sites.title: "社交网站"
+contact.email.me.title: "给我发电子邮件"
+contact.form.name.input: "您的姓名"
+contact.form.email.input: "您的电子邮件"
+contact.from.message.input: "消息"
+contact.from.website.input: "网站"
+contact.form.submit.button: "提交消息"
+contact.error.username.empty: "请输入您的用户名"
+contact.error.email.empty: "请输入您的电子邮件"
+contact.error.message.empty: "请输入您的消息"
+contact.error.characters.limit.reached: "消息最大长度为2000个字符"
+contact.error.ko.message: "由于错误，您的消息未发送，请稍后再试，或检查消息输入信息"
+contact.error.blocked.message: "您的消息已被阻止"
+contact.error.limit.reached.message: "错误：您有5条未读消息，请等待第一条消息的回复"
+contact.success.message: "您的消息已发送，Lukáš将在最多24小时内回复"
+
+# image uploader
+image.uploader.title: "图像上传者"
+image.uploader.form.title: "上传图像"
+image.uploader.form.description: "拖放或选择图像"
+image.uploader.form.remove.button: "删除"
+image.uploader.form.submit.button: "上传图像"
+image.uploader.file.format.error: "错误：文件格式不正确！"
+image.viewer.title: "图像"
+
+# code paste
+code.paste.title: "粘贴代码"
+code.view.title: "查看"

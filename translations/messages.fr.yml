@@ -1,0 +1,106 @@
+config.lang: "fr"
+
+# common
+common.here: "ici"
+
+# common error messages
+error.url.check.message: "Veuillez vérifier la barre d'adresse ou contacter votre administrateur"
+# error 400
+error.400.title: "Erreur : Requête incorrecte"
+error.400.message: "Erreur de requête"
+# error 401
+error.401.title: "Erreur : Non autorisé"
+error.401.message: "Vous n'avez pas la permission d'accéder à cette page"
+# error 403
+error.403.title: "Erreur : Interdit"
+error.403.message: "Vous n'avez pas la permission d'accéder à cette page"
+# error 404
+error.404.title: "Erreur : Page non trouvée"
+error.404.message: "Erreur, cette page n'a pas été trouvée"
+# error 429
+error.429.title: "Erreur : Trop de requêtes"
+error.429.message: "Trop de requêtes"
+error.429.submessage: "Veuillez essayer d'attendre et de réessayer plus tard"
+# error 500
+error.500.title: "Erreur : Erreur interne du serveur"
+error.500.message: "Le serveur a rencontré une condition inattendue l'empêchant de répondre à la requête"
+# error unknown
+error.unknown.title: "Erreur : erreur inconnue"
+error.unknown.message: "Erreur inconnue, veuillez contacter l'administrateur du service"
+# error maintenance
+error.maintenance.title: "Erreur : page non disponible"
+error.maintenance.message: "Le service est temporairement indisponible en raison de travaux de maintenance"
+# error banned
+error.banned.title: "Vous êtes banni"
+error.banned.message: "Vous êtes banni définitivement sur ce site"
+error.banned.message.reason: "Vous êtes banni définitivement sur ce site pour la raison suivante"
+error.banned.unban.email: "Veuillez adresser vos demandes de débannissement à"
+
+# main navigation
+navigation.home.link: "Accueil"
+navigation.about.link: "À propos"
+navigation.projects.link: "Projets"
+navigation.contact.link: "Contact"
+navigation.uploader.link: "Téléchargeur"
+navigation.paste.link: "Coller"
+
+# home
+home.im: "Je suis un"
+home.main.text: "développeur full stack"
+
+# about
+about.title: "À propos"
+about.description: "Développeur JAVA, PHP"
+about.subdescription: "Je suis un développeur de solutions web et serveur full stack"
+about.birthday: "Date de naissance"
+about.may: "Mai"
+about.age: "Âge"
+about.nationality: "Nationalité : tchèque"
+about.projects.link.description: "Tous mes projets publics disponibles"
+about.funfact.1: "Mon premier langage de programmation était Pascal, j'ai commencé à apprendre en 2012"
+about.funfact.2: "Mes langages de programmation principaux sont actuellement Java et PHP"
+about.counter.clients: "Clients"
+about.counter.projects: "Projets"
+about.counter.code.lines: "Lignes de code"
+about.counter.coding.langs: "Langages de programmation"
+about.my.skills.title: "Mes compétences"
+
+# projects
+projects.title: "Projets"
+projects.open.title: "Ouverts"
+projects.closed.title: "Fermés"
+projects.project.language: "Langue"
+projects.project.source: "Source"
+projects.list.empty.message: "La liste des projets est vide"
+projects.repos.link.description: "Vous pouvez trouver tous mes projets ici"
+
+# contact
+contact.title: "Contactez-moi"
+contact.social.sites.title: "Sites sociaux"
+contact.email.me.title: "Envoyer un e-mail"
+contact.form.name.input: "Votre nom"
+contact.form.email.input: "Votre e-mail"
+contact.from.message.input: "Message"
+contact.from.website.input: "Site web"
+contact.form.submit.button: "Envoyer le message"
+contact.error.username.empty: "Veuillez saisir votre nom d'utilisateur"
+contact.error.email.empty: "Veuillez saisir votre e-mail"
+contact.error.message.empty: "Veuillez saisir votre message"
+contact.error.characters.limit.reached: "Limite maximale de caractères du message : 2000"
+contact.error.ko.message: "Votre message n'a pas été envoyé en raison d'une erreur, veuillez réessayer plus tard ou vérifier les informations du message"
+contact.error.blocked.message: "Votre message a été bloqué"
+contact.error.limit.reached.message: "Erreur : Vous avez 5 messages non lus, veuillez attendre la réponse au premier message"
+contact.success.message: "Votre message a été envoyé, Lukáš répondra dans un délai de 24 heures au maximum"
+
+# image uploader
+image.uploader.title: "Téléchargeur d'images"
+image.uploader.form.title: "Télécharger une image"
+image.uploader.form.description: "Faites glisser-déposer ou sélectionnez une image"
+image.uploader.form.remove.button: "Supprimer"
+image.uploader.form.submit.button: "Télécharger l'image"
+image.uploader.file.format.error: "Erreur : Format de fichier incorrect !"
+image.viewer.title: "Image"
+
+# code paste
+code.paste.title: "Coller du code"
+code.view.title: "Affichage"
