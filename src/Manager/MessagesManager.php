@@ -69,7 +69,6 @@ class MessagesManager
                     'message' => $message_decrypted,
                     'time' => $inbox_message->getTime(),
                     'ip_address' => $inbox_message->getIpAddress(),
-                    'email' => $inbox_message->getEmail(),
                     'status' => $inbox_message->getStatus(),
                     'visitor_id' => $inbox_message->getVisitorId()
                 ];  

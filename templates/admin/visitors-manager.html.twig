@@ -86,8 +86,8 @@
                                 {% endif %}
                                 {# <===== IP-ADDRESS =====> #}
                                 {% if row.ipAddress == current_ip %}
-                                    <th scope='row'class='text-warning'>{{ row.ipAddress|e }}
-                                        <span class="text-light">[</span><span class='text-success'>You</span><span class="text-light">]</span>
+                                    <th scope='row'class='text-warning'>
+                                        {{ row.ipAddress|e }}<span class="text-light">[</span><span class='text-success'>You</span><span class="text-light">]</span>
                                     </th>
                                 {% else %}
                                     <th scope='row'>

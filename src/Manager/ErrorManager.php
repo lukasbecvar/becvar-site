@@ -41,7 +41,7 @@ class ErrorManager
         }
     }
 
-    public function handleErrorView(string $code): void
+    public function handleErrorView(string $code): string
     {
         // try to get view
         try {
