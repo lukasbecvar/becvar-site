@@ -24,11 +24,12 @@ class ProfilePicChangeFormType extends AbstractType
                 ])
             ],
             'attr' => [
-                'class' => 'form-control bg-dark',
+                'class' => 'form-control bg-dark profile-pic-change',
                 'placeholder' => 'Profile picture',
                 'accept' => 'image/*',
                 'image_property' => 'image'
-            ]
+            ],
+            'translation_domain' => false
         ])
         ;
     }

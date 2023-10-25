@@ -46,7 +46,8 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
-- [ ] Fix default translate (get from twig)
+- [ ] Add RequestEvents to middlewares
+- [ ] Online/Offline user status
 - [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor

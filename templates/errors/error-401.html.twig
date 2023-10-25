@@ -1,15 +1,15 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    {{ 'Error 401, Unauthorized'|trans }}
+    {{ 'error.401.title'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
     <strong>
-        {{ 'You do not have permission to access this page'|trans }}
+        {{ 'error.401.message'|trans }}
         <br><br>
-        {{ 'Please check the address bar or contact your administrator'|trans }}
+        {{ 'error.url.check.message'|trans }}
     </strong>
 </p>
 {% endblock %}

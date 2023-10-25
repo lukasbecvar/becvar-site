@@ -1,0 +1,106 @@
+config.lang: 'ru'
+
+# common
+common.here: 'здесь'
+
+# common error messages
+error.url.check.message: 'Пожалуйста, проверьте адресную строку или свяжитесь с администратором'
+# error 400
+error.400.title: 'Ошибка: Неверный запрос'
+error.400.message: 'Ошибка запроса'
+# error 401
+error.401.title: 'Ошибка: Неавторизованный доступ'
+error.401.message: 'У вас нет разрешения на доступ к этой странице'
+# error 403
+error.403.title: 'Ошибка: Доступ запрещен'
+error.403.message: 'У вас нет разрешения на доступ к этой странице'
+# error 404
+error.404.title: 'Ошибка: Страница не найдена'
+error.404.message: 'Ошибка, эта страница не была найдена'
+# error 429
+error.429.title: 'Ошибка: Слишком много запросов'
+error.429.message: 'Слишком много запросов'
+error.429.submessage: 'Пожалуйста, подождите и попробуйте позже'
+# error 500
+error.500.title: 'Ошибка: Внутренняя ошибка сервера'
+error.500.message: 'Сервер столкнулся с неожиданными условиями, которые помешали выполнению запроса'
+# error unknown
+error.unknown.title: 'Ошибка: неизвестная ошибка'
+error.unknown.message: 'Неизвестная ошибка, пожалуйста, свяжитесь с администратором службы'
+# error maintenance
+error.maintenance.title: 'Ошибка: страница недоступна'
+error.maintenance.message: 'Служба временно недоступна из-за технического обслуживания'
+# error banned
+error.banned.title: 'Вы заблокированы'
+error.banned.message: 'Вы постоянно заблокированы на этом сайте'
+error.banned.message.reason: 'Вы постоянно заблокированы на этом сайте по следующей причине'
+error.banned.unban.email: 'Пожалуйста, направьте запросы на разблокировку'
+
+# main navigation
+navigation.home.link: 'Главная'
+navigation.about.link: 'О нас'
+navigation.projects.link: 'Проекты'
+navigation.contact.link: 'Контакт'
+navigation.uploader.link: 'Загрузчик'
+navigation.paste.link: 'Вставить'
+
+# home
+home.im: 'Я'
+home.main.text: 'разработчик полного стека'
+
+# about
+about.title: 'О нас'
+about.description: 'Разработчик JAVA, PHP'
+about.subdescription: 'Я разработчик веб- и серверных решений для полного стека'
+about.birthday: 'День рождения'
+about.may: 'Май'
+about.age: 'Возраст'
+about.nationality: 'Национальность: чешская'
+about.projects.link.description: 'Все мои общедоступные проекты доступны здесь'
+about.funfact.1: 'Мой первый язык программирования был Pascal. Я начал учиться в 2012 году'
+about.funfact.2: 'Мои основные языки программирования на данный момент - Java и PHP'
+about.counter.clients: 'Клиенты'
+about.counter.projects: 'Проекты'
+about.counter.code.lines: 'Кодовые строки'
+about.counter.coding.langs: 'Языки программирования'
+about.my.skills.title: 'Мои навыки'
+
+# projects
+projects.title: 'Проекты'
+projects.open.title: 'Открытые'
+projects.closed.title: 'Закрытые'
+projects.project.language: 'Язык'
+projects.project.source: 'Исходный код'
+projects.list.empty.message: 'Список проектов пуст'
+projects.repos.link.description: 'Вы можете найти все мои проекты здесь'
+
+# contact
+contact.title: 'Свяжитесь со мной'
+contact.social.sites.title: 'Социальные сети'
+contact.email.me.title: 'Напишите мне'
+contact.form.name.input: 'Ваше имя'
+contact.form.email.input: 'Ваш адрес электронной почты'
+contact.from.message.input: 'Сообщение'
+contact.from.website.input: 'Веб-сайт'
+contact.form.submit.button: 'Отправить сообщение'
+contact.error.username.empty: 'Пожалуйста, введите ваше имя пользователя'
+contact.error.email.empty: 'Пожалуйста, введите ваш адрес электронной почты'
+contact.error.message.empty: 'Пожалуйста, введите ваше сообщение'
+contact.error.characters.limit.reached: 'Максимальная длина сообщения составляет 2000 символов'
+contact.error.ko.message: 'Ваше сообщение не было отправлено из-за ошибки. Попробуйте позже или проверьте ваши вводы'
+contact.error.blocked.message: 'Ваше сообщение было заблокировано'
+contact.error.limit.reached.message: 'ошибка: у вас 5 непрочитанных сообщений. Подождите ответа на первые сообщения'
+contact.success.message: 'Ваше сообщение было отправлено. Лукаш ответит в течение 24 часов как можно скорее'
+
+# image uploader
+image.uploader.title: 'Загрузчик изображений'
+image.uploader.form.title: 'Загрузить изображение'
+image.uploader.form.description: 'Перетащите изображение или выберите его'
+image.uploader.form.remove.button: 'Удалить'
+image.uploader.form.submit.button: 'Загрузить изображение'
+image.uploader.file.format.error: 'Ошибка: неверный формат файла!'
+image.viewer.title: 'Изображение'
+
+# code paste
+code.paste.title: 'Вставить код'
+code.view.title: 'Просмотр'

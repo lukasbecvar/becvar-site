@@ -34,6 +34,7 @@ class RegisterFormType extends AbstractType
                         'max' => 50,
                     ]),
                 ],
+                'translation_domain' => false
             ])
             ->add('password', PasswordType::class, [
                 'label' => false,
@@ -53,6 +54,7 @@ class RegisterFormType extends AbstractType
                         'max' => 80,
                     ]),
                 ],
+                'translation_domain' => false
             ])
             ->add('re-password', PasswordType::class, [
                 'label' => false,
@@ -73,6 +75,7 @@ class RegisterFormType extends AbstractType
                         'max' => 80,
                     ]),
                 ],
+                'translation_domain' => false
             ])
         ;
     }

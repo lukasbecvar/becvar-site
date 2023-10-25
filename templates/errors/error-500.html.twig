@@ -1,15 +1,15 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-    {{ 'Error 500, Internal Server Error'|trans }}
+    {{ 'error.500.title'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
     <strong>
-        {{ 'The server encountered an unexpected condition that prevented it from fulfilling the request'|trans }}
+        {{ 'error.500.message'|trans }}
         <br><br>
-        {{ 'Please check the address bar or contact your administrator'|trans }}
+        {{ 'error.url.check.message'|trans }}
     </strong>
 </p>
 {% endblock %}

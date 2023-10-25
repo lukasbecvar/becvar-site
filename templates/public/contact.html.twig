@@ -8,13 +8,13 @@
 
         {# <===== CONTACT-INFO =====> #}
         <div class="section-title">
-            <h2>{{ 'Contact me'|trans }}</h2>
+            <h2>{{ 'contact.title'|trans }}</h2>
         </div>
         <div class="row mt-2">
             <div class="col-md-6 d-flex align-items-stretch">
                 <div class="info-box">
                     <i class="bx bx-share-alt"></i>
-                    <h3>{{ 'Social sites'|trans }}</h3>
+                    <h3>{{ 'contact.social.sites.title'|trans }}</h3>
                     <div class="social-links">
                         <a href="{{ instagram_link }}" class="instagram"><i class="bi bi-instagram"></i></a>
                         <a href="{{ telegram_link }}" class="telegram"><i class="bi bi-telegram"></i></a>
@@ -25,7 +25,7 @@
             <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
                 <div class="info-box">
                     <i class="bx bx-envelope"></i>
-                    <h3>{{ 'Email Me'|trans }}</h3>
+                    <h3>{{ 'contact.email.me.title'|trans }}</h3>
                     <p>{{ contact_email }}</p>
                 </div>
             </div>
@@ -43,13 +43,13 @@
                 {% endif %}
 
                 {# SET PLACEHOLDERS FOR TRANSLATE #}
-                {{ form_widget(contact_form.name, {'attr': {'placeholder': 'Your name'|trans}}) }}
-                {{ form_widget(contact_form.email, {'attr': {'placeholder': 'Your email'|trans}}) }}
-                {{ form_widget(contact_form.message, {'attr': {'placeholder': 'Message'|trans}}) }}
+                {{ form_widget(contact_form.name, {'attr': {'placeholder': 'contact.form.name.input'|trans}}) }}
+                {{ form_widget(contact_form.email, {'attr': {'placeholder': 'contact.form.email.input'|trans}}) }}
+                {{ form_widget(contact_form.message, {'attr': {'placeholder': 'contact.from.message.input'|trans}}) }}
                 
                 {{ form_widget(contact_form) }}                     
                 <div class="text-center mt-3">
-                    <button type="submit">{{ 'Submit message'|trans }}</button>
+                    <button type="submit">{{ 'contact.form.submit.button'|trans }}</button>
                 </div>
             
             {{ form_end(contact_form) }}      

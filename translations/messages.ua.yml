@@ -1,0 +1,106 @@
+config.lang: 'ua'
+
+# common
+common.here: 'тут'
+
+# common error messages
+error.url.check.message: 'Будь ласка, перевірте адресний рядок або зв'яжіться з адміністратором'
+# error 400
+error.400.title: 'Помилка: Некоректний запит'
+error.400.message: 'Помилка запиту'
+# error 401
+error.401.title: 'Помилка: Неавторизований доступ'
+error.401.message: 'У вас немає дозволу на доступ до цієї сторінки'
+# error 403
+error.403.title: 'Помилка: Заборонено'
+error.403.message: 'У вас немає дозволу на доступ до цієї сторінки'
+# error 404
+error.404.title: 'Помилка: Сторінку не знайдено'
+error.404.message: 'Помилка, цю сторінку не знайдено'
+# error 429
+error.429.title: 'Помилка: Забагато запитів'
+error.429.message: 'Забагато запитів'
+error.429.submessage: 'Будь ласка, зачекайте і спробуйте ще раз пізніше'
+# error 500
+error.500.title: 'Помилка: Внутрішня помилка сервера'
+error.500.message: 'Сервер стикнувся з несподіваними умовами, які завадили виконанню запиту'
+# error unknown
+error.unknown.title: 'Помилка: невідома помилка'
+error.unknown.message: 'Невідома помилка, будь ласка, зв'яжіться з адміністратором служби'
+# error maintenance
+error.maintenance.title: 'Помилка: сторінка недоступна'
+error.maintenance.message: 'Служба тимчасово недоступна через технічне обслуговування'
+# error banned
+error.banned.title: 'Вас заблоковано'
+error.banned.message: 'Вас постійно заблоковано на цьому сайті'
+error.banned.message.reason: 'Вас постійно заблоковано на цьому сайті з такої причини'
+error.banned.unban.email: 'Будь ласка, надсилайте запити на розблокування'
+
+# main navigation
+navigation.home.link: 'Головна'
+navigation.about.link: 'Про нас'
+navigation.projects.link: 'Проекти'
+navigation.contact.link: 'Зв'язок'
+navigation.uploader.link: 'Завантажувач'
+navigation.paste.link: 'Вставити'
+
+# home
+home.im : 'Я'
+home.main.text: 'розробник повного стеку'
+
+# about
+about.title: 'Про нас'
+about.description: 'Розробник JAVA, PHP'
+about.subdescription: 'Я розробник веб- та серверних рішень для повного стеку'
+about.birthday: 'День народження'
+about.may: 'Травень'
+about.age: 'Вік'
+about.nationality: 'Національність: чеська'
+about.projects.link.description: 'Усі мої загальнодоступні проекти доступні тут'
+about.funfact.1: 'Мова програмування, яку я вивчав першою, була Pascal. Я почав вивчати її в 2012 році'
+about.funfact.2: 'Мої основні мови програмування на даний момент - Java та PHP'
+about.counter.clients: 'Клієнти'
+about.counter.projects: 'Проекти'
+about.counter.code.lines: 'Рядки коду'
+about.counter.coding.langs: 'Мови програмування'
+about.my.skills.title: 'Мої навички'
+
+# projects
+projects.title: 'Проекти'
+projects.open.title: 'Відкриті'
+projects.closed.title: 'Закриті'
+projects.project.language: 'Мова'
+projects.project.source: 'Джерело'
+projects.list.empty.message: 'Список проектів порожній'
+projects.repos.link.description: 'Усі мої проекти можна знайти тут'
+
+# contact
+contact.title: 'Зв'яжіться зі мною'
+contact.social.sites.title: 'Соціальні мережі'
+contact.email.me.title: 'Напишіть мені'
+contact.form.name.input: 'Ваше ім'я'
+contact.form.email.input: 'Ваша адреса електронної пошти'
+contact.from.message.input: 'Повідомлення'
+contact.from.website.input: 'Веб-сайт'
+contact.form.submit.button: 'Відправити повідомлення'
+contact.error.username.empty: 'Будь ласка, введіть своє ім'я'
+contact.error.email.empty: 'Будь ласка, введіть свою адресу електронної пошти'
+contact.error.message.empty: 'Будь ласка, введіть своє повідомлення'
+contact.error.characters.limit.reached: 'Максимальна довжина повідомлення - 2000 символів'
+contact.error.ko.message: 'Ваше повідомлення не було відправлене через помилку. Спробуйте пізніше або перевірте свої введені дані'
+contact.error.blocked.message: 'Ваше повідомлення було заблоковане'
+contact.error.limit.reached.message: 'помилка: у вас є 5 непрочитаних повідомлень. Почекайте відповіді на перше повідомлення'
+contact.success.message: 'Ваше повідомлення відправлене. Лукаш відповість протягом 24 годин, якнайшвидше'
+
+# image uploader
+image.uploader.title: 'Завантажувач зображень'
+image.uploader.form.title: 'Завантажити зображення'
+image.uploader.form.description: 'Перетягніть або виберіть зображення'
+image.uploader.form.remove.button: 'Видалити'
+image.uploader.form.submit.button: 'Завантажити зображення'
+image.uploader.file.format.error: 'Помилка: файл має невірний формат!'
+image.viewer.title: 'Зображення'
+
+# code paste
+code.paste.title: 'Вставити код'
+code.view.title: 'Перегляд'

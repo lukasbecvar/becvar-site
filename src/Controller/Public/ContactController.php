@@ -51,12 +51,12 @@ class ContactController extends AbstractController
 
         // handle success status
         if (!empty($request->query->get('status')) && $request->query->get('status') == 'ok') {
-            $success_msg = 'Your message has been sent, Lukáš replies within 24 hours at most';
+            $success_msg = 'contact.success.message';
         }
 
         // handle error status
         if (!empty($request->query->get('status')) && $request->query->get('status') == 'ko') {
-            $error_msg = 'Your message was not sent due to an error, please try again later, or check your message inputs';
+            $error_msg = 'contact.error.ko.message';
         }
 
         // create message entity
@@ -81,21 +81,21 @@ class ContactController extends AbstractController
 
             // check if values empty
             if (empty($name)) {
-                $error_msg = 'Please enter your username';
+                $error_msg = 'contact.error.username.empty';
                 $found_error = true;
             } else if (empty($email)) {
-                $error_msg = 'Please enter your email';
+                $error_msg = 'contact.error.email.empty';
                 $found_error = true;
             } else if (empty($message_input)) {
-                $error_msg = 'Please enter your message';
+                $error_msg = 'contact.error.message.empty';
                 $found_error = true;
             } else if (strlen($message_input) > 2000) {
-                $error_msg = 'Maximal message lenght is 2000 characters';
+                $error_msg = 'contact.error.characters.limit.reached';
                 $found_error = true;
 
             // check if honeypot is empty
             } elseif (isset($honeypot)) {
-                $error_msg = 'Your message has been blocked';
+                $error_msg = 'contact.error.blocked.message';
                 $found_error = true;
                 $this->logManager->log('message-sender', 'message: '.$message_input.', has been blocked: honeypot used');
             } else {
@@ -115,7 +115,7 @@ class ContactController extends AbstractController
 
                     // check if user have unclosed messages
                     if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
-                        $error_msg = 'error you have 5 unreaded messages, please wait for the response to the first messags';
+                        $error_msg = 'contact.error.limit.reached.message';
                         $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
                     } else {
 

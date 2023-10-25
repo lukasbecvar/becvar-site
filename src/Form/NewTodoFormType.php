@@ -28,6 +28,7 @@ class NewTodoFormType extends AbstractType
             ],
             'required' => true,
             'mapped' => true,
+            'translation_domain' => false
         ])
         ;
     }

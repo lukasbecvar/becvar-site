@@ -22,6 +22,7 @@ class BanFormType extends AbstractType
             ],
             'required' => false,
             'mapped' => true,
+            'translation_domain' => false
         ])
         ;
     }

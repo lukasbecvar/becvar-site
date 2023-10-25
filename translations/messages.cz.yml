@@ -1,88 +1,105 @@
-# html language specification
-en: 'cs'
+config.lang: 'cs'
 
-# common messages
-Please check the address bar or contact your administrator: 'Zkontrolujte adresní řádek nebo se obraťte na správce služby'
-here: 'zde'
+# common
+common.here: 'zde'
 
-# error messages
-Error 400, Bad request: 'Chyba 400, chybný dotaz'
-Request error: 'Chybný dotaz'
-Error 401, Unauthorized: 'Chyba 401, Neautorizovaný přístup'
-You do not have permission to access this page: 'Nemáte oprávnění k přístupu na tuto stránku'
-Error 403, Forbidden: 'Chyba 403, přístup odepřen'
-Error 404, Page not found: 'Chyba 404, stránka nebyla nalezena'
-Error this page was not found: 'Chyba tato stránka nebyla nalezena'
-Error 429, Too Many Requests: 'Chyba 429, příliš mnoho požadavků'
-Too Many Requests: 'Příliš mnoho požadavků'
-Please try to wait and try again later: 'Zkuste prosím počkat a zkuste to později'
-Error 500, Internal Server Error: 'Chyba: 500, vnitřní chyba serveru'
-The server encountered an unexpected condition that prevented it from fulfilling the request: 'Server narazil na neočekávanou chybu, která mu znemožnila splnit požadavek'
-You are banned: 'Byl jsi zablokován'
-You are permanently banned on this site for reason: 'Byl jsi zablokován z důvodu'
-You are permanently banned on this site: 'Na této stránce máte trvalý zákaz vstupu'
-Please direct unban requests to: 'Žádosti o zrušení zákazu směřujte na'
-Error 503, page is unavailable: 'Chyba 503, stránka je nedostupná'
-The service is temporarily unavailable due to maintenance: 'Služba je dočasně nedostupná z důvodu údržby'
-Error 520, unknown error: 'Chyba 520, neznámá chyba'  
-Unknown error, please contact the service administrator: 'Neznámá chyba, obraťte se na správce služby'
+# common error messages
+error.url.check.message: 'Prosím zkontrolujte adresní řádek nebo kontaktujte svého správce'
+# error 400
+error.400.title: 'Chyba: Špatný požadavek'
+error.400.message: 'Chyba požadavku'
+# error 401
+error.401.title: 'Chyba: Přístup odepřen'
+error.401.message: 'Nemáte oprávnění k přístupu na tuto stránku'
+# error 403
+error.403.title: 'Chyba: Vstup zakázán'
+error.403.message: 'Nemáte oprávnění k přístupu na tuto stránku'
+# error 404
+error.404.title: 'Chyba: Stránka nenalezena'
+error.404.message: 'Chyba, tato stránka nebyla nalezena'
+# error 429
+error.429.title: 'Chyba: Příliš mnoho požadků'
+error.429.message: 'Příliš mnoho požadavků'
+error.429.submessage: 'Zkuste počkat a zkuste to znovu později'
+# chyba 500
+error.500.title: 'Chyba: Interní serverová chyba'
+error.500.message: 'Server narazil na neočekávanou chybu, která mu brání ve splnění požadavku'
+# unknown chyba
+error.unknown.title: 'Chyba: neznámá chyba'
+error.unknown.message: 'Neznámá chyba, kontaktujte prosím správce služby'
+# maintenance error
+error.maintenance.title: 'Chyba: stránka není k dispozici'
+error.maintenance.message: 'Služba je dočasně nedostupná z důvodu údržby'
+# banned
+error.banned.title: 'Jste zablokován'
+error.banned.message: 'Jste na této stránce trvale zablokován'
+error.banned.message.reason: 'Jste na této stránce trvale zablokován z důvodu'
 
-# main web navigation
-Home: 'Domů'
-About: 'O mně'
-Projects: 'Projekty'
-Contact: 'Kontakt'
-Uploader: 'Nahrát obrázek'
-Paste: 'Vložit code'
+# main navigation
+navigation.home.link: 'Domů'
+navigation.about.link: 'O mně'
+navigation.projects.link: 'Projekty'
+navigation.contact.link: 'Kontakt'
+navigation.uploader.link: 'Nahrát obrázek'
+navigation.paste.link: 'Vložit code'
 
-# home page
-I'm a: 'Jsem'
-full stack developer: 'full stack developer'
+# home
+home.im: 'Jsem'
+home.main.text: 'full stack developer'
 
-# about page
-Developer: 'Programátor'
-I am a full stack web & server solutions developer: 'Jsem vývojář webových aplikací a serverových řešení'
-Birthday: 'Datum narození'
-May: 'Května'
-Age: 'Věk'
-All my public projects available: 'Všechny mé veřejné projekty jsou k dispozici'
-My first programming language was Pascal I started learning it in 2012: 'Můj první programovací jazyk byl Pascal a začal jsem se ho učit v roce 2012'
-My main programming languages are "currently" Java and PHP: 'Mé hlavní programovací jazyky jsou v současné době Java a PHP'
-Clients: 'Klienti'
-Lines of code: 'Řádky kódu'
-Coding langs: 'Programovací jazyky'
-My skills: 'Moje dovednosti'
+# about
+about.title: 'O mně'
+about.description: 'JAVĚ a PHP Vývojář'
+about.subdescription: 'Jsem vývojář webů a serverových řešení'
+about.birthday: 'Datum narození'
+about.may: 'Květen'
+about.age: 'Věk'
+about.nationality: 'Národnost: česká'
+about.projects.link.description: 'Všechny mé veřejné projekty jsou dostupné'
+about.funfact.1: 'Můj první programovací jazyk byl Pascal, začal jsem se učit v roce 2012'
+about.funfact.2: 'Mými hlavními programovacími jazyky jsou v současné době Java a PHP'
+about.counter.clients: 'Klienti'
+about.counter.projects: 'Projekty'
+about.counter.code.lines: 'Řádky kódu'
+about.counter.coding.langs: 'Programovací jazyky'
+about.my.skills.title: 'Mé dovednosti'
 
-# projects page
-Open: 'Otevřené'
-Closed: 'Ukončené'
-You can find all my projects here: 'Všechny mé projekty najdete zde'
-Language: 'Jazyk'
-Source: 'Kód'
-github: 'gitHub'
-Project list is empty: 'Seznam projektů je prázdný'
+# projects
+projects.title: 'Projekty'
+projects.open.title: 'Otevřené'
+projects.closed.title: 'Uzavřené'
+projects.project.language: 'Jazyk'
+projects.project.source: 'Repozitář'
+projects.list.empty.message: 'Seznam projektů je prázdný'
+projects.repos.link.description: 'Všechny mé projekty najdete zde'
 
-# contact page
-Contact me: 'Kontaktujte mě'
-Social sites: 'Sociální sítě'
-Email Me: 'Napište mi email'
-Submit message: 'Odeslat'
-Your message has been sent, Lukáš replies within 24 hours at most: 'Vaše zpráva byla odeslána, Lukáš odpoví nejpozději do 24 hodin'
-Your message was not sent due to an error, please try again later, or check your message inputs: 'Vaše zpráva nebyla odeslána z důvodu chyby, zkuste to prosím později nebo zkontrolujte vstupy zprávy'
-error you have 5 unreaded messages, please wait for the response to the first messags: 'chyba máte 5 nepřečtených zpráv, počkejte prosím na odpověď na první zprávu'
-Your name: 'Vaše jméno'
-Your email: 'Váš email'
-Message: 'Zpráva'
+# contact
+contact.title: 'Kontaktujte mě'
+contact.social.sites.title: 'Sociální sítě'
+contact.email.me.title: 'Napište mi e-mail'
+contact.form.name.input: 'Vaše jméno'
+contact.form.email.input: 'Váš e-mail'
+contact.from.message.input: 'Zpráva'
+contact.from.website.input: 'Webová stránka'
+contact.form.submit.button: 'Odeslat zprávu'
+contact.error.username.empty: 'Prosím, zadejte své uživatelské jméno'
+contact.error.email.empty: 'Prosím, zadejte svůj e-mail'
+contact.error.message.empty: 'Prosím, zadejte svou zprávu'
+contact.error.characters.limit.reached: 'Maximální délka zprávy je 2000 znaků'
+contact.error.ko.message: 'Vaše zpráva nebyla odeslána kvůli chybě. Zkuste to později nebo zkontrolujte své údaje'
+contact.error.blocked.message: 'Vaše zpráva byla zablokována'
+contact.error.limit.reached.message: 'Chyba: Máte 5 nepřečtených zpráv. Počkejte na odpověď na první zprávy.'
+contact.success.message: 'Vaše zpráva byla odeslána. Lukáš odpoví nejpozději do 24 hodin'
 
-# image uploader
-Image uploader: 'Nahrávač obrázků'
-Image upload: 'Nahrát obrázek'
-Drag/drop or select image: 'Vložte obrázek'
-Remove: 'Odstranit'
-Upload Image: 'Nahrát obrázek'
-Error file have wrong format!: 'Chyba váš subor není obrázek'
-Image: 'Obrázek'
+# nahrávač obrázků
+image.uploader.title: 'Nahrávač obrázků'
+image.uploader.form.title: 'Nahrát obrázek'
+image.uploader.form.description: 'Přetáhněte nebo vyberte obrázek'
+image.uploader.form.remove.button: 'Odebrat'
+image.uploader.form.submit.button: 'Nahrát obrázek'
+image.uploader.file.format.error: 'Chyba, soubor má nesprávný formát!'
+image.viewer.title: 'Obrázek'
 
-# Code paste
-Code paste: 'Code paste'
-Viewing: 'Prolížení'
+# vložení kódu
+code.paste.title: 'Vložení kódu'
+code.view.title: 'Čtení'

@@ -28,6 +28,7 @@ class LoginFormType extends AbstractType
                     'message' => 'Please enter a username',
                 ])
             ],
+            'translation_domain' => false
         ])
         ->add('password', PasswordType::class, [
             'label' => false,
@@ -41,6 +42,7 @@ class LoginFormType extends AbstractType
                     'message' => 'Please enter a password',
                 ])
             ],
+            'translation_domain' => false
         ])
         ->add('remember', CheckboxType::class, [
             'label' => 'Remember me',
@@ -48,7 +50,8 @@ class LoginFormType extends AbstractType
                 'class' => 'checkbox',
             ],
             'mapped' => false,
-            'required' => false
+            'required' => false,
+            'translation_domain' => false
         ])  
         ;
     }

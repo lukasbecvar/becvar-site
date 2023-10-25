@@ -33,6 +33,7 @@ class UsernameChangeFormType extends AbstractType
                     'max' => 50,
                 ]),
             ],
+            'translation_domain' => false
         ])
         ;
     }

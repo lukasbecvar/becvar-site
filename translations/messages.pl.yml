@@ -1,0 +1,106 @@
+config.lang: 'pl'
+
+# common
+common.here: 'tutaj'
+
+# common error messages
+error.url.check.message: 'Please check the address bar or contact your administrator'
+# error 400
+error.400.title: 'Błąd: Złe żądanie'
+error.400.message: 'Błąd żądania'
+# error 401
+error.401.title: 'Błąd: Brak autoryzacji'
+error.401.message: 'Nie masz uprawnień do dostępu do tej strony'
+# error 403
+error.403.title: 'Błąd: Zakazany'
+error.403.message: 'Nie masz uprawnień do dostępu do tej strony'
+# error 404
+error.404.title: 'Błąd: Strona nie znaleziona'
+error.404.message: 'Błąd, ta strona nie została znaleziona'
+# error 429
+error.429.title: 'Błąd: Zbyt wiele żądań'
+error.429.message: 'Zbyt wiele żądań'
+error.429.submessage: 'Proszę spróbować poczekać i spróbować ponownie później'
+# error 500
+error.500.title: 'Błąd: Wewnętrzny błąd serwera'
+error.500.message: 'Serwer napotkał niespodziewane warunki, które uniemożliwiły spełnienie żądania'
+# error unknown
+error.unknown.title: 'Błąd: nieznany błąd'
+error.unknown.message: 'Nieznany błąd, proszę skontaktować się z administratorem usługi'
+# error maintenance
+error.maintenance.title: 'Błąd: strona niedostępna'
+error.maintenance.message: 'Usługa jest tymczasowo niedostępna z powodu konserwacji'
+# error banned
+error.banned.title: 'Jesteś zbanowany'
+error.banned.message: 'Jesteś trwale zbanowany na tej stronie'
+error.banned.message.reason: 'Jesteś trwale zbanowany na tej stronie z powodu'
+error.banned.unban.email: 'Proszę przesyłać prośby o odbanowanie pod adres'
+
+# main navigation
+navigation.home.link: 'Strona główna'
+navigation.about.link: 'O nas'
+navigation.projects.link: 'Projekty'
+navigation.contact.link: 'Kontakt'
+navigation.uploader.link: 'Wgraj'
+navigation.paste.link: 'Wklej'
+
+# strona główna
+home.im : 'Jestem'
+home.main.text: 'programistą pełnego stosu technologicznego'
+
+# about
+about.title: 'O nas'
+about.description: 'Programista JAVA, PHP'
+about.subdescription: 'Jestem programistą rozwiązań webowych i serwerowych pełnego stosu technologicznego'
+about.birthday: 'Urodziny'
+about.may: 'Maj'
+about.age: 'Wiek'
+about.nationality: 'Narodowość: cz'
+about.projects.link.description: 'Wszystkie moje publiczne projekty są dostępne tutaj'
+about.funfact.1: 'Moim pierwszym językiem programowania był Pascal. Zacząłem się go uczyć w 2012 roku'
+about.funfact.2: 'Moimi głównymi językami programowania są obecnie Java i PHP'
+about.counter.clients: 'Klienci'
+about.counter.projects: 'Projekty'
+about.counter.code.lines: 'Linie kodu'
+about.counter.coding.langs: 'Języki programowania'
+about.my.skills.title: 'Moje umiejętności'
+
+# projects
+projects.title: 'Projekty'
+projects.open.title: 'Otwarte'
+projects.closed.title: 'Zamknięte'
+projects.project.language: 'Język'
+projects.project.source: 'Źródło'
+projects.list.empty.message: 'Lista projektów jest pusta'
+projects.repos.link.description: 'Wszystkie moje projekty można znaleźć tutaj'
+
+# contact
+contact.title: 'Skontaktuj się ze mną'
+contact.social.sites.title: 'Portale społecznościowe'
+contact.email.me.title: 'Napisz do mnie'
+contact.form.name.input: 'Twoje imię'
+contact.form.email.input: 'Twój adres e-mail'
+contact.from.message.input: 'Wiadomość'
+contact.from.website.input: 'Strona internetowa'
+contact.form.submit.button: 'Wyślij wiadomość'
+contact.error.username.empty: 'Proszę podać swoje imię'
+contact.error.email.empty: 'Proszę podać swój adres e-mail'
+contact.error.message.empty: 'Proszę wprowadzić swoją wiadomość'
+contact.error.characters.limit.reached: 'Maksymalna długość wiadomości to 2000 znaków'
+contact.error.ko.message: 'Twoja wiadomość nie została wysłana z powodu błędu. Spróbuj ponownie później lub sprawdź swoje dane'
+contact.error.blocked.message: 'Twoja wiadomość została zablokowana'
+contact.error.limit.reached.message: 'błąd: masz 5 nieprzeczytanych wiadomości. Poczekaj na odpowiedź na pierwszą wiadomość'
+contact.success.message: 'Twoja wiadomość została wysłana. Lukáš odpowie w ciągu maksymalnie 24 godzin'
+
+# image uploader
+image.uploader.title: 'Wgraj obraz'
+image.uploader.form.title: 'Wgraj obraz'
+image.uploader.form.description: 'Przeciągnij i upuść lub wybierz obraz'
+image.uploader.form.remove.button: 'Usuń'
+image.uploader.form.submit.button: 'Wgraj obraz'
+image.uploader.file.format.error: 'Błąd: plik ma niepoprawny format!'
+image.viewer.title: 'Obraz'
+
+# code paste
+code.paste.title: 'Wklej kod'
+code.view.title: 'Przeglądanie'

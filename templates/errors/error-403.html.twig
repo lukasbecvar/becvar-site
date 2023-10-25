@@ -1,15 +1,15 @@
 {% extends 'common/bases/error-base.html.twig' %}
 
 {% block title %}
-	{{ 'Error 403, Forbidden'|trans }}
+	{{ 'error.403.title'|trans }}
 {% endblock %}
 
 {% block body %}
 <p class="error-page-msg">
 	<strong>
-		{{ 'You do not have permission to access this page'|trans }}
+		{{ 'error.403.message'|trans }}
 		<br><br>
-		{{ 'Please check the address bar or contact your administrator'|trans }}
+		{{ 'error.url.check.message'|trans }}
 	</strong>
 </p>
 {% endblock %}

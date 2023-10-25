@@ -122,7 +122,7 @@ class ImageUploaderController extends AbstractController
 
             } else {
                 // handle error
-                $error_msg = 'Error file have wrong format!';
+                $error_msg = 'image.uploader.file.format.error';
             }
         }
 

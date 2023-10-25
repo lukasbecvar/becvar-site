@@ -820,6 +820,10 @@ textarea {
 	border: none;
 }
 
+.profile-pic-change {
+	color: white;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.custom-col-md-10 {

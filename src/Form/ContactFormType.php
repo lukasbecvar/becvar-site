@@ -21,7 +21,8 @@ class ContactFormType extends AbstractType
                 'class' => 'form-control mt-3',
                 'placeholder' => 'Your name',
             ],
-            'mapped' => true
+            'mapped' => true,
+            'translation_domain' => false
         ])
         ->add('email', EmailType::class, [
             'label' => false,
@@ -29,7 +30,8 @@ class ContactFormType extends AbstractType
                 'class' => 'form-control mt-3',
                 'placeholder' => 'Your Email',
             ],
-            'mapped' => true
+            'mapped' => true,
+            'translation_domain' => false
         ])
         ->add('message', TextareaType::class, [
             'label' => false,
@@ -38,7 +40,8 @@ class ContactFormType extends AbstractType
                 'placeholder' => 'Message',
                 'maxlength' => 1024
             ],
-            'mapped' => true
+            'mapped' => true,
+            'translation_domain' => false
         ])
         ->add('websiteIN', TextareaType::class, [
             'label' => false,
@@ -47,7 +50,8 @@ class ContactFormType extends AbstractType
                 'placeholder' => 'Website',
             ],
             'mapped' => false,
-            'required' => false
+            'required' => false,
+            'translation_domain' => false
         ])
         ;
     }
