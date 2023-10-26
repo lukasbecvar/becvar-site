@@ -6,7 +6,7 @@ use App\Util\VisitorInfoUtil;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /*
-    This middleware set translation
+    This middleware set translations
 */
 
 class TranslationsMiddleware

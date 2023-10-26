@@ -46,7 +46,6 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
-- [ ] Add RequestEvents to middlewares
 - [ ] Online/Offline user status
 - [ ] Admin chat
 - [ ] Terminal in admin

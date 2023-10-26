@@ -2,8 +2,8 @@
 
 namespace App\Middleware;
 
-use App\Manager\ErrorManager;
 use App\Util\SiteUtil;
+use App\Manager\ErrorManager;
 
 /*
     This middleware used to check if is application in devmode
