@@ -39,6 +39,12 @@ class User
     #[ORM\Column(type: Types::TEXT)]
     private ?string $profile_pic = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status_update_time = null;
+
     #[ORM\Column]
     private ?string $visitor_id = null;
 
@@ -139,6 +145,30 @@ class User
     public function setProfilePic(string $profile_pic): static
     {
         $this->profile_pic = $profile_pic;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStatusUpdateTime(): ?string
+    {
+        return $this->status_update_time;
+    }
+
+    public function setStatusUpdateTime(string $status_update_time): static
+    {
+        $this->status_update_time = $status_update_time;
 
         return $this;
     }

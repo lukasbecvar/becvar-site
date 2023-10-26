@@ -111,7 +111,7 @@ class ImageUploaderController extends AbstractController
                     $this->entityManager->persist($image);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
+                    return $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
                 }
 
                 // log to database

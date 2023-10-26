@@ -91,7 +91,7 @@ class TodoManagerController extends AbstractController
                         $this->entityManager->persist($todo);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
                     }
 
                     return $this->redirectToRoute('admin_todos');

@@ -115,6 +115,8 @@ class RegisterController extends AbstractController
                     $user->setRegistedTime($date); // set register time
                     $user->setLastLoginTime('not logged'); // set login date
                     $user->setProfilePic($image_base64); // set profile pic (base64)
+                    $user->setStatus('offline'); // set default online status
+                    $user->setLastLoginTime('not-online'); // set not online status update time
                     $user->setVisitorId($visitor_id); // set visitor id
 
                     // log regstration event
@@ -125,7 +127,7 @@ class RegisterController extends AbstractController
                         $this->entityManager->persist($user);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
+                        return $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
                     }
 
                     // set user token (login-token session)

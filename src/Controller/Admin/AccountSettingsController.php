@@ -113,7 +113,7 @@ class AccountSettingsController extends AbstractController
                         // redirect back to values table
                         return $this->redirectToRoute('admin_account_settings');
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 } else {
                     $error_msg = 'please select image file';
@@ -174,7 +174,7 @@ class AccountSettingsController extends AbstractController
                     return $this->redirectToRoute('admin_account_settings');
 
                 } catch (\Exception $e) {
-                    $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                 }  
             }
             
@@ -237,7 +237,7 @@ class AccountSettingsController extends AbstractController
                         return $this->redirectToRoute('admin_account_settings');
 
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 }
             }
