@@ -37,7 +37,7 @@ class ErrorManager
 
         // error (for non devmode visitors)
         } else {
-            die($this->handleErrorView($code));
+            die($this->handleErrorView(strval($code)));
         }
     }
 
