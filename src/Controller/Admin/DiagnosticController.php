@@ -17,11 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DiagnosticController extends AbstractController
 {
-    private $siteUtil;
-    private $authManager;
-    private $dashboardUtil;
-    private $serviceManager;
-    private $visitorInfoUtil;
+    private SiteUtil $siteUtil;
+    private AuthManager $authManager;
+    private DashboardUtil $dashboardUtil;
+    private ServiceManager $serviceManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,

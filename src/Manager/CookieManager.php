@@ -10,7 +10,7 @@ use App\Util\SecurityUtil;
 
 class CookieManager
 {
-    private $securityUtil;
+    private SecurityUtil $securityUtil;
 
     public function __construct(SecurityUtil $securityUtil)
     {

@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-    private $authManager;
+    private AuthManager $authManager;
 
     public function __construct(AuthManager $authManager)
     {

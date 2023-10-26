@@ -17,11 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LogReaderController extends AbstractController
 {
-    private $logManager;
-    private $authManager;
-    private $securityUtil;
-    private $visitorInfoUtil;
-    private $databaseManager;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private DatabaseManager $databaseManager;
 
     public function __construct(
         LogManager $logManager,

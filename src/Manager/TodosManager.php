@@ -12,9 +12,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TodosManager
 {
-    private $securityUtil;
-    private $errorManager;
-    private $entityManager;
+    private SecurityUtil $securityUtil;
+    private ErrorManager $errorManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         SecurityUtil $securityUtil,

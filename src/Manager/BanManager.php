@@ -12,11 +12,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BanManager
 {
-    private $logManager;
-    private $authManager;
-    private $errorManager;
-    private $entityManager;
-    private $visitorInfoUtil;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private ErrorManager $errorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
     
     public function __construct(
         LogManager $logManager,

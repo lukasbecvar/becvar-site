@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MediaBrowserController extends AbstractController
 {
-    private $authManager;
-    private $visitorInfoUtil;
-    private $databaseManager;
+    private AuthManager $authManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private DatabaseManager $databaseManager;
 
     public function __construct(
         AuthManager $authManager, 

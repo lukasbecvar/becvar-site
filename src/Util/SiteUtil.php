@@ -21,19 +21,23 @@ class SiteUtil
 
         $host = SiteUtil::getHttpHost();
 
-        // check if running on url localhost
-        if (str_starts_with($host, 'localhost')) {
-            $localhost = true;
-        } 
+        // check if host is null
+        if ($host != null) {
+
+            // check if running on url localhost
+            if (str_starts_with($host, 'localhost')) {
+                $localhost = true;
+            } 
+                
+            // check if running on localhost ip
+            if (str_starts_with($host, '127.0.0.1')) {
+                $localhost = true;
+            }
             
-        // check if running on localhost ip
-        if (str_starts_with($host, '127.0.0.1')) {
-            $localhost = true;
-        }
-        
-        // check if running on private ip
-        if (str_starts_with($host, '10.0.0.93')) {
-            $localhost = true;
+            // check if running on private ip
+            if (str_starts_with($host, '10.0.0.93')) {
+                $localhost = true;
+            }
         }
 
         return $localhost;

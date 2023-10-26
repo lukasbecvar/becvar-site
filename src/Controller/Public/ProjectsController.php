@@ -16,9 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectsController extends AbstractController
 {
-    private $authManager;
-    private $errorManager;
-    private $projectsManager;
+    private AuthManager $authManager;
+    private ErrorManager $errorManager;
+    private ProjectsManager $projectsManager;
 
     public function __construct(
         AuthManager $authManager, 

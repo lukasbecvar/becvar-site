@@ -14,11 +14,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class LogManager
 {
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
-    private $cookieManager;
-    private $visitorInfoUtil;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private CookieManager $cookieManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
     
     public function __construct(
         ErrorManager $errorManager,

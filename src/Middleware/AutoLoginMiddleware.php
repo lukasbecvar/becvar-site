@@ -13,9 +13,9 @@ use App\Manager\SessionManager;
 
 class AutoLoginMiddleware
 {
-    private $authManager;
-    private $cookieManager;
-    private $sessionManager;
+    private AuthManager $authManager;
+    private CookieManager $cookieManager;
+    private SessionManager $sessionManager;
 
     public function __construct(
         AuthManager $authManager, 

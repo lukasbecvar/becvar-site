@@ -19,10 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VisitorManagerController extends AbstractController
 {
-    private $banManager;
-    private $authManager;
-    private $securityUtil;
-    private $visitorInfoUtil;
+    private BanManager $banManager;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         BanManager $banManager,

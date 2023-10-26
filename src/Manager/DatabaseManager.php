@@ -12,11 +12,11 @@ use Doctrine\DBAL\Connection;
 
 class DatabaseManager
 {
-    private $logManager;
-    private $connection;
-    private $authManager;
-    private $securityUtil;
-    private $errorManager;
+    private LogManager $logManager;
+    private Connection $connection;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private ErrorManager $errorManager;
         
     public function __construct(
         LogManager $logManager,

@@ -11,8 +11,8 @@ use App\Util\SiteUtil;
 
 class ErrorManager
 {
-    private $twig;
-    private $siteUtil;
+    private Environment $twig;
+    private SiteUtil $siteUtil;
 
     public function __construct(Environment $twig, SiteUtil $siteUtil)
     {

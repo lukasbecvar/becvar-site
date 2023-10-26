@@ -20,10 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {   
-    private $logManager;
-    private $securityUtil;
-    private $visitorInfoUtil;
-    private $messagesManager;
+    private LogManager $logManager;
+    private SecurityUtil $securityUtil;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private MessagesManager $messagesManager;
 
     public function __construct(
         LogManager $logManager, 

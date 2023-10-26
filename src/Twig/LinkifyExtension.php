@@ -14,7 +14,7 @@ class LinkifyExtension extends AbstractExtension
         ];
     }
 
-    public function linkifyText($text): ?string
+    public function linkifyText(string $text): ?string
     {
         // replace link
         $text = preg_replace(

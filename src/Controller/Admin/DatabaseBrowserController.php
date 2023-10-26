@@ -18,10 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DatabaseBrowserController extends AbstractController
 {
-    private $authManager;
-    private $securityUtil;
-    private $databaseManager;
-    private $visitorInfoUtil;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private DatabaseManager $databaseManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         AuthManager $authManager, 

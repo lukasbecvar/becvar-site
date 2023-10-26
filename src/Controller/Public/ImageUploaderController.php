@@ -19,10 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ImageUploaderController extends AbstractController
 {
-    private $logManager;
-    private $errorManager;
-    private $secutityUtil;
-    private $entityManager;
+    private LogManager $logManager;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         LogManager $logManager,
@@ -32,7 +32,7 @@ class ImageUploaderController extends AbstractController
     ) {
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
-        $this->secutityUtil = $securityUtil;
+        $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
 
@@ -40,7 +40,7 @@ class ImageUploaderController extends AbstractController
     public function imageView($token): Response
     {
         // escape image token
-        $token = $this->secutityUtil->escapeString($token);
+        $token = $this->securityUtil->escapeString($token);
 
         // default image
         $image_content = null;
@@ -52,7 +52,7 @@ class ImageUploaderController extends AbstractController
         if ($imageRepo !== null) {
 
             // get image & decrypt
-            $image_content = $this->secutityUtil->decrypt_aes($imageRepo->getImage());
+            $image_content = $this->securityUtil->decrypt_aes($imageRepo->getImage());
 
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
             return $this->render('public/image/image-viewer.html.twig', [
@@ -90,7 +90,7 @@ class ImageUploaderController extends AbstractController
                 $image_file = base64_encode($image_file);
 
                 // escape image string
-                $image_file = $this->secutityUtil->escapeString($image_file);
+                $image_file = $this->securityUtil->escapeString($image_file);
     
                 // get current data
                 $date = date('d.m.Y H:i:s');
@@ -99,7 +99,7 @@ class ImageUploaderController extends AbstractController
                 $image = new Image();
 
                 // encrypt image
-                $image_file = $this->secutityUtil->encrypt_aes($image_file);
+                $image_file = $this->securityUtil->encrypt_aes($image_file);
 
                 // set image data
                 $image->setToken($token);

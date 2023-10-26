@@ -13,10 +13,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorInfoUtil
 {
-    private $jsonUtil;
-    private $siteUtil;
-    private $errorManager;
-    private $entityManager;
+    private JsonUtil $jsonUtil;
+    private SiteUtil $siteUtil;
+    private ErrorManager $errorManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct (
         JsonUtil $jsonUtil,
@@ -181,8 +181,10 @@ class VisitorInfoUtil
         foreach ($os_array as $regex => $value) {
 
             // check if os found
-            if (preg_match($regex, $agent)) {
-                $os = $value;
+            if ($regex != null && $agent != null) {
+                if (preg_match($regex, $agent)) {
+                    $os = $value;
+                }
             }
         }
         
@@ -343,7 +345,7 @@ class VisitorInfoUtil
     public function getVisitorLanguage(): ?string
     {
         $repo = $this->getVisitorRepository($this->getIP());
-    
+     
         // check visitor found
         if ($repo !== null) {
             return strtolower($repo->getCountry());   

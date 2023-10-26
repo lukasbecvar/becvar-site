@@ -23,11 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AccountSettingsController extends AbstractController
 {
-    private $authManager;
-    private $securityUtil;
-    private $errorManager;
-    private $entityManager;
-    private $visitorInfoUtil;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private ErrorManager $errorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         AuthManager $authManager, 

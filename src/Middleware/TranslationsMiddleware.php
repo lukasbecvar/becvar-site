@@ -3,7 +3,7 @@
 namespace App\Middleware;
 
 use App\Util\VisitorInfoUtil;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 /*
     This middleware set translations
@@ -11,18 +11,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TranslationsMiddleware
 {
-    private $translator;
-    private $visitorInfoUtil;
+    private LocaleAwareInterface $translator;
+    private VisitorInfoUtil $visitorInfoUtil;
     
     public function __construct(
-        TranslatorInterface $translator, 
+        LocaleAwareInterface $translator, 
         VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->translator = $translator;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    public function onKernelRequest()
+    public function onKernelRequest(): void
     {
         // get visitor language
         $language = $this->visitorInfoUtil->getVisitorLanguage();

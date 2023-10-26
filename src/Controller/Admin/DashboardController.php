@@ -27,13 +27,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DashboardController extends AbstractController
 {
-    private $siteUtil;
-    private $logManager;
-    private $authManager;
-    private $securityUtil;
-    private $dashboardUtil;
-    private $serviceManager;
-    private $visitorInfoUtil;
+    private SiteUtil $siteUtil;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
+    private DashboardUtil $dashboardUtil;
+    private ServiceManager $serviceManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,

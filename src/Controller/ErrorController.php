@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ErrorController extends AbstractController
 {
-    private $errorManager;
+    private ErrorManager $errorManager;
 
     public function __construct(ErrorManager $errorManager) 
     {

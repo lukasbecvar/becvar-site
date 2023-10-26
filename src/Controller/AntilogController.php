@@ -16,9 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AntilogController extends AbstractController
 {
-    private $logManager;
-    private $authManager;
-    private $errorManager;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private ErrorManager $errorManager;
 
     public function __construct(
         LogManager $logManager,

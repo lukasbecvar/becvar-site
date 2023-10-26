@@ -19,9 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LoginController extends AbstractController
 {
-    private $logManager;
-    private $authManager;
-    private $securityUtil;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
 
     public function __construct(
         LogManager $logManager, 

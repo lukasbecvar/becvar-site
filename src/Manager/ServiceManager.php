@@ -10,10 +10,10 @@ use App\Util\JsonUtil;
 
 class ServiceManager
 {
-    private $jsonUtil;
-    private $logManager;
-    private $authManager;
-    private $errorManager;
+    private JsonUtil $jsonUtil;
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private ErrorManager $errorManager;
 
     public function __construct(
         JsonUtil $jsonUtil, 

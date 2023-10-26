@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class InboxController extends AbstractController
 {
-    private $authManager;
-    private $messagesManager;
-    private $visitorInfoUtil;
+    private AuthManager $authManager;
+    private MessagesManager $messagesManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         AuthManager $authManager,

@@ -17,13 +17,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorSystemMiddleware
 {
-    private $twig;
-    private $banManager;
-    private $logManager;
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
-    private $visitorInfoUtil;
+    private Environment $twig;
+    private BanManager $banManager;
+    private LogManager $logManager;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         Environment $twig,

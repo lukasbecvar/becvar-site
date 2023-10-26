@@ -11,8 +11,8 @@ use App\Manager\ErrorManager;
 
 class MaintenanceMiddleware
 {
-    private $siteUtil;
-    private $errorManager;
+    private SiteUtil $siteUtil;
+    private ErrorManager $errorManager;
 
     public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager)
     {

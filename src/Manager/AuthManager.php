@@ -11,11 +11,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AuthManager
 {
-    private $logManager;
-    private $errorManager;
-    private $entityManager;
-    private $cookieManager;
-    private $sessionManager;
+    private LogManager $logManager;
+    private ErrorManager $errorManager;
+    private CookieManager $cookieManager;
+    private SessionManager $sessionManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         LogManager $logManager, 

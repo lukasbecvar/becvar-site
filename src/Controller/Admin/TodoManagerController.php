@@ -21,12 +21,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TodoManagerController extends AbstractController
 {
-    private $authManager;
-    private $todosManager;
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
-    private $visitorInfoUtil;
+    private AuthManager $authManager;
+    private TodosManager $todosManager;
+    private SecurityUtil $securityUtil;
+    private ErrorManager $errorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         AuthManager $authManager,

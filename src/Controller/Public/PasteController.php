@@ -18,10 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PasteController extends AbstractController
 {
-    private $logManager;
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
+    private LogManager $logManager;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         LogManager $logManager, 

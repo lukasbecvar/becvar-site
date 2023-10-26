@@ -23,12 +23,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegisterController extends AbstractController
 {
-    private $logManager;
-    private $authManager;
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
-    private $visitorInfoUtil;  
+    private LogManager $logManager;
+    private AuthManager $authManager;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private VisitorInfoUtil $visitorInfoUtil;  
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         LogManager $logManager, 

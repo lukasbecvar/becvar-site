@@ -13,11 +13,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProjectsManager
 {
-    private $jsonUtil;
-    private $logManager;
-    private $errorManager;
-    private $securityUtil;
-    private $entityManager;
+    private JsonUtil $jsonUtil;
+    private LogManager $logManager;
+    private ErrorManager $errorManager;
+    private SecurityUtil $securityUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         JsonUtil $jsonUtil, 

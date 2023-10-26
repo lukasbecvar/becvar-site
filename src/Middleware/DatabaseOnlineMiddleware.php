@@ -11,13 +11,11 @@ use \Doctrine\DBAL\Connection as Connection;
 
 class DatabaseOnlineMiddleware
 {
-    private $errorManager;
-    private $doctrineConnection;
+    private ErrorManager $errorManager;
+    private Connection $doctrineConnection;
 
-    public function __construct(
-        ErrorManager $errorManager,
-        Connection $doctrineConnection
-    ) {
+    public function __construct(ErrorManager $errorManager, Connection $doctrineConnection) 
+    {
         $this->errorManager = $errorManager;
         $this->doctrineConnection = $doctrineConnection;
     }

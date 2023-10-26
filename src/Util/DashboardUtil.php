@@ -11,9 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DashboardUtil
 {
-    private $jsonUtil;
-    private $errorManager;
-    private $entityManager;
+    private JsonUtil $jsonUtil;
+    private ErrorManager $errorManager;
+    private EntityManagerInterface $entityManager;
     
     public function __construct(
         JsonUtil $jsonUtil,

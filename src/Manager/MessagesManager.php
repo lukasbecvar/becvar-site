@@ -13,10 +13,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MessagesManager
 {
-    private $securityUtil;
-    private $errorManager;
-    private $entityManager;
-    private $visitorInfoUtil;
+    private SecurityUtil $securityUtil;
+    private ErrorManager $errorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         SecurityUtil $securityUtil, 
