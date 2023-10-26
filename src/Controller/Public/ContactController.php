@@ -8,7 +8,6 @@ use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
 use App\Manager\MessagesManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +22,6 @@ class ContactController extends AbstractController
 {   
     private $logManager;
     private $securityUtil;
-    private $entityManager;
     private $visitorInfoUtil;
     private $messagesManager;
 
@@ -32,11 +30,9 @@ class ContactController extends AbstractController
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
-        EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
         $this->securityUtil = $securityUtil;
-        $this->entityManager = $entityManager;
         $this->messagesManager = $messagesManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -108,7 +104,6 @@ class ContactController extends AbstractController
                 $message_input = $this->securityUtil->escapeString($message_input);
 
                 // get others data
-                $date = date('d.m.Y H:i:s');
                 $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
                 // check if user have unclosed messages
@@ -119,30 +114,12 @@ class ContactController extends AbstractController
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
 
-                    // update visitor email
-                    $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
+                    // save message & get return boolean
+                    $save = $this->messagesManager->saveMessage($name, $email, $message_input, $ip_address, $visitor_id);
 
-                    // ecrypt message
-                    $message_input = $this->securityUtil->encrypt_aes($message_input);
-
-                    // set message entity values
-                    $message->setName($name);
-                    $message->setEmail($email);
-                    $message->setMessage($message_input);
-                    $message->setTime($date);
-                    $message->setIpAddress($ip_address);
-                    $message->setStatus('open');
-                    $message->setVisitorID($visitor_id);
-
-                    // insert new message
-                    try {
-                        $this->entityManager->persist($message);
-                        $this->entityManager->flush();
-                            
-                        // redirect back to from & handle success status
+                    if ($save) {
                         return $this->redirectToRoute('public_contact', ['status' => 'ok']);
-                    } catch (\Exception) {
-                        // redirect back to from & handle error status
+                    } else {
                         return $this->redirectToRoute('public_contact', ['status' => 'ko']);
                     }
                 }

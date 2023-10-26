@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Message;
 use App\Util\SecurityUtil;
+use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -15,12 +16,51 @@ class MessagesManager
     private $securityUtil;
     private $errorManager;
     private $entityManager;
+    private $visitorInfoUtil;
 
-    public function __construct(SecurityUtil $securityUtil, ErrorManager $errorManager, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        SecurityUtil $securityUtil, 
+        ErrorManager $errorManager,
+        VisitorInfoUtil $visitorInfoUtil, 
+        EntityManagerInterface $entityManager
+    ) {
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
+    }
+
+    public function saveMessage(string $name, string $email, string $message_input, string $ip_address, string $visitor_id): bool
+    {
+        $message = new Message();
+
+        // get others data
+        $date = date('d.m.Y H:i:s');
+
+        // update visitor email
+        $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
+
+        // ecrypt message
+        $message_input = $this->securityUtil->encrypt_aes($message_input);
+        
+        // set message entity values
+        $message->setName($name);
+        $message->setEmail($email);
+        $message->setMessage($message_input);
+        $message->setTime($date);
+        $message->setIpAddress($ip_address);
+        $message->setStatus('open');
+        $message->setVisitorID($visitor_id);
+        
+        // insert new message
+        try {
+            $this->entityManager->persist($message);
+            $this->entityManager->flush();
+                                    
+            return true;
+        } catch (\Exception) {
+            return false;
+        }
     }
 
     public function getMessageCountByIpAddress(string $ip_address): int
