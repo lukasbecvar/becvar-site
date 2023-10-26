@@ -39,7 +39,7 @@ class SecurityUtil
 		  
 		$key = substr($salted, 0, 32);
 		$iv  = substr($salted, 32,16);
-		$encrypted_data = openssl_encrypt(json_encode($plain_text), $method, $key, true, $iv);
+		$encrypted_data = openssl_encrypt(json_encode($plain_text), $method, $key, 0, $iv);
 		$data = array("ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt));
 		  
 		return json_encode($data);
@@ -65,8 +65,7 @@ class SecurityUtil
 		}
 		  
 		$key = substr($result, 0, 32);
-		$data = openssl_decrypt($ct, $method, $key, true, $iv);
-		$decoded_string = json_decode($data, true);
-		return $decoded_string;
+		$data = openssl_decrypt($ct, $method, $key, 0, $iv);
+		return json_decode($data, true);
 	}
 }

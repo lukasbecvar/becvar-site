@@ -96,7 +96,7 @@ class VisitorSystemMiddleware
         $visitorEntity = new Visitor();
 
         // set visitor data
-        $visitorEntity->setVisitedSites(1);
+        $visitorEntity->setVisitedSites('1');
         $visitorEntity->setFirstVisit($date);
         $visitorEntity->setLastVisit($date);
         $visitorEntity->setBrowser($browser);
