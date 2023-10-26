@@ -47,15 +47,22 @@ class ContactController extends AbstractController
         // default msg state
         $error_msg = null;
         $success_msg = null;
-        $found_error = false;
+
+        // get visitor ip address
+        $ip_address = $this->visitorInfoUtil->getIP();
 
         // handle success status
-        if (!empty($request->query->get('status')) && $request->query->get('status') == 'ok') {
+        if ($request->query->get('status') == 'ok') {
             $success_msg = 'contact.success.message';
         }
 
+        // handle limit reached status
+        if ($request->query->get('status') == 'reached') {
+            $error_msg = 'contact.error.limit.reached.message';
+        }
+
         // handle error status
-        if (!empty($request->query->get('status')) && $request->query->get('status') == 'ko') {
+        if ($request->query->get('status') == 'ko') {
             $error_msg = 'contact.error.ko.message';
         }
 
@@ -82,21 +89,16 @@ class ContactController extends AbstractController
             // check if values empty
             if (empty($name)) {
                 $error_msg = 'contact.error.username.empty';
-                $found_error = true;
             } else if (empty($email)) {
                 $error_msg = 'contact.error.email.empty';
-                $found_error = true;
             } else if (empty($message_input)) {
                 $error_msg = 'contact.error.message.empty';
-                $found_error = true;
             } else if (strlen($message_input) > 2000) {
                 $error_msg = 'contact.error.characters.limit.reached';
-                $found_error = true;
 
             // check if honeypot is empty
-            } elseif (isset($honeypot)) {
+            } else if (isset($honeypot)) {
                 $error_msg = 'contact.error.blocked.message';
-                $found_error = true;
                 $this->logManager->log('message-sender', 'message: '.$message_input.', has been blocked: honeypot used');
             } else {
 
@@ -105,46 +107,43 @@ class ContactController extends AbstractController
                 $email = $this->securityUtil->escapeString($email);
                 $message_input = $this->securityUtil->escapeString($message_input);
 
-                // check if error not found
-                if ($found_error == false) {
+                // get others data
+                $date = date('d.m.Y H:i:s');
+                $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
 
-                    // get others data
-                    $date = date('d.m.Y H:i:s');
-                    $ip_address = $this->visitorInfoUtil->getIP();
-                    $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
+                // check if user have unclosed messages
+                if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
+                    $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
 
-                    // check if user have unclosed messages
-                    if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
-                        $error_msg = 'contact.error.limit.reached.message';
-                        $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
-                    } else {
+                    // redirect back to from & handle limit reached error status
+                    return $this->redirectToRoute('public_contact', ['status' => 'reached']);
+                } else {
 
-                        // update visitor email
-                        $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
+                    // update visitor email
+                    $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
 
-                        // ecrypt message
-                        $message_input = $this->securityUtil->encrypt_aes($message_input);
+                    // ecrypt message
+                    $message_input = $this->securityUtil->encrypt_aes($message_input);
 
-                        // set message entity values
-                        $message->setName($name);
-                        $message->setEmail($email);
-                        $message->setMessage($message_input);
-                        $message->setTime($date);
-                        $message->setIpAddress($ip_address);
-                        $message->setStatus('open');
-                        $message->setVisitorID($visitor_id);
+                    // set message entity values
+                    $message->setName($name);
+                    $message->setEmail($email);
+                    $message->setMessage($message_input);
+                    $message->setTime($date);
+                    $message->setIpAddress($ip_address);
+                    $message->setStatus('open');
+                    $message->setVisitorID($visitor_id);
 
-                        // insert new message
-                        try {
-                            $this->entityManager->persist($message);
-                            $this->entityManager->flush();
+                    // insert new message
+                    try {
+                        $this->entityManager->persist($message);
+                        $this->entityManager->flush();
                             
-                            // redirect back to from & handle success status
-                            return $this->redirectToRoute('public_contact', ['status' => 'ok', 'final' => 'yes']);
-                        } catch (\Exception) {
-                            // redirect back to from & handle error status
-                            return $this->redirectToRoute('public_contact', ['status' => 'ko', 'final' => 'yes']);
-                        }
+                        // redirect back to from & handle success status
+                        return $this->redirectToRoute('public_contact', ['status' => 'ok']);
+                    } catch (\Exception) {
+                        // redirect back to from & handle error status
+                        return $this->redirectToRoute('public_contact', ['status' => 'ko']);
                     }
                 }
             }

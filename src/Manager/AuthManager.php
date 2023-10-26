@@ -33,8 +33,6 @@ class AuthManager
 
     public function isUserLogedin(): bool 
     {
-        $userEntity = new User();
-
         // check if session exist
         if ($this->sessionManager->checkSession('login-token')) {
 
@@ -42,7 +40,7 @@ class AuthManager
             $login_token = $this->sessionManager->getSessionValue('login-token');
 
             // check if token exist in database
-            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
+            if ($this->getUserRepository(['token' => $login_token]) != null) {
                 return true;
             } else {
                 return false;
@@ -117,9 +115,6 @@ class AuthManager
         // default token value
         $token = null;
 
-        // init user entity
-        $userEntity = new User();
-
         // check if session exist
         if ($this->sessionManager->checkSession('login-token')) {
 
@@ -127,7 +122,7 @@ class AuthManager
             $login_token = $this->sessionManager->getSessionValue('login-token');
 
             // check if token exist in database
-            if ($this->getUserRepository(['token' => $login_token], $userEntity) != null) {
+            if ($this->getUserRepository(['token' => $login_token]) != null) {
                 $token = $login_token;
             }
         }
