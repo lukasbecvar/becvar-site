@@ -116,7 +116,7 @@ class RegisterController extends AbstractController
                     $user->setLastLoginTime('not logged'); // set login date
                     $user->setProfilePic($image_base64); // set profile pic (base64)
                     $user->setStatus('offline'); // set default online status
-                    $user->setLastLoginTime('not-online'); // set not online status update time
+                    $user->setStatusUpdateTime('not-online'); // set not online status update time
                     $user->setVisitorId($visitor_id); // set visitor id
 
                     // log regstration event
