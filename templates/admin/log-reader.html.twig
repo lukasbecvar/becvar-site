@@ -11,13 +11,13 @@
     {% else %}
         <ul class="breadcrumb"> 
             <li>
-                <a class="selector-button btn-small" href="/admin/database/logs/1"><strong>Unfiltered</strong></a>
+                <a class="selector-button btn-small" href="/admin/database/table?table=logs&page=1"><strong>Unfiltered</strong></a>
             </li>  
             <li>
                 <a class="selector-button btn-small" href="/admin/logs/readed/all"><strong>Readed all</strong></a>
             </li> 
             <li>
-                <a class="selector-button btn-small" href="/admin/logs/delete/1"><strong>Delete all</strong></a>
+                <a class="selector-button btn-small" href="/admin/logs/delete?page=1"><strong>Delete all</strong></a>
             </li>    
             <li class="count-text-in-menuR">Logs reader</li>
         </ul>
@@ -80,10 +80,10 @@
                                     <td>
                                         {% set result = row.visitorId / limit_value %}
                                         {% set visitor_page = result | round(0, 'ceil') %}
-                                        <a class="delete-link-todos text-warning" href="/admin/visitors/{{ visitor_page }}/#{{ row.visitorId|e }}">VISIT</a>
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors?page={{ visitor_page }}#{{ row.visitorId|e }}">VISIT</a>
                                     </td>
                                     <td>
-                                        <a class="delete-link-todos" href="/admin/database/delete/{{ reader_page }}/logs/{{ row.id|e }}?referer=log_reader">X</a>
+                                        <a class="delete-link-todos" href="/admin/database/delete?table=logs&page={{ reader_page }}&id={{ row.id|e }}&referer=log_reader">X</a>
                                     </td>
                                 </tr>
                             {% endfor %} 
@@ -93,16 +93,16 @@
                 <div class="page-button-box">
                     {% if reader_page != 1 %}
                         {% if where_ip != null %}
-                            <a class="back-page-button" href="/admin/logs/whereip/{{ where_ip }}/{{ reader_page - 1 }}">Back</a>
+                            <a class="back-page-button" href="/admin/logs/whereip?ip={{ where_ip }}&page={{ reader_page - 1 }}">Back</a>
                         {% else %}
-                            <a class="back-page-button" href="/admin/logs/{{ reader_page - 1 }}">Back</a>
+                            <a class="back-page-button" href="/admin/logs?page={{ reader_page - 1 }}">Back</a>
                         {% endif %}
                     {% endif %}
                     {% if reader_limit == logs_count %}
                         {% if where_ip != null %}
-                            <a class="back-page-button" href="/admin/logs/whereip/{{ where_ip }}/{{ reader_page + 1 }}">Next</a>
+                            <a class="back-page-button" href="/admin/logs/whereip?ip={{ where_ip }}&page={{ reader_page + 1 }}">Next</a>
                         {% else %}
-                            <a class="back-page-button" href="/admin/logs/{{ reader_page + 1 }}">Next</a>
+                            <a class="back-page-button" href="/admin/logs?page={{ reader_page + 1 }}">Next</a>
                         {% endif %}
                     {% endif %}
                 </div>

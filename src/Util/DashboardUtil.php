@@ -100,7 +100,8 @@ class DashboardUtil
         try {
             return exec("df -Ph / | awk 'NR == 2{print $5}' | tr -d '%'");
         } catch (\Exception $e) {
-            return $this->errorManager->handleError('error to get drive usage: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get drive usage: '.$e->getMessage(), 500);
+            return null;
         }
     }
 
@@ -159,12 +160,13 @@ class DashboardUtil
         }       
     }
 
-    public function getWebUsername(): ?string 
+    public function getWebUsername(): ?string
     {
         try {
             return exec('whoami');
         } catch (\Exception $e) {
-            return $this->errorManager->handleError('error to get web username: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get web username: '.$e->getMessage(), 500);
+            return null;
         }
     }
 

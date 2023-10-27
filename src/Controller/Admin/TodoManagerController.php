@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Todo;
+use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Form\NewTodoFormType;
@@ -21,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TodoManagerController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private TodosManager $todosManager;
     private SecurityUtil $securityUtil;
@@ -29,6 +31,7 @@ class TodoManagerController extends AbstractController
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         AuthManager $authManager,
         TodosManager $todosManager,
         SecurityUtil $securityUtil,
@@ -36,6 +39,7 @@ class TodoManagerController extends AbstractController
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->todosManager = $todosManager;
         $this->securityUtil = $securityUtil;
@@ -91,7 +95,7 @@ class TodoManagerController extends AbstractController
                         $this->entityManager->persist($todo);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
+                        $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
                     }
 
                     return $this->redirectToRoute('admin_todos');
@@ -116,11 +120,14 @@ class TodoManagerController extends AbstractController
         }
     }
 
-    #[Route('/admin/todos/close/{id}', name: 'admin_todo_close')]
-    public function closeTodo(int $id): Response
+    #[Route('/admin/todos/close', name: 'admin_todo_close')]
+    public function closeTodo(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get todo id
+            $id = intval($this->siteUtil->getQueryString('id', $request));
 
             // close todo
             $this->todosManager->closeTodo($id);

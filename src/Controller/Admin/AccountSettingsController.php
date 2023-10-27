@@ -75,6 +75,7 @@ class AccountSettingsController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // default error msg
             $error_msg = null;
 
             // init user entity
@@ -113,7 +114,7 @@ class AccountSettingsController extends AbstractController
                         // redirect back to values table
                         return $this->redirectToRoute('admin_account_settings');
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 } else {
                     $error_msg = 'please select image file';
@@ -148,8 +149,10 @@ class AccountSettingsController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // default error msg
             $error_msg = null;
 
+            // init user entity
             $user = new User();
 
             // create username form change
@@ -174,7 +177,7 @@ class AccountSettingsController extends AbstractController
                     return $this->redirectToRoute('admin_account_settings');
 
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                    $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                 }  
             }
             
@@ -206,8 +209,10 @@ class AccountSettingsController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // default error msg
             $error_msg = null;
 
+            // init user entity
             $user = new User();
 
             // create username form change
@@ -237,7 +242,7 @@ class AccountSettingsController extends AbstractController
                         return $this->redirectToRoute('admin_account_settings');
 
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 }
             }

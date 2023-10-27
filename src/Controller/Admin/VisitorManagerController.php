@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SiteUtil;
 use App\Entity\Visitor;
 use App\Form\BanFormType;
 use App\Util\SecurityUtil;
@@ -19,28 +20,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VisitorManagerController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private BanManager $banManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
+        SiteUtil $siteUtil,
         BanManager $banManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
         VisitorInfoUtil $visitorInfoUtil
     ) {
+        $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
-    #[Route('/admin/visitors/{page}', name: 'admin_visitor_manager')]
-    public function visitorsTable(int $page): Response
+    #[Route('/admin/visitors', name: 'admin_visitor_manager')]
+    public function visitorsTable(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
 
             return $this->render('admin/visitors-manager.html.twig', [
                 // component properties
@@ -65,11 +72,15 @@ class VisitorManagerController extends AbstractController
         }
     }
 
-    #[Route('/admin/visitors/delete/{page}', name: 'admin_visitor_delete')]
-    public function deleteAllVisitors(int $page): Response
+    #[Route('/admin/visitors/delete', name: 'admin_visitor_delete')]
+    public function deleteAllVisitors(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get page
+            $page = $this->siteUtil->getQueryString('page', $request);
+
             return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
                 // component properties
                 'is_mobile' => $this->visitorInfoUtil->isMobile(),
@@ -88,12 +99,16 @@ class VisitorManagerController extends AbstractController
         }
     } 
 
-    #[Route('/admin/visitors/ban/{id}/{page}', name: 'admin_visitor_ban')]
-    public function banVisitor(int $id, int $page, Request $request): Response
+    #[Route('/admin/visitors/ban', name: 'admin_visitor_ban')]
+    public function banVisitor(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // get query parameters
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+            $id = intval($this->siteUtil->getQueryString('id', $request));
+
             // create user entity
             $visitor = new Visitor();
 
@@ -155,12 +170,16 @@ class VisitorManagerController extends AbstractController
         }
     }
 
-    #[Route('/admin/visitors/unban/{id}/{page}', name: 'admin_visitor_unban')]
-    public function unbanVisitor(int $id, int $page, Request $request): Response
+    #[Route('/admin/visitors/unban', name: 'admin_visitor_unban')]
+    public function unbanVisitor(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // get query parameters
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+            $id = intval($this->siteUtil->getQueryString('id', $request));
+
             // get visitor ip
             $ip_address = $this->banManager->getVisitorIP($id);
             

@@ -10,6 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SiteUtil
 {
+    private SecurityUtil $securityUtil;
+
+    public function __construct(SecurityUtil $securityUtil)
+    {
+        $this->securityUtil = $securityUtil;
+    }
+
     public function getHttpHost(): ?string
     {
         return Request::createFromGlobals()->getHost();
@@ -73,6 +80,19 @@ class SiteUtil
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function getQueryString(string $query, Request $request): ?string
+    {
+        // get page
+        $value = $request->query->get($query);
+
+        // set page 1 if page is undefined
+        if ($value == null) {
+            return null;
+        } else {
+            return $this->securityUtil->escapeString($value);
         }
     }
 }

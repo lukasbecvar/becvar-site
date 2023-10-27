@@ -11,10 +11,10 @@
     {% else %}
         <ul class="breadcrumb">
             <li>
-                <a class="selector-button btn-small" href="/admin/database/visitors/1"><strong>Unfiltered</strong></a>
+                <a class="selector-button btn-small" href="/admin/database/table?table=visitors&page=1"><strong>Unfiltered</strong></a>
             </li>  
             <li>
-                <a class="selector-button btn-small" href="/admin/visitors/delete/{{ page }}"><strong>Delete all</strong></a>
+                <a class="selector-button btn-small" href="/admin/visitors/delete?page={{ page }}"><strong>Delete all</strong></a>
             </li>    
             <li class="count-text-in-menuR">Banned visitors: <strong>{{ banned_count }}</strong></li>
         </ul>
@@ -91,7 +91,7 @@
                                     </th>
                                 {% else %}
                                     <th scope='row'>
-                                        <a href="/admin/logs/whereip/{{ row.ipAddress|e }}/1" class="log-reader-link">{{ row.ipAddress|e }}</a>
+                                        <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link">{{ row.ipAddress|e }}</a>
                                     </th>
                                 {% endif %}
                                 {# <===== BANNED-STATUS =====> #}
@@ -103,13 +103,13 @@
                                 {# <===== BUTTONS =====> #}
                                 <td>
                                     {% if row.bannedStatus == 'yes' %}
-                                        <a class="delete-link-todos text-warning" href="/admin/visitors/unban/{{ row.id|e }}/{{ page }}">UNBAN</a>
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/unban?page={{ page }}&id={{ row.id|e }}">UNBAN</a>
                                     {% else %}
-                                        <a class="delete-link-todos text-warning" href="/admin/visitors/ban/{{ row.id|e }}/{{ page }}">BAN</a>
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/ban?page={{ page }}&id={{ row.id|e }}">BAN</a>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a class="delete-link-todos" href="/admin/database/delete/{{ page }}/visitors/{{ row.id|e }}?referer=visitor_manager">X</a>
+                                    <a class="delete-link-todos" href="/admin/database/delete?table=visitors&page={{ page }}&id={{ row.id|e }}&referer=visitor_manager">X</a>
                                 </td>
                             </tr>
                         {% endfor %} 
@@ -118,10 +118,10 @@
             </div>
             <div class="page-button-box">
                 {% if page != 1 %}
-                    <a class="back-page-button" href="/admin/visitors/{{ page - 1 }}">Back</a>
+                    <a class="back-page-button" href="/admin/visitors?page={{ page - 1 }}">Back</a>
                 {% endif %}
                 {% if visitors_limit == visitors_count %}
-                    <a class="back-page-button" href="/admin/visitors/{{ page + 1 }}">Next</a>
+                    <a class="back-page-button" href="/admin/visitors?page={{ page + 1 }}">Next</a>
                 {% endif %}
             </div>
         {% if page != 1 or visitors_limit == visitors_count %}

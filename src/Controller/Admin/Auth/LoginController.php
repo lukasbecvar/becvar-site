@@ -40,8 +40,10 @@ class LoginController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');   
         } else {
+            // default error msg
             $error_msg = null;
 
+            // init user entity
             $user = new User();
 
             // create register form

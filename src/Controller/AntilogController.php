@@ -36,6 +36,7 @@ class AntilogController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
+            // get logged username
             $username = $this->authManager->getUsername();
 
             if (isset($_COOKIE['anti-log-cookie'])) {
@@ -46,7 +47,7 @@ class AntilogController extends AbstractController
                 $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
             }
         } else {
-            return $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
+            $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
         }
         return $this->redirectToRoute('admin_dashboard');
     }

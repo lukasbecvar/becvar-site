@@ -102,5 +102,5 @@ image.uploader.file.format.error: "Error file have wrong format!"
 image.viewer.title: "Image"
 
 # code paste
-code.paste.title: Code paste"
+code.paste.title: "Code paste"
 code.view.title: "Viewing"

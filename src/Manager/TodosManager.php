@@ -50,10 +50,9 @@ class TodosManager
                 
                 return array_reverse($todo_data);
             } catch (\Exception $e) {
-                return $this->errorManager->handleError('error to get todos: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('error to get todos: '.$e->getMessage(), 500);
+                return null;
             }
-        } else {
-            return [];
         }
     }
 

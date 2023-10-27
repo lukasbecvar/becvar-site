@@ -19,7 +19,7 @@ class NewTodoFormType extends AbstractType
             'attr' => [
                 'class' => 'todo-area feedback-input',
                 'placeholder' => 'Todo',
-                'maxlength' => 120
+                'maxlength' => 240
             ],
             'constraints' => [
                 new NotBlank([

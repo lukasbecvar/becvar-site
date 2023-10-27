@@ -14,8 +14,8 @@
                 {% for message in inbox_data %}
                     <div class='card text-white mb-3 msg-box'>
                         <div class="card-body">
-                            <a class='delete-link' href='/admin/inbox/close/{{ message.id|e }}/{{ page }}'>X</a>
-                            <a class='delete-link text-warning' href="/admin/visitors/ban/{{ message.visitor_id|e }}/{{ page }}?referer=inbox">
+                            <a class='delete-link' href='/admin/inbox/close?page={{ page }}&id={{ message.id|e }}'>X</a>
+                            <a class='delete-link text-warning' href="/admin/visitors/ban?page={{ page }}&id={{ message.visitor_id|e }}&referer=inbox">
                                 BAN
                             </a>
                             <h5 class="left-center card-title">{{ message.name|e }}
@@ -30,10 +30,10 @@
             </center>
             <div class="page-button-box">
                 {% if page != 1 %}
-                    <a class="back-page-button" href="/admin/inbox/{{ page - 1 }}">Back</a>
+                    <a class="back-page-button" href="/admin/inbox?page={{ page - 1 }}">Back</a>
                 {% endif %}
                 {% if message_limit == message_count %}
-                    <a class="back-page-button" href="/admin/inbox/{{ page + 1 }}">Next</a>
+                    <a class="back-page-button" href="/admin/inbox?page={{ page + 1 }}">Next</a>
                 {% endif %}
             </div>
             <br>

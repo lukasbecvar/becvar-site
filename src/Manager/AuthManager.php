@@ -78,6 +78,46 @@ class AuthManager
         }
     }
 
+    public function updateUsersStatus(): void
+    {
+        // timeout (seconds)
+        $session_timeout_seconds = 60;
+
+        // get current timestamp
+        $current_time = time();
+        
+        // get users repository
+        $userRepository = $this->entityManager->getRepository(User::class);
+            
+        // check if users found
+        if ($userRepository !== null) {
+                
+            // get users list
+            $users = $userRepository->findAll();
+
+            // update all offline statuses
+            foreach ($users as $user) {
+
+                // get timestamp
+                $last_activity_timestamp = $user->getStatusUpdateTime();
+
+                // update only online users
+                if ($user->getStatus() === 'online') {
+                    if ($current_time - intval($last_activity_timestamp) >= $session_timeout_seconds) {
+                        $user->setStatus('offline');
+                    }
+                }
+            }
+        
+            // update users status
+            try {
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->errorManager->handleError('error to update users status: '.$e->getMessage(), 500);
+            }
+        }
+    }
+
     public function logout(): void 
     {
         // check if user logged in
@@ -85,10 +125,27 @@ class AuthManager
             // init user
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
+            // update user status
+            $this->setStatus($user, 'offline');
+
             $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
             $this->cookieManager->unset('login-token-cookie');
             $this->sessionManager->destroySession();   
         } 
+    }
+
+    public function setStatus(object $repo, string $status): void 
+    {
+        try {
+            // set offline status
+            $repo->setStatus($status);
+
+            // update database
+            $this->entityManager->flush();
+
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to update user status: '.$e->getMessage(), 500);
+        }       
     }
 
     public function setLastLoginDate(): void 

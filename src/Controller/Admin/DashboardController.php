@@ -16,6 +16,7 @@ use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ServiceManager;
 use Symfony\Component\String\ByteString;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,6 +111,8 @@ class DashboardController extends AbstractController
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // default error msg
             $error_msg = null;
 
             // generate configmation code
@@ -156,11 +159,15 @@ class DashboardController extends AbstractController
         }
     } 
 
-    #[Route('/admin/dashboard/runner/{service_name}/{action}', name: 'admin_service_manager')]
-    public function serviceRunner(string $service_name, string $action): Response
+    #[Route('/admin/dashboard/runner', name: 'admin_service_manager')]
+    public function serviceRunner(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get query parameters
+            $service_name = $this->siteUtil->getQueryString('service', $request);
+            $action = $this->siteUtil->getQueryString('action', $request);
 
             // escape values
             $service_name = $this->securityUtil->escapeString($service_name);

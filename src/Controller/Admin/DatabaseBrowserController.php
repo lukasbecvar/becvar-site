@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
@@ -18,17 +19,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DatabaseBrowserController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private DatabaseManager $databaseManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
+        SiteUtil $siteUtil,
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
         DatabaseManager $databaseManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
+        $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->databaseManager = $databaseManager;
@@ -59,12 +63,18 @@ class DatabaseBrowserController extends AbstractController
         }
     }
 
-    #[Route('/admin/database/{table}/{page}', name: 'admin_database_browser')]
-    public function tableView(string $table, int $page): Response
+    #[Route('/admin/database/table', name: 'admin_database_browser')]
+    public function tableView(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // get table name
+            $table = $this->siteUtil->getQueryString('table', $request);
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+
             // escape table name
             $table = $this->securityUtil->escapeString($table);
 
@@ -98,13 +108,19 @@ class DatabaseBrowserController extends AbstractController
         }
     }
     
-    #[Route('/admin/database/edit/{page}/{table}/{id}', name: 'admin_database_edit')]
-    public function rowEdit(string $table, int $page, int $id, Request $request): Response
+    #[Route('/admin/database/edit', name: 'admin_database_edit')]
+    public function rowEdit(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // default error msg
             $error_msg = null;
+
+            // get query parameters
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+            $id = intval($this->siteUtil->getQueryString('id', $request));
+            $table = $this->siteUtil->getQueryString('table', $request);
 
             // escape table name
             $table = $this->securityUtil->escapeString($table);
@@ -139,16 +155,10 @@ class DatabaseBrowserController extends AbstractController
                 // redirect back to browser
                 if ($error_msg == null) {
                  
-                    // check if edited by todo manager
-                    if ($referer == 'todo_manager') {
-                        return $this->redirectToRoute('admin_todos');              
-                    } else {
-
-                        return $this->redirectToRoute('admin_database_browser', [
-                            'table' => $table,
-                            'page' => $page
-                        ]);
-                    }
+                    return $this->redirectToRoute('admin_database_browser', [
+                        'table' => $table,
+                        'page' => $page
+                    ]);
                 }
             }            
 
@@ -181,13 +191,20 @@ class DatabaseBrowserController extends AbstractController
         }     
     }
 
-    #[Route('/admin/database/add/{page}/{table}', name: 'admin_database_add')]
-    public function rowAdd(string $table, int $page): Response
+    #[Route('/admin/database/add', name: 'admin_database_add')]
+    public function rowAdd(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
+            // default error msg
             $error_msg = null;
+
+            // get table name
+            $table = $this->siteUtil->getQueryString('table', $request);
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // escape table name
             $table = $this->securityUtil->escapeString($table);
@@ -255,12 +272,17 @@ class DatabaseBrowserController extends AbstractController
         }
     }
 
-    #[Route('/admin/database/delete/{page}/{table}/{id}', name: 'admin_database_delete')]
-    public function rowDelete(string $table, int $page, $id, Request $request): Response
+    #[Route('/admin/database/delete', name: 'admin_database_delete')]
+    public function rowDelete(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // get query parameters
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+            $id = $this->siteUtil->getQueryString('id', $request);
+            $table = $this->siteUtil->getQueryString('table', $request);
+
             // escape table name
             $table = $this->securityUtil->escapeString($table);
 

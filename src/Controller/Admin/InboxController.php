@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SiteUtil;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\MessagesManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,25 +17,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class InboxController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
+        SiteUtil $siteUtil,
         AuthManager $authManager,
         MessagesManager $messagesManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
+        $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
     
-    #[Route('/admin/inbox/{page}', name: 'admin_inbox')]
-    public function inbox(int $page): Response
+    #[Route('/admin/inbox', name: 'admin_inbox')]
+    public function inbox(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // get messages data
             $messages = $this->messagesManager->getMessages('open', $page);
@@ -60,11 +68,15 @@ class InboxController extends AbstractController
         }
     }
 
-    #[Route('/admin/inbox/close/{id}/{page}', name: 'admin_inbox_close')]
-    public function close(int $page, int $id): Response
+    #[Route('/admin/inbox/close', name: 'admin_inbox_close')]
+    public function close(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get query parameters
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+            $id = intval($this->siteUtil->getQueryString('id', $request));
 
             // close message
             $this->messagesManager->closeMessage($id);

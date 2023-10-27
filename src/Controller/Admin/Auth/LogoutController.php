@@ -6,6 +6,7 @@ use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
@@ -35,7 +36,8 @@ class LogoutController extends AbstractController
         if (!$this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('auth_login');
         } else {
-            return $this->errorManager->handleError('logout error: unknown error in logout function', 500);
+            $this->errorManager->handleError('logout error: unknown error in logout function', 500);
+            return new RedirectResponse('/');
         }
     }
 }

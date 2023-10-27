@@ -6,7 +6,7 @@
 
     // check if user logged in
     if (!isset($_SESSION['login-token'])) {
-        die('<script type="text/javascript">window.location.replace("/error/401");</script>');
+        die('<script type="text/javascript">window.location.replace("/error?code=401");</script>');
     }
 ?>
 

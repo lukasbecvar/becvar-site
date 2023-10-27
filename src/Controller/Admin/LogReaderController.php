@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LogReaderController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private LogManager $logManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
@@ -24,12 +27,14 @@ class LogReaderController extends AbstractController
     private DatabaseManager $databaseManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
         VisitorInfoUtil $visitorInfoUtil,
         DatabaseManager $databaseManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -37,11 +42,14 @@ class LogReaderController extends AbstractController
         $this->databaseManager = $databaseManager;
     }
 
-    #[Route('/admin/logs/{page}', name: 'admin_log_list')]
-    public function logsTable(int $page): Response
+    #[Route('/admin/logs', name: 'admin_log_list')]
+    public function logsTable(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // get logs
             $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
@@ -73,11 +81,17 @@ class LogReaderController extends AbstractController
         }
     }
 
-    #[Route('/admin/logs/whereip/{ip_address}/{page}', name: 'admin_log_list_where_ip')]
-    public function logsWhereIp(string $ip_address, int $page): Response
+    #[Route('/admin/logs/whereip', name: 'admin_log_list_where_ip')]
+    public function logsWhereIp(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get ip address
+            $ip_address = $this->siteUtil->getQueryString('ip', $request);
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // get & escape ip
             $ip_address = $this->securityUtil->escapeString($ip_address);
@@ -112,11 +126,15 @@ class LogReaderController extends AbstractController
         }
     }
 
-    #[Route('/admin/logs/delete/{page}', name: 'admin_log_delete')]
-    public function deleteAllLogs(int $page): Response
+    #[Route('/admin/logs/delete', name: 'admin_log_delete')]
+    public function deleteAllLogs(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
+
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+
             return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
                 // component properties
                 'is_mobile' => $this->visitorInfoUtil->isMobile(),

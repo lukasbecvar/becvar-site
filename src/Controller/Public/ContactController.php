@@ -7,6 +7,7 @@ use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
+use App\Manager\AuthManager;
 use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,17 +22,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ContactController extends AbstractController
 {   
     private LogManager $logManager;
+    private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private VisitorInfoUtil $visitorInfoUtil;
     private MessagesManager $messagesManager;
 
     public function __construct(
         LogManager $logManager, 
+        AuthManager $authManager,
         SecurityUtil $securityUtil, 
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
     ) {
         $this->logManager = $logManager;
+        $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->messagesManager = $messagesManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -104,7 +108,7 @@ class ContactController extends AbstractController
                 $message_input = $this->securityUtil->escapeString($message_input);
 
                 // get others data
-                $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
+                $visitor_id = strval($this->visitorInfoUtil->getVisitorID($ip_address));
 
                 // check if user have unclosed messages
                 if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
@@ -128,6 +132,7 @@ class ContactController extends AbstractController
 
         // render contact page
         return $this->render('public/contact.html.twig', [
+            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],

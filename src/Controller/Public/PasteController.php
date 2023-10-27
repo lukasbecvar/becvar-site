@@ -3,10 +3,12 @@
 namespace App\Controller\Public;
 
 use App\Entity\Paste;
+use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,17 +20,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PasteController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private LogManager $logManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         LogManager $logManager, 
         ErrorManager $errorManager, 
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -52,7 +57,7 @@ class PasteController extends AbstractController
             if (strlen($content) > 60001) {
 
                 // redirect error
-                return $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
+                $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
 
             } else {
 
@@ -75,7 +80,7 @@ class PasteController extends AbstractController
                         $this->entityManager->persist($paste);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
+                        $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
                     } 
                 } 
 
@@ -87,11 +92,14 @@ class PasteController extends AbstractController
         return $this->render('public/paste/paste-save.html.twig');
     }
 
-    #[Route('/paste/view/{token}', name: 'public_code_paste_view')]
-    public function pasteView($token): Response
+    #[Route('/paste/view', name: 'public_code_paste_view')]
+    public function pasteView(Request $request): Response
     {
         $content = null;
      
+        // get paste token
+        $token = $this->siteUtil->getQueryString('token', $request);
+
         // get paste spec name
         $name = $this->securityUtil->escapeString($token);
 
@@ -109,7 +117,7 @@ class PasteController extends AbstractController
 
             $this->logManager->log('code-paste', 'visitor viewed paste: '.$name);
         } else {
-            return $this->errorManager->handleError('error paste not found', 404);
+            $this->errorManager->handleError('error paste not found', 404);
         }
 
         return $this->render('public/paste/paste-view.html.twig', ['file' => $token, 'paste_content' => $content]);

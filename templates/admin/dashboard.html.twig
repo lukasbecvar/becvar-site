@@ -43,11 +43,11 @@
             {% endif %}
             
             {% if unreaded_logs_count != 0 %}
-                <p class="card-text text-warning"><strong>New logs found you can see it <a href="/admin/logs/1">here</a></strong></p>
+                <p class="card-text text-warning"><strong>New logs found you can see it <a href="/admin/logs?page=1">here</a></strong></p>
             {% endif %}
 
             {% if messages_count != 0 %}
-                <p class="card-text text-warning"><strong>New messages found you can see it <a href="/admin/inbox/1">here</a></strong></p>
+                <p class="card-text text-warning"><strong>New messages found you can see it <a href="/admin/inbox?page=1">here</a></strong></p>
             {% endif %}
         </div>
     </div>
@@ -60,7 +60,7 @@
                 <strong>
                     <span class="online-text">Online</span> 
                     <span>
-                        [<a href="/admin/dashboard/runner/emergency/shutdown">SHUTDOWN</a>]
+                        [<a href="/admin/dashboard/runner?service=emergency&action=shutdown">SHUTDOWN</a>]
                     </span>
                 </strong>
             </p>
@@ -71,12 +71,12 @@
                         {% if is_ufw_running %}
                             <span class="online-text">Online</span> 
                             <span>
-                                [<a href="/admin/dashboard/runner/ufw/disable">STOP</a>]
+                                [<a href="/admin/dashboard/runner?service=ufw&action=disable">STOP</a>]
                             </span>                   
                         {% else %}
                             <span class="text-red">Offline</span> 
                             <span>
-                                [<a href="/admin/dashboard/runner/ufw/enable">START</a>]
+                                [<a href="/admin/dashboard/runner?service=ufw&action=enable">START</a>]
                             </span>                       
                         {% endif %}
                     </strong>
@@ -95,8 +95,8 @@
                             <strong>
                                 <span class="online-text">Online</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{ service.service_name }}/stop">STOP</a>, 
-                                        <a href="/admin/dashboard/runner/{{ service.service_name }}/restart">RESTART</a>]
+                                    [<a href="/admin/dashboard/runner?service={{ service.service_name }}&action=stop">STOP</a>, 
+                                        <a href="/admin/dashboard/runner?service={{ service.service_name }}&action=restart">RESTART</a>]
                                 </span>
                             </strong>
                         </p>
@@ -106,7 +106,7 @@
                             <strong>
                                 <span class="text-red">Offline</span> 
                                 <span>
-                                    [<a href="/admin/dashboard/runner/{{ service.service_name }}/start">START</a>]
+                                    [<a href="/admin/dashboard/runner?service={{ service.service_name }}&action=start">START</a>]
                                 </span>
                             </strong>
                         </p>
@@ -131,7 +131,7 @@
                 <div class="card l-bg-cherry counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
-                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/logs/1" class="stats-link">Logs</a> <a href="/antilog/5369362536">.</a></h5>
+                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/logs?page=1" class="stats-link">Logs</a> <a href="/antilog/5369362536">.</a></h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
@@ -148,7 +148,7 @@
                 <div class="card l-bg-blue-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
-                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/inbox/1" class="stats-link">Messages</a></h5>
+                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/inbox?page=1" class="stats-link">Messages</a></h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
@@ -182,7 +182,7 @@
                 <div class="card l-bg-orange-dark counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
-                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/media/browser/1" class="stats-link">Images</a></h5>
+                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/media/browser?page=1" class="stats-link">Images</a></h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
@@ -199,7 +199,7 @@
                 <div class="card l-bg-orange-darker counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
-                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/database/code_paste/1" class="stats-link">Pastes</a></h5>
+                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/database/table?table=code_paste&page=1" class="stats-link">Pastes</a></h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
@@ -216,7 +216,7 @@
                 <div class="card l-bg-cyan-darker counter-card">
                     <div class="card-statistic-3 p-4">
                         <div class="mb-2">
-                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/visitors/1" class="stats-link">Visitors</a></h5>
+                            <h5 class="card-title mb-0"><a class="card-link" href="/admin/visitors?page=1" class="stats-link">Visitors</a></h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">

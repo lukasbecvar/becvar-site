@@ -2,7 +2,7 @@
     {# <===== ROW EDITOR =====> #}
     {% if editor_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{ editor_table }}/{{ editor_page }}">
+            <a class="selector-button btn-small" href="/admin/database/table?table{{ editor_table }}&page={{ editor_page }}">
                 <strong>
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                 </strong>
@@ -12,7 +12,7 @@
     {# <===== ROW ADD =====> #}
     {% elseif new_row_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/{{ new_row_table }}/{{ new_row_page }}">
+            <a class="selector-button btn-small" href="/admin/database/table?table={{ new_row_table }}&page={{ new_row_page }}">
                 <strong>
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                 </strong>
@@ -29,7 +29,7 @@
             </a>
         </li>
             <li> 
-                <a class="selector-button btn-small" href="/admin/database/delete/1/{{ table_name }}/all">
+                <a class="selector-button btn-small" href="/admin/database/delete?table={{ table_name }}&page=1&id=all">
                     <strong>
                         <i class="fa fa-trash" aria-hidden="true"></i> 
                         {{ table_name }}
@@ -38,7 +38,7 @@
             </li>
         <li>    
             {% if table_name != 'code_paste' and table_name != 'images' %}
-                <a class="selector-button btn-small" href="/admin/database/add/{{ page }}/{{ table_name }}">
+                <a class="selector-button btn-small" href="/admin/database/add?table={{ table_name }}&page={{ page }}">
                     <strong>NEW</strong>
                 </a>
             {% endif %}

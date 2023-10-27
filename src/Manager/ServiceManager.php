@@ -167,7 +167,8 @@ class ServiceManager
                 return false;
             }
         } catch (\Exception $e) {
-            return $this->errorManager->handleError('error to get ufw status'.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get ufw status'.$e->getMessage(), 500);
+            return false;
         }
     }
     

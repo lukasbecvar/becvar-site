@@ -65,7 +65,7 @@ class LogManager
                 $ip_address = $this->visitorInfoUtil->getIP();
 
                 // get visitor id
-                $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
+                $visitor_id = strval($this->visitorInfoUtil->getVisitorID($ip_address));
 
                 // xss escape inputs
                 $name = $this->securityUtil->escapeString($name);

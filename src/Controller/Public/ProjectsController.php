@@ -7,6 +7,7 @@ use App\Manager\ErrorManager;
 use App\Manager\ProjectsManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
@@ -35,6 +36,7 @@ class ProjectsController extends AbstractController
     {
         // render projects page
         return $this->render('public/projects.html.twig', [
+            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],
@@ -57,7 +59,8 @@ class ProjectsController extends AbstractController
                 'page' => 1
             ]);
         } else {
-            return $this->errorManager->handleError('error to update project list: please login first', 401);
+            $this->errorManager->handleError('error to update project list: please login first', 401);
+            return new RedirectResponse('/');
         }
     }
 }

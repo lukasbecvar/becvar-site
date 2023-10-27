@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Util\SiteUtil;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,26 +17,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MediaBrowserController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private DatabaseManager $databaseManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         AuthManager $authManager, 
         VisitorInfoUtil $visitorInfoUtil,
         DatabaseManager $databaseManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
         $this->databaseManager = $databaseManager;
     }
 
-    #[Route('/admin/media/browser/{page}', name: 'admin_media_browser')]
-    public function mediaBrowser(int $page): Response
+    #[Route('/admin/media/browser', name: 'admin_media_browser')]
+    public function mediaBrowser(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
      
+            // get page
+            $page = intval($this->siteUtil->getQueryString('page', $request));
+
+            // get media list
             $media = $this->databaseManager->getImages($page);
 
             return $this->render('admin/media-browser.html.twig', [

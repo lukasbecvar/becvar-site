@@ -15,7 +15,7 @@
             <br>
             {% for table in tables %}
                 {% if table != 'doctrine_migration_versions' %}
-                    <a class='db-browser-select-link' href="/admin/database/{{ table }}/1">{{ table }}</a>
+                    <a class='db-browser-select-link' href="/admin/database/table?table={{ table }}&page=1">{{ table }}</a>
                     <br><br>
                 {% endif %}
             {% endfor %}
@@ -28,9 +28,9 @@
             {% endif %}
             <center>
                 {% if editor_referer != null %}
-                    <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}?referer={{ editor_referer }}" method="post">
+                    <form class="db-edit-form dark-table" action="/admin/database/edit?table={{ editor_table }}&page={{ editor_page }}&id={{ editor_id }}&referer={{ editor_referer }}" method="post">
                 {% else %}
-                    <form class="db-edit-form dark-table" action="/admin/database/edit/{{ editor_page }}/{{ editor_table }}/{{ editor_id }}" method="post">
+                    <form class="db-edit-form dark-table" action="/admin/database/edit?table={{ editor_table }}&page={{ editor_page }}&id={{ editor_id }}" method="post">
                 {% endif %}
                     <p class="title">Edit {{ editor_table|e }}, row: {{ editor_id|e }}<p></p>
                     {% for field in editor_field %}
@@ -50,7 +50,7 @@
                         {% include "common/alerts/error-alert.html.twig" %}
                     {% endif %}
                     <center>
-                        <form class="db-edit-form dark-table" action="/admin/database/add/{{ new_row_page|e }}/{{ new_row_table|e }}" method="post">
+                        <form class="db-edit-form dark-table" action="/admin/database/add?table={{ new_row_table|e }}&page={{ new_row_page|e }}" method="post">
                             <p class="title">Add new: {{ new_row_table|e }}<p></p>
                             {% for field in new_row_columns %}
                                 {% if field != 'id' %}
@@ -92,7 +92,7 @@
                                         {% for row in table_data %}
                                             <tr class="line-item">
                                                 {% if table_name == 'code_paste' %}
-                                                    <th cope='col'><a href="/paste/view/{{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
+                                                    <th cope='col'><a href="/paste/view?token={{ row.name|e }}" target="_blank">{{ row.name|e }}</a></th>
                                                 {% endif %}
                                                 {% for column in table_columns %}
                                                     <th scope='row'>
@@ -100,21 +100,21 @@
                                                         {{ content ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
-                                                {% if table_name != 'code_paste' and table_name != 'images' %}
-                                                    <td><a class="text-warning delete-link-todos" href="/admin/database/edit/{{ page }}/{{ table_name }}/{{ row.id|e }}">Edit</a></td>
+                                                {% if table_name != 'code_paste' and table_name != 'images' %} 
+                                                    <td><a class="text-warning delete-link-todos" href="/admin/database/edit?table={{ table_name }}&page={{ page }}&id={{ row.id|e }}">Edit</a></td>
                                                 {% endif %}
-                                                <td><a class="delete-link-todos" href="/admin/database/delete/{{ page }}/{{ table_name }}/{{ row.id|e }}">X</a></td>
+                                                <td><a class="delete-link-todos" href="/admin/database/delete?table={{ table_name }}&page={{ page }}&id={{ row.id|e }}">X</a></td>
                                             </tr>
                                         {% endfor %} 
                                     </tbody>
-                                </table>
+                                </table> 
                             </div>
                             <div class="page-button-box">
                                 {% if page != 1 %}
-                                    <a class="back-page-button" href="/admin/database/{{ table_name }}/{{ page - 1 }}">Back</a>
+                                    <a class="back-page-button" href="/admin/database/table?table={{ table_name }}&page={{ page - 1 }}">Back</a>
                                 {% endif %}
                                 {% if limit == table_data_count %}
-                                    <a class="back-page-button" href="/admin/database/{{ table_name }}/{{ page + 1 }}">Next</a>
+                                    <a class="back-page-button" href="/admin/database/table?table={{ table_name }}&page={{ page + 1 }}">Next</a>
                                 {% endif %}
                             </div>
                             {% if page != 1 or limit == table_data_count %}

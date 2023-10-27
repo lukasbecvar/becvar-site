@@ -3,13 +3,17 @@
 namespace App\Controller\Public;
 
 use App\Entity\Image;
+use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
+use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
@@ -19,26 +23,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ImageUploaderController extends AbstractController
 {
+    private SiteUtil $siteUtil;
     private LogManager $logManager;
+    private AuthManager $authManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        SiteUtil $siteUtil,
         LogManager $logManager,
+        AuthManager $authManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         EntityManagerInterface $entityManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
+        $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/image/view/{token}', name: 'public_image_viewer')]
-    public function imageView($token): Response
+    #[Route('/image/view', name: 'public_image_viewer')]
+    public function imageView(Request $request): Response
     {
+        // get image token
+        $token = $this->siteUtil->getQueryString('token', $request);
+
         // escape image token
         $token = $this->securityUtil->escapeString($token);
 
@@ -61,7 +74,8 @@ class ImageUploaderController extends AbstractController
             ]);
 
         } else {
-            return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
+            $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
+            return new RedirectResponse('/');
         }
     }
 
@@ -111,7 +125,7 @@ class ImageUploaderController extends AbstractController
                     $this->entityManager->persist($image);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
+                    $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
                 }
 
                 // log to database
@@ -127,6 +141,7 @@ class ImageUploaderController extends AbstractController
         }
 
         return $this->render('public/image/image-uploader.html.twig', [
+            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],

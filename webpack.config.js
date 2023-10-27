@@ -56,6 +56,9 @@ Encore
     // register waypoints
     .addEntry('waypoints-js', './assets/js/noframework.waypoints.js')
 
+    // register user status updater
+    .addEntry('update-user-status-js', './assets/js/update-users-status.js')
+
     // copy assets
     .copyFiles(
         // copy images

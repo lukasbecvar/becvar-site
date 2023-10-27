@@ -18,7 +18,7 @@
             var formData = new FormData(document.getElementById('form'));
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    window.open("/paste/view/" + name, "_self");
+                    window.open("/paste/view?token=" + name, "_self");
                 }
             };
             xhr.send(formData);
