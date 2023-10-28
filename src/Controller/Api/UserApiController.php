@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     This controller provides API function: update user status to online
 */
 
-class UserStatusController extends AbstractController
+class UserApiController extends AbstractController
 {
     private AuthManager $authManager;
     private ErrorManager $errorManager;
