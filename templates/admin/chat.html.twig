@@ -1,0 +1,43 @@
+{% extends 'common/bases/admin-base.html.twig' %}
+
+{% block title %}
+    chat
+{% endblock %}
+
+{% block component %}
+<div class="admin-panel chat-page">
+    <div class="chat-panel">
+        <h2>Chat</h2>
+        <div id="chat">
+            <div id="messages"></div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="message" placeholder="message">
+            <button id="send">Send</button>
+        </div>
+    </div>
+    <div class="user-panel">
+        <h2>User List (online)</h2>
+        <ul>
+            {% for user in online_users %}
+                {% if user.role == 'owner' %}
+                    <li class="text-red">{{ user.username|e }}</li>
+                {% else %}
+                    <li class="text-white" >{{ user.username|e }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<style>
+    .admin-panel {
+        display: flex;
+        overflow: hidden !important;
+        background-color: #222 !important;
+    }
+    .chat-page {
+        height: calc(100% - 40px) !important;
+    }
+</style>
+{{ encore_entry_script_tags('admin-chat-js') }}
+{% endblock %}

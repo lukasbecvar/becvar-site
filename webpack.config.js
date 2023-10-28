@@ -59,6 +59,9 @@ Encore
     // register user status updater
     .addEntry('update-user-status-js', './assets/js/update-users-status.js')
 
+    // register admin chat function
+    .addEntry('admin-chat-js', './assets/js/admin-chat.js')
+
     // copy assets
     .copyFiles(
         // copy images

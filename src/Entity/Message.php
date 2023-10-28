@@ -6,7 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
 
-#[ORM\Table(name: 'messages')]
+#[ORM\Table(name: 'inbox_messages')]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {

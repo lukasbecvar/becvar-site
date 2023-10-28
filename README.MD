@@ -46,7 +46,6 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
-- [ ] Admin chat
 - [ ] Terminal in admin
 - [ ] File manager & config editor
 - [ ] add more translations

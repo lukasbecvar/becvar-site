@@ -27,7 +27,7 @@ class UserApiController extends AbstractController
         $this->errorManager = $errorManager;
     }
 
-    #[Route('/api/user/activity/iwvtqakxzkldtemmicanf', name: 'user_status')]
+    #[Route('/api/user/activity/iwvtqakxzkldtemmicanf', name: 'api_user_status')]
     public function updateStatus(EntityManagerInterface $entityManager): Response
     {
         // check if user logged in

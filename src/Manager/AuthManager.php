@@ -148,6 +148,11 @@ class AuthManager
         }       
     }
 
+    public function getUsersWhereStatus(string $status): ?array
+    {
+        return $this->entityManager->getRepository(User::class)->findBy(['status' => $status]);
+    }
+
     public function setLastLoginDate(): void 
     {
         $date = date('d.m.Y H:i:s');
