@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
-    This controller provides update user status to online
+    This controller provides API function: update user status to online
 */
 
 class UserStatusController extends AbstractController
@@ -27,7 +27,7 @@ class UserStatusController extends AbstractController
         $this->errorManager = $errorManager;
     }
 
-    #[Route('/user/activity/iwvtqakxzkldtemmicanf', name: 'user_status')]
+    #[Route('/api/user/activity/iwvtqakxzkldtemmicanf', name: 'user_status')]
     public function updateStatus(EntityManagerInterface $entityManager): Response
     {
         // check if user logged in
