@@ -46,6 +46,8 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
+- [ ] chat (owner & admin name = red)
+- [ ] chat command system
 - [ ] Terminal in admin
 - [ ] File manager & config editor
 - [ ] add more translations
