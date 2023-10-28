@@ -29,7 +29,7 @@ case $number in
 		sh scripts/build.sh
 	;;
 	3) # run tests
-		sh scripts/phpstan-test.sh
+		sh scripts/test.sh
 	;;
     4) # run clear
         sh scripts/clear.sh
