@@ -46,6 +46,7 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
+- [ ] admin-panel div height calcularor 100% - nav panel
 - [ ] chat (owner & admin name = red)
 - [ ] chat command system
 - [ ] Terminal in admin
