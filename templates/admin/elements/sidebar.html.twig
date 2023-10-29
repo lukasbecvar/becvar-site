@@ -3,8 +3,10 @@
         <img src="data:image/jpeg;base64,{{ user_pic|e }}" alt="profile_picture">
         <h3>{{ user_name|e }}</h3>
         <span class="role-line">
-			{% if user_role == 'owner' %}
+			{% if user_role == 'Owner' or user_role == 'Admin' %}
 				<span class="text-red">{{ user_role|e }}</span>
+			{% elseif user_role == 'User' %}
+				<span class="green-text">{{ user_role|e }}</span>
 			{% else %}
 				{{ user_role|e }}
 			{% endif %}

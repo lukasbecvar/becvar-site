@@ -207,27 +207,33 @@ class AuthManager
         return $username;
     }
 
-    public function getUserRole(): ?string 
+    public function getUserRole(string $token = 'self'): ?string 
     {
-        $role = null;
+        // get token
+        if ($token == 'self') {
+            $token = ['token' => $this->getUserToken()];
+        }
 
         // user repository
-        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+        $user = $this->getUserRepository($token);
 
         // check if user repo found
         if ($user != null) {
-            $role = $user->getRole();
-        } 
-
-        return strtolower($role);
+            return $user->getRole();
+        }
     }
 
-    public function getUserProfilePic(): ?string 
+    public function getUserProfilePic(string $token = 'self'): ?string 
     {
         $avatar = null;
 
+        // get token
+        if ($token == 'self') {
+            $token = ['token' => $this->getUserToken()];
+        }
+
         // user repository
-        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+        $user = $this->getUserRepository($token);
 
         // check if user repo found
         if ($user != null) {

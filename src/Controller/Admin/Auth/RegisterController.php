@@ -109,7 +109,7 @@ class RegisterController extends AbstractController
                     // set user entity data
                     $user->setUsername($username); // set user username
                     $user->setPassword($hashed_password); // set hashed password
-                    $user->setRole('owner'); // set default role
+                    $user->setRole('Owner'); // set default role
                     $user->setIpAddress($ip_address); // set user ip
                     $user->setToken($token); // set token (for auth validation)
                     $user->setRegistedTime($date); // set register time

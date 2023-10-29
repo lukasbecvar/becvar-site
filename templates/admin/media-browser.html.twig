@@ -11,47 +11,43 @@
 
 {% block component %}
 <div class="admin-panel">
-    {% if user_role != 'owner' %}
-        <h2 class="page-title">Sorry you dont have permission to this page</h2>
-    {% else %}
-        {% if media_data != null %}
-            <center>
-                <div id="lightgallery">
-                    {% for image in media_data %}                    
-                        <span 
-                            data-src="data:image/jpg;base64,{{ image.image|e }}" 
-                            data-sub-html="
-                                Image 
-                                <a class='img-edit-button' 
-                                    href='/image/view?token={{ image.token|e }}' 
-                                    target=_blank
-                                    >
-                                    {{ image.token|e }}
-                                </a> 
-                                | 
-                                <a class='img-edit-button' 
-                                    href='/admin/database/delete?table=images&page={{ page }}&id={{ image.id|e }}&referer=media_browser'
-                                    >
-                                    Delete
-                                </a>"
-                            >
-                            <img class="gallery-images" src="data:image/jpg;base64,{{ image.image|e }}">
-                        </span>
-                    {% endfor %}
-                </div>
-            </center>
-            <div class="page-button-box">
-                {% if page != 1 %}
-                    <a class="back-page-button" href="/admin/media/browser?page={{ page - 1 }}">Back</a>
-                {% endif %}
-                {% if media_limit == media_count %}
-                    <a class="back-page-button" href="/admin/media/browser?page={{ page + 1 }}">Next</a>
-                {% endif %}
+    {% if media_data != null %}
+        <center>
+            <div id="lightgallery">
+                {% for image in media_data %}                    
+                    <span 
+                        data-src="data:image/jpg;base64,{{ image.image|e }}" 
+                        data-sub-html="
+                            Image 
+                            <a class='img-edit-button' 
+                                href='/image/view?token={{ image.token|e }}' 
+                                target=_blank
+                                >
+                                {{ image.token|e }}
+                            </a> 
+                            | 
+                            <a class='img-edit-button' 
+                                href='/admin/database/delete?table=images&page={{ page }}&id={{ image.id|e }}&referer=media_browser'
+                                >
+                                Delete
+                            </a>"
+                        >
+                        <img class="gallery-images" src="data:image/jpg;base64,{{ image.image|e }}">
+                    </span>
+                {% endfor %}
             </div>
-            <br>
-        {% else %}
-            <h2 class="page-title">image database is empty</h2>
-        {% endif %}
+        </center>
+        <div class="page-button-box">
+            {% if page != 1 %}
+                <a class="back-page-button" href="/admin/media/browser?page={{ page - 1 }}">Back</a>
+            {% endif %}
+            {% if media_limit == media_count %}
+                <a class="back-page-button" href="/admin/media/browser?page={{ page + 1 }}">Next</a>
+            {% endif %}
+        </div>
+        <br>
+    {% else %}
+        <h2 class="page-title">image database is empty</h2>
     {% endif %}
 </div>
 {{ encore_entry_script_tags('lightgallery-js') }}
