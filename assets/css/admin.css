@@ -133,7 +133,7 @@ form {
 .wrapper .section .top-navbar {
 	position: fixed; 
 	z-index: 1000; 
-	width: calc(100% - 15px);
+	width: 100%;
 }
 
 .wrapper .section .top-navbar .hamburger a {
@@ -445,7 +445,7 @@ textarea {
 .admin-panel {
 	background-color: #242424;
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 40px);
 	position: absolute;
 	top: 40px;
 }
@@ -833,7 +833,7 @@ textarea {
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	background-color: #000;
+	background-color: #202020;
 	color: white;
 	font-size: 20px;
 	font-family: 'Courier New', monospace;
@@ -871,7 +871,7 @@ textarea {
 	padding: 10px;
 	margin: 0;
 	border: 1px solid rgba(255, 255, 255, 0.24);
-	background-color: #000;
+	background-color: #202020;
 	color: white;
 	outline: none;
 	border-left: 1px solid rgba(255, 255, 255, 0.24);
@@ -882,7 +882,7 @@ textarea {
 	margin-left: 1px;
 	margin-right: 1px;
 	background-color: rgba(255, 255, 255, 0.24);
-	color: #000;
+	background-color: #202020;
 	border: none;
 	cursor: pointer;
 }
@@ -892,22 +892,20 @@ textarea {
 }
 
 .user-panel {
-	width: 15%;
-	background-color: #000;
+	min-width: 15%;
+	background-color: #202020;
 	color: rgba(255, 255, 255, 0.24);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-start;
 	padding: 0px;
-	border-top: 1px solid rgba(255, 255, 255, 0.24);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
-	border-right: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	overflow-y: auto;
 }
 
 .user-panel h2 {
-	font-size: 16px;
+	font-size: 18px;
 	margin-bottom: 10px;
 	background-color: #222;
 	padding: 5px 10px;
@@ -924,6 +922,13 @@ textarea {
 
 .user-panel li {
 	margin-left: 10px;
+}
+
+.chat-message-box {
+	border: 1px solid rgba(255, 255, 255, 0.24);;
+	border-radius: 20px;
+	padding: 10px;
+	background-color: rgb(24, 24, 24);
 }
 
 /* mobile devices style */

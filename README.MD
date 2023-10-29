@@ -51,8 +51,6 @@ the main part of this application is the admin panel which contains functions an
 - [ ] visitors stats (charts: country, city, visitors by date)
 - [ ] current online visitor counter
 - [ ] admin-panel div height calcularor 100% - nav panel
-- [ ] chat (owner & admin name = red)
-- [ ] chat command system
 - [ ] Terminal in admin
 - [ ] File manager & config editor
 - [ ] add more translations

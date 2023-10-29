@@ -1,5 +1,5 @@
 function sendOnlineStatus() {
-    fetch('/api/user/activity/iwvtqakxzkldtemmicanf', {
+    fetch('/api/user/update/activity', {
         method: 'POST'
     });
 }

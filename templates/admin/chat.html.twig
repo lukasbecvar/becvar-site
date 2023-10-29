@@ -12,7 +12,7 @@
             <div id="messages"></div>
         </div>
         <div class="input-container">
-            <input type="text" id="message" placeholder="message">
+            <input type="text" id="message" placeholder="message" maxlength="512">
             <button id="send">Send</button>
         </div>
     </div>
@@ -35,10 +35,6 @@
     .admin-panel {
         display: flex;
         overflow: hidden !important;
-        background-color: #222 !important;
-    }
-    .chat-page {
-        height: calc(100% - 40px) !important;
     }
 </style>
 {{ encore_entry_script_tags('admin-chat-js') }}

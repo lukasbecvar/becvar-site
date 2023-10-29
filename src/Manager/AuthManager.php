@@ -192,12 +192,17 @@ class AuthManager
         return $token;
     }
 
-    public function getUsername(): ?string 
+    public function getUsername(string $token = 'self'): ?string 
     {
         $username = null;
 
+        // get token
+        if ($token == 'self') {
+            $token = $this->getUserToken();
+        }
+
         // user repository
-        $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+        $user = $this->getUserRepository(['token' => $token]);
 
         // check if user repo found
         if ($user != null) {
@@ -211,11 +216,11 @@ class AuthManager
     {
         // get token
         if ($token == 'self') {
-            $token = ['token' => $this->getUserToken()];
+            $token = $this->getUserToken();
         }
 
         // user repository
-        $user = $this->getUserRepository($token);
+        $user = $this->getUserRepository(['token' => $token]);
 
         // check if user repo found
         if ($user != null) {
@@ -229,11 +234,11 @@ class AuthManager
 
         // get token
         if ($token == 'self') {
-            $token = ['token' => $this->getUserToken()];
+            $token = $this->getUserToken();
         }
 
         // user repository
-        $user = $this->getUserRepository($token);
+        $user = $this->getUserRepository(['token' => $token]);
 
         // check if user repo found
         if ($user != null) {

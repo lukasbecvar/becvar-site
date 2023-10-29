@@ -49,8 +49,8 @@ class ChatApiController extends AbstractController
             // get time
             $time = date('H:i');
 
-            // get username
-            $username = $this->authManager->getUsername();
+            // get token
+            $token = $this->authManager->getUserToken();
 
             // get message data
             $data = json_decode($request->getContent(), true);
@@ -69,7 +69,7 @@ class ChatApiController extends AbstractController
 
                 // set message data
                 $message->setMessage($chat_message);
-                $message->setSender($username);
+                $message->setSender($token);
                 $message->setDay($day);
                 $message->setTime($time);
 
@@ -98,17 +98,28 @@ class ChatApiController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             $messageData = [];
-    
+            
+            // get max message limit
+            $limit = intval($_ENV['ITEMS_PER_PAGE']);
+
             // get messages
-            $messages = $this->entityManager->getRepository(ChatMessage::class)->findAll();
-    
+            $messages = $this->entityManager->getRepository(ChatMessage::class)->findBy([], ['id' => 'DESC'], $limit);
+
+            $messages = array_reverse($messages);
+
             // build message data
             foreach ($messages as $message) {
+
+                // get sender token
+                $sender = $message->getSender();
+
                 $messageData[] = [
                     'id' => $message->getId(),
                     'day' => $message->getDay(),
                     'time' => $message->getTime(),
-                    'sender' => $message->getSender(),
+                    'sender' => $this->authManager->getUsername($sender),
+                    'role' => $this->authManager->getUserRole($sender),
+                    'pic' => $this->authManager->getUserProfilePic($sender),
                     'message' => $this->securityUtil->decrypt_aes($message->getMessage())
                 ];
             }
