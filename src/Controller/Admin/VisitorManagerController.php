@@ -8,7 +8,7 @@ use App\Form\BanFormType;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
+use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,20 +24,20 @@ class VisitorManagerController extends AbstractController
     private BanManager $banManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
 
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
-        VisitorInfoUtil $visitorInfoUtil
+        VisitorManager $visitorManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     #[Route('/admin/visitors', name: 'admin_visitor_manager')]
@@ -51,7 +51,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/visitors-manager.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -61,11 +61,56 @@ class VisitorManagerController extends AbstractController
 
                 // visitor manager data
                 'page' => $page,
-                'current_ip' => $this->visitorInfoUtil->getIP(),
+                'current_ip' => $this->visitorManager->getIP(),
+                'online_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
                 'banned_count' => $this->banManager->getBannedCount(),
                 'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],
-                'visitors_data' => $this->visitorInfoUtil->getVisitors($page),
-                'visitors_count' => $this->visitorInfoUtil->getVisitorsCount($page)
+                'visitors_data' => $this->visitorManager->getVisitors($page),
+                'visitors_count' => $this->visitorManager->getVisitorsCount($page)
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    }
+
+    #[Route('/admin/visitors/stats', name: 'admin_visitor_stats')]
+    public function visitorsStatsTable(): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            return $this->render('admin/visitors-stats.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_dashboard' => false,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                // visitor manager data
+                'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
+                'banned_visitors_count' => $this->banManager->getBannedCount(),
+
+                'country_data' => $visitorData = [
+                    'CZ' => 50,
+                    'DE' => 25,
+                    'US' => 25,
+                    'UF' => 25,
+                    'UH' => 25,
+                    'UP' => 25,
+                    'UB' => 25,
+                    'UK' => 25,
+                    'UM' => 25,
+                    'US' => 25,
+                    'UV' => 25,
+                    'UQ' => 25,
+                    'UE' => 25,
+                    'UL' => 25,
+                    'UZ' => 25,
+
+                ]
             ]);
         } else {
             return $this->redirectToRoute('auth_login');
@@ -83,7 +128,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
     
                 // user data
@@ -152,7 +197,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/elements/forms/ban-form.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
     
                 // user data

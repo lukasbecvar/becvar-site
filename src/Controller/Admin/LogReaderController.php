@@ -6,8 +6,8 @@ use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
+use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ class LogReaderController extends AbstractController
     private LogManager $logManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private DatabaseManager $databaseManager;
 
     public function __construct(
@@ -31,14 +31,14 @@ class LogReaderController extends AbstractController
         LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         DatabaseManager $databaseManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
         $this->databaseManager = $databaseManager;
     }
 
@@ -56,7 +56,7 @@ class LogReaderController extends AbstractController
 
             return $this->render('admin/log-reader.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -101,7 +101,7 @@ class LogReaderController extends AbstractController
 
             return $this->render('admin/log-reader.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -137,7 +137,7 @@ class LogReaderController extends AbstractController
 
             return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
     
                 // user data

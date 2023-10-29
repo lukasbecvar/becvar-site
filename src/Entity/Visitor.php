@@ -14,9 +14,6 @@ class Visitor
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?string $visited_sites = null;
-
     #[ORM\Column(length: 255)]
     private ?string $first_visit = null;
 
@@ -50,21 +47,15 @@ class Visitor
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status_update_time = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getVisitedSites(): ?string
-    {
-        return $this->visited_sites;
-    }
-
-    public function setVisitedSites(string $visited_sites): static
-    {
-        $this->visited_sites = $visited_sites;
-
-        return $this;
     }
 
     public function getFirstVisit(): ?string
@@ -195,6 +186,30 @@ class Visitor
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStatusUpdateTime(): ?string
+    {
+        return $this->status_update_time;
+    }
+
+    public function setStatusUpdateTime(string $status_update_time): static
+    {
+        $this->status_update_time = $status_update_time;
 
         return $this;
     }

@@ -7,8 +7,8 @@ use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
+use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -22,7 +22,7 @@ class VisitorSystemMiddleware
     private LogManager $logManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -31,7 +31,7 @@ class VisitorSystemMiddleware
         BanManager $banManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager 
     ) {
         $this->twig = $twig;
@@ -39,25 +39,25 @@ class VisitorSystemMiddleware
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
+        $this->visitorManager = $visitorManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     public function onKernelRequest(): void
     {
         // get data to insert
-        $date = date('d.m.Y H:i:s');
-        $os = $this->visitorInfoUtil->getOS();
-        $ip_address = $this->visitorInfoUtil->getIP();
-        $browser = $this->visitorInfoUtil->getBrowser();
-        $location = $this->visitorInfoUtil->getLocation($ip_address);
+        $date = date('d.m.Y H:i');
+        $os = $this->visitorManager->getOS();
+        $ip_address = $this->visitorManager->getIP();
+        $browser = $this->visitorManager->getBrowser();
+        $location = $this->visitorManager->getLocation($ip_address);
 
         // escape inputs
         $ip_address = $this->securityUtil->escapeString($ip_address);
         $browser = $this->securityUtil->escapeString($browser);
 
         // check if visitor found in database
-        if ($this->visitorInfoUtil->getVisitorRepository($ip_address) == null) {
+        if ($this->visitorManager->getVisitorRepository($ip_address) == null) {
 
             // save new visitor data
             $this->insertNewVisitor($date, $ip_address, $browser, $os, $location);
@@ -96,7 +96,6 @@ class VisitorSystemMiddleware
         $visitorEntity = new Visitor();
 
         // set visitor data
-        $visitorEntity->setVisitedSites('1');
         $visitorEntity->setFirstVisit($date);
         $visitorEntity->setLastVisit($date);
         $visitorEntity->setBrowser($browser);
@@ -108,6 +107,8 @@ class VisitorSystemMiddleware
         $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');
+        $visitorEntity->setStatus('online');
+        $visitorEntity->setStatusUpdateTime(time());
             
         // insert new visitor
         try {
@@ -121,18 +122,17 @@ class VisitorSystemMiddleware
     public function updateVisitor(string $date, string $ip_address, string $browser, string $os): void
     {
         // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+
+        // update visitors stats list
+        $this->visitorManager->updateVisitorsStatus();
 
         // check if visitor data found
         if (!$visitor != null) {
             $this->errorManager->handleError('unexpected visitor with ip: '.$ip_address.' update error, please check database structure', 500);
         } else {
 
-            // get current visited_sites value from database
-            $visitedSites = intval($visitor->getVisitedSites());
-
             // update values
-            $visitor->setVisitedSites($visitedSites + 1);
             $visitor->setLastVisit($date);
             $visitor->setBrowser($browser);
             $visitor->setOs($os);

@@ -6,9 +6,9 @@ use App\Entity\User;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Form\RegisterFormType;
+use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class RegisterController extends AbstractController
     private AuthManager $authManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
-    private VisitorInfoUtil $visitorInfoUtil;  
+    private VisitorManager $visitorManager;  
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
         AuthManager $authManager, 
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
@@ -43,7 +43,7 @@ class RegisterController extends AbstractController
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     #[Route('/register', name: 'auth_register')]
@@ -92,13 +92,13 @@ class RegisterController extends AbstractController
                 } else {
 
                     // get user ip
-                    $ip_address = $this->visitorInfoUtil->getIP();
+                    $ip_address = $this->visitorManager->getIP();
                 
                     // generate token
                     $token = ByteString::fromRandom(32)->toString();
                     
                     // get visitor id
-                    $visitor_id = $this->visitorInfoUtil->getVisitorID($ip_address);
+                    $visitor_id = $this->visitorManager->getVisitorID($ip_address);
 
                     // password hash
                     $hashed_password = $this->securityUtil->gen_bcrypt($password, 10);

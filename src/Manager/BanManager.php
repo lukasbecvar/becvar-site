@@ -3,7 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\Visitor;
-use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -15,21 +14,21 @@ class BanManager
     private LogManager $logManager;
     private AuthManager $authManager;
     private ErrorManager $errorManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
     
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager,
         ErrorManager $errorManager,
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     public function banVisitor(string $ip_address, string $reason): void 
@@ -38,7 +37,7 @@ class BanManager
         $date = date('d.m.Y H:i:s');
 
         // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
         // check if visitor found
         if ($visitor != null) {
@@ -69,7 +68,7 @@ class BanManager
     public function unbanVisitor(string $ip_address): void 
     {
         // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
         // check if visitor found
         if ($visitor != null) {
@@ -94,7 +93,7 @@ class BanManager
     public function isVisitorBanned(string $ip_address): bool 
     {
         // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
         
         // check if visitor found
         if ($visitor === null) {
@@ -128,7 +127,7 @@ class BanManager
     public function getBanReason(string $ip_address): ?string 
     {
         // get visitor data
-        $visitor = $this->visitorInfoUtil->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
         // check if visitor found
         if ($visitor == null) {
@@ -163,7 +162,7 @@ class BanManager
 
     public function getVisitorIP(int $id): string
     {
-        $repo = $this->visitorInfoUtil->getVisitorRepositoryByID($id);
+        $repo = $this->visitorManager->getVisitorRepositoryByID($id);
         return $repo->getIpAddress();
     }
 }

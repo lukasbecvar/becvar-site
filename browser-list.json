@@ -1,4 +1,5 @@
 {
+	"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801": "Mozilla",
 	"becvold.xyz": "Becvold-service",
 	"Cloudflare-SSLDetector": "Cloudflare",
 	"CheckMarkNetwork": "Check Mark Network",
@@ -19,6 +20,7 @@
 	"Yahoo": "Yahoo-bot",
 	"https://domainsproject.org": "dataset domainsproject.org",
 	"https://security.ipip.net": "HTTP BD/security.ipip.net",
+	"internal dummy connection": "Internal dummy connection",
 	"PolycomRealPresenceTrio": "PolycomRealPresenceTrio",
 	"Nmap Scripting Engine": "Nmap Scripting Engine",
 	"Google-InspectionTool": "Google-InspectionTool",
@@ -55,6 +57,7 @@
 	"crawlson": "Crawlson",
 	"fasthttp": "Fast-HTTP",
 	"Symbian": "Symbian browser",
+	"BLEXBot": "BLEXBot",
 	"Trident": "Trident",
 	"aiohttp": "AIO-HTTP",
 	"l9tcpid": "L9tcpid",

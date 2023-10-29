@@ -4,7 +4,6 @@ namespace App\Manager;
 
 use App\Entity\Message;
 use App\Util\SecurityUtil;
-use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -15,19 +14,19 @@ class MessagesManager
 {
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         SecurityUtil $securityUtil, 
         ErrorManager $errorManager,
-        VisitorInfoUtil $visitorInfoUtil, 
+        VisitorManager $visitorManager, 
         EntityManagerInterface $entityManager
     ) {
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     public function saveMessage(string $name, string $email, string $message_input, string $ip_address, string $visitor_id): bool
@@ -38,7 +37,7 @@ class MessagesManager
         $date = date('d.m.Y H:i:s');
 
         // update visitor email
-        $this->visitorInfoUtil->updateVisitorEmail($ip_address, $email);
+        $this->visitorManager->updateVisitorEmail($ip_address, $email);
 
         // ecrypt message
         $message_input = $this->securityUtil->encrypt_aes($message_input);

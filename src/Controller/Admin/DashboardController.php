@@ -13,8 +13,9 @@ use App\Util\SecurityUtil;
 use App\Util\DashboardUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
+use App\Manager\BanManager;
 use App\Manager\ServiceManager;
+use App\Manager\VisitorManager;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,29 +30,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DashboardController extends AbstractController
 {
     private SiteUtil $siteUtil;
+    private BanManager $banManager;
     private LogManager $logManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private DashboardUtil $dashboardUtil;
     private ServiceManager $serviceManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
 
     public function __construct(
         SiteUtil $siteUtil,
+        BanManager $banManager,
         LogManager $logManager,
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
         DashboardUtil $dashboardUtil,
         ServiceManager $serviceManager,
-        VisitorInfoUtil $visitorInfoUtil
+        VisitorManager $visitorManager
     ) {
         $this->siteUtil = $siteUtil;
+        $this->banManager = $banManager;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->dashboardUtil = $dashboardUtil;
         $this->serviceManager = $serviceManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
@@ -61,7 +65,7 @@ class DashboardController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/dashboard.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => true,
 
                 // user data
@@ -96,6 +100,8 @@ class DashboardController extends AbstractController
                 'images_count' => $this->dashboardUtil->getDatabaseEntityCount(new Image),
                 'pastest_count' => $this->dashboardUtil->getDatabaseEntityCount(new Paste),
                 'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
+                'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
+                'banned_visitors_count' => $this->banManager->getBannedCount(),
                 'server_uptime' => $this->dashboardUtil->getHostUptime(),   
                 'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
                 'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   
@@ -142,7 +148,7 @@ class DashboardController extends AbstractController
     
             return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
     
                 // user data

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
+use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ChatController extends AbstractController
 {
     private AuthManager $authManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
 
     public function __construct(
         AuthManager $authManager,
-        VisitorInfoUtil $visitorInfoUtil
+        VisitorManager $visitorManager
     ) {
         $this->authManager = $authManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
     
     #[Route('/admin/chat', name: 'admin_chat')]
@@ -33,7 +33,7 @@ class ChatController extends AbstractController
 
             return $this->render('admin/chat.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Util;
+namespace App\Manager;
 
 use App\Entity\Visitor;
+use App\Util\JsonUtil;
+use App\Util\SiteUtil;
 use Detection\MobileDetect;
-use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
-    Visitorinfo util provides visitor info getters
+    Visitor manager provides methods for manage visitors
 */
 
-class VisitorInfoUtil
+class VisitorManager
 {
     private JsonUtil $jsonUtil;
     private SiteUtil $siteUtil;
     private ErrorManager $errorManager;
     private EntityManagerInterface $entityManager;
 
-    public function __construct (
+    public function __construct(
         JsonUtil $jsonUtil,
         SiteUtil $siteUtil,
-        ErrorManager $errorManager, 
+        ErrorManager $errorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->jsonUtil = $jsonUtil;
@@ -191,54 +192,8 @@ class VisitorInfoUtil
         return $os;
     }
 
-    public function getRepositoryByArray(array $search): ?object
-    {
-        $result = null;
-        
-        // get visitor repository
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
-
-        // try to find visitor in database
-        try {
-            $result = $visitorRepository->findOneBy($search);
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        // return result
-        if ($result !== null) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
-
-    public function getVisitorRepositoryByID(int $id): ?object 
-    {
-        return $this->getRepositoryByArray(['id' => $id]);
-    }
-
-    public function getVisitorRepository(string $ip_address): ?object 
-    {
-        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
-    }
-
-    public function getVisitorID(string $ip_address): ?int 
-    {
-        // try to get visitor data
-        $result = $this->getVisitorRepository($ip_address);
-
-        if ($result === null) {
-            return 0;
-        } else {
-            return $result->getID();
-        }
-    }
-
     public function getLocation(string $ip_address): ?array
     {
-        $location = null;
-
         // check if site running on localhost
         if ($this->siteUtil->isRunningLocalhost()) {
             return ['city' => 'locale', 'country' => 'host'];
@@ -281,6 +236,90 @@ class VisitorInfoUtil
         }
 
         return ['city' => $city, 'country' => $country];
+    }
+
+    public function updateVisitorsStatus(): void
+    {
+        // timeout (seconds)
+        $session_timeout_seconds = 180;
+
+        // get current timestamp
+        $current_time = time();
+        
+        // get visitor repository
+        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+            
+        // check if visitor found
+        if ($visitorRepository !== null) {
+                
+            // get visitors list
+            $visitors = $visitorRepository->findAll();
+
+            // update all offline statuses
+            foreach ($visitors as $visitor) {
+
+                // get timestamp
+                $last_activity_timestamp = $visitor->getStatusUpdateTime();
+
+                // update only online visitors
+                if ($visitor->getStatus() === 'online') {
+                    if ($current_time - intval($last_activity_timestamp) >= $session_timeout_seconds) {
+                        $visitor->setStatus('offline');
+                    }
+                }
+            }
+        
+            // update visitor status
+            try {
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->errorManager->handleError('error to update visitor status: '.$e->getMessage(), 500);
+            }
+        }
+    }
+
+    public function getRepositoryByArray(array $search): ?object
+    {
+        $result = null;
+        
+        // get visitor repository
+        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+
+        // try to find visitor in database
+        try {
+            $result = $visitorRepository->findOneBy($search);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+        }
+
+        // return result
+        if ($result !== null) {
+            return $result;
+        } else {
+            return null;
+        }
+    }
+
+    public function getVisitorRepositoryByID(int $id): ?object 
+    {
+        return $this->getRepositoryByArray(['id' => $id]);
+    }
+
+    public function getVisitorRepository(string $ip_address): ?object 
+    {
+        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
+    }
+
+    public function getVisitorID(string $ip_address): ?int 
+    {
+        // try to get visitor data
+        $result = $this->getVisitorRepository($ip_address);
+
+        if ($result === null) {
+            return 0;
+        } else {
+            return $result->getID();
+        }
     }
 
     public function updateVisitorEmail(string $ip_address, string $email): void
@@ -336,12 +375,6 @@ class VisitorInfoUtil
         return count($this->getVisitors($page));
     }
 
-    public function isMobile(): bool 
-    {
-        $detect = new MobileDetect();
-        return $detect->isMobile();
-    }
-
     public function getVisitorLanguage(): ?string
     {
         $repo = $this->getVisitorRepository($this->getIP());
@@ -352,5 +385,16 @@ class VisitorInfoUtil
         } else {
             return null;
         }
+    }
+
+    public function isMobile(): bool 
+    {
+        $detect = new MobileDetect();
+        return $detect->isMobile();
+    }
+
+    public function getVisitorsWhereStstus(string $status): ?array
+    {
+        return $this->entityManager->getRepository(Visitor::class)->findBy(['status' => $status]);
     }
 }

@@ -45,7 +45,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $status_update_time = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?string $visitor_id = null;
 
     public function getId(): ?int

@@ -9,7 +9,7 @@ use App\Manager\AuthManager;
 use App\Form\NewTodoFormType;
 use App\Manager\ErrorManager;
 use App\Manager\TodosManager;
-use App\Util\VisitorInfoUtil;
+use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +27,7 @@ class TodoManagerController extends AbstractController
     private TodosManager $todosManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -36,7 +36,7 @@ class TodoManagerController extends AbstractController
         TodosManager $todosManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
@@ -45,7 +45,7 @@ class TodoManagerController extends AbstractController
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     #[Route('/admin/todos', name: 'admin_todos')]
@@ -104,7 +104,7 @@ class TodoManagerController extends AbstractController
 
             return $this->render('admin/todo-manager.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
+                'is_mobile' => $this->visitorManager->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

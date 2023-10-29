@@ -45,8 +45,14 @@ class UserApiController extends AbstractController
                 // update users status
                 $user->setStatusUpdateTime(time());
                 $user->setStatus('online');
-                $entityManager->flush();
     
+                // update user status
+                try {
+                    $entityManager->flush();
+                } catch (\Exception) {
+                    return $this->json(['status' => 'error'], 500);
+                }
+
                 return $this->json(['status' => 'success']);
             } else {
 

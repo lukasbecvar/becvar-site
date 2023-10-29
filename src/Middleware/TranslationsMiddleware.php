@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Util\VisitorInfoUtil;
+use App\Manager\VisitorManager;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 /*
@@ -12,20 +12,20 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 class TranslationsMiddleware
 {
     private LocaleAwareInterface $translator;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     
     public function __construct(
         LocaleAwareInterface $translator, 
-        VisitorInfoUtil $visitorInfoUtil
+        VisitorManager $visitorManager
     ) {
         $this->translator = $translator;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     public function onKernelRequest(): void
     {
         // get visitor language
-        $language = $this->visitorInfoUtil->getVisitorLanguage();
+        $language = $this->visitorManager->getVisitorLanguage();
 
         if ($language == null or $language == 'host' or $language == 'unknown') {
             $this->translator->setLocale('en');

@@ -422,6 +422,17 @@ textarea {
 	margin-right: 235px;
 }
 
+.system-info-card {
+	width: calc(100% - 255px - 28.5%);
+	display: inline-block;
+	margin-right: 0px;
+}
+
+.visitors-info-card {
+	width: 27.7%;
+	display: inline-block;
+}
+
 .custom-col-md-10 {
     width: 85.3%;
 	margin-left: 15px;
@@ -931,6 +942,10 @@ textarea {
 	background-color: rgb(24, 24, 24);
 }
 
+.link-yellow {
+	color: rgb(235, 201, 50) !important;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.custom-col-md-10 {
@@ -1078,7 +1093,7 @@ textarea {
 		right: 15px;
 	}
 	.wrapper .section .top-navbar {
-		width: calc(100% - 10px) !important;
+		width: 100% !important;
 	}
 	.new-todo-form {
 		height: 62px;

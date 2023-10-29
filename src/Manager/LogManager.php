@@ -4,7 +4,6 @@ namespace App\Manager;
 
 use App\Entity\Log;
 use App\Util\SecurityUtil;
-use App\Util\VisitorInfoUtil;
 use App\Manager\CookieManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,21 +16,21 @@ class LogManager
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private CookieManager $cookieManager;
-    private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
     
     public function __construct(
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         CookieManager $cookieManager,
-        VisitorInfoUtil $visitorInfoUtil,
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->cookieManager = $cookieManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->visitorManager = $visitorManager;
     }
 
     public function log(string $name, string $value): void 
@@ -59,13 +58,13 @@ class LogManager
                 $date = date('d.m.Y H:i:s');
 
                 // get visitor browser agent
-                $browser = $this->visitorInfoUtil->getBrowser();
+                $browser = $this->visitorManager->getBrowser();
 
                 // get visitor ip address
-                $ip_address = $this->visitorInfoUtil->getIP();
+                $ip_address = $this->visitorManager->getIP();
 
                 // get visitor id
-                $visitor_id = strval($this->visitorInfoUtil->getVisitorID($ip_address));
+                $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
 
                 // xss escape inputs
                 $name = $this->securityUtil->escapeString($name);
@@ -124,7 +123,7 @@ class LogManager
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
             $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
+            $formated_browser = $this->visitorManager->getBrowserShortify($user_agent);
             $log->setBrowser($formated_browser);
         }
 
@@ -159,7 +158,7 @@ class LogManager
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
             $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
+            $formated_browser = $this->visitorManager->getBrowserShortify($user_agent);
             $log->setBrowser($formated_browser);
         }
 
