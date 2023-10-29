@@ -1,13 +1,8 @@
 ## About becvar-site
 Personal website builded with symfony framework, bootstrap & webpack-encore
 
-## Public site
- - Main components: about, projects list, contact, etc...
- - Projects component gets repos from github (closed, open / Archived, Unarchived)
- - Image uploader / view
- - Code paste site
-
 ## Admin site
+the main part of this application is the admin panel which contains functions and components for administration of the host linux server
  - Account system with permissions
  - Warning system
  - Server dashboard
@@ -19,6 +14,13 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - Advanced log system
  - Server Emergency shutdown
  - Included adminer in admin page
+ - Chat system
+
+## Public site
+ - Main components: about, projects list, contact, etc...
+ - Projects component gets repos from github (closed, open / Archived, Unarchived)
+ - Image uploader / view
+ - Code paste site
 
 ## Installation (with apache)
  - install apache2, mysql8, composer, php, php-pdo, php-mysqli, php-xml, php-dom
@@ -46,8 +48,10 @@ Personal website builded with symfony framework, bootstrap & webpack-encore
  - npm 9 or <
 
 ## TODOS
+- [ ] visitors stats (charts: country, city, visitors by date)
 - [ ] current online visitor counter
 - [ ] admin-panel div height calcularor 100% - nav panel
+- [ ] better user system
 - [ ] chat (owner & admin name = red)
 - [ ] chat command system
 - [ ] Terminal in admin
