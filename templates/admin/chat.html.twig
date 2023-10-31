@@ -21,11 +21,11 @@
         <ul>
             {% for user in online_users %}
                 {% if user.role == 'Owner' or user.role == 'Admin' %}
-                    <li class="text-red">{{ user.username|e }}</li>
+                    <li class="user-name text-red">{{ user.username|e }}</li>
                 {% elseif user.role == 'User' %}
-                    <li class="green-text">{{ user.username|e }}</li>
+                    <li class="user-name green-text">{{ user.username|e }}</li>
                 {% else %}
-                    <li class="text-white" >{{ user.username|e }}</li>
+                    <li class="user-name text-white" >{{ user.username|e }}</li>
                 {% endif %}
             {% endfor %}
         </ul>

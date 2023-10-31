@@ -916,13 +916,18 @@ textarea {
 }
 
 .user-panel h2 {
-	font-size: 18px;
+	font-size: 17px;
 	margin-bottom: 10px;
 	background-color: #222;
 	padding: 5px 10px;
 	width: 100%;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 	color: white;
+}
+
+.user-panel .user-name {
+	font-size: 25 !important;
+	font-weight: bold;
 }
 
 .user-panel ul {
