@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Manager\LogManager;
 use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VisitorApiController extends AbstractController
 {
+    private LogManager $logManager;
     private VisitorManager $visitorManager;
 
     public function __construct(
+        LogManager $logManager,
         VisitorManager $visitorManager
     ) {
+        $this->logManager = $logManager;
         $this->visitorManager = $visitorManager;
     }
 
@@ -39,7 +43,8 @@ class VisitorApiController extends AbstractController
             // update visitor status
             try {
                 $entityManager->flush();
-            } catch (\Exception) {
+            } catch (\Exception $e) {
+                $this->logManager->log('system-error', 'error to update visitor status: '.$e->getMessage());
                 return $this->json(['status' => 'error'], 500);
             }
     

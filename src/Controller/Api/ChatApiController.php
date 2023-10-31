@@ -6,6 +6,7 @@ use App\Util\SecurityUtil;
 use App\Entity\ChatMessage;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
+use App\Manager\LogManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,17 +21,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChatApiController extends AbstractController
 {
+    private LogManager $logManager;
     private AuthManager $authManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        LogManager $logManager,
         AuthManager $authManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -79,9 +83,9 @@ class ChatApiController extends AbstractController
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
                     $this->errorManager->handleError('error to save message: ' . $e->getMessage(), 401);
+                    $this->logManager->log('system-error', 'chat message save error: '.$e->getMessage());
                     return new RedirectResponse('/');
                 }
-
                 return new JsonResponse(['status' => 'message saved']);
             } else {
                 return new JsonResponse(['status' => 'message not saved'], 400);

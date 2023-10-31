@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
+use App\Manager\LogManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,13 +17,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserApiController extends AbstractController
 {
+    private LogManager $logManager;
     private AuthManager $authManager;
     private ErrorManager $errorManager;
 
     public function __construct(
+        LogManager $logManager,
         AuthManager $authManager,
         ErrorManager $errorManager
     ) {
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
     }
@@ -49,13 +53,13 @@ class UserApiController extends AbstractController
                 // update user status
                 try {
                     $entityManager->flush();
-                } catch (\Exception) {
+                } catch (\Exception $e) {
+                    $this->logManager->log('system-error', 'error to update user status: '.$e->getMessage());
                     return $this->json(['status' => 'error'], 500);
                 }
 
                 return $this->json(['status' => 'success']);
             } else {
-
                 return $this->json(['status' => 'error'], 404);
             }
             

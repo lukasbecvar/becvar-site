@@ -45,7 +45,7 @@
                     <tbody>
                         {% for row in logs_data %}
                             <tr class="line-item">
-                                {% if row.name == 'action-runner' or row.name == 'ban-system' or row.name == 'authenticator' or row.name == 'geolocate-error' %}
+                                {% if row.name == 'action-runner' or row.name == 'ban-system' or row.name == 'authenticator' or row.name == 'geolocate-error' or row.name == 'system-error' %}
                                     <th scope='row' class='text-red'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.name|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.value|e }}</th>
