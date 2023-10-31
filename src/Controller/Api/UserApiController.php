@@ -55,12 +55,21 @@ class UserApiController extends AbstractController
                     $entityManager->flush();
                 } catch (\Exception $e) {
                     $this->logManager->log('system-error', 'error to update user status: '.$e->getMessage());
-                    return $this->json(['status' => 'error'], 500);
+                    return $this->json([
+                        'status' => 'error',
+                        'message' => 'error to update user status'
+                    ], 500);
                 }
 
-                return $this->json(['status' => 'success']);
+                return $this->json([
+                    'status' => 'success',
+                    'message' => 'user status updated'
+                ], 200);
             } else {
-                return $this->json(['status' => 'error'], 404);
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'user not found'
+                ], 500);
             }
             
         } else {

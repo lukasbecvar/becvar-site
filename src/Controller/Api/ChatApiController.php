@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -86,9 +85,15 @@ class ChatApiController extends AbstractController
                     $this->logManager->log('system-error', 'chat message save error: '.$e->getMessage());
                     return new RedirectResponse('/');
                 }
-                return new JsonResponse(['status' => 'message saved']);
+                return $this->json([
+                    'status' => 'success',
+                    'message' => 'chat message saved'
+                ], 200);
             } else {
-                return new JsonResponse(['status' => 'message not saved'], 400);
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'chat message not saved'
+                ], 400);
             }
         } else {
             $this->errorManager->handleError('error to save message: only for authenticated users!', 401);
@@ -129,7 +134,7 @@ class ChatApiController extends AbstractController
             }
     
             // return messages json
-            return new JsonResponse($messageData);
+            return $this->json($messageData);
         } else {
             $this->errorManager->handleError('error to get messages: only for authenticated users!', 401);
             return new RedirectResponse('/');

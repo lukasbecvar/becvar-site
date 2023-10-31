@@ -45,12 +45,20 @@ class VisitorApiController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->logManager->log('system-error', 'error to update visitor status: '.$e->getMessage());
-                return $this->json(['status' => 'error'], 500);
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'error to update visitor status'
+                ], 500);
             }
     
-            return $this->json(['status' => 'success']);
+            return $this->json([
+                'status' => 'success'
+            ], 200);
         } else {
-            return $this->json(['status' => 'error'], 404);
+            return $this->json([
+                'status' => 'error',
+                'message' => 'error visitor not found'
+            ], 500);
         }
     }
 }

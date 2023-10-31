@@ -942,6 +942,16 @@ textarea {
 	background-color: rgb(24, 24, 24);
 }
 
+.chat-message-box img {
+	max-width: 50px;
+}
+
+.chat-message-box img {
+	max-width: 30px;
+    margin-right: 4px;
+    border-radius: 20%;
+}
+
 .link-yellow {
 	color: rgb(235, 201, 50) !important;
 }
