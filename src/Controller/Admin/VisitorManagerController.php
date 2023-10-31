@@ -73,50 +73,6 @@ class VisitorManagerController extends AbstractController
         }
     }
 
-    #[Route('/admin/visitors/stats', name: 'admin_visitor_stats')]
-    public function visitorsStatsTable(): Response
-    {
-        // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
-
-            return $this->render('admin/visitors-stats.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
-                'is_dashboard' => false,
-
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // visitor manager data
-                'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
-                'banned_visitors_count' => $this->banManager->getBannedCount(),
-
-                'country_data' => $visitorData = [
-                    'CZ' => 50,
-                    'DE' => 25,
-                    'US' => 25,
-                    'UF' => 25,
-                    'UH' => 25,
-                    'UP' => 25,
-                    'UB' => 25,
-                    'UK' => 25,
-                    'UM' => 25,
-                    'US' => 25,
-                    'UV' => 25,
-                    'UQ' => 25,
-                    'UE' => 25,
-                    'UL' => 25,
-                    'UZ' => 25,
-
-                ]
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
-    }
-
     #[Route('/admin/visitors/delete', name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
     {

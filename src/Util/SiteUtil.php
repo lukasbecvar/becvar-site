@@ -90,7 +90,7 @@ class SiteUtil
 
         // set page 1 if page is undefined
         if ($value == null) {
-            return null;
+            return '1';
         } else {
             return $this->securityUtil->escapeString($value);
         }
