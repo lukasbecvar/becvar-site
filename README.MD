@@ -48,7 +48,6 @@ the main part of this application is the admin panel which contains functions an
  - npm 9 or <
 
 ## TODOS
-- [ ] Visitors stats
 - [ ] Terminal in admin
 - [ ] File manager & config editor
 - [ ] add more translations
