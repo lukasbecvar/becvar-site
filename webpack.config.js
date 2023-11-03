@@ -65,6 +65,9 @@ Encore
     // register admin chat function
     .addEntry('admin-chat-js', './assets/js/admin-chat.js')
 
+    // register admin terminal function
+    .addEntry('admin-terminal', './assets/js/admin-terminal.js')
+
     // copy assets
     .copyFiles(
         // copy images
