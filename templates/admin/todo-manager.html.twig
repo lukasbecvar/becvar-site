@@ -6,15 +6,31 @@
 
 {% block component %}
 <div class="admin-panel">
-    <div class="new-todo-form">
-        {{ form_start(new_todo_form) }}
-            {{ form_widget(new_todo_form) }}
-                <button type="submit" class="input-button todo-button">Add</button>
-        {{ form_end(new_todo_form) }}
-    </div>
+
+
+    <ul class="breadcrumb">
+        {% if completed_list %}
+            <li>
+                <a class="selector-button btn-small" href="/admin/todos"><strong>Uncompleted</strong></a>
+            </li>  
+        {% else %}
+            <li>
+                <a class="selector-button btn-small" href="/admin/todos/completed"><strong>Completed</strong></a>
+            </li>  
+        {% endif %} 
+    </ul>
+
+    {% if completed_list == false %}
+        <div class="new-todo-form">
+            {{ form_start(new_todo_form) }}
+                {{ form_widget(new_todo_form) }}
+                    <button type="submit" class="input-button todo-button">Add</button>
+            {{ form_end(new_todo_form) }}
+        </div>
+    {% endif %}
     {% if todos_data != null %}
-        <div class="table-responsive">
-            <table class="todo-table table table-dark">
+        <div class="table-responsive">        
+            <table class="todo-table table table-dark {% if completed_list %}todo-table-top-reset{% endif %}">
                 <thead>
                     <tr class="line-item">
                         <th scope="col">#</th>

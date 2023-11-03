@@ -112,8 +112,37 @@ class TodoManagerController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
+                'completed_list' => false,
                 'todos_data' => $todos,
                 'new_todo_form' => $form
+            ]);
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    }
+
+
+    #[Route('/admin/todos/completed', name: 'admin_todos_completed')]
+    public function completedTodosTable(): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            // get todos data
+            $todos = $this->todosManager->getTodos('completed');
+
+            return $this->render('admin/todo-manager.html.twig', [
+                // component properties
+                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_dashboard' => false,
+
+                // user data
+                'user_name' => $this->authManager->getUsername(),
+                'user_role' => $this->authManager->getUserRole(),
+                'user_pic' => $this->authManager->getUserProfilePic(),
+
+                'completed_list' => true,
+                'todos_data' => $todos,
             ]);
         } else {
             return $this->redirectToRoute('auth_login');

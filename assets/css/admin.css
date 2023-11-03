@@ -759,7 +759,7 @@ textarea {
 
 .todo-table {
 	position: absolute;
-	top: 60px;
+	top: 110px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
@@ -1135,6 +1135,6 @@ textarea {
 		height: 100%;
 	}	
 	.todo-table {
-		top: 60px;
+		top: 110px;
 	}
 }

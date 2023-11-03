@@ -48,8 +48,6 @@ the main part of this application is the admin panel which contains functions an
  - npm 9 or <
 
 ## TODOS
-- [ ] Admin completed todos list
-- [ ] Admin bash panel
 - [ ] Admin file browser (server file system)
 - [ ] Complte refactor & code format
 - [ ] PHPUnit tests
