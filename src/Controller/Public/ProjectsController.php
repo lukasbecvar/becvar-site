@@ -60,7 +60,6 @@ class ProjectsController extends AbstractController
             ]);
         } else {
             $this->errorManager->handleError('error to update project list: please login first', 401);
-            return new RedirectResponse('/');
         }
     }
 }

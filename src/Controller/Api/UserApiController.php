@@ -74,7 +74,6 @@ class UserApiController extends AbstractController
             
         } else {
             $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
-            return new RedirectResponse('/');
         }
     }
 }

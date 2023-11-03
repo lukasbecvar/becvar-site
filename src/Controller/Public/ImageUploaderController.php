@@ -75,7 +75,6 @@ class ImageUploaderController extends AbstractController
 
         } else {
             $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
-            return new RedirectResponse('/');
         }
     }
 

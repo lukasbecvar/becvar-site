@@ -83,7 +83,6 @@ class ChatApiController extends AbstractController
                 } catch (\Exception $e) {
                     $this->errorManager->handleError('error to save message: ' . $e->getMessage(), 401);
                     $this->logManager->log('system-error', 'chat message save error: '.$e->getMessage());
-                    return new RedirectResponse('/');
                 }
                 return $this->json([
                     'status' => 'success',
@@ -97,7 +96,6 @@ class ChatApiController extends AbstractController
             }
         } else {
             $this->errorManager->handleError('error to save message: only for authenticated users!', 401);
-            return new RedirectResponse('/');
         }
     }
 
@@ -137,7 +135,6 @@ class ChatApiController extends AbstractController
             return $this->json($messageData);
         } else {
             $this->errorManager->handleError('error to get messages: only for authenticated users!', 401);
-            return new RedirectResponse('/');
         }
     }
 }

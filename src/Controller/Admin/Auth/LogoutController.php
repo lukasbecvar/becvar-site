@@ -37,7 +37,6 @@ class LogoutController extends AbstractController
             return $this->redirectToRoute('auth_login');
         } else {
             $this->errorManager->handleError('logout error: unknown error in logout function', 500);
-            return new RedirectResponse('/');
         }
     }
 }
