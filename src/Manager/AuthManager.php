@@ -282,4 +282,16 @@ class AuthManager
             return null;
         }
     }
+
+    public function isLoggedAdmin(): bool
+    {
+        $token = $this->getUserToken();
+        $role = $this->getUserRole($token);
+
+        if ($role == 'Owner' || $role == 'Admin') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

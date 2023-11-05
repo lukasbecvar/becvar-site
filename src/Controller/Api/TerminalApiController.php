@@ -6,6 +6,7 @@ use App\Util\JsonUtil;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
+use App\Manager\LogManager;
 use App\Manager\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TerminalApiController extends AbstractController
 {
     private JsonUtil $jsonUtil;
+    private LogManager $logManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
@@ -27,12 +29,14 @@ class TerminalApiController extends AbstractController
 
     public function __construct(
         JsonUtil $jsonUtil,
+        LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
         SessionManager $sessionManager
     ) {
         $this->jsonUtil = $jsonUtil;
+        $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
@@ -43,9 +47,12 @@ class TerminalApiController extends AbstractController
     public function terminalAction(Request $request)
     {
         // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
+        if ($this->authManager->isUserLogedin() && $this->authManager->isLoggedAdmin()) {
             // start session (for saving working path)
             $this->sessionManager->startSession();
+
+            // get username
+            $username = $this->authManager->getUsername();
 
             // set default working dir
             if ($this->sessionManager->checkSession('terminal-dir')) {
@@ -135,18 +142,22 @@ class TerminalApiController extends AbstractController
                     } else {
 
                         // execute command
-                        exec($command, $output, $returnCode);
+                        exec($command, $output, $return_code);
 
                         // check if command run valid
-                        if ($returnCode !== 0) {
+                        if ($return_code !== 0) {
 
                             // check if command not found
-                            if ($returnCode == 127) {
+                            if ($return_code == 127) {
+                                $this->logManager->log('terminal', $username.' executed not found command: '.$command);
                                 return new Response('command: ' . $command . ' not found');
                             } else {
+                                $this->logManager->log('terminal', $username.' executed command: '.$command.' with error code: '.$return_code);
                                 return new Response('error to execute command: ' . $command);
                             }
                         } else {
+
+                            $this->logManager->log('terminal', $username.' executed command: '.$command);
 
                             // get output
                             $output = implode("\n", $output);
