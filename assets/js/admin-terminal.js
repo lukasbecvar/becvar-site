@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // elements list
     const terminal = document.getElementById('output-container');
+    const command_container = document.getElementById('command-container');
     const command_input = document.getElementById('command');
     const user_element = document.getElementById('user');
     const path_element = document.getElementById('path');
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (command.toLowerCase() === 'clear') {
             terminal.innerHTML = '';
         } else {
+            command_container.style.display = 'none';
             const xhr = new XMLHttpRequest();
             xhr.open('POST', api_url, true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -86,11 +88,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         terminal.innerHTML += '<div>' + xhr.responseText + '</div>';
+                        command_container.style.display = '';
                         scrollToBottom();
+                        command_input.focus();
                     } else {
                         console.log(xhr.responseText);
                         terminal.innerHTML += '<div class="text-warning">Error communicating with the API.</div>';
                         scrollToBottom();
+                        command_input.focus();
                     }
                 }
             };

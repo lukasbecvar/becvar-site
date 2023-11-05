@@ -987,7 +987,7 @@ textarea {
     padding-top: 8px;
     padding-right: 8px;
     padding-left: 8px;
-    font-size: 16px;
+    font-size: 20px !important;
 	margin-bottom: 0px;
     overflow-x: hidden;
 	color: #30ff30;
@@ -1006,7 +1006,7 @@ textarea {
 .terminal-component #prompt-line {
     white-space: nowrap;
     color: rgb(86, 86, 255);
-    font-size: 16px;
+    font-size: 22px !important;
 }
 
 .terminal-component .prompr-reset {
@@ -1020,7 +1020,7 @@ textarea {
     outline: none;
     margin-left: 5px;
     color: white;
-    font-size: 16px;
+    font-size: 22px !important;
 }
 
 /* mobile devices style */
