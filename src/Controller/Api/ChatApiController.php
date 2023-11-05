@@ -41,7 +41,7 @@ class ChatApiController extends AbstractController
     }
 
     #[Route('/api/chat/save/message', name: 'api_chat_save')]
-    public function saveMessage(Request $request): Response
+    public function saveMessage(Request $request)
     {
         // check if user loggedin
         if ($this->authManager->isUserLogedin()) {
@@ -100,7 +100,7 @@ class ChatApiController extends AbstractController
     }
 
     #[Route('/api/chat/get/messages', name: 'api_chat_get')]
-    public function getMessages(): Response
+    public function getMessages()
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

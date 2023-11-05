@@ -225,6 +225,8 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getRole();
+        } else {
+            return null;
         }
     }
 

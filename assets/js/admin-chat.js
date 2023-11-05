@@ -3,7 +3,7 @@ const chatDiv = document.getElementById('chat');
 const messagesDiv = document.getElementById('messages');
 const messageInput = document.getElementById('message');
 const sendButton = document.getElementById('send');
-
+ 
 // initialize variables
 let lastMessageId = 0; // keeps track of the last displayed message's ID
 let userIsScrolling = false; // indicates whether the user is currently scrolling
@@ -89,8 +89,9 @@ setInterval(getChatMessages, 500);
 sendButton.addEventListener('click', sendMessage);
 
 // add a keypress event listener to send a message when the Enter key is pressed
-messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
+messageInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
         sendMessage();
+        messageInput.value = '';
     }
 });

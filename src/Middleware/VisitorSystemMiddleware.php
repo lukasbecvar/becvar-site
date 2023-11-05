@@ -108,7 +108,7 @@ class VisitorSystemMiddleware
         $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');
         $visitorEntity->setStatus('online');
-        $visitorEntity->setStatusUpdateTime(time());
+        $visitorEntity->setStatusUpdateTime(strval(time()));
             
         // insert new visitor
         try {

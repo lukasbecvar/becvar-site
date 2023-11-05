@@ -25,7 +25,7 @@ class LogoutController extends AbstractController
     }
 
     #[Route('/logout', name: 'auth_logout')]
-    public function logout(): Response
+    public function logout()
     {
         // logout user (if session found)
         if ($this->authManager->isUserLogedin()) {

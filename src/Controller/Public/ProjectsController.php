@@ -49,7 +49,7 @@ class ProjectsController extends AbstractController
     }
 
     #[Route('/projects/update', name: 'public_projects_update')]
-    public function projectsUpdate(): Response
+    public function projectsUpdate()
     {
         // check if user logged
         if ($this->authManager->isUserLogedin()) {

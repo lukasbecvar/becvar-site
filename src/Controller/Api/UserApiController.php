@@ -32,7 +32,7 @@ class UserApiController extends AbstractController
     }
 
     #[Route('/api/user/update/activity', name: 'api_user_status')]
-    public function updateStatus(EntityManagerInterface $entityManager): Response
+    public function updateStatus(EntityManagerInterface $entityManager)
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

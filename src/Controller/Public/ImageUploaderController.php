@@ -47,7 +47,7 @@ class ImageUploaderController extends AbstractController
     }
 
     #[Route('/image/view', name: 'public_image_viewer')]
-    public function imageView(Request $request): Response
+    public function imageView(Request $request)
     {
         // get image token
         $token = $this->siteUtil->getQueryString('token', $request);
