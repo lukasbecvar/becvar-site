@@ -2,9 +2,9 @@
 
 namespace App\Manager;
 
-use App\Entity\Visitor;
 use App\Util\JsonUtil;
 use App\Util\SiteUtil;
+use App\Entity\Visitor;
 use Detection\MobileDetect;
 use Doctrine\ORM\EntityManagerInterface;
 

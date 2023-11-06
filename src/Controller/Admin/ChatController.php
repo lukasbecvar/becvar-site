@@ -17,10 +17,7 @@ class ChatController extends AbstractController
     private AuthManager $authManager;
     private VisitorManager $visitorManager;
 
-    public function __construct(
-        AuthManager $authManager,
-        VisitorManager $visitorManager
-    ) {
+    public function __construct(AuthManager $authManager, VisitorManager $visitorManager) {
         $this->authManager = $authManager;
         $this->visitorManager = $visitorManager;
     }

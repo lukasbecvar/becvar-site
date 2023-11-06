@@ -11,12 +11,12 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class TranslationsMiddleware
 {
-    private LocaleAwareInterface $translator;
     private VisitorManager $visitorManager;
+    private LocaleAwareInterface $translator;
     
     public function __construct(
-        LocaleAwareInterface $translator, 
-        VisitorManager $visitorManager
+        VisitorManager $visitorManager,
+        LocaleAwareInterface $translator 
     ) {
         $this->translator = $translator;
         $this->visitorManager = $visitorManager;

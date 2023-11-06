@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
-use App\Manager\DatabaseManager;
 use App\Manager\VisitorManager;
+use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,21 +22,21 @@ class DatabaseBrowserController extends AbstractController
     private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
-    private DatabaseManager $databaseManager;
     private VisitorManager $visitorManager;
+    private DatabaseManager $databaseManager;
 
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
-        DatabaseManager $databaseManager,
-        VisitorManager $visitorManager
+        VisitorManager $visitorManager,
+        DatabaseManager $databaseManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->databaseManager = $databaseManager;
         $this->visitorManager = $visitorManager;
+        $this->databaseManager = $databaseManager;
     }
 
     #[Route('/admin/database', name: 'admin_database_list')]

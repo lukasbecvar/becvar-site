@@ -4,9 +4,7 @@ namespace App\Controller\Admin\Auth;
 
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
@@ -18,8 +16,7 @@ class LogoutController extends AbstractController
     private AuthManager $authManager;
     private ErrorManager $errorManager;
 
-    public function __construct(AuthManager $authManager, ErrorManager $errorManager)
-    {
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager) {
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
     }

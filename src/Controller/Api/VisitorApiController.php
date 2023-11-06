@@ -18,10 +18,7 @@ class VisitorApiController extends AbstractController
     private LogManager $logManager;
     private VisitorManager $visitorManager;
 
-    public function __construct(
-        LogManager $logManager,
-        VisitorManager $visitorManager
-    ) {
+    public function __construct(LogManager $logManager, VisitorManager $visitorManager) {
         $this->logManager = $logManager;
         $this->visitorManager = $visitorManager;
     }

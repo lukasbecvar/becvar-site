@@ -17,6 +17,7 @@ the main part of this application is the admin panel which contains functions an
  - Chat system
 
 ## Public site
+the public part of the site contains information about me and my projects
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader / view
@@ -48,7 +49,6 @@ the main part of this application is the admin panel which contains functions an
  - npm 9 or <
 
 ## TODOS
-- [ ] Admin file browser (server file system)
 - [ ] Complte refactor & code format
 - [ ] PHPUnit tests
 - [ ] Deep testing

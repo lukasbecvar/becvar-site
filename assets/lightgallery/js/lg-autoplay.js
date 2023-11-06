@@ -1,5 +1,5 @@
 /**!
- * lg-autoplay.js | 1.2.0 | May 20th 2020
+ * lg-autoplay.js | 1.2.0 - edited | May 20th 2020
  * http://sachinchoolur.github.io/lg-autoplay.js
  * Copyright (c) 2016 Sachin N; 
  * @license GPLv3 

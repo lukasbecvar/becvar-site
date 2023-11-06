@@ -26,7 +26,7 @@ class LoginController extends AbstractController
     public function __construct(
         LogManager $logManager, 
         AuthManager $authManager, 
-        SecurityUtil $securityUtil,
+        SecurityUtil $securityUtil
     ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;

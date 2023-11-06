@@ -19,19 +19,19 @@ class InboxController extends AbstractController
 {
     private SiteUtil $siteUtil;
     private AuthManager $authManager;
-    private MessagesManager $messagesManager;
     private VisitorManager $visitorManager;
+    private MessagesManager $messagesManager;
 
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
-        MessagesManager $messagesManager,
-        VisitorManager $visitorManager
+        VisitorManager $visitorManager,
+        MessagesManager $messagesManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
-        $this->messagesManager = $messagesManager;
         $this->visitorManager = $visitorManager;
+        $this->messagesManager = $messagesManager;
     }
     
     #[Route('/admin/inbox', name: 'admin_inbox')]

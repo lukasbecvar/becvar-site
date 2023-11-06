@@ -2,13 +2,11 @@
 
 namespace App\Controller\Api;
 
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use App\Manager\LogManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*

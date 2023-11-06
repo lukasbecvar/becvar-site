@@ -4,14 +4,12 @@ namespace App\Controller\Api;
 
 use App\Util\SecurityUtil;
 use App\Entity\ChatMessage;
+use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use App\Manager\LogManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
@@ -120,6 +118,7 @@ class ChatApiController extends AbstractController
                 // get sender token
                 $sender = $message->getSender();
 
+                // build message
                 $messageData[] = [
                     'id' => $message->getId(),
                     'day' => $message->getDay(),

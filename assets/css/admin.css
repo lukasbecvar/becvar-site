@@ -469,14 +469,6 @@ textarea {
 	overflow-x: hidden;
 }
 
-.custom-file-label {
-	color: white;
-}
-
-.php-info {
-	overflow-x: scroll;
- }
-
 .todo-area {
 	width: calc(100% - 6.5%);
 	color:white;

@@ -1,8 +1,8 @@
 // get references to HTML elements
-const chatDiv = document.getElementById('chat');
-const messagesDiv = document.getElementById('messages');
-const messageInput = document.getElementById('message');
-const sendButton = document.getElementById('send');
+const chat = document.getElementById('chat');
+const messages = document.getElementById('messages');
+const message_input = document.getElementById('message');
+const send_button = document.getElementById('send');
  
 // initialize variables
 let lastMessageId = 0; // keeps track of the last displayed message's ID
@@ -13,15 +13,15 @@ function displayMessage(message, sender, role, pic, day, time) {
     // check if the sender is not the system
     if (sender !== 'You_184911818748818kgf') {
         // determine whether the user is at the bottom of the chat
-        const isAtBottom = chatDiv.scrollTop + chatDiv.clientHeight >= chatDiv.scrollHeight - 5;
+        const isAtBottom = chat.scrollTop + chat.clientHeight >= chat.scrollHeight - 5;
 
         // append the message to the messages container
         if (role == 'Owner' || role == 'Admin') {
-            messagesDiv.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-red">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-red">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
         } else if (role == 'User') {
-            messagesDiv.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-success">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-success">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
         } else {
-            messagesDiv.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture">' + sender + ' (' + day + ' ' + time + '):´ <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture">' + sender + ' (' + day + ' ' + time + '):´ <br>' + message + '</p>';
         }
 
         // if the user is at the bottom of the chat, scroll to the new message
@@ -33,7 +33,7 @@ function displayMessage(message, sender, role, pic, day, time) {
 
 // function to send a chat message to the server
 function sendMessage() {
-    const message = messageInput.value;
+    const message = message_input.value;
     if (message) {
         // send a POST request to save the message
         fetch('/api/chat/save/message', {
@@ -47,7 +47,7 @@ function sendMessage() {
         .then(data => {
             if (data.status === 'message saved') {
                 // clear the message input after sending
-                messageInput.value = '';
+                message_input.value = '';
                 // display the sent message in the chat
                 displayMessage(message, 'You_184911818748818kgf', new Date().toLocaleString());
             } else {
@@ -59,7 +59,7 @@ function sendMessage() {
 
 // function to scroll to the bottom of the chat
 function scrollToBottom() {
-    chatDiv.scrollTop = chatDiv.scrollHeight;
+    chat.scrollTop = chat.scrollHeight;
 }
 
 // function to fetch and display chat messages from the server
@@ -86,12 +86,12 @@ getChatMessages();
 setInterval(getChatMessages, 500);
 
 // add a click event listener to the send button to send messages
-sendButton.addEventListener('click', sendMessage);
+send_button.addEventListener('click', sendMessage);
 
 // add a keypress event listener to send a message when the Enter key is pressed
-messageInput.addEventListener("keypress", function(e) {
+message_input.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
         sendMessage();
-        messageInput.value = '';
+        message_input.value = '';
     }
 });
