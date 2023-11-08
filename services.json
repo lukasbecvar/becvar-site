@@ -4,7 +4,6 @@
         "display_name": "SSHD",
         "enable": true 
     },
-    
     "mysql": {
         "service_name": "mysql",
         "display_name": "Mysql",

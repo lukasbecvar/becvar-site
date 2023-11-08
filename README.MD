@@ -49,9 +49,7 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
-- [ ] Complte refactor & code format
 - [ ] PHPUnit tests
-- [ ] Deep testing
 
 ## Dependencies 
 * Symfony

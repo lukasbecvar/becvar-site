@@ -43,30 +43,31 @@ class TerminalApiController extends AbstractController
     }
 
     #[Route('/api/system/terminal', name: 'api_terminal')]
-    public function terminalAction(Request $request)
+    public function terminalAction(Request $request): Response
     {
         // check if user logged in
-        if ($this->authManager->isUserLogedin() && $this->authManager->isLoggedAdmin()) {
-            // start session (for saving working path)
-            $this->sessionManager->startSession();
-
-            // get username
-            $username = $this->authManager->getUsername();
-
-            // set default working dir
-            if ($this->sessionManager->checkSession('terminal-dir')) {
-                $currentDir = $this->sessionManager->getSessionValue('terminal-dir');
-                if (!file_exists($currentDir)) {
-                    $currentDir = '/';
-                }
-                chdir($currentDir);
-            } else {
-                chdir('/');
-            }
+        if ($this->authManager->isUserLogedin() && $this->authManager->isAdmin()) {
 
             // check if request is post
             if ($request->isMethod('POST')) {
-                
+
+                // start session (for saving working path)
+                $this->sessionManager->startSession();
+
+                // get username
+                $username = $this->authManager->getUsername();
+
+                // set default working dir
+                if ($this->sessionManager->checkSession('terminal-dir')) {
+                    $currentDir = $this->sessionManager->getSessionValue('terminal-dir');
+                    if (!file_exists($currentDir)) {
+                        $currentDir = '/';
+                    }
+                    chdir($currentDir);
+                } else {
+                    chdir('/');
+                }
+
                 // get command
                 $command = $request->request->get('command');
 
@@ -168,13 +169,14 @@ class TerminalApiController extends AbstractController
                             return new Response($output);
                         }
                     }
+                } else {
+                    return $this->errorManager->handleError('terminal-api: command data is empty!', 401);
                 }
             } else {
-
-                return new Response('terminal-api: request is not POST');
+                return $this->errorManager->handleError('terminal-api: request is not POST!', 500);
             }
         } else {
-            $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
+            return $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
         }
     }
 }

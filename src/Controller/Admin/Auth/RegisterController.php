@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Form\RegisterFormType;
 use App\Manager\VisitorManager;
@@ -18,7 +19,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Register controller provides user register function
-    This function is enabled only if users table is empty!
+    ! This function is enabled only if users table is empty or for owner users !
+    ! Login uses its own Authenticator not symfony auth !
 */
 
 class RegisterController extends AbstractController
@@ -28,6 +30,7 @@ class RegisterController extends AbstractController
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;  
+    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -36,6 +39,7 @@ class RegisterController extends AbstractController
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
@@ -44,13 +48,14 @@ class RegisterController extends AbstractController
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/register', name: 'auth_register')]
     public function register(Request $request): Response
     {
-        // check if user table is empty (register only for first account)
-        if (!$this->authManager->isUsersEmpty()) {
+        // check if user table is empty or if registrant is admin
+        if (!$this->authManager->isRegisterPageAllowed()) {
             return $this->redirectToRoute('auth_login');   
         } else {
             // default error msg
@@ -92,7 +97,7 @@ class RegisterController extends AbstractController
                 } else {
 
                     // get user ip
-                    $ip_address = $this->visitorManager->getIP();
+                    $ip_address = $this->visitorInfoUtil->getIP();
                 
                     // generate token
                     $token = ByteString::fromRandom(32)->toString();
@@ -119,7 +124,7 @@ class RegisterController extends AbstractController
                     $user->setStatusUpdateTime('not-online'); // set not online status update time
                     $user->setVisitorId(strval($visitor_id)); // set visitor id
 
-                    // log regstration event
+                    // log registration event
                     $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
 
                     // insert new user
@@ -127,12 +132,14 @@ class RegisterController extends AbstractController
                         $this->entityManager->persist($user);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
+                        return $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
                     }
 
                     // set user token (login-token session)
-                    $this->authManager->login($username, $user->getToken(), false);
-
+                    if (!$this->authManager->isUserLogedin()) {
+                        $this->authManager->login($username, $user->getToken(), false);
+                    }
+                        
                     // redirect to homepage
                     return $this->redirectToRoute('admin_dashboard');
                 }

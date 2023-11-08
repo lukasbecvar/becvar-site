@@ -46,7 +46,7 @@ class ImageUploaderController extends AbstractController
     }
 
     #[Route('/image/view', name: 'public_image_viewer')]
-    public function imageView(Request $request)
+    public function imageView(Request $request): Response
     {
         // get image token
         $token = $this->siteUtil->getQueryString('token', $request);
@@ -73,7 +73,7 @@ class ImageUploaderController extends AbstractController
             ]);
 
         } else {
-            $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
+            return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         }
     }
 
@@ -123,7 +123,7 @@ class ImageUploaderController extends AbstractController
                     $this->entityManager->persist($image);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
+                    return $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
                 }
 
                 // log to database

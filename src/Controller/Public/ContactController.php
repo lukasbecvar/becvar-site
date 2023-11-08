@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
+use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
 use App\Manager\VisitorManager;
 use App\Manager\MessagesManager;
@@ -25,6 +26,7 @@ class ContactController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
     private MessagesManager $messagesManager;
 
     public function __construct(
@@ -32,13 +34,15 @@ class ContactController extends AbstractController
         AuthManager $authManager,
         SecurityUtil $securityUtil, 
         VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
     ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->messagesManager = $messagesManager;
         $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->messagesManager = $messagesManager;
     }
 
     #[Route('/contact', name: 'public_contact')]
@@ -49,7 +53,7 @@ class ContactController extends AbstractController
         $success_msg = null;
 
         // get visitor ip address
-        $ip_address = $this->visitorManager->getIP();
+        $ip_address = $this->visitorInfoUtil->getIP();
 
         // handle success status
         if ($request->query->get('status') == 'ok') {

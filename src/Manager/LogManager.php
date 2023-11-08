@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Log;
 use App\Util\SecurityUtil;
+use App\Util\VisitorInfoUtil;
 use App\Manager\CookieManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,6 +18,7 @@ class LogManager
     private SecurityUtil $securityUtil;
     private CookieManager $cookieManager;
     private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
     
     public function __construct(
@@ -24,6 +26,7 @@ class LogManager
         SecurityUtil $securityUtil, 
         CookieManager $cookieManager,
         VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->errorManager = $errorManager;
@@ -31,66 +34,63 @@ class LogManager
         $this->cookieManager = $cookieManager;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     public function log(string $name, string $value): void 
     {
         // check if logs enabled in config
-        if ($this->isLogsEnabled()) {
+        if ($this->isLogsEnabled() && !$this->isEnabledAntiLog()) {
 
-            // check if antilog is disabled
-            if (!$this->isEnabledAntiLog()) {
+            // get log level
+            $level = $this->getLogLevel();
 
-                // get log level
-                $level = $this->getLogLevel();
+            // disable database log for level 1 & 2
+            if ($name == 'database' && $level < 3) {
+                return;
+            }
 
-                // disable database log for level 1 & 2
-                if ($name == 'database' && $level < 3) {
-                    return;
-                }
+            // disable paste, image-uploader log for level 1
+            if (($name == 'code-paste' || $name == 'image-uploader' || $name == 'message-sender') && $level < 2) {
+                return;
+            }
 
-                // disable paste, image-uploader log for level 1
-                if (($name == 'code-paste' || $name == 'image-uploader' || $name == 'message-sender') && $level < 2) {
-                    return;
-                }
+            // get current date
+            $date = date('d.m.Y H:i:s');
 
-                // get current date
-                $date = date('d.m.Y H:i:s');
+            // get visitor browser agent
+            $browser = $this->visitorInfoUtil->getBrowser();
 
-                // get visitor browser agent
-                $browser = $this->visitorManager->getBrowser();
+            // get visitor ip address
+            $ip_address = $this->visitorInfoUtil->getIP();
 
-                // get visitor ip address
-                $ip_address = $this->visitorManager->getIP();
+            // get visitor id
+            $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
 
-                // get visitor id
-                $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
-
-                // xss escape inputs
-                $name = $this->securityUtil->escapeString($name);
-                $value = $this->securityUtil->escapeString($value);
-                $browser = $this->securityUtil->escapeString($browser);
-                $ip_address = $this->securityUtil->escapeString($ip_address);
+            // xss escape inputs
+            $name = $this->securityUtil->escapeString($name);
+            $value = $this->securityUtil->escapeString($value);
+            $browser = $this->securityUtil->escapeString($browser);
+            $ip_address = $this->securityUtil->escapeString($ip_address);
                 
-                // create new log enity
-                $LogEntity = new Log();
+            // create new log enity
+            $LogEntity = new Log();
 
-                // set log entity values
-                $LogEntity->setName($name); 
-                $LogEntity->setValue($value); 
-                $LogEntity->setTime($date); 
-                $LogEntity->setIpAddress($ip_address); 
-                $LogEntity->setBrowser($browser); 
-                $LogEntity->setStatus('unreaded'); 
-                $LogEntity->setVisitorId($visitor_id);
+            // set log entity values
+            $LogEntity->setName($name); 
+            $LogEntity->setValue($value); 
+            $LogEntity->setTime($date); 
+            $LogEntity->setIpAddress($ip_address); 
+            $LogEntity->setBrowser($browser); 
+            $LogEntity->setStatus('unreaded'); 
+            $LogEntity->setVisitorId($visitor_id);
                 
-                // try insert row
-                try {
-                    $this->entityManager->persist($LogEntity);
-                    $this->entityManager->flush();
-                } catch (\Exception $e) {
-                    $this->errorManager->handleError('log flush error: '.$e->getMessage(), 500);
-                }
+            // try insert row
+            try {
+                $this->entityManager->persist($LogEntity);
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->errorManager->handleError('log flush error: '.$e->getMessage(), 500);
             }
         }
     }
@@ -123,7 +123,7 @@ class LogManager
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
             $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorManager->getBrowserShortify($user_agent);
+            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
             $log->setBrowser($formated_browser);
         }
 
@@ -158,7 +158,7 @@ class LogManager
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
             $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorManager->getBrowserShortify($user_agent);
+            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
             $log->setBrowser($formated_browser);
         }
 

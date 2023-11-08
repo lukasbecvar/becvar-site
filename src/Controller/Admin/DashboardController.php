@@ -12,8 +12,8 @@ use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Util\DashboardUtil;
 use App\Manager\LogManager;
-use App\Manager\AuthManager;
 use App\Manager\BanManager;
+use App\Manager\AuthManager;
 use App\Manager\ServiceManager;
 use App\Manager\VisitorManager;
 use Symfony\Component\String\ByteString;
@@ -113,7 +113,7 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/admin/dashboard/emergency/shutdown', name: 'admin_emergency_shutdown')]
-    public function emergencyShutdown (): Response
+    public function emergencyShutdown(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -124,24 +124,34 @@ class DashboardController extends AbstractController
             // generate configmation code
             $confirm_code = ByteString::fromRandom(16)->toString();
     
-            // check if form submited
-            if (isset($_POST['submitShutdown'])) {
+            // check request is post
+            if ($request->isMethod('POST')) {
+
+                // get post data
+                $form_submit = $request->request->get('submitShutdown');
+                $shutdown_code = $request->request->get('shutdownCode');
+                $confirm_code = $request->request->get('confirmCode');
+
+                // check if form submited
+                if (isset($form_submit)) {
+
+                    // check if codes submited
+                    if (isset($shutdown_code) && isset($confirm_code)) {
+
+                        // escape post data
+                        $code_1 = $this->securityUtil->escapeString($shutdown_code);
+                        $code_2 = $this->securityUtil->escapeString($confirm_code);
     
-                // check if data is empty
-                if (empty($_POST['confirmCode']) or empty($_POST['shutdownCode'])) {
-                    $error_msg = 'You must enter all values';
-                } else {
-                    // get form data & escape
-                    $code_1 = $this->securityUtil->escapeString($_POST['confirmCode']);
-                    $code_2 = $this->securityUtil->escapeString($_POST['shutdownCode']);
-    
-                    // check if codes is valid
-                    if ($code_1 == $code_2) {
-    
-                        // execute shutdown
-                        $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
+                        // check if codes is valid
+                        if ($code_1 == $code_2) {
+            
+                            // execute shutdown
+                            $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
+                        } else {
+                            $error_msg = 'confirmation codes is not matched';
+                        }
                     } else {
-                        $error_msg = 'confirmation codes is not matched';
+                        $error_msg = 'You must enter all values';
                     }
                 }
             }
@@ -166,7 +176,7 @@ class DashboardController extends AbstractController
     } 
 
     #[Route('/admin/dashboard/runner', name: 'admin_service_manager')]
-    public function serviceRunner(Request $request): Response
+    public function serviceActionRunner(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {

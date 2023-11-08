@@ -131,36 +131,43 @@ class DatabaseBrowserController extends AbstractController
             // get referer query string
             $referer = $request->query->get('referer');
 
-			// check if user submit edit form
-			if (isset($_POST['submitEdit'])) {
+            // check request is post
+            if ($request->isMethod('POST')) {
 
-                // update values
-                foreach($columns as $row) { 
+                $form_submit = $request->request->get('submitEdit');
 
-                    // check if form value is empty
-                    if (empty($_POST[$row])) {
-                        if ($row != 'id') {
-                            $error_msg = $row.' is empty';
-                            break;
+                // check if user submit edit form
+                if (isset($form_submit)) {
+
+                    // update values
+                    foreach($columns as $row) { 
+
+                        // check if form value is empty
+                        if (empty($_POST[$row])) {
+                            if ($row != 'id') {
+                                $error_msg = $row.' is empty';
+                                break;
+                            }
+                        } else {
+                            // get value & escape
+                            $value = $this->securityUtil->escapeString($request->request->get($row));
+
+                            // update value
+                            $this->databaseManager->updateValue($table, $row, $value, $id);
                         }
-                    } else {
-                        // get value & escape
-                        $value = $this->securityUtil->escapeString($_POST[$row]);
-
-                        // update value
-                        $this->databaseManager->updateValue($table, $row, $value, $id);
                     }
-                }
 
-                // redirect back to browser
-                if ($error_msg == null) {
-                 
-                    return $this->redirectToRoute('admin_database_browser', [
-                        'table' => $table,
-                        'page' => $page
-                    ]);
+                    // redirect back to browser
+                    if ($error_msg == null) {
+                    
+                        return $this->redirectToRoute('admin_database_browser', [
+                            'table' => $table,
+                            'page' => $page
+                        ]);
+                    }
+
                 }
-            }            
+            }          
 
             return $this->render('admin/database-browser.html.twig', [
                 // component properties
@@ -212,36 +219,43 @@ class DatabaseBrowserController extends AbstractController
             // get table columns
             $columns = $this->databaseManager->getTableColumns($table);
 
-            // check if form submited
-            if (isset($_POST['submitSave'])) {
+            // check request is post
+            if ($request->isMethod('POST')) {
 
-                $columnsBuilder = [];
-                $valuesBuilder = [];
-            
-                // Build columns and values list
-                foreach ($columns as $column) {
-                    if ($column != 'id') {
-                        if (!empty($_POST[$column])) {
-                            $columnsBuilder[] = $column;
-                            $valuesBuilder[] = $this->securityUtil->escapeString($_POST[$column]);
-                        } else {
-                            $error_msg = 'value: '.$column.' is empty';
-                            break;
+                $form_submit = $request->request->get('submitSave');
+
+                // check if form submited
+                if (isset($form_submit)) {
+
+                    $columnsBuilder = [];
+                    $valuesBuilder = [];
+                
+                    // build columns and values list
+                    foreach ($columns as $column) {
+                        if ($column != 'id') {
+                            $column_value = $request->request->get($column);
+                            if (!empty($column_value)) {
+                                $columnsBuilder[] = $column;
+                                $valuesBuilder[] = $this->securityUtil->escapeString($column_value);
+                            } else {
+                                $error_msg = 'value: '.$column.' is empty';
+                                break;
+                            }
                         }
                     }
-                }
-                
-                // execute new row insert
-                if ($error_msg == null) {
-                    $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
-                }
-
-                // redirect back to browser
-                if ($error_msg == null) {
-                    return $this->redirectToRoute('admin_database_browser', [
-                        'table' => $table,
-                        'page' => $page
-                    ]);
+                    
+                    // execute new row insert
+                    if ($error_msg == null) {
+                        $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
+                    }
+    
+                    // redirect back to browser
+                    if ($error_msg == null) {
+                        return $this->redirectToRoute('admin_database_browser', [
+                            'table' => $table,
+                            'page' => $page
+                        ]);
+                    }
                 }
             }
 

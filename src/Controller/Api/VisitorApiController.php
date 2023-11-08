@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Manager\LogManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,17 +18,23 @@ class VisitorApiController extends AbstractController
 {
     private LogManager $logManager;
     private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(LogManager $logManager, VisitorManager $visitorManager) {
+    public function __construct(
+        LogManager $logManager, 
+        VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil
+    ) {
         $this->logManager = $logManager;
         $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/api/visitor/update/activity', name: 'api_visitor_status')]
     public function updateStatus(EntityManagerInterface $entityManager): Response
     {
         // get user ip
-        $ip_address = $this->visitorManager->getIP();
+        $ip_address = $this->visitorInfoUtil->getIP();
 
         // get visitor repository
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);

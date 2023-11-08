@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Util\SiteUtil;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -26,16 +27,16 @@ class ErrorController extends AbstractController
 
     // handle error
     #[Route('/error', methods: ['GET'], name: 'error_by_code')]
-    public function errorHandle(Request $request): void
+    public function errorHandle(Request $request): Response
     {
         // get error code
         $code = $this->siteUtil->getQueryString('code', $request);
 
         // block handeling (maintenance, banned use only from app logic)
         if ($code == 'maintenance' or $code == 'banned' or $code == null) {
-            $this->errorManager->handleErrorView('unknown');
+            return new Response($this->errorManager->handleErrorView('unknown'));
         } else {
-            $this->errorManager->handleErrorView($code);
+            return new Response($this->errorManager->handleErrorView($code));
         }
     }
 }

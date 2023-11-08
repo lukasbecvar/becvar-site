@@ -8,7 +8,7 @@
                 </strong>
             </a>
         </li>
-        <li class="count-text-in-menuR">Row editor</li>
+        <li class="count-text-in-menu">Row editor</li>
     {# <===== ROW ADD =====> #}
     {% elseif new_row_table != null %}
         <li>
@@ -18,7 +18,7 @@
                 </strong>
             </a>
         </li>
-        <li class="count-text-in-menuR">New row</li>
+        <li class="count-text-in-menu">New row</li>
     {# <===== TABLE VIEWER =====> #}
     {% elseif table_name != null %}
         <li>
@@ -49,6 +49,13 @@
                 <a class="selector-button btn-small" href="/projects/update"><i class="project-update fas fa-sync"></i></a>
             </li>        
         {% endif %}
-        <li class="count-text-in-menuR">{{ table_name }} = {{ table_data_count_all }} rows</li>
+
+        {# <===== REGISTER NEW USER BUTTON =====> #}
+        {% if table_name == 'users' %}
+            <li>
+                <a class="selector-button btn-small" href="/register"><strong>REGISTER</strong></a>
+            </li>        
+        {% endif %}
+        <li class="count-text-in-menu">{{ table_name }} = {{ table_data_count_all }} rows</li>
     {% endif %}
 </ul>

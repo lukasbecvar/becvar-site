@@ -9,6 +9,7 @@ use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -39,7 +40,7 @@ class ChatApiController extends AbstractController
     }
 
     #[Route('/api/chat/save/message', name: 'api_chat_save')]
-    public function saveMessage(Request $request)
+    public function saveMessage(Request $request): Response
     {
         // check if user loggedin
         if ($this->authManager->isUserLogedin()) {
@@ -79,8 +80,8 @@ class ChatApiController extends AbstractController
                     $this->entityManager->persist($message);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    $this->errorManager->handleError('error to save message: ' . $e->getMessage(), 401);
                     $this->logManager->log('system-error', 'chat message save error: '.$e->getMessage());
+                    return $this->errorManager->handleError('error to save message: ' . $e->getMessage(), 401);
                 }
                 return $this->json([
                     'status' => 'success',
@@ -93,12 +94,12 @@ class ChatApiController extends AbstractController
                 ], 400);
             }
         } else {
-            $this->errorManager->handleError('error to save message: only for authenticated users!', 401);
+            return $this->errorManager->handleError('error to save message: only for authenticated users!', 401);
         }
     }
 
     #[Route('/api/chat/get/messages', name: 'api_chat_get')]
-    public function getMessages()
+    public function getMessages(): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -110,6 +111,7 @@ class ChatApiController extends AbstractController
             // get messages
             $messages = $this->entityManager->getRepository(ChatMessage::class)->findBy([], ['id' => 'DESC'], $limit);
 
+            // sort messages reverse
             $messages = array_reverse($messages);
 
             // build message data
@@ -133,7 +135,7 @@ class ChatApiController extends AbstractController
             // return messages json
             return $this->json($messageData);
         } else {
-            $this->errorManager->handleError('error to get messages: only for authenticated users!', 401);
+            return $this->errorManager->handleError('error to get messages: only for authenticated users!', 401);
         }
     }
 }

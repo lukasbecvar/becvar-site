@@ -8,6 +8,7 @@ use App\Form\BanFormType;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\AuthManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,19 +26,22 @@ class VisitorManagerController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
-        VisitorManager $visitorManager
+        VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/visitors', name: 'admin_visitor_manager')]
@@ -61,7 +65,7 @@ class VisitorManagerController extends AbstractController
 
                 // visitor manager data
                 'page' => $page,
-                'current_ip' => $this->visitorManager->getIP(),
+                'current_ip' => $this->visitorInfoUtil->getIP(),
                 'online_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
                 'banned_count' => $this->banManager->getBannedCount(),
                 'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],

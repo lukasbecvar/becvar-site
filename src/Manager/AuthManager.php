@@ -71,7 +71,6 @@ class AuthManager
 
                 // log to mysql
                 $this->logManager->log('authenticator', 'user: '.$username.' logged in');
-
             } else {
                 $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
             }
@@ -128,8 +127,13 @@ class AuthManager
             // update user status
             $this->setStatus($user, 'offline');
 
+            // log logout event
             $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
+            
+            // unset login cookie
             $this->cookieManager->unset('login-token-cookie');
+
+            // unset login session
             $this->sessionManager->destroySession();   
         } 
     }
@@ -155,12 +159,16 @@ class AuthManager
 
     public function setLastLoginDate(): void 
     {
+        // get date & time
         $date = date('d.m.Y H:i:s');
+
+        // get user data
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
         // check if user repo found
         if ($user != null) {
 
+            // update last login time
             $user->setLastLoginTime($date);
 
             // update last login time
@@ -174,9 +182,6 @@ class AuthManager
 
     public function getUserToken(): ?string 
     {
-        // default token value
-        $token = null;
-
         // check if session exist
         if ($this->sessionManager->checkSession('login-token')) {
 
@@ -185,17 +190,17 @@ class AuthManager
 
             // check if token exist in database
             if ($this->getUserRepository(['token' => $login_token]) != null) {
-                $token = $login_token;
+                return $login_token;
+            } else {
+                return null;
             }
+        } else {
+            return null;
         }
-
-        return $token;
     }
 
     public function getUsername(string $token = 'self'): ?string 
     {
-        $username = null;
-
         // get token
         if ($token == 'self') {
             $token = $this->getUserToken();
@@ -206,10 +211,10 @@ class AuthManager
 
         // check if user repo found
         if ($user != null) {
-            $username = $user->getUsername();
-        } 
-
-        return $username;
+            return $user->getUsername();
+        } else {
+            return null;
+        }
     }
 
     public function getUserRole(string $token = 'self'): ?string 
@@ -232,8 +237,6 @@ class AuthManager
 
     public function getUserProfilePic(string $token = 'self'): ?string 
     {
-        $avatar = null;
-
         // get token
         if ($token == 'self') {
             $token = $this->getUserToken();
@@ -244,10 +247,10 @@ class AuthManager
 
         // check if user repo found
         if ($user != null) {
-            $avatar = $user->getProfilePic();
-        } 
-
-        return $avatar;
+            return $user->getProfilePic();
+        } else {
+            return null;
+        }
     }
 
     public function isUsersEmpty(): bool
@@ -285,12 +288,21 @@ class AuthManager
         }
     }
 
-    public function isLoggedAdmin(): bool
+    public function isAdmin(): bool
     {
         $token = $this->getUserToken();
         $role = $this->getUserRole($token);
 
         if ($role == 'Owner' || $role == 'Admin') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isRegisterPageAllowed(): bool
+    {
+        if ($this->isUsersEmpty() or ($this->isUserLogedin() && $this->isAdmin())) {
             return true;
         } else {
             return false;

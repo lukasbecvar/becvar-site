@@ -57,7 +57,7 @@ class PasteController extends AbstractController
             if (strlen($content) > 60001) {
 
                 // redirect error
-                $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
+                return $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
 
             } else {
 
@@ -80,7 +80,7 @@ class PasteController extends AbstractController
                         $this->entityManager->persist($paste);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
                     } 
                 } 
 
@@ -117,7 +117,7 @@ class PasteController extends AbstractController
 
             $this->logManager->log('code-paste', 'visitor viewed paste: '.$name);
         } else {
-            $this->errorManager->handleError('error paste not found', 404);
+            return $this->errorManager->handleError('error paste not found', 404);
         }
 
         return $this->render('public/paste/paste-view.html.twig', ['file' => $token, 'paste_content' => $content]);

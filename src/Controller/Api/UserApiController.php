@@ -6,6 +6,7 @@ use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -30,7 +31,7 @@ class UserApiController extends AbstractController
     }
 
     #[Route('/api/user/update/activity', name: 'api_user_status')]
-    public function updateStatus(EntityManagerInterface $entityManager)
+    public function updateStatus(EntityManagerInterface $entityManager): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -71,7 +72,7 @@ class UserApiController extends AbstractController
             }
             
         } else {
-            $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
+            return $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
         }
     }
 }

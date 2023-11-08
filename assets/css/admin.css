@@ -15,8 +15,13 @@ body {
 	zoom: 80%;
 }
 
-.overflow-x-hiden {
-	overflow-x: hidden;
+body.active .wrapper .sidebar {
+	left: -225px;
+}
+  
+body.active .wrapper .section {
+	margin-left: 0;
+	width: 100%;
 }
 
 a:hover {
@@ -29,6 +34,44 @@ ul {
 
 form {
 	color:white;
+}
+
+textarea {
+	height: 150px;
+	line-height: 150%;
+	resize: none;
+}
+
+.green-text {
+	color: #35ee3b !important;
+}
+
+.online-text {
+	color: #35ee3b !important;
+}
+
+.color-white {
+	color: white;
+}
+
+.text-red {
+	color: rgb(253, 94, 94) !important;
+}
+
+.text-light-green {
+	color: rgb(39, 179, 20);
+}
+
+.text-dark-yellow {
+	color: rgb(179, 150, 20);
+}
+
+.green-text:hover {
+	color: #ee3535 !important;
+}
+
+.white-text {
+	color: #FFFFFF !important;
 }
 
 #wrarning-box {
@@ -121,15 +164,6 @@ form {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
-.role-line {
-	font-size: 18px;
-	color: rgb(148, 255, 241);
-}
-
-.hamburger {
-	text-decoration: none;
-}
-
 .wrapper .section .top-navbar {
 	position: fixed; 
 	z-index: 1000; 
@@ -153,14 +187,14 @@ form {
 	padding: 50px;
 	line-height: 28px;
 }
-  
-body.active .wrapper .sidebar {
-	left: -225px;
+
+.role-line {
+	font-size: 18px;
+	color: rgb(148, 255, 241);
 }
-  
-body.active .wrapper .section {
-	margin-left: 0;
-	width: 100%;
+
+.hamburger {
+	text-decoration: none;
 }
 
 .register-page {
@@ -201,12 +235,6 @@ button {
 	outline:0;
 }
 
-textarea {
-	height: 150px;
-	line-height: 150%;
-	resize: none;
-}
-
 .alert {
 	position: relative;
 	top: 20px;
@@ -231,7 +259,7 @@ textarea {
     background-size: cover;
 }
 
-.login-form {
+.form {
 	margin-top: 4%;
 	padding: 0.5%;
 	background: rgba(0, 0, 0, 0.596);
@@ -242,18 +270,14 @@ textarea {
 	min-width: 350px;
 }
 
-.ac-form {
-	background-color: #303030 !important;
-}
-
-.login-form .text-input:-webkit-autofill, .login-form .text-input:-webkit-autofill:hover , .login-form .text-input:-webkit-autofill:focus {
+.form .text-input:-webkit-autofill, .form .text-input:-webkit-autofill:hover , .form .text-input:-webkit-autofill:focus {
     border: 2px solid rgba(255, 255, 255, 0.24);
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-form-pos-y {
+.form-pos-y {
 	padding: 1%;
 	top: 27%;
 	left: 50%;
@@ -281,16 +305,12 @@ textarea {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 }
 
-.bg-image-input {
-	background-color: rgba(0, 0, 0, 0.596) !important;
-}
-
-.login-form-title {
+.form-title {
 	color: white;
 	text-align: center;
 }
 
-.login-form-sub-title {
+.form-sub-title {
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -415,6 +435,11 @@ textarea {
 
 .card {
 	margin-top: 10px;
+    background-color: #303030;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 .dashbord-card {
@@ -431,12 +456,6 @@ textarea {
 .visitors-info-card {
 	width: 27.7%;
 	display: inline-block;
-}
-
-.custom-col-md-10 {
-    width: 85.3%;
-	margin-left: 15px;
-	margin-right: 15px;
 }
 
 .delete-link {
@@ -502,37 +521,6 @@ textarea {
 	width: 6.6%;
 }
 
-.settings-value-box {
-	color: white;
-	position: relative;
-	width: 45%;
-	padding: 3px;
-	padding-left: 8px;
-	border: 1px solid white;
-	transform: translate(-50%, -50%);
-	font-size: 28px;
-	top: 10%;
-	left: 50%;
-	margin-bottom: 0;
-}
-
-.settings-button {
-	color: white;
-	border: 1px solid white;
-	padding: 4px;
-	float: right;
-	font-size: 20px;
-	padding-left: 6px;
-	padding-right: 6px;
-	margin-left: 5px;
-}
-
-.settings-button:hover {
-	color: #fada28;
-	border: 1px solid #fada28;
-	text-decoration: none;
-}
-
 .table {
 	position: relative;
 	font-size: 18px;
@@ -578,11 +566,6 @@ textarea {
 }
 
 .count-text-in-menu {
-	color: white;
-	left: 1%;
-}
-
-.count-text-in-menuR {
 	color: white;
 	position: absolute;
 	right: 1%;
@@ -630,19 +613,6 @@ textarea {
 	margin-left: 5px;
 }
 
-.card {
-    background-color: #303030;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 4px;
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.l-bg-dark {
-    background: linear-gradient(to right, #1a1a1a, #242424) !important;
-    color: #fff;
-}
-
 .card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
     font-size: 110px;
 }
@@ -666,10 +636,6 @@ textarea {
     right: -5px;
     top: 20px;
     opacity: 0.1;
-}
-
-.todo-error-alert {
-	margin-bottom: 3%;
 }
 
 .stats-link {
@@ -712,42 +678,6 @@ textarea {
 .websiteIN {
 	display: none;
 }
-  
-.blue-grey.darken-1 {
-	background-color: #4a535c;
-}
-  
-.green-text {
-	color: #35ee3b !important;
-}
-
-.online-text {
-	color: #35ee3b !important;
-}
-
-.color-white {
-	color: white;
-}
-
-.text-red {
-	color: rgb(253, 94, 94) !important;
-}
-
-.text-light-green {
-	color: rgb(39, 179, 20);
-}
-
-.text-dark-yellow {
-	color: rgb(179, 150, 20);
-}
-
-.green-text:hover {
-	color: #ee3535 !important;
-}
-
-.white-text {
-	color: #FFFFFF !important;
-}
 
 .todo-table {
 	position: absolute;
@@ -762,11 +692,6 @@ textarea {
 
 .line-item:hover {
 	background-color: rgba(87, 87, 87, 0.397);
-}
-
-.card-sub-title {
-	font-size: 28px;
-	margin-bottom: 0;
 }
 
 .counter-card {
@@ -1017,10 +942,6 @@ textarea {
 
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
-	.custom-col-md-10 {
-		width: 95%;
-		margin-left: 10px;
-	}
 	.account-settings-table {
 		max-width: 100%;
 	}
@@ -1044,7 +965,7 @@ textarea {
 		margin-bottom: 20px;
 		font-size: 18px;
 	}
-	.login-form-title {
+	.form-title {
 		font-size: 20px;
 	}
 	.todo-button {
@@ -1056,21 +977,6 @@ textarea {
 	}
 	.delete-link-todos {
 		font-size: 15px;
-	}
-	.settings-value-box {
-		width: 98%;
-		padding: 1.5px;
-		padding-left: 4px;
-		font-size: 17px;
-		top: 5%;
-		left: 50%;
-	}
-	.settings-button {
-		padding: 1px;
-		font-size: 13px;
-		padding-left: 3px;
-		padding-right: 3px;
-		margin-left: 2px;
 	}
 	.alert {
 		top: 6%;
@@ -1089,19 +995,16 @@ textarea {
 	.back-page-button {
 		font-size: 17px;
 	}
-	.login-form {
+	.form {
 		margin-top: 18%;
 		padding: 0.5%;
 		left: 50%;
 		width: 90%;
 	}
-	.login-form-pos-y {
+	.form-pos-y {
 		padding: 10px;
 	}
 	.count-text-in-menu {
-		display: none;
-	}
-	.count-text-in-menuR {
 		display: none;
 	}
 	.selector-button {
@@ -1142,9 +1045,6 @@ textarea {
 	.log-reader-info {
 		font-size: 16px;
 	}
-	.todo-error-alert {
-		margin-top: 11%;
-	}
 	.close {
 		margin-top: -7px;
 	}
@@ -1184,9 +1084,6 @@ textarea {
 /* fix dashboard for tablets */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 	.card-phone {
-		width: 97.5%;
-	}
-	.custom-col-md-10 {
 		width: 97.5%;
 	}
 } 

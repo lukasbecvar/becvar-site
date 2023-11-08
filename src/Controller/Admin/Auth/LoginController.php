@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Login controller provides user login function
-    Login uses its own Authenticator not symfony auth
+    ! Login uses its own Authenticator not symfony auth !
 */
 
 class LoginController extends AbstractController
@@ -68,8 +68,11 @@ class LoginController extends AbstractController
                     // get user data
                     $user = $this->authManager->getUserRepository(['username' => $username]);
 
+                    // get user password form database
+                    $user_password = $user->getPassword();
+
                     // check if password valid
-                    if ($this->securityUtil->hash_validate($password , $user->getPassword())) {
+                    if ($this->securityUtil->hash_validate($password, $user_password)) {
 
                         // set user token (login-token session)
                         $this->authManager->login($username, $user->getToken(), $remember);
@@ -91,7 +94,7 @@ class LoginController extends AbstractController
             // render login view
             return $this->render('admin/auth/login.html.twig', [
                 'error_msg' => $error_msg,
-                'is_users_empty' => $this->authManager->isUsersEmpty(),
+                'is_users_empty' => $this->authManager->isRegisterPageAllowed(),
                 'login_form' => $form->createView()
             ]);
         }

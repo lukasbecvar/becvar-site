@@ -5,6 +5,10 @@ namespace App\Twig;
 use Twig\TwigFilter;
 use Twig\Extension\AbstractExtension;
 
+/*
+    This is a custom extension for twig to replace link to clickable html link (use with |linkify) 
+*/
+
 class LinkifyExtension extends AbstractExtension
 {
     public function getFilters(): array

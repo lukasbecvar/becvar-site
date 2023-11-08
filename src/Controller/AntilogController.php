@@ -47,7 +47,7 @@ class AntilogController extends AbstractController
                 $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
             }
         } else {
-            $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
+            return $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
         }
         return $this->redirectToRoute('admin_dashboard');
     }

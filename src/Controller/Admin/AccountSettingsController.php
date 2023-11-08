@@ -43,7 +43,7 @@ class AccountSettingsController extends AbstractController
         $this->visitorManager = $visitorManager;
     }
 
-    #[Route('/admin/account/settings', name: 'admin_account_settings')]
+    #[Route('/admin/account/settings', name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
         // check if user logged in
@@ -69,7 +69,7 @@ class AccountSettingsController extends AbstractController
         }
     }
 
-    #[Route('/admin/account/settings/pic', name: 'admin_account_settings_pic')]
+    #[Route('/admin/account/settings/pic', name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
         // check if user logged in
@@ -112,9 +112,9 @@ class AccountSettingsController extends AbstractController
                         $this->entityManager->flush();
 
                         // redirect back to values table
-                        return $this->redirectToRoute('admin_account_settings');
+                        return $this->redirectToRoute('admin_account_settings_table');
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 } else {
                     $error_msg = 'please select image file';
@@ -143,7 +143,7 @@ class AccountSettingsController extends AbstractController
         }
     }
 
-    #[Route('/admin/account/settings/username', name: 'admin_account_settings_username')]
+    #[Route('/admin/account/settings/username', name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
         // check if user logged in
@@ -162,8 +162,11 @@ class AccountSettingsController extends AbstractController
             // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get username
-                $username = $this->securityUtil->escapeString($form->get('username')->getData());
+                // get username 
+                $username = $form->get('username')->getData();
+
+                // escape username (XSS protection)
+                $username = $this->securityUtil->escapeString($username);
 
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
@@ -174,10 +177,10 @@ class AccountSettingsController extends AbstractController
                     $this->entityManager->flush();
 
                     // redirect back to values table
-                    return $this->redirectToRoute('admin_account_settings');
+                    return $this->redirectToRoute('admin_account_settings_table');
 
                 } catch (\Exception $e) {
-                    $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                 }  
             }
             
@@ -203,8 +206,8 @@ class AccountSettingsController extends AbstractController
         }
     }
 
-    #[Route('/admin/account/settings/password', name: 'admin_account_settings_password')]
-    public function accountSettingsPassword(Request $request): Response
+    #[Route('/admin/account/settings/password', name: 'admin_account_settings_password_change')]
+    public function accountSettingsPasswordChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
@@ -222,9 +225,13 @@ class AccountSettingsController extends AbstractController
             // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get passwords & escape XSS
-                $password = $this->securityUtil->escapeString($form->get('password')->getData());
-                $repassword = $this->securityUtil->escapeString($form->get('repassword')->getData());
+                // get passwords
+                $password = $form->get('password')->getData();
+                $repassword = $form->get('repassword')->getData();
+
+                // escape data (XSS protection)
+                $password = $this->securityUtil->escapeString($password);
+                $repassword = $this->securityUtil->escapeString($repassword);
 
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
@@ -234,15 +241,21 @@ class AccountSettingsController extends AbstractController
                 } else {
                     // update username
                     try {
+                        
+                        // hash password
                         $password_hash = $this->securityUtil->gen_bcrypt($password, 10);
+
+                        // update password
                         $userRepo->setPassword($password_hash);
+
+                        // flush user data
                         $this->entityManager->flush();
 
                         // redirect back to values table
-                        return $this->redirectToRoute('admin_account_settings');
+                        return $this->redirectToRoute('admin_account_settings_table');
 
                     } catch (\Exception $e) {
-                        $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  
                 }
             }

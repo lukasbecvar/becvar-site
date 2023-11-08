@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use Twig\Environment;
 use App\Util\SiteUtil;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
     Error manager provides error handle operations
@@ -20,37 +21,31 @@ class ErrorManager
         $this->siteUtil = $siteUtil;
     }
 
-    public function handleError(string $msg, int $code): void
+    public function handleError(string $msg, int $code): Response
     {
-        // check if app in devmode
+        // check if app is in dev mode
         if ($this->siteUtil->isDevMode()) {
-
-            // build app error msg
+            // build app error message
             $data = [
                 'status' => 'error',
                 'code' => $code,
                 'message' => $msg
             ];
-
-            // kill app & send error json
-            die(json_encode($data));
-
-        // error (for non devmode visitors)
+            // return JSON response
+            return die(json_encode($data));
         } else {
-            die($this->handleErrorView(strval($code)));
+            // return an error view response
+            return die($this->handleErrorView(strval($code)));
         }
-    }
+    }    
 
-    public function handleErrorView(string $code): string
+    public function handleErrorView(string $code)
     {
         // try to get view
         try {
-            $view = $this->twig->render('errors/error-'.$code.'.html.twig');
+            return $this->twig->render('errors/error-'.$code.'.html.twig');
         } catch (\Exception) {
-            $view = $this->twig->render('errors/error-unknown.html.twig');
+            return $this->twig->render('errors/error-unknown.html.twig');
         }
-
-        // die app & render error view
-        die($view);
     }
 }

@@ -7,6 +7,7 @@ use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,7 @@ class VisitorSystemMiddleware
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -32,6 +34,7 @@ class VisitorSystemMiddleware
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager 
     ) {
         $this->twig = $twig;
@@ -39,18 +42,19 @@ class VisitorSystemMiddleware
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
-        $this->visitorManager = $visitorManager;
         $this->entityManager = $entityManager;
+        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     public function onKernelRequest(): void
     {
         // get data to insert
         $date = date('d.m.Y H:i');
-        $os = $this->visitorManager->getOS();
-        $ip_address = $this->visitorManager->getIP();
-        $browser = $this->visitorManager->getBrowser();
-        $location = $this->visitorManager->getLocation($ip_address);
+        $os = $this->visitorInfoUtil->getOS();
+        $ip_address = $this->visitorInfoUtil->getIP();
+        $browser = $this->visitorInfoUtil->getBrowser();
+        $location = $this->visitorInfoUtil->getLocation($ip_address);
 
         // escape inputs
         $ip_address = $this->securityUtil->escapeString($ip_address);

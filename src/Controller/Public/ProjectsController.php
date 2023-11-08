@@ -48,7 +48,7 @@ class ProjectsController extends AbstractController
     }
 
     #[Route('/projects/update', name: 'public_projects_update')]
-    public function projectsUpdate()
+    public function projectsUpdate(): Response
     {
         // check if user logged
         if ($this->authManager->isUserLogedin()) {
@@ -58,7 +58,7 @@ class ProjectsController extends AbstractController
                 'page' => 1
             ]);
         } else {
-            $this->errorManager->handleError('error to update project list: please login first', 401);
+            return $this->errorManager->handleError('error to update project list: please login first', 401);
         }
     }
 }
