@@ -685,6 +685,10 @@ button {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
+.todo-table-top-reset {
+	top: 50px !important;
+}
+
 .line-item {
 	border-top: 2px solid #242627;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
