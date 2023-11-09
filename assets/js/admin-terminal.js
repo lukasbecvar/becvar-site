@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const terminal = document.getElementById('output-container');
     const command_container = document.getElementById('command-container');
     const command_input = document.getElementById('command');
-    const user_element = document.getElementById('user');
+    const hostname_element = document.getElementById('user');
     const path_element = document.getElementById('path');
 
     const api_url = '/api/system/terminal';
 
     let currentPath = '';
-    let currentUser = '';
+    let currentHostname = '';
 
     // select command input
     command_input.focus();
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
         path_element.textContent = currentPath;
     }
 
-    function updateUser() {
-        user_element.textContent = currentUser;
+    function updateHostname() {
+        hostname_element.textContent = 'root@' + currentHostname;
     }
 
     function scrollToBottom() {
@@ -40,30 +40,30 @@ document.addEventListener("DOMContentLoaded", function() {
         xhr.send('command=get_current_path_1181517815187484');
     }
 
-    function getCurrentUser() {
+    function getCurrentHostname() {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', api_url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                currentUser = xhr.responseText;
-                updateUser();
+                currentHostname = xhr.responseText;
+                updateHostname();
             }
         };
-        xhr.send('command=get_current_user_1181517815187484');
+        xhr.send('command=get_current_hostname_1181517815187484');
     }
 
-    getCurrentUser();
+    getCurrentHostname();
     getCurrentPath();
 
     command_input.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             const command = this.value.trim();
             if (command.length > 0) {
-                terminal.innerHTML += '<div class="prompr-reset" id="prompt-line"><span id="user">' + user_element.textContent + '</span><span class="color-white">:</span><span id="path">' + path_element.textContent + '</span><span id="prompt" class="color-white">$ ' + command + '</span></div>';
+                terminal.innerHTML += '<div class="prompr-reset" id="prompt-line"><span id="user">' + hostname_element.textContent + '</span><span class="color-white">:</span><span id="path">' + path_element.textContent + '</span><span id="prompt" class="color-white">$ ' + command + '</span></div>';
                 this.value = '';
                 executeCommand(command);
-                getCurrentUser();
+                getCurrentHostname();
                 getCurrentPath();
                 scrollToBottom();
             }

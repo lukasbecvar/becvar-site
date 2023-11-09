@@ -117,8 +117,8 @@ class TerminalApiController extends AbstractController
                     }
 
                     // get user (system get)
-                    if ($command === 'get_current_user_1181517815187484') {
-                        return new Response(get_current_user());
+                    if ($command === 'get_current_hostname_1181517815187484') {
+                        return new Response(gethostname());
                     }
 
                     // update cwd (system get)
@@ -142,7 +142,7 @@ class TerminalApiController extends AbstractController
                     } else {
 
                         // execute command
-                        exec($command, $output, $return_code);
+                        exec('sudo '.$command, $output, $return_code);
 
                         // check if command run valid
                         if ($return_code !== 0) {
