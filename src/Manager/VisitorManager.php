@@ -3,7 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\Visitor;
-use Detection\MobileDetect;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -89,16 +88,6 @@ class VisitorManager
         }
     }
 
-    public function getVisitorRepositoryByID(int $id): ?object 
-    {
-        return $this->getRepositoryByArray(['id' => $id]);
-    }
-
-    public function getVisitorRepository(string $ip_address): ?object 
-    {
-        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
-    }
-
     public function getVisitorID(string $ip_address): ?int 
     {
         // try to get visitor data
@@ -158,11 +147,6 @@ class VisitorManager
 
         return $visitors;
     }
-    
-    public function getVisitorsCount(int $page): int
-    {
-        return count($this->getVisitors($page));
-    }
 
     public function getVisitorLanguage(): ?string
     {
@@ -176,10 +160,19 @@ class VisitorManager
         }
     }
 
-    public function isMobile(): bool 
+    public function getVisitorRepositoryByID(int $id): ?object 
     {
-        $detect = new MobileDetect();
-        return $detect->isMobile();
+        return $this->getRepositoryByArray(['id' => $id]);
+    }
+
+    public function getVisitorRepository(string $ip_address): ?object 
+    {
+        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
+    }
+    
+    public function getVisitorsCount(int $page): int
+    {
+        return count($this->getVisitors($page));
     }
 
     public function getVisitorsWhereStstus(string $status): ?array

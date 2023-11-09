@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use App\Manager\VisitorManager;
+use App\Util\VisitorInfoUtil;
 use App\Form\PasswordChangeFormType;
 use App\Form\UsernameChangeFormType;
 use App\Form\ProfilePicChangeFormType;
@@ -26,21 +26,21 @@ class AccountSettingsController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/account/settings', name: 'admin_account_settings_table')]
@@ -50,7 +50,7 @@ class AccountSettingsController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -124,7 +124,7 @@ class AccountSettingsController extends AbstractController
             // render profile pic change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -187,7 +187,7 @@ class AccountSettingsController extends AbstractController
             // render username change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -263,7 +263,7 @@ class AccountSettingsController extends AbstractController
             // render password change form
             return $this->render('admin/account-settings.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

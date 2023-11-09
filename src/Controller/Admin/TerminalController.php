@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
-use App\Manager\VisitorManager;
+use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,12 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TerminalController extends AbstractController
 {
     private AuthManager $authManager;
-    private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(AuthManager $authManager, VisitorManager $visitorManager)
+    public function __construct(AuthManager $authManager, VisitorInfoUtil $visitorInfoUtil)
     {
         $this->authManager = $authManager;
-        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/terminal', name: 'admin_terminal')]
@@ -30,7 +30,7 @@ class TerminalController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/terminal.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

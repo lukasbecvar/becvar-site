@@ -198,21 +198,6 @@ class DatabaseManager
         $this->logManager->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
     }
 
-    public function isTableExist(string $table_name): bool 
-    {
-        return $this->connection->getSchemaManager()->tablesExist([$table_name]);
-    }
-
-    public function countTableData(string $table_name): int 
-    {
-        return count($this->getTableData($table_name, false));
-    }
-
-    public function countTableDataByPage(string $table_name, int $page): int 
-    {
-        return count($this->getTableDataByPage($table_name, $page, false));
-    }
-
     public function getImages(int $page): ?array
     {
         $images_list = $this->getTableDataByPage('images', $page);
@@ -230,5 +215,20 @@ class DatabaseManager
         }
 
         return $images;
+    }
+
+    public function isTableExist(string $table_name): bool 
+    {
+        return $this->connection->getSchemaManager()->tablesExist([$table_name]);
+    }
+
+    public function countTableData(string $table_name): int 
+    {
+        return count($this->getTableData($table_name, false));
+    }
+
+    public function countTableDataByPage(string $table_name, int $page): int 
+    {
+        return count($this->getTableDataByPage($table_name, $page, false));
     }
 }   

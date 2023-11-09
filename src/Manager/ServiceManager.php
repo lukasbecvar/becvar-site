@@ -29,6 +29,7 @@ class ServiceManager
 
     public function getServices(): ?array 
     {
+        // get services list from services.json 
         $services_list = $this->getServicesJson();
         $services = [];  
 
@@ -91,15 +92,6 @@ class ServiceManager
             $this->executeCommand($command);
         } else {
             $this->errorManager->handleError('error action runner is only for authentificated users', 401);
-        }
-    }
-
-    public function isServicesListExist(): bool 
-    {
-        if ($this->getServicesJson() != null) {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -168,6 +160,16 @@ class ServiceManager
             }
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get ufw status'.$e->getMessage(), 500);
+            return false;
+        }
+    }
+    
+    public function isServicesListExist(): bool 
+    {
+        // check if services list exist
+        if ($this->getServicesJson() != null) {
+            return true;
+        } else {
             return false;
         }
     }

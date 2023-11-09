@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Util\SiteUtil;
 use App\Util\DashboardUtil;
 use App\Manager\AuthManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\ServiceManager;
-use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,20 +21,20 @@ class DiagnosticController extends AbstractController
     private AuthManager $authManager;
     private DashboardUtil $dashboardUtil;
     private ServiceManager $serviceManager;
-    private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
         DashboardUtil $dashboardUtil,
         ServiceManager $serviceManager,
-        VisitorManager $visitorManager
+        VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->dashboardUtil = $dashboardUtil;
         $this->serviceManager = $serviceManager;
-        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/diagnostic', name: 'admin_diagnostics')]
@@ -44,7 +44,7 @@ class DiagnosticController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/diagnostic.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

@@ -921,7 +921,6 @@ button {
 
 .terminal-component #prompt {
     display: inline-block;
-    font-weight: bold;
 }
 
 .terminal-component #prompt-line {

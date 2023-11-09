@@ -143,8 +143,8 @@ class ContactController extends AbstractController
             'twitter_link' => $_ENV['TWITTER_LINK'],
             'github_link' => $_ENV['GITHUB_LINK'],
             'contact_form' => $form->createView(),
-            'error_msg' => $error_msg,
-            'success_msg' => $success_msg
+            'success_msg' => $success_msg,
+            'error_msg' => $error_msg
         ]);
     }
 }

@@ -96,6 +96,7 @@ class ProjectsManager
 
     public function dropProjects(): void 
     {
+        // get projects repository
         $repository = $this->entityManager->getRepository(Project::class);
         
         // get projects entitys
@@ -111,6 +112,18 @@ class ProjectsManager
             $this->entityManager->flush();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to delete projects list: '.$e->getMessage(), 500);
+        }
+    }
+
+    public function resetIndex(): void 
+    {
+        // reset table AUTO_INCREMENT
+        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
+        $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
+        try {
+            $this->entityManager->getConnection()->executeQuery($sql);
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to reset projects index: '.$e->getMessage(), 500);
         }
     }
 
@@ -132,17 +145,5 @@ class ProjectsManager
             $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
             return 0;
         }   
-    }
-
-    public function resetIndex(): void 
-    {
-        // reset table AUTO_INCREMENT
-        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
-        $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
-        try {
-            $this->entityManager->getConnection()->executeQuery($sql);
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('error to reset projects index: '.$e->getMessage(), 500);
-        }
     }
 }

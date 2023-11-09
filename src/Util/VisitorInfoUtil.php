@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use Detection\MobileDetect;
+
 /*
     Visitor info util provides visitors info getters
 */
@@ -19,11 +21,16 @@ class VisitorInfoUtil
 
     public function getIP(): ?string 
     {
+        // check client ip
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $address = $_SERVER['HTTP_CLIENT_IP'];
+
+        // check forwarded ip (get ip from cloudflare visitors) 
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $address = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
+
+            // default header
             $address = $_SERVER['REMOTE_ADDR'];
         }
         return $address;
@@ -31,112 +38,117 @@ class VisitorInfoUtil
 
     public function getBrowser(): ?string 
     {
+        // get user agent
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $browser = 'Unknown';
 
+        // check if user agent found
         if ($user_agent != null) {
-            $browser = $user_agent;
+            return $user_agent;
+        } else {
+            return 'Unknown';
         }
-            
-        return $browser;
     }
 
     public function getBrowserShortify(string $user_agent): ?string 
     {
-        $out = null;
+        $output = null;
 
         // identify shortify array [ID: str_contains, Value: replacement]
         $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../browser-list.json');
 
         // check if browser list found
-        if ($browser_list != NULL) {
+        if ($browser_list != null) {
 
-            // get short output from browser list
+            // check all user agents 
             foreach ($browser_list as $index => $value) {
+
+                // check if index found in agent
                 if (str_contains($user_agent, $index)) {
-                    $out = $value;
+                    $output = $value;
                 }
             }
         }
 
-        if ($out == null) {
+        // check if output is not found in browser list
+        if ($output == null) {
+
             // identify Internet explorer
             if(preg_match('/MSIE (\d+\.\d+);/', $user_agent)) {
-                $out = 'Internet Explore';
+                $output = 'Internet Explore';
 
             } else if (str_contains($user_agent, 'MSIE')) {
-                $out = 'Internet Explore';   
+                $output = 'Internet Explore';   
 
             // identify Google chrome
             } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent) ) {
-                $out = 'Chrome';
+                $output = 'Chrome';
             
             // identify Internet edge
             } else if (preg_match('/Edge\/\d+/', $user_agent)) {
-                $out = 'Edge';
+                $output = 'Edge';
             
             // identify Firefox
             } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = 'Firefox';
+                $output = 'Firefox';
 
             } else if (str_contains($user_agent, 'Firefox/96')) {
-                $out = 'Firefox/96';  
+                $output = 'Firefox/96';  
                 
             // identify Safari
             } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = 'Safari';
+                $output = 'Safari';
                 
             // identify UC Browser
             } else if (str_contains($user_agent, 'UCWEB')) {
-                $out = 'UC Browser';
+                $output = 'UC Browser';
 
             // identify UCBrowser Browser
             } else if (str_contains($user_agent, 'UCBrowser')) {
-                $out = 'UC Browser';
+                $output = 'UC Browser';
 
             // identify IceApe Browser
             } else if (str_contains($user_agent, 'Iceape')) {
-                $out = 'IceApe Browser';
+                $output = 'IceApe Browser';
 
             // identify Maxthon Browser
             } else if (str_contains($user_agent, 'maxthon')) {
-                $out = 'Maxthon Browser';
+                $output = 'Maxthon Browser';
 
             // identify Konqueror Browser
             } else if (str_contains($user_agent, 'konqueror')) {
-                $out = 'Konqueror Browser';
+                $output = 'Konqueror Browser';
 
             // identify NetFront Browser
             } else if (str_contains($user_agent, 'NetFront')) {
-                $out = 'NetFront Browser';
+                $output = 'NetFront Browser';
 
             // identify Midori Browser
             } else if (str_contains($user_agent, 'Midori')) {
-                $out = 'Midori Browser';
+                $output = 'Midori Browser';
 
             // identify Opera
             } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = 'Opera';
+                $output = 'Opera';
 
             } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent)) {
-                $out = 'Opera';
+                $output = 'Opera';
             }
         }
 
-        // if notfound
-        if ($out == null) {
-            $out = $user_agent;
-        }
+        // if not found
+        if ($output == null) {
+            $output = $user_agent;
+        
+        } 
 
-        return $out;
+        return $output;
     }
 
     public function getOS(): ?string 
     { 
+        // get user agent
         $agent = $this->getBrowser();
-        
-        $os = 'Unknown OS';
-        
+                
         // OS list
         $os_array = array (
             '/windows nt 5.2/i'     =>  'Windows Server_2003',
@@ -166,17 +178,21 @@ class VisitorInfoUtil
             '/ipad/i'               =>  'iPad'
         );
         
-        foreach ($os_array as $regex => $value) {
+        // check all os in list
+        foreach ($os_array as $index => $value) {
 
-            // check if os found
-            if ($regex != null && $agent != null) {
-                if (preg_match($regex, $agent)) {
-                    $os = $value;
+            if ($index != null && $agent != null) {
+                
+                // check if os found
+                if (preg_match($index, $agent)) {
+                    return $value;
+                } else {
+                    return 'Unknown OS';
                 }
+            } else {
+                return 'Unknown OS';
             }
         }
-        
-        return $os;
     }
 
     public function getLocation(string $ip_address): ?array
@@ -187,6 +203,7 @@ class VisitorInfoUtil
         } else {
  
             try {
+                // get geoplugin url form app enviroment
                 $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
 
                 // get data from geoplugin
@@ -206,6 +223,7 @@ class VisitorInfoUtil
                 } else {
                     $city = null;
                 }
+
             } catch (\Exception) {
 
                 // set null if data not getted
@@ -225,4 +243,9 @@ class VisitorInfoUtil
         return ['city' => $city, 'country' => $country];
     }
 
+    public function isMobile(): bool 
+    {
+        $detect = new MobileDetect();
+        return $detect->isMobile();
+    }
 }

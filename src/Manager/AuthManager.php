@@ -6,7 +6,8 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
-    Ban manager provides login/logout methods
+    Auth manager provides login/logout methods
+    ! Login uses its own Authenticator not symfony auth !
 */
 
 class AuthManager
@@ -150,11 +151,6 @@ class AuthManager
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to update user status: '.$e->getMessage(), 500);
         }       
-    }
-
-    public function getUsersWhereStatus(string $status): ?array
-    {
-        return $this->entityManager->getRepository(User::class)->findBy(['status' => $status]);
     }
 
     public function setLastLoginDate(): void 
@@ -307,5 +303,10 @@ class AuthManager
         } else {
             return false;
         }
+    }
+
+    public function getUsersWhereStatus(string $status): ?array
+    {
+        return $this->entityManager->getRepository(User::class)->findBy(['status' => $status]);
     }
 }

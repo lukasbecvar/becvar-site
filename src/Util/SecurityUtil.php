@@ -25,7 +25,7 @@ class SecurityUtil
 
 	public static function encrypt_aes(string $plain_text, string $method = 'AES-128-CBC'): string {
 		
-        // get encryption password
+        // get encryption password form app enviroment
         $password = $_ENV['APP_SECRET'];
 
 		$salt = openssl_random_pseudo_bytes(8);

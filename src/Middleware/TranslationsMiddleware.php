@@ -27,6 +27,7 @@ class TranslationsMiddleware
         // get visitor language
         $language = $this->visitorManager->getVisitorLanguage();
 
+        // check unidentified languages
         if ($language == null or $language == 'host' or $language == 'unknown') {
             $this->translator->setLocale('en');
         } else {

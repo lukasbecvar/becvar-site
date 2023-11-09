@@ -17,8 +17,9 @@ class SiteUtil
         $this->securityUtil = $securityUtil;
     }
 
-    public function getHttpHost(): ?string
+    public function getHttpHost(): string
     {
+        // return host url
         return Request::createFromGlobals()->getHost();
     }
 
@@ -26,6 +27,7 @@ class SiteUtil
     {
 		$localhost = false;
 
+        // get host url
         $host = SiteUtil::getHttpHost();
 
         // check if host is null
@@ -52,9 +54,14 @@ class SiteUtil
 
     public function isSsl(): bool 
     {
+        // check if set https header
         if (isset($_SERVER['HTTPS'])) {
+
+            // https value (1)
             if ($_SERVER['HTTPS'] == 1) {
                 return true;
+
+            // check https value (on)
             } elseif ($_SERVER['HTTPS'] == 'on') {
                 return true;
             } else {
@@ -67,6 +74,7 @@ class SiteUtil
 
     public function isMaintenance(): bool 
     {
+        // check if maintenance mode enabled in app enviroment
         if ($_ENV['MAINTENANCE_MODE'] == 'true') {
             return true;
         } else {
@@ -76,6 +84,7 @@ class SiteUtil
 
     public function isDevMode(): bool 
     {
+        // check if dev mode enabled in app enviroment
         if ($_ENV['APP_ENV'] == 'dev') {
             return true;
         } else {
@@ -85,14 +94,19 @@ class SiteUtil
 
     public function getQueryString(string $query, Request $request): ?string
     {
-        // get page
+        // get query value
         $value = $request->query->get($query);
 
-        // set page 1 if page is undefined
+        // set return to 1 if value is null
         if ($value == null) {
             return '1';
         } else {
-            return $this->securityUtil->escapeString($value);
+
+            // escape query string value (XSS Protection)
+            $output = $this->securityUtil->escapeString($value);
+            
+            // return final output
+            return $output;
         }
     }
 }

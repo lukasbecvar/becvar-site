@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
-use App\Manager\VisitorManager;
+use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,21 +22,21 @@ class DatabaseBrowserController extends AbstractController
     private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
-    private VisitorManager $visitorManager;
     private DatabaseManager $databaseManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
-        VisitorManager $visitorManager,
-        DatabaseManager $databaseManager
+        DatabaseManager $databaseManager,
+        VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->visitorManager = $visitorManager;
         $this->databaseManager = $databaseManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/database', name: 'admin_database_list')]
@@ -47,7 +47,7 @@ class DatabaseBrowserController extends AbstractController
             
             return $this->render('admin/database-browser.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -80,7 +80,7 @@ class DatabaseBrowserController extends AbstractController
 
             return $this->render('admin/database-browser.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -165,13 +165,12 @@ class DatabaseBrowserController extends AbstractController
                             'page' => $page
                         ]);
                     }
-
                 }
             }          
 
             return $this->render('admin/database-browser.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -261,7 +260,7 @@ class DatabaseBrowserController extends AbstractController
 
             return $this->render('admin/database-browser.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

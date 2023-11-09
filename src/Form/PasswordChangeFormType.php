@@ -10,6 +10,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
+/*
+    Password change form provides the password change in the account settings
+*/
+
 class PasswordChangeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

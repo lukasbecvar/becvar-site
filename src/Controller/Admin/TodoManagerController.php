@@ -9,7 +9,7 @@ use App\Manager\AuthManager;
 use App\Form\NewTodoFormType;
 use App\Manager\ErrorManager;
 use App\Manager\TodosManager;
-use App\Manager\VisitorManager;
+use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +27,8 @@ class TodoManagerController extends AbstractController
     private TodosManager $todosManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
@@ -36,7 +36,7 @@ class TodoManagerController extends AbstractController
         TodosManager $todosManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
@@ -45,7 +45,7 @@ class TodoManagerController extends AbstractController
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/todos', name: 'admin_todos')]
@@ -104,7 +104,7 @@ class TodoManagerController extends AbstractController
 
             return $this->render('admin/todo-manager.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -133,7 +133,7 @@ class TodoManagerController extends AbstractController
 
             return $this->render('admin/todo-manager.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data

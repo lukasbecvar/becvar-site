@@ -34,7 +34,10 @@ class AutoLoginMiddleware
             // check if cookie set
             if (isset($_COOKIE['login-token-cookie'])) {
                 
+                // init user entity
                 $user = new User();
+
+                // get user token
                 $user_token = $this->cookieManager->get('login-token-cookie');
 
                 // check if token exist in database

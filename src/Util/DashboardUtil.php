@@ -28,10 +28,14 @@ class DashboardUtil
     public function getDatabaseEntityCount(object $entity, array $search = null): int 
     {
         $result = null;
+        
+        // get entity repository
         $repository = $this->entityManager->getRepository($entity::class);
 
         // find visitor in database
         try {
+
+            // check if search not used (search all)
             if ($search == null) {
                 $result = $repository->findAll();
             } else {
@@ -46,10 +50,13 @@ class DashboardUtil
 
     public function getHostUptime(): string 
     {
-        $ut = strtok(exec('cat /proc/uptime'), '.');
-        $days = sprintf('%2d', ($ut/(3600*24)));
-        $hours = sprintf('%2d', (($ut % (3600*24))/3600));
-        $min = sprintf('%2d', ($ut % (3600*24) % 3600)/60);
+        // get host uptime
+        $up_time = strtok(exec('cat /proc/uptime'), '.');
+        
+        // get uptime values
+        $days = sprintf('%2d', ($up_time/(3600*24)));
+        $hours = sprintf('%2d', (($up_time % (3600*24))/3600));
+        $min = sprintf('%2d', ($up_time % (3600*24) % 3600)/60);
 
         // format output
         return 'Days: '.$days.', Hours: '.$hours.', Min: '.$min;
@@ -153,6 +160,7 @@ class DashboardUtil
 
     public function isSystemLinux(): bool 
     {
+        // check if system is linux
         if (strtolower(substr(PHP_OS, 0, 3)) == 'lin') {
             return true;
         } else {

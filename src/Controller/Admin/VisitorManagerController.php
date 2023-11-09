@@ -55,7 +55,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/visitors-manager.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
 
                 // user data
@@ -88,7 +88,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
     
                 // user data
@@ -157,7 +157,7 @@ class VisitorManagerController extends AbstractController
 
             return $this->render('admin/elements/forms/ban-form.html.twig', [
                 // component properties
-                'is_mobile' => $this->visitorManager->isMobile(),
+                'is_mobile' => $this->visitorInfoUtil->isMobile(),
                 'is_dashboard' => false,
     
                 // user data

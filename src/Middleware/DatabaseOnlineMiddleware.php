@@ -27,7 +27,7 @@ class DatabaseOnlineMiddleware
             $this->doctrineConnection->executeQuery('SELECT 1');
         } catch (\Exception $e) {
 
-            // return error if not connected
+            // handle error if database not connected
             $this->errorManager->handleError('database connection error: '.$e->getMessage(), 500);
         }
     }

@@ -23,6 +23,7 @@ class UserStatusMiddleware
         // check if user is online
         if ($this->authManager->isUserLogedin()) {
 
+            // update user status
             $this->authManager->updateUsersStatus();
         }
     }

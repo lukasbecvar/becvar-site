@@ -8,6 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
+/*
+    Ban form provides visitor ban form with reason value
+*/
+
 class BanFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
