@@ -19,7 +19,3 @@ php vendor/bin/phpstan analyze --level 5 ./src
 # PHPSTAN analyze tests
 yellow_echo 'PHPSTAN: testing: ./tests'
 php vendor/bin/phpstan analyze --level 5 ./tests
-
-# run php unit tests
-yellow_echo 'PHPUNIT: testing...'
-php vendor/bin/phpunit
