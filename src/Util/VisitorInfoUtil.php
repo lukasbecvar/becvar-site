@@ -146,9 +146,10 @@ class VisitorInfoUtil
 
     public function getOS(): ?string 
     { 
-        // get user agent
         $agent = $this->getBrowser();
-                
+        
+        $os = 'Unknown OS';
+        
         // OS list
         $os_array = array (
             '/windows nt 5.2/i'     =>  'Windows Server_2003',
@@ -178,21 +179,17 @@ class VisitorInfoUtil
             '/ipad/i'               =>  'iPad'
         );
         
-        // check all os in list
-        foreach ($os_array as $index => $value) {
+        foreach ($os_array as $regex => $value) {
 
-            if ($index != null && $agent != null) {
-                
-                // check if os found
-                if (preg_match($index, $agent)) {
-                    return $value;
-                } else {
-                    return 'Unknown OS';
+            // check if os found
+            if ($regex != null && $agent != null) {
+                if (preg_match($regex, $agent)) {
+                    $os = $value;
                 }
-            } else {
-                return 'Unknown OS';
             }
         }
+        
+        return $os;
     }
 
     public function getLocation(string $ip_address): ?array
