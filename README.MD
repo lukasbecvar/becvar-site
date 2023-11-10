@@ -48,11 +48,6 @@ the public part of the site contains information about me and my projects
  - nodejs 18 or <
  - npm 9 or <
 
-## TODOS
-- [ ] entity manager
-- [ ] refactor cookie & session manager with symfony valid functions
-- [ ] PHPUnit tests
-
 ## Dependencies 
 * Symfony
    * Version: **6.3**

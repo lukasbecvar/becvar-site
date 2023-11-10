@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Manager;
+namespace App\Util;
 
 use App\Util\SecurityUtil;
 
 /*
-    Cookie manager provides cookies managment
+    Cookie util provides cookies managment
 */
 
-class CookieManager
+class CookieUtil
 {
     private SecurityUtil $securityUtil;
 

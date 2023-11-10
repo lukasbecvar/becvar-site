@@ -3,11 +3,11 @@
 namespace App\Controller\Api;
 
 use App\Util\JsonUtil;
+use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use App\Manager\SessionManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,25 +21,25 @@ class TerminalApiController extends AbstractController
 {
     private JsonUtil $jsonUtil;
     private LogManager $logManager;
+    private SessionUtil $sessionUtil;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private SessionManager $sessionManager;
 
     public function __construct(
         JsonUtil $jsonUtil,
         LogManager $logManager,
         AuthManager $authManager,
+        SessionUtil $sessionUtil,
         SecurityUtil $securityUtil,
-        ErrorManager $errorManager,
-        SessionManager $sessionManager
+        ErrorManager $errorManager
     ) {
         $this->jsonUtil = $jsonUtil;
         $this->logManager = $logManager;
+        $this->sessionUtil = $sessionUtil;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
-        $this->sessionManager = $sessionManager;
     }
 
     #[Route('/api/system/terminal', name: 'api_terminal')]
@@ -52,14 +52,14 @@ class TerminalApiController extends AbstractController
             if ($request->isMethod('POST')) {
 
                 // start session (for saving working path)
-                $this->sessionManager->startSession();
+                $this->sessionUtil->startSession();
 
                 // get username
                 $username = $this->authManager->getUsername();
 
                 // set default working dir
-                if ($this->sessionManager->checkSession('terminal-dir')) {
-                    $currentDir = $this->sessionManager->getSessionValue('terminal-dir');
+                if ($this->sessionUtil->checkSession('terminal-dir')) {
+                    $currentDir = $this->sessionUtil->getSessionValue('terminal-dir');
                     if (!file_exists($currentDir)) {
                         $currentDir = '/';
                     }
@@ -134,7 +134,7 @@ class TerminalApiController extends AbstractController
 
                         // check if directory exists
                         if (file_exists($finalDir)) {
-                            $this->sessionManager->setSession('terminal-dir', $finalDir);
+                            $this->sessionUtil->setSession('terminal-dir', $finalDir);
                             return new Response('', 200);
                         } else {
                             return new Response('error directory: ' . $finalDir . ' not found');

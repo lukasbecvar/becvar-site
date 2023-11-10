@@ -3,9 +3,9 @@
 namespace App\Middleware;
 
 use App\Entity\User;
+use App\Util\CookieUtil;
+use App\Util\SessionUtil;
 use App\Manager\AuthManager;
-use App\Manager\CookieManager;
-use App\Manager\SessionManager;
 
 /*
     This middleware check if requird autologin function
@@ -13,18 +13,18 @@ use App\Manager\SessionManager;
 
 class AutoLoginMiddleware
 {
+    private CookieUtil $cookieUtil;
+    private SessionUtil $sessionUtil;
     private AuthManager $authManager;
-    private CookieManager $cookieManager;
-    private SessionManager $sessionManager;
 
     public function __construct(
-        AuthManager $authManager, 
-        CookieManager $cookieManager,
-        SessionManager $sessionManager
+        CookieUtil $cookieUtil,
+        SessionUtil $sessionUtil,
+        AuthManager $authManager 
     ) {
+        $this->cookieUtil = $cookieUtil;
+        $this->sessionUtil = $sessionUtil;
         $this->authManager = $authManager;
-        $this->cookieManager = $cookieManager;
-        $this->sessionManager = $sessionManager;
     }
 
     public function onKernelRequest(): void
@@ -38,7 +38,7 @@ class AutoLoginMiddleware
                 $user = new User();
 
                 // get user token
-                $user_token = $this->cookieManager->get('login-token-cookie');
+                $user_token = $this->cookieUtil->get('login-token-cookie');
 
                 // check if token exist in database
                 if ($this->authManager->getUserRepository(['token' => $user_token]) != null) {
@@ -49,10 +49,10 @@ class AutoLoginMiddleware
                     // autologin user
                     $this->authManager->login($user->getUsername(), $user_token, true);
                 } else {
-                    $this->cookieManager->unset('login-token-cookie');
+                    $this->cookieUtil->unset('login-token-cookie');
             
                     // destory session is cookie token is invalid
-                    $this->sessionManager->destroySession();
+                    $this->sessionUtil->destroySession();
                 }
             }
         }

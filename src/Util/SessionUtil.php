@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Manager;
-
-use App\Util\SecurityUtil;
+namespace App\Util;
 
 /*
-    Session manager provides session managment
+    Session util provides session managment
 */
 
-class SessionManager
+class SessionUtil
 {
     private SecurityUtil $securityUtil;
 

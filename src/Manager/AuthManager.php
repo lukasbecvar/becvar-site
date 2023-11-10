@@ -3,6 +3,8 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use App\Util\CookieUtil;
+use App\Util\SessionUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -13,32 +15,32 @@ use Doctrine\ORM\EntityManagerInterface;
 class AuthManager
 {
     private LogManager $logManager;
+    private CookieUtil $cookieUtil;
+    private SessionUtil $sessionUtil;
     private ErrorManager $errorManager;
-    private CookieManager $cookieManager;
-    private SessionManager $sessionManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         LogManager $logManager, 
+        CookieUtil $cookieUtil,
+        SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
-        CookieManager $cookieManager,
-        SessionManager $sessionManager,
         EntityManagerInterface $entityManager
     ) {
+        $this->cookieUtil = $cookieUtil;
         $this->logManager = $logManager;
+        $this->sessionUtil = $sessionUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->cookieManager = $cookieManager;
-        $this->sessionManager = $sessionManager;
     }
 
     public function isUserLogedin(): bool 
     {
         // check if session exist
-        if ($this->sessionManager->checkSession('login-token')) {
+        if ($this->sessionUtil->checkSession('login-token')) {
 
             // get login token form session
-            $login_token = $this->sessionManager->getSessionValue('login-token');
+            $login_token = $this->sessionUtil->getSessionValue('login-token');
 
             // check if token exist in database
             if ($this->getUserRepository(['token' => $login_token]) != null) {
@@ -58,12 +60,12 @@ class AuthManager
 
             // check if user token is valid
             if (!empty($user_token)) {
-                $this->sessionManager->setSession('login-token', $user_token);
+                $this->sessionUtil->setSession('login-token', $user_token);
 
                 // check if remember set
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieManager->set('login-token-cookie', $user_token, time() + (60*60*24*7*365));
+                        $this->cookieUtil->set('login-token-cookie', $user_token, time() + (60*60*24*7*365));
                     }
                 }
 
@@ -132,10 +134,10 @@ class AuthManager
             $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
             
             // unset login cookie
-            $this->cookieManager->unset('login-token-cookie');
+            $this->cookieUtil->unset('login-token-cookie');
 
             // unset login session
-            $this->sessionManager->destroySession();   
+            $this->sessionUtil->destroySession();   
         } 
     }
 
@@ -179,10 +181,10 @@ class AuthManager
     public function getUserToken(): ?string 
     {
         // check if session exist
-        if ($this->sessionManager->checkSession('login-token')) {
+        if ($this->sessionUtil->checkSession('login-token')) {
 
             // get login token form session
-            $login_token = $this->sessionManager->getSessionValue('login-token');
+            $login_token = $this->sessionUtil->getSessionValue('login-token');
 
             // check if token exist in database
             if ($this->getUserRepository(['token' => $login_token]) != null) {

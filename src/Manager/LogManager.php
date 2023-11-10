@@ -3,9 +3,9 @@
 namespace App\Manager;
 
 use App\Entity\Log;
+use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
-use App\Manager\CookieManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -14,24 +14,24 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class LogManager
 {
+    private CookieUtil $cookieUtil;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
-    private CookieManager $cookieManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
     
     public function __construct(
+        CookieUtil $cookieUtil,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
-        CookieManager $cookieManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
-        $this->cookieManager = $cookieManager;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -221,7 +221,7 @@ class LogManager
         if (isset($_COOKIE['anti-log-cookie'])) {
 
             // get cookie token
-            $token = $this->cookieManager->get('anti-log-cookie');
+            $token = $this->cookieUtil->get('anti-log-cookie');
 
             // check if token is valid
             if ($token == $_ENV['ANTI_LOG_COOKIE']) {
@@ -236,12 +236,12 @@ class LogManager
 
     public function setAntiLogCookie(): void
     {
-        $this->cookieManager->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
+        $this->cookieUtil->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
     }
 
     public function unsetAntiLogCookie(): void
     {
-        $this->cookieManager->unset('anti-log-cookie');
+        $this->cookieUtil->unset('anti-log-cookie');
     }
 
     public function getLogLevel(): int
