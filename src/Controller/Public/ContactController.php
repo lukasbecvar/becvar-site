@@ -5,7 +5,6 @@ namespace App\Controller\Public;
 use App\Entity\Message;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
-use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
 use App\Manager\VisitorManager;
@@ -23,7 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ContactController extends AbstractController
 {   
     private LogManager $logManager;
-    private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
@@ -31,14 +29,12 @@ class ContactController extends AbstractController
 
     public function __construct(
         LogManager $logManager, 
-        AuthManager $authManager,
         SecurityUtil $securityUtil, 
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
     ) {
         $this->logManager = $logManager;
-        $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -136,7 +132,6 @@ class ContactController extends AbstractController
 
         // render contact page
         return $this->render('public/contact.html.twig', [
-            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],

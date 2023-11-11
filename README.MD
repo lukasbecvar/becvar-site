@@ -48,6 +48,13 @@ the public part of the site contains information about me and my projects
  - nodejs 18 or <
  - npm 9 or <
 
+## TODOS
+- [ ] Recode cookie & session utils (with symfony interfaces)
+- [ ] Create EntityManager adapter
+- [ ] Terminal switch user command (like linux su)
+- [ ] Terminal phone first char shift block
+- [ ] Code unit tests
+
 ## Dependencies 
 * Symfony
    * Version: **6.3**

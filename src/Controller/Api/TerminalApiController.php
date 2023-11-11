@@ -51,9 +51,6 @@ class TerminalApiController extends AbstractController
             // check if request is post
             if ($request->isMethod('POST')) {
 
-                // start session (for saving working path)
-                $this->sessionUtil->startSession();
-
                 // get username
                 $username = $this->authManager->getUsername();
 

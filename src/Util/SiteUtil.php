@@ -20,7 +20,7 @@ class SiteUtil
     public function getHttpHost(): string
     {
         // return host url
-        return Request::createFromGlobals()->getHost();
+        return $_SERVER['HTTP_HOST'];
     }
 
     public function isRunningLocalhost(): bool 
@@ -28,7 +28,7 @@ class SiteUtil
 		$localhost = false;
 
         // get host url
-        $host = SiteUtil::getHttpHost();
+        $host = $this->getHttpHost();
 
         // check if host is null
         if ($host != null) {

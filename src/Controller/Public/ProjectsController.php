@@ -35,7 +35,6 @@ class ProjectsController extends AbstractController
     {
         // render projects page
         return $this->render('public/projects.html.twig', [
-            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],

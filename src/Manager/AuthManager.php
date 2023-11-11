@@ -278,7 +278,7 @@ class AuthManager
         foreach ($users as $user) {
 
             // get user data
-            $id = $user->getVisitorId();
+            $id = intval($user->getVisitorId());
             $username = $user->getUsername();
             $role = $user->getRole();
 

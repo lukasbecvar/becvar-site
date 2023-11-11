@@ -2,7 +2,6 @@
 
 namespace App\Controller\Public;
 
-use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,13 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AboutController extends AbstractController
 {
-    private AuthManager $authManager;
-
-    public function __construct(AuthManager $authManager)
-    {
-        $this->authManager = $authManager;
-    }
-
     #[Route('/about', name: 'public_about')]
     public function aboutPage(): Response
     {
@@ -31,7 +23,6 @@ class AboutController extends AbstractController
         $age = date('Y', $current_timestamp) - date('Y', $birth_timestamp);
         
         return $this->render('public/about.html.twig', [
-            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],

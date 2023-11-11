@@ -6,7 +6,6 @@ use App\Entity\Image;
 use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
-use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
@@ -24,7 +23,6 @@ class ImageUploaderController extends AbstractController
 {
     private SiteUtil $siteUtil;
     private LogManager $logManager;
-    private AuthManager $authManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private EntityManagerInterface $entityManager;
@@ -32,14 +30,12 @@ class ImageUploaderController extends AbstractController
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager,
-        AuthManager $authManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
-        $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
@@ -139,7 +135,6 @@ class ImageUploaderController extends AbstractController
         }
 
         return $this->render('public/image/image-uploader.html.twig', [
-            'user_logged' => $this->authManager->isUserLogedin(),
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],
