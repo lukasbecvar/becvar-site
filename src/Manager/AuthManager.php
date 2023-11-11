@@ -3,8 +3,10 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use App\Entity\Visitor;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
+use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -18,6 +20,8 @@ class AuthManager
     private CookieUtil $cookieUtil;
     private SessionUtil $sessionUtil;
     private ErrorManager $errorManager;
+    private VisitorManager $visitorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -25,6 +29,8 @@ class AuthManager
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
+        VisitorManager $visitorManager,
+        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->cookieUtil = $cookieUtil;
@@ -32,6 +38,8 @@ class AuthManager
         $this->sessionUtil = $sessionUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
+        $this->visitorManager = $visitorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     public function isUserLogedin(): bool 
@@ -70,52 +78,12 @@ class AuthManager
                 }
 
                 // update last login time
-                $this->setLastLoginDate();
+                $this->updateUserData();
 
                 // log to mysql
                 $this->logManager->log('authenticator', 'user: '.$username.' logged in');
             } else {
                 $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
-            }
-        }
-    }
-
-    public function updateUsersStatus(): void
-    {
-        // timeout (seconds)
-        $session_timeout_seconds = 60;
-
-        // get current timestamp
-        $current_time = time();
-        
-        // get users repository
-        $userRepository = $this->entityManager->getRepository(User::class);
-            
-        // check if users found
-        if ($userRepository !== null) {
-                
-            // get users list
-            $users = $userRepository->findAll();
-
-            // update all offline statuses
-            foreach ($users as $user) {
-
-                // get timestamp
-                $last_activity_timestamp = $user->getStatusUpdateTime();
-
-                // update only online users
-                if ($user->getStatus() === 'online') {
-                    if ($current_time - intval($last_activity_timestamp) >= $session_timeout_seconds) {
-                        $user->setStatus('offline');
-                    }
-                }
-            }
-        
-            // update users status
-            try {
-                $this->entityManager->flush();
-            } catch (\Exception $e) {
-                $this->errorManager->handleError('error to update users status: '.$e->getMessage(), 500);
             }
         }
     }
@@ -126,9 +94,6 @@ class AuthManager
         if ($this->isUserLogedin()) {
             // init user
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
-
-            // update user status
-            $this->setStatus($user, 'offline');
 
             // log logout event
             $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
@@ -141,24 +106,16 @@ class AuthManager
         } 
     }
 
-    public function setStatus(object $repo, string $status): void 
-    {
-        try {
-            // set offline status
-            $repo->setStatus($status);
-
-            // update database
-            $this->entityManager->flush();
-
-        } catch (\Exception $e) {
-            $this->errorManager->handleError('error to update user status: '.$e->getMessage(), 500);
-        }       
-    }
-
-    public function setLastLoginDate(): void 
+    public function updateUserData(): void 
     {
         // get date & time
         $date = date('d.m.Y H:i:s');
+
+        // get current visitor ip address
+        $ip_address = $this->visitorInfoUtil->getIP();
+
+        // get visitor id
+        $visitor_id = $this->visitorManager->getVisitorRepository($ip_address)->getID();
 
         // get user data
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
@@ -169,7 +126,10 @@ class AuthManager
             // update last login time
             $user->setLastLoginTime($date);
 
-            // update last login time
+            // update visitor id
+            $user->setVisitorId($visitor_id);
+
+            // update user data
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
@@ -309,6 +269,31 @@ class AuthManager
 
     public function getUsersWhereStatus(string $status): ?array
     {
-        return $this->entityManager->getRepository(User::class)->findBy(['status' => $status]);
+        // get all users data
+        $users = $this->entityManager->getRepository(User::class)->findAll();
+
+        $online_users = [];
+
+        // check all users status
+        foreach ($users as $user) {
+
+            // get user data
+            $id = $user->getVisitorId();
+            $username = $user->getUsername();
+            $role = $user->getRole();
+
+            // check user status
+            if ($this->visitorManager->getVisitorStatus($id) == $status) {
+                $user_item = [
+                    'id' => $id,
+                    'username' => $username,
+                    'role' => $role
+                ];
+                array_push($online_users, $user_item);
+            }
+        }
+
+        return $online_users;
     }
 }
+  

@@ -24,11 +24,6 @@ services:
         tags:
             - { name: 'twig.extension' }
 
-    # update users statuses
-    App\Middleware\UserStatusMiddleware:
-        tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
-
     # translations set checker
     App\Middleware\TranslationsMiddleware:
         tags:

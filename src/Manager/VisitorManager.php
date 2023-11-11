@@ -29,7 +29,7 @@ class VisitorManager
     public function updateVisitorsStatus(): void
     {
         // timeout (seconds)
-        $session_timeout_seconds = 180;
+        $session_timeout_seconds = 60;
 
         // get current timestamp
         $current_time = time();
@@ -155,6 +155,19 @@ class VisitorManager
         // check visitor found
         if ($repo !== null) {
             return strtolower($repo->getCountry());   
+        } else {
+            return null;
+        }
+    }
+
+    public function getVisitorStatus(int $id): ?string 
+    {
+        $visitor = $this->getVisitorRepositoryByID($id);
+
+        // check if visitor found
+        if ($visitor !== null) {
+            
+            return $visitor->getStatus();
         } else {
             return null;
         }

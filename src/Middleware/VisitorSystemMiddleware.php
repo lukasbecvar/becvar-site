@@ -49,6 +49,9 @@ class VisitorSystemMiddleware
 
     public function onKernelRequest(): void
     {
+        // update visitors stats list
+        $this->visitorManager->updateVisitorsStatus();
+
         // get data to insert
         $date = date('d.m.Y H:i');
         $os = $this->visitorInfoUtil->getOS();
@@ -127,9 +130,6 @@ class VisitorSystemMiddleware
     {
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
-
-        // update visitors stats list
-        $this->visitorManager->updateVisitorsStatus();
 
         // check if visitor data found
         if (!$visitor != null) {

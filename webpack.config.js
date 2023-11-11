@@ -56,9 +56,6 @@ Encore
     // register waypoints
     .addEntry('waypoints-js', './assets/js/noframework.waypoints.js')
 
-    // register user status updater
-    .addEntry('update-user-status-js', './assets/js/update-users-status.js')
-
     // register visitor status updater
     .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')
 
