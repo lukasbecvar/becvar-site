@@ -8,27 +8,38 @@ const send_button = document.getElementById('send');
 let lastMessageId = 0; // keeps track of the last displayed message's ID
 let userIsScrolling = false; // indicates whether the user is currently scrolling
 
-// function to display a chat message in the chat window
+// function to linkify message content
+function linkifyText(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '" target="_blank">' + url + '</a>';
+    });
+}
+
+// function to display a message in the chat with linkify for links
 function displayMessage(message, sender, role, pic, day, time) {
     // check if the sender is not the system
     if (sender !== 'You_184911818748818kgf') {
         // determine whether the user is at the bottom of the chat
         const isAtBottom = chat.scrollTop + chat.clientHeight >= chat.scrollHeight - 5;
 
-        // append the message to the messages container
+        // wrap links in the message text with the <a> tag
+        const linkifiedMessage = linkifyText(message);
+
+        // add the message to the messages container
         if (role == 'Owner' || role == 'Admin') {
-            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-red">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-red">' + sender + '</span> (' + day + ' ' + time + ') <br>' + linkifiedMessage + '</p>';
         } else if (role == 'User') {
-            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-success">' + sender + '</span> (' + day + ' ' + time + ') <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture"><span class="text-success">' + sender + '</span> (' + day + ' ' + time + ') <br>' + linkifiedMessage + '</p>';
         } else {
-            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture">' + sender + ' (' + day + ' ' + time + '):´ <br>' + message + '</p>';
+            messages.innerHTML += '<p class="chat-message-box"><img src="data:image/jpeg;base64,' + pic + '" alt="profile_picture">' + sender + ' (' + day + ' ' + time + '):´ <br>' + linkifiedMessage + '</p>';
         }
 
         // if the user is at the bottom of the chat, scroll to the new message
         if (isAtBottom) {
             scrollToBottom();
         }
-    } 
+    }
 }
 
 // function to send a chat message to the server
@@ -82,8 +93,8 @@ function getChatMessages() {
 // initial fetch and display of chat messages
 getChatMessages();
 
-// set an interval to periodically fetch chat messages (every 500 milliseconds)
-setInterval(getChatMessages, 500);
+// set an interval to periodically fetch chat messages (every 100 milliseconds)
+setInterval(getChatMessages, 100);
 
 // add a click event listener to the send button to send messages
 send_button.addEventListener('click', sendMessage);
