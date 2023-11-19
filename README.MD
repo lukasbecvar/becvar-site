@@ -54,6 +54,8 @@ the public part of the site contains information about me and my projects
 ## TODOS
 - [ ] inbox - if close last message -> redirect to dashboard
 - [ ] todo editor
+- [ ] todo category
+- [ ] todo created/closed by username in todos table
 - [ ] fix completed todo delete
 - [ ] Recode cookie & session utils (with symfony interfaces)
 - [ ] Create EntityManager adapter
