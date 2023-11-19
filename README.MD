@@ -52,6 +52,7 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
+- [ ] fix dashboard card zoom scale (visitor stats)
 - [ ] inbox - if close last message -> redirect to dashboard
 - [ ] todo editor
 - [ ] todo category
