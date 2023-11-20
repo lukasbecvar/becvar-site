@@ -91,10 +91,7 @@ class TodoManagerController extends AbstractController
 
                     // escape text
                     $text = $this->securityUtil->escapeString($text);
-                    
-                    // encrypt todo text
-                    $text = $this->securityUtil->encrypt_aes($text);
-
+                
                     // set todo data
                     $todo->setText($text);
                     $todo->setCategory($category);
@@ -102,7 +99,6 @@ class TodoManagerController extends AbstractController
                     $todo->setAddedTime($date);
                     $todo->setCompletedTime('non-completed');
                     $todo->setAddedBy($username);
-                    $todo->setEditedBy('non-edited');
                     $todo->setClosedBy('non-closed');
 
                     // save new todo

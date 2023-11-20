@@ -3,7 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\Todo;
-use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -13,18 +12,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class TodosManager
 {
     private AuthManager $authManager;
-    private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         AuthManager $authManager,
-        SecurityUtil $securityUtil,
         ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
         $this->authManager = $authManager;
-        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
@@ -47,7 +43,7 @@ class TodosManager
                 foreach ($todos as $todo) {
                     $todo_item = [
                         'id' => $todo->getId(),
-                        'text' => $this->securityUtil->decrypt_aes($todo->getText()),
+                        'text' => $todo->getText(),
                         'category' => $todo->getCategory()
                     ];
                     array_push($todo_data, $todo_item);

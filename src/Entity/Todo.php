@@ -33,9 +33,6 @@ class Todo
     #[ORM\Column(length: 255)]
     private ?string $added_by = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $edited_by = null;
-
     #[ORM\Column(length: 2555)]
     private ?string $closed_by = null;
 
@@ -112,18 +109,6 @@ class Todo
     public function setAddedBy(string $added_by): static
     {
         $this->added_by = $added_by;
-
-        return $this;
-    }
-
-    public function getEditedBy(): ?string
-    {
-        return $this->edited_by;
-    }
-
-    public function setEditedBy(string $edited_by): static
-    {
-        $this->edited_by = $edited_by;
 
         return $this;
     }
