@@ -52,7 +52,6 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
-- [ ] inbox - if close last message -> redirect to dashboard
 - [ ] todo editor
 - [ ] todo category
 - [ ] todo created/closed by username in todos table
