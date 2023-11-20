@@ -19,9 +19,6 @@ class Todo
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $category = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $status = null;
     
     #[ORM\Column(length: 255)]
@@ -49,18 +46,6 @@ class Todo
     public function setText(string $text): static
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }

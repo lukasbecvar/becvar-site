@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Todo;
+use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /*
@@ -12,39 +13,37 @@ use Doctrine\ORM\EntityManagerInterface;
 class TodosManager
 {
     private AuthManager $authManager;
+    private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         AuthManager $authManager,
+        SecurityUtil $securityUtil,
         ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
         $this->authManager = $authManager;
+        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
 
-    public function getTodos(string $status, string $category = '_all_todos_1189848'): ?array
+    public function getTodos(string $status): ?array
     {
         $repository = $this->entityManager->getRepository(Todo::class);
 
         // check if repository found
         if ($repository !== null) {
             try {
-                if ($category == '_all_todos_1189848') {
-                    $todos = $repository->findBy(['status' => $status]);
-                } else {
-                    $todos = $repository->findBy(['status' => $status, 'category' => $category]);
-                }
+                $todos = $repository->findBy(['status' => $status]);
                 
                 $todo_data = [];
 
                 foreach ($todos as $todo) {
                     $todo_item = [
                         'id' => $todo->getId(),
-                        'text' => $todo->getText(),
-                        'category' => $todo->getCategory()
+                        'text' => $this->securityUtil->decrypt_aes($todo->getText())
                     ];
                     array_push($todo_data, $todo_item);
                 }

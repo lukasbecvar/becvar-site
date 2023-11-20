@@ -54,16 +54,8 @@ class TodoManagerController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
-            // get todo category
-            $category = $this->siteUtil->getQueryString('category', $request);
-
-            // check if category is missing
-            if ($category == '1') {
-                return $this->errorManager->handleError('todo category error: error query missing', 500);
-            }
-
             // get todos data
-            $todos = $this->todosManager->getTodos('non-completed',  $category);
+            $todos = $this->todosManager->getTodos('non-completed');
 
             // create user entity
             $todo = new Todo();
@@ -92,9 +84,11 @@ class TodoManagerController extends AbstractController
                     // escape text
                     $text = $this->securityUtil->escapeString($text);
                 
+                    // encrypt todo
+                    $text = $this->securityUtil->encrypt_aes($text);
+
                     // set todo data
                     $todo->setText($text);
-                    $todo->setCategory($category);
                     $todo->setStatus('non-completed');
                     $todo->setAddedTime($date);
                     $todo->setCompletedTime('non-completed');
@@ -109,9 +103,7 @@ class TodoManagerController extends AbstractController
                         return $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
                     }
 
-                    return $this->redirectToRoute('admin_todos', [
-                        'category' => $category
-                    ]);
+                    return $this->redirectToRoute('admin_todos');
                 }
             }
 
