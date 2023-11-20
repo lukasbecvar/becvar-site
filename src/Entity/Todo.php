@@ -19,13 +19,25 @@ class Todo
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $category = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+    
+    #[ORM\Column(length: 255)]
     private ?string $added_time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $completed_time = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $added_by = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $edited_by = null;
+
+    #[ORM\Column(length: 2555)]
+    private ?string $closed_by = null;
 
     public function getId(): ?int
     {
@@ -40,6 +52,30 @@ class Todo
     public function setText(string $text): static
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -68,14 +104,38 @@ class Todo
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getAddedBy(): ?string
     {
-        return $this->status;
+        return $this->added_by;
     }
 
-    public function setStatus(string $status): static
+    public function setAddedBy(string $added_by): static
     {
-        $this->status = $status;
+        $this->added_by = $added_by;
+
+        return $this;
+    }
+
+    public function getEditedBy(): ?string
+    {
+        return $this->edited_by;
+    }
+
+    public function setEditedBy(string $edited_by): static
+    {
+        $this->edited_by = $edited_by;
+
+        return $this;
+    }
+
+    public function getClosedBy(): ?string
+    {
+        return $this->closed_by;
+    }
+
+    public function setClosedBy(string $closed_by): static
+    {
+        $this->closed_by = $closed_by;
 
         return $this;
     }

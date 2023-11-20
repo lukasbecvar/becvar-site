@@ -323,6 +323,11 @@ class DatabaseBrowserController extends AbstractController
                 ]);              
             }
 
+            // check if deleted by todo-manager
+            if ($request->query->get('referer') == 'todo_manager') {
+                return $this->redirectToRoute('admin_todos_completed');              
+            }
+
             return $this->redirectToRoute('admin_database_browser', [
                 'table' => $table,
                 'page' => $page

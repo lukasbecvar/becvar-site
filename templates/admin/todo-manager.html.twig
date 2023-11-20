@@ -8,14 +8,24 @@
 <div class="admin-panel">
 
     <ul class="breadcrumb">
-        {% if completed_list %}
-            <li>
-                <a class="selector-button btn-small" href="/admin/todos"><strong>Uncompleted</strong></a>
-            </li>  
-        {% else %}
+        
+        {# <===== add link to completed todos =====> #}
+        {% if completed_list == false %}
             <li>
                 <a class="selector-button btn-small" href="/admin/todos/completed"><strong>Completed</strong></a>
-            </li>  
+            </li>   
+        {% endif %} 
+        
+        <li>
+            <a class="selector-button btn-small" href="/admin/todos?category=main"><strong>main</strong></a>
+        </li>  
+        <li>
+            <a class="selector-button btn-small" href="/admin/todos?category=search_list"><strong>search list</strong></a>
+        </li>
+
+        {# <===== print todos count =====> #}
+        {% if completed_list == false %}
+            <li class="count-text-in-menu">{{ todos_count }} todos</li>
         {% endif %} 
     </ul>
 
@@ -34,6 +44,12 @@
                     <tr class="line-item">
                         <th scope="col">#</th>
                         <th scope="col">Todo</th>
+
+                        {# <===== print category in completed list =====> #}
+                        {% if completed_list == true %}
+                            <th scope="col">Category</th>
+                        {% endif %} 
+
                         <th scope="col">X</th>
                     </tr>
                 </thead>
@@ -42,8 +58,19 @@
                         <tr class="line-item">
                             <th scope='row'>{{ todo.id|e }}</th>
                             <th scope='row'>{{ todo.text|linkify|raw }}</th>
+                            
+                            {# <===== print category in completed list =====> #}
+                            {% if completed_list == true %}
+                                <th scope='row'>{{ todo.category|e }}</th>
+                            {% endif %} 
+
+                            {# <===== delete link =====> #}
                             <th scope='row'>
-                                <a class='delete-link-todos' href='/admin/todos/close?id={{ todo.id|e }}'>X</a>
+                                {% if completed_list %}
+                                    <a class='delete-link-todos' href='/admin/database/delete?table=todos&page=1&id={{ todo.id|e }}&referer=todo_manager'>X</a>
+                                {% else %}
+                                    <a class='delete-link-todos' href='/admin/todos/close?id={{ todo.id|e }}&category={{ todo.category|e }}'>X</a>
+                                {% endif %}
                             </th>
                         </tr>
                     {% endfor %}

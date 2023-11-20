@@ -12,28 +12,35 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TodosManager
 {
+    private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        AuthManager $authManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager, 
         EntityManagerInterface $entityManager
     ) {
+        $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
     }
 
-    public function getTodos(string $status): ?array
+    public function getTodos(string $status, string $category = '_all_todos_1189848'): ?array
     {
         $repository = $this->entityManager->getRepository(Todo::class);
 
         // check if repository found
         if ($repository !== null) {
             try {
-                $todos = $repository->findBy(['status' => $status]);
+                if ($category == '_all_todos_1189848') {
+                    $todos = $repository->findBy(['status' => $status]);
+                } else {
+                    $todos = $repository->findBy(['status' => $status, 'category' => $category]);
+                }
                 
                 $todo_data = [];
 
@@ -41,9 +48,7 @@ class TodosManager
                     $todo_item = [
                         'id' => $todo->getId(),
                         'text' => $this->securityUtil->decrypt_aes($todo->getText()),
-                        'added_time' => $todo->getAddedTime(),
-                        'completed_time' => $todo->getCompletedTime(),
-                        'status' => $todo->getStatus()
+                        'category' => $todo->getCategory()
                     ];
                     array_push($todo_data, $todo_item);
                 }
@@ -64,6 +69,9 @@ class TodosManager
         // get todo repository
         $todo = $this->entityManager->getRepository(Todo::class)->find($id);
 
+        // get username
+        $username = $this->authManager->getUsername();
+
         // check if todo found
         if ($todo !== null) {
             // close todo
@@ -71,6 +79,7 @@ class TodosManager
 
             // update closed time
             $todo->setCompletedTime($date);
+            $todo->setClosedBy($username);
 
             try {
                 // update todo
