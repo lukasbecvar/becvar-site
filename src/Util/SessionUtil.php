@@ -18,7 +18,9 @@ class SessionUtil
     public function startSession(): void 
     {
         if (session_status() == PHP_SESSION_NONE) {
-            session_start();
+            if (!headers_sent()) {
+                session_start();
+            }
         }
     }
 
