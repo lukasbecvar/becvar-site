@@ -1,9 +1,6 @@
 ## About becvar-site
 Personal website builded with symfony framework, bootstrap & webpack-encore
 
-## Warning
-All components are not fully compliant with current symfony and php oop standards because the original application was designed in pure php without framework and rewritten in symfony and some features are shared with other applications that are not directly linked to the main admin app
-
 ## Admin site
 the main part of this application is the admin panel which contains functions and components for administration of the host linux server
  - Account system with permissions
@@ -54,6 +51,8 @@ the public part of the site contains information about me and my projects
 ## TODOS
 - [ ] Terminal switch user command (like linux su)
 - [ ] Terminal phone first char shift block
+- [ ] Entity util with entity repos get functions
+- [ ] Refactor
 - [ ] Code unit tests
 
 ## Dependencies 
