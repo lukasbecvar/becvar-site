@@ -54,10 +54,6 @@ class VisitorManagerController extends AbstractController
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             return $this->render('admin/visitors-manager.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -87,10 +83,6 @@ class VisitorManagerController extends AbstractController
             $page = $this->siteUtil->getQueryString('page', $request);
 
             return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-    
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -156,10 +148,6 @@ class VisitorManagerController extends AbstractController
             }
 
             return $this->render('admin/elements/forms/ban-form.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-    
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

@@ -9,7 +9,6 @@ use App\Manager\AuthManager;
 use App\Form\NewTodoFormType;
 use App\Manager\ErrorManager;
 use App\Manager\TodosManager;
-use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +26,6 @@ class TodoManagerController extends AbstractController
     private TodosManager $todosManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -36,7 +34,6 @@ class TodoManagerController extends AbstractController
         TodosManager $todosManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
@@ -45,7 +42,6 @@ class TodoManagerController extends AbstractController
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/todos', name: 'admin_todos')]
@@ -108,10 +104,6 @@ class TodoManagerController extends AbstractController
             }
 
             return $this->render('admin/todo-manager.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -138,10 +130,6 @@ class TodoManagerController extends AbstractController
             $todos = $this->todosManager->getTodos('completed');
 
             return $this->render('admin/todo-manager.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

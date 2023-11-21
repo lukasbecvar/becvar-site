@@ -239,10 +239,4 @@ class VisitorInfoUtil
 
         return ['city' => $city, 'country' => $country];
     }
-
-    public function isMobile(): bool 
-    {
-        $detect = new MobileDetect();
-        return $detect->isMobile();
-    }
 }

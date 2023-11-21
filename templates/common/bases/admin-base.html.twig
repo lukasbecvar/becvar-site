@@ -28,25 +28,30 @@
             {# <===== MAIN ADMIN COMPONENT WRAPPER =====> #}
             {% block component %}{% endblock %}
 
-            {% if is_mobile %}
-                <script>
-                    document.querySelector("body").classList.toggle("active");
+            <script>
+                function sidebarInit() {
+                    var body = document.querySelector("body");
                     var hamburger = document.querySelector(".hamburger");
-                    hamburger.addEventListener("click", function() {
-                        document.querySelector("body").classList.toggle("active");
-                    })
-                </script>
-            {% else %}
-                {% if is_dashboard == false %}
-                    <script>
-                        document.querySelector("body").classList.toggle("active");
-                        var hamburger = document.querySelector(".hamburger");
+            
+                    if (window.innerWidth <= 1024) {
+                        body.classList.add("active");
                         hamburger.addEventListener("click", function() {
-                            document.querySelector("body").classList.toggle("active");
-                        })
-                    </script>
-                {% endif %}
-            {% endif %}
+                            body.classList.toggle("active");
+                        });
+                    } else {
+                        body.classList.remove("active");
+                        hamburger.removeEventListener("click", function() {
+                            body.classList.toggle("active");
+                        });
+                    }
+                }
+            
+                sidebarInit();
+            
+                window.addEventListener('resize', function() {
+                    sidebarInit();
+                });
+            </script>
         </div>
     </div>
 </main>

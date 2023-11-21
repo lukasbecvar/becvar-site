@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Util\SiteUtil;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,18 +19,15 @@ class InboxController extends AbstractController
     private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
-    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
-        MessagesManager $messagesManager,
-        VisitorInfoUtil $visitorInfoUtil
+        MessagesManager $messagesManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
     
     #[Route('/admin/inbox', name: 'admin_inbox')]
@@ -47,10 +43,6 @@ class InboxController extends AbstractController
             $messages = $this->messagesManager->getMessages('open', $page);
 
             return $this->render('admin/inbox.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

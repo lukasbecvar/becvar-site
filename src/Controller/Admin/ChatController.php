@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ChatController extends AbstractController
 {
     private AuthManager $authManager;
-    private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(
-        AuthManager $authManager, 
-        VisitorInfoUtil $visitorInfoUtil
-    ) {
+    public function __construct(AuthManager $authManager) {
         $this->authManager = $authManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
     
     #[Route('/admin/chat', name: 'admin_chat')]
@@ -32,10 +26,6 @@ class ChatController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
 
             return $this->render('admin/chat.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

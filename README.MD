@@ -60,9 +60,6 @@ the public part of the site contains information about me and my projects
 * Symfony
    * Version: **6.3**
    * [Website](https://symfony.com/)   
-* Mobile-Detect
-   * Version: **3.74.0**
-   * [Github](https://github.com/serbanghita/Mobile-Detect)
 * Adminer
    * Version: **4.8.1**
    * [Website](https://www.adminer.org/)

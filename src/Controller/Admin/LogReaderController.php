@@ -6,7 +6,6 @@ use App\Util\SiteUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,22 +23,19 @@ class LogReaderController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private DatabaseManager $databaseManager;
-    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
-        DatabaseManager $databaseManager,
-        VisitorInfoUtil $visitorInfoUtil
+        DatabaseManager $databaseManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
         $this->databaseManager = $databaseManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/logs', name: 'admin_log_list')]
@@ -55,10 +51,6 @@ class LogReaderController extends AbstractController
             $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
 
             return $this->render('admin/log-reader.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -100,10 +92,6 @@ class LogReaderController extends AbstractController
             $logs = $this->logManager->getLogsWhereIP($ip_address, $this->authManager->getUsername(), $page);
 
             return $this->render('admin/log-reader.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -136,10 +124,6 @@ class LogReaderController extends AbstractController
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-    
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

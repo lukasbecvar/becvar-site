@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Util\SiteUtil;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,18 +19,11 @@ class MediaBrowserController extends AbstractController
     private SiteUtil $siteUtil;
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
-    private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(
-        SiteUtil $siteUtil,
-        AuthManager $authManager, 
-        DatabaseManager $databaseManager,
-        VisitorInfoUtil $visitorInfoUtil
-    ) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/media/browser', name: 'admin_media_browser')]
@@ -47,10 +39,6 @@ class MediaBrowserController extends AbstractController
             $media = $this->databaseManager->getImages($page);
 
             return $this->render('admin/media-browser.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),

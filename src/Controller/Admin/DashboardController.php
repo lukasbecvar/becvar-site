@@ -14,7 +14,6 @@ use App\Util\DashboardUtil;
 use App\Manager\LogManager;
 use App\Manager\BanManager;
 use App\Manager\AuthManager;
-use App\Util\VisitorInfoUtil;
 use App\Manager\ServiceManager;
 use App\Manager\VisitorManager;
 use Symfony\Component\String\ByteString;
@@ -38,7 +37,6 @@ class DashboardController extends AbstractController
     private DashboardUtil $dashboardUtil;
     private ServiceManager $serviceManager;
     private VisitorManager $visitorManager;
-    private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         SiteUtil $siteUtil,
@@ -48,8 +46,7 @@ class DashboardController extends AbstractController
         SecurityUtil $securityUtil,
         DashboardUtil $dashboardUtil,
         ServiceManager $serviceManager,
-        VisitorManager $visitorManager,
-        VisitorInfoUtil $visitorInfoUtil
+        VisitorManager $visitorManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
@@ -59,7 +56,6 @@ class DashboardController extends AbstractController
         $this->dashboardUtil = $dashboardUtil;
         $this->serviceManager = $serviceManager;
         $this->visitorManager = $visitorManager;
-        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
@@ -68,10 +64,6 @@ class DashboardController extends AbstractController
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/dashboard.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => true,
-
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
@@ -162,10 +154,6 @@ class DashboardController extends AbstractController
             }
     
             return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
-                // component properties
-                'is_mobile' => $this->visitorInfoUtil->isMobile(),
-                'is_dashboard' => false,
-    
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
