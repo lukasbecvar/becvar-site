@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+/*
+    Login authenticator test 
+*/
 
 final class LoginControllerTest extends WebTestCase
 {
