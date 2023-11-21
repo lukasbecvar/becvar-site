@@ -5,7 +5,7 @@ namespace App\Tests\Controller\Admin\Auth;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Login authenticator test 
+    Login component of user authenticator test 
 */
 
 class LoginControllerTest extends WebTestCase

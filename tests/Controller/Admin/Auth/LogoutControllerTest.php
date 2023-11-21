@@ -5,7 +5,7 @@ namespace App\Tests\Controller\Admin\Auth;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Logout authenticator test 
+    Logout component of user authenticator test 
 */
 
 class LogoutControllerTest extends WebTestCase
