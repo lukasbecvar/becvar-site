@@ -51,7 +51,10 @@ class ProjectsController extends AbstractController
     {
         // check if user logged
         if ($this->authManager->isUserLogedin()) {
+            
+            // update projects list
             $this->projectsManager->updateProjectList();
+            
             return $this->redirectToRoute('admin_database_browser', [
                 'table' => 'projects',
                 'page' => 1

@@ -39,6 +39,7 @@ class AntilogController extends AbstractController
             // get logged username
             $username = $this->authManager->getUsername();
 
+            // check if user have set antilog
             if (isset($_COOKIE['anti-log-cookie'])) {
                 $this->logManager->unsetAntiLogCookie();
                 $this->logManager->log('anti-log', 'user: '.$username.' set antilog');

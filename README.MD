@@ -49,7 +49,6 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
-- [ ] Entity util with entity repos get functions
 - [ ] Refactor
 - [ ] Code unit tests
 

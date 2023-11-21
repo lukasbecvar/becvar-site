@@ -134,6 +134,7 @@ class DatabaseBrowserController extends AbstractController
             // check request is post
             if ($request->isMethod('POST')) {
 
+                // get form submit status
                 $form_submit = $request->request->get('submitEdit');
 
                 // check if user submit edit form
@@ -159,7 +160,6 @@ class DatabaseBrowserController extends AbstractController
 
                     // redirect back to browser
                     if ($error_msg == null) {
-                    
                         return $this->redirectToRoute('admin_database_browser', [
                             'table' => $table,
                             'page' => $page
@@ -221,6 +221,7 @@ class DatabaseBrowserController extends AbstractController
             // check request is post
             if ($request->isMethod('POST')) {
 
+                // get form submit status
                 $form_submit = $request->request->get('submitSave');
 
                 // check if form submited

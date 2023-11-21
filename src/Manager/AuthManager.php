@@ -3,7 +3,6 @@
 namespace App\Manager;
 
 use App\Entity\User;
-use App\Entity\Visitor;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
 use App\Util\VisitorInfoUtil;
@@ -251,6 +250,7 @@ class AuthManager
         $token = $this->getUserToken();
         $role = $this->getUserRole($token);
 
+        // check if user role is admin
         if ($role == 'Owner' || $role == 'Admin') {
             return true;
         } else {

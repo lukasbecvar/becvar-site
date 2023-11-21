@@ -62,7 +62,9 @@ class ImageUploaderController extends AbstractController
             // get image & decrypt
             $image_content = $this->securityUtil->decrypt_aes($imageRepo->getImage());
 
+            // log paste view
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
+            
             return $this->render('public/image/image-viewer.html.twig', [
                 'token' => $token,
                 'image' => $image_content
@@ -122,7 +124,7 @@ class ImageUploaderController extends AbstractController
                     return $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
                 }
 
-                // log to database
+                // log image upload
                 $this->logManager->log('image-uploader', 'uploaded new image: '.$token);	
 
                 // redirect to image view

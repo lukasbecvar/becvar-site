@@ -39,6 +39,7 @@ class VisitorApiController extends AbstractController
         // get visitor repository
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
+        // check if visitor found
         if ($visitor != null) {
             // update visitor status
             $visitor->setStatusUpdateTime(time());

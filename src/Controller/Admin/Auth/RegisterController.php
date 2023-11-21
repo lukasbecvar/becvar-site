@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /*
     Register controller provides user register function
     ! This function is enabled only if users table is empty or for owner users !
-    ! Login uses its own Authenticator not symfony auth !
+    ! Login uses its own authenticator not symfony auth !
 */
 
 class RegisterController extends AbstractController
@@ -73,9 +73,6 @@ class RegisterController extends AbstractController
             // check if form submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get current date
-                $date = date('d.m.Y H:i:s');
-
                 // get form data
                 $username = $form->get('username')->getData();
                 $password = $form->get('password')->getData();
@@ -95,6 +92,9 @@ class RegisterController extends AbstractController
                 if ($password != $repassword) {
                     $error_msg = 'Your passwords dont match';
                 } else {
+
+                    // get current date
+                    $date = date('d.m.Y H:i:s');
 
                     // get user ip
                     $ip_address = $this->visitorInfoUtil->getIP();
@@ -130,7 +130,7 @@ class RegisterController extends AbstractController
                         $this->entityManager->persist($user);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to insert new user: '.$e->getMessage(), 400);
+                        return $this->errorManager->handleError('error to register new user: '.$e->getMessage(), 400);
                     }
 
                     // set user token (login-token session)

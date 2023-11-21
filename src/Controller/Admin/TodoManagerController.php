@@ -27,8 +27,8 @@ class TodoManagerController extends AbstractController
     private TodosManager $todosManager;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
-    private EntityManagerInterface $entityManager;
     private VisitorInfoUtil $visitorInfoUtil;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         SiteUtil $siteUtil,

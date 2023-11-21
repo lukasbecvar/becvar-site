@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Login controller provides user login function
-    ! Login uses its own Authenticator not symfony auth !
+    ! Login uses its own authenticator not symfony auth !
 */
 
 class LoginController extends AbstractController
@@ -23,11 +23,7 @@ class LoginController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
 
-    public function __construct(
-        LogManager $logManager, 
-        AuthManager $authManager, 
-        SecurityUtil $securityUtil
-    ) {
+    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -85,6 +81,7 @@ class LoginController extends AbstractController
                     $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
                     $error_msg = 'Incorrect username or password.';
                 }
+
                 // redirect to admin (if login OK)
                 if ($error_msg == null) {
                     return $this->redirectToRoute('admin_dashboard');

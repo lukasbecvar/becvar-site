@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /*
     Logout controller provides user logout function
-    ! Login uses its own Authenticator not symfony auth !
+    ! Login uses its own authenticator not symfony auth !
 */
 
 class LogoutController extends AbstractController
