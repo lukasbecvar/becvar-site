@@ -4,9 +4,9 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class HomeControllerTest extends WebTestCase
+final class HomeControllerTest extends WebTestCase
 {
-    public function testHomeResponseCode()
+    public final function testHomeResponseCode()
     {
         $client = static::createClient();
 
