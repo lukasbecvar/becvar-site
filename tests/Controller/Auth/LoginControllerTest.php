@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Login authenticator test 
 */
 
-final class LoginControllerTest extends WebTestCase
+class LoginControllerTest extends WebTestCase
 {
-    public final function testLoginPageIsLoaded()
+    public function testLoginPageIsLoaded()
     {
         $client = static::createClient();
 
@@ -22,7 +22,7 @@ final class LoginControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    public final function testEmptyLoginFormSubmission()
+    public function testEmptyLoginFormSubmission()
     {
         $client = static::createClient();
 
@@ -46,7 +46,7 @@ final class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
     }
 
-    public final function testIncorrectLoginFormSubmission()
+    public function testIncorrectLoginFormSubmission()
     {
         $client = static::createClient();
 
@@ -69,7 +69,7 @@ final class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
-    public final function testValidLoginFormSubmission()
+    public function testValidLoginFormSubmission()
     {
         $client = static::createClient();
 

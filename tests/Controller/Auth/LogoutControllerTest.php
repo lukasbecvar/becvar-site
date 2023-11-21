@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Logout authenticator test 
 */
 
-final class LogoutControllerTest extends WebTestCase
+class LogoutControllerTest extends WebTestCase
 {
-    public final function testLogout()
+    public function testLogout()
     {
         $client = static::createClient();
 

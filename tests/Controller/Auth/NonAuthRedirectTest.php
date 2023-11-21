@@ -9,9 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Test all admin routes in the default state when the user is not logged in (to test if it is correct check if user is logged in)
 */
 
-final class NonAuthRedirectTest extends WebTestCase
+class NonAuthRedirectTest extends WebTestCase
 {
-    public final function testNonAuthRedirectAdminInit()
+    public function testNonAuthRedirectAdminInit()
     {
         $client = static::createClient();
 
@@ -22,7 +22,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public final function testNonAuthRedirectAccountSettings()
+    public function testNonAuthRedirectAccountSettings()
     {
         $client = static::createClient();
 
@@ -33,7 +33,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public final function testNonAuthRedirectAccountSettingsProfilePicsChange()
+    public function testNonAuthRedirectAccountSettingsProfilePicsChange()
     {
         $client = static::createClient();
 
@@ -44,7 +44,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public final function testNonAuthRedirectAccountSettingsUsernameChange()
+    public function testNonAuthRedirectAccountSettingsUsernameChange()
     {
         $client = static::createClient();
 
@@ -55,7 +55,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public final function testNonAuthRedirectAccountSettingsPasswordChange()
+    public function testNonAuthRedirectAccountSettingsPasswordChange()
     {
         $client = static::createClient();
 
@@ -66,7 +66,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public final function testNonAuthRedirectAdminChat()
+    public function testNonAuthRedirectAdminChat()
     {
         $client = static::createClient();
 
@@ -77,7 +77,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDashboard()
+    public function testNonAuthRedirectAdminDashboard()
     {
         $client = static::createClient();
 
@@ -88,7 +88,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminEmergencyShutdown()
+    public function testNonAuthRedirectAdminEmergencyShutdown()
     {
         $client = static::createClient();
 
@@ -99,7 +99,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminServiceRunner()
+    public function testNonAuthRedirectAdminServiceRunner()
     {
         $client = static::createClient();
 
@@ -110,7 +110,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDatabase()
+    public function testNonAuthRedirectAdminDatabase()
     {
         $client = static::createClient();
 
@@ -121,7 +121,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDatabaseTable()
+    public function testNonAuthRedirectAdminDatabaseTable()
     {
         $client = static::createClient();
 
@@ -132,7 +132,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDatabaseEdit()
+    public function testNonAuthRedirectAdminDatabaseEdit()
     {
         $client = static::createClient();
 
@@ -143,7 +143,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDatabaseAdd()
+    public function testNonAuthRedirectAdminDatabaseAdd()
     {
         $client = static::createClient();
 
@@ -154,7 +154,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDatabaseDelete()
+    public function testNonAuthRedirectAdminDatabaseDelete()
     {
         $client = static::createClient();
 
@@ -165,7 +165,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminDiagnostics()
+    public function testNonAuthRedirectAdminDiagnostics()
     {
         $client = static::createClient();
 
@@ -176,7 +176,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminInbox()
+    public function testNonAuthRedirectAdminInbox()
     {
         $client = static::createClient();
 
@@ -187,7 +187,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminInboxClose()
+    public function testNonAuthRedirectAdminInboxClose()
     {
         $client = static::createClient();
 
@@ -198,7 +198,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminLogs()
+    public function testNonAuthRedirectAdminLogs()
     {
         $client = static::createClient();
 
@@ -209,7 +209,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminLogsWhreIP()
+    public function testNonAuthRedirectAdminLogsWhreIP()
     {
         $client = static::createClient();
 
@@ -220,7 +220,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminLogsDelete()
+    public function testNonAuthRedirectAdminLogsDelete()
     {
         $client = static::createClient();
 
@@ -231,7 +231,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminLogsReadedAll()
+    public function testNonAuthRedirectAdminLogsReadedAll()
     {
         $client = static::createClient();
 
@@ -242,7 +242,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminMediaBrowser()
+    public function testNonAuthRedirectAdminMediaBrowser()
     {
         $client = static::createClient();
 
@@ -253,7 +253,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminTerminal()
+    public function testNonAuthRedirectAdminTerminal()
     {
         $client = static::createClient();
 
@@ -264,7 +264,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminTodos()
+    public function testNonAuthRedirectAdminTodos()
     {
         $client = static::createClient();
 
@@ -275,7 +275,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminCompletedTodos()
+    public function testNonAuthRedirectAdminCompletedTodos()
     {
         $client = static::createClient();
 
@@ -286,7 +286,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminTodosClose()
+    public function testNonAuthRedirectAdminTodosClose()
     {
         $client = static::createClient();
 
@@ -297,7 +297,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminVisitors()
+    public function testNonAuthRedirectAdminVisitors()
     {
         $client = static::createClient();
 
@@ -308,7 +308,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminVisitorsDelete()
+    public function testNonAuthRedirectAdminVisitorsDelete()
     {
         $client = static::createClient();
 
@@ -319,7 +319,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminVisitorsBan()
+    public function testNonAuthRedirectAdminVisitorsBan()
     {
         $client = static::createClient();
 
@@ -330,7 +330,7 @@ final class NonAuthRedirectTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public final function testNonAuthRedirectAdminVisitorsUnban()
+    public function testNonAuthRedirectAdminVisitorsUnban()
     {
         $client = static::createClient();
 
