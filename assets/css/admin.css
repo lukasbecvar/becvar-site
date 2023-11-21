@@ -934,6 +934,7 @@ button {
     margin-left: 5px;
     color: white;
     font-size: 22px !important;
+	text-transform: lowercase;
 }
 
 /* mobile devices style */

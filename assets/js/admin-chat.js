@@ -106,3 +106,8 @@ message_input.addEventListener("keypress", function(e) {
         message_input.value = '';
     }
 });
+
+// set command input to lower case
+document.getElementById('command').addEventListener('input', function () {
+    this.value = this.value.toLowerCase();
+});

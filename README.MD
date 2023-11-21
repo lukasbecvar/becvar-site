@@ -49,8 +49,6 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
-- [ ] Terminal switch user command (like linux su)
-- [ ] Terminal phone first char shift block
 - [ ] Entity util with entity repos get functions
 - [ ] Refactor
 - [ ] Code unit tests
