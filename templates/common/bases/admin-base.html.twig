@@ -29,20 +29,27 @@
             {% block component %}{% endblock %}
 
             <script>
+                function manipulaceTridou() {
+                    document.querySelector("body").classList.toggle("active");
+                }
+            
                 function sidebarInit() {
                     var body = document.querySelector("body");
                     var hamburger = document.querySelector(".hamburger");
             
                     if (window.innerWidth <= 1024) {
                         body.classList.add("active");
-                        hamburger.addEventListener("click", function() {
-                            body.classList.toggle("active");
-                        });
+                        hamburger.addEventListener("click", manipulaceTridou);
                     } else {
                         body.classList.remove("active");
-                        hamburger.removeEventListener("click", function() {
-                            body.classList.toggle("active");
-                        });
+                        hamburger.removeEventListener("click", manipulaceTridou);
+                    }
+            
+                    if (window.innerWidth > 1024) {
+                        if (!window.location.href.includes("/admin/dashboard")) {
+                            manipulaceTridou();
+                            hamburger.addEventListener("click", manipulaceTridou);
+                        }
                     }
                 }
             
@@ -52,6 +59,7 @@
                     sidebarInit();
                 });
             </script>
+            
         </div>
     </div>
 </main>
