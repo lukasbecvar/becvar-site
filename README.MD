@@ -49,6 +49,7 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
+- [ ] fake database na login unit test (mock object)
 - [ ] Admin controller unit tests
 - [ ] API controllers unit tests
 - [ ] public pages unit tests
