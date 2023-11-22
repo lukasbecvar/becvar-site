@@ -52,27 +52,26 @@ class LoginControllerTest extends WebTestCase
 
     protected function tearDown(): void
     {
-        // init entity manager
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $this->removeFakeData();
+        parent::tearDown();
+    }
 
-        // get user repository
-        $userRepository = $entityManager->getRepository(\App\Entity\User::class);
+    private function removeFakeData(): void
+    {
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $userRepository = $entityManager->getRepository(User::class);
         $fakeUser = $userRepository->findOneBy(['username' => 'test_username']);
     
-        // check if fake user found
         if ($fakeUser) {
-
-            // Remove the fake user
             $id = $fakeUser->getId();
+    
             $entityManager->remove($fakeUser);
             $entityManager->flush();
     
-            // Reset auto-increment value for the users table
+            // Reset auto-increment hodnoty pro tabulku users
             $connection = $entityManager->getConnection();
             $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
         }
-
-        parent::tearDown();
     }
 
     public function testLoginPageLoad(): void
