@@ -19,5 +19,9 @@ class LogoutControllerTest extends WebTestCase
 
         // check if logout redirected
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
+
+        // check if login cookie unseted
+        $this->assertResponseNotHasCookie('login-token-cookie');
     }
 }
+ 
