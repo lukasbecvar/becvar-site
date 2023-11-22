@@ -18,10 +18,6 @@
         <env name="REMOTE_ADDR" value="127.0.0.1"/>
         <env name="HTTP_HOST" value="127.0.0.1"/>
         <env name="HTTP_USER_AGENT" value="test"/>
-
-        <!-- testing auth values -->
-        <env name="VALID_USERNAME" value="lordbecvold"/>
-        <env name="VALID_PASSWORD" value="kokotkokot"/>
     </php>
 
     <testsuites>

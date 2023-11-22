@@ -78,8 +78,8 @@ class LoginControllerTest extends WebTestCase
 
         // set from data
         $form = $crawler->selectButton('Sign in')->form();
-        $form['login_form[username]'] = $_ENV['VALID_USERNAME'];
-        $form['login_form[password]'] = $_ENV['VALID_PASSWORD'];
+        $form['login_form[username]'] = 'lordbecvold';
+        $form['login_form[password]'] = 'kokotkokot';
 
         // submit form (post request)
         $client->submit($form);
