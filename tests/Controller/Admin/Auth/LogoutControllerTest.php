@@ -5,12 +5,12 @@ namespace App\Tests\Controller\Admin\Auth;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Logout component of user authenticator test 
+    Logout component test 
 */
 
 class LogoutControllerTest extends WebTestCase
 {
-    public function testLogout()
+    public function testLogout(): void
     {
         $client = static::createClient();
 
@@ -22,6 +22,9 @@ class LogoutControllerTest extends WebTestCase
 
         // check if login cookie unseted
         $this->assertResponseNotHasCookie('login-token-cookie');
+
+        // Check response status code
+        $this->assertResponseStatusCodeSame(302); 
     }
 }
  

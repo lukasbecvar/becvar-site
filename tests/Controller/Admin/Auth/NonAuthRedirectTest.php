@@ -11,333 +11,282 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class NonAuthRedirectTest extends WebTestCase
 {
-    public function testNonAuthRedirectAdminInit()
+    public function testNonAuthRedirectAdminInit(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public function testNonAuthRedirectAccountSettings()
+    public function testNonAuthRedirectAccountSettings(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/account/settings');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public function testNonAuthRedirectAccountSettingsProfilePicsChange()
+    public function testNonAuthRedirectAccountSettingsProfilePicsChange(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/account/settings/pic');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public function testNonAuthRedirectAccountSettingsUsernameChange()
+    public function testNonAuthRedirectAccountSettingsUsernameChange(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/account/settings/username');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public function testNonAuthRedirectAccountSettingsPasswordChange()
+    public function testNonAuthRedirectAccountSettingsPasswordChange(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/account/settings/password');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 
-    public function testNonAuthRedirectAdminChat()
+    public function testNonAuthRedirectAdminChat(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/chat');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDashboard()
+    public function testNonAuthRedirectAdminDashboard(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/dashboard');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminEmergencyShutdown()
+    public function testNonAuthRedirectAdminEmergencyShutdown(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/dashboard/emergency/shutdown');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminServiceRunner()
+    public function testNonAuthRedirectAdminServiceRunner(): void
     {
         $client = static::createClient();
 
-        // make get request to logout
         $client->request('GET', '/admin/dashboard/runner');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDatabase()
+    public function testNonAuthRedirectAdminDatabase(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/database');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDatabaseTable()
+    public function testNonAuthRedirectAdminDatabaseTable(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/database/table');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDatabaseEdit()
+    public function testNonAuthRedirectAdminDatabaseEdit(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/database/edit');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDatabaseAdd()
+    public function testNonAuthRedirectAdminDatabaseAdd(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/database/add');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDatabaseDelete()
+    public function testNonAuthRedirectAdminDatabaseDelete(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/database/delete');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminDiagnostics()
+    public function testNonAuthRedirectAdminDiagnostics(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/diagnostic');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminInbox()
+    public function testNonAuthRedirectAdminInbox(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/inbox');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminInboxClose()
+    public function testNonAuthRedirectAdminInboxClose(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/inbox/close');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminLogs()
+    public function testNonAuthRedirectAdminLogs(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/logs');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminLogsWhreIP()
+    public function testNonAuthRedirectAdminLogsWhreIP(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/logs/whereip');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminLogsDelete()
+    public function testNonAuthRedirectAdminLogsDelete(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/logs/delete');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminLogsReadedAll()
+    public function testNonAuthRedirectAdminLogsReadedAll(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/logs/readed/all');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminMediaBrowser()
+    public function testNonAuthRedirectAdminMediaBrowser(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/media/browser');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminTerminal()
+    public function testNonAuthRedirectAdminTerminal(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/terminal');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminTodos()
+    public function testNonAuthRedirectAdminTodos(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/todos');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminCompletedTodos()
+    public function testNonAuthRedirectAdminCompletedTodos(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/todos/completed');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminTodosClose()
+    public function testNonAuthRedirectAdminTodosClose(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/todos/close');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminVisitors()
+    public function testNonAuthRedirectAdminVisitors(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/visitors');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminVisitorsDelete()
+    public function testNonAuthRedirectAdminVisitorsDelete(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/visitors/delete');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminVisitorsBan()
+    public function testNonAuthRedirectAdminVisitorsBan(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/visitors/ban');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }  
 
-    public function testNonAuthRedirectAdminVisitorsUnban()
+    public function testNonAuthRedirectAdminVisitorsUnban(): void
     {
         $client = static::createClient();
-
-        // make get request to logout
         $client->request('GET', '/admin/visitors/unban');
 
-        // check if logout redirected
+        $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($client->getResponse()->isRedirect('/login'));
     }
 }
