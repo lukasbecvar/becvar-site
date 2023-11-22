@@ -85,7 +85,7 @@
                             {# <===== IP-ADDRESS =====> #}
                             {% if row.ipAddress == current_ip %}
                                 <th scope='row'class='text-warning'>
-                                    <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link link-yellow">{{ row.ipAddress|e }}</a><span class="text-light">[</span><span class='text-success'>You</span><span class="text-light">]</span>
+                                    <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link text-warning">{{ row.ipAddress|e }}</a><span class="text-light">[</span><span class='text-success'>You</span><span class="text-light">]</span>
                                 </th>
                             {% else %}
                                 <th scope='row'>
