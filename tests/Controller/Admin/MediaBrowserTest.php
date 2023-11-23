@@ -4,12 +4,13 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
-    Admin init controller test
+    Admin media browser component test
 */
 
-class AdminControllerTest extends WebTestCase
+class MediaBrowserTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -32,16 +33,18 @@ class AdminControllerTest extends WebTestCase
         return $authManagerMock;
     }
 
-    public function testDashboardRedirect(): void
+    public function testMediaBrowser(): void
     {
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to admin init controller
-        $this->client->request('GET', '/admin');
+        $this->client->request('GET', '/admin/media/browser?page=1');
 
-        // check response
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
+        // check response code
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        
+        // check response content
+        $this->assertSelectorTextContains('title', 'Admin | images');
     }
 }

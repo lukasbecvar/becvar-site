@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Admin dashboard controller test
+    Admin dashboard component test
 */
 
-class DashboardControllerTest extends WebTestCase
+class DashboardTest extends WebTestCase
 {
     // instance for making requests
     private $client;

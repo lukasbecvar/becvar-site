@@ -3,14 +3,14 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Admin media browser test
+    Admin diagnostics component test
 */
 
-class MediaBrowserControllerTest extends WebTestCase
+class AdminDiagnosticTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -33,18 +33,20 @@ class MediaBrowserControllerTest extends WebTestCase
         return $authManagerMock;
     }
 
-    public function testMediaBrowser(): void
+    public function testDiagnostic(): void
     {
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        // make post request to admin init controller
-        $this->client->request('GET', '/admin/media/browser?page=1');
+        // make post request to diagnostic page
+        $this->client->request('GET', '/admin/diagnostic');
 
-        // check response code
+        // check response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-        
+
         // check response content
-        $this->assertSelectorTextContains('title', 'Admin | images');
+        $this->assertSelectorTextContains('title', 'Admin | diagnostic');
+        $this->assertSelectorTextContains('div', 'System diagnostics');
+        $this->assertSelectorTextContains('div', 'Website diagnostics');
     }
 }

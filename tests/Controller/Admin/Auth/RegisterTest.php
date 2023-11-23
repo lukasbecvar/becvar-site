@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Register component test 
 */
 
-class RegisterControllerTest extends WebTestCase
+class RegisterTest extends WebTestCase
 {
     // instance for making requests
     private $client;

@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Admin database browser component test
 */
 
-class DatabaseControllerTest extends WebTestCase
+class DatabaseBrowserTest extends WebTestCase
 {
     // instance for making requests
     private $client;

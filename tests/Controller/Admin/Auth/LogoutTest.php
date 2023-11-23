@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Logout component test 
 */
 
-class LogoutControllerTest extends WebTestCase
+class LogoutTest extends WebTestCase
 {
     // instance for making requests
     private $client;

@@ -7,10 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /*
-    Admin message inbox controller test
+    Admin message inbox component test
 */
 
-class InboxControllerTest extends WebTestCase
+class MessageInboxTest extends WebTestCase
 {
     // instance for making requests
     private $client;

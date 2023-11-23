@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
     Admin log reader component test
 */
 
-class LogReaderControllerTest extends WebTestCase
+class LogReaderTest extends WebTestCase
 {
     // instance for making requests
     private $client;

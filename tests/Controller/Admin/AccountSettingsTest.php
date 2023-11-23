@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Admin account settings test
 */
 
-class AccountSettingsControllerTest extends WebTestCase
+class AccountSettingsTest extends WebTestCase
 {
     // instance for making requests
     private $client;

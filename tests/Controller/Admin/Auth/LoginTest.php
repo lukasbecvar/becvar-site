@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Login component test 
 */
 
-class LoginControllerTest extends WebTestCase
+class LoginTest extends WebTestCase
 {
     // instance for making requests
     private $client;

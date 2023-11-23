@@ -3,14 +3,13 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Admin diagnostics componnt test
+    Admin init compnent test
 */
 
-class DiagnosticControllerTest extends WebTestCase
+class AdminInitTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -33,20 +32,16 @@ class DiagnosticControllerTest extends WebTestCase
         return $authManagerMock;
     }
 
-    public function testDiagnostic(): void
+    public function testDashboardRedirect(): void
     {
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        // make post request to diagnostic page
-        $this->client->request('GET', '/admin/diagnostic');
+        // make post request to admin init controller
+        $this->client->request('GET', '/admin');
 
         // check response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
-        $this->assertSelectorTextContains('title', 'Admin | diagnostic');
-        $this->assertSelectorTextContains('div', 'System diagnostics');
-        $this->assertSelectorTextContains('div', 'Website diagnostics');
+        $this->assertResponseStatusCodeSame(302); 
+        $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }
 }

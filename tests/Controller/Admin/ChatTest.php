@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     Admin chat component test
 */
 
-class ChatControllerTest extends WebTestCase
+class ChatTest extends WebTestCase
 {
     // instance for making requests
     private $client;
