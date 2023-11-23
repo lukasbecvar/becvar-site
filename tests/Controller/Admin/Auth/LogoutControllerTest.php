@@ -10,20 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LogoutControllerTest extends WebTestCase
 {
+    // instance for making requests
+    private $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // create client instance
+        $this->client = static::createClient();
+    }
+
     public function testLogout(): void
     {
-        $client = static::createClient();
-
         // make get request to logout
-        $client->request('GET', '/logout');
+        $this->client->request('GET', '/logout');
 
         // check if logout redirected
-        $this->assertTrue($client->getResponse()->isRedirect('/login'));
+        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
 
         // check if login cookie unseted
         $this->assertResponseNotHasCookie('login-token-cookie');
 
-        // Check response status code
+        // check response status code
         $this->assertResponseStatusCodeSame(302); 
     }
 }

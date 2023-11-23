@@ -13,53 +13,54 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterControllerTest extends WebTestCase
 {
-   // Instance for making requests
-   private $client;
+    // instance for making requests
+    private $client;
 
-   protected function setUp(): void
-   {
-       parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-       // Create client instance
-       $this->client = static::createClient();
-   }
+        // create client instance
+        $this->client = static::createClient();
+    }
 
-   protected function tearDown(): void
-   {
-       $this->removeFakeData();
-       parent::tearDown();
-   }
+    protected function tearDown(): void
+    {
+        $this->removeFakeData();
+        parent::tearDown();
+    }
 
-   private function removeFakeData(): void
-   {
-       $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-       $userRepository = $entityManager->getRepository(User::class);
-       $fakeUser = $userRepository->findOneBy(['username' => 'testing_username']);
+    private function removeFakeData(): void
+    {
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $userRepository = $entityManager->getRepository(User::class);
+        $fakeUser = $userRepository->findOneBy(['username' => 'testing_username']);
 
-       if ($fakeUser) {
-           $id = $fakeUser->getId();
+        // check if user exist
+        if ($fakeUser) {
+            $id = $fakeUser->getId();
 
-           $entityManager->remove($fakeUser);
-           $entityManager->flush();
+            $entityManager->remove($fakeUser);
+            $entityManager->flush();
 
-           // Reset auto-increment values for the users table
-           $connection = $entityManager->getConnection();
-           $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
-       }
-   }
+            // reset auto-increment values for the users table
+            $connection = $entityManager->getConnection();
+            $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
+        }
+    }
 
     public function testRegisterAllowedLoaded(): void
     {
-        // Create moc auth manager fake object
+        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
 
-        // Init fake testing value
+        // init fake testing value
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
 
-        // Use fake auth manager instance
+        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
-        // Make get request to account settings admin component
+        // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
         // check response code
@@ -76,23 +77,23 @@ class RegisterControllerTest extends WebTestCase
         $this->assertSelectorExists('button:contains("Register")');
     }
 
-   public function testRegisterNonAllowedLoaded(): void
-   {
-       // Create moc auth manager fake object
-       $authManagerMock = $this->createMock(AuthManager::class);
+    public function testRegisterNonAllowedLoaded(): void
+    {
+        // create moc auth manager fake object
+        $authManagerMock = $this->createMock(AuthManager::class);
 
-       // Init fake testing value
-       $authManagerMock->method('isRegisterPageAllowed')->willReturn(false);
+        // init fake testing value
+        $authManagerMock->method('isRegisterPageAllowed')->willReturn(false);
 
-       // Use fake auth manager instance
-       $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+        // use fake auth manager instance
+        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
-       // Make get request to account settings admin component
-       $this->client->request('GET', '/register');
+        // make get request to account settings admin component
+        $this->client->request('GET', '/register');
 
-       // Check response code
-       $this->assertSame(302, $this->client->getResponse()->getStatusCode());
-   }
+        // check response code
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
+    }
 
     public function testRegisterEmptySubmit(): void
     {
@@ -105,6 +106,7 @@ class RegisterControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
+        // build post request
         $this->client->request('POST', '/register', [
             'register_form' => [
                 'username' => '',
@@ -134,6 +136,7 @@ class RegisterControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
+        // build post request
         $this->client->request('POST', '/register', [
             'register_form' => [
                 'username' => 'testing_username',

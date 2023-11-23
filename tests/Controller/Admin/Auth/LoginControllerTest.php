@@ -62,13 +62,14 @@ class LoginControllerTest extends WebTestCase
         $userRepository = $entityManager->getRepository(User::class);
         $fakeUser = $userRepository->findOneBy(['username' => 'test_username']);
     
+        // check if user exist
         if ($fakeUser) {
             $id = $fakeUser->getId();
     
             $entityManager->remove($fakeUser);
             $entityManager->flush();
     
-            // Reset auto-increment hodnoty pro tabulku users
+            // reset auto-increment hodnoty pro tabulku users
             $connection = $entityManager->getConnection();
             $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
         }

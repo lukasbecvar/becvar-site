@@ -12,6 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AccountSettingsControllerTest extends WebTestCase
 {
+    // instance for making requests
+    private $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+    
+        // create client instance
+        $this->client = static::createClient();
+    }
+
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -24,13 +35,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTable(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
-        $client->request('GET', '/admin/account/settings');
+        $this->client->request('GET', '/admin/account/settings');
 
         // check response code
         $this->assertResponseIsSuccessful();
@@ -46,13 +55,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangePicForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
-        $client->request('GET', '/admin/account/settings/pic');
+        $this->client->request('GET', '/admin/account/settings/pic');
 
         // check response code
         $this->assertResponseIsSuccessful();
@@ -66,13 +73,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangeUsernameForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
-        $client->request('GET', '/admin/account/settings/username');
+        $this->client->request('GET', '/admin/account/settings/username');
 
         // check response code
         $this->assertResponseIsSuccessful();
@@ -86,12 +91,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangeUsernameEmptyForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        $client->request('POST', '/admin/account/settings/username', [
+        // build post request
+        $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => ''
             ],
@@ -105,12 +109,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangeUsernameShortForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        $client->request('POST', '/admin/account/settings/username', [
+        // build post request
+        $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => 'a'
             ],
@@ -124,13 +127,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangePasswordForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
-        $client->request('GET', '/admin/account/settings/password');
+        $this->client->request('GET', '/admin/account/settings/password');
 
         // check response code
         $this->assertResponseIsSuccessful();
@@ -147,12 +148,11 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangePasswordNotMatchForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        $client->request('POST', '/admin/account/settings/password', [
+        // build post request
+        $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => 'testing_password_1',
                 'repassword' => 'testing_password_2'
@@ -169,12 +169,10 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangePasswordEmptyForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        $client->request('POST', '/admin/account/settings/password', [
+        $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => '',
                 'repassword' => ''
@@ -190,12 +188,10 @@ class AccountSettingsControllerTest extends WebTestCase
 
     public function testAccountSettingsTableChangePasswordShortForm(): void
     {
-        $client = static::createClient();
-
         // use fake auth manager instance
-        $client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        $client->request('POST', '/admin/account/settings/password', [
+        $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => 'a',
                 'repassword' => 'a'
