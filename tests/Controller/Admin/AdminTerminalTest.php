@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Admin terminal compnent test
+    Admin terminal component test
 */
 
 class AdminTerminalTest extends WebTestCase
