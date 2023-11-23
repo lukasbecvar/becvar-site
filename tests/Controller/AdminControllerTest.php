@@ -22,16 +22,20 @@ class AdminControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testDashboardRedirect(): void
+    private function createAuthManagerMock(): object
     {
-        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
 
         // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
 
+        return $authManagerMock;
+    }
+
+    public function testDashboardRedirect(): void
+    {
         // use fake auth manager instance
-        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to admin init controller
         $this->client->request('GET', '/admin');
