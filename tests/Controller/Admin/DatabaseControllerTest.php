@@ -39,7 +39,7 @@ class DatabaseControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
-        // make post request to admin init controller
+        // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
         // check response
@@ -54,7 +54,7 @@ class DatabaseControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('User'));
 
-        // make post request to admin init controller
+        // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
         // check response code
@@ -71,7 +71,7 @@ class DatabaseControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
-        // make post request to admin init controller
+        // make post request to database browser
         $this->client->request('GET', '/admin/database/table?table=users&page=1');
 
         // check response
@@ -88,7 +88,7 @@ class DatabaseControllerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
-        // make post request to admin init controller
+        // make post request to database browser
         $this->client->request('GET', '/admin/database/add?table=users&page=1');
 
         // check response
