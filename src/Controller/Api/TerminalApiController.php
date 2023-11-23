@@ -7,7 +7,6 @@ use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,6 @@ class TerminalApiController extends AbstractController
     private SessionUtil $sessionUtil;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
-    private ErrorManager $errorManager;
 
     public function __construct(
         JsonUtil $jsonUtil,
@@ -32,14 +30,12 @@ class TerminalApiController extends AbstractController
         AuthManager $authManager,
         SessionUtil $sessionUtil,
         SecurityUtil $securityUtil,
-        ErrorManager $errorManager
     ) {
         $this->jsonUtil = $jsonUtil;
         $this->logManager = $logManager;
         $this->sessionUtil = $sessionUtil;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
-        $this->errorManager = $errorManager;
     }
 
     #[Route('/api/system/terminal', name: 'api_terminal')]
@@ -167,13 +163,25 @@ class TerminalApiController extends AbstractController
                         }
                     }
                 } else {
-                    return $this->errorManager->handleError('terminal-api: command data is empty!', 401);
+                    return $this->json([
+                        'status' => 'error',
+                        'code' => 500,
+                        'message' => 'command data is empty!'
+                    ], 500);
                 }
             } else {
-                return $this->errorManager->handleError('terminal-api: request is not POST!', 500);
+                return $this->json([
+                    'status' => 'error',
+                    'code' => 500,
+                    'message' => 'POST request required!'
+                ], 500);
             }
         } else {
-            return $this->errorManager->handleError('error to set online status for non authentificated users!', 401);
+            return $this->json([
+                'status' => 'error',
+                'code' => 401,
+                'message' => 'error this function is only for authentificated users!'
+            ], 401);
         }
     }
 }

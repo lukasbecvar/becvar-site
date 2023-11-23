@@ -69,7 +69,7 @@ function sendMessage() {
 }
 
 // function to scroll to the bottom of the chat
-function scrollToBottom() {
+function scrollToBottom() { 
     chat.scrollTop = chat.scrollHeight;
 }
 

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         hostname_element.textContent = 'root@' + currentHostname;
     }
 
-    function scrollToBottom() {
+    function scrollToBottom() { 
         terminal.scrollTop = terminal.scrollHeight;
     }
 
