@@ -937,6 +937,12 @@ button {
 	text-transform: lowercase;
 }
 
+.file-input-control {
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(177, 177, 177);
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {

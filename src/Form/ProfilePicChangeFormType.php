@@ -28,7 +28,7 @@ class ProfilePicChangeFormType extends AbstractType
                 ])
             ],
             'attr' => [
-                'class' => 'form-control bg-dark profile-pic-change',
+                'class' => 'file-input-control profile-pic-change',
                 'placeholder' => 'Profile picture',
                 'accept' => 'image/*',
                 'image_property' => 'image'
