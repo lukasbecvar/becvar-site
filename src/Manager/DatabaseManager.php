@@ -40,7 +40,7 @@ class DatabaseManager
         try {
             $platform = $this->connection->getDatabasePlatform();
             $sql = $platform->getListTablesSQL();
-            $tables = $this->connection->executeQuery($sql)->fetchAll();   
+            $tables = $this->connection->executeQuery($sql)->fetchAllAssociative();   
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get tables list: '.$e->getMessage(), 500);
         }
@@ -60,7 +60,7 @@ class DatabaseManager
     {
         $table = null;
         $columns = [];
-        $schema = $this->connection->getSchemaManager()->createSchema();
+        $schema = $this->connection->createSchemaManager()->introspectSchema();
         
         // get data
         try {
@@ -85,7 +85,7 @@ class DatabaseManager
 
         // get data
         try {
-            $data = $this->connection->executeQuery('SELECT * FROM '.$table_name)->fetchAll();
+            $data = $this->connection->executeQuery('SELECT * FROM '.$table_name)->fetchAllAssociative();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get data from table: '.$table_name.', '.$e->getMessage(), 404);
         }
@@ -112,7 +112,7 @@ class DatabaseManager
         // get data with LIMIT and OFFSET
         try {
             $query = 'SELECT * FROM ' . $table_name . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
-            $data = $this->connection->executeQuery($query)->fetchAll();
+            $data = $this->connection->executeQuery($query)->fetchAllAssociative();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
         }
@@ -219,7 +219,7 @@ class DatabaseManager
 
     public function isTableExist(string $table_name): bool 
     {
-        return $this->connection->getSchemaManager()->tablesExist([$table_name]);
+        return $this->connection->createSchemaManager()->tablesExist([$table_name]);
     }
 
     public function countTableData(string $table_name): int 
