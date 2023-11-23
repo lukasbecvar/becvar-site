@@ -38,7 +38,7 @@ class TodoManagerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        // make post request to admin init controller
+        // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos');
 
         // check response code
@@ -57,7 +57,7 @@ class TodoManagerTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
-        // make post request to admin init controller
+        // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos/completed');
 
         // check response code
