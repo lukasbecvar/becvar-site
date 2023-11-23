@@ -39,6 +39,9 @@ class AccountSettingsControllerTest extends WebTestCase
         // check response content
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('h2', 'Account settings');
+        $this->assertSelectorTextContains('body', 'profile-pic');
+        $this->assertSelectorTextContains('body', 'username');
+        $this->assertSelectorTextContains('body', 'password');
     }
 
     public function testAccountSettingsTableChangePicForm(): void

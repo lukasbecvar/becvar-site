@@ -74,7 +74,7 @@ class LoginControllerTest extends WebTestCase
         }
     }
 
-    public function testLoginPageLoad(): void
+    public function testLoadLoginPage(): void
     {
         $this->client->request('GET', '/login');
 
@@ -88,10 +88,11 @@ class LoginControllerTest extends WebTestCase
         $this->assertSelectorExists('form[name="login_form"]');
         $this->assertSelectorExists('input[name="login_form[username]"]');
         $this->assertSelectorExists('input[name="login_form[password]"]');
+        $this->assertSelectorExists('input[name="login_form[remember]"]');
         $this->assertSelectorExists('button:contains("Sign in")');
     }
 
-    public function testEmptyLoginFormSubmit(): void
+    public function testEmptyLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
 
@@ -112,7 +113,7 @@ class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
     }
 
-    public function testIncorrectLoginFormSubmit(): void
+    public function testIncorrectLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
 
@@ -132,7 +133,7 @@ class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
-    public function testIncorrectUsernameLoginFormSubmit()
+    public function testIncorrectUsernameLoginSubmit()
     {
         $crawler = $this->client->request('GET', '/login');
 
@@ -152,7 +153,7 @@ class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
-    public function testIncorrectPassordLoginFormSubmit(): void
+    public function testIncorrectPassordLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
 
@@ -172,7 +173,7 @@ class LoginControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
-    public function testValidLoginFormSubmit(): void
+    public function testValidLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
 

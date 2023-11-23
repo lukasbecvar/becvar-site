@@ -48,6 +48,34 @@ class RegisterControllerTest extends WebTestCase
        }
    }
 
+    public function testRegisterAllowedLoaded(): void
+    {
+        // Create moc auth manager fake object
+        $authManagerMock = $this->createMock(AuthManager::class);
+
+        // Init fake testing value
+        $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
+
+        // Use fake auth manager instance
+        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+
+        // Make get request to account settings admin component
+        $this->client->request('GET', '/register');
+
+        // check response code
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+        // check response content
+        $this->assertSelectorTextContains('title', 'Admin | Login');
+        $this->assertSelectorTextContains('.form-title', 'Register admin account');
+        $this->assertSelectorExists('form[name="register_form"]');
+        $this->assertSelectorExists('input[name="register_form[username]"]');
+        $this->assertSelectorExists('input[name="register_form[password]"]');
+        $this->assertSelectorExists('input[name="register_form[re-password]"]');
+        $this->assertSelectorExists('button:contains("Register")');
+    }
+
    public function testRegisterNonAllowedLoaded(): void
    {
        // Create moc auth manager fake object
@@ -66,7 +94,7 @@ class RegisterControllerTest extends WebTestCase
        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
    }
 
-    public function testRegisterEmptyInputs(): void
+    public function testRegisterEmptySubmit(): void
     {
         // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -95,7 +123,7 @@ class RegisterControllerTest extends WebTestCase
         $this->assertSelectorTextContains('li:contains("Please enter a password again")', 'Please enter a password again');
     }
 
-    public function testRegisterNotMatchPasswordsInputs(): void
+    public function testRegisterNotMatchPasswordsSubmit(): void
     {
         // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
