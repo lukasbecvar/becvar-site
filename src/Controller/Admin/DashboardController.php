@@ -98,7 +98,7 @@ class DashboardController extends AbstractController
                 'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
                 'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
                 'banned_visitors_count' => $this->banManager->getBannedCount(),
-                'online_users_count' => count($this->authManager->getUsersWhereStatus('online')),
+                'online_users_count' => $this->authManager->getUsersWhereStatus('online'),
                 'server_uptime' => $this->dashboardUtil->getHostUptime(),   
                 'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
                 'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   

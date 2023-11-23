@@ -166,7 +166,6 @@ class VisitorManager
 
         // check if visitor found
         if ($visitor !== null) {
-            
             return $visitor->getStatus();
         } else {
             return null;
