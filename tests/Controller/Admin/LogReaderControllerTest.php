@@ -52,4 +52,22 @@ class LogReaderControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Logs reader');
         $this->assertSelectorTextContains('body', 'Basic info');
     }
+
+    public function testLogReaderDelete(): void
+    {
+        // use fake auth manager instance
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+
+        // make post request to logs page
+        $this->client->request('GET', '/admin/logs/delete');
+
+        // check response
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+
+        // check response content
+        $this->assertSelectorTextContains('title', 'Admin | confirmation');
+        $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');
+        $this->assertSelectorTextContains('body', 'Yes');
+        $this->assertSelectorTextContains('body', 'No');
+    }
 }
