@@ -42,6 +42,11 @@ class LogManager
         // check if logs enabled in config
         if ($this->isLogsEnabled() && !$this->isEnabledAntiLog()) {
 
+            // value character shortifiy
+            if (mb_strlen($value) >= 100) {
+                $value = mb_substr($value, 0, 100 - 3).'...';
+            } 
+
             // get log level
             $level = $this->getLogLevel();
 
