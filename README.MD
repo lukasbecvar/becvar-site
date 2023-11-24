@@ -49,10 +49,6 @@ the public part of the site contains information about me and my projects
  - npm 9 or <
 
 ## TODOS
-- [ ] sidebar load fix
-- [ ] Admin controller unit tests
-- [ ] API controllers unit tests
-- [ ] public pages unit tests
 - [ ] middlewares unit tests 
 - [ ] utils unit tests 
 - [ ] Refactor

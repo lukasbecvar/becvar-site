@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Api;
+namespace App\Tests\Controller\Api;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
