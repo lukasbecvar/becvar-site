@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,16 +17,13 @@ class AntilogController extends AbstractController
 {
     private LogManager $logManager;
     private AuthManager $authManager;
-    private ErrorManager $errorManager;
 
     public function __construct(
         LogManager $logManager,
-        AuthManager $authManager,
-        ErrorManager $errorManager, 
+        AuthManager $authManager
     ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
-        $this->errorManager = $errorManager;
     }
 
     #[Route('/antilog/5369362536', name: 'antilog')]
@@ -48,7 +44,11 @@ class AntilogController extends AbstractController
                 $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
             }
         } else {
-            return $this->errorManager->handleError('error to set anti-log-cookie for non authentificated users!', 401);
+            return $this->json([
+                'status' => 'error',
+                'code' => 401,
+                'message' => 'error to set anti-log for non authentificated users!'
+            ], 401);
         }
         return $this->redirectToRoute('admin_dashboard');
     }

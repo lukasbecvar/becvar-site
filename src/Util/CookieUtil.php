@@ -19,9 +19,11 @@ class CookieUtil
 
     public function set($name, $value, $expiration): void 
     {
-        $value = $this->securityUtil->encrypt_aes($value);
-        $value = base64_encode($value);
-        setcookie($name, $value, $expiration, '/');
+        if (!headers_sent()) {
+            $value = $this->securityUtil->encrypt_aes($value);
+            $value = base64_encode($value);
+            setcookie($name, $value, $expiration, '/');
+        }
     }
 
     public function get($name): ?string 
