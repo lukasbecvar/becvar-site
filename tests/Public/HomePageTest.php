@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Controller\Public;
+namespace App\Tests\Public;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Projects component test
+    Home component test
 */
 
-class ProjectsPageTest extends WebTestCase
+class HomeTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -22,10 +22,20 @@ class ProjectsPageTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testProjectsPage()
+    public function testHomePage()
     {
         // make get request
-        $this->client->request('GET', '/projects');
+        $this->client->request('GET', '/home');
+
+        // check response code
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    public function testHomeDefaultRote()
+    {
+        // make get request
+        $this->client->request('GET', '/');
 
         // check response code
         $this->assertResponseIsSuccessful();

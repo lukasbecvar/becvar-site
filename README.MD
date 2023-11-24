@@ -48,11 +48,6 @@ the public part of the site contains information about me and my projects
  - nodejs 18 or <
  - npm 9 or <
 
-## TODOS
-- [ ] middlewares unit tests 
-- [ ] utils unit tests 
-- [ ] Refactor
-
 ## Dependencies 
 * Symfony
    * Version: **6.3**

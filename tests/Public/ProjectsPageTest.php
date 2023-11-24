@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Controller\Public;
+namespace App\Tests\Public;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    About component test
+    Projects component test
 */
 
-class AboutPageTest extends WebTestCase
+class ProjectsPageTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -22,10 +22,10 @@ class AboutPageTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testAboutPage()
+    public function testProjectsPage()
     {
         // make get request
-        $this->client->request('GET', '/about');
+        $this->client->request('GET', '/projects');
 
         // check response code
         $this->assertResponseIsSuccessful();

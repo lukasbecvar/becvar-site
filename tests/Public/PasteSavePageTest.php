@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Controller\Public;
+namespace App\Tests\Public;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Home component test
+    Paste save component test
 */
 
-class HomeTest extends WebTestCase
+class PasteSavePageTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -22,20 +22,10 @@ class HomeTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testHomePage()
+    public function testPastePage()
     {
         // make get request
-        $this->client->request('GET', '/home');
-
-        // check response code
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    public function testHomeDefaultRote()
-    {
-        // make get request
-        $this->client->request('GET', '/');
+        $this->client->request('GET', '/paste');
 
         // check response code
         $this->assertResponseIsSuccessful();

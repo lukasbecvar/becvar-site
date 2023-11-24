@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Admin\Auth;
+namespace App\Tests\Admin\Auth;
 
 use App\Entity\User;
 use App\Manager\AuthManager;

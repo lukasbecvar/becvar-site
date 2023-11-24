@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Controller\Public;
+namespace App\Tests\Public;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /*
-    Paste save component test
+    About component test
 */
 
-class PasteSavePageTest extends WebTestCase
+class AboutPageTest extends WebTestCase
 {
     // instance for making requests
     private $client;
@@ -22,10 +22,10 @@ class PasteSavePageTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testPastePage()
+    public function testAboutPage()
     {
         // make get request
-        $this->client->request('GET', '/paste');
+        $this->client->request('GET', '/about');
 
         // check response code
         $this->assertResponseIsSuccessful();
