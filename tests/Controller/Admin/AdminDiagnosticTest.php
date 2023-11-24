@@ -46,7 +46,7 @@ class AdminDiagnosticTest extends WebTestCase
 
         // check response content
         $this->assertSelectorTextContains('title', 'Admin | diagnostic');
-        $this->assertSelectorTextContains('div', 'System diagnostics');
-        $this->assertSelectorTextContains('div', 'Website diagnostics');
+        $this->assertSelectorTextContains('body', 'System diagnostics');
+        $this->assertSelectorTextContains('body', 'Website diagnostics');
     }
 }
