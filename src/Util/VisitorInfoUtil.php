@@ -2,23 +2,34 @@
 
 namespace App\Util;
 
-use Detection\MobileDetect;
-
-/*
-    Visitor info util provides visitors info getters
-*/
-
+/**
+ * VisitorInfoUtil provides methods to get information about visitors.
+ */
 class VisitorInfoUtil
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var JsonUtil */
     private JsonUtil $jsonUtil;
 
+    /**
+     * VisitorInfoUtil constructor.
+     *
+     * @param SiteUtil $siteUtil The SiteUtil instance.
+     * @param JsonUtil $jsonUtil The JsonUtil instance.
+     */
     public function __construct(SiteUtil $siteUtil, JsonUtil $jsonUtil)
     {
         $this->siteUtil = $siteUtil;
         $this->jsonUtil = $jsonUtil;
     }
 
+    /**
+     * Get the client's IP address.
+     *
+     * @return string|null The client's IP address.
+     */
     public function getIP(): ?string 
     {
         // check client ip
@@ -36,6 +47,11 @@ class VisitorInfoUtil
         return $address;
     }
 
+    /**
+     * Get the user agent (browser).
+     *
+     * @return string|null The user agent.
+     */
     public function getBrowser(): ?string 
     {
         // get user agent
@@ -49,6 +65,13 @@ class VisitorInfoUtil
         }
     }
 
+    /**
+     * Get a short version of the browser name.
+     *
+     * @param string $user_agent The user agent string.
+     *
+     * @return string|null The short browser name.
+     */
     public function getBrowserShortify(string $user_agent): ?string 
     {
         $output = null;
@@ -144,6 +167,11 @@ class VisitorInfoUtil
         return $output;
     }
 
+    /**
+     * Get the operating system.
+     *
+     * @return string|null The operating system.
+     */
     public function getOS(): ?string 
     { 
         $agent = $this->getBrowser();
@@ -192,6 +220,13 @@ class VisitorInfoUtil
         return $os;
     }
 
+    /**
+     * Get the location based on IP address.
+     *
+     * @param string $ip_address The IP address.
+     *
+     * @return array|null The location information (city, country).
+     */
     public function getLocation(string $ip_address): ?array
     {
         // check if site running on localhost

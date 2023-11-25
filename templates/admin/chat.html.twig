@@ -6,6 +6,8 @@
 
 {% block component %}
 <div class="admin-panel chat-page">
+    
+    {# <===== chat component =====> #}
     <div class="chat-panel">
         <h2>Chat</h2>
         <div id="chat">
@@ -13,9 +15,11 @@
         </div>
         <div class="input-container">
             <input type="text" id="message" placeholder="message" maxlength="512" autocomplete="off">
-            <button id="send">Send</button>
+            <button id="send" class="text-white">Send</button>
         </div>
     </div>
+
+    {# <===== online users =====> #}
     <div class="user-panel">
         <h2>User List (online)</h2>
         <ul>

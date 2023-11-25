@@ -4,16 +4,23 @@ namespace App\Tests\Admin\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Non auth redirect authenticator test 
-    Test all admin routes in the default state when the user is not logged in (to test if it is correct check if user is logged in)
-*/
-
+/**
+ * Non-auth redirect authenticator test.
+ *
+ * Test all admin routes in the default state when the user is not logged in
+ *
+ * @package App\Tests\Admin\Auth
+ */
 class NonAuthRedirectTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -257,7 +264,7 @@ class NonAuthRedirectTest extends WebTestCase
     public function testNonAuthRedirectAdminVisitorsUnban(): void
     {
         $this->client->request('GET', '/admin/visitors/unban');
-
+        
         $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
     }

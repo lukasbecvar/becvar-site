@@ -6,21 +6,37 @@ use Twig\Environment;
 use App\Util\SiteUtil;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Error manager provides error handle operations
-*/
-
+/**
+ * ErrorManager provides error handling operations.
+ */
 class ErrorManager
 {
+    /** * @var Environment */
     private Environment $twig;
+
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
 
+    /**
+     * ErrorManager constructor.
+     *
+     * @param Environment $twig
+     * @param SiteUtil    $siteUtil
+     */
     public function __construct(Environment $twig, SiteUtil $siteUtil)
     {
         $this->twig = $twig;
         $this->siteUtil = $siteUtil;
     }
 
+    /**
+     * Handles errors based on the application's mode.
+     *
+     * @param string $msg The error message.
+     * @param int $code The error code.
+     *
+     * @return Response A Response object representing the error.
+     */
     public function handleError(string $msg, int $code): Response
     {
         // check if app is in dev mode
@@ -39,6 +55,13 @@ class ErrorManager
         }
     }    
 
+    /**
+     * Renders an error view based on the error code.
+     *
+     * @param string $code The error code.
+     *
+     * @return string The rendered error view.
+     */
     public function handleErrorView(string $code)
     {
         // try to get view

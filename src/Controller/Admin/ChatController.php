@@ -7,18 +7,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Chat controller provides admin chat box
-*/
-
+/**
+ * Chat controller provides an admin chat box.
+ */
 class ChatController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
-
+    
+    /**
+     * AuthManager constructor.
+     *
+     * @param AuthManager $authManager
+     */
     public function __construct(AuthManager $authManager) {
         $this->authManager = $authManager;
     }
-    
+
+    /**
+     * Display the admin chat box.
+     *
+     * @return Response
+     */
     #[Route('/admin/chat', name: 'admin_chat')]
     public function chat(): Response
     {

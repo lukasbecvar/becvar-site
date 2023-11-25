@@ -12,18 +12,35 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    This controller provides API function: execute terminal commands
-*/
-
+/**
+ * This controller provides API functions for executing terminal commands.
+ */
 class TerminalApiController extends AbstractController
 {
+    /** * @var JsonUtil */
     private JsonUtil $jsonUtil;
-    private LogManager $logManager;
-    private SessionUtil $sessionUtil;
-    private AuthManager $authManager;
-    private SecurityUtil $securityUtil;
 
+    /** * @var LogManager */
+    private LogManager $logManager;
+
+    /** * @var SessionUtil */
+    private SessionUtil $sessionUtil;
+
+    /** * @var AuthManager */
+    private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
+    private SecurityUtil $securityUtil;
+    
+    /**
+     * TerminalApiController constructor.
+     *
+     * @param JsonUtil     $jsonUtil
+     * @param LogManager   $logManager
+     * @param AuthManager  $authManager
+     * @param SessionUtil  $sessionUtil
+     * @param SecurityUtil $securityUtil
+     */
     public function __construct(
         JsonUtil $jsonUtil,
         LogManager $logManager,
@@ -38,6 +55,12 @@ class TerminalApiController extends AbstractController
         $this->securityUtil = $securityUtil;
     }
 
+    /**
+     * Execute a terminal command.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/api/system/terminal', name: 'api_terminal')]
     public function terminalAction(Request $request): Response
     {

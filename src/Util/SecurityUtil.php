@@ -2,27 +2,57 @@
 
 namespace App\Util;
 
-/*
-    Security util provides all security methods (escape, encrypt, hash)
-*/
-
+/**
+ * SecurityUtil provides various security methods such as escaping, hashing, and encryption.
+ */
 class SecurityUtil
 {
+    /**
+     * Escape a string for safe output in HTML.
+     *
+     * @param string $string The string to escape.
+     *
+     * @return string|null The escaped string or null on failure.
+     */
     public function escapeString(string $string): ?string 
     {
         return htmlspecialchars($string, ENT_QUOTES);
     }
 
+    /**
+     * Validate a plain text against a hashed value.
+     *
+     * @param string $plain_text The plain text to validate.
+     * @param string $hash The hashed value to compare against.
+     *
+     * @return bool Whether the validation is successful.
+     */
     public function hash_validate(string $plain_text, string $hash): bool 
 	{
 		return password_verify($plain_text, $hash);
 	}
 
+    /**
+     * Generate a bcrypt hash for the given plain text with the specified cost.
+     *
+     * @param string $plain_text The plain text to hash.
+     * @param int $cost The cost parameter for bcrypt.
+     *
+     * @return string The generated bcrypt hash.
+     */
 	public function gen_bcrypt(string $plain_text, int $cost): string 
 	{
 		return password_hash($plain_text, PASSWORD_BCRYPT, ['cost' => $cost]);
 	}
 
+    /**
+     * Encrypt a string using AES-128-CBC method.
+     *
+     * @param string $plain_text The plain text to encrypt.
+     * @param string $method The encryption method (default: AES-128-CBC).
+     *
+     * @return string The encrypted data in JSON format.
+     */
 	public static function encrypt_aes(string $plain_text, string $method = 'AES-128-CBC'): string {
 		
         // get encryption password form app enviroment
@@ -45,6 +75,14 @@ class SecurityUtil
 		return json_encode($data);
 	}
 
+    /**
+     * Decrypt an AES-128-CBC encrypted JSON string.
+     *
+     * @param string $json_string The JSON string containing encrypted data.
+     * @param string $method The encryption method (default: AES-128-CBC).
+     *
+     * @return string The decrypted data in JSON format.
+     */
 	public static function decrypt_aes(string $json_string, string $method = 'AES-128-CBC'): string {
 		  
         // get encryption password

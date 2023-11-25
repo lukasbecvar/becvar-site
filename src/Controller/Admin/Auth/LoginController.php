@@ -12,23 +12,40 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Login controller provides user login function
-    ! Login uses its own authenticator not symfony auth !
-*/
-
+/**
+ * Login controller provides user login function.
+ * Note: Login uses its own authenticator, not Symfony auth.
+ */
 class LoginController extends AbstractController
 {
+    /** * @var ErrorManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
 
+    /**
+     * LoginController constructor.
+     *
+     * @param LogManager   $logManager
+     * @param AuthManager  $authManager
+     * @param SecurityUtil $securityUtil
+     */
     public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
     }
 
+    /**
+     * User login action.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/login', name: 'auth_login')]
     public function login(Request $request): Response
     {

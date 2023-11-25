@@ -8,19 +8,39 @@ use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Log manager provides log functions for save events to database table
-*/
-
+/**
+ * LogManager provides log functions for saving events to a database table.
+ */
 class LogManager
 {
+    /** * @var CookieUtil */
     private CookieUtil $cookieUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
     
+    /**
+     * LogManager constructor.
+     *
+     * @param CookieUtil             $cookieUtil
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param VisitorManager         $visitorManager
+     * @param VisitorInfoUtil        $visitorInfoUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
@@ -37,6 +57,14 @@ class LogManager
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Logs an event.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
     public function log(string $name, string $value): void 
     {
         // check if logs enabled in config
@@ -100,6 +128,15 @@ class LogManager
         }
     }
 
+    /**
+     * Retrieves logs based on IP address.
+     *
+     * @param string $ip_address
+     * @param mixed $username
+     * @param int $page
+     *
+     * @return Log[]|null
+     */
     public function getLogsWhereIP(string $ip_address, $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);
@@ -135,6 +172,15 @@ class LogManager
         return $logs;
     }
 
+    /**
+     * Retrieves logs based on status, paginated.
+     *
+     * @param string $status
+     * @param mixed $username
+     * @param int $page
+     *
+     * @return Log[]|null
+     */
     public function getLogs(string $status, $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);
@@ -170,6 +216,13 @@ class LogManager
         return $logs;
     }
 
+    /**
+     * Retrieves the count of logs based on status.
+     *
+     * @param string $status
+     *
+     * @return int
+     */
     public function getLogsCount(string $status): int
     {
         $repo = $this->entityManager->getRepository(Log::class);
@@ -184,6 +237,11 @@ class LogManager
         return count($logs);
     }
 
+    /**
+     * Retrieves the count of login logs.
+     *
+     * @return int
+     */
     public function getLoginLogsCount(): int
     {
         $repo = $this->entityManager->getRepository(Log::class);
@@ -198,6 +256,11 @@ class LogManager
         return count($logs);
     }
 
+    /**
+     * Sets the status of all logs to 'readed'.
+     *
+     * @return void
+     */
     public function setReaded(): void
     {
         $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
@@ -210,6 +273,11 @@ class LogManager
         }
     }
 
+    /**
+     * Checks if logs are enabled.
+     *
+     * @return bool
+     */
     public function isLogsEnabled(): bool 
     {
         // check if logs enabled
@@ -220,6 +288,11 @@ class LogManager
         }
     }
 
+    /**
+     * Checks if the anti-log cookie is enabled.
+     *
+     * @return bool
+     */
     public function isEnabledAntiLog(): bool
     {
         // check if cookie set
@@ -239,16 +312,31 @@ class LogManager
         }
     } 
 
+    /**
+     * Sets the anti-log cookie.
+     *
+     * @return void
+     */
     public function setAntiLogCookie(): void
     {
         $this->cookieUtil->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
     }
 
+    /**
+     * Unsets the anti-log cookie.
+     *
+     * @return void
+     */
     public function unsetAntiLogCookie(): void
     {
         $this->cookieUtil->unset('anti-log-cookie');
     }
 
+    /**
+     * Retrieves the log level from the environment configuration.
+     *
+     * @return int
+     */
     public function getLogLevel(): int
     {
         return $_ENV['LOG_LEVEL'];

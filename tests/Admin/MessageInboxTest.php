@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Admin message inbox component test
-*/
-
+/**
+ * Admin message inbox component test
+ *
+ * @package App\Tests\Admin
+ */
 class MessageInboxTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,12 @@ class MessageInboxTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param string $role
+     * @return object
+     */
     private function createAuthManagerMock(string $role): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -34,6 +46,9 @@ class MessageInboxTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the inbox page loads successfully for an admin user.
+     */
     public function testInboxLoad(): void
     {
         // use fake auth manager instance
@@ -42,13 +57,14 @@ class MessageInboxTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | inbox');
     }
 
+    /**
+     * Test if the inbox page displays a permission error for a non-admin user.
+     */
     public function testInboxLoadNoPermissions(): void
     {
         // use fake auth manager instance
@@ -57,10 +73,8 @@ class MessageInboxTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | inbox');
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');
     }

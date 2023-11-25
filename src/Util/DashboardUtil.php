@@ -5,16 +5,27 @@ namespace App\Util;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Dashboard util provides admin info getters (count, database, os, etc)
-*/
-
+/**
+ * DashboardUtil provides various utilities for gathering information about the server and environment.
+ */
 class DashboardUtil
 {
+    /** @var JsonUtil */
     private JsonUtil $jsonUtil;
+
+    /** @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
     
+    /**
+     * DashboardUtil constructor.
+     *
+     * @param JsonUtil $jsonUtil The JSON utility.
+     * @param ErrorManager $errorManager The error manager.
+     * @param EntityManagerInterface $entityManager The entity manager.
+     */
     public function __construct(
         JsonUtil $jsonUtil,
         ErrorManager $errorManager,
@@ -25,6 +36,14 @@ class DashboardUtil
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Get the count of entities in the database.
+     *
+     * @param object $entity The entity class.
+     * @param array|null $search Additional search criteria.
+     *
+     * @return int The count of entities.
+     */
     public function getDatabaseEntityCount(object $entity, array $search = null): int 
     {
         $result = null;
@@ -48,6 +67,11 @@ class DashboardUtil
         return count($result);
     }
 
+    /**
+     * Get the host uptime.
+     *
+     * @return string The formatted host uptime.
+     */
     public function getHostUptime(): string 
     {
         // get host uptime
@@ -62,6 +86,11 @@ class DashboardUtil
         return 'Days: '.$days.', Hours: '.$hours.', Min: '.$min;
     }
 
+    /**
+     * Get the CPU usage percentage.
+     *
+     * @return float The CPU usage percentage.
+     */
     public function getCpuUsage(): float 
     {
         $load = 100;
@@ -78,6 +107,11 @@ class DashboardUtil
         return $load;
     }
 
+    /**
+     * Get the RAM usage information.
+     *
+     * @return array An array containing RAM usage information.
+     */
     public function getRamUsage(): array 
     {
         exec('cat /proc/meminfo', $memory_raw);
@@ -102,6 +136,11 @@ class DashboardUtil
         );	
     }
 
+    /**
+     * Get the drive usage percentage.
+     *
+     * @return string|null The drive usage percentage or null on error.
+     */
     public function getDriveUsage(): ?string 
     {
         try {
@@ -112,6 +151,11 @@ class DashboardUtil
         }
     }
 
+    /**
+     * Get information about installed software packages and the Linux distribution.
+     *
+     * @return array An array containing information about installed software packages and the Linux distribution.
+     */
     public function getSoftwareInfo(): array 
     {
         $softwares = array();
@@ -142,6 +186,11 @@ class DashboardUtil
         );
     }
 
+    /**
+     * Check if the web user has sudo privileges.
+     *
+     * @return bool True if the web user has sudo privileges, false otherwise.
+     */
     public function isWebUserSudo(): bool 
     {
         // testing sudo exec
@@ -158,6 +207,11 @@ class DashboardUtil
         }
    }
 
+    /**
+     * Check if the system is running Linux.
+     *
+     * @return bool True if the system is running Linux, false otherwise.
+     */
     public function isSystemLinux(): bool 
     {
         // check if system is linux
@@ -168,6 +222,11 @@ class DashboardUtil
         }       
     }
 
+    /**
+     * Get the web username.
+     *
+     * @return string|null The web username or null on error.
+     */
     public function getWebUsername(): ?string
     {
         try {
@@ -178,6 +237,11 @@ class DashboardUtil
         }
     }
 
+    /**
+     * Check if the browser list is found.
+     *
+     * @return bool True if the browser list is found, false otherwise.
+     */
     public function isBrowserListFound(): bool 
     {
        // check if list is null
@@ -186,5 +250,5 @@ class DashboardUtil
        } else {
            return false;
        }
-   }
+    }
 }

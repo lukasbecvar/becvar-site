@@ -14,19 +14,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Contact controller provides contact links & contact form
-    Page to display contact information and a form that stores messages in the database
+/** 
+ * Contact controller provides contact links & contact form
+ * Page to display contact information and a form that stores messages in the database
 */
 
 class ContactController extends AbstractController
 {   
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
+
+    /** * @var MessagesManager */
     private MessagesManager $messagesManager;
 
+    /**
+     * ContactController constructor.
+     *
+     * @param LogManager      $logManager      
+     * @param SecurityUtil    $securityUtil    
+     * @param VisitorManager  $visitorManager  
+     * @param VisitorInfoUtil $visitorInfoUtil
+     * @param MessagesManager $messagesManager 
+     */
     public function __construct(
         LogManager $logManager, 
         SecurityUtil $securityUtil, 
@@ -41,6 +59,12 @@ class ContactController extends AbstractController
         $this->messagesManager = $messagesManager;
     }
 
+    /**
+     * Renders the public contact page.
+     *
+     * @param Request $request The HTTP request.
+     * @return Response The response containing the rendered contact page.
+     */
     #[Route('/contact', name: 'public_contact')]
     public function contactPage(Request $request): Response
     {

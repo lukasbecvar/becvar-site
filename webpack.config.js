@@ -11,7 +11,9 @@ Encore
     ///////////////////////////////////////////////////////////////////////////
     // register common assets
     .addEntry('scrollbar-css', './assets/css/scrollbar.css')
-    
+    .addEntry('page-loading-css', './assets/css/page-loading.css')
+    .addEntry('page-loading-js', './assets/js/page-loading.js')
+
     // register public-page assets
     .addEntry('public-css', './assets/css/public.css')
     .addEntry('public-js', './assets/js/public.js')
@@ -54,7 +56,7 @@ Encore
     .addEntry('purecounter-js', './assets/js/purecounter.js')
 
     // register waypoints
-    .addEntry('waypoints-js', './assets/js/noframework.waypoints.js')
+    .addEntry('skills-progress-js', './assets/js/skills-progress.js')
 
     // register visitor status updater
     .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')

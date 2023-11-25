@@ -22,22 +22,48 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Dashboard controller provides homepage of admin site
-    Dashboard components: warning box, services controller, host info, server/database counters
-*/
-
+/**
+ * Dashboard controller provides the homepage of the admin site.
+ * Dashboard components: warning box, services controller, host info, server/database counters.
+ */
 class DashboardController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var BanManager */
     private BanManager $banManager;
+
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var DashboardUtil */
     private DashboardUtil $dashboardUtil;
+
+    /** * @var ServiceManager */
     private ServiceManager $serviceManager;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
 
+    /**
+     * DashboardController constructor.
+     *
+     * @param SiteUtil       $siteUtil
+     * @param BanManager     $banManager
+     * @param LogManager     $logManager
+     * @param AuthManager    $authManager
+     * @param SecurityUtil   $securityUtil
+     * @param DashboardUtil  $dashboardUtil
+     * @param ServiceManager $serviceManager
+     * @param VisitorManager $visitorManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,
@@ -58,6 +84,11 @@ class DashboardController extends AbstractController
         $this->visitorManager = $visitorManager;
     }
 
+    /**
+     * Display the admin dashboard.
+     *
+     * @return Response
+     */
     #[Route('/admin/dashboard', name: 'admin_dashboard')]
     public function dashboard(): Response
     {
@@ -109,6 +140,45 @@ class DashboardController extends AbstractController
         }
     }
 
+    /**
+     * Run service action.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/admin/dashboard/runner', name: 'admin_service_manager')]
+    public function serviceActionRunner(Request $request): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+
+            // get query parameters
+            $service_name = $this->siteUtil->getQueryString('service', $request);
+            $action = $this->siteUtil->getQueryString('action', $request);
+
+            // escape values
+            $service_name = $this->securityUtil->escapeString($service_name);
+            $action = $this->securityUtil->escapeString($action);
+
+            // check if action is emergency shutdown
+            if ($service_name == 'emergency' && $action == 'shutdown') {
+                return $this->redirectToRoute('admin_emergency_shutdown'); 
+            } else {
+                // run normal action
+                $this->serviceManager->runAction($service_name, $action);
+            }
+            return $this->redirectToRoute('admin_dashboard');
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    }
+    
+    /**
+     * Emergency shutdown page.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/dashboard/emergency/shutdown', name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
     {
@@ -167,31 +237,4 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
     } 
-
-    #[Route('/admin/dashboard/runner', name: 'admin_service_manager')]
-    public function serviceActionRunner(Request $request): Response
-    {
-        // check if user logged in
-        if ($this->authManager->isUserLogedin()) {
-
-            // get query parameters
-            $service_name = $this->siteUtil->getQueryString('service', $request);
-            $action = $this->siteUtil->getQueryString('action', $request);
-
-            // escape values
-            $service_name = $this->securityUtil->escapeString($service_name);
-            $action = $this->securityUtil->escapeString($action);
-
-            // check if action is emergency shutdown
-            if ($service_name == 'emergency' && $action == 'shutdown') {
-                return $this->redirectToRoute('admin_emergency_shutdown'); 
-            } else {
-                // run normal action
-                $this->serviceManager->runAction($service_name, $action);
-            }
-            return $this->redirectToRoute('admin_dashboard');
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
-    }
 }

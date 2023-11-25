@@ -15,19 +15,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Todo manager controller provides view/add/delete todos
-*/
-
+/**
+ * Todo manager controller provides view/add/delete todos.
+ */
 class TodoManagerController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var TodosManager */
     private TodosManager $todosManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * TodoManagerController constructor.
+     *
+     * @param SiteUtil               $siteUtil
+     * @param AuthManager            $authManager
+     * @param TodosManager           $todosManager
+     * @param SecurityUtil           $securityUtil
+     * @param ErrorManager           $errorManager
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
@@ -44,6 +64,12 @@ class TodoManagerController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Display the table of non-completed todos and handle new todo creation.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/todos', name: 'admin_todos')]
     public function todosTable(Request $request): Response
     {
@@ -119,7 +145,11 @@ class TodoManagerController extends AbstractController
         }
     }
 
-
+    /**
+     * Display the table of completed todos.
+     *
+     * @return Response
+     */
     #[Route('/admin/todos/completed', name: 'admin_todos_completed')]
     public function completedTodosTable(): Response
     {
@@ -143,7 +173,13 @@ class TodoManagerController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
     }
-
+    
+    /**
+     * Close a todo.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/todos/close', name: 'admin_todo_close')]
     public function closeTodo(Request $request): Response
     {

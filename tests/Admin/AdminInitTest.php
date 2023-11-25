@@ -5,15 +5,21 @@ namespace App\Tests\Admin;
 use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin init compnent test
-*/
-
+/**
+ * Admin init component test
+ *
+ * @package App\Tests\Admin
+ */
 class AdminInitTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,6 +28,11 @@ class AdminInitTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -32,6 +43,9 @@ class AdminInitTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the admin init controller redirects to the dashboard.
+     */
     public function testDashboardRedirect(): void
     {
         // use fake auth manager instance
@@ -40,7 +54,7 @@ class AdminInitTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }

@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin chat api test
-*/
-
+/**
+ * Admin chat API test
+ *
+ * @package App\Tests\Api
+ */
 class ChatTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,12 @@ class ChatTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param bool $logged
+     * @return object
+     */
     private function createAuthManagerMock(bool $logged): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -34,6 +46,9 @@ class ChatTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test posting a chat message.
+     */
     public function testPostMessage(): void
     {
         // use fake auth manager instance
@@ -50,15 +65,16 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response message
         $this->assertEquals('success', $responseData['status']);
         $this->assertEquals('chat message saved', $responseData['message']);
     }
 
+    /**
+     * Test posting an empty chat message.
+     */
     public function testPostEmptyMessage(): void
     {
         // use fake auth manager instance
@@ -73,14 +89,15 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(400);
-
-        // check response message
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('chat message not saved', $responseData['message']);
     }
 
+    /**
+     * Test posting a chat message without authentication.
+     */
     public function testPostNonAuthMessage(): void
     {
         // use fake auth manager instance
@@ -97,13 +114,14 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(401);
-
-        // check response message
         $this->assertEquals('error to save message: only for authenticated users!', $responseData['message']);
     }
 
+    /**
+     * Test getting chat messages.
+     */
     public function testGetMessages(): void
     {
         // use fake auth manager instance
@@ -112,10 +130,13 @@ class ChatTest extends WebTestCase
         // make request
         $this->client->request('GET', '/api/chat/get/messages');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
+    /**
+     * Test getting chat messages without authentication.
+     */
     public function testNonAuthGetMessages(): void
     {
         // use fake auth manager instance
@@ -127,10 +148,8 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(401);
-
-        // check response message
         $this->assertEquals('error to get messages: only for authenticated users!', $responseData['message']);
     }
 }

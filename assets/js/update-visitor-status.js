@@ -1,3 +1,4 @@
+/* becvar-site: front-end visitor status update */ 
 function sendOnlineStatus() {
     fetch('/api/visitor/update/activity', {
         method: 'POST'

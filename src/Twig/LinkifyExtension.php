@@ -5,12 +5,16 @@ namespace App\Twig;
 use Twig\TwigFilter;
 use Twig\Extension\AbstractExtension;
 
-/*
-    This is a custom extension for twig to replace link to clickable html link (use with |linkify) 
-*/
-
+/**
+ * LinkifyExtension is a custom Twig extension for converting links in text to clickable HTML links.
+ */
 class LinkifyExtension extends AbstractExtension
 {
+    /**
+     * Get the filters provided by this extension.
+     *
+     * @return array An array of Twig filters.
+     */
     public function getFilters(): array
     {
         return [
@@ -18,6 +22,13 @@ class LinkifyExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * Converts links in the given text to clickable HTML links.
+     *
+     * @param string $text The input text.
+     *
+     * @return string|null The text with clickable HTML links.
+     */
     public function linkifyText(string $text): ?string
     {
         // replace link

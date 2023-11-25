@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin diagnostics component test
-*/
-
+/**
+ * Admin diagnostics component test
+ *
+ * @package App\Tests\Admin
+ */
 class AdminDiagnosticTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,11 @@ class AdminDiagnosticTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -33,6 +44,9 @@ class AdminDiagnosticTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the diagnostic page is loaded successfully.
+     */
     public function testDiagnostic(): void
     {
         // use fake auth manager instance
@@ -41,10 +55,8 @@ class AdminDiagnosticTest extends WebTestCase
         // make post request to diagnostic page
         $this->client->request('GET', '/admin/diagnostic');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | diagnostic');
         $this->assertSelectorTextContains('body', 'System diagnostics');
         $this->assertSelectorTextContains('body', 'Website diagnostics');

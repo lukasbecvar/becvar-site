@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Admin media browser component test
-*/
-
+/**
+ * Admin media browser component test
+ *
+ * @package App\Tests\Admin
+ */
 class MediaBrowserTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,11 @@ class MediaBrowserTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -33,6 +44,9 @@ class MediaBrowserTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the media browser page loads successfully.
+     */
     public function testMediaBrowser(): void
     {
         // use fake auth manager instance
@@ -41,10 +55,8 @@ class MediaBrowserTest extends WebTestCase
         // make post request to media browser controller
         $this->client->request('GET', '/admin/media/browser?page=1');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-        
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | images');
     }
 }

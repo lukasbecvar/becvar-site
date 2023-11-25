@@ -13,19 +13,36 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Paste controller provides save/view code paste component
-    Page for storing code in database and sharing via url
-*/
-
+/**
+ * Paste controller provides save/view code paste component
+ * Page for storing code in the database and sharing via URL.
+ */
 class PasteController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * PasteController constructor.
+     *
+     * @param SiteUtil               $siteUtil
+     * @param LogManager             $logManager
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager, 
@@ -40,6 +57,11 @@ class PasteController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Displays the page for saving a code paste.
+     *
+     * @return Response The response containing the rendered paste save page.
+     */
     #[Route('/paste', name: 'public_code_paste')]
     public function pasteInsert(): Response
     {
@@ -92,6 +114,12 @@ class PasteController extends AbstractController
         return $this->render('public/paste/paste-save.html.twig');
     }
 
+    /**
+     * Displays the page for viewing a code paste.
+     *
+     * @param Request $request The HTTP request.
+     * @return Response The response containing the rendered paste view page.
+     */
     #[Route('/paste/view', name: 'public_code_paste_view')]
     public function pasteView(Request $request): Response
     {

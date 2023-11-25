@@ -10,12 +10,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-/*
-    Contact form provides contact message form
-*/
-
+/**
+ * Contact form provides a contact message form.
+ *
+ * @see AbstractType
+ */
 class ContactFormType extends AbstractType
 {
+    /**
+     * Builds the form for contacting.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array<string, mixed> $options The options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -60,6 +67,11 @@ class ContactFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver for the form options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

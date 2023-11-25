@@ -13,18 +13,35 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    This controller provides API function: save, get chat messages
-*/
-
+/**
+ * This controller provides API functions for saving and retrieving chat messages.
+ */
 class ChatApiController extends AbstractController
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * ChatApiController constructor.
+     *
+     * @param LogManager             $logManager
+     * @param AuthManager            $authManager
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager,
@@ -39,6 +56,12 @@ class ChatApiController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Save a chat message.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/api/chat/save/message', name: 'api_chat_save')]
     public function saveMessage(Request $request): Response
     {
@@ -102,6 +125,11 @@ class ChatApiController extends AbstractController
         }
     }
 
+    /**
+     * Get chat messages.
+     *
+     * @return Response
+     */
     #[Route('/api/chat/get/messages', name: 'api_chat_get')]
     public function getMessages(): Response
     {

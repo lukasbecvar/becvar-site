@@ -6,12 +6,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Home controller is a main app controller for homepage
+/**
+ * Home controller is a main app controller for homepage
 */
 
 class HomeController extends AbstractController
 {
+    /**
+     * Renders the public home page.
+     *
+     * @return Response The response containing the rendered home page.
+     */
     #[Route(['/', '/home'], name: 'public_home')]
     public function homePage(): Response
     {

@@ -6,11 +6,16 @@
     {{ encore_entry_link_tags('atom-one-dark-css') }}
     {{ encore_entry_link_tags('paste-view-css') }}
     {{ encore_entry_link_tags('scrollbar-css') }}
+    {{ encore_entry_link_tags('page-loading-css') }}
     <title>{{ 'code.view.title'|trans }} {{ file|e }}</title>
 </head>
 <body>
-    <pre>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+    <pre id="content" style="display:none;">
         <code>{{ paste_content|e }}</code>
     </pre>
+    {{ encore_entry_script_tags('page-loading-js') }}
 </body>
 </html>

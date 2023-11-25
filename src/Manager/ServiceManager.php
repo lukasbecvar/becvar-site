@@ -4,17 +4,31 @@ namespace App\Manager;
 
 use App\Util\JsonUtil;
 
-/*
-    Service manager provides all services methods (start, stop, status)
+/**
+ * Service manager provides all services methods (start, stop, status)
 */
-
 class ServiceManager
 {
+    /** * @var JsonUtil */
     private JsonUtil $jsonUtil;
+    
+    /** * @var LogManager */
     private LogManager $logManager;
+    
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
 
+    /**
+     * ServiceManager constructor.
+     *
+     * @param JsonUtil     $jsonUtil
+     * @param LogManager   $logManager
+     * @param AuthManager  $authManager
+     * @param ErrorManager $errorManager
+     */
     public function __construct(
         JsonUtil $jsonUtil, 
         LogManager $logManager,
@@ -27,6 +41,11 @@ class ServiceManager
         $this->errorManager = $errorManager;
     }
 
+    /**
+     * Gets the list of services.
+     *
+     * @return array|null
+     */
     public function getServices(): ?array 
     {
         // get services list from services.json 
@@ -67,6 +86,14 @@ class ServiceManager
         return $services;
     }
 
+    /**
+     * Runs an action on a specified service.
+     *
+     * @param string $service_name
+     * @param string $action
+     *
+     * @return void
+     */
     public function runAction(string $service_name, string $action): void
     {
         // check if user logged in
@@ -95,6 +122,13 @@ class ServiceManager
         }
     }
 
+    /**
+     * Checks if a service is installed.
+     *
+     * @param string $service_name
+     *
+     * @return bool
+     */
     public function isServiceInstalled(string $service_name): bool
     {
         exec('dpkg -l | grep '.escapeshellarg($service_name), $output, $returnCode);
@@ -106,6 +140,13 @@ class ServiceManager
         }
     }
 
+    /**
+     * Checks if a service is running.
+     *
+     * @param string $service
+     *
+     * @return bool
+     */
     public function isServiceRunning(string $service): bool 
     {
         $output = shell_exec('systemctl is-active '.$service);
@@ -118,6 +159,14 @@ class ServiceManager
         }
     }
     
+    /**
+     * Checks if a socket is open.
+     *
+     * @param string $ip
+     * @param int $port
+     *
+     * @return string
+     */
     public function isSocktOpen(string $ip, int $port): string 
     {
         // default response output
@@ -134,6 +183,13 @@ class ServiceManager
         return $response_output;
     }
 
+    /**
+     * Checks if a process is running.
+     *
+     * @param string $process
+     *
+     * @return bool
+     */
     public function isProcessRunning(string $process): bool 
     {
         exec('pgrep '.$process, $pids);
@@ -146,6 +202,11 @@ class ServiceManager
         }
     }
 
+    /**
+     * Checks if UFW (Uncomplicated Firewall) is running.
+     *
+     * @return bool
+     */
     public function isUfwRunning(): bool 
     {
         try {
@@ -164,6 +225,11 @@ class ServiceManager
         }
     }
     
+    /**
+     * Checks if the services list file exists.
+     *
+     * @return bool
+     */
     public function isServicesListExist(): bool 
     {
         // check if services list exist
@@ -174,6 +240,13 @@ class ServiceManager
         }
     }
     
+    /**
+     * Executes a command.
+     *
+     * @param string $command
+     *
+     * @return void
+     */
     public function executeCommand($command): void 
     {
         try {
@@ -183,12 +256,22 @@ class ServiceManager
         }
     }
 
+    /**
+     * Initiates an emergency shutdown.
+     *
+     * @return void
+     */
     public function emergencyShutdown(): void
     {
         $this->logManager->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
         $this->executeCommand('sudo poweroff');
     }
 
+    /**
+     * Gets the services list from the services.json file.
+     *
+     * @return array|null
+     */
     public function getServicesJson(): ?array
     {
         return $this->jsonUtil->getJson(__DIR__.'/../../services.json');

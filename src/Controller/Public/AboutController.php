@@ -6,13 +6,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    About controller provides basic public about page
-    Page with information about me
+/** 
+ * About controller provides basic public about page
+ * Page with information about me
 */
-
 class AboutController extends AbstractController
 {
+    /**
+     * Renders the public about page.
+     *
+     * @return Response The response containing the rendered about page.
+     */
     #[Route('/about', name: 'public_about')]
     public function aboutPage(): Response
     {

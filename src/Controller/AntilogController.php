@@ -8,16 +8,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Antilog controller provides function block database logs
-    Antilog for admin users disables logging via browser cookie
-*/
-
+/**
+ * Antilog controller provides a function to block database logs.
+ * Antilog for admin users disables logging via browser cookie.
+ */
 class AntilogController extends AbstractController
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
 
+    /**
+     * AntilogController constructor.
+     *
+     * @param LogManager  $logManager
+     * @param AuthManager $authManager
+     */
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager
@@ -26,6 +34,11 @@ class AntilogController extends AbstractController
         $this->authManager = $authManager;
     }
 
+    /**
+     * Sets or unsets antilog for admin users.
+     *
+     * @return Response The response, redirects to the admin dashboard.
+     */
     #[Route('/antilog/5369362536', name: 'antilog')]
     public function antilog(): Response
     {

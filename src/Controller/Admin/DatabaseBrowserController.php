@@ -11,18 +11,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Database browser controller provides database tables browser/editor
-    Database browser components: table list, table view, edit row, insert row, update projects list
-*/
-
+/**
+ * Database browser controller provides a database tables browser/editor.
+ * Database browser components: table list, table view, edit row, insert row, update projects list.
+ */
 class DatabaseBrowserController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var DatabaseManager */
     private DatabaseManager $databaseManager;
 
+    /**
+     * DatabaseBrowserController constructor.
+     *
+     * @param SiteUtil        $siteUtil
+     * @param AuthManager     $authManager
+     * @param SecurityUtil    $securityUtil
+     * @param DatabaseManager $databaseManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager, 
@@ -35,6 +49,11 @@ class DatabaseBrowserController extends AbstractController
         $this->databaseManager = $databaseManager;
     }
 
+    /**
+     * Display the list of database tables.
+     *
+     * @return Response
+     */
     #[Route('/admin/database', name: 'admin_database_list')]
     public function databaseList(): Response
     {
@@ -55,6 +74,12 @@ class DatabaseBrowserController extends AbstractController
         }
     }
 
+    /**
+     * Display the view of a specific database table.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/database/table', name: 'admin_database_browser')]
     public function tableView(Request $request): Response
     {
@@ -95,7 +120,13 @@ class DatabaseBrowserController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
     }
-    
+
+    /**
+     * Edit a specific row in a database table.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/database/edit', name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
@@ -181,6 +212,12 @@ class DatabaseBrowserController extends AbstractController
         }     
     }
 
+    /**
+     * Add a new row to a database table.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/database/add', name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
@@ -266,6 +303,12 @@ class DatabaseBrowserController extends AbstractController
         }
     }
 
+    /**
+     * Delete a row from a database table.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/database/delete', name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
     {

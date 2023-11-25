@@ -10,12 +10,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-/*
-    The username change form provides the username change in the account settings
-*/
-
+/**
+ * UsernameChangeFormType provides a form for changing the username in the account settings.
+ *
+ * @see AbstractType
+ */
 class UsernameChangeFormType extends AbstractType
 {
+    /**
+     * Builds the username change form.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array<string, mixed> $options The options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -42,6 +49,11 @@ class UsernameChangeFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver for the form options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

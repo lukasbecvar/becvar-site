@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin dashboard component test
-*/
-
+/**
+ * Admin dashboard component test
+ *
+ * @package App\Tests\Admin
+ */
 class DashboardTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,11 @@ class DashboardTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -36,6 +47,9 @@ class DashboardTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the admin dashboard page loads successfully.
+     */
     public function testAdminDashboard(): void
     {
         // use fake auth manager instance
@@ -44,10 +58,8 @@ class DashboardTest extends WebTestCase
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorExists('img[alt="profile_picture"]');
@@ -73,6 +85,9 @@ class DashboardTest extends WebTestCase
         $this->assertSelectorExists('div[class="sidebar"]');
     }
 
+    /**
+     * Test the admin emergency shutdown confirmation page.
+     */
     public function testAdminEmergencyShutdownConfirmation(): void
     {
         // use fake auth manager instance
@@ -81,10 +96,8 @@ class DashboardTest extends WebTestCase
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard/emergency/shutdown');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorTextContains('.form-title', 'Confirmation');

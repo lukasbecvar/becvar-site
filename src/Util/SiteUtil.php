@@ -4,25 +4,39 @@ namespace App\Util;
 
 use Symfony\Component\HttpFoundation\Request;
 
-/*
-    Site util provides basic site get, set etc methods
-*/
-
+/**
+ * SiteUtil provides basic site-related methods.
+ */
 class SiteUtil
 {
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
 
+    /**
+     * SiteUtil constructor.
+     *
+     * @param SecurityUtil $securityUtil The SecurityUtil instance.
+     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;
     }
 
+    /**
+     * Get the HTTP host.
+     *
+     * @return string The HTTP host.
+     */
     public function getHttpHost(): string
     {
-        // return host url
         return $_SERVER['HTTP_HOST'];
     }
 
+    /**
+     * Check if the application is running on localhost.
+     *
+     * @return bool Whether the application is running on localhost.
+     */
     public function isRunningLocalhost(): bool 
     {
 		$localhost = false;
@@ -52,6 +66,11 @@ class SiteUtil
         return $localhost;
     }
 
+    /**
+     * Check if the connection is secure (SSL).
+     *
+     * @return bool Whether the connection is secure.
+     */
     public function isSsl(): bool 
     {
         // check if set https header
@@ -72,6 +91,11 @@ class SiteUtil
         }
     }
 
+    /**
+     * Check if the application is in maintenance mode.
+     *
+     * @return bool Whether the application is in maintenance mode.
+     */
     public function isMaintenance(): bool 
     {
         // check if maintenance mode enabled in app enviroment
@@ -82,6 +106,11 @@ class SiteUtil
         }
     }
 
+    /**
+     * Check if the application is in development mode.
+     *
+     * @return bool Whether the application is in development mode.
+     */
     public function isDevMode(): bool 
     {
         // check if dev mode enabled in app enviroment
@@ -92,6 +121,14 @@ class SiteUtil
         }
     }
 
+    /**
+     * Get the value of a query string parameter, with XSS protection.
+     *
+     * @param string $query The query string parameter name.
+     * @param Request $request The Symfony request object.
+     *
+     * @return string|null The sanitized value of the query string parameter.
+     */
     public function getQueryString(string $query, Request $request): ?string
     {
         // get query value

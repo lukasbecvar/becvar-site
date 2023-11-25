@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin chat component test
-*/
-
+/**
+ * Admin chat component test
+ *
+ * @package App\Tests\Admin
+ */
 class ChatTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,12 @@ class ChatTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param bool $logged
+     * @return object
+     */
     private function createAuthManagerMock(bool $logged): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -34,6 +46,9 @@ class ChatTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the admin chat page loads successfully.
+     */
     public function testAdminChatLoad(): void
     {
         // use fake auth manager instance
@@ -42,11 +57,9 @@ class ChatTest extends WebTestCase
         // make post request to admin chat controller
         $this->client->request('GET', '/admin/chat');
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | chat');
         $this->assertSelectorTextContains('h2', 'Chat');
         $this->assertSelectorExists('div[id="chat"]');

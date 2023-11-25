@@ -14,19 +14,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Image uploader/view controller provides image upload/view component
-    Page for storing images in database and sharing via url
+/**
+ * Image uploader/view controller provides image upload/view component
+ * Page for storing images in database and sharing via url
 */
 
 class ImageUploaderController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * ImageUploaderController constructor.
+     *
+     * @param SiteUtil               $siteUtil
+     * @param LogManager             $logManager
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager,
@@ -41,6 +59,12 @@ class ImageUploaderController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Displays the image view page.
+     *
+     * @param Request $request The HTTP request.
+     * @return Response The response containing the rendered image view page.
+     */
     #[Route('/image/view', name: 'public_image_viewer')]
     public function imageView(Request $request): Response
     {
@@ -75,6 +99,11 @@ class ImageUploaderController extends AbstractController
         }
     }
 
+    /**
+     * Displays the image upload page.
+     *
+     * @return Response The response containing the rendered image upload page.
+     */
     #[Route('/image/uploader', name: 'public_image_uploader')]
     public function uploadImage(): Response
     {

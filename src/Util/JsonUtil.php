@@ -2,12 +2,18 @@
 
 namespace App\Util;
 
-/*
-    Json util provides function for get json file or url
-*/
-
+/**
+ * JsonUtil provides functions for retrieving JSON data from a file or URL.
+ */
 class JsonUtil
 {
+    /**
+     * Get JSON data from a file or URL.
+     *
+     * @param string $target The file path or URL.
+     *
+     * @return array|null The decoded JSON data as an associative array or null on failure.
+     */
     public function getJson($target): ?array {
 
         // requst options

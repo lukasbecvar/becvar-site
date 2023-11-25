@@ -15,18 +15,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Account settings controller provides user account changes
-    Configurable values: username, password, profile-pic
-*/
-
+/**
+ * Account settings controller provides user account changes.
+ * Configurable values: username, password, profile-pic
+ */
 class AccountSettingsController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * AccountSettingsController constructor.
+     *
+     * @param AuthManager            $authManager
+     * @param SecurityUtil           $securityUtil
+     * @param ErrorManager           $errorManager
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         AuthManager $authManager, 
         SecurityUtil $securityUtil,
@@ -39,6 +53,11 @@ class AccountSettingsController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Display account settings table.
+     *
+     * @return Response
+     */
     #[Route('/admin/account/settings', name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
@@ -61,17 +80,23 @@ class AccountSettingsController extends AbstractController
         }
     }
 
+    /**
+     * Handle profile picture change request.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/account/settings/pic', name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // init user enity
+            $user = new User();
+
             // default error msg
             $error_msg = null;
-
-            // init user entity
-            $user = new User();
 
             // create pic form change
             $form = $this->createForm(ProfilePicChangeFormType::class, $user);
@@ -90,10 +115,10 @@ class AccountSettingsController extends AbstractController
                 if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
 
                     // get image content
-                    $fileContents = file_get_contents($image);
+                    $file_contents = file_get_contents($image);
 
                     // encode image
-                    $image_code = base64_encode($fileContents);
+                    $image_code = base64_encode($file_contents);
 
                     // get user repository
                     $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
@@ -131,17 +156,23 @@ class AccountSettingsController extends AbstractController
         }
     }
 
+    /**
+     * Handle username change request.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/account/settings/username', name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // init user enity
+            $user = new User();
+
             // default error msg
             $error_msg = null;
-
-            // init user entity
-            $user = new User();
 
             // create username form change
             $form = $this->createForm(UsernameChangeFormType::class, $user);
@@ -159,8 +190,7 @@ class AccountSettingsController extends AbstractController
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
-                // update username
-                try {
+                try { // update username
                     $userRepo->setUsername($username);
                     $this->entityManager->flush();
 
@@ -189,18 +219,24 @@ class AccountSettingsController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
     }
-
+    
+    /**
+     * Handle password change request.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/account/settings/password', name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             
+            // init user enity
+            $user = new User();
+
             // default error msg
             $error_msg = null;
-
-            // init user entity
-            $user = new User();
 
             // create username form change
             $form = $this->createForm(PasswordChangeFormType::class, $user);
@@ -223,8 +259,7 @@ class AccountSettingsController extends AbstractController
                 if ($password != $repassword) {
                     $error_msg = 'Your passwords is not match!';
                 } else {
-                    // update username
-                    try {
+                    try { // update password
                         
                         // hash password
                         $password_hash = $this->securityUtil->gen_bcrypt($password, 10);

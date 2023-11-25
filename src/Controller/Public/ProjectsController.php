@@ -9,17 +9,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Projects controller provides public projects list
-    Project page shows projects from the database that are downloaded from the github api
-*/
-
+/**
+ * Projects controller provides a public list of projects.
+ * The project page displays projects from the database that are downloaded from the GitHub API.
+ */
 class ProjectsController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var ProjectsManager */
     private ProjectsManager $projectsManager;
 
+    /**
+     * ProjectsController constructor.
+     *
+     * @param AuthManager     $authManager
+     * @param ErrorManager    $errorManager
+     * @param ProjectsManager $projectsManager
+     */
     public function __construct(
         AuthManager $authManager, 
         ErrorManager $errorManager, 
@@ -30,6 +41,11 @@ class ProjectsController extends AbstractController
         $this->projectsManager = $projectsManager;    
     }
 
+    /**
+     * Displays the public projects page.
+     *
+     * @return Response The response containing the rendered projects page.
+     */
     #[Route('/projects', name: 'public_projects')]
     public function index(): Response
     {
@@ -46,6 +62,11 @@ class ProjectsController extends AbstractController
         ]);
     }
 
+    /**
+     * Updates the projects list.
+     *
+     * @return Response The response for updating projects, redirects to the admin database browser.
+     */
     #[Route('/projects/update', name: 'public_projects_update')]
     public function projectsUpdate(): Response
     {

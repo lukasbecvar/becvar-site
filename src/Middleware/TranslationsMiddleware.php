@@ -5,15 +5,25 @@ namespace App\Middleware;
 use App\Manager\VisitorManager;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
-/*
-    This middleware set translations
-*/
-
+/**
+ * Class TranslationsMiddleware
+ *
+ * This middleware sets translations based on the visitor's language.
+ */
 class TranslationsMiddleware
 {
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var LocaleAwareInterface */
     private LocaleAwareInterface $translator;
     
+    /**
+     * TranslationsMiddleware constructor.
+     *
+     * @param VisitorManager       $visitorManager
+     * @param LocaleAwareInterface $translator
+     */
     public function __construct(
         VisitorManager $visitorManager,
         LocaleAwareInterface $translator 
@@ -22,6 +32,9 @@ class TranslationsMiddleware
         $this->visitorManager = $visitorManager;
     }
 
+    /**
+     * Set translations based on the visitor's language.
+     */
     public function onKernelRequest(): void
     {
         // get visitor language

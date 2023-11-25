@@ -17,22 +17,45 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Register controller provides user register function
-    ! This function is enabled only if users table is empty or for owner users !
-    ! Login uses its own authenticator not symfony auth !
-*/
-
+/**
+ * Register controller provides user register function.
+ * Note: This function is enabled only if users table is empty or for owner users
+ * Note: Login uses its own authenticator, not Symfony auth.
+ */
 class RegisterController extends AbstractController
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;  
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * RegisterController constructor.
+     *
+     * @param LogManager             $logManager
+     * @param AuthManager            $authManager
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param VisitorManager         $visitorManager
+     * @param VisitorInfoUtil        $visitorInfoUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         LogManager $logManager, 
         AuthManager $authManager, 
@@ -51,6 +74,12 @@ class RegisterController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Handles user registration.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/register', name: 'auth_register')]
     public function register(Request $request): Response
     {
@@ -58,11 +87,11 @@ class RegisterController extends AbstractController
         if (!$this->authManager->isRegisterPageAllowed()) {
             return $this->redirectToRoute('auth_login');   
         } else {
+            // init user enity
+            $user = new User();
+
             // default error msg
             $error_msg = null;
-
-            // create user entity
-            $user = new User();
 
             // create register form
             $form = $this->createForm(RegisterFormType::class, $user);
@@ -112,15 +141,15 @@ class RegisterController extends AbstractController
                         $image_base64 = '/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw4RDQ0OEA0QDhANDQ0NDw4NDhsNDg0OFREWFxcTFRUYICggGBolGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDisZFRkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAOYA2wMBIgACEQEDEQH/xAAaAAEAAwEBAQAAAAAAAAAAAAAAAQQFAwIH/8QAMhABAQABAQYEBAQGAwAAAAAAAAECEQMEEiFRkSIxQWEFcYGhQnKxwSMyUoLh8DNi0f/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A+qAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIebtMf6p3B7HObXH+qd49ygkQkAAAAAAAAAAAAAAAAAAAEWgjLKSa26SKe232/hn1v/jhvG3uV9vSfu5A9Z7TK+eVv1eNEiiNHrHKzytnyqAFnZb5lPPxT7r2y2kyxlmul6shY3Ta2Zaa8ulvJBpCEgAAAAAAAAAAAAAAAAK2/bSTCzXnfT10WMrpLb6c/oyNpncsrlfX7QHkBQAAAAdN2kueOt05uYDZSr7nteLDn5zlVhAAAAAAAAAAAAAAAABX37LTC+9mP+9mau/EbywnvapAAKAAAAAALPw/LxWdcf0aLL3O/wATH31n2aiAAAAAAAAAAAAAAADjvW14cdZ53lAVfiF8WP5f3VXrabS5XW3V5UAAAAAAAAdN3v8AEw/NGqxpdLrPTmv7nvFytmXPSayoLYAAAAAAAAAAAAACp8Qnhntl+y28bXCZY2X1BkD1tMLjdLNHlQAAAAAAAAWdwnjvtjVaRpbnseHHn53z9vZB3SAAAAAAAAAAAAACEgK2/wD/AB/3Ys5o7/PB/dGcAAoAAAAAAtfD74svy/u0FD4dj4sr6Sad19BCQAAAAAAAAAAAAAABz281wyn/AFrJbNjHzx0tnS6AgBQAAAAAkBf+Hzw29clpz3fDhwxl8/V1QAAAAAAAAAAAAAAAAFLf9l5ZSeXnp0XUWAxha2+52S2XWTW6XlZFVQAAAAWNy2VuUvpOf1eNhsLneknnWls8JjJJ5T7+6D0kAAAAAAAAAAAAAAQCRFrxdrjPxTuDoOGW94T8Wvyjllv2Ppjb9gd95vgy+TKd9tvWWUs0klcFAAAAF74deWU95+i4ydhtrjrppz6rOO/T1x7VBdFeb5h1s+ce8dvhfxQHUeZlOsv1egAAAAAAAAAU983jTwzz9b09gdNvvWOPL+a9J6fNT2m9Z3109pycQC29UaJFAAAAAAAAAAAAB0w2+c8sr8rzjmAvbHfZeWU0955f4W5WMsbrvHDdL/Lfsg0hCQAAAAc9vtOHG325fNk2+t875rvxDK+HGS9byU+G9L2BAnhvS9jhvS9lECeG9L2OG9L2BAnhvS9jhvS9gQJ4b0vY4b0vYECeG9L2OG9L2BAnhvS9jhvS9gQJ4b0vY4b0vYECeG9L2OG9L2BAnhvS9jhvS9gQJ4b0vY4b0vYF/cNrrjcb54/otMzdLcc5yvPleXVpoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/9k=';
 
                         // set user entity data
-                        $user->setUsername($username); // set user username
-                        $user->setPassword($hashed_password); // set hashed password
-                        $user->setRole('Owner'); // set default role
-                        $user->setIpAddress($ip_address); // set user ip
-                        $user->setToken($token); // set token (for auth validation)
-                        $user->setRegistedTime($date); // set register time
-                        $user->setLastLoginTime('not logged'); // set login date
-                        $user->setProfilePic($image_base64); // set profile pic (base64)
-                        $user->setVisitorId(strval($visitor_id)); // set visitor id
+                        $user->setUsername($username);
+                        $user->setPassword($hashed_password);
+                        $user->setRole('Owner');
+                        $user->setIpAddress($ip_address);
+                        $user->setToken($token);
+                        $user->setRegistedTime($date);
+                        $user->setLastLoginTime('not logged');
+                        $user->setProfilePic($image_base64);
+                        $user->setVisitorId(strval($visitor_id));
 
                         // log registration event
                         $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');

@@ -6,15 +6,21 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Login component test 
-*/
-
+/**
+ * Login component test.
+ *
+ * @package App\Tests\Admin\Auth
+ */
 class LoginTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,12 +56,18 @@ class LoginTest extends WebTestCase
         }
     }
 
+    /**
+     * Tear down after each test.
+     */
     protected function tearDown(): void
     {
         $this->removeFakeData();
         parent::tearDown();
     }
 
+    /**
+     * Remove fake data from the database.
+     */
     private function removeFakeData(): void
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
@@ -69,21 +81,22 @@ class LoginTest extends WebTestCase
             $entityManager->remove($fakeUser);
             $entityManager->flush();
     
-            // reset auto-increment hodnoty pro tabulku users
+            // reset auto-increment
             $connection = $entityManager->getConnection();
             $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
         }
     }
 
+    /**
+     * Test loading the login page.
+     */
     public function testLoadLoginPage(): void
     {
         $this->client->request('GET', '/login');
 
-        // check reponse
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check responsed components
         $this->assertSelectorTextContains('body', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Remember me');
         $this->assertSelectorExists('form[name="login_form"]');
@@ -93,6 +106,9 @@ class LoginTest extends WebTestCase
         $this->assertSelectorExists('button:contains("Sign in")');
     }
 
+    /**
+     * Test submitting the login form with empty fields.
+     */
     public function testEmptyLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
@@ -105,15 +121,16 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response message
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
     }
 
+    /**
+     * Test submitting the login form with incorrect credentials.
+     */
     public function testIncorrectLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
@@ -126,14 +143,15 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response message
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
+    /**
+     * Test submitting the login form with an incorrect username.
+     */
     public function testIncorrectUsernameLoginSubmit()
     {
         $crawler = $this->client->request('GET', '/login');
@@ -146,14 +164,15 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response message
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
+    /**
+     * Test submitting the login form with an incorrect password.
+     */
     public function testIncorrectPassordLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
@@ -166,14 +185,15 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response message
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
+    /**
+     * Test submitting the login form with valid credentials.
+     */
     public function testValidLoginSubmit(): void
     {
         $crawler = $this->client->request('GET', '/login');
@@ -188,10 +208,10 @@ class LoginTest extends WebTestCase
 
         // check if login success
         $crawler = $this->client->followRedirect();
-        $this->assertSelectorTextContains('title', 'Admin | dashboard');
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('title', 'Admin | dashboard');
     }
 }

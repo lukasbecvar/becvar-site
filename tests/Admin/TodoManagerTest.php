@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Admin todo manager component test
-*/
-
+/**
+ * Admin todo manager component test
+ *
+ * @package App\Tests\Admin
+ */
 class TodoManagerTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,11 @@ class TodoManagerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -33,6 +44,9 @@ class TodoManagerTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the todo manager page loads successfully.
+     */
     public function testTodoManager(): void
     {
         // use fake auth manager instance
@@ -41,10 +55,8 @@ class TodoManagerTest extends WebTestCase
         // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-        
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | todos');
         $this->assertSelectorTextContains('body', 'Completed');
         $this->assertSelectorExists('form[name="new_todo_form"]');
@@ -52,6 +64,9 @@ class TodoManagerTest extends WebTestCase
         $this->assertSelectorExists('button:contains("Add")');
     }
 
+    /**
+     * Test if the completed todo manager page loads successfully.
+     */
     public function testTodoManagerCompleted(): void
     {
         // use fake auth manager instance
@@ -60,10 +75,8 @@ class TodoManagerTest extends WebTestCase
         // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos/completed');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-        
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | todos');
         $this->assertSelectorTextContains('body', 'Uncompleted');
         $this->assertSelectorNotExists('form[name="new_todo_form"]');

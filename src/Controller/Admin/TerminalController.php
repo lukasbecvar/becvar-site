@@ -7,19 +7,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Terminal controller provides admin server shell
-*/
-
+/**
+ * Terminal controller provides an admin server shell.
+ */
 class TerminalController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
 
+    /**
+     * TerminalController constructor.
+     *
+     * @param AuthManager $authManager
+     */
     public function __construct(AuthManager $authManager)
     {
         $this->authManager = $authManager;
     }
 
+    /**
+     * Display the admin server shell.
+     *
+     * @return Response
+     */
     #[Route('/admin/terminal', name: 'admin_terminal')]
     public function admin(): Response
     {

@@ -5,6 +5,7 @@
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.0/phpunit.xsd"
     colors="true"
     verbose="true"
+    cacheResult="false"
 >
     <php>
         <server name="APP_ENV" value="dev" force="true"/>

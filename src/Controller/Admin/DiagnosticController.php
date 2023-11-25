@@ -10,17 +10,31 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Diagnostic controller provides diagnostics with web & host server errors scan
-*/
-
+/**
+ * Diagnostic controller provides diagnostics with web & host server errors scan.
+ */
 class DiagnosticController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var DashboardUtil */
     private DashboardUtil $dashboardUtil;
+
+    /** * @var ServiceManager */
     private ServiceManager $serviceManager;
 
+    /**
+     * DiagnosticController constructor.
+     *
+     * @param SiteUtil       $siteUtil
+     * @param AuthManager    $authManager
+     * @param DashboardUtil  $dashboardUtil
+     * @param ServiceManager $serviceManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
@@ -33,6 +47,11 @@ class DiagnosticController extends AbstractController
         $this->serviceManager = $serviceManager;
     }
 
+    /**
+     * Display diagnostics information.
+     *
+     * @return Response
+     */
     #[Route('/admin/diagnostic', name: 'admin_diagnostics')]
     public function diagnostic(): Response
     {

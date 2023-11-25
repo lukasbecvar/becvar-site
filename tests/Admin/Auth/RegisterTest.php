@@ -7,15 +7,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Register component test 
-*/
-
+/**
+ * Register component test.
+ *
+ * @package App\Tests\Admin\Auth
+ */
 class RegisterTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,12 +30,18 @@ class RegisterTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Tear down after each test.
+     */
     protected function tearDown(): void
     {
         $this->removeFakeData();
         parent::tearDown();
     }
 
+    /**
+     * Remove fake user data after each test.
+     */
     private function removeFakeData(): void
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
@@ -49,6 +61,9 @@ class RegisterTest extends WebTestCase
         }
     }
 
+    /**
+     * Test if the register page is loaded when registration is allowed.
+     */
     public function testRegisterAllowedLoaded(): void
     {
         // create moc auth manager fake object
@@ -63,11 +78,9 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | Login');
         $this->assertSelectorTextContains('.form-title', 'Register admin account');
         $this->assertSelectorExists('form[name="register_form"]');
@@ -77,6 +90,9 @@ class RegisterTest extends WebTestCase
         $this->assertSelectorExists('button:contains("Register")');
     }
 
+    /**
+     * Test if the register page redirects when registration is not allowed.
+     */
     public function testRegisterNonAllowedLoaded(): void
     {
         // create moc auth manager fake object
@@ -91,10 +107,13 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // check response code
+        // test response
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     * Test if the register form handles empty submission correctly.
+     */ 
     public function testRegisterEmptySubmit(): void
     {
         // create moc auth manager fake object
@@ -115,16 +134,17 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response content
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorTextContains('li:contains("Please enter a password again")', 'Please enter a password again');
     }
 
+    /**
+     * Test if the register form handles passwords that do not match correctly.
+     */
     public function testRegisterNotMatchPasswordsSubmit(): void
     {
         // create moc auth manager fake object
@@ -145,11 +165,9 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check response content
         $this->assertSelectorTextContains('body', 'Your passwords dont match');
     }
 }

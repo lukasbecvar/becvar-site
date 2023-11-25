@@ -9,23 +9,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Error controller is a handler for visitors redirect
-    Main controller what shows error pages by error code
-*/
-
+/**
+ * Error controller is a handler for visitors redirect.
+ * Main controller that shows error pages by error code.
+ */
 class ErrorController extends AbstractController
 {
+
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
 
+    /**
+     * ErrorController constructor.
+     *
+     * @param SiteUtil     $siteUtil
+     * @param ErrorManager $errorManager
+     */
     public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager) 
     {
         $this->siteUtil = $siteUtil;
         $this->errorManager = $errorManager;
     }
 
-    // handle error
+    /**
+     * Handles errors based on the provided error code.
+     *
+     * @param Request $request The HTTP request.
+     * @return Response The error response.
+     */
     #[Route('/error', methods: ['GET'], name: 'error_by_code')]
     public function errorHandle(Request $request): Response
     {

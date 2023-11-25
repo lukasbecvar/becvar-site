@@ -1,11 +1,11 @@
 /*!
- * purecounter.js - A simple yet configurable native javascript counter which you can count on.
- * Author: Stig Rex
- * Version: 1.1.4
- * Url: https://github.com/srexi/purecounterjs
- * License: MIT
- */
-! function() {
+	* purecounter.js - A simple yet configurable native javascript counter which you can count on.
+	* Author: Stig Rex
+	* Version: 1.1.4
+	* Url: https://github.com/srexi/purecounterjs
+	* License: MIT
+*/
+!function() {
 	"use strict";
 
 	function e(e, t) {
@@ -183,4 +183,3 @@
 		}]) && r(a.prototype, i), o && r(a, o), n
 	}())
 }();
-//# sourceMappingURL=purecounter.js.map

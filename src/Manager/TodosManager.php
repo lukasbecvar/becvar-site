@@ -6,17 +6,31 @@ use App\Entity\Todo;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Todos manager provides methods for admin todo manager
+/**
+ * Todos manager provides methods for admin todo manager
 */
-
 class TodosManager
 {
+    /** @var AuthManager */
     private AuthManager $authManager;
+    
+    /** @var SecurityUtil */
     private SecurityUtil $securityUtil;
+    
+    /** @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * TodosManager constructor.
+     *
+     * @param AuthManager            $authManager
+     * @param SecurityUtil           $securityUtil
+     * @param ErrorManager           $errorManager
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         AuthManager $authManager,
         SecurityUtil $securityUtil,
@@ -29,6 +43,13 @@ class TodosManager
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Gets todos based on the specified status.
+     *
+     * @param string $status
+     *
+     * @return array|null
+     */
     public function getTodos(string $status): ?array
     {
         $repository = $this->entityManager->getRepository(Todo::class);
@@ -56,6 +77,13 @@ class TodosManager
         }
     }
 
+    /**
+     * Closes a todo by updating its status, completion time, and the user who closed it.
+     *
+     * @param int $id
+     *
+     * @return void
+     */
     public function closeTodo(int $id): void
     {
         // get current date

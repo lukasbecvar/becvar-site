@@ -5,11 +5,21 @@ namespace App\Tests\Others;
 use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Test cases for the AntiLog functionality.
+ *
+ * @package App\Tests\Others
+ */
 class AntiLogTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -18,6 +28,12 @@ class AntiLogTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock instance of the AuthManager.
+     *
+     * @param bool $logged Whether the user is logged in or not.
+     * @return object The mock AuthManager instance.
+     */
     private function createAuthManagerMock(bool $logged = true): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -29,6 +45,9 @@ class AntiLogTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test setting AntiLog for an authenticated user.
+     */
     public function testAntiLogSet(): void
     {
         // use fake auth manager instance
@@ -37,11 +56,14 @@ class AntiLogTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/antilog/5369362536');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }
 
+    /**
+     * Test setting AntiLog for a non-authenticated user.
+     */
     public function testAntiLogNonAuth(): void
     {
         // use fake auth manager instance
@@ -53,10 +75,8 @@ class AntiLogTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(401);
-
-        // check response message
         $this->assertEquals('error to set anti-log for non authentificated users!', $responseData['message']);
     }
 }

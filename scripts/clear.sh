@@ -11,5 +11,8 @@ rm -rf vendor/
 rm -rf node_modules/
 rm -rf package-lock.json
 
+# delete builded assets
+rm -rf public/build/
+
 # delete symfony cache folder
 rm -rf var/

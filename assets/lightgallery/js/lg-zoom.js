@@ -3,7 +3,8 @@
  * http://sachinchoolur.github.io/lg-zoom.js
  * Copyright (c) 2016 Sachin N; 
  * @license GPLv3 
- */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.LgZoom = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+ */
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.LgZoom = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
     (function (global, factory) {
         if (typeof define === "function" && define.amd) {
             define([], factory);
@@ -61,10 +62,10 @@
             if (this.core.s.zoom && this.core.doCss()) {
                 this.init();
     
-                // Store the zoomable timeout value just to clear it while closing
+                // store the zoomable timeout value just to clear it while closing
                 this.zoomabletimeout = false;
     
-                // Set the initial value center
+                // set the initial value center
                 this.pageX = window.innerWidth / 2;
                 this.pageY = window.innerHeight / 2 + (document.documentElement.scrollTop || document.body.scrollTop);
             }
@@ -89,7 +90,7 @@
     
             this.core.outer.querySelector('.lg-toolbar').insertAdjacentHTML('beforeend', zoomIcons);
     
-            // Add zoomable class
+            // add zoomable class
             utils.on(_this.core.el, 'onSlideItemLoad.lgtmzoom', function (event) {
     
                 // delay will be 0 except first time
@@ -102,7 +103,7 @@
                     _speed = 0;
                 } else {
     
-                    // Remove lg-from-hash to enable starting animation.
+                    // remove lg-from-hash to enable starting animation.
                     utils.removeClass(document.body, 'lg-from-hash');
                 }
     
@@ -113,8 +114,8 @@
     
             var scale = 1;
             /**
-             * @desc Image zoom
-             * Translate the wrap and scale the image to get better user experience
+             * @desc image zoom
+             * translate the wrap and scale the image to get better user experience
              *
              * @param {String} scaleVal - Zoom decrement/increment value
              */
@@ -124,7 +125,7 @@
                 var _x;
                 var _y;
     
-                // Find offset manually to avoid issue after zoom
+                // find offset manually to avoid issue after zoom
                 var offsetX = (window.innerWidth - image.clientWidth) / 2;
                 var offsetY = (window.innerHeight - image.clientHeight) / 2 + (document.documentElement.scrollTop || document.body.scrollTop);
     
@@ -204,7 +205,7 @@
     
                 var index = event.detail.index;
     
-                // Get the current element
+                // get the current element
                 var image = _this.core.___slide[index].querySelector('.lg-image');
     
                 if (!_this.core.isTouch) {
@@ -230,7 +231,7 @@
                 }
             });
     
-            // Update zoom on resize and orientationchange
+            // update zoom on resize and orientationchange
             utils.on(window, 'resize.lgzoom scroll.lgzoom orientationchange.lgzoom', function () {
                 _this.pageX = window.innerWidth / 2;
                 _this.pageY = window.innerHeight / 2 + (document.documentElement.scrollTop || document.body.scrollTop);
@@ -255,13 +256,13 @@
                 actualSize(event, _this.core.___slide[_this.core.index].querySelector('.lg-image'), _this.core.index, true);
             });
     
-            // Reset zoom on slide change
+            // reset zoom on slide change
             utils.on(_this.core.el, 'onBeforeSlide.lgtm', function () {
                 scale = 1;
                 _this.resetZoom();
             });
     
-            // Drag option after zoom
+            // drag option after zoom
             if (!_this.core.isTouch) {
                 _this.zoomDrag();
             }
@@ -311,7 +312,7 @@
                 x: 'offsetWidth'
             };
             if (rotateValue === 90) {
-                // Swap axis 
+                // swap axis 
                 if (axis === 'x') {
                     axis = 'y';
                 } else {
@@ -393,7 +394,7 @@
          * 
          * @param {Element} el 
          * @return matrix(cos(X), sin(X), -sin(X), cos(X), 0, 0);
-         * Get the current transform value
+         * get the current transform value
          */
         Zoom.prototype.getCurrentTransform = function (el) {
             if (!el) {
@@ -414,13 +415,11 @@
             var values = this.getCurrentTransform(el);
             if (values) {
                 return Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
-                // If you want rotate in 360
-                //return (angle < 0 ? angle + 360 : angle);
             }
             return 0;
         };
     
-        // Reset zoom effect
+        // reset zoom effect
         Zoom.prototype.resetZoom = function () {
             utils.removeClass(this.core.outer, 'lg-zoomed');
             for (var i = 0; i < this.core.___slide.length; i++) {
@@ -438,7 +437,7 @@
                 }
             }
     
-            // Reset pagx pagy values to center
+            // reset pagx pagy values to center
             this.pageX = window.innerWidth / 2;
             this.pageY = window.innerHeight / 2 + (document.documentElement.scrollTop || document.body.scrollTop);
         };
@@ -449,10 +448,10 @@
             var endCoords = {};
             var isMoved = false;
     
-            // Allow x direction drag
+            // allow x direction drag
             var allowX = false;
     
-            // Allow Y direction drag
+            // allow Y direction drag
             var allowY = false;
     
             var rotateValue = 0;
@@ -460,7 +459,7 @@
     
             for (var i = 0; i < _this.core.___slide.length; i++) {
     
-                /*jshint loopfunc: true */
+                /* jshint loopfunc: true */
                 utils.on(_this.core.___slide[i], 'touchstart.lg', function (e) {
     
                     if (utils.hasClass(_this.core.outer, 'lg-zoomed')) {
@@ -483,7 +482,7 @@
     
             for (var j = 0; j < _this.core.___slide.length; j++) {
     
-                /*jshint loopfunc: true */
+                /* jshint loopfunc: true */
                 utils.on(_this.core.___slide[j], 'touchmove.lg', function (e) {
     
                     if (utils.hasClass(_this.core.outer, 'lg-zoomed')) {
@@ -527,7 +526,7 @@
     
             for (var k = 0; k < _this.core.___slide.length; k++) {
     
-                /*jshint loopfunc: true */
+                /* jshint loopfunc: true */
                 utils.on(_this.core.___slide[k], 'touchend.lg', function () {
                     if (utils.hasClass(_this.core.outer, 'lg-zoomed')) {
                         if (isMoved) {
@@ -548,10 +547,10 @@
             var isDraging = false;
             var isMoved = false;
     
-            // Allow x direction drag
+            // allow x direction drag
             var allowX = false;
     
-            // Allow Y direction drag
+            // allow Y direction drag
             var allowY = false;
     
             var rotateValue = 0;
@@ -559,7 +558,7 @@
     
             for (var i = 0; i < _this.core.___slide.length; i++) {
     
-                /*jshint loopfunc: true */
+                /* jshint loopfunc: true */
                 utils.on(_this.core.___slide[i], 'mousedown.lgzoom', function (e) {
     
                     // execute only on .lg-object
@@ -579,7 +578,7 @@
     
                             isDraging = true;
     
-                            // ** Fix for webkit cursor issue https://code.google.com/p/chromium/issues/detail?id=26723
+                            // ** fix for webkit cursor issue https://code.google.com/p/chromium/issues/detail?id=26723
                             _this.core.outer.scrollLeft += 1;
                             _this.core.outer.scrollLeft -= 1;
     
@@ -629,7 +628,7 @@
                     isDraging = false;
                     utils.removeClass(_this.core.outer, 'lg-zoom-dragging');
     
-                    // Fix for chrome mouse move on click
+                    // fix for chrome mouse move on click
                     if (isMoved && (startCoords.x !== endCoords.x || startCoords.y !== endCoords.y)) {
                         endCoords = _this.getDragCords(e, Math.abs(rotateValue));
                         _this.touchendZoom(startCoords, endCoords, allowX, allowY, rotateValue);
@@ -695,7 +694,7 @@
     
             var _this = this;
     
-            // Unbind all events added by lightGallery zoom plugin
+            // unbind all events added by lightGallery zoom plugin
             utils.off(_this.core.el, '.lgzoom');
             utils.off(window, '.lgzoom');
             for (var i = 0; i < _this.core.___slide.length; i++) {
@@ -712,4 +711,4 @@
     });
     
     },{}]},{},[1])(1)
-    });
+});

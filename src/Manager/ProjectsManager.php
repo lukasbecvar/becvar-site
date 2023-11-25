@@ -7,18 +7,35 @@ use App\Entity\Project;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Projects manager provides get/update projects list
+/**
+ * Projects manager provides methods to get/update the projects list
 */
-
 class ProjectsManager
 {
+    /** * @var JsonUtil */
     private JsonUtil $jsonUtil;
+
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * ProjectsManager constructor.
+     *
+     * @param JsonUtil               $jsonUtil
+     * @param LogManager             $logManager
+     * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         JsonUtil $jsonUtil, 
         LogManager $logManager, 
@@ -33,6 +50,11 @@ class ProjectsManager
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * Updates the project list from a GitHub user's repositories.
+     *
+     * @return void
+     */
     public function updateProjectList(): void 
     {
         // get github link
@@ -94,6 +116,11 @@ class ProjectsManager
         $this->logManager->log('project-update', 'project list updated!');
     }
 
+    /**
+     * Drops all projects from the database.
+     *
+     * @return void
+     */
     public function dropProjects(): void 
     {
         // get projects repository
@@ -115,6 +142,11 @@ class ProjectsManager
         }
     }
 
+    /**
+     * Resets the AUTO_INCREMENT value for the projects table.
+     *
+     * @return void
+     */
     public function resetIndex(): void 
     {
         // reset table AUTO_INCREMENT
@@ -127,6 +159,13 @@ class ProjectsManager
         }
     }
 
+    /**
+     * Gets the list of projects based on their status.
+     *
+     * @param string $status
+     *
+     * @return Project[]|null
+     */
     public function getProjectsList(string $status): ?array 
     {
         try {
@@ -137,6 +176,11 @@ class ProjectsManager
         }
     }
 
+    /**
+     * Gets the total count of projects.
+     *
+     * @return int
+     */
     public function getProjectsCount(): int
     {
         try {

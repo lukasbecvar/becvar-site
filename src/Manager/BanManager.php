@@ -5,18 +5,35 @@ namespace App\Manager;
 use App\Entity\Visitor;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Ban manager provides all ban/unban methods
-*/
-
+/**
+ * BanManager provides methods for banning and unbanning visitors.
+ */
 class BanManager
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
     
+    /**
+     * BanManager constructor.
+     *
+     * @param LogManager             $logManager
+     * @param AuthManager            $authManager
+     * @param ErrorManager           $errorManager
+     * @param VisitorManager         $visitorManager
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager,
@@ -31,6 +48,14 @@ class BanManager
         $this->visitorManager = $visitorManager;
     }
 
+    /**
+     * Bans a visitor by setting the banned status and reason.
+     *
+     * @param string $ip_address The IP address of the visitor to ban.
+     * @param string $reason The reason for banning the visitor.
+     *
+     * @return void
+     */
     public function banVisitor(string $ip_address, string $reason): void 
     {
         // get current date
@@ -65,6 +90,13 @@ class BanManager
         }
     }
 
+    /**
+     * Unbans a visitor by updating the banned status.
+     *
+     * @param string $ip_address The IP address of the visitor to unban.
+     *
+     * @return void
+     */
     public function unbanVisitor(string $ip_address): void 
     {
         // get visitor data
@@ -90,6 +122,13 @@ class BanManager
         }
     }
 
+    /**
+     * Checks if a visitor is banned.
+     *
+     * @param string $ip_address The IP address of the visitor.
+     *
+     * @return bool True if the visitor is banned, false otherwise.
+     */
     public function isVisitorBanned(string $ip_address): bool 
     {
         // get visitor data
@@ -109,6 +148,11 @@ class BanManager
         }
     }
 
+    /**
+     * Retrieves the count of banned visitors.
+     *
+     * @return int|null The count of banned visitors or null if an error occurs.
+     */
     public function getBannedCount(): ?int
     {
         $result = null;
@@ -124,6 +168,13 @@ class BanManager
         return count($result);
     }
 
+    /**
+     * Retrieves the ban reason for a visitor.
+     *
+     * @param string $ip_address The IP address of the visitor.
+     *
+     * @return string|null The ban reason or null if not found.
+     */
     public function getBanReason(string $ip_address): ?string 
     {
         // get visitor data
@@ -139,6 +190,13 @@ class BanManager
         }
     }
 
+    /**
+     * Closes all messages associated with a banned visitor.
+     *
+     * @param string $ip_address The IP address of the banned visitor.
+     *
+     * @return void
+     */
     public function closeAllVisitorMessages(string $ip_address)
     {
         // sql query builder
@@ -160,6 +218,13 @@ class BanManager
         }
     }
 
+    /**
+     * Retrieves the IP address of a visitor by ID.
+     *
+     * @param int $id The ID of the visitor.
+     *
+     * @return string The IP address of the visitor.
+     */
     public function getVisitorIP(int $id): string
     {
         $repo = $this->visitorManager->getVisitorRepositoryByID($id);

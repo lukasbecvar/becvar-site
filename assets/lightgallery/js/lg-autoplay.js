@@ -3,7 +3,8 @@
  * http://sachinchoolur.github.io/lg-autoplay.js
  * Copyright (c) 2016 Sachin N; 
  * @license GPLv3 
- */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.LgAutoplay = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+*/
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.LgAutoplay = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
     (function (global, factory) {
         if (typeof define === "function" && define.amd) {
             define([], factory);
@@ -43,7 +44,7 @@
         };
     
         /**
-         * Creates the autoplay plugin.
+         * creates the autoplay plugin.
          * @param {object} element - lightGallery element
          */
         var Autoplay = function Autoplay(element) {
@@ -52,7 +53,7 @@
     
             this.core = window.lgData[this.el.getAttribute('lg-uid')];
     
-            // Execute only if items are above 1
+            // xecute only if items are above 1
             if (this.core.items.length < 2) {
                 return false;
             }
@@ -60,10 +61,10 @@
             this.core.s = _extends({}, autoplayDefaults, this.core.s);
             this.interval = false;
     
-            // Identify if slide happened from autoplay
+            // identify if slide happened from autoplay
             this.fromAuto = true;
     
-            // Identify if autoplay canceled from touch/drag
+            // identify if autoplay canceled from touch/drag
             this.canceledOnTouch = false;
     
             // save fourceautoplay value
@@ -87,7 +88,7 @@
                 _this.controls();
             }
     
-            // Create progress bar
+            // create progress bar
             if (_this.core.s.progressBar) {
                 _this.core.outer.querySelector('.lg').insertAdjacentHTML('beforeend', '<div class="lg-progress-bar"><div class="lg-progress"></div></div>');
             }
@@ -95,7 +96,7 @@
             // set progress
             _this.progress();
     
-            // Start autoplay
+            // start autoplay
             if (_this.core.s.autoplay) {
                 _this.startlAuto();
             }
@@ -139,7 +140,7 @@
                     }
                 }
     
-                // Remove setinterval if slide is triggered manually and fourceautoplay is false
+                // remove setinterval if slide is triggered manually and fourceautoplay is false
                 if (!_this.fromAuto && !_this.core.s.fourceAutoplay) {
                     _this.cancelAuto();
                 }
@@ -148,12 +149,12 @@
             });
         };
     
-        // Manage autoplay via play/stop buttons
+        // manage autoplay via play/stop buttons
         Autoplay.prototype.controls = function () {
             var _this = this;
             var _html = '<button aria-label="Toggle autoplay" class="lg-autoplay-button lg-icon"></button>';
     
-            // Append autoplay controls
+            // append autoplay controls
             _this.core.outer.querySelector(this.core.s.appendAutoplayControlsTo).insertAdjacentHTML('beforeend', _html);
     
             utils.on(_this.core.outer.querySelector('.lg-autoplay-button'), 'click.lg', function () {
@@ -169,7 +170,7 @@
             });
         };
     
-        // Autostart gallery
+        // autostart gallery
         Autoplay.prototype.startlAuto = function () {
             var _this = this;
     
@@ -213,4 +214,4 @@
     });
     
     },{}]},{},[1])(1)
-    });
+});

@@ -6,17 +6,31 @@ use App\Entity\Message;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Messages manager provides methods for manager inbox/contact system
+/** 
+ * Messages manager provides methods for managing inbox/contact system
 */
-
 class MessagesManager
 {
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * MessagesManager constructor.
+     *
+     * @param SecurityUtil           $securityUtil
+     * @param ErrorManager           $errorManager
+     * @param VisitorManager         $visitorManager
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         SecurityUtil $securityUtil, 
         ErrorManager $errorManager,
@@ -29,6 +43,17 @@ class MessagesManager
         $this->visitorManager = $visitorManager;
     }
 
+    /**
+     * Saves a new message to the database.
+     *
+     * @param string $name
+     * @param string $email
+     * @param string $message_input
+     * @param string $ip_address
+     * @param string $visitor_id
+     *
+     * @return bool
+     */
     public function saveMessage(string $name, string $email, string $message_input, string $ip_address, string $visitor_id): bool
     {
         $message = new Message();
@@ -62,6 +87,13 @@ class MessagesManager
         }
     }
 
+    /**
+     * Gets the count of open messages from a specific IP address.
+     *
+     * @param string $ip_address
+     *
+     * @return int
+     */
     public function getMessageCountByIpAddress(string $ip_address): int
     {
         // build query
@@ -82,6 +114,14 @@ class MessagesManager
         }
     }
 
+    /**
+     * Gets messages based on status and pagination.
+     *
+     * @param string $status
+     * @param int $page
+     *
+     * @return array|null
+     */
     public function getMessages(string $status, int $page): ?array
     {
         $repository = $this->entityManager->getRepository(Message::class);
@@ -125,6 +165,13 @@ class MessagesManager
         }
     }
 
+    /**
+     * Closes a message by updating its status to 'closed'.
+     *
+     * @param int $id
+     *
+     * @return void
+     */
     public function closeMessage(int $id): void 
     {
         $message = $this->entityManager->getRepository(Message::class)->find($id);

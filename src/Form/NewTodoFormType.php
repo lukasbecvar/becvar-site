@@ -9,12 +9,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-/*
-    NewTodo form provides save new todo item
-*/
-
+/**
+ * NewTodo form provides a form for saving a new todo item.
+ *
+ * @see AbstractType
+ */
 class NewTodoFormType extends AbstractType
 {
+    /**
+     * Builds the new todo form.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array<string, mixed> $options The options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -37,6 +44,11 @@ class NewTodoFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver for the form options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

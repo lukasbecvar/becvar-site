@@ -6,16 +6,27 @@ use App\Entity\Visitor;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Visitor manager provides methods for manage visitors
-*/
-
+/**
+ * Visitor manager provides methods for managing visitors.
+ */
 class VisitorManager
 {
+    /** @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil; 
+
+    /** @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * VisitorManager constructor.
+     *
+     * @param ErrorManager           $errorManager
+     * @param VisitorInfoUtil        $visitorInfoUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         ErrorManager $errorManager,
         VisitorInfoUtil $visitorInfoUtil,
@@ -26,6 +37,9 @@ class VisitorManager
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Update visitors' online status based on session timeout.
+     */
     public function updateVisitorsStatus(): void
     {
         // timeout (seconds)
@@ -66,6 +80,13 @@ class VisitorManager
         }
     }
 
+    /**
+     * Get a visitor repository by array search criteria.
+     *
+     * @param array $search
+     *
+     * @return Visitor|null
+     */
     public function getRepositoryByArray(array $search): ?object
     {
         $result = null;
@@ -88,6 +109,13 @@ class VisitorManager
         }
     }
 
+    /**
+     * Get the visitor ID by IP address.
+     *
+     * @param string $ip_address
+     *
+     * @return int
+     */
     public function getVisitorID(string $ip_address): ?int 
     {
         // try to get visitor data
@@ -100,6 +128,12 @@ class VisitorManager
         }
     }
 
+    /**
+     * Update visitor email by IP address.
+     *
+     * @param string $ip_address
+     * @param string $email
+     */
     public function updateVisitorEmail(string $ip_address, string $email): void
     {
         $visitor = $this->getVisitorRepository($ip_address);
@@ -117,6 +151,13 @@ class VisitorManager
         }
     }
 
+    /**
+     * Get a paginated list of visitors.
+     *
+     * @param int $page
+     *
+     * @return Visitor[]|null
+     */
     public function getVisitors(int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Visitor::class);
@@ -148,6 +189,11 @@ class VisitorManager
         return $visitors;
     }
 
+    /**
+     * Get the visitor language based on IP address.
+     *
+     * @return string|null
+     */
     public function getVisitorLanguage(): ?string
     {
         $repo = $this->getVisitorRepository($this->visitorInfoUtil->getIP());
@@ -160,6 +206,13 @@ class VisitorManager
         }
     }
 
+    /**
+     * Get the visitor status by ID.
+     *
+     * @param int $id
+     *
+     * @return string|null
+     */
     public function getVisitorStatus(int $id): ?string 
     {
         $visitor = $this->getVisitorRepositoryByID($id);
@@ -172,21 +225,49 @@ class VisitorManager
         }
     }
 
+    /**
+     * Get a visitor repository by ID.
+     *
+     * @param int $id
+     *
+     * @return Visitor|null
+     */
     public function getVisitorRepositoryByID(int $id): ?object 
     {
         return $this->getRepositoryByArray(['id' => $id]);
     }
 
+    /**
+     * Get a visitor repository by IP address.
+     *
+     * @param string $ip_address
+     *
+     * @return Visitor|null
+     */
     public function getVisitorRepository(string $ip_address): ?object 
     {
         return $this->getRepositoryByArray(['ip_address' => $ip_address]);
     }
     
+    /**
+     * Get the count of visitors for a given page.
+     *
+     * @param int $page
+     *
+     * @return int
+     */
     public function getVisitorsCount(int $page): int
     {
         return count($this->getVisitors($page));
     }
 
+    /**
+     * Get visitors by status.
+     *
+     * @param string $status
+     *
+     * @return Visitor[]|null
+     */
     public function getVisitorsWhereStstus(string $status): ?array
     {
         return $this->entityManager->getRepository(Visitor::class)->findBy(['status' => $status]);

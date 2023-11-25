@@ -5,15 +5,21 @@ namespace App\Tests\Api;
 use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin terminal api test
-*/
-
+/**
+ * Admin terminal API test
+ *
+ * @package App\Tests\Api
+ */
 class TerminalApiTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,6 +28,12 @@ class TerminalApiTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param string $role
+     * @return object
+     */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -39,6 +51,9 @@ class TerminalApiTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test executing terminal command with no permissions.
+     */
     public function testTerminalExecNoPermissions(): void
     {
         // use fake auth manager instance
@@ -55,14 +70,15 @@ class TerminalApiTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(401);
-
-        // check response message
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('error this function is only for authentificated users!', $responseData['message']);
     }
 
+    /**
+     * Test executing terminal command with an empty command.
+     */
     public function testTerminalExecEmpty(): void
     {
         // use fake auth manager instance
@@ -79,14 +95,15 @@ class TerminalApiTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(500);
-
-        // check response message
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('command data is empty!', $responseData['message']);
     }
 
+    /**
+     * Test executing terminal command with a GET request.
+     */
     public function testTerminalExecGet(): void
     {
         // use fake auth manager instance
@@ -98,14 +115,15 @@ class TerminalApiTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(500);
-
-        // check response message
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('POST request required!', $responseData['message']);
     }
 
+    /**
+     * Test executing a valid terminal command.
+     */
     public function testTerminalExecValid(): void
     {
         // use fake auth manager instance
@@ -116,10 +134,13 @@ class TerminalApiTest extends WebTestCase
             'command' => 'whoami',
         ]);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(200);
     }
 
+    /**
+     * Test executing a specific terminal command using a GET request.
+     */
     public function testTerminalExecGetPatch(): void
     {
         // use fake auth manager instance
@@ -130,10 +151,13 @@ class TerminalApiTest extends WebTestCase
             'command' => 'get_current_path_1181517815187484',
         ]);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(200);
     }
 
+    /**
+     * Test executing a specific terminal command to get the hostname.
+     */
     public function testTerminalExecGetHostname(): void
     {
         // use fake auth manager instance
@@ -144,7 +168,7 @@ class TerminalApiTest extends WebTestCase
             'command' => 'get_current_hostname_1181517815187484',
         ]);
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(200);
     }
 }

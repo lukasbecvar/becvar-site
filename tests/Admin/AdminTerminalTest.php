@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Admin terminal component test
-*/
-
+/**
+ * Admin terminal component test
+ *
+ * @package App\Tests\Admin
+ */
 class AdminTerminalTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,12 @@ class AdminTerminalTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param string $role
+     * @return object
+     */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -40,6 +52,9 @@ class AdminTerminalTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the user with no permissions is redirected.
+     */
     public function testAdminTerminalNoPermissions(): void
     {
         // use fake auth manager instance
@@ -48,15 +63,15 @@ class AdminTerminalTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/terminal');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | terminal');
-
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');
     }
 
+    /**
+     * Test if the admin terminal page is accessible.
+     */
     public function testAdminTerminal(): void
     {
         // use fake auth manager instance
@@ -65,10 +80,8 @@ class AdminTerminalTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/terminal');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | terminal');
         $this->assertSelectorTextContains('body', '$');
     }

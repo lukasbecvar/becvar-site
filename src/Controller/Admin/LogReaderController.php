@@ -12,18 +12,35 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Log reader controller provides read logs from database table
-*/
-
+/**
+ * Log reader controller provides read logs from the database table.
+ */
 class LogReaderController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+    
+    /** * @var LogManager */
     private LogManager $logManager;
+    
+    /** * @var AuthManager */
     private AuthManager $authManager;
+    
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+    
+    /** * @var DatabaseManager */
     private DatabaseManager $databaseManager;
 
+    /**
+     * LogReaderController constructor.
+     *
+     * @param SiteUtil        $siteUtil
+     * @param LogManager      $logManager
+     * @param AuthManager     $authManager
+     * @param SecurityUtil    $securityUtil
+     * @param DatabaseManager $databaseManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager,
@@ -38,6 +55,12 @@ class LogReaderController extends AbstractController
         $this->databaseManager = $databaseManager;
     }
 
+    /**
+     * Display logs from the database table.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/logs', name: 'admin_log_list')]
     public function logsTable(Request $request): Response
     {
@@ -73,6 +96,12 @@ class LogReaderController extends AbstractController
         }
     }
 
+    /**
+     * Display logs filtered by IP address.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/logs/whereip', name: 'admin_log_list_where_ip')]
     public function logsWhereIp(Request $request): Response
     {
@@ -114,6 +143,12 @@ class LogReaderController extends AbstractController
         }
     }
 
+    /**
+     * Display a confirmation page for deleting all logs.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/logs/delete', name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
     {
@@ -137,6 +172,11 @@ class LogReaderController extends AbstractController
         }
     } 
 
+    /**
+     * Set all logs as read.
+     *
+     * @return Response
+     */
     #[Route('/admin/logs/readed/all', name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {

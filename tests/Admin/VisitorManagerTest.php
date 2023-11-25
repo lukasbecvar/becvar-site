@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Admin visitor manager component test
-*/
-
+/**
+ * Admin visitor manager component test
+ *
+ * @package App\Tests\Admin
+ */
 class VisitorManagerTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,12 @@ class VisitorManagerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @param string $role
+     * @return object
+     */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -34,6 +46,9 @@ class VisitorManagerTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the visitor manager page loads successfully.
+     */
     public function testVisitorManager(): void
     {
         // use fake auth manager instance
@@ -42,10 +57,8 @@ class VisitorManagerTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/visitors?page=1');
 
-        // check response code
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-        
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | visitors');
         $this->assertSelectorTextContains('body', 'Online visitors');
         $this->assertSelectorTextContains('body', 'Banned visitors');

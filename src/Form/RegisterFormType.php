@@ -11,12 +11,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-/*
-    Register form provides registration new admin users
-*/
-
+/**
+ * RegisterFormType provides a form for registering new admin users.
+ *
+ * @see AbstractType
+ */
 class RegisterFormType extends AbstractType
 {
+    /**
+     * Builds the registration form.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array<string, mixed> $options The options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -84,6 +91,11 @@ class RegisterFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver for the form options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

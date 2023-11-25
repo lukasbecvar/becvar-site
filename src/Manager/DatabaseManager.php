@@ -5,19 +5,35 @@ namespace App\Manager;
 use App\Util\SecurityUtil;
 use Doctrine\DBAL\Connection;
 
-/*
-    Database manager provides methods for get/edit database data
-    Manager for when it is not possible to use entity manager
-*/
-
+/**
+ * DatabaseManager provides methods for retrieving, editing, and managing database data when it is not possible to use the entity manager.
+ */
 class DatabaseManager
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var Connection */
     private Connection $connection;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
         
+    /**
+     * DatabaseManager constructor.
+     *
+     * @param LogManager   $logManager
+     * @param Connection   $connection
+     * @param AuthManager  $authManager
+     * @param SecurityUtil $securityUtil
+     * @param ErrorManager $errorManager
+     */
     public function __construct(
         LogManager $logManager,
         Connection $connection,
@@ -32,6 +48,11 @@ class DatabaseManager
         $this->errorManager = $errorManager;
     }
 
+    /**
+     * Retrieves a list of tables in the database.
+     *
+     * @return array|null A list of table names or null if an error occurs.
+     */
     public function getTables(): ?array
     {
         $tables_list = [];
@@ -56,6 +77,13 @@ class DatabaseManager
         return $tables_list;
     }
 
+    /**
+     * Retrieves the columns of a specific table.
+     *
+     * @param string $table_name The name of the table.
+     *
+     * @return array The list of column names.
+     */
     public function getTableColumns(string $table_name): array
     {
         $table = null;
@@ -76,6 +104,14 @@ class DatabaseManager
         return $columns;
     }
 
+    /**
+     * Retrieves all data from a specific table.
+     *
+     * @param string $table_name The name of the table.
+     * @param bool $log Whether to log the action.
+     *
+     * @return array The table data.
+     */
     public function getTableData(string $table_name, bool $log = true): array
     {
         $data = [];
@@ -98,6 +134,15 @@ class DatabaseManager
         return $data;
     }
 
+    /**
+     * Retrieves paginated data from a specific table.
+     *
+     * @param string $table_name The name of the table.
+     * @param int $page The page number.
+     * @param bool $log Whether to log the action.
+     *
+     * @return array The paginated table data.
+     */
     public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true): array
     {
         $data = [];
@@ -125,6 +170,14 @@ class DatabaseManager
         return $data;
     }
 
+    /**
+     * Retrieves the data of a specific row in a table.
+     *
+     * @param string $table_name The name of the table.
+     * @param int $id The ID of the row.
+     *
+     * @return array The row data.
+     */
     public function selectRowData(string $table_name, int $id): array
     {
         $data = [];
@@ -144,6 +197,15 @@ class DatabaseManager
         return $data[0];
     }
 
+    /**
+     * Adds a new row to a table.
+     *
+     * @param string $table_name The name of the table.
+     * @param array $columns The column names.
+     * @param array $values The values to insert.
+     *
+     * @return void
+     */
     public function addNew(string $table_name, array $columns, array $values): void
     {
         // create placeholders for prepared statement
@@ -164,6 +226,14 @@ class DatabaseManager
         $this->logManager->log('database', $this->authManager->getUsername(). ' inserted new row to table: '.$table_name);     
     }
 
+    /**
+     * Deletes a row from a table.
+     *
+     * @param string $table_name The name of the table.
+     * @param string $id The ID of the row to delete.
+     *
+     * @return void
+     */
     public function deleteRowFromTable(string $table_name, string $id): void
     {
         if ($id == 'all') {
@@ -182,6 +252,16 @@ class DatabaseManager
         $this->logManager->log('database', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
     }
 
+    /**
+     * Updates a value in a specific row of a table.
+     *
+     * @param string $table_name The name of the table.
+     * @param string $row The column to update.
+     * @param string $value The new value.
+     * @param int $id The ID of the row.
+     *
+     * @return void
+     */
     public function updateValue(string $table_name, string $row, string $value, int $id): void
     {
         // query builder
@@ -198,6 +278,13 @@ class DatabaseManager
         $this->logManager->log('database', $this->authManager->getUsername().': edited '.$row.' -> '.$value.', in table: '.$table_name);
     }
 
+    /**
+     * Retrieves decrypted images from the 'images' table.
+     *
+     * @param int $page The page number.
+     *
+     * @return array|null Decrypted images or null if an error occurs.
+     */
     public function getImages(int $page): ?array
     {
         $images_list = $this->getTableDataByPage('images', $page);
@@ -217,16 +304,38 @@ class DatabaseManager
         return $images;
     }
 
+    /**
+     * Checks if a table exists in the database.
+     *
+     * @param string $table_name The name of the table.
+     *
+     * @return bool True if the table exists, false otherwise.
+     */
     public function isTableExist(string $table_name): bool 
     {
         return $this->connection->createSchemaManager()->tablesExist([$table_name]);
     }
 
+    /**
+     * Counts the total number of rows in a table.
+     *
+     * @param string $table_name The name of the table.
+     *
+     * @return int The total number of rows.
+     */
     public function countTableData(string $table_name): int 
     {
         return count($this->getTableData($table_name, false));
     }
 
+    /**
+     * Counts the number of rows on a specific page of a table.
+     *
+     * @param string $table_name The name of the table.
+     * @param int $page The page number.
+     *
+     * @return int The number of rows on the page.
+     */
     public function countTableDataByPage(string $table_name, int $page): int 
     {
         return count($this->getTableDataByPage($table_name, $page, false));

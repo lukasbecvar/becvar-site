@@ -10,16 +10,27 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Inbox controller provides contact form message reader/ban/close messages
-*/
-
+/**
+ * Inbox controller provides contact form message reader/ban/close messages.
+ */
 class InboxController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var MessagesManager */
     private MessagesManager $messagesManager;
 
+    /**
+     * InboxController constructor.
+     *
+     * @param SiteUtil        $siteUtil
+     * @param AuthManager     $authManager
+     * @param MessagesManager $messagesManager
+     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
@@ -29,7 +40,13 @@ class InboxController extends AbstractController
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
     }
-    
+
+    /**
+     * Display inbox messages.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/inbox', name: 'admin_inbox')]
     public function inbox(Request $request): Response
     {
@@ -60,6 +77,12 @@ class InboxController extends AbstractController
         }
     }
 
+    /**
+     * Close a message in the inbox.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/inbox/close', name: 'admin_inbox_close')]
     public function close(Request $request): Response
     {

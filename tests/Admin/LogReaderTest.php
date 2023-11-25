@@ -6,15 +6,21 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-    Admin log reader component test
-*/
-
+/**
+ * Admin log reader component test
+ *
+ * @package App\Tests\Admin
+ */
 class LogReaderTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,6 +29,11 @@ class LogReaderTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Create a mock object for AuthManager.
+     *
+     * @return object
+     */
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -33,6 +44,9 @@ class LogReaderTest extends WebTestCase
         return $authManagerMock;
     }
 
+    /**
+     * Test if the log reader page loads successfully.
+     */
     public function testLogReaderLoad(): void
     {
         // use fake auth manager instance
@@ -41,10 +55,8 @@ class LogReaderTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs?page=1');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | logs');
         $this->assertSelectorTextContains('body', 'Delete all');
         $this->assertSelectorTextContains('body', 'Readed all');
@@ -53,6 +65,9 @@ class LogReaderTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Basic info');
     }
 
+    /**
+     * Test if the log reader delete page loads successfully.
+     */
     public function testLogReaderDelete(): void
     {
         // use fake auth manager instance
@@ -61,10 +76,8 @@ class LogReaderTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs/delete');
 
-        // check response
+        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
-
-        // check response content
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');
         $this->assertSelectorTextContains('body', 'Yes');

@@ -66,9 +66,6 @@ the public part of the site contains information about me and my projects
 * Font-awesome
    * Version: **5.8.1 - FREE**
    * [Website](https://fontawesome.com)
-* Waypoints
-   * Version: **4.0.1**
-   * [Github](https://github.com/imakewebthings/waypoints)
 * Purecounterjs
    * [Github](https://github.com/srexi/purecounterjs)
 * Light-Gallery

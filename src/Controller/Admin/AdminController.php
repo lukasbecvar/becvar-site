@@ -7,20 +7,30 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Admin controller provides init admin site
-    Controller redirect users to login or dashboard component
-*/
-
+/**
+ * Admin controller provides initialization of the admin site.
+ * Controller redirects users to the login or dashboard component.
+ */
 class AdminController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
 
+    /**
+     * AdminController constructor.
+     *
+     * @param AuthManager $authManager
+     */
     public function __construct(AuthManager $authManager)
     {
         $this->authManager = $authManager;
     }
 
+    /**
+     * Initialize the admin site.
+     *
+     * @return Response
+     */
     #[Route('/admin', name: 'admin_init')]
     public function admin(): Response
     {

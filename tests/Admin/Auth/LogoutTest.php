@@ -4,15 +4,21 @@ namespace App\Tests\Admin\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Logout component test 
-*/
-
+/**
+ * Logout component test.
+ *
+ * @package App\Tests\Admin\Auth
+ */
 class LogoutTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,6 +27,9 @@ class LogoutTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Test the logout functionality.
+     */
     public function testLogout(): void
     {
         // make get request to logout
@@ -29,11 +38,9 @@ class LogoutTest extends WebTestCase
         // check if logout redirected
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
 
-        // check if login cookie unseted
-        $this->assertResponseNotHasCookie('login-token-cookie');
-
-        // check response status code
+        // test response
         $this->assertResponseStatusCodeSame(302); 
+        $this->assertResponseNotHasCookie('login-token-cookie');
     }
 }
  

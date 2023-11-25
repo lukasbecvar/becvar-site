@@ -91,7 +91,7 @@ contact.error.blocked.message: "Vaše zpráva byla zablokována"
 contact.error.limit.reached.message: "Chyba: Máte 5 nepřečtených zpráv. Počkejte na odpověď na první zprávy."
 contact.success.message: "Vaše zpráva byla odeslána. Lukáš odpoví nejpozději do 24 hodin"
 
-# nahrávač obrázků
+# image uploader
 image.uploader.title: "Nahrávač obrázků"
 image.uploader.form.title: "Nahrát obrázek"
 image.uploader.form.description: "Přetáhněte nebo vyberte obrázek"
@@ -100,6 +100,6 @@ image.uploader.form.submit.button: "Nahrát obrázek"
 image.uploader.file.format.error: "Chyba, soubor má nesprávný formát!"
 image.viewer.title: "Obrázek"
 
-# vložení kódu
+# code paste
 code.paste.title: "Vložení kódu"
 code.view.title: "Čtení"

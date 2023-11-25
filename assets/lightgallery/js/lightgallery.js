@@ -3,7 +3,8 @@
  * http://sachinchoolur.github.io/lightgallery.js/
  * Copyright (c) 2016 Sachin N; 
  * @license GPLv3 
- */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Lightgallery = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+*/
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Lightgallery = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
     (function (global, factory) {
         if (typeof define === "function" && define.amd) {
             define(['exports'], factory);
@@ -234,7 +235,7 @@
     
             mode: 'lg-slide',
     
-            // Ex : 'ease'
+            // ex : 'ease'
             cssEasing: 'ease',
     
             //'for jquery animation'
@@ -252,7 +253,7 @@
             // aria-labelledby attribute fot gallery
             ariaLabelledby: '',
     
-            //aria-describedby attribute for gallery
+            // aria-describedby attribute for gallery
             ariaDescribedby: '',
     
             closable: true,
@@ -279,7 +280,7 @@
              * slide will be loaded in the background after the 4th slide is fully loaded..
              * if preload is 2 then 2nd 3rd 5th 6th slides will be preloaded.. ... ...
              *
-             */
+            */
             preload: 1,
             showAfterLoad: true,
             selector: '',
@@ -307,13 +308,13 @@
     
         function Plugin(element, options) {
     
-            // Current lightGallery element
+            // current lightGallery element
             this.el = element;
     
             // lightGallery settings
             this.s = _extends({}, defaults, options);
     
-            // When using dynamic mode, ensure dynamicEl is an array
+            // when using dynamic mode, ensure dynamicEl is an array
             if (this.s.dynamic && this.s.dynamicEl !== 'undefined' && this.s.dynamicEl.constructor === Array && !this.s.dynamicEl.length) {
                 throw 'When using dynamic mode, you must also define dynamicEl as an Array.';
             }
@@ -326,20 +327,20 @@
     
             this.lgBusy = false;
     
-            // Timeout function for hiding controls;
+            // timeout function for hiding controls;
             this.hideBartimeout = false;
     
-            // To determine browser supports for touch events;
+            // to determine browser supports for touch events;
             this.isTouch = 'ontouchstart' in document.documentElement;
     
-            // Disable hideControlOnEnd if sildeEndAnimation is true
+            // disable hideControlOnEnd if sildeEndAnimation is true
             if (this.s.slideEndAnimatoin) {
                 this.s.hideControlOnEnd = false;
             }
     
             this.items = [];
     
-            // Gallery items
+            // gallery items
             if (this.s.dynamic) {
                 this.items = this.s.dynamicEl;
             } else {
@@ -409,10 +410,10 @@
     
                 for (var i = 0; i < _this.items.length; i++) {
     
-                    /*jshint loopfunc: true */
+                    /* jshint loopfunc: true */
                     (function (index) {
     
-                        // Using different namespace for click because click event should not unbind if selector is same object('this')
+                        // using different namespace for click because click event should not unbind if selector is same object('this')
                         _lgUtils2.default.on(_this.items[index], 'click.lgcustom', function (e) {
     
                             e.preventDefault();
@@ -468,14 +469,14 @@
     
             _lgUtils2.default.trigger(_this.el, 'onAfterOpen');
     
-            // Hide controllers if mouse doesn't move for some period
+            // hide controllers if mouse doesn't move for some period
             _lgUtils2.default.on(_this.outer, 'mousemove.lg click.lg touchstart.lg', function () {
     
                 _lgUtils2.default.removeClass(_this.outer, 'lg-hide-items');
     
                 clearTimeout(_this.hideBartimeout);
     
-                // Timeout will be cleared on each slide movement also
+                // timeout will be cleared on each slide movement also
                 _this.hideBartimeout = setTimeout(function () {
                     _lgUtils2.default.addClass(_this.outer, 'lg-hide-items');
                 }, _this.s.hideBarsDelay);
@@ -493,12 +494,12 @@
             document.body.insertAdjacentHTML('beforeend', '<div class="lg-backdrop"></div>');
             _lgUtils2.default.setVendor(document.querySelector('.lg-backdrop'), 'TransitionDuration', this.s.backdropDuration + 'ms');
     
-            // Create gallery items
+            // create gallery items
             for (i = 0; i < this.items.length; i++) {
                 list += '<div class="lg-item"></div>';
             }
     
-            // Create controlls
+            // create controlls
             if (this.s.controls && this.items.length > 1) {
                 controls = '<div class="lg-actions">' + '<button type="button" aria-label="Previous slide" class="lg-prev lg-icon">' + this.s.prevHtml + '</button>' + '<button type="button" aria-label="Next slide" class="lg-next lg-icon">' + this.s.nextHtml + '</button>' + '</div>';
             }
@@ -520,13 +521,13 @@
             if (this.s.useLeft) {
                 _lgUtils2.default.addClass(this.outer, 'lg-use-left');
     
-                // Set mode lg-slide if use left is true;
+                // set mode lg-slide if use left is true;
                 this.s.mode = 'lg-slide';
             } else {
                 _lgUtils2.default.addClass(this.outer, 'lg-use-css3');
             }
     
-            // For fixed height gallery
+            // for fixed height gallery
             _this.setTop();
             _lgUtils2.default.on(window, 'resize.lg orientationchange.lg', function () {
                 setTimeout(function () {
@@ -543,7 +544,7 @@
             } else {
                 _lgUtils2.default.addClass(this.outer, 'lg-css');
     
-                // Set speed 0 because no animation will happen if browser doesn't support css3
+                // set speed 0 because no animation will happen if browser doesn't support css3
                 this.s.speed = 0;
             }
     
@@ -575,11 +576,11 @@
                 this.outer.querySelector('.lg-toolbar').insertAdjacentHTML('beforeend', '<a id="lg-download" aria-label="Download" target="_blank" download class="lg-download lg-icon"></a>');
             }
     
-            // Store the current scroll top value to scroll back after closing the gallery..
+            // store the current scroll top value to scroll back after closing the gallery..
             this.prevScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         };
     
-        // For fixed height gallery
+        // for fixed height gallery
         Plugin.prototype.setTop = function () {
             if (this.s.height !== '100%') {
                 var wH = window.innerHeight;
@@ -593,7 +594,7 @@
             }
         };
     
-        // Find css3 support
+        // find css3 support
         Plugin.prototype.doCss = function () {
             // check for css animation support
             var support = function support() {
@@ -619,7 +620,7 @@
          *  @param {String} src
          *  @return {Object} video type
          *  Ex:{ youtube  :  ["//www.youtube.com/watch?v=c0asJgSyxcY", "c0asJgSyxcY"] }
-         */
+        */
         Plugin.prototype.isVideo = function (src, index) {
     
             var html;
@@ -662,7 +663,7 @@
         /**
          *  @desc Create image counter
          *  Ex: 1/10
-         */
+        */
         Plugin.prototype.counter = function () {
             if (this.s.counter) {
                 this.outer.querySelector(this.s.appendCounterTo).insertAdjacentHTML('beforeend', '<div id="lg-counter" role="status" aria-live="polite"><span id="lg-counter-current">' + (parseInt(this.index, 10) + 1) + '</span> / <span id="lg-counter-all">' + this.items.length + '</span></div>');
@@ -672,7 +673,7 @@
         /**
          *  @desc add sub-html into the slide
          *  @param {Number} index - index of the slide
-         */
+        */
         Plugin.prototype.addHtml = function (index) {
             var subHtml = null;
             var currentEle;
@@ -711,7 +712,7 @@
                 this.___slide[index].insertAdjacentHTML('beforeend', subHtml);
             }
     
-            // Add lg-empty-html class if title doesn't exist
+            // add lg-empty-html class if title doesn't exist
             if (typeof subHtml !== 'undefined' && subHtml !== null) {
                 if (subHtml === '') {
                     _lgUtils2.default.addClass(this.outer.querySelector(this.s.appendSubHtmlTo), 'lg-empty-html');
@@ -728,7 +729,7 @@
         /**
          *  @desc Preload slides
          *  @param {Number} index - index of the slide
-         */
+        */
         Plugin.prototype.preload = function (index) {
             var i = 1;
             var j = 1;
@@ -754,7 +755,7 @@
          *  @param {Number} index - index of the slide.
          *  @param {Boolean} rec - if true call loadcontent() function again.
          *  @param {Boolean} delay - delay for adding complete class. it is 0 except first time.
-         */
+        */
         Plugin.prototype.loadContent = function (index, rec, delay) {
     
             var _this = this;
@@ -772,7 +773,7 @@
                 for (var i = 0; i < srcItms.length; i++) {
                     var __src = srcItms[i].split(' ');
     
-                    // Manage empty space
+                    // manage empty space
                     if (__src[0] === '') {
                         __src.splice(0, 1);
                     }
@@ -832,7 +833,7 @@
                 _sizes = _this.items[index].getAttribute('data-sizes');
             }
     
-            //if (_src || _srcset || _sizes || _poster) {
+            // if (_src || _srcset || _sizes || _poster) {
     
             var iframe = false;
             if (_this.s.dynamic) {
@@ -901,11 +902,11 @@
     
             _lgUtils2.default.on(_this.___slide[index].querySelector('.lg-object'), 'load.lg error.lg', function () {
     
-                // For first time add some delay for displaying the start animation.
+                // for first time add some delay for displaying the start animation.
                 var _speed = 0;
     
-                // Do not change the delay value because it is required for zoom plugin.
-                // If gallery opened from direct url (hash) speed value should be 0
+                // do not change the delay value because it is required for zoom plugin.
+                // if gallery opened from direct url (hash) speed value should be 0
                 if (delay && !_lgUtils2.default.hasClass(document.body, 'lg-from-hash')) {
                     _speed = delay;
                 }
@@ -934,29 +935,27 @@
                     _this.preload(index);
                 }
             }
-    
-            //}
         };
     
         /**
-        *   @desc slide function for lightgallery
-            ** Slide() gets call on start
-            ** ** Set lg.on true once slide() function gets called.
-            ** Call loadContent() on slide() function inside setTimeout
-            ** ** On first slide we do not want any animation like slide of fade
-            ** ** So on first slide( if lg.on if false that is first slide) loadContent() should start loading immediately
-            ** ** Else loadContent() should wait for the transition to complete.
-            ** ** So set timeout s.speed + 50
-        <=> ** loadContent() will load slide content in to the particular slide
-            ** ** It has recursion (rec) parameter. if rec === true loadContent() will call preload() function.
-            ** ** preload will execute only when the previous slide is fully loaded (images iframe)
-            ** ** avoid simultaneous image load
-        <=> ** Preload() will check for s.preload value and call loadContent() again accoring to preload value
-            ** loadContent()  <====> Preload();
-        
-        *   @param {Number} index - index of the slide
-        *   @param {Boolean} fromTouch - true if slide function called via touch event or mouse drag
-        *   @param {Boolean} fromThumb - true if slide function called via thumbnail click
+            *   @desc slide function for lightgallery
+                ** Slide() gets call on start
+                ** ** Set lg.on true once slide() function gets called.
+                ** Call loadContent() on slide() function inside setTimeout
+                ** ** On first slide we do not want any animation like slide of fade
+                ** ** So on first slide( if lg.on if false that is first slide) loadContent() should start loading immediately
+                ** ** Else loadContent() should wait for the transition to complete.
+                ** ** So set timeout s.speed + 50
+            <=> ** loadContent() will load slide content in to the particular slide
+                ** ** It has recursion (rec) parameter. if rec === true loadContent() will call preload() function.
+                ** ** preload will execute only when the previous slide is fully loaded (images iframe)
+                ** ** avoid simultaneous image load
+            <=> ** Preload() will check for s.preload value and call loadContent() again accoring to preload value
+                ** loadContent()  <====> Preload();
+            
+            *   @param {Number} index - index of the slide
+            *   @param {Boolean} fromTouch - true if slide function called via touch event or mouse drag
+            *   @param {Boolean} fromThumb - true if slide function called via thumbnail click
         */
         Plugin.prototype.slide = function (index, fromTouch, fromThumb) {
     
@@ -970,8 +969,8 @@
     
             var _this = this;
     
-            // Prevent if multiple call
-            // Required for hsh plugin
+            // prevent if multiple call
+            // required for hsh plugin
             if (_this.lGalleryOn && _prevIndex === index) {
                 return;
             }
@@ -1010,7 +1009,7 @@
     
                 clearTimeout(_this.hideBartimeout);
     
-                // Add title if this.s.appendSubHtmlTo === lg-sub-html
+                // add title if this.s.appendSubHtmlTo === lg-sub-html
                 if (this.s.appendSubHtmlTo === '.lg-sub-html') {
     
                     // wait for slide animation to complete
@@ -1047,7 +1046,7 @@
     
                     if (_prev) {
     
-                        //prevslide
+                        // prevslide
                         _lgUtils2.default.addClass(this.___slide[index], 'lg-prev-slide');
                         _lgUtils2.default.addClass(this.___slide[_prevIndex], 'lg-next-slide');
                     } else if (_next) {
@@ -1131,7 +1130,7 @@
         /**
          *  @desc Go to next slide
          *  @param {Boolean} fromTouch - true if slide function called via touch event
-         */
+        */
         Plugin.prototype.goToNextSlide = function (fromTouch) {
             var _this = this;
             if (!_this.lgBusy) {
@@ -1161,7 +1160,7 @@
         /**
          *  @desc Go to previous slide
          *  @param {Boolean} fromTouch - true if slide function called via touch event
-         */
+        */
         Plugin.prototype.goToPrevSlide = function (fromTouch) {
             var _this = this;
             if (!_this.lgBusy) {
@@ -1233,7 +1232,7 @@
     
         Plugin.prototype.arrowDisable = function (index) {
     
-            // Disable arrows if s.hideControlOnEnd is true
+            // disable arrows if s.hideControlOnEnd is true
             if (!this.s.loop && this.s.hideControlOnEnd) {
                 var next = this.outer.querySelector('.lg-next');
                 var prev = this.outer.querySelector('.lg-prev');
@@ -1304,7 +1303,7 @@
                     _this.goToPrevSlide(true);
                 } else if (Math.abs(distance) < 5) {
     
-                    // Trigger click if distance is less than 5 pix
+                    // trigger click if distance is less than 5 pix
                     _lgUtils2.default.trigger(_this.el, 'onSlideClick');
                 }
     
@@ -1330,7 +1329,7 @@
             if (_this.s.enableSwipe && _this.isTouch && _this.doCss()) {
     
                 for (var i = 0; i < _this.___slide.length; i++) {
-                    /*jshint loopfunc: true */
+                    /* jshint loopfunc: true */
                     _lgUtils2.default.on(_this.___slide[i], 'touchstart.lg', function (e) {
                         if (!_lgUtils2.default.hasClass(_this.outer, 'lg-zoomed') && !_this.lgBusy) {
                             e.preventDefault();
@@ -1341,7 +1340,7 @@
                 }
     
                 for (var j = 0; j < _this.___slide.length; j++) {
-                    /*jshint loopfunc: true */
+                    /* jshint loopfunc: true */
                     _lgUtils2.default.on(_this.___slide[j], 'touchmove.lg', function (e) {
                         if (!_lgUtils2.default.hasClass(_this.outer, 'lg-zoomed')) {
                             e.preventDefault();
@@ -1353,7 +1352,7 @@
                 }
     
                 for (var k = 0; k < _this.___slide.length; k++) {
-                    /*jshint loopfunc: true */
+                    /* jshint loopfunc: true */
                     _lgUtils2.default.on(_this.___slide[k], 'touchend.lg', function () {
                         if (!_lgUtils2.default.hasClass(_this.outer, 'lg-zoomed')) {
                             if (isMoved) {
@@ -1376,7 +1375,7 @@
             var isMoved = false;
             if (_this.s.enableDrag && !_this.isTouch && _this.doCss()) {
                 for (var i = 0; i < _this.___slide.length; i++) {
-                    /*jshint loopfunc: true */
+                    /* jshint loopfunc: true */
                     _lgUtils2.default.on(_this.___slide[i], 'mousedown.lg', function (e) {
                         // execute only on .lg-object
                         if (!_lgUtils2.default.hasClass(_this.outer, 'lg-zoomed')) {
@@ -1388,7 +1387,7 @@
                                     startCoords = e.pageX;
                                     isDraging = true;
     
-                                    // ** Fix for webkit cursor issue https://code.google.com/p/chromium/issues/detail?id=26723
+                                    // ** fix for webkit cursor issue https://code.google.com/p/chromium/issues/detail?id=26723
                                     _this.outer.scrollLeft += 1;
                                     _this.outer.scrollLeft -= 1;
     
@@ -1422,7 +1421,7 @@
                         _lgUtils2.default.trigger(_this.el, 'onSlideClick');
                     }
     
-                    // Prevent execution on click
+                    // prevent execution on click
                     if (isDraging) {
                         isDraging = false;
                         _lgUtils2.default.removeClass(_this.outer, 'lg-grabbing');
@@ -1484,7 +1483,7 @@
     
             if (_this.s.closable) {
     
-                // If you drag the slide and release outside gallery gets close on chrome
+                // if you drag the slide and release outside gallery gets close on chrome
                 // for preventing this check mousedown and mouseup happened on .lg-item or lg-outer
                 _lgUtils2.default.on(_this.outer, 'mousedown.lg', function (e) {
     
@@ -1522,8 +1521,7 @@
              * plugins instance remains with the element
              *
              * if d is true destroy will completely remove the plugin
-             */
-    
+            */
             if (d) {
                 if (!_this.s.dynamic) {
                     // only when not using dynamic mode is $items a jquery collection
@@ -1539,10 +1537,10 @@
                 _this.el.removeAttribute('lg-uid');
             }
     
-            // Unbind all events added by lightGallery
+            // unbind all events added by lightGallery
             _lgUtils2.default.off(this.el, '.lgtm');
     
-            // Distroy all lightGallery modules
+            // distroy all lightGallery modules
             for (var key in window.lgModules) {
                 if (_this.modules[key]) {
                     _this.modules[key].destroy(d);
@@ -1604,4 +1602,4 @@
     });
     
     },{"./lg-utils":1}]},{},[2])(2)
-    });
+});

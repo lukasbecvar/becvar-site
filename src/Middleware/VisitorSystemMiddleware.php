@@ -12,21 +12,47 @@ use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Visitor system provides basic visitors managment
-*/
-
+/**
+ * Visitor system provides basic visitors managment
+ */
 class VisitorSystemMiddleware
 {
+    /** * @var Environment */
     private Environment $twig;
+
+    /** * @var BanManager */
     private BanManager $banManager;
+
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * VisitorSystemMiddleware Constructor.
+     *
+     * @param Environment            $twig               The Twig environment for rendering templates.
+     * @param LogManager             $logManager         The log manager for handling log-related tasks.
+     * @param BanManager             $banManager         The manager for handling user bans.
+     * @param ErrorManager           $errorManager       The manager for handling errors.
+     * @param SecurityUtil           $securityUtil       The utility class for security-related tasks.
+     * @param VisitorManager         $visitorManager     The manager for handling visitors.
+     * @param VisitorInfoUtil        $visitorInfoUtil    The utility class for retrieving visitor information.
+     * @param EntityManagerInterface $entityManager      The Doctrine EntityManager for database interactions.
+     */
     public function __construct(
         Environment $twig,
         LogManager $logManager,
@@ -47,6 +73,15 @@ class VisitorSystemMiddleware
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Handles actions to be performed on each kernel request.
+     *
+     * - Updates visitors' statistics.
+     * - Retrieves and sanitizes visitor information.
+     * - Checks if the visitor is in the database and takes appropriate actions.
+     *
+     * @return void
+     */
     public function onKernelRequest(): void
     {
         // update visitors stats list
@@ -92,6 +127,17 @@ class VisitorSystemMiddleware
         }
     }
 
+    /**
+     * Inserts a new visitor record into the database.
+     *
+     * @param string $date The date of the visit.
+     * @param string $ip_address The IP address of the visitor.
+     * @param string $browser The browser used by the visitor.
+     * @param string $os The operating system of the visitor.
+     * @param array $location The location information of the visitor, including 'city' and 'country'.
+     *
+     * @throws \Exception If an error occurs during the database flush.
+     */
     public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, array $location): void 
     {
         // log geolocate error
@@ -126,6 +172,16 @@ class VisitorSystemMiddleware
         }
     }
 
+    /**
+     * Updates an existing visitor record in the database.
+     *
+     * @param string $date The date of the visit.
+     * @param string $ip_address The IP address of the visitor.
+     * @param string $browser The updated browser used by the visitor.
+     * @param string $os The updated operating system of the visitor.
+     *
+     * @throws \Exception If an error occurs during the database flush.
+     */
     public function updateVisitor(string $date, string $ip_address, string $browser, string $os): void
     {
         // get visitor data

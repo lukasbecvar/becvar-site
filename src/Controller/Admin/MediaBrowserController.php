@@ -10,22 +10,43 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Media browser controller provides image-uploader browser
-*/
-
+/**
+ * Media browser controller provides an image-uploader browser.
+ */
 class MediaBrowserController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var DatabaseManager */
     private DatabaseManager $databaseManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager) {
+    /**
+     * MediaBrowserController constructor.
+     *
+     * @param SiteUtil        $siteUtil
+     * @param AuthManager     $authManager
+     * @param DatabaseManager $databaseManager
+     */
+    public function __construct(
+        SiteUtil $siteUtil, 
+        AuthManager $authManager, 
+        DatabaseManager $databaseManager
+    ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
     }
 
+    /**
+     * Display the media browser with image-uploader.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/media/browser', name: 'admin_media_browser')]
     public function mediaBrowser(Request $request): Response
     {

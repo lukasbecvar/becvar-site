@@ -4,19 +4,33 @@ namespace App\Util;
 
 use App\Util\SecurityUtil;
 
-/*
-    Cookie util provides cookies managment
-*/
-
+/**
+ * CookieUtil provides cookie management functionalities.
+ */
 class CookieUtil
 {
+    /** @var SecurityUtil */
     private SecurityUtil $securityUtil;
 
+    /**
+     * CookieUtil constructor.
+     *
+     * @param SecurityUtil $securityUtil The security utility.
+     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;
     }
 
+    /**
+     * Set a cookie with the specified name, value, and expiration.
+     *
+     * @param string $name The name of the cookie.
+     * @param mixed $value The value to store in the cookie.
+     * @param int $expiration The expiration time for the cookie.
+     *
+     * @throws \Exception If headers have already been sent.
+     */
     public function set($name, $value, $expiration): void 
     {
         if (!headers_sent()) {
@@ -26,12 +40,26 @@ class CookieUtil
         }
     }
 
+    /**
+     * Get the value of the specified cookie.
+     *
+     * @param string $name The name of the cookie.
+     *
+     * @return string|null The decrypted value of the cookie.
+     */
     public function get($name): ?string 
     {
         $value = base64_decode($_COOKIE[$name]);
         return $this->securityUtil->decrypt_aes($value);
     }
 
+    /**
+     * Unset (delete) the specified cookie.
+     *
+     * @param string $name The name of the cookie.
+     *
+     * @throws \Exception If the URI is invalid.
+     */
     public function unset($name): void 
     {   
         $host = $_SERVER['HTTP_HOST'];   

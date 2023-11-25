@@ -1,10 +1,10 @@
-/* becvar-site: admin page style */ 
+/* becvar-site: admin page style */
 * {
 	padding: 0px;
 	margin: 0px;
 	box-sizing: border-box;
 	font-family: Verdana, sans-serif;
-} 
+}
 
 html {
 	scroll-behavior: smooth;
@@ -18,7 +18,7 @@ body {
 body.active .wrapper .sidebar {
 	left: -225px;
 }
-  
+
 body.active .wrapper .section {
 	margin-left: 0;
 	width: 100%;
@@ -40,33 +40,6 @@ textarea {
 	height: 150px;
 	line-height: 150%;
 	resize: none;
-}
-
-#loader-wrapper {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: #242424;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-#loader {
-    border: 16px solid #ffffff;
-    border-top: 16px solid #ff4242;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 .green-text {
@@ -102,11 +75,11 @@ textarea {
 }
 
 #wrarning-box {
-    display: none;
+	display: none;
 }
 
 .highlight {
-    background-color: #a72e2e;	
+	background-color: #a72e2e;	
 }
 
 .center {
@@ -114,24 +87,24 @@ textarea {
 }
 
 .wrapper .sidebar {
-    background-color: #242424;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 225px;
-    height: 100%;
-    padding: 5px 0;
-    transition: all 0.2s ease;
-    z-index: 1;
-    border-right: 1px solid rgba(255, 255, 255, 0.24);
-    overflow-y: auto;
+	background-color: #242424;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 225px;
+	height: 100%;
+	padding: 5px 0;
+	transition: all 0.2s ease;
+	z-index: 1;
+	border-right: 1px solid rgba(255, 255, 255, 0.24);
+	overflow-y: auto;
 }
-  
+
 .wrapper .sidebar .profile {
 	margin-bottom: 3px;
 	text-align: center;
 }
-  
+
 .wrapper .sidebar .profile img {
 	display: block;
 	width: 60px;
@@ -139,13 +112,13 @@ textarea {
 	border-radius: 10%;
 	margin: 0 auto;
 }
-  
+
 .wrapper .sidebar .profile h3 {
 	color: #ffffff;
 	margin: 5px 0 1px;
 	font-size: 25px;
 }
-  
+
 .wrapper .sidebar .profile p {
 	color: rgb(206, 240, 253);
 	font-size: 14px;
@@ -159,23 +132,23 @@ textarea {
 	font-size: 18px;
 	position: relative;
 }
-  
+
 .wrapper .sidebar ul li a .icon {
 	color: #dee4ec;
 	width: 25px;
 	display: inline-block;
 }
-  
+
 .wrapper .sidebar ul li a:hover, .wrapper .sidebar ul li a.active {
 	background-color: rgba(87, 87, 87, 0.397);
 	border-right: 2px solid rgb(33, 39, 43);
 	color: #79d5ec;
 }
-  
+
 .wrapper .sidebar ul li a:hover:before, .wrapper .sidebar ul li a.active:before {
 	display: block;
 }
-  
+
 .wrapper .section {
 	width: calc(100% - 225px);
 	margin-left: 225px;
@@ -201,8 +174,8 @@ textarea {
 	font-size: 28px;
 	color: #f4fbff;
 	text-decoration: none;
- }
-  
+}
+
 .wrapper .section .top-navbar .hamburger a:hover {
 	color: #79d5ec;
 	text-decoration: none;
@@ -282,8 +255,8 @@ button {
 	position: fixed;
 	height: 100%;
 	width: 100%;
-    background: #000000 url(../img/bg.jpg) top right no-repeat;
-    background-size: cover;
+	background: #000000 url(../img/bg.jpg) top right no-repeat;
+	background-size: cover;
 }
 
 .form {
@@ -298,10 +271,10 @@ button {
 }
 
 .form .text-input:-webkit-autofill, .form .text-input:-webkit-autofill:hover , .form .text-input:-webkit-autofill:focus {
-    border: 2px solid rgba(255, 255, 255, 0.24);
-    -webkit-text-fill-color: white;
-    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
-    transition: background-color 5000s ease-in-out 0s;
+	border: 2px solid rgba(255, 255, 255, 0.24);
+	-webkit-text-fill-color: white;
+	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-pos-y {
@@ -356,11 +329,11 @@ button {
 }
 
 .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus {
-    border: 2px solid rgba(255, 255, 255, 0.24);
-    -webkit-text-fill-color: white;
+	border: 2px solid rgba(255, 255, 255, 0.24);
+	-webkit-text-fill-color: white;
 	background: rgba(255, 255, 255, 0.062);
-    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
-    transition: background-color 5000s ease-in-out 0s;
+	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 .text-input-title {
@@ -462,11 +435,11 @@ button {
 
 .card {
 	margin-top: 10px;
-    background-color: #303030;
+	background-color: #303030;
 	border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 4px;
-    position: relative;
-    margin-bottom: 15px;
+	border-radius: 4px;
+	position: relative;
+	margin-bottom: 15px;
 }
 
 .card-text {
@@ -634,7 +607,7 @@ button {
 }
 
 .card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
-    font-size: 110px;
+	font-size: 110px;
 }
 
 .card-link {
@@ -648,14 +621,14 @@ button {
 }
 
 .card .card-statistic-3 .card-icon {
-    text-align: center;
-    line-height: 50px;
-    margin-left: 15px;
-    color: #000;
-    position: absolute;
-    right: -5px;
-    top: 20px;
-    opacity: 0.1;
+	text-align: center;
+	line-height: 50px;
+	margin-left: 15px;
+	color: #000;
+	position: absolute;
+	right: -5px;
+	top: 20px;
+	opacity: 0.1;
 }
 
 .stats-link {
@@ -894,8 +867,8 @@ button {
 
 .chat-message-box img {
 	max-width: 30px;
-    margin-right: 4px;
-    border-radius: 20%;
+	margin-right: 4px;
+	border-radius: 20%;
 }
 
 .link-yellow {
@@ -903,64 +876,64 @@ button {
 }
 
 .terminal-component {
-    background-color: rgb(12, 12, 12);
-    height: 100%;
+	background-color: rgb(12, 12, 12);
+	height: 100%;
 }
 
 .terminal-component #terminal {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    color: #FFFFFF;
-    font-family: monospace !important;
-    display: flex;
-    flex-direction: column;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	color: #FFFFFF;
+	font-family: monospace !important;
+	display: flex;
+	flex-direction: column;
 	padding-left: 5px !important;
 }
 
 .terminal-component #user {
-    color: #ff4a4a;
+	color: #ff4a4a;
 }
 
 .terminal-component #output-container {
-    overflow: auto; 
-    max-height: 100%;
-    padding-top: 8px;
-    padding-right: 8px;
-    padding-left: 8px;
-    font-size: 23px !important;
+	overflow: auto; 
+	max-height: 100%;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-left: 8px;
+	font-size: 23px !important;
 	margin-bottom: 0px;
-    overflow-x: hidden;
+	overflow-x: hidden;
 	color: #FFFFFF;
 }
 
 .terminal-component #command-container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .terminal-component #prompt {
-    display: inline-block;
+	display: inline-block;
 }
 
 .terminal-component #prompt-line {
-    white-space: nowrap;
-    color: #6262ff;
-    font-size: 22px !important;
+	white-space: nowrap;
+	color: #6262ff;
+	font-size: 22px !important;
 }
 
 .terminal-component .prompr-reset {
-    margin-left: -8px;
+	margin-left: -8px;
 }
 
 .terminal-component #command {
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    margin-left: 5px;
-    color: white;
-    font-size: 22px !important;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	margin-left: 5px;
+	color: white;
+	font-size: 22px !important;
 	text-transform: lowercase;
 }
 
@@ -1101,14 +1074,14 @@ button {
 		display: none;
 	}
 	.terminal-component #output-container {
-        font-size: 22px;
-    }
-    .terminal-component #prompt-line {
-        font-size: 22px;
-    }
-    .terminal-component #command {
-        font-size: 22px;
-    }
+		font-size: 22px;
+	}
+	.terminal-component #prompt-line {
+		font-size: 22px;
+	}
+	.terminal-component #command {
+		font-size: 22px;
+	}
 }
 
 /* fix dashboard for tablets */
@@ -1116,7 +1089,7 @@ button {
 	.card-phone {
 		width: 97.5%;
 	}
-} 
+}
 
 /* fix for mobile todo table */
 @media screen and (max-height: 500px) {

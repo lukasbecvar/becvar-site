@@ -9,12 +9,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-/*
-    Profile pic change form provides the profile picture change in the account settings
-*/
-
+/**
+ * ProfilePicChangeFormType provides a form for changing the profile picture in the account settings.
+ *
+ * @see AbstractType
+ */
 class ProfilePicChangeFormType extends AbstractType
 {
+    /**
+     * Builds the profile picture change form.
+     *
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array<string, mixed> $options The options for building the form.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,6 +45,11 @@ class ProfilePicChangeFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this form.
+     *
+     * @param OptionsResolver $resolver The resolver for the form options.
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

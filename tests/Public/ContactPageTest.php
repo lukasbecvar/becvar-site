@@ -5,15 +5,21 @@ namespace App\Tests\Public;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/*
-    Contact component test
-*/
-
+/**
+ * Test cases for the Contact page.
+ *
+ * @package App\Tests\Public
+ */
 class ContactPageTest extends WebTestCase
 {
-    // instance for making requests
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
+     */
     private $client;
 
+    /**
+     * Set up before each test.
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,16 +28,19 @@ class ContactPageTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Test accessing the Contact page.
+     *
+     * @return void
+     */
     public function testContactPage()
     {
         // make get request
         $this->client->request('GET', '/contact');
 
-        // check response code
+        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // check form inputs
         $this->assertSelectorExists('form[name="contact_form"]');
         $this->assertSelectorExists('input[name="contact_form[name]"]');
         $this->assertSelectorExists('input[name="contact_form[email]"]');

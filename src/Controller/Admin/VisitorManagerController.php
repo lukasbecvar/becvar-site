@@ -15,19 +15,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Visitor manager controller provides view/ban/delete visitor
-*/
-
+/**
+ * Visitor manager controller provides view/ban/delete visitor.
+ */
 class VisitorManagerController extends AbstractController
 {
+    /** * @var SiteUtil */
     private SiteUtil $siteUtil;
+
+    /** * @var BanManager */
     private BanManager $banManager;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
 
+    /**
+     * VisitorManagerController constructor.
+     *
+     * @param SiteUtil        $siteUtil
+     * @param BanManager      $banManager
+     * @param AuthManager     $authManager
+     * @param SecurityUtil    $securityUtil
+     * @param VisitorManager  $visitorManager
+     * @param VisitorInfoUtil $visitorInfoUtil
+     */
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,
@@ -44,6 +64,12 @@ class VisitorManagerController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Display the table of visitors and their details.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/visitors', name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
     {
@@ -73,6 +99,12 @@ class VisitorManagerController extends AbstractController
         }
     }
 
+    /**
+     * Display the confirmation form for deleting all visitors.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/visitors/delete', name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
     {
@@ -96,6 +128,12 @@ class VisitorManagerController extends AbstractController
         }
     } 
 
+    /**
+     * Ban a visitor.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/visitors/ban', name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
     {
@@ -163,6 +201,12 @@ class VisitorManagerController extends AbstractController
         }
     }
 
+    /**
+     * Unban a visitor.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/admin/visitors/unban', name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response
     {

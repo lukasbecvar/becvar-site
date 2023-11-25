@@ -7,16 +7,29 @@ use App\Util\CookieUtil;
 use App\Util\SessionUtil;
 use App\Manager\AuthManager;
 
-/*
-    This middleware check if requird autologin function
-*/
-
+/**
+ * Class AutoLoginMiddleware
+ *
+ * This middleware checks if the required auto-login function should be triggered.
+ */
 class AutoLoginMiddleware
 {
+    /** * @var CookieUtil */
     private CookieUtil $cookieUtil;
+
+    /** * @var SessionUtil */
     private SessionUtil $sessionUtil;
+
+    /** * @var AuthManager */
     private AuthManager $authManager;
 
+    /**
+     * AutoLoginMiddleware constructor.
+     *
+     * @param CookieUtil  $cookieUtil
+     * @param SessionUtil $sessionUtil
+     * @param AuthManager $authManager
+     */
     public function __construct(
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
@@ -27,6 +40,9 @@ class AutoLoginMiddleware
         $this->authManager = $authManager;
     }
 
+    /**
+     * Check if auto-login should be performed.
+     */
     public function onKernelRequest(): void
     {
         // check if user not logged

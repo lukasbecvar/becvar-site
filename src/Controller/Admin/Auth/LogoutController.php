@@ -8,21 +8,34 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/*
-    Logout controller provides user logout function
-    ! Login uses its own authenticator not symfony auth !
-*/
-
+/**
+ * Logout controller provides user logout function.
+ * Note: Login uses its own authenticator, not Symfony auth.
+ */
 class LogoutController extends AbstractController
 {
+    /** * @var AuthManager */
     private AuthManager $authManager;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
 
+    /**
+     * LogoutController constructor.
+     *
+     * @param AuthManager  $authManager
+     * @param ErrorManager $errorManager
+     */
     public function __construct(AuthManager $authManager, ErrorManager $errorManager) {
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
     }
 
+    /**
+     * Handles user logout.
+     *
+     * @return Response
+     */
     #[Route('/logout', name: 'auth_logout')]
     public function logout(): Response
     {

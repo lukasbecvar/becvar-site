@@ -8,21 +8,44 @@ use App\Util\SessionUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/*
-    Auth manager provides login/logout methods
-    ! Login uses its own Authenticator not symfony auth !
-*/
-
+/**
+ * AuthManager provides login/logout methods.
+ * Note: Login uses its own Authenticator, not Symfony auth.
+ */
 class AuthManager
 {
+    /** * @var LogManager */
     private LogManager $logManager;
+
+    /** * @var CookieUtil */
     private CookieUtil $cookieUtil;
+
+    /** * @var SessionUtil */
     private SessionUtil $sessionUtil;
+
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
+
+    /** * @var VisitorManager */
     private VisitorManager $visitorManager;
+
+    /** * @var VisitorInfoUtil */
     private VisitorInfoUtil $visitorInfoUtil;
+
+    /** * @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * AuthManager constructor.
+     *
+     * @param LogManager             $logManager
+     * @param CookieUtil             $cookieUtil
+     * @param SessionUtil            $sessionUtil
+     * @param ErrorManager           $errorManager
+     * @param VisitorManager         $visitorManager
+     * @param VisitorInfoUtil        $visitorInfoUtil
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         LogManager $logManager, 
         CookieUtil $cookieUtil,
@@ -41,6 +64,11 @@ class AuthManager
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * Checks if a user is logged in.
+     *
+     * @return bool
+     */
     public function isUserLogedin(): bool 
     {
         // check if session exist
@@ -60,6 +88,15 @@ class AuthManager
         }
     }
 
+    /**
+     * Logs in a user.
+     *
+     * @param string $username
+     * @param string $user_token
+     * @param bool   $remember
+     *
+     * @return void
+     */
     public function login(string $username, string $user_token, bool $remember): void 
     {
         // check if user not logged in
@@ -87,6 +124,11 @@ class AuthManager
         }
     }
 
+    /**
+     * Logs out a user.
+     *
+     * @return void
+     */
     public function logout(): void 
     {
         // check if user logged in
@@ -105,6 +147,11 @@ class AuthManager
         } 
     }
 
+    /**
+     * Updates user data.
+     *
+     * @return void
+     */
     public function updateUserData(): void 
     {
         // get date & time
@@ -137,6 +184,11 @@ class AuthManager
         }     
     }
 
+    /**
+     * Retrieves the login token for the current user session.
+     *
+     * @return string|null The login token or null if not found or invalid.
+     */
     public function getUserToken(): ?string 
     {
         // check if session exist
@@ -156,6 +208,12 @@ class AuthManager
         }
     }
 
+    /**
+     * Retrieves the username associated with the given token.
+     *
+     * @param string $token The user token to retrieve the username for.
+     * @return string|null The username or null if not found.
+     */
     public function getUsername(string $token = 'self'): ?string 
     {
         // get token
@@ -174,6 +232,12 @@ class AuthManager
         }
     }
 
+    /**
+     * Retrieves the role associated with the given token.
+     *
+     * @param string $token The user token to retrieve the role for.
+     * @return string|null The user role or null if not found.
+     */
     public function getUserRole(string $token = 'self'): ?string 
     {
         // get token
@@ -192,6 +256,12 @@ class AuthManager
         }
     }
 
+    /**
+     * Retrieves the profile picture URL associated with the given token.
+     *
+     * @param string $token The user token to retrieve the profile picture URL for.
+     * @return string|null The profile picture URL or null if not found.
+     */
     public function getUserProfilePic(string $token = 'self'): ?string 
     {
         // get token
@@ -210,6 +280,11 @@ class AuthManager
         }
     }
 
+    /**
+     * Checks if the user repository is empty.
+     *
+     * @return bool True if the user repository is empty, false otherwise.
+     */
     public function isUsersEmpty(): bool
     {
         $repository = $this->entityManager->getRepository(User::class);
@@ -225,6 +300,12 @@ class AuthManager
         }
     }
 
+    /**
+     * Retrieves a user entity from the repository based on the provided criteria.
+     *
+     * @param array $array The criteria to search for in the repository.
+     * @return object|null The user entity or null if not found.
+     */
     public function getUserRepository(array $array): ?object 
     {
         $result = null;
@@ -245,6 +326,11 @@ class AuthManager
         }
     }
 
+    /**
+     * Checks if the user associated with the current session is an administrator.
+     *
+     * @return bool True if the user is an administrator, false otherwise.
+     */
     public function isAdmin(): bool
     {
         $token = $this->getUserToken();
@@ -258,6 +344,11 @@ class AuthManager
         }
     }
 
+    /**
+     * Checks if the registration page is allowed based on the current system state.
+     *
+     * @return bool True if the registration page is allowed, false otherwise.
+     */
     public function isRegisterPageAllowed(): bool
     {
         if ($this->isUsersEmpty() or ($this->isUserLogedin() && $this->isAdmin())) {
@@ -267,6 +358,12 @@ class AuthManager
         }
     }
 
+    /**
+     * Retrieves a list of users with the specified online or offline status.
+     *
+     * @param string $status The status to filter users by (e.g., 'online' or 'offline').
+     * @return array|null An array of users with the specified status or null if not found.
+     */
     public function getUsersWhereStatus(string $status): ?array
     {
         // get all users data
