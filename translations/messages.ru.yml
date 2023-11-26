@@ -50,7 +50,7 @@ home.main.text: "разработчик полного стека"
 
 # about
 about.title: "О нас"
-about.description: "Разработчик JAVA, PHP"
+about.description: "Разработчик PHP"
 about.subdescription: "Я разработчик веб- и серверных решений для полного стека"
 about.birthday: "День рождения"
 about.may: "Май"

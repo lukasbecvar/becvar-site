@@ -50,7 +50,7 @@ home.main.text: "бүтэн стэк хөгжүүлэгч"
 
 # about
 about.title: "Тухай"
-about.description: "JAVA, PHP хөгжүүлэгч"
+about.description: "PHP хөгжүүлэгч"
 about.subdescription: "Би бүтэн стэк вэб болон серверийн шийдэгч"
 about.birthday: "Төрсөн өдөр"
 about.may: "Май"

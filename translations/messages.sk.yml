@@ -49,7 +49,7 @@ home.main.text: "full stack developer"
 
 # about
 about.title: "O mně"
-about.description: "JAVA, PHP developer"
+about.description: "PHP developer"
 about.subdescription: "Som vývojár webu a serverových riešení"
 about.birthday: "Narodeniny"
 about.may: "Máj"

@@ -50,7 +50,7 @@ home.main.text: "développeur full stack"
 
 # about
 about.title: "À propos"
-about.description: "Développeur JAVA, PHP"
+about.description: "Développeur PHP"
 about.subdescription: "Je suis un développeur de solutions web et serveur full stack"
 about.birthday: "Date de naissance"
 about.may: "Mai"
