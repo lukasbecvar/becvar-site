@@ -167,7 +167,7 @@ textarea {
 .wrapper .section .top-navbar {
 	position: fixed; 
 	z-index: 1000; 
-	width: 100%;
+	width: calc(100% - 15px) !important;
 }
 
 .wrapper .section .top-navbar .hamburger a {
@@ -421,7 +421,7 @@ button {
 
 .logout-link {
 	position: fixed;
-	right: 8px;
+	right: 20px;
 }
 
 .left-center {
@@ -1062,10 +1062,10 @@ button {
 		font-size: 18px;
 	}
 	.logout-link {
-		right: 8px;
+		right: 15px;
 	}
 	.wrapper .section .top-navbar {
-		width: 100% !important;
+		width: calc(100% - 10px) !important;
 	}
 	.new-todo-form {
 		height: 62px;
