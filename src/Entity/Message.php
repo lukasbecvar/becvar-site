@@ -34,6 +34,7 @@ class Message
     private ?string $status = null;
 
     #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(name: "visitors", referencedColumnName: "id")]
     private ?string $visitor_id = null;
 
     public function getId(): ?int
