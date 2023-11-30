@@ -9,12 +9,13 @@ the main part of this application is the admin panel which contains functions an
  - Services manager
  - Custom database viewer
  - Private todo manager
- - Media browser (Image uploader)
+ - Media browser (image uploader)
  - Inbox for contact form
  - Advanced log system
+ - Admin chat
+ - Admin terminal (host server)
  - Server Emergency shutdown
  - Included adminer in admin page
- - Chat system
 
 ## Public site
 the public part of the site contains information about me and my projects
