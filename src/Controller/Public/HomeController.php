@@ -17,7 +17,7 @@ class HomeController extends AbstractController
      *
      * @return Response The response containing the rendered home page.
      */
-    #[Route(['/', '/home'], name: 'public_home')]
+    #[Route(['/', '/home'], methods: ['GET'], name: 'public_home')]
     public function homePage(): Response
     {
         return $this->render('public/home.html.twig', [

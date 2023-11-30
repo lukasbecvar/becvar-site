@@ -54,7 +54,7 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/database', name: 'admin_database_list')]
+    #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
     {
         // check if user logged in
@@ -80,7 +80,7 @@ class DatabaseBrowserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/database/table', name: 'admin_database_browser')]
+    #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
     {
         // check if user logged in
@@ -127,7 +127,7 @@ class DatabaseBrowserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/database/edit', name: 'admin_database_edit')]
+    #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
         // check if user logged in
@@ -218,7 +218,7 @@ class DatabaseBrowserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/database/add', name: 'admin_database_add')]
+    #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
         // check if user logged in
@@ -309,7 +309,7 @@ class DatabaseBrowserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/database/delete', name: 'admin_database_delete')]
+    #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
     {
         // check if user logged in

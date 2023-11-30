@@ -61,7 +61,7 @@ class LogReaderController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/logs', name: 'admin_log_list')]
+    #[Route('/admin/logs', methods: ['GET'], name: 'admin_log_list')]
     public function logsTable(Request $request): Response
     {
         // check if user logged in
@@ -102,7 +102,7 @@ class LogReaderController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/logs/whereip', name: 'admin_log_list_where_ip')]
+    #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_where_ip')]
     public function logsWhereIp(Request $request): Response
     {
         // check if user logged in
@@ -149,7 +149,7 @@ class LogReaderController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/logs/delete', name: 'admin_log_delete')]
+    #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
     {
         // check if user logged in
@@ -177,7 +177,7 @@ class LogReaderController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/logs/readed/all', name: 'admin_log_readed')]
+    #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {
         // check if user logged in

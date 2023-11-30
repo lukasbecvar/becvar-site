@@ -62,7 +62,7 @@ class PasteController extends AbstractController
      *
      * @return Response The response containing the rendered paste save page.
      */
-    #[Route('/paste', name: 'public_code_paste')]
+    #[Route('/paste', methods: ['GET', 'POST'], name: 'public_code_paste')]
     public function pasteInsert(): Response
     {
         // check if paste submited
@@ -120,7 +120,7 @@ class PasteController extends AbstractController
      * @param Request $request The HTTP request.
      * @return Response The response containing the rendered paste view page.
      */
-    #[Route('/paste/view', name: 'public_code_paste_view')]
+    #[Route('/paste/view', methods: ['GET'], name: 'public_code_paste_view')]
     public function pasteView(Request $request): Response
     {
         $content = null;

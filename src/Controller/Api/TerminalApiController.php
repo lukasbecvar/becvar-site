@@ -61,7 +61,7 @@ class TerminalApiController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/api/system/terminal', name: 'api_terminal')]
+    #[Route('/api/system/terminal', methods: ['GET', 'POST'], name: 'api_terminal')]
     public function terminalAction(Request $request): Response
     {
         // check if user logged in

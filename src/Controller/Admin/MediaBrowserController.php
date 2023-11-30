@@ -47,7 +47,7 @@ class MediaBrowserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/media/browser', name: 'admin_media_browser')]
+    #[Route('/admin/media/browser', methods: ['GET'], name: 'admin_media_browser')]
     public function mediaBrowser(Request $request): Response
     {
         // check if user logged in

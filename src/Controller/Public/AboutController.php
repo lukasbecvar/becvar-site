@@ -17,7 +17,7 @@ class AboutController extends AbstractController
      *
      * @return Response The response containing the rendered about page.
      */
-    #[Route('/about', name: 'public_about')]
+    #[Route('/about', methods: ['GET'], name: 'public_about')]
     public function aboutPage(): Response
     {
         // calculate lukas becvar age xD

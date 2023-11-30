@@ -70,7 +70,7 @@ class VisitorManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/visitors', name: 'admin_visitor_manager')]
+    #[Route('/admin/visitors', methods: ['GET'], name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
     {
         // check if user logged in
@@ -105,7 +105,7 @@ class VisitorManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/visitors/delete', name: 'admin_visitor_delete')]
+    #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
     {
         // check if user logged in
@@ -134,7 +134,7 @@ class VisitorManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/visitors/ban', name: 'admin_visitor_ban')]
+    #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
     {
         // check if user logged in
@@ -207,7 +207,7 @@ class VisitorManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/visitors/unban', name: 'admin_visitor_unban')]
+    #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response
     {
         // check if user logged in

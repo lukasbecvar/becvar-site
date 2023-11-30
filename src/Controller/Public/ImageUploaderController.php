@@ -65,7 +65,7 @@ class ImageUploaderController extends AbstractController
      * @param Request $request The HTTP request.
      * @return Response The response containing the rendered image view page.
      */
-    #[Route('/image/view', name: 'public_image_viewer')]
+    #[Route('/image/view', methods: ['GET'], name: 'public_image_viewer')]
     public function imageView(Request $request): Response
     {
         // get image token
@@ -104,7 +104,7 @@ class ImageUploaderController extends AbstractController
      *
      * @return Response The response containing the rendered image upload page.
      */
-    #[Route('/image/uploader', name: 'public_image_uploader')]
+    #[Route('/image/uploader', methods: ['GET', 'POST'], name: 'public_image_uploader')]
     public function uploadImage(): Response
     {
         // default error msg

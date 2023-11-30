@@ -52,7 +52,7 @@ class DiagnosticController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/diagnostic', name: 'admin_diagnostics')]
+    #[Route('/admin/diagnostic', methods: ['GET'], name: 'admin_diagnostics')]
     public function diagnostic(): Response
     {
         // check if user logged in

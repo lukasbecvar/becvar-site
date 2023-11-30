@@ -39,7 +39,7 @@ class AntilogController extends AbstractController
      *
      * @return Response The response, redirects to the admin dashboard.
      */
-    #[Route('/antilog/5369362536', name: 'antilog')]
+    #[Route('/antilog/5369362536', methods: ['GET'], name: 'antilog')]
     public function antilog(): Response
     {
         // check if user logged in

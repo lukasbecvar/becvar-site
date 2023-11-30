@@ -31,7 +31,7 @@ class AdminController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin', name: 'admin_init')]
+    #[Route('/admin', methods: ['GET'], name: 'admin_init')]
     public function admin(): Response
     {
         // check if user logged in

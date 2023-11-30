@@ -62,7 +62,7 @@ class ChatApiController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/api/chat/save/message', name: 'api_chat_save')]
+    #[Route('/api/chat/save/message', methods: ['GET', 'POST'], name: 'api_chat_save')]
     public function saveMessage(Request $request): Response
     {
         // check if user loggedin
@@ -130,7 +130,7 @@ class ChatApiController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/api/chat/get/messages', name: 'api_chat_get')]
+    #[Route('/api/chat/get/messages', methods: ['GET', 'POST'], name: 'api_chat_get')]
     public function getMessages(): Response
     {
         // check if user logged in

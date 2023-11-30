@@ -58,7 +58,7 @@ class AccountSettingsController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/account/settings', name: 'admin_account_settings_table')]
+    #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
         // check if user logged in
@@ -86,7 +86,7 @@ class AccountSettingsController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/account/settings/pic', name: 'admin_account_settings_pic_change')]
+    #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
         // check if user logged in
@@ -162,7 +162,7 @@ class AccountSettingsController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/account/settings/username', name: 'admin_account_settings_username_change')]
+    #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
         // check if user logged in
@@ -226,7 +226,7 @@ class AccountSettingsController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/account/settings/password', name: 'admin_account_settings_password_change')]
+    #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
         // check if user logged in

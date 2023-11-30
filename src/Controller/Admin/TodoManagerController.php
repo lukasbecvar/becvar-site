@@ -70,7 +70,7 @@ class TodoManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/todos', name: 'admin_todos')]
+    #[Route('/admin/todos', methods: ['GET', 'POST'], name: 'admin_todos')]
     public function todosTable(Request $request): Response
     {
         // check if user logged in
@@ -150,7 +150,7 @@ class TodoManagerController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/todos/completed', name: 'admin_todos_completed')]
+    #[Route('/admin/todos/completed', methods: ['GET'], name: 'admin_todos_completed')]
     public function completedTodosTable(): Response
     {
         // check if user logged in
@@ -180,7 +180,7 @@ class TodoManagerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/todos/close', name: 'admin_todo_close')]
+    #[Route('/admin/todos/close', methods: ['GET'], name: 'admin_todo_close')]
     public function closeTodo(Request $request): Response
     {
         // check if user logged in

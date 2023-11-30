@@ -46,7 +46,7 @@ class LoginController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/login', name: 'auth_login')]
+    #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response
     {
         // check if user logged in

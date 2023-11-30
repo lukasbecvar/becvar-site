@@ -56,7 +56,7 @@
             
                     // additional condition for specific URL and window width
                     if (window.innerWidth > 1024) {
-                        if (!window.location.href.includes("/admin/dashboard")) {
+                        if (!window.location.href.includes("/admin/dashboard") || window.location.href.includes("/admin/dashboard/emergency/shutdown")) {
                             manipulate();
                             hamburger.addEventListener("click", manipulate);
                         }

@@ -46,7 +46,7 @@ class ProjectsController extends AbstractController
      *
      * @return Response The response containing the rendered projects page.
      */
-    #[Route('/projects', name: 'public_projects')]
+    #[Route('/projects', methods: ['GET'], name: 'public_projects')]
     public function index(): Response
     {
         // render projects page
@@ -67,7 +67,7 @@ class ProjectsController extends AbstractController
      *
      * @return Response The response for updating projects, redirects to the admin database browser.
      */
-    #[Route('/projects/update', name: 'public_projects_update')]
+    #[Route('/projects/update', methods: ['GET'], name: 'public_projects_update')]
     public function projectsUpdate(): Response
     {
         // check if user logged

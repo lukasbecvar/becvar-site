@@ -80,7 +80,7 @@ class RegisterController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/register', name: 'auth_register')]
+    #[Route('/register', methods: ['GET', 'POST'], name: 'auth_register')]
     public function register(Request $request): Response
     {
         // check if user table is empty or if registrant is admin

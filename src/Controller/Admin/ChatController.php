@@ -29,7 +29,7 @@ class ChatController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/chat', name: 'admin_chat')]
+    #[Route('/admin/chat', methods: ['GET'], name: 'admin_chat')]
     public function chat(): Response
     {
         // check if user logged in

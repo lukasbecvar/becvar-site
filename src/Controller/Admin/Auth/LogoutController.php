@@ -36,7 +36,7 @@ class LogoutController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/logout', name: 'auth_logout')]
+    #[Route('/logout', methods: ['GET'], name: 'auth_logout')]
     public function logout(): Response
     {
         // logout user (if session found)

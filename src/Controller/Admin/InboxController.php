@@ -47,7 +47,7 @@ class InboxController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/inbox', name: 'admin_inbox')]
+    #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
     {
         // check if user logged in
@@ -83,7 +83,7 @@ class InboxController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/inbox/close', name: 'admin_inbox_close')]
+    #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response
     {
         // check if user logged in

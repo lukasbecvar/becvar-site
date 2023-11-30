@@ -47,7 +47,7 @@ class VisitorApiController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    #[Route('/api/visitor/update/activity', name: 'api_visitor_status')]
+    #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(EntityManagerInterface $entityManager): Response
     {
         // get user ip

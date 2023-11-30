@@ -89,7 +89,7 @@ class DashboardController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/admin/dashboard', name: 'admin_dashboard')]
+    #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response
     {
         // check if user logged in
@@ -146,7 +146,7 @@ class DashboardController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/dashboard/runner', name: 'admin_service_manager')]
+    #[Route('/admin/dashboard/runner', methods: ['GET'], name: 'admin_service_manager')]
     public function serviceActionRunner(Request $request): Response
     {
         // check if user logged in
@@ -179,7 +179,7 @@ class DashboardController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/admin/dashboard/emergency/shutdown', name: 'admin_emergency_shutdown')]
+    #[Route('/admin/dashboard/emergency/shutdown', methods: ['GET', 'POST'], name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
     {
         // check if user logged in
