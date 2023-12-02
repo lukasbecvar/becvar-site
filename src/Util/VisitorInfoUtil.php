@@ -76,13 +76,18 @@ class VisitorInfoUtil
     {
         $output = null;
 
+		// check uncompleted agent
+        if ($user_agent == 'Mozilla/5.0 (compatible; version/1.0; Windows NT 5.1') {
+            return 'Unknown';
+        }
+
         // identify shortify array [ID: str_contains, Value: replacement]
         $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../browser-list.json');
 
         // check if browser list found
         if ($browser_list != null) {
 
-            // check all user agents 
+            // check all user agents
             foreach ($browser_list as $index => $value) {
 
                 // check if index found in agent
