@@ -65,7 +65,7 @@ class MessagesManager
         $this->visitorManager->updateVisitorEmail($ip_address, $email);
 
         // ecrypt message
-        $message_input = $this->securityUtil->encrypt_aes($message_input);
+        $message_input = $this->securityUtil->encryptAes($message_input);
         
         // set message entity values
         $message->setName($name);
@@ -138,7 +138,7 @@ class MessagesManager
             foreach ($inbox as $inbox_message) {
 
                 // decrypt message
-                $message_decrypted = $this->securityUtil->decrypt_aes($inbox_message->getMessage());
+                $message_decrypted = $this->securityUtil->decryptAes($inbox_message->getMessage());
 
                 // build message content
                 $message = [

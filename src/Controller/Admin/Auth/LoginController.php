@@ -85,7 +85,7 @@ class LoginController extends AbstractController
                     $user_password = $user->getPassword();
 
                     // check if password valid
-                    if ($this->securityUtil->hash_validate($password, $user_password)) {
+                    if ($this->securityUtil->hashValidate($password, $user_password)) {
 
                         // set user token (login-token session)
                         $this->authManager->login($username, $user->getToken(), $remember);

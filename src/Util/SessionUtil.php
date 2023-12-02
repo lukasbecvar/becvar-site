@@ -61,7 +61,7 @@ class SessionUtil
     public function setSession(string $session_name, string $session_value): void 
     {
         $this->startSession();
-        $_SESSION[$session_name] = $this->securityUtil->encrypt_aes($session_value);
+        $_SESSION[$session_name] = $this->securityUtil->encryptAes($session_value);
     }
 
     /**
@@ -74,6 +74,6 @@ class SessionUtil
     public function getSessionValue(string $session_name): ?string 
     {
         $this->startSession();
-        return $this->securityUtil->decrypt_aes($_SESSION[$session_name]);
+        return $this->securityUtil->decryptAes($_SESSION[$session_name]);
     }
 }

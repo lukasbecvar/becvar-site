@@ -84,7 +84,7 @@ class ImageUploaderController extends AbstractController
         if ($imageRepo !== null) {
 
             // get image & decrypt
-            $image_content = $this->securityUtil->decrypt_aes($imageRepo->getImage());
+            $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
 
             // log paste view
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
@@ -138,7 +138,7 @@ class ImageUploaderController extends AbstractController
                 $image = new Image();
 
                 // encrypt image
-                $image_file = $this->securityUtil->encrypt_aes($image_file);
+                $image_file = $this->securityUtil->encryptAes($image_file);
 
                 // set image data
                 $image->setToken($token);

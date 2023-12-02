@@ -262,7 +262,7 @@ class AccountSettingsController extends AbstractController
                     try { // update password
                         
                         // hash password
-                        $password_hash = $this->securityUtil->gen_bcrypt($password, 10);
+                        $password_hash = $this->securityUtil->genBcryptHash($password, 10);
 
                         // update password
                         $userRepo->setPassword($password_hash);

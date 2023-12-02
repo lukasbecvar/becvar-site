@@ -27,7 +27,7 @@ class SecurityUtil
      *
      * @return bool Whether the validation is successful.
      */
-    public function hash_validate(string $plain_text, string $hash): bool 
+    public function hashValidate(string $plain_text, string $hash): bool 
 	{
 		return password_verify($plain_text, $hash);
 	}
@@ -40,7 +40,7 @@ class SecurityUtil
      *
      * @return string The generated bcrypt hash.
      */
-	public function gen_bcrypt(string $plain_text, int $cost): string 
+	public function genBcryptHash(string $plain_text, int $cost): string 
 	{
 		return password_hash($plain_text, PASSWORD_BCRYPT, ['cost' => $cost]);
 	}
@@ -53,7 +53,7 @@ class SecurityUtil
      *
      * @return string The encrypted data in JSON format.
      */
-	public static function encrypt_aes(string $plain_text, string $method = 'AES-128-CBC'): string {
+	public static function encryptAes(string $plain_text, string $method = 'AES-128-CBC'): string {
 		
         // get encryption password form app enviroment
         $password = $_ENV['APP_SECRET'];
@@ -83,7 +83,7 @@ class SecurityUtil
      *
      * @return string The decrypted data in JSON format.
      */
-	public static function decrypt_aes(string $json_string, string $method = 'AES-128-CBC'): string {
+	public static function decryptAes(string $json_string, string $method = 'AES-128-CBC'): string {
 		  
         // get encryption password
         $password = $_ENV['APP_SECRET'];

@@ -34,7 +34,7 @@ class CookieUtil
     public function set($name, $value, $expiration): void 
     {
         if (!headers_sent()) {
-            $value = $this->securityUtil->encrypt_aes($value);
+            $value = $this->securityUtil->encryptAes($value);
             $value = base64_encode($value);
             setcookie($name, $value, $expiration, '/');
         }
@@ -50,7 +50,7 @@ class CookieUtil
     public function get($name): ?string 
     {
         $value = base64_decode($_COOKIE[$name]);
-        return $this->securityUtil->decrypt_aes($value);
+        return $this->securityUtil->decryptAes($value);
     }
 
     /**

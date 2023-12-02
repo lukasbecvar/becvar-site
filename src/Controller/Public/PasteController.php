@@ -90,7 +90,7 @@ class PasteController extends AbstractController
                     $paste = new Paste();
 
                     // encrypt paste content
-                    $content = $this->securityUtil->encrypt_aes($content);
+                    $content = $this->securityUtil->encryptAes($content);
 
                     // set paste data
                     $paste->setName($name);
@@ -138,7 +138,7 @@ class PasteController extends AbstractController
         if ($pasteContent !== null) {
 
             // get content & decrypt
-            $content = $this->securityUtil->decrypt_aes($pasteContent->getContent());
+            $content = $this->securityUtil->decryptAes($pasteContent->getContent());
 
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);

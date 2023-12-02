@@ -295,7 +295,7 @@ class DatabaseManager
             $image_item = [
                 'id' => $image['id'],
                 'token' => $image['token'],
-                'image' => $this->securityUtil->decrypt_aes($image['image'])
+                'image' => $this->securityUtil->decryptAes($image['image'])
             ];
 
             array_push($images, $image_item);

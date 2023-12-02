@@ -107,7 +107,7 @@ class TodoManagerController extends AbstractController
                     $text = $this->securityUtil->escapeString($text);
                 
                     // encrypt todo
-                    $text = $this->securityUtil->encrypt_aes($text);
+                    $text = $this->securityUtil->encryptAes($text);
 
                     // set todo data
                     $todo->setText($text);

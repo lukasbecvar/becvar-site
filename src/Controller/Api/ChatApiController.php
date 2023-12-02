@@ -87,7 +87,7 @@ class ChatApiController extends AbstractController
                 $chat_message = $this->securityUtil->escapeString($data['message']);
                 
                 // encrypt message
-                $chat_message = $this->securityUtil->encrypt_aes($chat_message);
+                $chat_message = $this->securityUtil->encryptAes($chat_message);
 
                 // init chat message entity
                 $message = new ChatMessage();
@@ -160,7 +160,7 @@ class ChatApiController extends AbstractController
                     'sender' => $this->authManager->getUsername($sender),
                     'role' => $this->authManager->getUserRole($sender),
                     'pic' => $this->authManager->getUserProfilePic($sender),
-                    'message' => $this->securityUtil->decrypt_aes($message->getMessage())
+                    'message' => $this->securityUtil->decryptAes($message->getMessage())
                 ];
             }
     

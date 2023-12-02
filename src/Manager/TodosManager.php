@@ -64,7 +64,7 @@ class TodosManager
                 foreach ($todos as $todo) {
                     $todo_item = [
                         'id' => $todo->getId(),
-                        'text' => $this->securityUtil->decrypt_aes($todo->getText())
+                        'text' => $this->securityUtil->decryptAes($todo->getText())
                     ];
                     array_push($todo_data, $todo_item);
                 }
