@@ -12,6 +12,7 @@
 	background: #40444b;
 	-webkit-transition: all 0.2s ease;
 	transition: all 0.2s ease;
+	min-height: 80px;
 } 
 
 ::-webkit-scrollbar-thumb:hover {
@@ -24,4 +25,7 @@
 		width: 10px;
 		height: 10px;
 	}
+    ::-webkit-scrollbar-thumb {
+        min-height: 40px;
+    } 
 }
