@@ -9,7 +9,6 @@ use App\Manager\AuthManager;
 use App\Form\NewTodoFormType;
 use App\Manager\ErrorManager;
 use App\Manager\TodosManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,9 +34,6 @@ class TodoManagerController extends AbstractController
     /** * @var ErrorManager */
     private ErrorManager $errorManager;
 
-    /** * @var EntityManagerInterface */
-    private EntityManagerInterface $entityManager;
-
     /**
      * TodoManagerController constructor.
      *
@@ -46,7 +42,6 @@ class TodoManagerController extends AbstractController
      * @param TodosManager           $todosManager
      * @param SecurityUtil           $securityUtil
      * @param ErrorManager           $errorManager
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         SiteUtil $siteUtil,
@@ -54,14 +49,12 @@ class TodoManagerController extends AbstractController
         TodosManager $todosManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->todosManager = $todosManager;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -77,9 +70,9 @@ class TodoManagerController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
 
             // get todos data
-            $todos = $this->todosManager->getTodos('non-completed');
+            $todos = $this->todosManager->getTodos(['status' => 'non-completed']);
 
-            // create user entity
+            // create todo entity
             $todo = new Todo();
 
             // create register form
@@ -97,33 +90,11 @@ class TodoManagerController extends AbstractController
                 // check if text is empty
                 if (!empty($text)) {
 
-                    // get current date
-                    $date = date('d.m.Y H:i:s');
-
-                    // get username
-                    $username = $this->authManager->getUsername();
-
                     // escape text
                     $text = $this->securityUtil->escapeString($text);
-                
-                    // encrypt todo
-                    $text = $this->securityUtil->encryptAes($text);
-
-                    // set todo data
-                    $todo->setText($text);
-                    $todo->setStatus('non-completed');
-                    $todo->setAddedTime($date);
-                    $todo->setCompletedTime('non-completed');
-                    $todo->setAddedBy($username);
-                    $todo->setClosedBy('non-closed');
 
                     // save new todo
-                    try {
-                        $this->entityManager->persist($todo);
-                        $this->entityManager->flush();
-                    } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
-                    }
+                    $this->todosManager->addTodo($text);
 
                     return $this->redirectToRoute('admin_todos');
                 }
@@ -135,6 +106,7 @@ class TodoManagerController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
+                'todo_editor' => false,
                 'completed_list' => false,
                 'todos_data' => $todos,
                 'todos_count' => count($todos),
@@ -157,7 +129,7 @@ class TodoManagerController extends AbstractController
         if ($this->authManager->isUserLogedin()) {
 
             // get todos data
-            $todos = $this->todosManager->getTodos('completed');
+            $todos = $this->todosManager->getTodos(['status' => 'completed']);
 
             return $this->render('admin/todo-manager.html.twig', [
                 // user data
@@ -165,6 +137,7 @@ class TodoManagerController extends AbstractController
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
 
+                'todo_editor' => false,
                 'completed_list' => true,
                 'todos_count' => count($todos),
                 'todos_data' => $todos,
@@ -174,6 +147,75 @@ class TodoManagerController extends AbstractController
         }
     }
     
+    /**
+     * Edit a todo.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/admin/todos/edit', methods: ['GET', 'POST'], name: 'admin_todo_edit')]
+    public function editTodo(Request $request): Response
+    {
+        // check if user logged in
+        if ($this->authManager->isUserLogedin()) {
+        
+            // default error message
+            $error_msg = null;
+
+            // get query parameter
+            $id = $this->siteUtil->getQueryString('id', $request);
+
+            // get todo data
+            $todo_data = $this->todosManager->getTodos(['id' => $id]);
+
+            // check if request is post
+            if ($request->isMethod('POST')) {
+                // get submit button value
+                $submited = $request->get('submitTodoEdit');
+                
+                // check if edit form submited
+                if (isset($submited)) {
+
+                    // get new todo text
+                    $new_todo_text = $request->get('new-todo-text');
+
+                    // check if new todo text is not empty
+                    if (empty($new_todo_text)) {
+                        $error_msg = 'Please add todo text!';
+                    } else {
+                        
+                        // escape todo text
+                        $new_todo_text = $this->securityUtil->escapeString($new_todo_text);
+
+                        // save change
+                        $this->todosManager->editTodo($id, $new_todo_text);
+
+                        // return back to todo table
+                        return $this->redirectToRoute('admin_todos');
+                    }
+                }
+            }
+
+            // check if todo not found
+            if (empty($todo_data)) {
+                return $this->errorManager->handleError('error todo: '.$id.' not found', 404);
+            } else {
+                return $this->render('admin/todo-manager.html.twig', [
+                    // user data
+                    'user_name' => $this->authManager->getUsername(),
+                    'user_role' => $this->authManager->getUserRole(),
+                    'user_pic' => $this->authManager->getUserProfilePic(),
+    
+                    'todo_editor' => true,
+                    'todo_edited_data' => $todo_data,
+                    'error_msg' => $error_msg
+                ]);
+            }
+        } else {
+            return $this->redirectToRoute('auth_login');
+        }
+    }
+
     /**
      * Close a todo.
      *

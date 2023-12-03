@@ -6,66 +6,95 @@
 
 {% block component %}
 <div class="admin-panel">
+    {% if todo_editor %}
 
-    <ul class="breadcrumb">
-        
-        {# <===== link completed todos =====> #}
+        {# <===== error message alert =====> #}
+        {% if error_msg != null %}
+            {% include "common/alerts/error-alert.html.twig" %}
+        {% endif %}
+
+        {# <===== todo edit form =====> #}
+        <center>
+            <form class="db-edit-form dark-table" action="/admin/todos/edit?id={{ todo_edited_data[0].id }}" method="post">
+                <p class="title">Edit todo: {{ todo_edited_data[0].id }}<p></p>
+                <p class="text-input-title">Todo</p>
+                <input class="text-input" type="text" name="new-todo-text" placeholder="Todo text" value="{{ todo_edited_data[0].text|e }}" maxlength="200"><br>
+                <input class="input-button" type="submit" name="submitTodoEdit" value="EDIT">
+            </form>
+        </center>
+    {% else %} 
+        <ul class="breadcrumb">
+            {# <===== link completed todos =====> #}
+            {% if completed_list == false %}
+                <li>
+                    <a class="selector-button btn-small" href="/admin/todos/completed"><strong>Completed</strong></a>
+                </li>   
+            {% else %}
+                <li>
+                    <a class="selector-button btn-small" href="/admin/todos"><strong>Uncompleted</strong></a>
+                </li>       
+            {% endif %} 
+
+            {# <===== todos count =====> #}
+            {% if completed_list == false %}
+                <li class="count-text-in-menu">{{ todos_count }} todos</li>
+            {% endif %} 
+        </ul>
+
         {% if completed_list == false %}
-            <li>
-                <a class="selector-button btn-small" href="/admin/todos/completed"><strong>Completed</strong></a>
-            </li>   
-        {% else %}
-            <li>
-                <a class="selector-button btn-small" href="/admin/todos"><strong>Uncompleted</strong></a>
-            </li>       
-        {% endif %} 
 
-        {# <===== todos count =====> #}
-        {% if completed_list == false %}
-            <li class="count-text-in-menu">{{ todos_count }} todos</li>
-        {% endif %} 
-    </ul>
+            {# <===== new todo form =====> #}
+            <div class="new-todo-form">
+                {{ form_start(new_todo_form) }}
+                    {{ form_widget(new_todo_form) }}
+                        <button type="submit" class="input-button todo-button">Add</button>
+                {{ form_end(new_todo_form) }}
+            </div>
+        {% endif %}
 
-    {% if completed_list == false %}
-        <div class="new-todo-form">
-            {{ form_start(new_todo_form) }}
-                {{ form_widget(new_todo_form) }}
-                    <button type="submit" class="input-button todo-button">Add</button>
-            {{ form_end(new_todo_form) }}
-        </div>
-    {% endif %}
-    {% if todos_data != null %}
-        <div class="table-responsive">        
-            <table class="todo-table table table-dark {% if completed_list %}todo-table-top-reset{% endif %}">
-                <thead>
-                    <tr class="line-item">
-                        <th scope="col">#</th>
-                        <th scope="col">Todo</th>
-
-                        <th scope="col">X</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for todo in todos_data %}
+        {# <===== todos data table =====> #}
+        {% if todos_data != null %}
+            <div class="table-responsive">        
+                <table class="todo-table table table-dark {% if completed_list %}todo-table-top-reset{% endif %}">
+                    <thead>
                         <tr class="line-item">
-                            <th scope='row'>{{ todo.id|e }}</th>
-                            <th scope='row'>{{ todo.text|linkify|raw }}</th>
-
-                            {# <===== delete link =====> #}
-                            <th scope='row'>
-                                {% if completed_list %}
-                                    <a class='delete-link-todos' href='/admin/database/delete?table=todos&page=1&id={{ todo.id|e }}&referer=todo_manager'>X</a>
-                                {% else %}
-                                    <a class='delete-link-todos' href='/admin/todos/close?id={{ todo.id|e }}'>X</a>
-                                {% endif %}
-                            </th>
+                            <th scope="col">#</th>
+                            <th scope="col">Todo</th>
+                            {% if completed_list == false %}
+                                <th scope="col">Edit</th>
+                            {% endif %}
+                            <th scope="col">X</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <h2 class="page-title">todo list is empty</h2>
+                    </thead>
+                    <tbody>
+                        {% for todo in todos_data %}
+                            <tr class="line-item">
+                                <th scope='row'>{{ todo.id|e }}</th>
+                                <th scope='row'>{{ todo.text|linkify|raw }}</th>
+
+                                {# <===== edit link =====> #}
+                                {% if completed_list == false %}
+                                    <th scope='row'>
+                                        <a class="text-warning delete-link-todos" href="/admin/todos/edit?id={{ todo.id|e }}">Edit</a>
+                                    </th>
+                                {% endif %}
+
+                                {# <===== delete link =====> #}
+                                <th scope='row'>    
+                                    {% if completed_list %}
+                                        <a class='delete-link-todos' href='/admin/database/delete?table=todos&page=1&id={{ todo.id|e }}&referer=todo_manager'>X</a>
+                                    {% else %}
+                                        <a class='delete-link-todos' href='/admin/todos/close?id={{ todo.id|e }}'>X</a>
+                                    {% endif %}
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <h2 class="page-title">todo list is empty</h2>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}
