@@ -54,6 +54,8 @@ class BanManager
      * @param string $ip_address The IP address of the visitor to ban.
      * @param string $reason The reason for banning the visitor.
      *
+     * @throws \Exception If there is an error during the update of the ban status or in case the visitor is not found.
+     *
      * @return void
      */
     public function banVisitor(string $ip_address, string $reason): void 
@@ -94,6 +96,8 @@ class BanManager
      * Unbans a visitor by updating the banned status.
      *
      * @param string $ip_address The IP address of the visitor to unban.
+     *
+     * @throws \Exception If there is an error during the update of the ban status or in case the visitor is not found.
      *
      * @return void
      */
@@ -151,6 +155,8 @@ class BanManager
     /**
      * Retrieves the count of banned visitors.
      *
+    * @throws \Exception If there is an error during the database query.
+     * 
      * @return int|null The count of banned visitors or null if an error occurs.
      */
     public function getBannedCount(): ?int
@@ -191,9 +197,11 @@ class BanManager
     }
 
     /**
-     * Closes all messages associated with a banned visitor.
+     * Closes all messages associated with a specific visitor based on their IP address.
      *
-     * @param string $ip_address The IP address of the banned visitor.
+     * @param string $ip_address  The IP address of the visitor whose messages should be closed.
+     *
+     * @throws \Exception If there is an error during the execution of the query.
      *
      * @return void
      */

@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class LoginController extends AbstractController
 {
-    /** * @var ErrorManager */
+    /** * @var LogManager */
     private LogManager $logManager;
 
     /** * @var AuthManager */

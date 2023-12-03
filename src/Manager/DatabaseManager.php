@@ -51,7 +51,9 @@ class DatabaseManager
     /**
      * Retrieves a list of tables in the database.
      *
-     * @return array|null A list of table names or null if an error occurs.
+     * @throws \Exception If there is an error during the retrieval of the tables list.
+     *
+     * @return array|null The list of tables if successful, otherwise null.
      */
     public function getTables(): ?array
     {
@@ -105,12 +107,13 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves all data from a specific table.
+     * Retrieves the columns of a specific database table.
      *
-     * @param string $table_name The name of the table.
-     * @param bool $log Whether to log the action.
+     * @param string $table_name  The name of the table for which columns should be retrieved.
      *
-     * @return array The table data.
+     * @throws \Exception If there is an error during the retrieval of the table columns or the table is not found.
+     *
+     * @return array The array of column names if successful.
      */
     public function getTableData(string $table_name, bool $log = true): array
     {
@@ -135,13 +138,15 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves paginated data from a specific table.
+     * Retrieves data from a specific database table with pagination.
      *
-     * @param string $table_name The name of the table.
-     * @param int $page The page number.
-     * @param bool $log Whether to log the action.
+     * @param string $table_name  The name of the table from which to retrieve data.
+     * @param int    $page        The page number for pagination (default is 1).
+     * @param bool   $log         Indicates whether to log the action (default is true).
      *
-     * @return array The paginated table data.
+     * @throws \Exception If there is an error during the retrieval of the table data or the table is not found.
+     *
+     * @return array The array of data from the specified table.
      */
     public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true): array
     {
@@ -171,12 +176,14 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves the data of a specific row in a table.
+     * Retrieves data from a specific row of a database table.
      *
-     * @param string $table_name The name of the table.
-     * @param int $id The ID of the row.
+     * @param string $table_name  The name of the table from which to retrieve data.
+     * @param int    $id          The unique identifier of the row.
      *
-     * @return array The row data.
+     * @throws \Exception If there is an error during the retrieval of the row data or the table is not found.
+     *
+     * @return array The array of data from the specified row.
      */
     public function selectRowData(string $table_name, int $id): array
     {
@@ -198,11 +205,13 @@ class DatabaseManager
     }
 
     /**
-     * Adds a new row to a table.
+     * Adds a new row to a specific database table.
      *
-     * @param string $table_name The name of the table.
-     * @param array $columns The column names.
-     * @param array $values The values to insert.
+     * @param string $table_name  The name of the table to which the new row will be added.
+     * @param array  $columns     The array of column names for the new row.
+     * @param array  $values      The array of values corresponding to the columns for the new row.
+     *
+     * @throws \Exception If there is an error during the insertion of the new row or the table is not found.
      *
      * @return void
      */
@@ -253,12 +262,14 @@ class DatabaseManager
     }
 
     /**
-     * Updates a value in a specific row of a table.
+     * Updates a specific value in a row of a database table.
      *
-     * @param string $table_name The name of the table.
-     * @param string $row The column to update.
-     * @param string $value The new value.
-     * @param int $id The ID of the row.
+     * @param string $table_name  The name of the table in which the value will be updated.
+     * @param string $row         The column name for which the value will be updated.
+     * @param string $value       The new value to be set.
+     * @param int    $id          The unique identifier of the row.
+     *
+     * @throws \Exception If there is an error during the update of the value or the table is not found.
      *
      * @return void
      */

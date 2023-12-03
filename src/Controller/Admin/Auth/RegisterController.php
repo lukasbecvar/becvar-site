@@ -27,8 +27,8 @@ class RegisterController extends AbstractController
     /**
      * RegisterController constructor.
      *
-     * @param AuthManager            $authManager
-     * @param SecurityUtil           $securityUtil
+     * @param AuthManager   $authManager
+     * @param SecurityUtil  $securityUtil
      */
     public function __construct(
         AuthManager $authManager, 

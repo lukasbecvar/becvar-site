@@ -37,11 +37,11 @@ class TodoManagerController extends AbstractController
     /**
      * TodoManagerController constructor.
      *
-     * @param SiteUtil               $siteUtil
-     * @param AuthManager            $authManager
-     * @param TodosManager           $todosManager
-     * @param SecurityUtil           $securityUtil
-     * @param ErrorManager           $errorManager
+     * @param SiteUtil      $siteUtil
+     * @param AuthManager   $authManager
+     * @param TodosManager  $todosManager
+     * @param SecurityUtil  $securityUtil
+     * @param ErrorManager  $errorManager
      */
     public function __construct(
         SiteUtil $siteUtil,

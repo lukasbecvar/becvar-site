@@ -156,7 +156,9 @@ class AuthManager
     }
 
     /**
-     * Updates user data.
+     * Updates user data
+     *
+     * @throws \Exception If there is an error during the flushing of the user data.
      *
      * @return void
      */
@@ -198,6 +200,8 @@ class AuthManager
      * @param string $username The username for the new user.
      * @param string $password The password for the new user.
      *
+     * @throws \Exception If there is an error during the registration process.
+     * 
      * @return void
      */
     public function registerNewUser(string $username, string $password): void
@@ -399,6 +403,9 @@ class AuthManager
      * Retrieves a user entity from the repository based on the provided criteria.
      *
      * @param array $array The criteria to search for in the repository.
+     * 
+     * @throws \Exception If there is an error during the database query.
+     * 
      * @return object|null The user entity or null if not found.
      */
     public function getUserRepository(array $array): ?object 
