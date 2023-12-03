@@ -5,8 +5,10 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
+use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\ByteString;
 
 /**
  * AuthManager provides login/logout methods.
@@ -19,12 +21,15 @@ class AuthManager
 
     /** * @var CookieUtil */
     private CookieUtil $cookieUtil;
-
+    
     /** * @var SessionUtil */
     private SessionUtil $sessionUtil;
-
+    
     /** * @var ErrorManager */
     private ErrorManager $errorManager;
+    
+    /** * @var SecurityUtil */
+    private SecurityUtil $securityUtil;
 
     /** * @var VisitorManager */
     private VisitorManager $visitorManager;
@@ -42,6 +47,7 @@ class AuthManager
      * @param CookieUtil             $cookieUtil
      * @param SessionUtil            $sessionUtil
      * @param ErrorManager           $errorManager
+     * @param SecurityUtil           $securityUtil
      * @param VisitorManager         $visitorManager
      * @param VisitorInfoUtil        $visitorInfoUtil
      * @param EntityManagerInterface $entityManager
@@ -51,6 +57,7 @@ class AuthManager
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
+        SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
@@ -59,6 +66,7 @@ class AuthManager
         $this->logManager = $logManager;
         $this->sessionUtil = $sessionUtil;
         $this->errorManager = $errorManager;
+        $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -182,6 +190,93 @@ class AuthManager
                 $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
             }
         }     
+    }
+
+    /**
+     * Registers a new user.
+     *
+     * @param string $username The username for the new user.
+     * @param string $password The password for the new user.
+     *
+     * @return void
+     */
+    public function registerNewUser(string $username, string $password): void
+    {
+        // init user enity
+        $user = new User();
+
+        // get current date
+        $date = date('d.m.Y H:i:s');
+
+        // get user ip
+        $ip_address = $this->visitorInfoUtil->getIP();
+                    
+        // generate token
+        $token = ByteString::fromRandom(32)->toString();
+                        
+        // get visitor id
+        $visitor_id = $this->visitorManager->getVisitorID($ip_address);
+
+        // password hash
+        $hashed_password = $this->securityUtil->genBcryptHash($password, 10);
+
+        // default profile pics base64
+        $image_base64 = '
+            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
+            poAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/9k=
+        ';
+
+        // set user entity data
+        $user->setUsername($username);
+        $user->setPassword($hashed_password);
+        $user->setRole('Owner');
+        $user->setIpAddress($ip_address);
+        $user->setToken($token);
+        $user->setRegistedTime($date);
+        $user->setLastLoginTime('not logged');
+        $user->setProfilePic($image_base64);
+        $user->setVisitorId(strval($visitor_id));
+        
+        // insert new user
+        try {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            // log registration event
+            $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
+
+        } catch (\Exception $e) {
+            $this->errorManager->handleError('error to register new user: '.$e->getMessage(), 400);
+        }
+
+        // set user token (login-token session)
+        if (!$this->isUserLogedin()) {
+            $this->login($username, $user->getToken(), false);
+        }
     }
 
     /**
