@@ -123,7 +123,7 @@ class ContactController extends AbstractController
             // check if honeypot is empty
             } else if (isset($honeypot)) {
                 $error_msg = 'contact.error.blocked.message';
-                $this->logManager->log('message-sender', 'message: '.$message_input.', has been blocked: honeypot used');
+                $this->logManager->log('message-sender', 'message by: '.$email.', has been blocked: honeypot used');
             } else {
 
                 // escape values (XSS protection)
