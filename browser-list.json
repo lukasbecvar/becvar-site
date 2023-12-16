@@ -73,7 +73,10 @@
 	"ELinks": "ELinks",
 	"webpros":  "webpros",
 	"getodin":  "getodin",
-	"Yahoo": "Yahoo-bot",
+	"dotbot": "dotbot",
 	"Minimo": "Minimo",
-    "IRIX":  "IRIX"
+	"msnbot": "msnbot",
+	"Yahoo": "Yahoo-bot",
+    "IRIX":  "IRIX",
+	"iPod": "iPod"
 }
