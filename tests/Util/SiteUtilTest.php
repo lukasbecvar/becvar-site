@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Tests\Util;
+
+use App\Util\SiteUtil;
+use App\Util\SecurityUtil;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @covers \App\Util\SiteUtil
+ */
+class SiteUtilTest extends TestCase
+{
+    /** @var SiteUtil */
+    private $siteUtil;
+
+    /** @var SecurityUtil|\PHPUnit\Framework\MockObject\MockObject */
+    private $securityUtilMock;
+
+    protected function setUp(): void
+    {
+        $this->securityUtilMock = $this->createMock(SecurityUtil::class);
+        $this->siteUtil = new SiteUtil($this->securityUtilMock);
+    }
+
+    /**
+     * @covers \App\Util\SiteUtil::getHttpHost
+     */
+    public function testGetHttpHost(): void
+    {
+        // mock $_SERVER['HTTP_HOST']
+        $_SERVER['HTTP_HOST'] = 'example.com';
+
+        // act
+        $result = $this->siteUtil->getHttpHost();
+
+        // assert
+        $this->assertEquals('example.com', $result);
+    }
+
+    /**
+     * @covers \App\Util\SiteUtil::isRunningLocalhost
+     */
+    public function testIsRunningLocalhost(): void
+    {
+        // mock $_SERVER['HTTP_HOST']
+        $_SERVER['HTTP_HOST'] = 'localhost';
+
+        // act
+        $result = $this->siteUtil->isRunningLocalhost();
+
+        // assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers \App\Util\SiteUtil::isSsl
+     */
+    public function testIsSsl(): void
+    {
+        // mock $_SERVER['HTTPS']
+        $_SERVER['HTTPS'] = 'on';
+
+        // act
+        $result = $this->siteUtil->isSsl();
+
+        // assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers \App\Util\SiteUtil::isMaintenance
+     */
+    public function testIsMaintenance(): void
+    {
+        // mock $_ENV['MAINTENANCE_MODE']
+        $_ENV['MAINTENANCE_MODE'] = 'true';
+
+        // act
+        $result = $this->siteUtil->isMaintenance();
+
+        // assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers \App\Util\SiteUtil::isDevMode
+     */
+    public function testIsDevMode(): void
+    {
+        // mock $_ENV['APP_ENV']
+        $_ENV['APP_ENV'] = 'dev';
+
+        // act
+        $result = $this->siteUtil->isDevMode();
+
+        // assert
+        $this->assertTrue($result);
+    }
+}
