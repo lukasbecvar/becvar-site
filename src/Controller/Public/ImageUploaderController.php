@@ -100,9 +100,11 @@ class ImageUploaderController extends AbstractController
     }
 
     /**
-     * Displays the image upload page.
+     * Image upload controller.
+     * 
+     * @return Response Returns a Response object representing the HTTP response.
      *
-     * @return Response The response containing the rendered image upload page.
+     * @throws \Exception Throws an exception if there is an error during the image upload process.
      */
     #[Route('/image/uploader', methods: ['GET', 'POST'], name: 'public_image_uploader')]
     public function uploadImage(): Response

@@ -42,10 +42,12 @@ class VisitorApiController extends AbstractController
     }
 
     /**
-     * API endpoint to update the visitor's status to "online."
+     * API endpoint for updating the status of a visitor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * @param EntityManagerInterface $entityManager The EntityManager for database operations.
+     * @return JsonResponse Returns a JsonResponse indicating the success or failure of the visitor status update.
+     *
+     * @throws \Exception Throws an exception if there is an error during the visitor status update.
      */
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(EntityManagerInterface $entityManager): Response

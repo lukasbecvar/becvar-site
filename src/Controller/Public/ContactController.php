@@ -145,6 +145,7 @@ class ContactController extends AbstractController
                     // save message & get return boolean
                     $save = $this->messagesManager->saveMessage($name, $email, $message_input, $ip_address, $visitor_id);
 
+                    // check if message saved
                     if ($save) {
                         return $this->redirectToRoute('public_contact', ['status' => 'ok']);
                     } else {

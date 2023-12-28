@@ -57,10 +57,12 @@ class ChatApiController extends AbstractController
     }
 
     /**
-     * Save a chat message.
+     * API endpoint for saving a chat message.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request The request object.
+     * @return JsonResponse Returns a JsonResponse with the status and message indicating the result of the operation.
+     *
+     * @throws \Exception Throws an exception if there is an error during the message save process.
      */
     #[Route('/api/chat/save/message', methods: ['GET', 'POST'], name: 'api_chat_save')]
     public function saveMessage(Request $request): Response

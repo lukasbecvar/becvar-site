@@ -58,9 +58,11 @@ class PasteController extends AbstractController
     }
 
     /**
-     * Displays the page for saving a code paste.
+     * Insertion of code pastes.
      *
-     * @return Response The response containing the rendered paste save page.
+     * @return Response Returns a Response object representing the HTTP response.
+     *
+     * @throws \Exception Throws an exception if there is an error during the code paste insertion process.
      */
     #[Route('/paste', methods: ['GET', 'POST'], name: 'public_code_paste')]
     public function pasteInsert(): Response

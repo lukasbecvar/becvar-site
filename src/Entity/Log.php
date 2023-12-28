@@ -10,8 +10,8 @@ use App\Repository\LogRepository;
 class Log
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

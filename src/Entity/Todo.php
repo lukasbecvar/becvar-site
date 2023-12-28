@@ -11,8 +11,8 @@ use App\Repository\TodoRepository;
 class Todo
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]

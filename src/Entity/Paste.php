@@ -11,8 +11,8 @@ use App\Repository\PasteRepository;
 class Paste
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

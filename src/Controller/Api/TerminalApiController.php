@@ -56,10 +56,12 @@ class TerminalApiController extends AbstractController
     }
 
     /**
-     * Execute a terminal command.
+     * Execute terminal commands.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request The request object.
+     * @return Response Returns a Response object representing the HTTP response.
+     *
+     * @throws \Exception Throws an exception if there is an error during the terminal command execution.
      */
     #[Route('/api/system/terminal', methods: ['GET', 'POST'], name: 'api_terminal')]
     public function terminalAction(Request $request): Response
