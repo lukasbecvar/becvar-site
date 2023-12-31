@@ -24,7 +24,6 @@
             <thead>
                 <tr class="line-item">  
                     <th scope='col'>#</th>
-                    <th scope='col'>Visit(first)</th>
                     <th scope='col'>Visit(last)</th>
                     <th scope='col'>Browser</th>
                     <th scope='col'>OS</th>
@@ -42,14 +41,8 @@
                         <tr class="line-item" id="{{ row.id|e }}">
                             {# <===== ID =====> #}
                             <th scope='row'>{{ row.id|e }}</th>
-                            {# <===== DATES =====> #}
-                            {% if row.firstVisit == row.lastVisit %}
-                                <th scope='row' class='text-red'>{{ row.firstVisit|e }}</th>
-                                <th scope='row' class='text-red'>{{ row.lastVisit|e }}</th>
-                            {% else %}
-                                <th scope='row'>{{ row.firstVisit|e }}</th>
-                                <th scope='row'>{{ row.lastVisit|e }}</th>
-                            {% endif %}
+                            {# <===== LAST-VISIT-TIME =====> #}
+                            <th scope='row'>{{ row.lastVisit|e }}</th>
                             {# <===== BROWSER =====> #}
                             {% if row.browser == 'Unknown' %}
                                 <th scope='row' class='text-red'>{{ row.browser|e }}</th>

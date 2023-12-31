@@ -45,7 +45,7 @@ class VisitorApiController extends AbstractController
      * API endpoint for updating the status of a visitor.
      *
      * @param EntityManagerInterface $entityManager The EntityManager for database operations.
-     * @return JsonResponse Returns a JsonResponse indicating the success or failure of the visitor status update.
+     * @return Response Returns a Response indicating the success or failure of the visitor status update.
      *
      * @throws \Exception Throws an exception if there is an error during the visitor status update.
      */

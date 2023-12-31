@@ -60,7 +60,7 @@ class ChatApiController extends AbstractController
      * API endpoint for saving a chat message.
      *
      * @param Request $request The request object.
-     * @return JsonResponse Returns a JsonResponse with the status and message indicating the result of the operation.
+     * @return Response Returns a Response with the status and message indicating the result of the operation.
      *
      * @throws \Exception Throws an exception if there is an error during the message save process.
      */

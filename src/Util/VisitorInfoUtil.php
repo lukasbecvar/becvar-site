@@ -76,11 +76,6 @@ class VisitorInfoUtil
     {
         $output = null;
 
-		// check uncompleted agent
-        if ($user_agent == 'Mozilla/5.0 (compatible; version/1.0; Windows NT 5.1') {
-            return 'Unknown';
-        }
-
         // identify shortify array [ID: str_contains, Value: replacement]
         $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../browser-list.json');
 
@@ -92,7 +87,7 @@ class VisitorInfoUtil
 
                 // check if index found in agent
                 if (str_contains($user_agent, $index)) {
-                    $output = $value;
+                    $output = $index;
                 }
             }
         }
@@ -165,9 +160,13 @@ class VisitorInfoUtil
 
         // if not found
         if ($output == null) {
-            $output = $user_agent;
-        
-        } 
+
+            if (str_contains($user_agent, ' ') or strlen($user_agent) >= 39) {
+                $output = 'Unknown';
+            } else {
+                $output = $user_agent;
+            }
+        }
 
         return $output;
     }
