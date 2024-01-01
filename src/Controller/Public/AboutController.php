@@ -26,6 +26,11 @@ class AboutController extends AbstractController
         $current_timestamp = time();
         $age = date('Y', $current_timestamp) - date('Y', $birth_timestamp);
         
+        // valid date
+        if (date('md', $current_timestamp) < date('md', $birth_timestamp)) {
+            $age--;
+        }
+
         return $this->render('public/about.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
