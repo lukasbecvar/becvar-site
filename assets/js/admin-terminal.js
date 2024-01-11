@@ -90,14 +90,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // event listener to focus on the command input when clicking outside of it
     document.addEventListener("click", function(e) {
-        if (e.target !== command_input) {
+        var isInsideTerminalComponent = e.target.closest('.terminal-component') !== null;
+    
+        if (isInsideTerminalComponent && e.target !== command_input) {
             command_input.focus();
         }
     });
+    
 
     // execute the entered command
     function executeCommand(command) {
-        if (command.toLowerCase() === 'clear') {
+        // set command to lower case
+        command = command.toLowerCase();
+
+        // clear terminal history
+        if (command === 'clear') {
             // clear the terminal
             terminal.innerHTML = '';
         } else {
