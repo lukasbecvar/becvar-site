@@ -31,7 +31,6 @@ class LinkifyExtension extends AbstractExtension
      */
     public function linkifyText(string $text): ?string
     {
-        // replace link
         return preg_replace(
             '/(https?:\/\/[^\s]+)/',
             '<a href="$1" target="_blank">$1</a>',

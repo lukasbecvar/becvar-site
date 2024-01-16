@@ -22,9 +22,6 @@ class VisitorApiTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -36,7 +33,6 @@ class VisitorApiTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/api/visitor/update/activity');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
     }
 }

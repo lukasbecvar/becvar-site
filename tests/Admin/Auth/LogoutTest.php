@@ -21,9 +21,6 @@ class LogoutTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -32,13 +29,9 @@ class LogoutTest extends WebTestCase
      */
     public function testLogout(): void
     {
-        // make get request to logout
         $this->client->request('GET', '/logout');
 
-        // check if logout redirected
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-
-        // test response
         $this->assertResponseStatusCodeSame(302); 
         $this->assertResponseNotHasCookie('login-token-cookie');
     }

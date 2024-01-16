@@ -15,7 +15,6 @@ class JsonUtil
      * @return array|null The decoded JSON data as an associative array or null on failure.
      */
     public function getJson($target): ?array {
-
         // requst options
         $opts = [
             'http' => [

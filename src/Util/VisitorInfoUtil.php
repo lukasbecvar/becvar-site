@@ -161,6 +161,7 @@ class VisitorInfoUtil
         // if not found
         if ($output == null) {
 
+            // check user agent length 
             if (str_contains($user_agent, ' ') or strlen($user_agent) >= 39) {
                 $output = 'Unknown';
             } else {
@@ -178,9 +179,10 @@ class VisitorInfoUtil
      */
     public function getOS(): ?string 
     { 
-        $agent = $this->getBrowser();
-        
         $os = 'Unknown OS';
+
+        // get browser agent
+        $agent = $this->getBrowser();
         
         // OS list
         $os_array = array (
@@ -211,8 +213,8 @@ class VisitorInfoUtil
             '/ipad/i'               =>  'iPad'
         );
         
+        // find os
         foreach ($os_array as $regex => $value) {
-
             // check if os found
             if ($regex != null && $agent != null) {
                 if (preg_match($regex, $agent)) {

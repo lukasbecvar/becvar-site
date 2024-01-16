@@ -51,16 +51,12 @@ class RegisterController extends AbstractController
         if (!$this->authManager->isRegisterPageAllowed()) {
             return $this->redirectToRoute('auth_login');   
         } else {
-            // init user enity
             $user = new User();
-
-            // default error msg
+            
             $error_msg = null;
 
             // create register form
             $form = $this->createForm(RegisterFormType::class, $user);
-            
-            // processing an HTTP request
             $form->handleRequest($request);
 
             // check if form submited
@@ -86,16 +82,12 @@ class RegisterController extends AbstractController
                         $error_msg = 'Your passwords dont match';
                     } else {
 
-                        // add new user to database
                         $this->authManager->registerNewUser($username, $password);
-                            
-                        // redirect to homepage
                         return $this->redirectToRoute('admin_dashboard');
                     }
                 }
             }
 
-            // render default register view
             return $this->render('admin/auth/register.html.twig', [
                 'error_msg' => $error_msg,
                 'registration_form' => $form->createView()

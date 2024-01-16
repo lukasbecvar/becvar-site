@@ -23,9 +23,6 @@ class AccountSettingsTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-    
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -37,8 +34,6 @@ class AccountSettingsTest extends WebTestCase
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
 
         return $authManagerMock;
@@ -49,13 +44,11 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTable(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
@@ -70,13 +63,11 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangePicForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/pic');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
@@ -89,13 +80,11 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangeUsernameForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/username');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
@@ -108,7 +97,6 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangeUsernameEmptyForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // build post request
@@ -118,7 +106,6 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
@@ -129,7 +116,6 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangeUsernameShortForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // build post request
@@ -139,7 +125,6 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
@@ -150,13 +135,11 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangePasswordForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/password');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
@@ -172,7 +155,6 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangePasswordNotMatchForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // build post request
@@ -183,7 +165,6 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords is not match!');
@@ -194,9 +175,9 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangePasswordEmptyForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
+        // build post request
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => '',
@@ -204,7 +185,6 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -216,9 +196,9 @@ class AccountSettingsTest extends WebTestCase
      */
     public function testAccountSettingsTableChangePasswordShortForm(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
+        // build post request
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => 'a',
@@ -226,7 +206,6 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');

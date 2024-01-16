@@ -67,13 +67,9 @@ class ChatApiController extends AbstractController
     #[Route('/api/chat/save/message', methods: ['GET', 'POST'], name: 'api_chat_save')]
     public function saveMessage(Request $request): Response
     {
-        // check if user loggedin
         if ($this->authManager->isUserLogedin()) {
-
-            // get current day
+            // get time data
             $day = date('d.m.Y');
-
-            // get time
             $time = date('H:i');
 
             // get token
@@ -84,7 +80,6 @@ class ChatApiController extends AbstractController
 
             // check if message seted
             if (isset($data['message'])) {
-
                 // escape message (XSS protection)
                 $chat_message = $this->securityUtil->escapeString($data['message']);
                 
@@ -135,7 +130,6 @@ class ChatApiController extends AbstractController
     #[Route('/api/chat/get/messages', methods: ['GET', 'POST'], name: 'api_chat_get')]
     public function getMessages(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             $messageData = [];
             

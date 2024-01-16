@@ -73,7 +73,6 @@ class DatabaseManager
             array_push($tables_list, $value['Tables_in_'.$_ENV['DATABASE_NAME']]);
         }
 
-        // log to database
         $this->logManager->log('database', $this->authManager->getUsername().' viewed database list');
 
         return $tables_list;
@@ -172,9 +171,10 @@ class DatabaseManager
             $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
         }
     
-        // decrypt database data
+        // decrypt database data (specify table names)
         $decrypted_tables = ["`todos`", "`chat_messages`", "`code_paste`", "`inbox_messages`"];
 
+        // build new data array (decrypt aes data)
         if (in_array($table_name, $decrypted_tables)) {
             $decrypted_data = [];
             foreach ($data as $value) {
@@ -190,7 +190,6 @@ class DatabaseManager
             }
             return $decrypted_data;
         }
-        
 
         return $data;
     }
@@ -245,8 +244,8 @@ class DatabaseManager
         // construct the SQL query
         $sql = "INSERT INTO `$table_name` ($columnList) VALUES ($columnPlaceholderList)";
     
-        // execute the prepared statement
         try {
+            // execute query
             $this->connection->executeQuery($sql, $values); 
         } catch (\Exception $e) {
             $this->errorManager->handleError('error insert new row into: '.$table_name.', '.$e->getMessage(), 500);
@@ -276,8 +275,6 @@ class DatabaseManager
             $params = ['id' => $id];
             $this->connection->executeStatement($sql, $params);
         }
-    
-        // log to database
         $this->logManager->log('database', $this->authManager->getUsername().' deleted row: '.$id.', table: '.$table_name);
     }
 
@@ -301,7 +298,7 @@ class DatabaseManager
         try {
             $this->connection->executeStatement($query, [
                 'value' => $value,
-                'id' => $id,
+                'id' => $id
             ]);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to update value: '.$value.' in: '.$table_name.' id: '.$id.', error: '.$e->getMessage(), 500);
@@ -318,17 +315,18 @@ class DatabaseManager
      */
     public function getImages(int $page): ?array
     {
+        $images = [];
+        
+        // get images list
         $images_list = $this->getTableDataByPage('images', $page);
 
-        $images = [];
-
+        // get image data (this is for decrypt image)
         foreach ($images_list as $image) {
             $image_item = [
                 'id' => $image['id'],
                 'token' => $image['token'],
                 'image' => $this->securityUtil->decryptAes($image['image'])
             ];
-
             array_push($images, $image_item);
         }
 

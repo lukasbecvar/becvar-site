@@ -109,12 +109,12 @@ class AuthManager
     {
         // check if user not logged in
         if (!$this->isUserLogedin()) {
-
             // check if user token is valid
             if (!empty($user_token)) {
+                // set login session
                 $this->sessionUtil->setSession('login-token', $user_token);
 
-                // check if remember set
+                // check if remember set (autologin cookie)
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
                         $this->cookieUtil->set('login-token-cookie', $user_token, time() + (60*60*24*7*365));
@@ -124,7 +124,7 @@ class AuthManager
                 // update last login time
                 $this->updateUserData();
 
-                // log to mysql
+                // log auth action
                 $this->logManager->log('authenticator', 'user: '.$username.' logged in');
             } else {
                 $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
@@ -388,7 +388,7 @@ class AuthManager
     {
         $repository = $this->entityManager->getRepository(User::class);
 
-        // get count
+        // get users count
         $count = $repository->createQueryBuilder('p')->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
 
         // check if count is zero
@@ -468,14 +468,13 @@ class AuthManager
      */
     public function getUsersWhereStatus(string $status): ?array
     {
+        $online_users = [];
+
         // get all users data
         $users = $this->entityManager->getRepository(User::class)->findAll();
 
-        $online_users = [];
-
         // check all users status
         foreach ($users as $user) {
-
             // get user data
             $id = intval($user->getVisitorId());
             $username = $user->getUsername();

@@ -23,9 +23,6 @@ class LogReaderTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -37,8 +34,6 @@ class LogReaderTest extends WebTestCase
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
 
         return $authManagerMock;
@@ -49,13 +44,11 @@ class LogReaderTest extends WebTestCase
      */
     public function testLogReaderLoad(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to logs page
         $this->client->request('GET', '/admin/logs?page=1');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | logs');
         $this->assertSelectorTextContains('body', 'Delete all');
@@ -70,13 +63,11 @@ class LogReaderTest extends WebTestCase
      */
     public function testLogReaderDelete(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to logs page
         $this->client->request('GET', '/admin/logs/delete');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');

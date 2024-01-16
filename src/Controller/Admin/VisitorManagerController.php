@@ -73,10 +73,8 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors', methods: ['GET'], name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // get page
+            // get page int
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             return $this->render('admin/visitors-manager.html.twig', [
@@ -108,10 +106,8 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // get page
+            // get page int
             $page = $this->siteUtil->getQueryString('page', $request);
 
             return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
@@ -137,26 +133,22 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
+            // create user entity
+            $visitor = new Visitor();
+
             // get query parameters
             $page = intval($this->siteUtil->getQueryString('page', $request));
             $id = intval($this->siteUtil->getQueryString('id', $request));
 
-            // create user entity
-            $visitor = new Visitor();
-
             // create register form
             $form = $this->createForm(BanFormType::class, $visitor);
-
-            // processing an HTTP request
             $form->handleRequest($request);
 
             // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get reason
+                // get ban reason
                 $ban_reason = $form->get('ban_reason')->getData();
 
                 // check if reason set
@@ -210,9 +202,7 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
             // get query parameters
             $page = intval($this->siteUtil->getQueryString('page', $request));
             $id = intval($this->siteUtil->getQueryString('id', $request));
@@ -222,7 +212,6 @@ class VisitorManagerController extends AbstractController
             
             // check if banned
             if ($this->banManager->isVisitorBanned($ip_address)) {
-
                 // unban visitor
                 $this->banManager->unbanVisitor($ip_address);
             }

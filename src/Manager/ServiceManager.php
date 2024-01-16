@@ -98,7 +98,6 @@ class ServiceManager
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             $command = null;
 
             // check if action is emergency shutdown

@@ -1,5 +1,6 @@
 /* becvar-site: admin terminal */ 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() 
+{
     
     // get html element list
     const terminal = document.getElementById('output-container');
@@ -18,22 +19,26 @@ document.addEventListener("DOMContentLoaded", function() {
     command_input.focus();
 
     // update cwd
-    function updatePath() {
+    function updatePath() 
+    {
         path_element.textContent = currentPath;
     }
 
     // update hostname
-    function updateHostname() {
+    function updateHostname() 
+    {
         hostname_element.textContent = 'root@' + currentHostname;
     }
 
     // scroll the bottom
-    function scrollToBottom() { 
+    function scrollToBottom() 
+    { 
         terminal.scrollTop = terminal.scrollHeight;
     }
 
     // fetch the current cwd from the server
-    function getCurrentPath() {
+    function getCurrentPath() 
+    {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', api_url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -47,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // fetch the current hostname from the server
-    function getCurrentHostname() {
+    function getCurrentHostname() 
+    {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', api_url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -65,7 +71,8 @@ document.addEventListener("DOMContentLoaded", function() {
     getCurrentPath();
 
     // event listener for keypress in the command input
-    command_input.addEventListener("keypress", function(e) {
+    command_input.addEventListener("keypress", function(e) 
+    {
         if (e.key === "Enter") {
             const command = this.value.trim();
             if (command.length > 0) {
@@ -89,7 +96,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // event listener to focus on the command input when clicking outside of it
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function(e) 
+    {
         var isInsideTerminalComponent = e.target.closest('.terminal-component') !== null;
     
         if (isInsideTerminalComponent && e.target !== command_input) {
@@ -99,7 +107,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
 
     // execute the entered command
-    function executeCommand(command) {
+    function executeCommand(command) 
+    {
         // set command to lower case
         command = command.toLowerCase();
 

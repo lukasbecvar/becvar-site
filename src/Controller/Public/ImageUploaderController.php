@@ -109,7 +109,6 @@ class ImageUploaderController extends AbstractController
     #[Route('/image/uploader', methods: ['GET', 'POST'], name: 'public_image_uploader')]
     public function uploadImage(): Response
     {
-        // default error msg
         $error_msg = null;
 
         // check if form is submited

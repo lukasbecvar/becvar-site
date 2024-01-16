@@ -23,9 +23,6 @@ class DashboardTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -37,8 +34,6 @@ class DashboardTest extends WebTestCase
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUsername')->willReturn('phpunit-user');
         $authManagerMock->method('getUserRole')->willReturn('Admin');
@@ -52,13 +47,11 @@ class DashboardTest extends WebTestCase
      */
     public function testAdminDashboard(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
         $this->assertSelectorExists('main[class="admin-page"]');
@@ -90,13 +83,11 @@ class DashboardTest extends WebTestCase
      */
     public function testAdminEmergencyShutdownConfirmation(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard/emergency/shutdown');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorExists('main[class="admin-page"]');

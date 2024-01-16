@@ -39,9 +39,6 @@ class DashboardUtilTest extends TestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create mocks for dependencies
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
@@ -60,7 +57,7 @@ class DashboardUtilTest extends TestCase
     public function testGetDatabaseEntityCount(): void
     {
         $entityMock = $this->getMockBuilder(\stdClass::class)->getMock();
-        $searchCriteria = ['name' => 'John'];
+        $search_criteria = ['name' => 'John'];
 
         // set up expectations for EntityManager mock
         $repositoryMock = $this->getMockBuilder(\Doctrine\ORM\EntityRepository::class)
@@ -69,7 +66,7 @@ class DashboardUtilTest extends TestCase
 
         $repositoryMock->expects($this->once())
             ->method('findBy')
-            ->with($searchCriteria)
+            ->with($search_criteria)
             ->willReturn(['entity1', 'entity2']);
 
         $this->entityManagerMock->expects($this->once())
@@ -77,9 +74,8 @@ class DashboardUtilTest extends TestCase
             ->willReturn($repositoryMock);
 
         // Act
-        $result = $this->dashboardUtil->getDatabaseEntityCount($entityMock, $searchCriteria);
+        $result = $this->dashboardUtil->getDatabaseEntityCount($entityMock, $search_criteria);
 
-        // Assert
         $this->assertEquals(2, $result);
     }
 
@@ -88,18 +84,17 @@ class DashboardUtilTest extends TestCase
      */
     public function testIsBrowserListFound(): void
     {
-        $jsonContents = ['browser1', 'browser2'];
+        $json_contents = ['browser1', 'browser2'];
 
         // set up expectations for JsonUtil mock
         $this->jsonUtilMock->expects($this->once())
             ->method('getJson')
             ->with($this->stringContains('browser-list.json'))
-            ->willReturn($jsonContents);
+            ->willReturn($json_contents);
 
         // act
         $result = $this->dashboardUtil->isBrowserListFound();
 
-        // assert
         $this->assertTrue($result);
     }
 }

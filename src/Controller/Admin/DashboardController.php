@@ -92,7 +92,6 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/dashboard.html.twig', [
                 // user data
@@ -149,9 +148,7 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/runner', methods: ['GET'], name: 'admin_service_manager')]
     public function serviceActionRunner(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get query parameters
             $service_name = $this->siteUtil->getQueryString('service', $request);
             $action = $this->siteUtil->getQueryString('action', $request);
@@ -182,16 +179,12 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/emergency/shutdown', methods: ['GET', 'POST'], name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // default error msg
             $error_msg = null;
 
             // generate configmation code
             $confirm_code = ByteString::fromRandom(16)->toString();
     
-            // check request is post
             if ($request->isMethod('POST')) {
 
                 // get post data
@@ -212,7 +205,7 @@ class DashboardController extends AbstractController
                         // check if codes is valid
                         if ($code_1 == $code_2) {
             
-                            // execute shutdown
+                            // ! execute shutdown !
                             $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
                         } else {
                             $error_msg = 'confirmation codes is not matched';

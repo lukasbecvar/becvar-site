@@ -149,7 +149,6 @@ class ProjectsManager
      */
     public function resetIndex(): void 
     {
-        // reset table AUTO_INCREMENT
         $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
         $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
         try {

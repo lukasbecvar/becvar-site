@@ -34,7 +34,8 @@ class LoginController extends AbstractController
      * @param AuthManager  $authManager
      * @param SecurityUtil $securityUtil
      */
-    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) {
+    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) 
+    {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -49,15 +50,11 @@ class LoginController extends AbstractController
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');   
         } else {
-            // default error msg
-            $error_msg = null;
-
-            // init user entity
             $user = new User();
+            $error_msg = null;
 
             // create register form
             $form = $this->createForm(LoginFormType::class, $user);
@@ -86,8 +83,6 @@ class LoginController extends AbstractController
 
                     // check if password valid
                     if ($this->securityUtil->hashValidate($password, $user_password)) {
-
-                        // set user token (login-token session)
                         $this->authManager->login($username, $user->getToken(), $remember);
 
                     } else { // invalid password error

@@ -34,7 +34,6 @@ class AdminController extends AbstractController
     #[Route('/admin', methods: ['GET'], name: 'admin_init')]
     public function admin(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');
         } else {

@@ -22,9 +22,6 @@ class ImageUploaderTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-    
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -40,7 +37,6 @@ class ImageUploaderTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/image/uploader');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('p[class=form-title]');

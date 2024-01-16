@@ -61,7 +61,6 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/account-settings.html.twig', [
                 // user data
@@ -91,13 +90,8 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
-            // init user enity
             $user = new User();
-
-            // default error msg
             $error_msg = null;
 
             // create pic form change
@@ -107,26 +101,24 @@ class AccountSettingsController extends AbstractController
             // check form if submited
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // get image
+                // get image data
                 $image = $form->get('profile-pic')->getData();
-
-                // get file extension
                 $extension = $image->getClientOriginalExtension();
 
                 // check if file is image
                 if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
 
+                    // get user repository
+                    $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+                    
                     // get image content
                     $file_contents = file_get_contents($image);
 
                     // encode image
                     $image_code = base64_encode($file_contents);
 
-                    // get user repository
-                    $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
-
-                    // update profile pics
                     try {
+                        // update profile pics
                         $userRepo->setProfilePic($image_code);
                         $this->entityManager->flush();
 
@@ -140,7 +132,6 @@ class AccountSettingsController extends AbstractController
                 }
             }
 
-            // render profile pic change form
             return $this->render('admin/account-settings.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),
@@ -169,13 +160,8 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
-            // init user enity
             $user = new User();
-
-            // default error msg
             $error_msg = null;
 
             // create username form change
@@ -206,7 +192,6 @@ class AccountSettingsController extends AbstractController
                 }  
             }
             
-            // render username change form
             return $this->render('admin/account-settings.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),
@@ -235,13 +220,8 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
-            // init user enity
             $user = new User();
-
-            // default error msg
             $error_msg = null;
 
             // create username form change
@@ -265,8 +245,8 @@ class AccountSettingsController extends AbstractController
                 if ($password != $repassword) {
                     $error_msg = 'Your passwords is not match!';
                 } else {
-                    try { // update password
-                        
+
+                    try {
                         // hash password
                         $password_hash = $this->securityUtil->genBcryptHash($password, 10);
 
@@ -276,9 +256,7 @@ class AccountSettingsController extends AbstractController
                         // flush user data
                         $this->entityManager->flush();
 
-                        // redirect back to values table
                         return $this->redirectToRoute('admin_account_settings_table');
-
                     } catch (\Exception $e) {
                         return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
                     }  

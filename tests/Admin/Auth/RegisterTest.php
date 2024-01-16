@@ -24,9 +24,6 @@ class RegisterTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -36,7 +33,6 @@ class RegisterTest extends WebTestCase
     protected function tearDown(): void
     {
         $this->removeFakeData();
-        parent::tearDown();
     }
 
     /**
@@ -66,19 +62,13 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterAllowedLoaded(): void
     {
-        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | Login');
@@ -95,19 +85,13 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterNonAllowedLoaded(): void
     {
-        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(false);
-
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // test response
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
     }
 
@@ -116,13 +100,8 @@ class RegisterTest extends WebTestCase
      */ 
     public function testRegisterEmptySubmit(): void
     {
-        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
         // build post request
@@ -134,7 +113,6 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
@@ -147,13 +125,8 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterNotMatchPasswordsSubmit(): void
     {
-        // create moc auth manager fake object
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
 
         // build post request
@@ -165,7 +138,6 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords dont match');

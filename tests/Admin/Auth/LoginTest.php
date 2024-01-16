@@ -23,16 +23,11 @@ class LoginTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
-
-        // initialize and create a fake user
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         
-        // get user repository
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $userRepository = $entityManager->getRepository(\App\Entity\User::class);
+        
         $existingUser = $userRepository->findOneBy(['username' => 'test_username']);
     
         // check if user exist
@@ -62,7 +57,6 @@ class LoginTest extends WebTestCase
     protected function tearDown(): void
     {
         $this->removeFakeData();
-        parent::tearDown();
     }
 
     /**
@@ -94,7 +88,6 @@ class LoginTest extends WebTestCase
     {
         $this->client->request('GET', '/login');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Dashboard login');
@@ -121,7 +114,6 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
@@ -143,7 +135,6 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
@@ -164,7 +155,6 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
@@ -185,7 +175,6 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
@@ -209,7 +198,6 @@ class LoginTest extends WebTestCase
         // check if login success
         $crawler = $this->client->followRedirect();
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');

@@ -50,13 +50,11 @@ class MediaBrowserController extends AbstractController
     #[Route('/admin/media/browser', methods: ['GET'], name: 'admin_media_browser')]
     public function mediaBrowser(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-     
             // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
-            // get media list
+            // get images data
             $media = $this->databaseManager->getImages($page);
 
             return $this->render('admin/media-browser.html.twig', [

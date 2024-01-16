@@ -23,9 +23,6 @@ class MessageInboxTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -38,8 +35,6 @@ class MessageInboxTest extends WebTestCase
     private function createAuthManagerMock(string $role): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUserRole')->willReturn($role);
 
@@ -51,13 +46,11 @@ class MessageInboxTest extends WebTestCase
      */
     public function testInboxLoad(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | inbox');
     }
@@ -67,13 +60,11 @@ class MessageInboxTest extends WebTestCase
      */
     public function testInboxLoadNoPermissions(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('User'));
 
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | inbox');
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');

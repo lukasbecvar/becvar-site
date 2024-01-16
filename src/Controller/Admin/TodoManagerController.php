@@ -66,19 +66,15 @@ class TodoManagerController extends AbstractController
     #[Route('/admin/todos', methods: ['GET', 'POST'], name: 'admin_todos')]
     public function todosTable(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
+            // init todo entity
+            $todo = new Todo();
+            
             // get todos data
             $todos = $this->todosManager->getTodos(['status' => 'non-completed']);
 
-            // create todo entity
-            $todo = new Todo();
-
             // create register form
             $form = $this->createForm(NewTodoFormType::class, $todo);
-
-            // processing an HTTP request
             $form->handleRequest($request);
 
             // check form if submited
@@ -125,9 +121,7 @@ class TodoManagerController extends AbstractController
     #[Route('/admin/todos/completed', methods: ['GET'], name: 'admin_todos_completed')]
     public function completedTodosTable(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get todos data
             $todos = $this->todosManager->getTodos(['status' => 'completed']);
 
@@ -156,10 +150,7 @@ class TodoManagerController extends AbstractController
     #[Route('/admin/todos/edit', methods: ['GET', 'POST'], name: 'admin_todo_edit')]
     public function editTodo(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-        
-            // default error message
             $error_msg = null;
 
             // get query parameter
@@ -225,9 +216,7 @@ class TodoManagerController extends AbstractController
     #[Route('/admin/todos/close', methods: ['GET'], name: 'admin_todo_close')]
     public function closeTodo(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get todo category
             $category = $this->siteUtil->getQueryString('category', $request);
 

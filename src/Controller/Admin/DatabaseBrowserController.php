@@ -57,9 +57,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
             return $this->render('admin/database-browser.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),
@@ -83,13 +81,9 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
-            // get table name
+            // get query parameters
             $table = $this->siteUtil->getQueryString('table', $request);
-
-            // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // escape table name
@@ -133,10 +127,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
-            // default error msg
             $error_msg = null;
 
             // get query parameters
@@ -224,16 +215,11 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // default error msg
             $error_msg = null;
 
-            // get table name
+            // get query parameters
             $table = $this->siteUtil->getQueryString('table', $request);
-
-            // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // escape table name
@@ -315,9 +301,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-            
             // get query parameters
             $page = intval($this->siteUtil->getQueryString('page', $request));
             $id = $this->siteUtil->getQueryString('id', $request);

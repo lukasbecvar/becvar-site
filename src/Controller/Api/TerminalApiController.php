@@ -66,10 +66,7 @@ class TerminalApiController extends AbstractController
     #[Route('/api/system/terminal', methods: ['GET', 'POST'], name: 'api_terminal')]
     public function terminalAction(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin() && $this->authManager->isAdmin()) {
-
-            // check if request is post
             if ($request->isMethod('POST')) {
 
                 // get username

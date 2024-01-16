@@ -68,7 +68,6 @@ class ContactController extends AbstractController
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response
     {
-        // default msg state
         $error_msg = null;
         $success_msg = null;
 

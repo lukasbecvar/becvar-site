@@ -43,7 +43,6 @@ class ErrorController extends AbstractController
     #[Route('/error', methods: ['GET'], name: 'error_by_code')]
     public function errorHandle(Request $request): Response
     {
-        // get error code
         $code = $this->siteUtil->getQueryString('code', $request);
 
         // block handeling (maintenance, banned use only from app logic)

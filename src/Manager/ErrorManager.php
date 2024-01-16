@@ -47,6 +47,7 @@ class ErrorManager
                 'code' => $code,
                 'message' => $msg
             ];
+            
             // return JSON response
             return die(json_encode($data));
         } else {
@@ -64,7 +65,6 @@ class ErrorManager
      */
     public function handleErrorView(string $code)
     {
-        // try to get view
         try {
             return $this->twig->render('errors/error-'.$code.'.html.twig');
         } catch (\Exception) {

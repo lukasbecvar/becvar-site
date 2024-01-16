@@ -62,16 +62,8 @@ textarea {
 	color: rgb(39, 179, 20);
 }
 
-.text-dark-yellow {
-	color: rgb(179, 150, 20);
-}
-
 .green-text:hover {
 	color: #ee3535 !important;
-}
-
-.white-text {
-	color: #FFFFFF !important;
 }
 
 #wrarning-box {
@@ -270,7 +262,7 @@ button {
 	min-width: 350px;
 }
 
-.form .text-input:-webkit-autofill, .form .text-input:-webkit-autofill:hover , .form .text-input:-webkit-autofill:focus {
+.form .text-input:-webkit-autofill, .form .text-input:-webkit-autofill:hover, .form .text-input:-webkit-autofill:focus {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	-webkit-text-fill-color: white;
 	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
@@ -328,7 +320,7 @@ button {
 	width: 98.5%;
 }
 
-.text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus, .text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus {
+.text-input:-webkit-autofill, .text-input:-webkit-autofill:hover, .text-input:-webkit-autofill:focus {
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	-webkit-text-fill-color: white;
 	background: rgba(255, 255, 255, 0.062);

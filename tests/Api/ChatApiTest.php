@@ -23,9 +23,6 @@ class ChatTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -38,8 +35,6 @@ class ChatTest extends WebTestCase
     private function createAuthManagerMock(bool $logged): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn($logged);
         $authManagerMock->method('getUserToken')->willReturn('testing-user-token');
 
@@ -51,16 +46,12 @@ class ChatTest extends WebTestCase
      */
     public function testPostMessage(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
 
-        // build post data
-        $postData = [
+        // // build post request
+        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode([
             'message' => 'Testing message: +ěščřžýáíé´=éíáýžřčš12345678ANFJNJNUJBZV',
-        ];
-
-        // make request
-        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode($postData));
+        ]));
 
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -80,11 +71,8 @@ class ChatTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
 
-        // build post data
-        $postData = [];
-
         // make request
-        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode($postData));
+        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode([]));
 
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
@@ -103,18 +91,14 @@ class ChatTest extends WebTestCase
         // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(false));
 
-        // build post data
-        $postData = [
+        // build post request
+        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode([
             'message' => 'This is non authentificated message!'
-        ];
-
-        // make request
-        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode($postData));
+        ]));
 
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // test response
         $this->assertResponseStatusCodeSame(401);
         $this->assertEquals('error to save message: only for authenticated users!', $responseData['message']);
     }
@@ -124,13 +108,11 @@ class ChatTest extends WebTestCase
      */
     public function testGetMessages(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
 
         // make request
         $this->client->request('GET', '/api/chat/get/messages');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -139,7 +121,6 @@ class ChatTest extends WebTestCase
      */
     public function testNonAuthGetMessages(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(false));
 
         // make request
@@ -148,7 +129,6 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // test response
         $this->assertResponseStatusCodeSame(401);
         $this->assertEquals('error to get messages: only for authenticated users!', $responseData['message']);
     }

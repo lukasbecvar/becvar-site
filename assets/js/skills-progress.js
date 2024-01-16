@@ -1,16 +1,19 @@
 /* becvar-site: skills bars smooth progress load */ 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () 
+{
     // select all progress-bar elements
     var progressBars = document.querySelectorAll('.progress-bar');
 
     // iterate through each progress bar and animate it
-    progressBars.forEach(function (progressBar) {
+    progressBars.forEach(function (progressBar) 
+    {
         var value = progressBar.getAttribute('aria-valuenow');        
         animateProgressBar(progressBar, value, 1000);
     });
 
     // animate the progress bar
-    function animateProgressBar(progressBar, value, duration) {
+    function animateProgressBar(progressBar, value, duration) 
+    {
         var startTime;
         var startWidth = 0;
         var targetWidth = value;

@@ -20,7 +20,8 @@ class ChatController extends AbstractController
      *
      * @param AuthManager $authManager
      */
-    public function __construct(AuthManager $authManager) {
+    public function __construct(AuthManager $authManager) 
+    {
         $this->authManager = $authManager;
     }
 
@@ -32,9 +33,7 @@ class ChatController extends AbstractController
     #[Route('/admin/chat', methods: ['GET'], name: 'admin_chat')]
     public function chat(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             return $this->render('admin/chat.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),

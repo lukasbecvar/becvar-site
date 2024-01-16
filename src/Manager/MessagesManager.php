@@ -58,7 +58,7 @@ class MessagesManager
     {
         $message = new Message();
 
-        // get others data
+        // get data & time
         $date = date('d.m.Y H:i:s');
 
         // update visitor email
@@ -157,7 +157,6 @@ class MessagesManager
             }
             
             return $messages;
-        
         
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get messages: ' . $e->getMessage(), 500);

@@ -64,13 +64,11 @@ class LogReaderController extends AbstractController
     #[Route('/admin/logs', methods: ['GET'], name: 'admin_log_list')]
     public function logsTable(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
-            // get logs
+            // get logs data
             $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
 
             return $this->render('admin/log-reader.html.twig', [
@@ -105,19 +103,16 @@ class LogReaderController extends AbstractController
     #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_where_ip')]
     public function logsWhereIp(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
 
-            // get ip address
+            // get query parameters
             $ip_address = $this->siteUtil->getQueryString('ip', $request);
-
-            // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // get & escape ip
             $ip_address = $this->securityUtil->escapeString($ip_address);
 
-            // get logs
+            // get logs data
             $logs = $this->logManager->getLogsWhereIP($ip_address, $this->authManager->getUsername(), $page);
 
             return $this->render('admin/log-reader.html.twig', [
@@ -152,10 +147,7 @@ class LogReaderController extends AbstractController
     #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
@@ -180,12 +172,9 @@ class LogReaderController extends AbstractController
     #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // set readed all logs
             $this->logManager->setReaded();
-
+            
             return $this->redirectToRoute('admin_dashboard');    
         } else {
             return $this->redirectToRoute('auth_login');

@@ -42,9 +42,7 @@ class AntilogController extends AbstractController
     #[Route('/antilog/5369362536', methods: ['GET'], name: 'antilog')]
     public function antilog(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get logged username
             $username = $this->authManager->getUsername();
 

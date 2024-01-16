@@ -50,10 +50,7 @@ class InboxController extends AbstractController
     #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
-            // get page
             $page = intval($this->siteUtil->getQueryString('page', $request));
 
             // get messages data
@@ -86,9 +83,7 @@ class InboxController extends AbstractController
     #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
-
             // get query parameters
             $page = intval($this->siteUtil->getQueryString('page', $request));
             $id = intval($this->siteUtil->getQueryString('id', $request));

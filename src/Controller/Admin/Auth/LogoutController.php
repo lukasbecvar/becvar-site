@@ -26,7 +26,8 @@ class LogoutController extends AbstractController
      * @param AuthManager  $authManager
      * @param ErrorManager $errorManager
      */
-    public function __construct(AuthManager $authManager, ErrorManager $errorManager) {
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager) 
+    {
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
     }
@@ -39,12 +40,10 @@ class LogoutController extends AbstractController
     #[Route('/logout', methods: ['GET'], name: 'auth_logout')]
     public function logout(): Response
     {
-        // logout user (if session found)
         if ($this->authManager->isUserLogedin()) {
             $this->authManager->logout();
         }
 
-        // check if logged out
         if (!$this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('auth_login');
         } else {

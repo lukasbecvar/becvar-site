@@ -23,9 +23,6 @@ class DatabaseBrowserTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -38,8 +35,6 @@ class DatabaseBrowserTest extends WebTestCase
     private function createAuthManagerMock(string $role): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUserRole')->willReturn($role);
 
@@ -51,13 +46,11 @@ class DatabaseBrowserTest extends WebTestCase
      */
     public function testDatabaseBrowserList(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Select table');
@@ -69,13 +62,11 @@ class DatabaseBrowserTest extends WebTestCase
      */
     public function testDatabaseBrowserListNonPermissions(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('User'));
 
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Sorry you dont have permission to this page');
@@ -87,13 +78,11 @@ class DatabaseBrowserTest extends WebTestCase
      */
     public function testDatabaseBrowserTableViewer(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
         // make post request to database browser
         $this->client->request('GET', '/admin/database/table?table=users&page=1');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('body', 'NEW');
@@ -105,13 +94,11 @@ class DatabaseBrowserTest extends WebTestCase
      */
     public function testDatabaseBrowserNewRowAdder(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock('Admin'));
 
         // make post request to database browser
         $this->client->request('GET', '/admin/database/add?table=users&page=1');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.title', 'Add new: users');

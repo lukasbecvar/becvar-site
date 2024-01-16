@@ -69,14 +69,13 @@ class LogManager
     {
         // check if logs enabled in config
         if ($this->isLogsEnabled() && !$this->isEnabledAntiLog()) {
+            // get log level
+            $level = $this->getLogLevel();
 
             // value character shortifiy
             if (mb_strlen($value) >= 100) {
                 $value = mb_substr($value, 0, 100 - 3).'...';
             } 
-
-            // get log level
-            $level = $this->getLogLevel();
 
             // disable database log for level 1 & 2
             if ($name == 'database' && $level < 3) {

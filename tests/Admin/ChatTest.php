@@ -23,9 +23,6 @@ class ChatTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -38,8 +35,6 @@ class ChatTest extends WebTestCase
     private function createAuthManagerMock(bool $logged): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn($logged);
         $authManagerMock->method('getUserToken')->willReturn('testing-user-token');
 
@@ -51,13 +46,11 @@ class ChatTest extends WebTestCase
      */
     public function testAdminChatLoad(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
 
         // make post request to admin chat controller
         $this->client->request('GET', '/admin/chat');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | chat');

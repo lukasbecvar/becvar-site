@@ -55,7 +55,6 @@ class DiagnosticController extends AbstractController
     #[Route('/admin/diagnostic', methods: ['GET'], name: 'admin_diagnostics')]
     public function diagnostic(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/diagnostic.html.twig', [
                 // user data

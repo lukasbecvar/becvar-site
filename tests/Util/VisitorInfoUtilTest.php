@@ -39,7 +39,6 @@ class VisitorInfoUtilTest extends TestCase
         // act
         $result = $this->visitorInfoUtil->getIP();
 
-        // assert
         $this->assertEquals('192.168.0.1', $result);
     }
 
@@ -54,7 +53,6 @@ class VisitorInfoUtilTest extends TestCase
         // act
         $result = $this->visitorInfoUtil->getBrowser();
 
-        // assert
         $this->assertEquals('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)', $result);
     }
 }

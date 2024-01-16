@@ -21,10 +21,7 @@ class ErrorTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {
-        parent::setUp();
-    
-        // create client instance
+    {    
         $this->client = static::createClient();
     }
 
@@ -38,7 +35,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
@@ -55,7 +51,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=banned');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
@@ -72,7 +67,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=maintenance');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
@@ -89,7 +83,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=400');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Bad request');
@@ -106,7 +99,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=401');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Unauthorized');
@@ -123,7 +115,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=403');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Forbidden');
@@ -140,7 +131,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=404');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Page not found');
@@ -157,7 +147,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=429');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Too Many Requests');
@@ -175,7 +164,6 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=500');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Internal Server Error');

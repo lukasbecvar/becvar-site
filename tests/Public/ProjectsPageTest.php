@@ -21,10 +21,7 @@ class ProjectsPageTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {
-        parent::setUp();
-    
-        // create client instance
+    {    
         $this->client = static::createClient();
     }
 
@@ -38,7 +35,6 @@ class ProjectsPageTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/projects');
 
-        // test response
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }

@@ -23,9 +23,6 @@ class AdminDiagnosticTest extends WebTestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create client instance
         $this->client = static::createClient();
     }
 
@@ -37,8 +34,6 @@ class AdminDiagnosticTest extends WebTestCase
     private function createAuthManagerMock(): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
-
-        // init fake testing value
         $authManagerMock->method('isUserLogedin')->willReturn(true);
 
         return $authManagerMock;
@@ -49,13 +44,11 @@ class AdminDiagnosticTest extends WebTestCase
      */
     public function testDiagnostic(): void
     {
-        // use fake auth manager instance
         $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
 
         // make post request to diagnostic page
         $this->client->request('GET', '/admin/diagnostic');
 
-        // test response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
         $this->assertSelectorTextContains('title', 'Admin | diagnostic');
         $this->assertSelectorTextContains('body', 'System diagnostics');

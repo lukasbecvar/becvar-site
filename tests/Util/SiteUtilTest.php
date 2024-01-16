@@ -34,7 +34,6 @@ class SiteUtilTest extends TestCase
         // act
         $result = $this->siteUtil->getHttpHost();
 
-        // assert
         $this->assertEquals('example.com', $result);
     }
 
@@ -49,7 +48,6 @@ class SiteUtilTest extends TestCase
         // act
         $result = $this->siteUtil->isRunningLocalhost();
 
-        // assert
         $this->assertTrue($result);
     }
 
@@ -64,7 +62,6 @@ class SiteUtilTest extends TestCase
         // act
         $result = $this->siteUtil->isSsl();
 
-        // assert
         $this->assertTrue($result);
     }
 
@@ -79,7 +76,6 @@ class SiteUtilTest extends TestCase
         // act
         $result = $this->siteUtil->isMaintenance();
 
-        // assert
         $this->assertTrue($result);
     }
 
@@ -94,7 +90,6 @@ class SiteUtilTest extends TestCase
         // act
         $result = $this->siteUtil->isDevMode();
 
-        // assert
         $this->assertTrue($result);
     }
 }

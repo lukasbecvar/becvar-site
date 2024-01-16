@@ -63,9 +63,8 @@ class TodosManager
         // check if repository found
         if ($repository !== null) {
             try {
-                $todos = $repository->findBy($search_array);
-                
                 $todo_data = [];
+                $todos = $repository->findBy($search_array);
 
                 foreach ($todos as $todo) {
                     $todo_item = [
@@ -95,7 +94,7 @@ class TodosManager
         // create todo entity
         $todo = new Todo();
 
-        // get current date
+        // get current date & time
         $date = date('d.m.Y H:i:s');
 
         // get username
@@ -189,7 +188,6 @@ class TodosManager
 
                 // log event
                 $this->logManager->log('todo-manager', 'user: '.$this->authManager->getUsername().' close todo: '.$id);
-
             } catch (\Exception $e) {
                 $this->errorManager->handleError('error to close todo: '.$id.', '.$e->getMessage(), 500);
             }

@@ -33,7 +33,6 @@ class TerminalController extends AbstractController
     #[Route('/admin/terminal', methods: ['GET'], name: 'admin_terminal')]
     public function admin(): Response
     {
-        // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->render('admin/terminal.html.twig', [
                 // user data
