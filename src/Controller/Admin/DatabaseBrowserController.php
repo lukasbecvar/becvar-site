@@ -95,6 +95,9 @@ class DatabaseBrowserController extends AbstractController
             // escape table name
             $table = $this->securityUtil->escapeString($table);
 
+            // get table data
+            $table_data = $this->databaseManager->getTableDataByPage($table, $page);
+
             return $this->render('admin/database-browser.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),
@@ -109,7 +112,7 @@ class DatabaseBrowserController extends AbstractController
                 // table browser data
                 'table_name' => $table,
                 'table_exist' => $this->databaseManager->isTableExist($table),
-                'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
+                'table_data' => $table_data,
                 'table_data_count_all' => $this->databaseManager->countTableData($table),
                 'table_data_count' => $this->databaseManager->countTableDataByPage($table, $page),
                 'table_columns' => $this->databaseManager->getTableColumns($table),

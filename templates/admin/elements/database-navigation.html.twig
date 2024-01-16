@@ -2,7 +2,7 @@
     {# <===== ROW EDITOR =====> #}
     {% if editor_table != null %}
         <li>
-            <a class="selector-button btn-small" href="/admin/database/table?table{{ editor_table }}&page={{ editor_page }}">
+            <a class="selector-button btn-small" href="/admin/database/table?table={{ editor_table }}&page={{ editor_page }}">
                 <strong>
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                 </strong>
@@ -36,13 +36,15 @@
                     </strong>
                 </a>
             </li>
-        <li>    
-            {% if table_name != 'code_paste' and table_name != 'images' %}
-                <a class="selector-button btn-small" href="/admin/database/add?table={{ table_name }}&page={{ page }}">
-                    <strong>NEW</strong>
-                </a>
-            {% endif %}
-        </li>
+        {% if table_name != 'code_paste' and table_name != 'images' and table_name != 'chat_messages' and table_name != 'inbox_messages' and table_name != 'todos' %}
+            <li>    
+                {% if table_name != 'code_paste' and table_name != 'images' %}
+                    <a class="selector-button btn-small" href="/admin/database/add?table={{ table_name }}&page={{ page }}">
+                        <strong>NEW</strong>
+                    </a>
+                {% endif %}
+            </li>
+        {% endif %}
         {# <===== PROJECTS UPDATE BUTTON =====> #}
         {% if table_name == 'projects' %}
             <li>

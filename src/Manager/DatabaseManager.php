@@ -172,6 +172,26 @@ class DatabaseManager
             $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
         }
     
+        // decrypt database data
+        $decrypted_tables = ["`todos`", "`chat_messages`", "`code_paste`", "`inbox_messages`"];
+
+        if (in_array($table_name, $decrypted_tables)) {
+            $decrypted_data = [];
+            foreach ($data as $value) {
+                $arr = [];
+                foreach ($value as $key => $val) {
+                    $arr[$key] = (
+                        $key === 'text' || 
+                        $key === 'message' ||
+                        $key === 'content'
+                    ) ? $this->securityUtil->decryptAes($val) : $val;
+                }
+                array_push($decrypted_data, $arr);
+            }
+            return $decrypted_data;
+        }
+        
+
         return $data;
     }
 

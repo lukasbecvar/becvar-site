@@ -82,7 +82,7 @@
                                                     <th scope='col'>{{ column|e }}</th>
                                                 {% endif %}
                                             {% endfor %}
-                                            {% if table_name != 'code_paste' and table_name != 'images' %}
+                                            {% if table_name != 'code_paste' and table_name != 'images' and table_name != 'chat_messages' and table_name != 'inbox_messages' and table_name != 'todos' %}
                                                 <th cope='col'>Edit</th>
                                             {% endif %}
                                             <th cope='col'>X</th>
@@ -100,7 +100,7 @@
                                                         {{ content ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
-                                                {% if table_name != 'code_paste' and table_name != 'images' %} 
+                                                {% if table_name != 'code_paste' and table_name != 'images' and table_name != 'chat_messages' and table_name != 'inbox_messages' and table_name != 'todos' %} 
                                                     <td><a class="text-warning delete-link-todos" href="/admin/database/edit?table={{ table_name }}&page={{ page }}&id={{ row.id|e }}">Edit</a></td>
                                                 {% endif %}
                                                 <td><a class="delete-link-todos" href="/admin/database/delete?table={{ table_name }}&page={{ page }}&id={{ row.id|e }}">X</a></td>
