@@ -22,9 +22,10 @@ class LoginTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {
+    {        
+        // create client instance
         $this->client = static::createClient();
-        
+
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $userRepository = $entityManager->getRepository(\App\Entity\User::class);
         
@@ -49,6 +50,8 @@ class LoginTest extends WebTestCase
             $entityManager->persist($user);
             $entityManager->flush();
         }
+
+        parent::setUp();
     }
 
     /**
@@ -57,6 +60,7 @@ class LoginTest extends WebTestCase
     protected function tearDown(): void
     {
         $this->removeFakeData();
+        parent::tearDown();
     }
 
     /**

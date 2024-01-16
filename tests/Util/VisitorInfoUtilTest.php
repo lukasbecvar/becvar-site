@@ -26,6 +26,8 @@ class VisitorInfoUtilTest extends TestCase
         $this->siteUtilMock = $this->createMock(SiteUtil::class);
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
         $this->visitorInfoUtil = new VisitorInfoUtil($this->siteUtilMock, $this->jsonUtilMock);
+    
+        parent::setUp();
     }
 
     /**

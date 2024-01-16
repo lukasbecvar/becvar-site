@@ -21,6 +21,8 @@ class SiteUtilTest extends TestCase
     {
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
         $this->siteUtil = new SiteUtil($this->securityUtilMock);
+
+        parent::setUp();
     }
 
     /**

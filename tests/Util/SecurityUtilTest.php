@@ -16,6 +16,7 @@ class SecurityUtilTest extends TestCase
     protected function setUp(): void
     {
         $this->securityUtil = new SecurityUtil();
+        parent::setUp();
     }
 
     /**

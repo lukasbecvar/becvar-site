@@ -145,6 +145,11 @@ class VisitorSystemMiddleware
             $this->logManager->log('geolocate-error', 'error to geolocate ip: '.$ip_address);
         }
 
+        // prevent maximal useragent to save
+        if (strlen($browser) >= 200) {
+            $browser = substr($browser, 0, 197) . "...";
+        }
+
         // create new visitor entity
         $visitorEntity = new Visitor();
 
@@ -186,6 +191,11 @@ class VisitorSystemMiddleware
     {
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+
+        // prevent maximal useragent to save
+        if (strlen($browser) >= 200) {
+            $browser = substr($browser, 0, 197) . "...";
+        }
 
         // check if visitor data found
         if (!$visitor != null) {

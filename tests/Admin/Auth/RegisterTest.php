@@ -25,6 +25,7 @@ class RegisterTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        parent::setUp();
     }
 
     /**
@@ -33,6 +34,7 @@ class RegisterTest extends WebTestCase
     protected function tearDown(): void
     {
         $this->removeFakeData();
+        parent::tearDown();
     }
 
     /**

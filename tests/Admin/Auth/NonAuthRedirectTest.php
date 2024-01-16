@@ -24,6 +24,7 @@ class NonAuthRedirectTest extends WebTestCase
     protected function setUp(): void
     {    
         $this->client = static::createClient();
+        parent::setUp();
     }
 
     public function testNonAuthRedirectAdminInit(): void

@@ -23,6 +23,7 @@ class TerminalApiTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        parent::setUp();
     }
 
     /**

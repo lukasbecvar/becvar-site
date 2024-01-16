@@ -52,7 +52,7 @@
                                     <th scope='row' class='text-red'>{{ row.time|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.ipAddress|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.browser|e }}</th>
-                                {% elseif row.name == 'database' %}
+                                {% elseif row.name == 'database' or row.name == 'project-update' %}
                                     <th scope='row' class='text-primary'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.name|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.value|e }}</th>

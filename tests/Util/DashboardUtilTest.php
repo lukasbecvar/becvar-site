@@ -49,6 +49,8 @@ class DashboardUtilTest extends TestCase
             $this->errorManagerMock,
             $this->entityManagerMock
         );
+
+        parent::setUp();
     }
 
     /**
