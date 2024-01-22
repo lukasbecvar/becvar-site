@@ -106,10 +106,10 @@ class PasteController extends AbstractController
                     } catch (\Exception $e) {
                         return $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
                     } 
+                    
+                    // log new paste
+                    $this->logManager->log('code-paste', 'saved new paste: '.$name);
                 } 
-
-                // log new paste
-                $this->logManager->log('code-paste', 'saved new paste: '.$name);
             }
         }
 

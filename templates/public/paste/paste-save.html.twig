@@ -7,6 +7,18 @@
     {{ encore_entry_link_tags('scrollbar-css') }}
     <script>
         function save() {
+            var textareaValue = document.getElementById('text').value.trim();
+            if (textareaValue === "") {
+                alert("Textarea is empty. Please enter some text.");
+                return;
+            }
+
+            if (textareaValue.length > 60001) {
+                alert("This paste reached maximum characters 60000.");
+                return;
+            }
+
+            
             var name = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             for (var i = 0; i < 15; i++) {
@@ -15,7 +27,7 @@
             document.getElementById('file').value = name;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/paste', true);
-            var formData = new FormData(document.getElementById('form'));
+            var formData = new FormData(document.getElementById('form'));            
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     window.open("/paste/view?token=" + name, "_self");
@@ -37,7 +49,7 @@
     </a>
     <form action="/paste" method="post" id="form">
         <input type="hidden" name="file" value="" id="file">
-        <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" name="data" maxlength="30000"></textarea>
+        <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" name="data" maxlength="50000"></textarea>
     </form>
 </body>
 </html>
