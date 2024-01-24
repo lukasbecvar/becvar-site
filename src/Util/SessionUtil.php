@@ -35,7 +35,8 @@ class SessionUtil
     /**
      * Destroy the current session.
      */
-    public function destroySession() {
+    public function destroySession(): void 
+    {
         $this->startSession();
         session_destroy();
     }
@@ -47,7 +48,8 @@ class SessionUtil
      *
      * @return bool Whether the session exists.
      */
-    public function checkSession(string $session_name): bool {
+    public function checkSession(string $session_name): bool 
+    {
         $this->startSession();
         return isset($_SESSION[$session_name]);
     }

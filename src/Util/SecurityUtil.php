@@ -53,8 +53,8 @@ class SecurityUtil
      *
      * @return string The encrypted data in JSON format.
      */
-	public static function encryptAes(string $plain_text, string $method = 'AES-128-CBC'): string {
-		
+	public static function encryptAes(string $plain_text, string $method = 'AES-128-CBC'): string 
+    {
         // get encryption password form app enviroment
         $password = $_ENV['APP_SECRET'];
 
@@ -83,8 +83,8 @@ class SecurityUtil
      *
      * @return string The decrypted data in JSON format.
      */
-	public static function decryptAes(string $json_string, string $method = 'AES-128-CBC'): string {
-		  
+	public static function decryptAes(string $json_string, string $method = 'AES-128-CBC'): string 
+    {	  
         // get encryption password
         $password = $_ENV['APP_SECRET'];
 
