@@ -4,7 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="icon" href="{{ asset('build/images/favicon.png') }}" type="image/x-icon"/> 
+	<link rel="icon" href="{{ asset('build/images/favicon.png') }}" type="image/x-icon"/>
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=/error?code=500">
+    </noscript>
     {{ encore_entry_link_tags('scrollbar-css') }}
     {{ encore_entry_link_tags('page-loading-css') }}
     {{ encore_entry_link_tags('bootstrap-css') }}
