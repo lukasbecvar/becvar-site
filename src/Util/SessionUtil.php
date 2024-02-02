@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use App\Manager\ErrorManager;
+
 /**
  * SessionUtil provides session management functions.
  */
@@ -10,14 +12,19 @@ class SessionUtil
     /** * @var SecurityUtil */
     private SecurityUtil $securityUtil;
 
+    /** * @var ErrorManager */
+    private ErrorManager $errorManager;
+
     /**
      * SessionUtil constructor.
      *
      * @param SecurityUtil $securityUtil The SecurityUtil instance.
+     * @param ErrorManager $errorManager The ErrorManager instance.
      */
-    public function __construct(SecurityUtil $securityUtil)
+    public function __construct(SecurityUtil $securityUtil, ErrorManager $errorManager)
     {
         $this->securityUtil = $securityUtil;
+        $this->errorManager = $errorManager;
     }
 
     /**
@@ -76,6 +83,16 @@ class SessionUtil
     public function getSessionValue(string $session_name): ?string 
     {
         $this->startSession();
-        return $this->securityUtil->decryptAes($_SESSION[$session_name]);
+
+        // decrypt session value
+        $value = $this->securityUtil->decryptAes($_SESSION[$session_name]);
+
+        // check if session data is decrypted
+        if ($value == null) {
+            $this->destroySession();
+            $this->errorManager->handleError('Error to decrypt session data', 500);
+        }
+
+        return $value;
     }
 }

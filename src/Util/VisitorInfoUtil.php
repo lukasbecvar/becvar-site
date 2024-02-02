@@ -231,7 +231,7 @@ class VisitorInfoUtil
      *
      * @param string $ip_address The IP address.
      *
-     * @return array|null The location information (city, country).
+     * @return array<string, string>|null The location information (city, country) or null on failure.
      */
     public function getLocation(string $ip_address): ?array
     {

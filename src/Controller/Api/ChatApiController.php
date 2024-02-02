@@ -148,6 +148,14 @@ class ChatApiController extends AbstractController
                 // get sender token
                 $sender = $message->getSender();
 
+                // decrypt message
+                $decrypted_message = $this->securityUtil->decryptAes($message->getMessage());
+
+                // check if message is decrypted
+                if ($decrypted_message == null) {
+                    $this->errorManager->handleError('Error to decrypt aes message', 500);
+                }
+
                 // build message
                 $messageData[] = [
                     'id' => $message->getId(),
@@ -156,7 +164,7 @@ class ChatApiController extends AbstractController
                     'sender' => $this->authManager->getUsername($sender),
                     'role' => $this->authManager->getUserRole($sender),
                     'pic' => $this->authManager->getUserProfilePic($sender),
-                    'message' => $this->securityUtil->decryptAes($message->getMessage())
+                    'message' => $decrypted_message
                 ];
             }
     

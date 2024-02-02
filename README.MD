@@ -53,6 +53,9 @@ the public part of the site contains information about me and my projects
 * Symfony
    * Version: **6.3**
    * [Website](https://symfony.com/)   
+* Phpunit-Pretty-Print
+   * Version: **1.4**
+   * [Github](https://github.com/indentno/phpunit-pretty-print)
 * Adminer
    * Version: **4.8.1**
    * [Website](https://www.adminer.org/)

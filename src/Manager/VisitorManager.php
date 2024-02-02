@@ -83,7 +83,7 @@ class VisitorManager
     /**
      * Get a visitor repository by array search criteria.
      *
-     * @param array $search
+     * @param array<string, mixed> $search
      *
      * @return Visitor|null
      */

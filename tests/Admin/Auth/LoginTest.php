@@ -146,6 +146,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test submitting the login form with an incorrect username.
+     *
+     * @return void
      */
     public function testIncorrectUsernameLoginSubmit()
     {

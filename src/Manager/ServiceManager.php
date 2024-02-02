@@ -44,7 +44,7 @@ class ServiceManager
     /**
      * Gets the list of services.
      *
-     * @return array|null
+     * @return array<mixed>
      */
     public function getServices(): ?array 
     {
@@ -269,7 +269,7 @@ class ServiceManager
     /**
      * Gets the services list from the services.json file.
      *
-     * @return array|null
+     * @return array<mixed>
      */
     public function getServicesJson(): ?array
     {

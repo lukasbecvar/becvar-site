@@ -13,7 +13,7 @@ class LinkifyExtension extends AbstractExtension
     /**
      * Get the filters provided by this extension.
      *
-     * @return array An array of Twig filters.
+     * @return array<TwigFilter> An array of Twig filters.
      */
     public function getFilters(): array
     {

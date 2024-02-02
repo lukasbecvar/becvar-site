@@ -120,7 +120,7 @@ class MessagesManager
      * @param string $status
      * @param int $page
      *
-     * @return array|null
+     * @return array<mixed>|null An array of messages if successful, or null if an error occurs.
      */
     public function getMessages(string $status, int $page): ?array
     {
@@ -139,6 +139,11 @@ class MessagesManager
 
                 // decrypt message
                 $message_decrypted = $this->securityUtil->decryptAes($inbox_message->getMessage());
+
+                // check if message data is decrypted
+                if ($message_decrypted == null) {
+                    $this->errorManager->handleError('Error to decrypt aes message data', 500);
+                }
 
                 // build message content
                 $message = [

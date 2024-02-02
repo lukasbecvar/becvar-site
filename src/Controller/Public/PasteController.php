@@ -142,6 +142,11 @@ class PasteController extends AbstractController
             // get content & decrypt
             $content = $this->securityUtil->decryptAes($pasteContent->getContent());
 
+            // check if paste content is decrypted
+            if ($content == null) {
+                $this->errorManager->handleError('Error to decrypt aes paste content', 500);
+            }
+
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);
 

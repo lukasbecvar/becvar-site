@@ -12,7 +12,7 @@ class JsonUtil
      *
      * @param string $target The file path or URL.
      *
-     * @return array|null The decoded JSON data as an associative array or null on failure.
+     * @return array<mixed>|null The decoded JSON data as an associative array or null on failure.
      */
     public function getJson($target): ?array 
     {

@@ -134,7 +134,7 @@ class VisitorSystemMiddleware
      * @param string $ip_address The IP address of the visitor.
      * @param string $browser The browser used by the visitor.
      * @param string $os The operating system of the visitor.
-     * @param array $location The location information of the visitor, including 'city' and 'country'.
+     * @param array<string, string> $location The location information of the visitor, including 'city' and 'country'.
      *
      * @throws \Exception If an error occurs during the database flush.
      */

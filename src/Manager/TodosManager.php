@@ -52,9 +52,9 @@ class TodosManager
     /**
      * Gets todos based on the specified status.
      *
-     * @param array $search_array
+     * @param array<string, mixed> $search_array
      *
-     * @return array|null
+     * @return array<int, array{id: int, text: string}>|null
      */
     public function getTodos(array $search_array): ?array
     {
@@ -67,9 +67,18 @@ class TodosManager
                 $todos = $repository->findBy($search_array);
 
                 foreach ($todos as $todo) {
+
+                    // decrypt todo text
+                    $todo_text = $this->securityUtil->decryptAes($todo->getText());
+
+                    // check if message data is decrypted
+                    if ($todo_text == null) {
+                        $this->errorManager->handleError('Error to decrypt aes todo data', 500);
+                    }
+
                     $todo_item = [
                         'id' => $todo->getId(),
-                        'text' => $this->securityUtil->decryptAes($todo->getText())
+                        'text' => $todo_text
                     ];
                     array_push($todo_data, $todo_item);
                 }

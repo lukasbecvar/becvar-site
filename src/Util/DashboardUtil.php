@@ -40,7 +40,7 @@ class DashboardUtil
      * Get the count of entities in the database.
      *
      * @param object $entity The entity class.
-     * @param array|null $search Additional search criteria.
+     * @param array<string, mixed>|null $search Additional search criteria.
      *
      * @return int The count of entities.
      */
@@ -110,7 +110,7 @@ class DashboardUtil
     /**
      * Get the RAM usage information.
      *
-     * @return array An array containing RAM usage information.
+     * @return array<string, string> An array containing RAM usage information.
      */
     public function getRamUsage(): array 
     {
@@ -154,7 +154,7 @@ class DashboardUtil
     /**
      * Get information about installed software packages and the Linux distribution.
      *
-     * @return array An array containing information about installed software packages and the Linux distribution.
+     * @return array<string, array<string, string>> An array containing information about installed software packages and the Linux distribution.
      */
     public function getSoftwareInfo(): array 
     {

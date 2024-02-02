@@ -53,7 +53,7 @@ class DatabaseManager
      *
      * @throws \Exception If there is an error during the retrieval of the tables list.
      *
-     * @return array|null The list of tables if successful, otherwise null.
+     * @return array<string> The list of tables if successful, otherwise null.
      */
     public function getTables(): ?array
     {
@@ -83,7 +83,7 @@ class DatabaseManager
      *
      * @param string $table_name The name of the table.
      *
-     * @return array The list of column names.
+     * @return array<string> The list of column names.
      */
     public function getTableColumns(string $table_name): array
     {
@@ -112,7 +112,7 @@ class DatabaseManager
      *
      * @throws \Exception If there is an error during the retrieval of the table columns or the table is not found.
      *
-     * @return array The array of column names if successful.
+     * @return array<mixed> The array of column names if successful.
      */
     public function getTableData(string $table_name, bool $log = true): array
     {
@@ -145,7 +145,7 @@ class DatabaseManager
      *
      * @throws \Exception If there is an error during the retrieval of the table data or the table is not found.
      *
-     * @return array The array of data from the specified table.
+     * @return array<mixed> The array of data from the specified table.
      */
     public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true): array
     {
@@ -202,7 +202,7 @@ class DatabaseManager
      *
      * @throws \Exception If there is an error during the retrieval of the row data or the table is not found.
      *
-     * @return array The array of data from the specified row.
+     * @return array<mixed> The array of data from the specified row.
      */
     public function selectRowData(string $table_name, int $id): array
     {
@@ -227,8 +227,8 @@ class DatabaseManager
      * Adds a new row to a specific database table.
      *
      * @param string $table_name  The name of the table to which the new row will be added.
-     * @param array  $columns     The array of column names for the new row.
-     * @param array  $values      The array of values corresponding to the columns for the new row.
+     * @param array<string> $columns     The array of column names for the new row.
+     * @param array<mixed> $values      The array of values corresponding to the columns for the new row.
      *
      * @throws \Exception If there is an error during the insertion of the new row or the table is not found.
      *
@@ -311,7 +311,7 @@ class DatabaseManager
      *
      * @param int $page The page number.
      *
-     * @return array|null Decrypted images or null if an error occurs.
+     * @return array<mixed>|null Decrypted images or null if an error occurs.
      */
     public function getImages(int $page): ?array
     {
@@ -322,10 +322,19 @@ class DatabaseManager
 
         // get image data (this is for decrypt image)
         foreach ($images_list as $image) {
+            
+            // decrypt image data
+            $image_data = $this->securityUtil->decryptAes($image['image']);
+
+            // check if image data is decrypted
+            if ($image_data == null) {
+                $this->errorManager->handleError('Error to decrypt aes image data', 500);
+            }
+
             $image_item = [
                 'id' => $image['id'],
                 'token' => $image['token'],
-                'image' => $this->securityUtil->decryptAes($image['image'])
+                'image' => $image_data
             ];
             array_push($images, $image_item);
         }

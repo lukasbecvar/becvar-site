@@ -86,6 +86,11 @@ class ImageUploaderController extends AbstractController
             // get image & decrypt
             $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
 
+            // check if image is decrypted
+            if ($image_content == null) {
+                $this->errorManager->handleError('Error to decrypt aes image', 500);
+            }
+
             // log paste view
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
             
