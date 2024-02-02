@@ -33,7 +33,7 @@ class VisitorInfoUtilTest extends TestCase
     /**
      * @covers \App\Util\VisitorInfoUtil::getIP
      */
-    public function testGetIP(): void
+    public function testGetIp(): void
     {
         // mock $_SERVER['HTTP_CLIENT_IP']
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.0.1';

@@ -6,6 +6,8 @@ use App\Entity\Log;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
+use App\Interface\LogManagerInterface;
+use App\Util\SiteUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -13,6 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class LogManager
 {
+    /** * @var SiteUtil */
+    private SiteUtil $siteUtil;
+
     /** * @var CookieUtil */
     private CookieUtil $cookieUtil;
 
@@ -34,6 +39,7 @@ class LogManager
     /**
      * LogManager constructor.
      *
+     * @param SiteUtil               $siteUtil
      * @param CookieUtil             $cookieUtil
      * @param ErrorManager           $errorManager
      * @param SecurityUtil           $securityUtil
@@ -42,6 +48,7 @@ class LogManager
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
+        SiteUtil $siteUtil,
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil, 
@@ -49,6 +56,7 @@ class LogManager
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->siteUtil = $siteUtil;
         $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -66,7 +74,15 @@ class LogManager
      * @return void
      */
     public function log(string $name, string $value): void 
-    {
+    {        
+        if (str_contains($value, 'Connection refused')) {
+            if ($this->siteUtil->isDevMode()) {
+                die('Database error: '.$value);
+            } else {
+                die('Internal server error');
+            }
+        }
+
         // check if logs enabled in config
         if ($this->isLogsEnabled() && !$this->isEnabledAntiLog()) {
             // get log level

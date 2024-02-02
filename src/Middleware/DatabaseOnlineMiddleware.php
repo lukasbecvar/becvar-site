@@ -12,7 +12,7 @@ use \Doctrine\DBAL\Connection as Connection;
  */
 class DatabaseOnlineMiddleware
 {
-    /** * @var AuthManager */
+    /** * @var ErrorManager */
     private ErrorManager $errorManager;
 
     /** * @var Connection */
@@ -41,7 +41,7 @@ class DatabaseOnlineMiddleware
         } catch (\Exception $e) {
 
             // handle error if database not connected
-            $this->errorManager->handleError('database connection error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('database connection error: '.$e->getMessage(), 1337);
         }
     }
 }

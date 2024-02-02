@@ -85,30 +85,34 @@ class ProjectsManager
             // check if repo is profile readme
             if ($name != $github_user) {
 
-                // check if repo archived
-                if ($repo['archived'] == true) {
-                    $status = 'closed';
-                } else {
-                    $status = 'open';
-                }
+                // check if repo is not fork
+                if ($repo['fork'] != true) {
 
-                // init project entity
-                $project = new Project();
+                    // check if repo archived
+                    if ($repo['archived'] == true) {
+                        $status = 'closed';
+                    } else {
+                        $status = 'open';
+                    }
 
-                // set project value
-                $project->setName($name);
-                $project->setDescription($description);
-                $project->setTechnology($language);
-                $project->setLink($html_url);
-                $project->setStatus($status);
+                    // init project entity
+                    $project = new Project();
 
-                // try to insert project
-                try {
-                    $this->entityManager->persist($project);
-                    $this->entityManager->flush();
-                } catch (\Exception $e) {
-                    $this->logManager->log('project-update', 'error to update project list');
-                    $this->errorManager->handleError('error to save project: '.$e->getMessage(), 500);
+                    // set project value
+                    $project->setName($name);
+                    $project->setDescription($description);
+                    $project->setTechnology($language);
+                    $project->setLink($html_url);
+                    $project->setStatus($status);
+
+                    // try to insert project
+                    try {
+                        $this->entityManager->persist($project);
+                        $this->entityManager->flush();
+                    } catch (\Exception $e) {
+                        $this->logManager->log('project-update', 'error to update project list');
+                        $this->errorManager->handleError('error to save project: '.$e->getMessage(), 500);
+                    }
                 }
             }
         }
