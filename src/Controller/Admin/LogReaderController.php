@@ -13,23 +13,42 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class LogReaderController
+ * 
  * Log reader controller provides read logs from the database table.
+ * 
+ * @package App\Controller\Admin
  */
 class LogReaderController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
-    
-    /** * @var LogManager */
+
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
-    
-    /** * @var AuthManager */
+
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
-    
-    /** * @var SecurityUtil */
+
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
-    
-    /** * @var DatabaseManager */
+
+    /**
+     * @var DatabaseManager
+     * Instance of the DatabaseManager for handling database-related functionality.
+     */
     private DatabaseManager $databaseManager;
 
     /**

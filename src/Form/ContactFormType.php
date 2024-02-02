@@ -11,9 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
+ * Class ContactFormType
+ * 
  * Contact form provides a contact message form.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class ContactFormType extends AbstractType
 {

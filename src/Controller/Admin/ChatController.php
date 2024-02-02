@@ -8,11 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class ChatController
+ * 
  * Chat controller provides an admin chat box.
+ * 
+ * @package App\Controller\Admin
  */
 class ChatController extends AbstractController
 {
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
     
     /**

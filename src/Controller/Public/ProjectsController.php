@@ -10,18 +10,31 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class ProjectsController
+ * 
  * Projects controller provides a public list of projects.
  * The project page displays projects from the database that are downloaded from the GitHub API.
+ * 
+ * @package App\Controller\Public
  */
 class ProjectsController extends AbstractController
 {
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var ProjectsManager */
+    /**
+     * @var ProjectsManager
+     * Instance of the ProjectsManager for handling projects-related functionality.
+     */
     private ProjectsManager $projectsManager;
 
     /**

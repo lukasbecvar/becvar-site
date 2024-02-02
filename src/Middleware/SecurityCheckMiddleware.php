@@ -9,13 +9,21 @@ use App\Manager\ErrorManager;
  * Class SecurityCheckMiddleware
  *
  * This middleware checks if the connection is secure.
+ * 
+ * @package App\Middleware
  */
 class SecurityCheckMiddleware
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
     /**

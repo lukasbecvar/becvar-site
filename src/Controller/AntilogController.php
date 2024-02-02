@@ -9,15 +9,25 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class AntilogController
+ * 
  * Antilog controller provides a function to block database logs.
  * Antilog for admin users disables logging via browser cookie.
+ * 
+ * @package App\Controller
  */
 class AntilogController extends AbstractController
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
     /**

@@ -6,23 +6,42 @@ use App\Util\SecurityUtil;
 use Doctrine\DBAL\Connection;
 
 /**
+ * Class AuthManager
+ * 
  * DatabaseManager provides methods for retrieving, editing, and managing database data when it is not possible to use the entity manager.
+ * 
+ * @package App\Manager
  */
 class DatabaseManager
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var Connection */
+    /**
+     * @var Connection
+     * Instance of the Doctrine\DBAL\Connection for interacting with the database.
+     */
     private Connection $connection;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
         
     /**

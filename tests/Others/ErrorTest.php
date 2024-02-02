@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class ErrorTest
+ * 
  * Test cases for handling different error scenarios.
  *
  * @package App\Tests\Others

@@ -6,23 +6,42 @@ use App\Entity\Visitor;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class AuthManager
+ * 
  * BanManager provides methods for banning and unbanning visitors.
+ * 
+ * @package App\Manager
  */
 class BanManager
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
     
     /**

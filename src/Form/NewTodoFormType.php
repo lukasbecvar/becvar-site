@@ -10,9 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
+ * Class NewTodoFormType
+ * 
  * NewTodo form provides a form for saving a new todo item.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class NewTodoFormType extends AbstractType
 {

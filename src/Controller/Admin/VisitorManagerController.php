@@ -16,26 +16,48 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class VisitorManagerController
+ * 
  * Visitor manager controller provides view/ban/delete visitor.
+ * 
+ * @package App\Controller\Admin
  */
 class VisitorManagerController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var BanManager */
+    /**
+     * @var BanManager
+     * Instance of the BanManager for handling ban-related functionality.
+     */
     private BanManager $banManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var VisitorInfoUtil */
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
     private VisitorInfoUtil $visitorInfoUtil;
 
     /**

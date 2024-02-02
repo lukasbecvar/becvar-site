@@ -12,16 +12,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class RegisterController
+ * 
  * Register controller provides user register function.
  * Note: This function is enabled only if users table is empty or for owner users
  * Note: Login uses its own authenticator, not Symfony auth.
+ * 
+ * @package App\Controller\Admin\Auth
  */
 class RegisterController extends AbstractController
 {
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
     /**

@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class TodoManagerTest
+ * 
  * Admin todo manager component test
  *
  * @package App\Tests\Admin

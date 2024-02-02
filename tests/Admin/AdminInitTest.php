@@ -6,6 +6,8 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class AdminInitTest
+ * 
  * Admin init component test
  *
  * @package App\Tests\Admin

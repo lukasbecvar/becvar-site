@@ -23,33 +23,61 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class DashboardController
+ * 
  * Dashboard controller provides the homepage of the admin site.
  * Dashboard components: warning box, services controller, host info, server/database counters.
+ * 
+ * @package App\Controller\Admin
  */
 class DashboardController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var BanManager */
+    /**
+     * @var BanManager
+     * Instance of the BanManager for handling ban-related functionality.
+     */
     private BanManager $banManager;
 
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var DashboardUtil */
+    /**
+     * @var DashboardUtil
+     * Instance of the DashboardUtil for handling dashboard-related functionality.
+     */
     private DashboardUtil $dashboardUtil;
 
-    /** * @var ServiceManager */
+    /**
+     * @var ServiceManager
+     * Instance of the ServiceManager for handling service-related functionality.
+     */
     private ServiceManager $serviceManager;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
     /**

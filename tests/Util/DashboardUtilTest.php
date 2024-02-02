@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class DashboardUtilTest
+ * 
  * @package App\Tests\Util
  */
 class DashboardUtilTest extends TestCase

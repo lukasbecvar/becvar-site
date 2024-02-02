@@ -13,23 +13,42 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class TerminalApiController
+ * 
  * This controller provides API functions for executing terminal commands.
+ * 
+ * @package App\Controller\Api
  */
 class TerminalApiController extends AbstractController
 {
-    /** * @var JsonUtil */
+    /**
+     * @var JsonUtil
+     * Instance of the JsonUtil for handling JSON-related utilities.
+     */
     private JsonUtil $jsonUtil;
 
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var SessionUtil */
+    /**
+     * @var SessionUtil
+     * Instance of the SessionUtil for handling session-related utilities.
+     */
     private SessionUtil $sessionUtil;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
     
     /**

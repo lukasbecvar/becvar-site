@@ -13,18 +13,31 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class LoginController
+ * 
  * Login controller provides user login function.
  * Note: Login uses its own authenticator, not Symfony auth.
+ * 
+ * @package App\Controller\Admin\Auth
  */
 class LoginController extends AbstractController
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling logging functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
     /**

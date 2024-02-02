@@ -8,23 +8,42 @@ use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class AuthManager
+ * 
  * Projects manager provides methods to get/update the projects list
+ * 
+ * @package App\Manager
 */
 class ProjectsManager
 {
-    /** * @var JsonUtil */
+    /**
+     * @var JsonUtil
+     * Instance of the JsonUtil for handling JSON-related utilities.
+     */
     private JsonUtil $jsonUtil;
 
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
 
     /**

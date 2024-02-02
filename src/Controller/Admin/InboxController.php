@@ -11,17 +11,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class InboxController
+ * 
  * Inbox controller provides contact form message reader/ban/close messages.
+ * 
+ * @package App\Controller\Admin
  */
 class InboxController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var MessagesManager */
+    /**
+     * @var MessagesManager
+     * Instance of the MessagesManager for handling messages-related functionality.
+     */
     private MessagesManager $messagesManager;
 
     /**

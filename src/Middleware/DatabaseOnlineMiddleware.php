@@ -9,13 +9,21 @@ use \Doctrine\DBAL\Connection as Connection;
  * Class DatabaseOnlineMiddleware
  *
  * This middleware is used to check the availability of the database.
+ * 
+ * @package App\Middleware
  */
 class DatabaseOnlineMiddleware
 {
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var Connection */
+    /**
+     * @var Connection
+     * Instance of the Doctrine\DBAL\Connection for interacting with the database.
+     */
     private Connection $doctrineConnection;
 
     /**

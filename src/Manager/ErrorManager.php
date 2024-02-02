@@ -7,17 +7,30 @@ use App\Util\SiteUtil;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class AuthManager
+ * 
  * ErrorManager provides error handling operations.
+ * 
+ * @package App\Manager
  */
 class ErrorManager
 {
-    /** * @var Environment */
+    /**
+     * @var Environment
+     * Instance of the Twig\Environment for rendering templates with Twig.
+     */
     private Environment $twig;
-    
-    /** * @var SiteUtil */
+
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
     /**

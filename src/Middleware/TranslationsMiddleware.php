@@ -9,13 +9,21 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
  * Class TranslationsMiddleware
  *
  * This middleware sets translations based on the visitor's language.
+ * 
+ * @package App\Middleware
  */
 class TranslationsMiddleware
 {
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var LocaleAwareInterface */
+    /**
+     * @var LocaleAwareInterface
+     * Instance of the LocaleAwareInterface for handling locale-aware translation.
+     */
     private LocaleAwareInterface $translator;
     
     /**

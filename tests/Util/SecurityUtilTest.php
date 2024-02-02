@@ -6,7 +6,11 @@ use App\Util\SecurityUtil;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class SecurityUtilTest
+ * 
  * @covers \App\Util\SecurityUtil
+ * 
+ * @package App\Tests\Util
  */
 class SecurityUtilTest extends TestCase
 {

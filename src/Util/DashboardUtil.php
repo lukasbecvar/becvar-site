@@ -6,17 +6,30 @@ use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class DashboardUtil
+ * 
  * DashboardUtil provides various utilities for gathering information about the server and environment.
+ * 
+ * @package App\Util
  */
 class DashboardUtil
 {
-    /** @var JsonUtil */
+    /**
+     * @var JsonUtil
+     * Instance of the JsonUtil for handling JSON-related utilities.
+     */
     private JsonUtil $jsonUtil;
 
-    /** @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
     
     /**

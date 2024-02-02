@@ -11,17 +11,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class MediaBrowserController
+ * 
  * Media browser controller provides an image-uploader browser.
+ * 
+ * @package App\Controller\Admin
  */
 class MediaBrowserController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var DatabaseManager */
+    /**
+     * @var DatabaseManager
+     * Instance of the DatabaseManager for handling database-related functionality.
+     */
     private DatabaseManager $databaseManager;
 
     /**

@@ -6,6 +6,8 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class TerminalApiTest
+ * 
  * Admin terminal API test
  *
  * @package App\Tests\Api

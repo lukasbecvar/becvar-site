@@ -3,14 +3,24 @@
 namespace App\Util;
 
 /**
+ * Class VisitorInfoUtil
+ * 
  * VisitorInfoUtil provides methods to get information about visitors.
+ * 
+ * @package App\Util
  */
 class VisitorInfoUtil
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var JsonUtil */
+    /**
+     * @var JsonUtil
+     * Instance of the JsonUtil for handling JSON-related utilities.
+     */
     private JsonUtil $jsonUtil;
 
     /**

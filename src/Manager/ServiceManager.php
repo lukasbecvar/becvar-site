@@ -5,20 +5,36 @@ namespace App\Manager;
 use App\Util\JsonUtil;
 
 /**
+ * Class AuthManager
+ * 
  * Service manager provides all services methods (start, stop, status)
+ * 
+ * @package App\Manager
 */
 class ServiceManager
 {
-    /** * @var JsonUtil */
+    /**
+     * @var JsonUtil
+     * Instance of the JsonUtil for handling JSON-related utilities.
+     */
     private JsonUtil $jsonUtil;
-    
-    /** * @var LogManager */
+
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
-    
-    /** * @var AuthManager */
+
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
     /**

@@ -7,17 +7,30 @@ use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class AuthManager
+ * 
  * Visitor manager provides methods for managing visitors.
+ * 
+ * @package App\Manager
  */
 class VisitorManager
 {
-    /** @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** @var VisitorInfoUtil */
-    private VisitorInfoUtil $visitorInfoUtil; 
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
+    private VisitorInfoUtil $visitorInfoUtil;
 
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
 
     /**

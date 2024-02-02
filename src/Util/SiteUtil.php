@@ -5,11 +5,18 @@ namespace App\Util;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * Class SiteUtil
+ * 
  * SiteUtil provides basic site-related methods.
+ * 
+ * @package App\Util
  */
 class SiteUtil
 {
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
     /**

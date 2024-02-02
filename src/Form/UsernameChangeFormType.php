@@ -11,9 +11,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
+ * Class UsernameChangeFormType
+ * 
  * UsernameChangeFormType provides a form for changing the username in the account settings.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class UsernameChangeFormType extends AbstractType
 {

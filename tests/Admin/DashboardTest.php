@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class DashboardTest
+ * 
  * Admin dashboard component test
  *
  * @package App\Tests\Admin

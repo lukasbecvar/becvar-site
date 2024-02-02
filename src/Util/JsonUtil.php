@@ -3,7 +3,11 @@
 namespace App\Util;
 
 /**
+ * Class JsonUtil
+ * 
  * JsonUtil provides functions for retrieving JSON data from a file or URL.
+ * 
+ * @package App\Util
  */
 class JsonUtil
 {

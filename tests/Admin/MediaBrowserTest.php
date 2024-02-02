@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class MediaBrowserTest
+ * 
  * Admin media browser component test
  *
  * @package App\Tests\Admin

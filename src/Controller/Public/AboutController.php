@@ -7,8 +7,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /** 
+ * Class AboutController
+ * 
  * About controller provides basic public about page
  * Page with information about me
+ * 
+ * @package App\Controller\Public
 */
 class AboutController extends AbstractController
 {

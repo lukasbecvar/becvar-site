@@ -10,16 +10,25 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class ErrorController
+ * 
  * Error controller is a handler for visitors redirect.
  * Main controller that shows error pages by error code.
+ * 
+ * @package App\Controller
  */
 class ErrorController extends AbstractController
 {
-
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
     /**

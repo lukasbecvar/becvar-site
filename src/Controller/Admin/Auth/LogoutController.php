@@ -9,15 +9,25 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class LogoutController
+ * 
  * Logout controller provides user logout function.
  * Note: Login uses its own authenticator, not Symfony auth.
+ * 
+ * @package App\Controller\Admin\Auth
  */
 class LogoutController extends AbstractController
 {
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
     /**

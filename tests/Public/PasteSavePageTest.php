@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class PasteSavePageTest
+ * 
  * Test cases for the Paste Save component.
  *
  * @package App\Tests\Public

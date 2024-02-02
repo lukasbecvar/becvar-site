@@ -7,7 +7,7 @@ namespace App\Util;
  *
  * Utility class for security-related operations.
  *
- * @package App\Utils
+ * @package App\Util
  */
 class SecurityUtil
 {

@@ -14,23 +14,42 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class ChatApiController
+ * 
  * This controller provides API functions for saving and retrieving chat messages.
+ * 
+ * @package App\Controller\Api
  */
 class ChatApiController extends AbstractController
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
 
     /**

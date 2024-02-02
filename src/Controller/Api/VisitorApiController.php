@@ -11,17 +11,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class VisitorApiController
+ * 
  * This controller provides API functions for updating visitor status.
+ * 
+ * @package App\Controller\Api
  */
 class VisitorApiController extends AbstractController
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var VisitorInfoUtil */
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
     private VisitorInfoUtil $visitorInfoUtil;
 
     /**

@@ -6,6 +6,8 @@ namespace App\Middleware;
  * Class AssetsCheckMiddleware
  *
  * This middleware checks if the required resources are installed.
+ * 
+ * @package App\Middleware
  */
 class AssetsCheckMiddleware
 {

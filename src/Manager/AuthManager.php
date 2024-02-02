@@ -11,33 +11,61 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
 
 /**
+ * Class AuthManager
+ * 
  * AuthManager provides login/logout methods.
  * Note: Login uses its own Authenticator, not Symfony auth.
+ * 
+ * @package App\Manager
  */
 class AuthManager
 {
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var CookieUtil */
+    /**
+     * @var CookieUtil
+     * Instance of the CookieUtil for handling cookie-related functionality.
+     */
     private CookieUtil $cookieUtil;
-    
-    /** * @var SessionUtil */
+
+    /**
+     * @var SessionUtil
+     * Instance of the SessionUtil for handling session-related utilities.
+     */
     private SessionUtil $sessionUtil;
-    
-    /** * @var ErrorManager */
+
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
-    
-    /** * @var SecurityUtil */
+
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var VisitorInfoUtil */
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
     private VisitorInfoUtil $visitorInfoUtil;
 
-    /** * @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
 
     /**

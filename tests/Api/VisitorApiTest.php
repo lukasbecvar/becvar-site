@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class VisitorApiTest
+ * 
  * Visitor (status) API test
  *
  * @package App\Tests\Api

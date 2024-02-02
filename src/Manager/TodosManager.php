@@ -7,23 +7,42 @@ use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class AuthManager
+ * 
  * Todos manager provides methods for admin todo manager
+ * 
+ * @package App\Manager
 */
 class TodosManager
 {
-    /** @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
-    
-    /** @var SecurityUtil */
+
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
-    
-    /** @var ErrorManager */
+
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
 
     /**

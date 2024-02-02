@@ -11,20 +11,36 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class DiagnosticController
+ * 
  * Diagnostic controller provides diagnostics with web & host server errors scan.
+ * 
+ * @package App\Controller\Admin
  */
 class DiagnosticController extends AbstractController
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
-    /** * @var DashboardUtil */
+    /**
+     * @var DashboardUtil
+     * Instance of the DashboardUtil for handling dashboard-related functionality.
+     */
     private DashboardUtil $dashboardUtil;
 
-    /** * @var ServiceManager */
+    /**
+     * @var ServiceManager
+     * Instance of the ServiceManager for handling service-related functionality.
+     */
     private ServiceManager $serviceManager;
 
     /**

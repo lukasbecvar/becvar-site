@@ -12,9 +12,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 /**
+ * Class RegisterFormType
  * RegisterFormType provides a form for registering new admin users.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class RegisterFormType extends AbstractType
 {

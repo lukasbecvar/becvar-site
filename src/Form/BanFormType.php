@@ -9,9 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
+ * Class BanFormType
+ * 
  * Ban form provides a visitor ban form with a reason value.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class BanFormType extends AbstractType
 {

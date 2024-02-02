@@ -5,8 +5,9 @@ namespace App\Tests\Admin\Auth;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class NonAuthRedirectTest
+ * 
  * Non-auth redirect authenticator test.
- *
  * Test all admin routes in the default state when the user is not logged in
  *
  * @package App\Tests\Admin\Auth

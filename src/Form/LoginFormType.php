@@ -12,9 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
+ * Class LoginFormType
+ * 
  * Login form provides an admin accounts authenticator.
  *
  * @see AbstractType
+ * 
+ * @package App\Form
  */
 class LoginFormType extends AbstractType
 {

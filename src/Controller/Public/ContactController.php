@@ -15,25 +15,43 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /** 
+ * Class ContactController
+ * 
  * Contact controller provides contact links & contact form
  * Page to display contact information and a form that stores messages in the database
+ * 
+ * @package App\Controller\Public
 */
-
 class ContactController extends AbstractController
 {   
-    /** * @var LogManager */
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
     private LogManager $logManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var VisitorInfoUtil */
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
     private VisitorInfoUtil $visitorInfoUtil;
 
-    /** * @var MessagesManager */
+    /**
+     * @var MessagesManager
+     * Instance of the MessagesManager for handling messages-related functionality.
+     */
     private MessagesManager $messagesManager;
 
     /**

@@ -6,6 +6,8 @@ use App\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class AntiLogTest
+ * 
  * Test cases for the AntiLog functionality.
  *
  * @package App\Tests\Others

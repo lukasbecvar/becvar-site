@@ -5,11 +5,18 @@ namespace App\Util;
 use App\Util\SecurityUtil;
 
 /**
+ * Class CookieUtil
+ * 
  * CookieUtil provides cookie management functionalities.
+ * 
+ * @package App\Util
  */
 class CookieUtil
 {
-    /** @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
     /**

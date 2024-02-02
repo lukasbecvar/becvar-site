@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class AdminDiagnosticTest
+ * 
  * Admin diagnostics component test
  *
  * @package App\Tests\Admin

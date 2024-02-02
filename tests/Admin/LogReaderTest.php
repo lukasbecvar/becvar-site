@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class LogReaderTest
+ * 
  * Admin log reader component test
  *
  * @package App\Tests\Admin

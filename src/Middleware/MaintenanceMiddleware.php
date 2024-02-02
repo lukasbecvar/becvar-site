@@ -9,15 +9,23 @@ use App\Manager\ErrorManager;
  * Class MaintenanceMiddleware
  *
  * This middleware is used to check if the application is in maintenance mode.
+ * 
+ * @package App\Middleware
  */
 class MaintenanceMiddleware
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
-
+    
     /**
      * MaintenanceMiddleware constructor.
      *

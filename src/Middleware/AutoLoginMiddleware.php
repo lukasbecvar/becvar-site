@@ -11,16 +11,27 @@ use App\Manager\AuthManager;
  * Class AutoLoginMiddleware
  *
  * This middleware checks if the required auto-login function should be triggered.
+ * 
+ * @package App\Middleware
  */
 class AutoLoginMiddleware
 {
-    /** * @var CookieUtil */
+    /**
+     * @var CookieUtil
+     * Instance of the CookieUtil for handling cookie-related functionality.
+     */
     private CookieUtil $cookieUtil;
 
-    /** * @var SessionUtil */
+    /**
+     * @var SessionUtil
+     * Instance of the SessionUtil for handling session-related utilities.
+     */
     private SessionUtil $sessionUtil;
 
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
     /**

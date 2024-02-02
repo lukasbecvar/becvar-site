@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class ContactPageTest
+ * 
  * Test cases for the Contact page.
  *
  * @package App\Tests\Public

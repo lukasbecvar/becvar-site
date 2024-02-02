@@ -5,14 +5,24 @@ namespace App\Util;
 use App\Manager\ErrorManager;
 
 /**
+ * Class SessionUtil
+ * 
  * SessionUtil provides session management functions.
+ * 
+ * @package App\Util
  */
 class SessionUtil
 {
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
     /**

@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class DatabaseBrowserTest
+ * 
  * Admin database browser component test
  *
  * @package App\Tests\Admin

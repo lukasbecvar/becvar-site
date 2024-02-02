@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class ChatTest
+ * 
  * Admin chat API test
  *
  * @package App\Tests\Api

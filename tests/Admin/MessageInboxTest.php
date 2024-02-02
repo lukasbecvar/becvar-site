@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * Class MessageInboxTest
+ * 
  * Admin message inbox component test
  *
  * @package App\Tests\Admin

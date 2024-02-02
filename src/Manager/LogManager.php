@@ -3,37 +3,61 @@
 namespace App\Manager;
 
 use App\Entity\Log;
+use App\Util\SiteUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
-use App\Interface\LogManagerInterface;
-use App\Util\SiteUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
+ * Class AuthManager
+ * 
  * LogManager provides log functions for saving events to a database table.
+ * 
+ * @package App\Manager
  */
 class LogManager
 {
-    /** * @var SiteUtil */
+    /**
+     * @var SiteUtil
+     * Instance of the SiteUtil for handling site-related utilities.
+     */
     private SiteUtil $siteUtil;
 
-    /** * @var CookieUtil */
+    /**
+     * @var CookieUtil
+     * Instance of the CookieUtil for handling cookie-related functionality.
+     */
     private CookieUtil $cookieUtil;
 
-    /** * @var ErrorManager */
+    /**
+     * @var ErrorManager
+     * Instance of the ErrorManager for handling error-related functionality.
+     */
     private ErrorManager $errorManager;
 
-    /** * @var SecurityUtil */
+    /**
+     * @var SecurityUtil
+     * Instance of the SecurityUtil for handling security-related utilities.
+     */
     private SecurityUtil $securityUtil;
 
-    /** * @var VisitorManager */
+    /**
+     * @var VisitorManager
+     * Instance of the VisitorManager for handling visitor-related functionality.
+     */
     private VisitorManager $visitorManager;
 
-    /** * @var VisitorInfoUtil */
+    /**
+     * @var VisitorInfoUtil
+     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
+     */
     private VisitorInfoUtil $visitorInfoUtil;
 
-    /** * @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     * Instance of the EntityManagerInterface for interacting with the database.
+     */
     private EntityManagerInterface $entityManager;
     
     /**

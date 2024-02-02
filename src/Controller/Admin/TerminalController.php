@@ -8,11 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
+ * Class TerminalController
+ * 
  * Terminal controller provides an admin server shell.
+ * 
+ * @package App\Controller\Admin
  */
 class TerminalController extends AbstractController
 {
-    /** * @var AuthManager */
+    /**
+     * @var AuthManager
+     * Instance of the AuthManager for handling authentication-related functionality.
+     */
     private AuthManager $authManager;
 
     /**

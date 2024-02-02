@@ -6,7 +6,11 @@ use Twig\TwigFilter;
 use Twig\Extension\AbstractExtension;
 
 /**
+ * Class LinkifyExtension
+ * 
  * LinkifyExtension is a custom Twig extension for converting links in text to clickable HTML links.
+ * 
+ * @package App\Twig
  */
 class LinkifyExtension extends AbstractExtension
 {

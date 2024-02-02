@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class RegisterTest
+ * 
  * Register component test.
  *
  * @package App\Tests\Admin\Auth

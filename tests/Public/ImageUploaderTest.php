@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
+ * Class ImageUploaderTest
+ * 
  * Test cases for the Image Uploader component.
  *
  * @package App\Tests\Public

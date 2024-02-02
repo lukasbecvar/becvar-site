@@ -7,7 +7,11 @@ use App\Util\SecurityUtil;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class SiteUtilTest
+ * 
  * @covers \App\Util\SiteUtil
+ * 
+ * @package App\Tests\Util
  */
 class SiteUtilTest extends TestCase
 {
