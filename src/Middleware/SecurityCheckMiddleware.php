@@ -36,7 +36,7 @@ class SecurityCheckMiddleware
     public function onKernelRequest(): void
     {
         // check if app not localhost running
-        if (!$this->siteUtil->isRunningLocalhost()) {
+        if ($this->siteUtil->isSSLOnly()) {
             if (!$this->siteUtil->isSsl()) {
                 $this->errorManager->handleError('SSL error: connection not running on ssl protocol', 500);
             }

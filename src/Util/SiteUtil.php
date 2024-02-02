@@ -107,6 +107,21 @@ class SiteUtil
     }
 
     /**
+     * Check if the ssl only mode.
+     *
+     * @return bool Whether the application is under ssl only mode.
+     */
+    public function isSSLOnly(): bool 
+    {
+        // check if ssl only mode enabled in app enviroment
+        if ($_ENV['SSL_ONLY'] == 'true') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Check if the application is in development mode.
      *
      * @return bool Whether the application is in development mode.
