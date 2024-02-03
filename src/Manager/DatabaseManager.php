@@ -191,7 +191,7 @@ class DatabaseManager
         }
     
         // decrypt database data (specify table names)
-        $decrypted_tables = ["`todos`", "`chat_messages`", "`code_paste`", "`inbox_messages`"];
+        $decrypted_tables = ["`todos`", "`chat_messages`", "`code_paste`", "`images`", "`inbox_messages`", "`users`"];
 
         // build new data array (decrypt aes data)
         if (in_array($table_name, $decrypted_tables)) {
@@ -202,8 +202,11 @@ class DatabaseManager
                     $arr[$key] = (
                         $key === 'text' || 
                         $key === 'message' ||
-                        $key === 'content'
-                    ) ? $this->securityUtil->decryptAes($val) : $val;
+                        $key === 'content' ||
+                        $key === 'image' ||
+                        $key === 'profile_pic' ||
+                        $key === 'password'
+                    ) ? '[encrypted-data]' : $val;
                 }
                 array_push($decrypted_data, $arr);
             }
