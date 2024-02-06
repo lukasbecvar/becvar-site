@@ -161,12 +161,13 @@ class DatabaseManager
      * @param string $table_name  The name of the table from which to retrieve data.
      * @param int    $page        The page number for pagination (default is 1).
      * @param bool   $log         Indicates whether to log the action (default is true).
+     * @param bool   $raw         Whether to return raw data without decryption. Default is false.
      *
      * @throws \Exception If there is an error during the retrieval of the table data or the table is not found.
      *
      * @return array<mixed> The array of data from the specified table.
      */
-    public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true): array
+    public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true, bool $raw = false): array
     {
         $data = [];
         $itemsPerPage = $_ENV['ITEMS_PER_PAGE'];
@@ -199,14 +200,18 @@ class DatabaseManager
             foreach ($data as $value) {
                 $arr = [];
                 foreach ($value as $key => $val) {
-                    $arr[$key] = (
-                        $key === 'text' || 
-                        $key === 'message' ||
-                        $key === 'content' ||
-                        $key === 'image' ||
-                        $key === 'profile_pic' ||
-                        $key === 'password'
-                    ) ? '[encrypted-data]' : $val;
+                    if ($raw == true) {
+                        $arr[$key] = $val;
+                    } else {
+                        $arr[$key] = (
+                            $key === 'text' || 
+                            $key === 'message' ||
+                            $key === 'content' ||
+                            $key === 'image' ||
+                            $key === 'profile_pic' ||
+                            $key === 'password'
+                        ) ? '[encrypted-data]' : $val;
+                    }
                 }
                 array_push($decrypted_data, $arr);
             }
@@ -340,7 +345,7 @@ class DatabaseManager
         $images = [];
         
         // get images list
-        $images_list = $this->getTableDataByPage('images', $page);
+        $images_list = $this->getTableDataByPage('images', $page, true, true);
 
         // get image data (this is for decrypt image)
         foreach ($images_list as $image) {
