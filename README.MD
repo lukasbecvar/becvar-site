@@ -41,6 +41,11 @@ the public part of the site contains information about me and my projects
 ## Assets builder
  - Webpack (symfony-encore), scripts/build.sh
 
+## Authentificator
+ - This project uses my own authentication system, not Symfony security!
+ - This authentication is designed to authenticate across my internal apps.
+ - AuthManager contains functions for registration, login, logout, and user token authentication.
+
 ## Required
  - php-8.1 or <
  - mysql8 or <
