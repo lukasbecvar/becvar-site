@@ -99,7 +99,15 @@ class ProjectsManager
             $name = $repo['name'];
             $language = $repo['language'];
             $html_url = $repo['html_url'];
-            $description = $this->securityUtil->escapeString($repo['description']);
+
+            // check if description is null
+            if ($repo['description'] == null) {
+                $description = $repo['name'];
+            } else {
+
+                // get repository description (with escape)
+                $description = $this->securityUtil->escapeString($repo['description']);
+            }
             
             // check if repo is profile readme
             if ($name != $github_user) {
