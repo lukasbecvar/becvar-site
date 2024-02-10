@@ -19,10 +19,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # enable lazy loadings
-    App\Manager\LogManager:
-        lazy: true
-
     # twig extension (link detect & replace with |linkify)
     App\Twig\LinkifyExtension:
         tags:

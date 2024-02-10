@@ -28,23 +28,15 @@ class ErrorManager
     private SiteUtil $siteUtil;
 
     /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
-    private LogManager $logManager;
-
-    /**
      * ErrorManager constructor.
      *
      * @param Environment $twig
      * @param SiteUtil    $siteUtil
-     * @param LogManager  $logManager
      */
-    public function __construct(Environment $twig, SiteUtil $siteUtil, LogManager $logManager)
+    public function __construct(Environment $twig, SiteUtil $siteUtil)
     {
         $this->twig = $twig;
         $this->siteUtil = $siteUtil;
-        $this->logManager = $logManager;
     }
 
     /**
@@ -57,9 +49,6 @@ class ErrorManager
      */
     public function handleError(string $msg, int $code): Response
     {
-        // log error action
-        $this->logManager->log('internal-error', $msg.', code: '.$code);
-
         // check if app is in dev mode
         if ($this->siteUtil->isDevMode()) {
             // build app error message
