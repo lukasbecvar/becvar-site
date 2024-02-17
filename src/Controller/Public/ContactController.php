@@ -3,7 +3,6 @@
 namespace App\Controller\Public;
 
 use App\Entity\Message;
-use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
@@ -31,12 +30,6 @@ class ContactController extends AbstractController
     private LogManager $logManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * @var VisitorManager
      * Instance of the VisitorManager for handling visitor-related functionality.
      */
@@ -58,20 +51,17 @@ class ContactController extends AbstractController
      * ContactController constructor.
      *
      * @param LogManager      $logManager      
-     * @param SecurityUtil    $securityUtil    
      * @param VisitorManager  $visitorManager  
      * @param VisitorInfoUtil $visitorInfoUtil
      * @param MessagesManager $messagesManager 
      */
     public function __construct(
         LogManager $logManager, 
-        SecurityUtil $securityUtil, 
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
     ) {
         $this->logManager = $logManager;
-        $this->securityUtil = $securityUtil;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
         $this->messagesManager = $messagesManager;
@@ -142,11 +132,6 @@ class ContactController extends AbstractController
                 $error_msg = 'contact.error.blocked.message';
                 $this->logManager->log('message-sender', 'message by: '.$email.', has been blocked: honeypot used');
             } else {
-
-                // escape values (XSS protection)
-                $name = $this->securityUtil->escapeString($name);
-                $email = $this->securityUtil->escapeString($email);
-                $message_input = $this->securityUtil->escapeString($message_input);
 
                 // get others data
                 $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));

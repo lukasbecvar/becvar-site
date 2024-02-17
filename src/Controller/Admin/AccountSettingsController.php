@@ -190,9 +190,6 @@ class AccountSettingsController extends AbstractController
                 // get username 
                 $username = $form->get('username')->getData();
 
-                // escape username (XSS protection)
-                $username = $this->securityUtil->escapeString($username);
-
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
@@ -250,10 +247,6 @@ class AccountSettingsController extends AbstractController
                 // get passwords
                 $password = $form->get('password')->getData();
                 $repassword = $form->get('repassword')->getData();
-
-                // escape data (XSS protection)
-                $password = $this->securityUtil->escapeString($password);
-                $repassword = $this->securityUtil->escapeString($repassword);
 
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);

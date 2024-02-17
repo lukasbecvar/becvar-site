@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Util\SiteUtil;
 use App\Entity\Visitor;
 use App\Form\BanFormType;
-use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
@@ -43,12 +42,6 @@ class VisitorManagerController extends AbstractController
     private AuthManager $authManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * @var VisitorManager
      * Instance of the VisitorManager for handling visitor-related functionality.
      */
@@ -66,7 +59,6 @@ class VisitorManagerController extends AbstractController
      * @param SiteUtil        $siteUtil
      * @param BanManager      $banManager
      * @param AuthManager     $authManager
-     * @param SecurityUtil    $securityUtil
      * @param VisitorManager  $visitorManager
      * @param VisitorInfoUtil $visitorInfoUtil
      */
@@ -74,14 +66,12 @@ class VisitorManagerController extends AbstractController
         SiteUtil $siteUtil,
         BanManager $banManager,
         AuthManager $authManager,
-        SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
         $this->authManager = $authManager;
-        $this->securityUtil = $securityUtil;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -174,17 +164,15 @@ class VisitorManagerController extends AbstractController
                 $ban_reason = $form->get('ban_reason')->getData();
 
                 // check if reason set
-                if (!empty($ban_reason)) {
-                    $reason = $this->securityUtil->escapeString($ban_reason);
-                } else {
-                    $reason = 'no-reason';
+                if (empty($ban_reason)) {
+                    $ban_reason = 'no-reason';
                 }
 
                 // get visitor ip
                 $ip_address = $this->banManager->getVisitorIP($id);
 
                 // ban visitor
-                $this->banManager->banVisitor($ip_address, $reason);
+                $this->banManager->banVisitor($ip_address, $ban_reason);
 
                 // check if banned by inbox
                 if ($request->query->get('referer') == 'inbox') {

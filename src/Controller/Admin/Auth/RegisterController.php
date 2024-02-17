@@ -3,7 +3,6 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Entity\User;
-use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Form\RegisterFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,23 +28,14 @@ class RegisterController extends AbstractController
     private AuthManager $authManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * RegisterController constructor.
      *
      * @param AuthManager   $authManager
-     * @param SecurityUtil  $securityUtil
      */
     public function __construct(
         AuthManager $authManager, 
-        SecurityUtil $securityUtil, 
     ) {
         $this->authManager = $authManager;
-        $this->securityUtil = $securityUtil;
     }
 
     /**
@@ -76,11 +66,6 @@ class RegisterController extends AbstractController
                 $username = $form->get('username')->getData();
                 $password = $form->get('password')->getData();
                 $repassword = $form->get('re-password')->getData();
-
-                // escape values (XSS protection)
-                $username = $this->securityUtil->escapeString($username);
-                $password = $this->securityUtil->escapeString($password);
-                $repassword = $this->securityUtil->escapeString($repassword);
 
                 // check if username used
                 if ($this->authManager->getUserRepository(['username' => $username]) != null) {

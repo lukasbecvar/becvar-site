@@ -104,10 +104,7 @@ class TodoManagerController extends AbstractController
 
                 // check if text is empty
                 if (!empty($text)) {
-
-                    // escape text
-                    $text = $this->securityUtil->escapeString($text);
-
+                    
                     // save new todo
                     $this->todosManager->addTodo($text);
 

@@ -81,10 +81,6 @@ class LoginController extends AbstractController
                 $password = $form->get('password')->getData();
                 $remember = $form->get('remember')->getData();
 
-                // escape values (XSS protection)
-                $username = $this->securityUtil->escapeString($username);
-                $password = $this->securityUtil->escapeString($password);
-
                 // check if user exist
                 if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                     
