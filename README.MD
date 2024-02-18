@@ -46,6 +46,9 @@ the public part of the site contains information about me and my projects
  - This authentication is designed to authenticate across my internal apps.
  - AuthManager contains functions for registration, login, logout, and user token authentication.
 
+## Docker
+Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
+
 ## Required
  - php-8.1 or <
  - mysql8 or <
