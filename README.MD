@@ -49,6 +49,17 @@ the public part of the site contains information about me and my projects
 ## Docker
 Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
 
+## Todos
+- [ ] Check user login middleware for all /admin routes
+- [ ] Change user token on every login
+- [ ] Implement security alert email (user login) (use classic event)
+- [ ] Implement smyfony messenger to emails & save logs
+- [ ] Implement redis for cache & symfony messenger
+- [ ] Implement advanced get methods to entity repoistory
+- [ ] Recode managers to Services
+- [ ] Increase phpstan level
+- [ ] Admin dark mode++
+
 ## Required
  - php-8.1 or <
  - mysql8 or <

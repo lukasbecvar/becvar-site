@@ -5,6 +5,9 @@
 # color codes.
 red_echo () { echo "\033[31m\033[1m$1\033[0m"; }
 
+# print warning
+red_echo 'Warning: use this server only for local development'
+
 # check if vendor installed
 if [ ! -d 'vendor/' ]
 then
@@ -24,8 +27,11 @@ sudo systemctl start mysql
 # print mysql status
 systemctl --no-pager status mysql
 
-# print warning
-red_echo 'Warning: use this server only for local development'
+# start Symfony server in background
+symfony server:start &
 
-# start server
-symfony server:start
+# start npm watch in background
+npm run watch &
+
+# wait for both processes to finish
+wait

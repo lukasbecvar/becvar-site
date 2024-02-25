@@ -43,6 +43,6 @@ class JsonUtil
         }
 
         // decode & return json
-        return json_decode(utf8_encode($data), true);
+        return json_decode($data, true);
     }
 }
