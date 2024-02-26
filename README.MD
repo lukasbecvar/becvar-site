@@ -52,9 +52,7 @@ Docker is used only for development in this application. The production version 
 ## Todos
 - [ ] Check user login middleware for all /admin routes
 - [ ] Change user token on every login
-- [ ] Implement security alert email (user login) (use classic event)
-- [ ] Implement smyfony messenger to emails & save logs
-- [ ] Implement redis for cache & symfony messenger
+- [ ] Recode error manager
 - [ ] Implement advanced get methods to entity repoistory
 - [ ] Recode managers to Services
 - [ ] Increase phpstan level
