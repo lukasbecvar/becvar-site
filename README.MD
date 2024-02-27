@@ -57,6 +57,10 @@ Docker is used only for development in this application. The production version 
 - [ ] Recode managers to Services
 - [ ] Increase phpstan level
 - [ ] Admin dark mode++
+- [ ] Implement redis for cache & store userstatus
+- [ ] Implement security alert (user login)
+- [ ] Implement symfony messenger (email and logs)
+- [ ] Rework docker config (allow access to the host system)
 
 ## Required
  - php-8.1 or <
