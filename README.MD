@@ -51,7 +51,6 @@ Docker is used only for development in this application. The production version 
 
 ## Todos
 - [X] Check user login middleware for all /admin routes
-- [ ] Change user token on every login
 - [ ] Recode error manager
 - [ ] Implement advanced get methods to entity repoistory
 - [ ] Recode managers to Services

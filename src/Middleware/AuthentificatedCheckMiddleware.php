@@ -29,7 +29,7 @@ class AuthentificatedCheckMiddleware
     private UrlGeneratorInterface $urlGenerator;
 
     /**
-     * SecurityCheckMiddleware constructor.
+     * AuthentificatedCheckMiddleware constructor.
      *
      * @param AuthManager           $authManager
      * @param UrlGeneratorInterface $urlGenerator
