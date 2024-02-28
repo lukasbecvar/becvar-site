@@ -120,51 +120,47 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/dashboard.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
+        return $this->render('admin/dashboard.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // warning system
-                'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
-                'web_service_username' => $this->dashboardUtil->getWebUsername(),
-                'is_ssl' => $this->siteUtil->isSsl(),
-                'is_maintenance' => $this->siteUtil->isMaintenance(),   
-                'is_dev_mode' => $this->siteUtil->isDevMode(),
-                'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
-                'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound(),
-                'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
+            // warning system
+            'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
+            'web_service_username' => $this->dashboardUtil->getWebUsername(),
+            'is_ssl' => $this->siteUtil->isSsl(),
+            'is_maintenance' => $this->siteUtil->isMaintenance(),   
+            'is_dev_mode' => $this->siteUtil->isDevMode(),
+            'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
+            'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound(),
+            'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
 
-                // dashboard (services controller)
-                'services' => $this->serviceManager->getServices(),
-                'is_ufw_installed' => $this->serviceManager->isServiceInstalled('ufw'),
-                'is_ufw_running' => $this->serviceManager->isUfwRunning(),
+            // dashboard (services controller)
+            'services' => $this->serviceManager->getServices(),
+            'is_ufw_installed' => $this->serviceManager->isServiceInstalled('ufw'),
+            'is_ufw_running' => $this->serviceManager->isUfwRunning(),
                 
-                // dashboard data (System info)
-                'operating_system' => str_replace('DISTRIB_ID=', '', $this->dashboardUtil->getSoftwareInfo()['distro']['operating_system']),
-                'kernal_version' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_version'],
-                'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_arch'],
+            // dashboard data (System info)
+            'operating_system' => str_replace('DISTRIB_ID=', '', $this->dashboardUtil->getSoftwareInfo()['distro']['operating_system']),
+            'kernal_version' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_version'],
+            'kernal_arch' => $this->dashboardUtil->getSoftwareInfo()['distro']['kernal_arch'],
 
-                // dashboard data (counters)
-                'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log, ['status' => 'unreaded']),
-                'messages_count' => $this->dashboardUtil->getDatabaseEntityCount(new Message, ['status' => 'open']),
-                'todos_count' => $this->dashboardUtil->getDatabaseEntityCount(new Todo, ['status' => 'non-completed']),
-                'images_count' => $this->dashboardUtil->getDatabaseEntityCount(new Image),
-                'pastest_count' => $this->dashboardUtil->getDatabaseEntityCount(new Paste),
-                'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
-                'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
-                'banned_visitors_count' => $this->banManager->getBannedCount(),
-                'online_users_count' => $this->authManager->getUsersWhereStatus('online'),
-                'server_uptime' => $this->dashboardUtil->getHostUptime(),   
-                'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
-                'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   
-                'drive_usage' => $this->dashboardUtil->getDriveUsage()
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // dashboard data (counters)
+            'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log, ['status' => 'unreaded']),
+            'messages_count' => $this->dashboardUtil->getDatabaseEntityCount(new Message, ['status' => 'open']),
+            'todos_count' => $this->dashboardUtil->getDatabaseEntityCount(new Todo, ['status' => 'non-completed']),
+            'images_count' => $this->dashboardUtil->getDatabaseEntityCount(new Image),
+            'pastest_count' => $this->dashboardUtil->getDatabaseEntityCount(new Paste),
+            'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor),
+            'online_visitors_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
+            'banned_visitors_count' => $this->banManager->getBannedCount(),
+            'online_users_count' => $this->authManager->getUsersWhereStatus('online'),
+            'server_uptime' => $this->dashboardUtil->getHostUptime(),   
+            'cpu_usage' => $this->dashboardUtil->getCpuUsage(),   
+            'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],   
+            'drive_usage' => $this->dashboardUtil->getDriveUsage()
+        ]);
     }
 
     /**
@@ -176,26 +172,22 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/runner', methods: ['GET'], name: 'admin_service_manager')]
     public function serviceActionRunner(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            // get query parameters
-            $service_name = $this->siteUtil->getQueryString('service', $request);
-            $action = $this->siteUtil->getQueryString('action', $request);
+        // get query parameters
+        $service_name = $this->siteUtil->getQueryString('service', $request);
+        $action = $this->siteUtil->getQueryString('action', $request);
 
-            // escape values
-            $service_name = $this->securityUtil->escapeString($service_name);
-            $action = $this->securityUtil->escapeString($action);
+        // escape values
+        $service_name = $this->securityUtil->escapeString($service_name);
+        $action = $this->securityUtil->escapeString($action);
 
-            // check if action is emergency shutdown
-            if ($service_name == 'emergency' && $action == 'shutdown') {
-                return $this->redirectToRoute('admin_emergency_shutdown'); 
-            } else {
-                // run normal action
-                $this->serviceManager->runAction($service_name, $action);
-            }
-            return $this->redirectToRoute('admin_dashboard');
+        // check if action is emergency shutdown
+        if ($service_name == 'emergency' && $action == 'shutdown') {
+            return $this->redirectToRoute('admin_emergency_shutdown'); 
         } else {
-            return $this->redirectToRoute('auth_login');
+            // run normal action
+            $this->serviceManager->runAction($service_name, $action);
         }
+        return $this->redirectToRoute('admin_dashboard');
     }
     
     /**
@@ -207,55 +199,51 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/emergency/shutdown', methods: ['GET', 'POST'], name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            $error_msg = null;
+        $error_msg = null;
 
-            // generate configmation code
-            $confirm_code = ByteString::fromRandom(16)->toString();
+        // generate configmation code
+        $confirm_code = ByteString::fromRandom(16)->toString();
     
-            if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
 
-                // get post data
-                $form_submit = $request->request->get('submitShutdown');
-                $shutdown_code = $request->request->get('shutdownCode');
-                $confirm_code = $request->request->get('confirmCode');
+            // get post data
+            $form_submit = $request->request->get('submitShutdown');
+            $shutdown_code = $request->request->get('shutdownCode');
+            $confirm_code = $request->request->get('confirmCode');
 
-                // check if form submited
-                if (isset($form_submit)) {
+            // check if form submited
+            if (isset($form_submit)) {
 
-                    // check if codes submited
-                    if (isset($shutdown_code) && isset($confirm_code)) {
+                // check if codes submited
+                if (isset($shutdown_code) && isset($confirm_code)) {
 
-                        // escape post data
-                        $code_1 = $this->securityUtil->escapeString($shutdown_code);
-                        $code_2 = $this->securityUtil->escapeString($confirm_code);
+                    // escape post data
+                    $code_1 = $this->securityUtil->escapeString($shutdown_code);
+                    $code_2 = $this->securityUtil->escapeString($confirm_code);
     
-                        // check if codes is valid
-                        if ($code_1 == $code_2) {
+                    // check if codes is valid
+                    if ($code_1 == $code_2) {
             
-                            // ! execute shutdown !
-                            $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
-                        } else {
-                            $error_msg = 'confirmation codes is not matched';
-                        }
+                        // ! execute shutdown !
+                        $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
                     } else {
-                        $error_msg = 'You must enter all values';
+                        $error_msg = 'confirmation codes is not matched';
                     }
+                } else {
+                    $error_msg = 'You must enter all values';
                 }
             }
-    
-            return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-    
-                // form data
-                'error_msg' => $error_msg,
-                'confirm_code' => $confirm_code
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
         }
+    
+        return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+    
+            // form data
+            'error_msg' => $error_msg,
+            'confirm_code' => $confirm_code
+        ]);
     } 
 }

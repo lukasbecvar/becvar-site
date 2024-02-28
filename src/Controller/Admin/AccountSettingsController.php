@@ -77,22 +77,18 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/account-settings.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
+        return $this->render('admin/account-settings.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // account settings froms data
-                'profile_pic_change_form' => null,
-                'username_change_form' => null,
-                'password_change_form' => null,
-                'error_msg' => null
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // account settings froms data
+            'profile_pic_change_form' => null,
+            'username_change_form' => null,
+            'password_change_form' => null,
+            'error_msg' => null
+        ]);
     }
 
     /**
@@ -106,63 +102,59 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            $user = new User();
-            $error_msg = null;
+        $user = new User();
+        $error_msg = null;
 
-            // create pic form change
-            $form = $this->createForm(ProfilePicChangeFormType::class, $user);
-            $form->handleRequest($request);
+        // create pic form change
+        $form = $this->createForm(ProfilePicChangeFormType::class, $user);
+        $form->handleRequest($request);
 
-            // check form if submited
-            if ($form->isSubmitted() && $form->isValid()) {
+        // check form if submited
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                // get image data
-                $image = $form->get('profile-pic')->getData();
-                $extension = $image->getClientOriginalExtension();
+            // get image data
+            $image = $form->get('profile-pic')->getData();
+            $extension = $image->getClientOriginalExtension();
 
-                // check if file is image
-                if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
+            // check if file is image
+            if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
 
-                    // get user repository
-                    $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+                // get user repository
+                $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
                     
-                    // get image content
-                    $file_contents = file_get_contents($image);
+                // get image content
+                $file_contents = file_get_contents($image);
 
-                    // encode image
-                    $image_code = base64_encode($file_contents);
+                // encode image
+                $image_code = base64_encode($file_contents);
 
-                    try {
-                        // update profile pics
-                        $userRepo->setProfilePic($image_code);
-                        $this->entityManager->flush();
+                try {
+                    // update profile pics
+                    $userRepo->setProfilePic($image_code);
+                    $this->entityManager->flush();
 
-                        // redirect back to values table
-                        return $this->redirectToRoute('admin_account_settings_table');
-                    } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-                    }  
-                } else {
-                    $error_msg = 'please select image file';
-                }
+                    // redirect back to values table
+                    return $this->redirectToRoute('admin_account_settings_table');
+                } catch (\Exception $e) {
+                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                }  
+            } else {
+                $error_msg = 'please select image file';
             }
-
-            return $this->render('admin/account-settings.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // account settings froms data
-                'profile_pic_change_form' => $form->createView(),
-                'username_change_form' => null,
-                'password_change_form' => null,
-                'error_msg' => $error_msg
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
         }
+
+        return $this->render('admin/account-settings.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
+            // account settings froms data
+            'profile_pic_change_form' => $form->createView(),
+            'username_change_form' => null,
+            'password_change_form' => null,
+            'error_msg' => $error_msg
+        ]);
     }
 
     /**
@@ -176,50 +168,46 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            $user = new User();
-            $error_msg = null;
+        $user = new User();
+        $error_msg = null;
 
-            // create username form change
-            $form = $this->createForm(UsernameChangeFormType::class, $user);
-            $form->handleRequest($request);
+        // create username form change
+        $form = $this->createForm(UsernameChangeFormType::class, $user);
+        $form->handleRequest($request);
 
-            // check form if submited
-            if ($form->isSubmitted() && $form->isValid()) {
+        // check form if submited
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                // get username 
-                $username = $form->get('username')->getData();
+            // get username 
+            $username = $form->get('username')->getData();
 
-                // get user repository
-                $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+            // get user repository
+            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
-                try { // update username
-                    $userRepo->setUsername($username);
-                    $this->entityManager->flush();
+            try { // update username
+                $userRepo->setUsername($username);
+                $this->entityManager->flush();
 
-                    // redirect back to values table
-                    return $this->redirectToRoute('admin_account_settings_table');
+                // redirect back to values table
+                return $this->redirectToRoute('admin_account_settings_table');
 
-                } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-                }  
-            }
-            
-            return $this->render('admin/account-settings.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // account settings froms data
-                'profile_pic_change_form' => null,
-                'password_change_form' => null,
-                'username_change_form' => $form,
-                'error_msg' => $error_msg
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
+            } catch (\Exception $e) {
+                return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+            }  
         }
+            
+        return $this->render('admin/account-settings.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
+            // account settings froms data
+            'profile_pic_change_form' => null,
+            'password_change_form' => null,
+            'username_change_form' => $form,
+            'error_msg' => $error_msg
+        ]);
     }
     
     /**
@@ -233,60 +221,56 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            $user = new User();
-            $error_msg = null;
+        $user = new User();
+        $error_msg = null;
 
-            // create username form change
-            $form = $this->createForm(PasswordChangeFormType::class, $user);
-            $form->handleRequest($request);
+        // create username form change
+        $form = $this->createForm(PasswordChangeFormType::class, $user);
+        $form->handleRequest($request);
 
-            // check form if submited
-            if ($form->isSubmitted() && $form->isValid()) {
+        // check form if submited
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                // get passwords
-                $password = $form->get('password')->getData();
-                $repassword = $form->get('repassword')->getData();
+            // get passwords
+            $password = $form->get('password')->getData();
+            $repassword = $form->get('repassword')->getData();
 
-                // get user repository
-                $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+            // get user repository
+            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
-                if ($password != $repassword) {
-                    $error_msg = 'Your passwords is not match!';
-                } else {
+            if ($password != $repassword) {
+                $error_msg = 'Your passwords is not match!';
+            } else {
 
-                    try {
-                        // hash password
-                        $password_hash = $this->securityUtil->genBcryptHash($password, 10);
+                try {
+                    // hash password
+                    $password_hash = $this->securityUtil->genBcryptHash($password, 10);
 
-                        // update password
-                        $userRepo->setPassword($password_hash);
+                    // update password
+                    $userRepo->setPassword($password_hash);
 
-                        // flush user data
-                        $this->entityManager->flush();
+                    // flush user data
+                    $this->entityManager->flush();
 
-                        return $this->redirectToRoute('admin_account_settings_table');
-                    } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-                    }  
-                }
+                    return $this->redirectToRoute('admin_account_settings_table');
+                } catch (\Exception $e) {
+                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
+                }  
             }
-
-            // render password change form
-            return $this->render('admin/account-settings.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                // account settings froms data
-                'profile_pic_change_form' => null,
-                'username_change_form' => null,
-                'password_change_form' => $form,
-                'error_msg' => $error_msg
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
         }
+
+        // render password change form
+        return $this->render('admin/account-settings.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
+            // account settings froms data
+            'profile_pic_change_form' => null,
+            'username_change_form' => null,
+            'password_change_form' => $form,
+            'error_msg' => $error_msg
+        ]);
     }
 }

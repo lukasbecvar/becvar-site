@@ -71,31 +71,27 @@ class DiagnosticController extends AbstractController
     #[Route('/admin/diagnostic', methods: ['GET'], name: 'admin_diagnostics')]
     public function diagnostic(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/diagnostic.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),    
+        return $this->render('admin/diagnostic.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),    
                 
-                // system diagnostic
-                'is_system_linux' => $this->dashboardUtil->isSystemLinux(),
-                'drive_usage' => $this->dashboardUtil->getDriveUsage(),
-                'cpu_usage' => $this->dashboardUtil->getCpuUsage(),
-                'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],
-                'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
-                'web_service_username' => $this->dashboardUtil->getWebUsername(),
+            // system diagnostic
+            'is_system_linux' => $this->dashboardUtil->isSystemLinux(),
+            'drive_usage' => $this->dashboardUtil->getDriveUsage(),
+            'cpu_usage' => $this->dashboardUtil->getCpuUsage(),
+            'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],
+            'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
+            'web_service_username' => $this->dashboardUtil->getWebUsername(),
                 
-                // web diagnostics
-                'is_ssl' => $this->siteUtil->isSsl(),
-                'is_www_subdomain' => str_starts_with($_SERVER['HTTP_HOST'], 'www'),
-                'is_dev_mode' => $this->siteUtil->isDevMode(),
-                'is_maintenance' => $this->siteUtil->isMaintenance(),   
-                'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
-                'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound()
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // web diagnostics
+            'is_ssl' => $this->siteUtil->isSsl(),
+            'is_www_subdomain' => str_starts_with($_SERVER['HTTP_HOST'], 'www'),
+            'is_dev_mode' => $this->siteUtil->isDevMode(),
+            'is_maintenance' => $this->siteUtil->isMaintenance(),   
+            'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
+            'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound()
+        ]);
     }
 }

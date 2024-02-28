@@ -50,7 +50,7 @@ the public part of the site contains information about me and my projects
 Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
 
 ## Todos
-- [ ] Check user login middleware for all /admin routes
+- [X] Check user login middleware for all /admin routes
 - [ ] Change user token on every login
 - [ ] Recode error manager
 - [ ] Implement advanced get methods to entity repoistory

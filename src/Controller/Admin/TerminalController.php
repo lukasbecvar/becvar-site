@@ -40,15 +40,11 @@ class TerminalController extends AbstractController
     #[Route('/admin/terminal', methods: ['GET'], name: 'admin_terminal')]
     public function admin(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/terminal.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic()
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+        return $this->render('admin/terminal.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic()
+        ]);
     }
 }

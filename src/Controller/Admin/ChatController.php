@@ -40,18 +40,14 @@ class ChatController extends AbstractController
     #[Route('/admin/chat', methods: ['GET'], name: 'admin_chat')]
     public function chat(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            return $this->render('admin/chat.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
+        return $this->render('admin/chat.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // chat data
-                'online_users' => $this->authManager->getUsersWhereStatus('online')
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // chat data
+            'online_users' => $this->authManager->getUsersWhereStatus('online')
+        ]);
     }
 }

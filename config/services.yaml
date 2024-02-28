@@ -24,6 +24,11 @@ services:
         tags:
             - { name: 'twig.extension' }
 
+    # check user auth for admin sites
+    App\Middleware\AuthentificatedCheckMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
+
     # translations set checker
     App\Middleware\TranslationsMiddleware:
         tags:

@@ -63,28 +63,23 @@ class InboxController extends AbstractController
     #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            $page = intval($this->siteUtil->getQueryString('page', $request));
+        $page = intval($this->siteUtil->getQueryString('page', $request));
 
-            // get messages data
-            $messages = $this->messagesManager->getMessages('open', $page);
+        // get messages data
+        $messages = $this->messagesManager->getMessages('open', $page);
 
-            return $this->render('admin/inbox.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
+        return $this->render('admin/inbox.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // inbox data
-                'page' => $page,
-                'inbox_data' => $messages, 
-                'message_count' => count($messages),
-                'message_limit' => $_ENV['ITEMS_PER_PAGE']
-            ]);
-
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // inbox data
+            'page' => $page,
+            'inbox_data' => $messages, 
+            'message_count' => count($messages),
+            'message_limit' => $_ENV['ITEMS_PER_PAGE']
+        ]);
     }
 
     /**
@@ -96,28 +91,24 @@ class InboxController extends AbstractController
     #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            // get query parameters
-            $page = intval($this->siteUtil->getQueryString('page', $request));
-            $id = intval($this->siteUtil->getQueryString('id', $request));
+        // get query parameters
+        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $id = intval($this->siteUtil->getQueryString('id', $request));
 
-            // close message
-            $this->messagesManager->closeMessage($id);
+        // close message
+        $this->messagesManager->closeMessage($id);
 
-            // get messages count
-            $messages_count = count($this->messagesManager->getMessages('open', 1));
+        // get messages count
+        $messages_count = count($this->messagesManager->getMessages('open', 1));
 
-            // check if messages count is 0
-            if ($messages_count == 0) {
-                return $this->redirectToRoute('admin_dashboard');
-            }
-
-            // redirect back to inbox
-            return $this->redirectToRoute('admin_inbox', [
-                'page' => $page
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
+        // check if messages count is 0
+        if ($messages_count == 0) {
+            return $this->redirectToRoute('admin_dashboard');
         }
+
+        // redirect back to inbox
+        return $this->redirectToRoute('admin_inbox', [
+            'page' => $page
+        ]);
     }
 }

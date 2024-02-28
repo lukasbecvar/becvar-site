@@ -63,27 +63,23 @@ class MediaBrowserController extends AbstractController
     #[Route('/admin/media/browser', methods: ['GET'], name: 'admin_media_browser')]
     public function mediaBrowser(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            // get page
-            $page = intval($this->siteUtil->getQueryString('page', $request));
+        // get page
+        $page = intval($this->siteUtil->getQueryString('page', $request));
 
-            // get images data
-            $media = $this->databaseManager->getImages($page);
+        // get images data
+        $media = $this->databaseManager->getImages($page);
 
-            return $this->render('admin/media-browser.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
+        return $this->render('admin/media-browser.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
 
-                // media browser data
-                'page' => $page,
-                'media_data' => $media, 
-                'media_count' => count($media),
-                'media_limit' => $_ENV['ITEMS_PER_PAGE']
-            ]);
-        } else {
-            return $this->redirectToRoute('auth_login');
-        }
+            // media browser data
+            'page' => $page,
+            'media_data' => $media, 
+            'media_count' => count($media),
+            'media_limit' => $_ENV['ITEMS_PER_PAGE']
+        ]);
     }
 }
