@@ -52,12 +52,11 @@ Docker is used only for development in this application. The production version 
 ## Todos
 - [X] Check user login middleware for all /admin routes
 - [X] Remove mixed return types
-- [ ] Increase phpstan level
-- [ ] Admin dark mode++
 - [ ] Implement redis for cache & store userstatus
 - [ ] Implement security alert (user login)
 - [ ] Implement symfony messenger (email and logs)
 - [ ] Rework docker config (allow access to the host system)
+- [ ] Admin dark mode++
 - [ ] Refactor
 
 ## Required
