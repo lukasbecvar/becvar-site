@@ -521,5 +521,67 @@ class AuthManager
 
         return $online_users;
     }
+
+    /**
+     * Generate a unique token for a user.
+     *
+     * @return string The generated user token.
+     */
+    public function generateUserToken(): string
+    {
+        // generate user token
+        $token = ByteString::fromRandom(32)->toString();
+
+        // get users repository
+        $user_repo = $this->entityManager->getRepository(User::class);
+
+        // check if user token is not already used
+        if ($user_repo->findOneBy(['token' => $token]) != null) {
+            $this->generateUserToken();
+        }
+
+        return $token;
+    }
+
+    /**
+     * Regenerate tokens for all users in the database.
+     *
+     * This method regenerates tokens for all users in the database, ensuring uniqueness for each token.
+     *
+     * @return array<bool|null|string> An array containing the status of the operation and any relevant message.
+     *               - The 'status' key indicates whether the operation was successful (true) or not (false).
+     *               - The 'message' key contains any relevant error message if the operation failed, otherwise it is null.
+     */
+    public function regenerateUsersTokens(): array
+    {
+        $state = [
+            'status' => true,
+            'message' => null
+        ];
+
+        // get all users in database
+        $user_repo = $this->entityManager->getRepository(User::class)->findAll();
+
+        // regenerate all users tokens
+        foreach ($user_repo as $user) {
+
+            // regenerate new token
+            $new_token = $this->generateUserToken();
+            
+            // set new token
+            $user->setToken($new_token);
+
+            // flush data
+            try {
+                $this->entityManager->flush();
+            } catch(\Exception $e) {
+                $state = [
+                    'status' => false,
+                    'message' => $e->getMessage()
+                ];
+            }
+        }
+
+        return $state;
+    }
 }
-  
