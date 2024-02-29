@@ -51,10 +51,7 @@ Docker is used only for development in this application. The production version 
 
 ## Todos
 - [X] Check user login middleware for all /admin routes
-- [ ] Recode error manager
-- [ ] Implement advanced get methods to entity repoistory
-- [ ] Recode managers to Services
-- [ ] Remove mixed return types
+- [X] Remove mixed return types
 - [ ] Increase phpstan level
 - [ ] Admin dark mode++
 - [ ] Implement redis for cache & store userstatus

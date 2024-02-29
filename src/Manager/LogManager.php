@@ -171,7 +171,7 @@ class LogManager
      * Retrieves logs based on IP address.
      *
      * @param string $ip_address
-     * @param mixed $username
+     * @param string $username
      * @param int $page
      *
      * @return Log[]|null
@@ -215,7 +215,7 @@ class LogManager
      * Retrieves logs based on status, paginated.
      *
      * @param string $status
-     * @param mixed $username
+     * @param string $username
      * @param int $page
      *
      * @return Log[]|null

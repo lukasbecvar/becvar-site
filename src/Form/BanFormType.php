@@ -42,7 +42,7 @@ class BanFormType extends AbstractType
      * Builds the form for banning a visitor.
      *
      * @param FormBuilderInterface $builder The form builder.
-     * @param array<string, mixed> $options The options for building the form.
+     * @param array<string> $options The options for building the form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

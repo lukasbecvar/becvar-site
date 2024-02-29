@@ -136,7 +136,7 @@ class MessagesManager
      * @param string $status
      * @param int $page
      *
-     * @return array<mixed>|null An array of messages if successful, or null if an error occurs.
+     * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs.
      */
     public function getMessages(string $status, int $page): ?array
     {

@@ -33,7 +33,7 @@ class CookieUtil
      * Set a cookie with the specified name, value, and expiration.
      *
      * @param string $name The name of the cookie.
-     * @param mixed $value The value to store in the cookie.
+     * @param string $value The value to store in the cookie.
      * @param int $expiration The expiration time for the cookie.
      *
      * @throws \Exception If headers have already been sent.

@@ -26,7 +26,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for escapeString method.
      *
-     * @return array<mixed>
+     * @return array<array<string>>
      */
     public function escapeStringDataProvider(): array
     {
@@ -40,7 +40,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for genBcryptHash method.
      *
-     * @return array<mixed>
+     * @return array<array<string|int>>
      */
     public function genBcryptHashDataProvider(): array
     {
@@ -53,7 +53,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for hashValidate method.
      *
-     * @return array<mixed>
+     * @return array<array<string|bool>>
      */
     public function hashValidateDataProvider(): array
     {
@@ -66,7 +66,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for encryptAes method.
      *
-     * @return array<mixed>
+     * @return array<array<string>>
      */
     public function encryptAesDataProvider(): array
     {

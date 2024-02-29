@@ -430,7 +430,7 @@ class AuthManager
     /**
      * Retrieves a user entity from the repository based on the provided criteria.
      *
-     * @param array<string, mixed> $array The criteria to search for in the repository.
+     * @param array<string> $array The criteria to search for in the repository.
      * 
      * @throws \Exception If there is an error during the database query.
      * 
@@ -492,7 +492,7 @@ class AuthManager
      * Retrieves a list of users with the specified online or offline status.
      *
      * @param string $status The status to filter users by (e.g., 'online' or 'offline').
-     * @return array<array<string, mixed>>|null An array of users with the specified status or null if not found.
+     * @return array<array<string, int|string|null>>|null An array of users with the specified status or null if not found.
      */
     public function getUsersWhereStatus(string $status): ?array
     {

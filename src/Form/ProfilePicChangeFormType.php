@@ -24,7 +24,7 @@ class ProfilePicChangeFormType extends AbstractType
      * Builds the profile picture change form.
      *
      * @param FormBuilderInterface $builder The form builder.
-     * @param array<string, mixed> $options The options for building the form.
+     * @param array<string> $options The options for building the form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
