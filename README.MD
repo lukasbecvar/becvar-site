@@ -61,6 +61,7 @@ Docker is used only for development in this application. The production version 
 - [ ] Implement security alert (user login)
 - [ ] Implement symfony messenger (email and logs)
 - [ ] Rework docker config (allow access to the host system)
+- [ ] Refactor
 
 ## Required
  - php-8.1 or <
