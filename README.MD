@@ -55,7 +55,6 @@ Docker is used only for development in this application. The production version 
 - [ ] Implement redis for cache & store userstatus
 - [ ] Implement security alert (user login)
 - [ ] Implement symfony messenger (email and logs)
-- [ ] Rework docker config (allow access to the host system)
 - [ ] Admin dark mode++
 - [ ] Refactor
 
