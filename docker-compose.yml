@@ -4,7 +4,7 @@ version: '3'
 
 # docker network config
 networks:
-    becvar_site:
+    dev:
         driver: bridge
 
 services:
@@ -21,7 +21,7 @@ services:
         ports:
             - "3306:3306"
         networks:
-            - becvar_site
+            - dev
 
     # web server container
     apache_php:
@@ -43,4 +43,4 @@ services:
         ports:
             - "80:80"
         networks:
-            - becvar_site
+            - dev
