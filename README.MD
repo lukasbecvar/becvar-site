@@ -52,9 +52,6 @@ Docker is used only for development in this application. The production version 
 ## Todos
 - [X] Check user login middleware for all /admin routes
 - [X] Remove mixed return types
-- [ ] Implement redis for cache & store userstatus
-- [ ] Implement security alert (user login)
-- [ ] Implement symfony messenger (email and logs)
 - [ ] Admin dark mode++
 - [ ] Refactor
 
