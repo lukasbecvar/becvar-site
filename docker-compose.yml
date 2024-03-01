@@ -1,10 +1,13 @@
 ## Overview
-# This Docker Compose configuration defines two services: apache and database.
-# The web service sets up a PHP environment with Apache, while the db service sets up a MySQL database.
+# This Docker Compose configuration defines local development services.
 version: '3'
 
-services:
+# docker network config
+networks:
+    becvar_site:
+        driver: bridge
 
+services:
     # database container
     mysql:
         image: mysql:latest
@@ -14,8 +17,11 @@ services:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
             - ./docker/configs/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
+            - ./docker/services/mysql_database:/var/lib/mysql
         ports:
             - "3306:3306"
+        networks:
+            - becvar_site
 
     # web server container
     apache_php:
@@ -36,3 +42,5 @@ services:
             - ./:/var/www
         ports:
             - "80:80"
+        networks:
+            - becvar_site

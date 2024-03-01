@@ -16,3 +16,6 @@ rm -rf public/build/
 
 # delete symfony cache folder
 rm -rf var/
+
+# delete docker services data
+rm -rf docker/services/

@@ -4,6 +4,9 @@
 /.env.local.php
 /.env.*.local
 
+# exclude docker env data
+/docker/services/
+
 # cache files
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
