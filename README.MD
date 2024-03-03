@@ -52,12 +52,13 @@ Docker is used only for development in this application. The production version 
 ## Todos
 - [X] Check user login middleware for all /admin routes
 - [X] Remove mixed return types
+- [X] Admin dark mode++
 - [ ] Form submit event auto escape
-- [ ] Login log event
 - [ ] Error event (log to database)
+- [ ] Login/register event (log)
+- [ ] Email service
 - [ ] Security alert for login and register
 - [ ] Implement nonasync messenger with mode (async, sync) in config
-- [ ] Admin dark mode++
 - [ ] Refactor
 
 ## Required

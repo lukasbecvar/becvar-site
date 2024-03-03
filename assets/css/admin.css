@@ -11,7 +11,7 @@ html {
 }
 
 body {
-	background-color: #242424;
+	background-color: #161616;
 	zoom: 80%;
 }
 
@@ -79,7 +79,7 @@ textarea {
 }
 
 .wrapper .sidebar {
-	background-color: #242424;
+	background-color: #161616;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -148,7 +148,7 @@ textarea {
 }
 
 .wrapper .section .top-navbar {
-	background-color: #242424;
+	background-color: #161616;
 	height: 40px;
 	display: flex;
 	align-items: center;
@@ -427,7 +427,7 @@ button {
 
 .card {
 	margin-top: 10px;
-	background-color: #303030;
+	background-color: #1d1d1d;
 	border: 1px solid rgba(255, 255, 255, 0.24);
 	border-radius: 4px;
 	position: relative;
@@ -458,7 +458,7 @@ button {
 }
 
 .admin-panel {
-	background-color: #242424;
+	background-color: #161616;
 	width: 100%;
 	height: calc(100% - 40px);
 	position: absolute;
@@ -467,7 +467,7 @@ button {
 
 .admin-page {
 	position: absolute;
-	background-color: #242424;
+	background-color: #161616;
 	width: 100%;
 	height: 100%;
 	overflow-x: hidden;
@@ -515,7 +515,7 @@ button {
 }
 
 .dark-table {
-	background-color: rgb(41, 41, 41) !important;
+	background-color: rgb(27, 27, 27);
 }
 
 .delete-link-todos {
@@ -531,7 +531,7 @@ button {
 }
 
 .breadcrumb {
-	background-color: #242424;
+	background-color: #161616;
 	border-top: #242627 1px solid;
 	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
 	margin: 0;
@@ -582,7 +582,7 @@ button {
 	margin: 10px;
 	max-height: 400px;
 	max-width: 80%;
-	border: 1px solid rgba(146, 146, 146, 0.945);;
+	border: 1px solid rgba(146, 146, 146, 0.945);
 	transition: all 0.2s ease;
 }
 
@@ -632,7 +632,7 @@ button {
 	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: #242424;
+	background-color: #161616;
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	text-align: center;
 	padding: 10px;
@@ -641,7 +641,7 @@ button {
 
 .confirmation-button {
 	position: relative;
-	background-color: #242424;
+	background-color: #161616;
 	border: 2px solid rgba(255, 255, 255, 0.24);
 	padding: 6px;
 	font-size: 23px;	
@@ -750,7 +750,7 @@ button {
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	background-color: #202020;
+	background-color: #1a1a1a;
 	color: white;
 	font-size: 20px;
 	font-family: 'Courier New', monospace;
@@ -759,7 +759,7 @@ button {
 .chat-panel h2 {
 	font-size: 16px;
 	margin-bottom: 0px;
-	background-color: #222;
+	background-color: #1d1d1d;
 	padding: 5px 10px;
 	width: 100%;
 	border-top: 1px solid rgba(255, 255, 255, 0.24);
@@ -788,7 +788,7 @@ button {
 	padding: 10px;
 	margin: 0;
 	border: 1px solid rgba(255, 255, 255, 0.24);
-	background-color: #202020;
+	background-color: #1d1d1d;
 	color: white;
 	outline: none;
 	border-left: 1px solid rgba(255, 255, 255, 0.24);
@@ -799,7 +799,7 @@ button {
 	margin-left: 1px;
 	margin-right: 1px;
 	background-color: rgba(255, 255, 255, 0.24);
-	background-color: #202020;
+	background-color: #1d1d1d;
 	border: none;
 	cursor: pointer;
 }
@@ -810,7 +810,7 @@ button {
 
 .user-panel {
 	min-width: 15%;
-	background-color: #202020;
+	background-color: #1d1d1d;
 	color: rgba(255, 255, 255, 0.24);
 	display: flex;
 	flex-direction: column;
@@ -847,10 +847,10 @@ button {
 }
 
 .chat-message-box {
-	border: 1px solid rgba(255, 255, 255, 0.24);;
 	border-radius: 20px;
 	padding: 10px;
 	background-color: rgb(24, 24, 24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .chat-message-box img {
