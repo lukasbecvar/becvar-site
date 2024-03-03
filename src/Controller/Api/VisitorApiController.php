@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
-use App\Manager\VisitorManager;
+use App\Service\Manager\LogManager;
+use App\Service\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

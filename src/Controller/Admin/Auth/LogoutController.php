@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin\Auth;
 
-use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
+use App\Service\Manager\AuthManager;
+use App\Service\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

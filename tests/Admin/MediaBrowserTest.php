@@ -2,9 +2,9 @@
 
 namespace App\Tests\Admin;
 
-use App\Manager\AuthManager;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Service\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class MediaBrowserTest

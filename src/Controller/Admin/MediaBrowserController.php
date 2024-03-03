@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Util\SiteUtil;
-use App\Manager\AuthManager;
-use App\Manager\DatabaseManager;
+use App\Service\Manager\AuthManager;
+use App\Service\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

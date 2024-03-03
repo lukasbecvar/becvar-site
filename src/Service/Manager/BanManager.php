@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Entity\Visitor;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * BanManager provides methods for banning and unbanning visitors.
  * 
- * @package App\Manager
+ * @package App\Service\Manager
  */
 class BanManager
 {

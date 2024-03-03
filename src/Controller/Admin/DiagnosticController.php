@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Util\SiteUtil;
 use App\Util\DashboardUtil;
-use App\Manager\AuthManager;
-use App\Manager\ServiceManager;
+use App\Service\Manager\AuthManager;
+use App\Service\Manager\ServiceManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

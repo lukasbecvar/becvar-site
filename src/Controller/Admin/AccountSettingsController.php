@@ -4,10 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Util\SecurityUtil;
-use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
+use App\Service\Manager\AuthManager;
 use App\Form\PasswordChangeFormType;
 use App\Form\UsernameChangeFormType;
+use App\Service\Manager\ErrorManager;
 use App\Form\ProfilePicChangeFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Manager\AuthManager;
+use App\Service\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

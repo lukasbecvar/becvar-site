@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Entity\User;
 use App\Util\CookieUtil;
@@ -16,7 +16,7 @@ use Symfony\Component\String\ByteString;
  * AuthManager provides login/logout methods.
  * Note: Login uses its own Authenticator, not Symfony auth.
  * 
- * @package App\Manager
+ * @package App\Service\Manager
  */
 class AuthManager
 {

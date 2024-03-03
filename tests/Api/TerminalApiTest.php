@@ -2,7 +2,7 @@
 
 namespace App\Tests\Api;
 
-use App\Manager\AuthManager;
+use App\Service\Manager\AuthManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**

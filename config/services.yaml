@@ -19,47 +19,49 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # - CUSTOM SERVICES & MIDDLEWARES - #
+
     # twig extension (link detect & replace with |linkify)
     App\Twig\LinkifyExtension:
         tags:
             - { name: 'twig.extension' }
 
     # check user auth for admin sites
-    App\Middleware\AuthentificatedCheckMiddleware:
+    App\Service\Middleware\AuthentificatedCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
     # translations set checker
-    App\Middleware\TranslationsMiddleware:
+    App\Service\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
 
     # resources build checker
-    App\Middleware\AssetsCheckMiddleware:
+    App\Service\Middleware\AssetsCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 
     # maintenance mode checker
-    App\Middleware\MaintenanceMiddleware:
+    App\Service\Middleware\MaintenanceMiddleware:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 5 }
 
     # visitor system service
-    App\Middleware\VisitorSystemMiddleware:
+    App\Service\Middleware\VisitorSystemMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
     # auto login service
-    App\Middleware\AutoLoginMiddleware:
+    App\Service\Middleware\AutoLoginMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
     # security check service
-    App\Middleware\SecurityCheckMiddleware:
+    App\Service\Middleware\SecurityCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
     # database online checker
-    App\Middleware\DatabaseOnlineMiddleware:
+    App\Service\Middleware\DatabaseOnlineMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }

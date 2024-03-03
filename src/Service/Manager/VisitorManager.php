@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Entity\Visitor;
 use App\Util\VisitorInfoUtil;
@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * Visitor manager provides methods for managing visitors.
  * 
- * @package App\Manager
+ * @package App\Service\Manager
  */
 class VisitorManager
 {

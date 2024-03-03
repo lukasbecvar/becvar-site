@@ -2,9 +2,9 @@
 
 namespace App\Controller\Public;
 
-use App\Manager\AuthManager;
-use App\Manager\ErrorManager;
-use App\Manager\ProjectsManager;
+use App\Service\Manager\AuthManager;
+use App\Service\Manager\ErrorManager;
+use App\Service\Manager\ProjectsManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

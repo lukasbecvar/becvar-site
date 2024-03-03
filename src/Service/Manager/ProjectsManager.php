@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Util\JsonUtil;
 use App\Entity\Project;
@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * Projects manager provides methods to get/update the projects list
  * 
- * @package App\Manager
+ * @package App\Service\Manager
 */
 class ProjectsManager
 {

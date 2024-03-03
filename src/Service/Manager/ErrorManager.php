@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use Twig\Environment;
 use App\Util\SiteUtil;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  * 
  * ErrorManager provides error handling operations.
  * 
- * @package App\Manager
+ * @package App\Service\Manager
  */
 class ErrorManager
 {

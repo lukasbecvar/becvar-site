@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Util\JsonUtil;
 
@@ -9,7 +9,7 @@ use App\Util\JsonUtil;
  * 
  * Service manager provides all services methods (start, stop, status)
  * 
- * @package App\Manager
+ * @package App\Service\Manager
 */
 class ServiceManager
 {

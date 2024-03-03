@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Middleware;
+namespace App\Service\Middleware;
 
 use App\Util\SiteUtil;
-use App\Manager\ErrorManager;
+use App\Service\Manager\ErrorManager;
 
 /**
  * Class SecurityCheckMiddleware
  *
  * This middleware checks if the connection is secure.
  * 
- * @package App\Middleware
+ * @package App\Service\Middleware
  */
 class SecurityCheckMiddleware
 {

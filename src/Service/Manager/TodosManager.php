@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Entity\Todo;
 use App\Util\SecurityUtil;
@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * Todos manager provides methods for admin todo manager
  * 
- * @package App\Manager
+ * @package App\Service\Manager
 */
 class TodosManager
 {

@@ -2,7 +2,7 @@
 
 namespace App\Util;
 
-use App\Manager\ErrorManager;
+use App\Service\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**

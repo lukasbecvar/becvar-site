@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Service\Manager;
 
 use App\Util\SecurityUtil;
 use Doctrine\DBAL\Connection;
@@ -10,7 +10,7 @@ use Doctrine\DBAL\Connection;
  * 
  * DatabaseManager provides methods for retrieving, editing, and managing database data when it is not possible to use the entity manager.
  * 
- * @package App\Manager
+ * @package App\Service\Manager
  */
 class DatabaseManager
 {
