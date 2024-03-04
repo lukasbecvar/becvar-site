@@ -54,7 +54,7 @@ Docker is used only for development in this application. The production version 
 - [X] Remove mixed return types
 - [X] Admin dark mode++
 - [X] Form submit event auto escape
-- [ ] Email service
+- [X] Email service
 - [ ] Security alert for login and register
 - [ ] Implement nonasync messenger with mode (async, sync) in config
 - [ ] Refactor
