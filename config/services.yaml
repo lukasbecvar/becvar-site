@@ -19,12 +19,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # - CUSTOM SERVICES & MIDDLEWARES - #
-
     # twig extension (link detect & replace with |linkify)
     App\Twig\LinkifyExtension:
         tags:
             - { name: 'twig.extension' }
+
+    # - CUSTOM SERVICES, EVENTS & MIDDLEWARES - #
+
+    # event for escape data in post request
+    App\EventSubscriber\FormSubmitSubscriber:
+        tags:
+            - { name: kernel.event_subscriber, event: 'kernel.request' }
 
     # check user auth for admin sites
     App\Service\Middleware\AuthentificatedCheckMiddleware:

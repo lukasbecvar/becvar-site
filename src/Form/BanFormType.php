@@ -3,9 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Visitor;
-use App\Util\SecurityUtil;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,22 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
  */
 class BanFormType extends AbstractType
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
-     * VisitorManagerController constructor.
-     *
-     * @param SecurityUtil    $securityUtil
-     */
-    public function __construct(SecurityUtil $securityUtil)
-    {
-        $this->securityUtil = $securityUtil;
-    }
-
     /**
      * Builds the form for banning a visitor.
      *
@@ -58,26 +39,7 @@ class BanFormType extends AbstractType
             'mapped' => true,
             'translation_domain' => false
         ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmitData'])
         ;
-    }
-
-    /**
-     * Handles form submission, escaping insecure characters in inputs field.
-     *
-     * @param FormEvent $event The form event.
-     */
-    public function preSubmitData(FormEvent $event): void
-    {
-        $formData = $event->getData();
-
-        // escape input
-        if (isset($formData['ban_reason'])) {
-            $formData['ban_reason'] = $this->securityUtil->escapeString($formData['ban_reason']);
-        }
-
-        // set the updated data back to the form
-        $event->setData($formData);
     }
 
     /**

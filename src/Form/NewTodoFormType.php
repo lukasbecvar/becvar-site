@@ -3,9 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Todo;
-use App\Util\SecurityUtil;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -23,22 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
  */
 class NewTodoFormType extends AbstractType
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
-     * VisitorManagerController constructor.
-     *
-     * @param SecurityUtil    $securityUtil
-     */
-    public function __construct(SecurityUtil $securityUtil)
-    {
-        $this->securityUtil = $securityUtil;
-    }
-
     /**
      * Builds the new todo form.
      *
@@ -64,26 +45,7 @@ class NewTodoFormType extends AbstractType
             'mapped' => true,
             'translation_domain' => false
         ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmitData'])
         ;
-    }
-
-    /**
-     * Handles form submission, escaping insecure characters in inputs field.
-     *
-     * @param FormEvent $event The form event.
-     */
-    public function preSubmitData(FormEvent $event): void
-    {
-        $formData = $event->getData();
-
-        // escape input
-        if (isset($formData['text'])) {
-            $formData['text'] = $this->securityUtil->escapeString($formData['text']);
-        }
-
-        // set the updated data back to the form
-        $event->setData($formData);
     }
 
     /**

@@ -3,9 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Util\SecurityUtil;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -24,22 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
  */
 class PasswordChangeFormType extends AbstractType
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
-     * VisitorManagerController constructor.
-     *
-     * @param SecurityUtil    $securityUtil
-     */
-    public function __construct(SecurityUtil $securityUtil)
-    {
-        $this->securityUtil = $securityUtil;
-    }
-
     /**
      * Builds the password change form.
      *
@@ -89,30 +70,7 @@ class PasswordChangeFormType extends AbstractType
             ],
             'translation_domain' => false
         ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'preSubmitData'])
         ;
-    }
-
-    /**
-     * Handles form submission, escaping insecure characters in inputs field.
-     *
-     * @param FormEvent $event The form event.
-     */
-    public function preSubmitData(FormEvent $event): void
-    {
-        $formData = $event->getData();
-
-        // escape inputs
-        if (isset($formData['password'])) {
-            $formData['password'] = $this->securityUtil->escapeString($formData['password']);
-        }
-
-        if (isset($formData['repassword'])) {
-            $formData['repassword'] = $this->securityUtil->escapeString($formData['repassword']);
-        }
-
-        // set the updated data back to the form
-        $event->setData($formData);
     }
 
     /**
