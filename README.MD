@@ -49,15 +49,12 @@ the public part of the site contains information about me and my projects
 ## Docker
 Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
 
-## Todos
-- [X] Check user login middleware for all /admin routes
-- [X] Remove mixed return types
-- [X] Admin dark mode++
-- [X] Form submit event auto escape
-- [X] Email service
-- [ ] Security alert for login and register
-- [ ] Implement nonasync messenger with mode (async, sync) in config
-- [ ] Refactor
+## Todos refactor
+- [ ] Clean not used functions
+- [ ] Clean project root
+- [ ] Recode components
+- [ ] Format code & update phpdoc
+- [ ] Manual test
 
 ## Required
  - php-8.1 or <
