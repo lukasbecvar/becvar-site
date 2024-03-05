@@ -94,10 +94,11 @@ class LogManager
      *
      * @param string $name
      * @param string $value
+     * @param bool $bypass_antilog
      *
      * @return void
      */
-    public function log(string $name, string $value): void 
+    public function log(string $name, string $value, bool $bypass_antilog = false): void 
     {        
         if (str_contains($value, 'Connection refused')) {
             if ($this->siteUtil->isDevMode()) {
@@ -108,13 +109,13 @@ class LogManager
         }
 
         // check if logs enabled in config
-        if ($this->isLogsEnabled() && !$this->isEnabledAntiLog()) {
+        if (($this->isLogsEnabled() && !$this->isEnabledAntiLog()) || $bypass_antilog) {
             // get log level
             $level = $this->getLogLevel();
 
             // value character shortifiy
-            if (mb_strlen($value) >= 100) {
-                $value = mb_substr($value, 0, 100 - 3).'...';
+            if (mb_strlen($value) >= 512) {
+                $value = mb_substr($value, 0, 512).'...';
             } 
 
             // disable database log for level 1 & 2

@@ -21,21 +21,21 @@ class EmailManager
     private MailerInterface $mailer;
 
     /**
-     * @var ErrorManager 
-     * The error manager instance used for handling errors.
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
      */
-    private ErrorManager $errorManager;
+    private LogManager $logManager;
 
     /**
      * EmailManager constructor.
      *
      * @param MailerInterface $mailer 
-     * @param ErrorManager    $errorManager
+     * @param LogManagers    $logManager
      */
-    public function __construct(MailerInterface $mailer, ErrorManager $errorManager)
+    public function __construct(MailerInterface $mailer, LogManager $logManager)
     {
         $this->mailer = $mailer;
-        $this->errorManager = $errorManager;
+        $this->logManager = $logManager;
     }
 
     /**
@@ -53,7 +53,7 @@ class EmailManager
             try {
                 // build a templated email 
                 $email = (new TemplatedEmail())
-                    ->from('lukas@becvar.xyz')
+                    ->from($_ENV['MAILER_USERNAME'])
                     ->to($email)
                     ->subject($subject)
                     ->htmlTemplate('common/email/email-message.html.twig')
@@ -65,7 +65,7 @@ class EmailManager
                 // send the email
                 $this->mailer->send($email);
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to process email: '.$e->getMessage(), 500);
+                $this->logManager->log('internal-error', 'error to send email: '.$subject.' to: '.$email.', error: '.$e->getMessage(), true);
             }
         }
     }

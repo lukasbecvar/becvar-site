@@ -289,6 +289,6 @@ class ServiceManager
      */
     public function getServicesJson(): ?array
     {
-        return $this->jsonUtil->getJson(__DIR__.'/../../services.json');
+        return $this->jsonUtil->getJson(__DIR__.'/../../../services.json');
     }
 }
