@@ -61,4 +61,15 @@ class ErrorController extends AbstractController
             return new Response($this->errorManager->handleErrorView($code));
         }
     }
+
+    /**
+     * Handles 404 error page.
+     *
+     * @return Response The error response.
+     */
+    #[Route('/error/notfound', methods: ['GET'], name: 'error_404')]
+    public function errorHandle404(): Response
+    {
+        return new Response($this->errorManager->handleErrorView(404));
+    }
 }
