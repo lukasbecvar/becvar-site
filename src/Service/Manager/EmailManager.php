@@ -30,7 +30,7 @@ class EmailManager
      * EmailManager constructor.
      *
      * @param MailerInterface $mailer 
-     * @param LogManagers    $logManager
+     * @param LogManager    $logManager
      */
     public function __construct(MailerInterface $mailer, LogManager $logManager)
     {
@@ -41,12 +41,12 @@ class EmailManager
     /**
      * Sends an email.
      *
-     * @param string $email The recipient email address.
+     * @param string $email_to The recipient email address.
      * @param string $subject The subject of the email.
      * @param string $message The content of the email.
      * @throws \Exception If an error occurs while sending the email.
      */
-    public function sendEmail(string $email, string $subject, string $message): void 
+    public function sendEmail(string $email_to, string $subject, string $message): void 
     {
         // check if email sending is enabled
         if ($_ENV['MAILER_ENABLED'] == 'true') {
@@ -54,7 +54,7 @@ class EmailManager
                 // build a templated email 
                 $email = (new TemplatedEmail())
                     ->from($_ENV['MAILER_USERNAME'])
-                    ->to($email)
+                    ->to($email_to)
                     ->subject($subject)
                     ->htmlTemplate('common/email/email-message.html.twig')
                     ->context([
@@ -65,7 +65,7 @@ class EmailManager
                 // send the email
                 $this->mailer->send($email);
             } catch (\Exception $e) {
-                $this->logManager->log('internal-error', 'error to send email: '.$subject.' to: '.$email.', error: '.$e->getMessage(), true);
+                $this->logManager->log('internal-error', 'error to send email: '.$subject.' to: '.$email_to.', error: '.$e->getMessage(), true);
             }
         }
     }
