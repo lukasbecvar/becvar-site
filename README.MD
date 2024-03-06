@@ -49,13 +49,6 @@ the public part of the site contains information about me and my projects
 ## Docker
 Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
 
-## Todos refactor
-- [ ] Clean not used functions
-- [ ] Clean project root
-- [ ] Recode components
-- [ ] Format code & update phpdoc
-- [ ] Manual test
-
 ## Required
  - php-8.1 or <
  - mysql8 or <
@@ -66,7 +59,7 @@ Docker is used only for development in this application. The production version 
 
 ## Dependencies 
 * Symfony
-   * Version: **6.3**
+   * Version: **7**
    * [Website](https://symfony.com/)   
 * Phpunit-Pretty-Print
    * Version: **1.4**
@@ -77,7 +70,7 @@ Docker is used only for development in this application. The production version 
 * Geo-Plugin
    * [Website](http://www.geoplugin.net/)
 * Bootstrap
-   * Version: **4.0.0**
+   * Version: **4.6.2**
    * [Website](https://getbootstrap.com/)
 * Boxicons
    * Version: **2.1.2**

@@ -112,10 +112,10 @@ class TerminalApiController extends AbstractController
                     $command = $this->securityUtil->escapeString($command);
 
                     // check if blocked commands config found
-                    if (file_exists((__DIR__ . '/../../../terminal-blocked-commands.json'))) {
+                    if (file_exists((__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json'))) {
                         // get blocked command list
                         try {
-                            $blockedCommands = $this->jsonUtil->getJson(__DIR__ . '/../../../terminal-blocked-commands.json');
+                            $blockedCommands = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json');
                         } catch (\Exception $e) {
                             return new Response($e->getMessage());
                         }
@@ -129,10 +129,10 @@ class TerminalApiController extends AbstractController
                     }
 
                     // check if aliases config found
-                    if (file_exists(__DIR__ . '/../../../terminal-aliases.json')) {
+                    if (file_exists(__DIR__ . '/../../../config/becwork/terminal-aliases.json')) {
                         // get aliases list
                         try {
-                            $aliases = $this->jsonUtil->getJson(__DIR__ . '/../../../terminal-aliases.json');
+                            $aliases = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-aliases.json');
                         } catch (\Exception $e) {
                             return new Response($e->getMessage());
                         }

@@ -8,14 +8,7 @@
 <div class="admin-panel">
     {# <===== ERROR MSG BOX =====> #}
     {% if error_msg != null %}
-        <center>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error</strong>: {{ error_msg }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </center>
+        {% include "common/alerts/error-alert.html.twig" %}
     {% endif %}
 
     {# <===== SHUTDOWN CONFIRMATION FORM =====> #}

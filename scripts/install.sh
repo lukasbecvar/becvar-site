@@ -11,7 +11,7 @@ fi
 # install node modules
 if [ ! -d 'node_modules/' ]
 then
-    npm install --no-warnings
+    npm install
 fi
 
 # build assets
