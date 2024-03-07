@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace App\Event\Subscriber;
 
 use App\Util\SecurityUtil;
 use Symfony\Component\HttpKernel\KernelEvents;

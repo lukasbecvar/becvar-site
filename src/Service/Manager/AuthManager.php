@@ -4,11 +4,14 @@ namespace App\Service\Manager;
 
 use App\Entity\User;
 use App\Util\CookieUtil;
+use App\Event\LoginEvent;
+use App\Event\LogoutEvent;
 use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AuthManager
@@ -69,16 +72,23 @@ class AuthManager
     private EntityManagerInterface $entityManager;
 
     /**
+     * @var EventDispatcherInterface
+     * Instance of the EventDispatcherInterface for dispatch custom events.
+     */
+    private EventDispatcherInterface $eventDispatcher;
+
+    /**
      * AuthManager constructor.
      *
-     * @param LogManager             $logManager
-     * @param CookieUtil             $cookieUtil
-     * @param SessionUtil            $sessionUtil
-     * @param ErrorManager           $errorManager
-     * @param SecurityUtil           $securityUtil
-     * @param VisitorManager         $visitorManager
-     * @param VisitorInfoUtil        $visitorInfoUtil
-     * @param EntityManagerInterface $entityManager
+     * @param LogManager               $logManager
+     * @param CookieUtil               $cookieUtil
+     * @param SessionUtil              $sessionUtil
+     * @param ErrorManager             $errorManager
+     * @param SecurityUtil             $securityUtil
+     * @param VisitorManager           $visitorManager
+     * @param VisitorInfoUtil          $visitorInfoUtil
+     * @param EntityManagerInterface   $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         LogManager $logManager, 
@@ -88,7 +98,8 @@ class AuthManager
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->cookieUtil = $cookieUtil;
         $this->logManager = $logManager;
@@ -98,6 +109,7 @@ class AuthManager
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -152,8 +164,9 @@ class AuthManager
                 // update last login time
                 $this->updateUserData();
 
-                // log auth action
-                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
+                // dispatch login event
+                $this->eventDispatcher->dispatch(new LoginEvent($username), LoginEvent::NAME);
+                
             } else {
                 $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
             }
@@ -172,8 +185,8 @@ class AuthManager
             // init user
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
-            // log logout event
-            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
+            // dispatch logout event
+            $this->eventDispatcher->dispatch(new LogoutEvent($user->getUsername()), LogoutEvent::NAME);
             
             // unset login cookie
             $this->cookieUtil->unset('login-token-cookie');

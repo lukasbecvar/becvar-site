@@ -24,12 +24,31 @@ services:
         tags:
             - { name: 'twig.extension' }
 
-    # - CUSTOM SERVICES, EVENTS & MIDDLEWARES - #
+
+
+
+
+    # login event 
+    App\Event\Subscriber\LoginEventSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # logout event 
+    App\Event\Subscriber\LogoutEventSubscribe:
+        tags:
+            - { name: kernel.event_subscriber }
 
     # event for escape data in post request
-    App\EventSubscriber\FormSubmitSubscriber:
+    App\Event\Subscriber\FormSubmitSubscriber:
         tags:
             - { name: kernel.event_subscriber, event: 'kernel.request' }
+
+
+
+
+
+
+
 
     # check user auth for admin sites
     App\Service\Middleware\AuthentificatedCheckMiddleware:
