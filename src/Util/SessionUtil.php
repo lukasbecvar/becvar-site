@@ -88,9 +88,9 @@ class SessionUtil
      *
      * @param string $session_name The name of the session.
      *
-     * @return string|null The decrypted session value or null if the session doesn't exist.
+     * @return mixed The decrypted session value.
      */
-    public function getSessionValue(string $session_name): ?string 
+    public function getSessionValue(string $session_name): mixed 
     {
         $this->startSession();
 

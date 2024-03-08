@@ -28,7 +28,7 @@ sudo systemctl start mysql
 systemctl --no-pager status mysql
 
 # start npm watch in background
-#npm run watch &
+npm run watch &
 
 # start Symfony server in background
 symfony server:start 

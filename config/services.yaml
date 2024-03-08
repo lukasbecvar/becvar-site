@@ -24,10 +24,7 @@ services:
         tags:
             - { name: 'twig.extension' }
 
-
-
-
-
+    # -- EVENTS -- #
     # login event 
     App\Event\Subscriber\LoginEventSubscriber:
         tags:
@@ -42,14 +39,9 @@ services:
     App\Event\Subscriber\FormSubmitSubscriber:
         tags:
             - { name: kernel.event_subscriber, event: 'kernel.request' }
+    # ------------------------------------------------------------------------- #
 
-
-
-
-
-
-
-
+    # -- MIDDLEWARE -- #
     # check user auth for admin sites
     App\Service\Middleware\AuthentificatedCheckMiddleware:
         tags:
@@ -89,3 +81,4 @@ services:
     App\Service\Middleware\DatabaseOnlineMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }
+    # ------------------------------------------------------------------------- #

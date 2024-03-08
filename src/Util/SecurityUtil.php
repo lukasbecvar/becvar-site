@@ -100,7 +100,7 @@ class SecurityUtil
 	
 		// check if decryption was successful
 		if ($decrypted_data === false) {
-			return null; 
+			$decrypted_data = null; 
 		}
 	
 		return $decrypted_data;

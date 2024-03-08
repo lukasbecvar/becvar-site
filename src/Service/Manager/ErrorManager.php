@@ -69,11 +69,11 @@ class ErrorManager
     /**
      * Renders an error view based on the error code.
      *
-     * @param string $code The error code.
+     * @param string|int $code The error code.
      *
      * @return string The rendered error view.
      */
-    public function handleErrorView(string $code)
+    public function handleErrorView(string|int $code)
     {
         try {
             return $this->twig->render('errors/error-'.$code.'.html.twig');

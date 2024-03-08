@@ -103,14 +103,9 @@ class SiteUtil
      *
      * @return bool Whether the application is in maintenance mode.
      */
-    public function isMaintenance(): bool 
+    public function isMaintenance(): bool
     {
-        // check if maintenance mode enabled in app enviroment
-        if ($_ENV['MAINTENANCE_MODE'] == 'true') {
-            return true;
-        } else {
-            return false;
-        }
+        return $_ENV['MAINTENANCE_MODE'] === 'true';
     }
 
     /**
@@ -118,14 +113,9 @@ class SiteUtil
      *
      * @return bool Whether the application is under ssl only mode.
      */
-    public function isSSLOnly(): bool 
+    public function isSSLOnly(): bool
     {
-        // check if ssl only mode enabled in app enviroment
-        if ($_ENV['SSL_ONLY'] == 'true') {
-            return true;
-        } else {
-            return false;
-        }
+        return $_ENV['SSL_ONLY'] === 'true';
     }
 
     /**
@@ -133,14 +123,9 @@ class SiteUtil
      *
      * @return bool Whether the application is in development mode.
      */
-    public function isDevMode(): bool 
+    public function isDevMode(): bool
     {
-        // check if dev mode enabled in app enviroment
-        if ($_ENV['APP_ENV'] == 'dev') {
-            return true;
-        } else {
-            return false;
-        }
+        return $_ENV['APP_ENV'] === 'dev';
     }
 
     /**

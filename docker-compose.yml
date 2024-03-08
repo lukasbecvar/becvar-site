@@ -1,4 +1,3 @@
-## Overview
 # This Docker Compose configuration defines local development services.
 version: '3'
 

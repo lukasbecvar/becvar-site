@@ -5,10 +5,11 @@ WORKDIR /var/www
 
 # update package index and install necessary dependencies
 RUN apt-get update && apt-get install -y \
-    rpm \ 
+    rpm \
     libzip-dev \
-    unzip \ 
-    && docker-php-ext-install zip pdo_mysql mysqli pdo
+    unzip \
+    libicu-dev \ 
+    && docker-php-ext-install zip pdo_mysql mysqli pdo intl
 
 # install Xdebug
 RUN pecl install xdebug \

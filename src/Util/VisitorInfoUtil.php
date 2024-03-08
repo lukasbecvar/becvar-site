@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use App\Exception\AppException;
+
 /**
  * Class VisitorInfoUtil
  * 
@@ -42,6 +44,8 @@ class VisitorInfoUtil
      */
     public function getIP(): ?string 
     {
+        $address = null;
+
         // check client ip
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $address = $_SERVER['HTTP_CLIENT_IP'];
@@ -64,6 +68,8 @@ class VisitorInfoUtil
      */
     public function getBrowser(): ?string 
     {
+        $user_agent = null;
+
         // get user agent
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -241,7 +247,7 @@ class VisitorInfoUtil
      *
      * @param string $ip_address The IP address.
      *
-     * @return array<string, string>|null The location information (city, country) or null on failure.
+     * @return array<string,string>|null The location information (city, country) or null on failure.
      */
     public function getLocation(string $ip_address): ?array
     {

@@ -1,14 +1,13 @@
+/*
+ * becvar-site frontend webpack builder
+ */
 const Encore = require('@symfony/webpack-encore');
 
-if (!Encore.isRuntimeEnvironmentConfigured()) {
-    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
-}
-
 Encore
+    // set build path
     .setOutputPath('public/build/')
     .setPublicPath('/build')
 
-    ///////////////////////////////////////////////////////////////////////////
     // register common assets
     .addEntry('scrollbar-css', './assets/css/scrollbar.css')
     .addEntry('page-loading-css', './assets/css/page-loading.css')
@@ -67,16 +66,15 @@ Encore
     // register admin terminal function
     .addEntry('admin-terminal', './assets/js/admin-terminal.js')
 
-    // copy assets
+    // copy static assets
     .copyFiles(
-        // copy images
         {
             from: './assets/img', 
             to: 'images/[path][name].[ext]' 
         }
     )
-    ///////////////////////////////////////////////////////////////////////////
 
+    // other webpack configs
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

@@ -1,8 +1,8 @@
 ## About becvar-site
-Personal website builded with symfony framework, bootstrap & webpack-encore
- 
+Personal website built with the Symfony framework, Bootstrap & Webpack Encore.
+
 ## Admin site
-the main part of this application is the admin panel which contains functions and components for administration of the host linux server
+The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
  - Account system with permissions
  - Warning system
  - Server dashboard
@@ -15,10 +15,10 @@ the main part of this application is the admin panel which contains functions an
  - Admin chat
  - Admin terminal (host server)
  - Server Emergency shutdown
- - Included adminer in admin page
+ - Included adminer in the admin page
 
 ## Public site
-the public part of the site contains information about me and my projects
+the public part of the site contains information about me and my projects.
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader / view
@@ -28,7 +28,7 @@ the public part of the site contains information about me and my projects
  - install apache2, mysql8, composer, php, php-pdo, php-mysqli, php-xml, php-dom
  - clone repository to your /www dir
  - disable apache autoindex module
- - configure apache config like [apache-site.conf](./apache-site.conf)
+ - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
  - for production use only APP_ENV=prod! (in .env)
  - configure app enviroment in .env.prod
  - configure all values (mysql app secret etc)
@@ -41,48 +41,41 @@ the public part of the site contains information about me and my projects
 ## Assets builder
  - Webpack (symfony-encore), scripts/build.sh
 
-## Authentificator
+## Authenticator
  - This project uses my own authentication system, not Symfony security!
  - This authentication is designed to authenticate across my internal apps.
  - AuthManager contains functions for registration, login, logout, and user token authentication.
 
 ## Docker
-Docker is used only for development in this application. The production version of the application runs directly on the host environment for simple connect the admin system to running services
+Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
 ## Required
- - php-8.1 or <
- - mysql8 or <
+ - php-8.2 or less
+ - mysql8
  - php-curl
  - php-pdo
- - nodejs 18 or <
- - npm 9 or <
+ - nodejs 18 or less
+ - npm 10 or less
 
 ## Dependencies 
 * Symfony
-   * Version: **7**
    * [Website](https://symfony.com/)   
-* Phpunit-Pretty-Print
-   * Version: **1.4**
-   * [Github](https://github.com/indentno/phpunit-pretty-print)
 * Adminer
-   * Version: **4.8.1**
    * [Website](https://www.adminer.org/)
 * Geo-Plugin
    * [Website](http://www.geoplugin.net/)
 * Bootstrap
-   * Version: **4.6.2**
    * [Website](https://getbootstrap.com/)
 * Boxicons
-   * Version: **2.1.2**
    * [Website](https://boxicons.com/)
 * Font-awesome
-   * Version: **5.8.1 - FREE**
    * [Website](https://fontawesome.com)
 * Purecounterjs
    * [Github](https://github.com/srexi/purecounterjs)
 * Light-Gallery
-   * Version: **1.10.0**
    * [Github](https://github.com/sachinchoolur/lightGallery)
-
+* Phpunit-Pretty-Print
+   * [Github](https://github.com/indentno/phpunit-pretty-print)
+   
 ## License
 The framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
