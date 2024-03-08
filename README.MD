@@ -50,12 +50,12 @@ the public part of the site contains information about me and my projects.
 Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
 ## Required
- - php-8.2 or less
+ - php-8.2 or <
  - mysql8
  - php-curl
  - php-pdo
- - nodejs 18 or less
- - npm 10 or less
+ - nodejs 18 or <
+ - npm 10 or <
 
 ## Dependencies 
 * Symfony
