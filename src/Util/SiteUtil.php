@@ -145,7 +145,6 @@ class SiteUtil
         if ($value == null) {
             return '1';
         } else {
-
             // escape query string value (XSS Protection)
             $output = $this->securityUtil->escapeString($value);
             

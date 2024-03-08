@@ -257,11 +257,11 @@ class DashboardUtil
      */
     public function isBrowserListFound(): bool 
     {
-       // check if list is null
-       if ($this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json') != null) {
-           return true;
-       } else {
-           return false;
-       }
+        // check if list is null
+        if ($this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json') != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

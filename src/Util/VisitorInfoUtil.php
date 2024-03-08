@@ -2,8 +2,6 @@
 
 namespace App\Util;
 
-use App\Exception\AppException;
-
 /**
  * Class VisitorInfoUtil
  * 
@@ -277,7 +275,6 @@ class VisitorInfoUtil
                 } else {
                     $city = null;
                 }
-
             } catch (\Exception) {
 
                 // set null if data not getted
