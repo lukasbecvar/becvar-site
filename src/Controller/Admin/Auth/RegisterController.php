@@ -52,7 +52,6 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('auth_login');   
         } else {
             $user = new User();
-            
             $error_msg = null;
 
             // create register form

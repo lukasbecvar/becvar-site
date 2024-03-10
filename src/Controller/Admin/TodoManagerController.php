@@ -106,7 +106,6 @@ class TodoManagerController extends AbstractController
                     
                 // save new todo
                 $this->todosManager->addTodo($text);
-
                 return $this->redirectToRoute('admin_todos');
             }
         }

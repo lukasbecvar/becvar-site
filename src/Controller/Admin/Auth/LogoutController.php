@@ -54,6 +54,7 @@ class LogoutController extends AbstractController
             $this->authManager->logout();
         }
 
+        // verify if user logout
         if (!$this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('auth_login');
         } else {

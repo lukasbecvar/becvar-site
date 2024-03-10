@@ -204,6 +204,7 @@ class DashboardController extends AbstractController
         // generate configmation code
         $confirm_code = ByteString::fromRandom(16)->toString();
     
+        // check if request is post
         if ($request->isMethod('POST')) {
 
             // get post data

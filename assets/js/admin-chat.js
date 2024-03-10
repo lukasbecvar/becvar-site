@@ -1,6 +1,5 @@
 /* becvar-site: admin chat function */ 
-document.addEventListener("DOMContentLoaded", function() 
-{
+document.addEventListener("DOMContentLoaded", function() {
     // get html elements
     const chat = document.getElementById('chat');
     const messages = document.getElementById('messages');
@@ -11,8 +10,7 @@ document.addEventListener("DOMContentLoaded", function()
     let lastMessageId = 0; // keeps track of the last displayed message's ID
 
     // linkify message content
-    function linkifyText(text) 
-    {
+    function linkifyText(text) {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function(url) {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
@@ -20,14 +18,12 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     // scroll to the bottom of the chat
-    function scrollToBottom() 
-    { 
+    function scrollToBottom() { 
         chat.scrollTop = chat.scrollHeight;
     }
 
     // display a message in the chat
-    function displayMessage(message, sender, role, pic, day, time) 
-    {
+    function displayMessage(message, sender, role, pic, day, time) {
         // determine whether the user is at the bottom of the chat
         const isAtBottom = chat.scrollTop + chat.clientHeight >= chat.scrollHeight - 5;
 
@@ -50,8 +46,7 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     // send a chat message to the server
-    function sendMessage() 
-    {
+    function sendMessage() {
         const message = message_input.value;
         if (message) {
             // send a POST request to save the message
@@ -75,8 +70,7 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     // fetch and display chat messages from the server
-    function getChatMessages() 
-    {
+    function getChatMessages() {
         // fetch chat messages from the server
         fetch('/api/chat/get/messages')
         .then(response => response.json())
@@ -95,15 +89,14 @@ document.addEventListener("DOMContentLoaded", function()
     // initial fetch and display of chat messages
     getChatMessages();
 
-    // set an interval to periodically fetch chat messages (every 100 milliseconds)
-    setInterval(getChatMessages, 100);
+    // set an interval to periodically fetch chat messages (every 1000 milliseconds)
+    setInterval(getChatMessages, 1000);
 
     // add a click event listener to the send button to send messages
     send_button.addEventListener('click', sendMessage);
 
     // add a keypress event listener to send a message when the Enter key is pressed
-    message_input.addEventListener("keypress", function(e) 
-    {
+    message_input.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             sendMessage();
             message_input.value = '';
@@ -111,8 +104,7 @@ document.addEventListener("DOMContentLoaded", function()
     });
 
     // set command input to lower case
-    document.getElementById('command').addEventListener('input', function () 
-    {
+    document.getElementById('command').addEventListener('input', function () {
         this.value = this.value.toLowerCase();
     });
 });

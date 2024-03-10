@@ -101,9 +101,7 @@ class PasteController extends AbstractController
 
                 // redirect error
                 return $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
-
             } else {
-
                 // save paste to mysql table
                 if (!empty($content)) {
 
