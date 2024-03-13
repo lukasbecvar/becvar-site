@@ -25,6 +25,11 @@ services:
             - { name: 'twig.extension' }
 
     # -- EVENTS -- #
+    # register event 
+    App\Event\Subscriber\RegisterEventSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
     # login event 
     App\Event\Subscriber\LoginEventSubscriber:
         tags:

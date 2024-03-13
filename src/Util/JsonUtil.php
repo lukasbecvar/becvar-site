@@ -40,13 +40,13 @@ class JsonUtil
 
             // check if data is null
             if ($data == null) {
-                return null; // Return null if data retrieval fails
+                return null; // return null if data retrieval fails
             }
 
             // decode & return json
             return json_decode($data, true);
         } catch (\Exception) {
-            return null; // Return null on any exception
+            return null; // return null on any exception
         }
     }
 }

@@ -4,10 +4,11 @@ namespace App\Service\Manager;
 
 use App\Entity\User;
 use App\Util\CookieUtil;
-use App\Event\LoginEvent;
-use App\Event\LogoutEvent;
 use App\Util\SessionUtil;
+use App\Event\LoginEvent;
 use App\Util\SecurityUtil;
+use App\Event\LogoutEvent;
+use App\Event\RegisterEvent;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
@@ -23,12 +24,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class AuthManager
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
-    private LogManager $logManager;
-
     /**
      * @var CookieUtil
      * Instance of the CookieUtil for handling cookie-related functionality.
@@ -80,7 +75,6 @@ class AuthManager
     /**
      * AuthManager constructor.
      *
-     * @param LogManager               $logManager
      * @param CookieUtil               $cookieUtil
      * @param SessionUtil              $sessionUtil
      * @param ErrorManager             $errorManager
@@ -91,7 +85,6 @@ class AuthManager
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        LogManager $logManager, 
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
@@ -102,7 +95,6 @@ class AuthManager
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->cookieUtil = $cookieUtil;
-        $this->logManager = $logManager;
         $this->sessionUtil = $sessionUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -311,8 +303,8 @@ class AuthManager
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            // log registration event
-            $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
+            // dispatch register event
+            $this->eventDispatcher->dispatch(new RegisterEvent($username), RegisterEvent::NAME);
 
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to register new user: '.$e->getMessage(), 400);
