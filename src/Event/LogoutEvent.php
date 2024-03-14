@@ -28,7 +28,7 @@ class LogoutEvent extends Event
      *
      * @param string|null $username The username of the user who logged out.
      */
-    public function __construct($username)
+    public function __construct(?string $username)
     {
         $this->username = $username;
     }

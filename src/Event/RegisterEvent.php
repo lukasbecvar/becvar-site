@@ -28,7 +28,7 @@ class RegisterEvent extends Event
      *
      * @param string|null $username The username of the user who registered.
      */
-    public function __construct($username)
+    public function __construct(?string $username)
     {
         $this->username = $username;
     }

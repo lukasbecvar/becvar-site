@@ -4,7 +4,9 @@ namespace App\Service\Manager;
 
 use Twig\Environment;
 use App\Util\SiteUtil;
+use App\Event\ErrorEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AuthManager
@@ -28,15 +30,23 @@ class ErrorManager
     private SiteUtil $siteUtil;
 
     /**
+     * @var EventDispatcherInterface
+     * Instance of the EventDispatcherInterface for dispatch custom events.
+     */
+    private EventDispatcherInterface $eventDispatcher;
+
+    /**
      * ErrorManager constructor.
      *
      * @param Environment $twig
      * @param SiteUtil    $siteUtil
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(Environment $twig, SiteUtil $siteUtil)
+    public function __construct(Environment $twig, SiteUtil $siteUtil, EventDispatcherInterface $eventDispatcher)
     {
         $this->twig = $twig;
         $this->siteUtil = $siteUtil;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -49,6 +59,9 @@ class ErrorManager
      */
     public function handleError(string $msg, int $code): Response
     {
+        // dispatch error event
+        $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
+
         // check if app is in dev mode
         if ($this->siteUtil->isDevMode()) {
             // build app error message
