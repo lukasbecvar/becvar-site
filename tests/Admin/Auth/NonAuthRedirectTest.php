@@ -28,242 +28,54 @@ class NonAuthRedirectTest extends WebTestCase
         parent::setUp();
     }
 
-    public function testNonAuthRedirectAdminInit(): void
+    /**
+     * Admin routes list
+     * 
+     * @return array<array<string>>
+     */
+    public function provideAdminUrls(): array
     {
-        $this->client->request('GET', '/admin');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+        return [
+            ['/admin'],
+            ['/admin/account/settings'],
+            ['/admin/account/settings/pic'],
+            ['/admin/account/settings/username'],
+            ['/admin/account/settings/password'],
+            ['/admin/chat'],
+            ['/admin/dashboard'],
+            ['/admin/dashboard/emergency/shutdown'],
+            ['/admin/dashboard/runner'],
+            ['/admin/database'],
+            ['/admin/database/table'],
+            ['/admin/database/edit'],
+            ['/admin/database/add'],
+            ['/admin/database/delete'],
+            ['/admin/diagnostic'],
+            ['/admin/inbox'],
+            ['/admin/inbox/close'],
+            ['/admin/logs'],
+            ['/admin/logs/whereip'],
+            ['/admin/logs/delete'],
+            ['/admin/logs/readed/all'],
+            ['/admin/media/browser'],
+            ['/admin/terminal'],
+            ['/admin/todos'],
+            ['/admin/todos/completed'],
+            ['/admin/todos/close'],
+            ['/admin/visitors'],
+            ['/admin/visitors/delete'],
+            ['/admin/visitors/ban'],
+            ['/admin/visitors/unban'],
+        ];
     }
 
-    public function testNonAuthRedirectAccountSettings(): void
+    /**
+     * @dataProvider provideAdminUrls
+     */
+    public function testNonAuthAdminRedirect(string $url): void
     {
-        $this->client->request('GET', '/admin/account/settings');
+        $this->client->request('GET', $url);
 
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }
-
-    public function testNonAuthRedirectAccountSettingsProfilePicsChange(): void
-    {
-        $this->client->request('GET', '/admin/account/settings/pic');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }
-
-    public function testNonAuthRedirectAccountSettingsUsernameChange(): void
-    {
-        $this->client->request('GET', '/admin/account/settings/username');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }
-
-    public function testNonAuthRedirectAccountSettingsPasswordChange(): void
-    {
-        $this->client->request('GET', '/admin/account/settings/password');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }
-
-    public function testNonAuthRedirectAdminChat(): void
-    {
-        $this->client->request('GET', '/admin/chat');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDashboard(): void
-    {
-        $this->client->request('GET', '/admin/dashboard');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminEmergencyShutdown(): void
-    {
-        $this->client->request('GET', '/admin/dashboard/emergency/shutdown');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminServiceRunner(): void
-    {
-        $this->client->request('GET', '/admin/dashboard/runner');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDatabase(): void
-    {
-        $this->client->request('GET', '/admin/database');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDatabaseTable(): void
-    {
-        $this->client->request('GET', '/admin/database/table');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDatabaseEdit(): void
-    {
-        $this->client->request('GET', '/admin/database/edit');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDatabaseAdd(): void
-    {
-        $this->client->request('GET', '/admin/database/add');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDatabaseDelete(): void
-    {
-        $this->client->request('GET', '/admin/database/delete');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminDiagnostics(): void
-    {
-        $this->client->request('GET', '/admin/diagnostic');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminInbox(): void
-    {
-        $this->client->request('GET', '/admin/inbox');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminInboxClose(): void
-    {
-        $this->client->request('GET', '/admin/inbox/close');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminLogs(): void
-    {
-        $this->client->request('GET', '/admin/logs');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminLogsWhreIP(): void
-    {
-        $this->client->request('GET', '/admin/logs/whereip');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminLogsDelete(): void
-    {
-        $this->client->request('GET', '/admin/logs/delete');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminLogsReadedAll(): void
-    {
-        $this->client->request('GET', '/admin/logs/readed/all');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminMediaBrowser(): void
-    {
-        $this->client->request('GET', '/admin/media/browser');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminTerminal(): void
-    {
-        $this->client->request('GET', '/admin/terminal');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminTodos(): void
-    {
-        $this->client->request('GET', '/admin/todos');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminCompletedTodos(): void
-    {
-        $this->client->request('GET', '/admin/todos/completed');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminTodosClose(): void
-    {
-        $this->client->request('GET', '/admin/todos/close');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminVisitors(): void
-    {
-        $this->client->request('GET', '/admin/visitors');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminVisitorsDelete(): void
-    {
-        $this->client->request('GET', '/admin/visitors/delete');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminVisitorsBan(): void
-    {
-        $this->client->request('GET', '/admin/visitors/ban');
-
-        $this->assertResponseStatusCodeSame(302); 
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-    }  
-
-    public function testNonAuthRedirectAdminVisitorsUnban(): void
-    {
-        $this->client->request('GET', '/admin/visitors/unban');
-        
         $this->assertResponseStatusCodeSame(302); 
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
     }
