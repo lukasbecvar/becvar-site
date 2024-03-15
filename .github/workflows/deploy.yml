@@ -14,6 +14,8 @@ jobs:
 
       - name: Deploy to server
         env:
-          SERVER_SSH: ${{ secrets.SERVER_SSH }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          ssh -i "$SERVER_SSH" lordbecvold@89.168.77.11 "bash /services/test.sh"
+          echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+          chmod 600 ssh_key.pem
+          ssh -i ssh_key.pem lordbecvold@89.168.77.11 "bash /services/test.sh"
