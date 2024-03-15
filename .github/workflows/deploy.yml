@@ -16,4 +16,4 @@ jobs:
         env:
           SERVER_SSH: ${{ secrets.SERVER_SSH }}
         run: |
-          ssh -i $SERVER_SSH lordbecvold@89.168.77.11 "bash /services/test.sh"
+          ssh -i "$SERVER_SSH" lordbecvold@89.168.77.11 "bash /services/test.sh"
