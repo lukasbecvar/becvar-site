@@ -202,7 +202,7 @@ class ProjectsManager
             return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
-            return [];
+            return null;
         }
     }
 
@@ -211,13 +211,13 @@ class ProjectsManager
      *
      * @return int
      */
-    public function getProjectsCount(): int
+    public function getProjectsCount(): ?int
     {
         try {
             return count($this->entityManager->getRepository(Project::class)->findAll());
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
-            return 0;
+            return null;
         }   
     }
 }

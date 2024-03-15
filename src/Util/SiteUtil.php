@@ -146,10 +146,7 @@ class SiteUtil
             return '1';
         } else {
             // escape query string value (XSS Protection)
-            $output = $this->securityUtil->escapeString($value);
-            
-            // return final output
-            return $output;
+            return $this->securityUtil->escapeString($value);
         }
     }
 }

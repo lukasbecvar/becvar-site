@@ -443,20 +443,13 @@ class AuthManager
      */
     public function getUserRepository(array $array): ?object 
     {
-        $result = null;
         $userRepository = $this->entityManager->getRepository(User::class);
 
         // try to find user in database
         try {
-            $result = $userRepository->findOneBy($array);
+            return $userRepository->findOneBy($array);
         } catch (\Exception $e) {
             $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        // return result
-        if ($result !== null) {
-            return $result;
-        } else {
             return null;
         }
     }
@@ -554,8 +547,8 @@ class AuthManager
      * This method regenerates tokens for all users in the database, ensuring uniqueness for each token.
      *
      * @return array<bool|null|string> An array containing the status of the operation and any relevant message.
-     *               - The 'status' key indicates whether the operation was successful (true) or not (false).
-     *               - The 'message' key contains any relevant error message if the operation failed, otherwise it is null.
+     * - The 'status' key indicates whether the operation was successful (true) or not (false).
+     * - The 'message' key contains any relevant error message if the operation failed, otherwise it is null.
      */
     public function regenerateUsersTokens(): array
     {

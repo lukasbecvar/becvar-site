@@ -177,17 +177,15 @@ class BanManager
      */
     public function getBannedCount(): ?int
     {
-        $banned_users = null;
         $repository = $this->entityManager->getRepository(Visitor::class);
 
         try {
             // get banned users list
-            $banned_users = $repository->findBy(['banned_status' => 'yes']);
+            return $repository->count(['banned_status' => 'yes']);
         } catch (\Exception $e) {
             $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+            return null;
         }
-
-        return count($banned_users);
     }
 
     /**
@@ -250,7 +248,6 @@ class BanManager
      */
     public function getVisitorIP(int $id): string
     {
-        $repo = $this->visitorManager->getVisitorRepositoryByID($id);
-        return $repo->getIpAddress();
+        return $this->visitorManager->getVisitorRepositoryByID($id)->getIpAddress();
     }
 }

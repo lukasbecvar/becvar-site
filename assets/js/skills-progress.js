@@ -1,5 +1,5 @@
 /* becvar-site: skills bars smooth progress load */ 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     // select all progress-bar elements
     var progressBars = document.querySelectorAll('.progress-bar');
 

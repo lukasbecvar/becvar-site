@@ -101,23 +101,15 @@ class VisitorManager
      * @return Visitor|null
      */
     public function getRepositoryByArray(array $search): ?object
-    {
-        $result = null;
-        
+    {        
         // get visitor repository
         $visitorRepository = $this->entityManager->getRepository(Visitor::class);
 
         // try to find visitor in database
         try {
-            $result = $visitorRepository->findOneBy($search);
+            return $visitorRepository->findOneBy($search);
         } catch (\Exception $e) {
             $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
-        }
-
-        // return result
-        if ($result !== null) {
-            return $result;
-        } else {
             return null;
         }
     }
@@ -131,14 +123,8 @@ class VisitorManager
      */
     public function getVisitorID(string $ip_address): ?int 
     {
-        // try to get visitor data
-        $result = $this->getVisitorRepository($ip_address);
-
-        if ($result === null) {
-            return 0;
-        } else {
-            return $result->getID();
-        }
+        // get visitor id
+        return $this->getVisitorRepository($ip_address)->getID();
     }
 
     /**
@@ -228,14 +214,8 @@ class VisitorManager
      */
     public function getVisitorStatus(int $id): ?string 
     {
-        $visitor = $this->getVisitorRepositoryByID($id);
-
-        // check if visitor found
-        if ($visitor !== null) {
-            return $visitor->getStatus();
-        } else {
-            return null;
-        }
+        // get visitor status
+        return $this->getVisitorRepositoryByID($id)->getStatus();
     }
 
     /**

@@ -100,6 +100,7 @@ class LogManager
      */
     public function log(string $name, string $value, bool $bypass_antilog = false): void 
     {        
+        // check if log can be saved
         if (str_contains($value, 'Connection refused')) {
             if ($this->siteUtil->isDevMode()) {
                 die('Database error: '.$value);
@@ -261,39 +262,35 @@ class LogManager
      *
      * @param string $status
      *
-     * @return int
+     * @return int|null
      */
-    public function getLogsCount(string $status): int
+    public function getLogsCount(string $status): ?int
     {
         $repo = $this->entityManager->getRepository(Log::class);
 
         try {
-            $logs = $repo->findBy(['status' => $status]);   
+            return $repo->count(['status' => $status]);   
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
-            $logs = [];
+            return null;
         } 
-
-        return count($logs);
     }
 
     /**
      * Retrieves the count of login logs.
      *
-     * @return int
+     * @return int|null
      */
-    public function getLoginLogsCount(): int
+    public function getLoginLogsCount(): ?int
     {
         $repo = $this->entityManager->getRepository(Log::class);
 
         try {
-            $logs = $repo->findBy(['name' => 'authenticator']);   
+            return $repo->count(['name' => 'authenticator']);   
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
-            $logs = [];
+            return null;
         } 
-
-        return count($logs);
     }
 
     /**
@@ -306,8 +303,7 @@ class LogManager
         $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
 
         try {
-            $query = $this->entityManager->createQuery($dql);
-            $query->execute();
+            $query = $this->entityManager->createQuery($dql)->execute();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to set readed logs: '.$e->getMessage(), 500);
         }

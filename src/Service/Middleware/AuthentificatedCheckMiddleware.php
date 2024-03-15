@@ -56,9 +56,12 @@ class AuthentificatedCheckMiddleware
         if (str_starts_with($path_info, '/admin')) {
             // check if user is loggedin
             if (!$this->authManager->isUserLogedin()) {
+                
+                // get login page route url
+                $login_url = $this->urlGenerator->generate('auth_login'); 
+                
                 // redirect to login page
-                $loginUrl = $this->urlGenerator->generate('auth_login'); 
-                $event->setResponse(new RedirectResponse($loginUrl));
+                $event->setResponse(new RedirectResponse($login_url));
             }
         }
     }

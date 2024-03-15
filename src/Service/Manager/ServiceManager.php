@@ -146,9 +146,9 @@ class ServiceManager
      */
     public function isServiceInstalled(string $service_name): bool
     {
-        exec('dpkg -l | grep '.escapeshellarg($service_name), $output, $returnCode);
+        exec('dpkg -l | grep '.escapeshellarg($service_name), $output, $return_code);
         
-        if ($returnCode === 0) {
+        if ($return_code === 0) {
             return true;
         } else {
             return false;
