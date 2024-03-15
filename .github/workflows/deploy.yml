@@ -14,5 +14,6 @@ jobs:
 
       - name: Deploy to server
         env:
-            SERVER_SSH: ${{ secrets.SERVER_SSH }}
-          ssh lordbecvold@89.168.77.11 "sh test.sh"
+          SERVER_SSH: ${{ secrets.SERVER_SSH }}
+        run: |
+          ssh -i $SERVER_SSH lordbecvold@89.168.77.11 "bash /services/test.sh"
