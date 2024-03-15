@@ -112,10 +112,17 @@ class ImageUploaderController extends AbstractController
             // log paste view
             $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
             
-            return $this->render('public/image/image-viewer.html.twig', [
-                'token' => $token,
-                'image' => $image_content
-            ]);
+            // decode image data
+            $image_data = base64_decode($image_content);
+
+            // init response
+            $response = new Response($image_data);
+
+            // set response type header
+            $response->headers->set('Content-Type', 'image/jpg');
+
+            // return image response
+            return $response;
 
         } else {
             return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
@@ -189,7 +196,7 @@ class ImageUploaderController extends AbstractController
             }
         }
 
-        return $this->render('public/image/image-uploader.html.twig', [
+        return $this->render('public/image-uploader.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],
             'contact_email' => $_ENV['CONTACT_EMAIL'],
