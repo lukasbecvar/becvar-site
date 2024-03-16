@@ -12,6 +12,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+      # this step checks if the directory for the application already exists on the server
+    - name: Check if directory exists
+      run: |
+        if [ ! -d "/services/website/becvar.xyz" ]; then
+          git clone git@github.com:lordbecvold/becvar-site.git /services/website/becvar.xyz
+        fi
+
+      # This step performs the deployment of the application to the server using SSH
+      # It utilizes the appleboy/ssh-action, which allows connecting to the server and executing a script
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -23,6 +32,12 @@ jobs:
           sudo systemctl stop apache2
 
           cd /services/website/becvar.xyz/
-          mkdir asdfghjkl
-          
+          git update-index --skip-worktree .env .env.prod .env.dev .env.test
+
+          sh scripts/clear.sh
+          sh scripts/install.sh
+
+          sh scripts/create-database.sh
+          sh scripts/migrate.sh
+
           sudo systemctl start apache2
