@@ -55,11 +55,6 @@ class ErrorEventSubscriber implements EventSubscriberInterface
         $error_message = $event->getErrorMessage();
 
         // check if error is not log error
-        if (
-            !str_contains($error_message, 'log-error:') &&
-            !str_contains($error_message, 'Unknown database')
-        ) {
-            $this->logManager->log($error_name, $error_message, true);
-        }
+        $this->logManager->log($error_name, $error_message, true);
     }
 }

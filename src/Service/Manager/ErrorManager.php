@@ -60,7 +60,9 @@ class ErrorManager
     public function handleError(string $msg, int $code): Response
     {
         // dispatch error event
-        $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
+        if ($this->canBeEventDispatched($msg)) {
+            $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
+        }
 
         // check if app is in dev mode
         if ($this->siteUtil->isDevMode()) {
@@ -93,5 +95,32 @@ class ErrorManager
         } catch (\Exception) {
             return $this->twig->render('errors/error-unknown.html.twig');
         }
+    }
+
+    /**
+     * Checks if an event can be dispatched based on the error message.
+     *
+     * @param string $error_message The error message to be checked.
+     * @return bool Returns true if the event can be dispatched, otherwise false.
+     */
+    public function canBeEventDispatched(string $error_message): bool
+    {
+        // list of error patterns that should block event dispatch
+        $blocked_error_patterns = [
+            'log-error:', 
+            'Unknown database'
+        ];
+        
+        // loop through each blocked error pattern
+        foreach ($blocked_error_patterns as $pattern) {
+            // check if the current pattern exists in the error message
+            if (strpos($error_message, $pattern) !== false) {
+                // if a blocked pattern is found, return false
+                return false;
+            }
+        }
+        
+        // if no blocked patterns are found, return true
+        return true;
     }
 }
