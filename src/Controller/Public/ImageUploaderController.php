@@ -12,6 +12,7 @@ use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -88,42 +89,36 @@ class ImageUploaderController extends AbstractController
     {
         // get image token
         $token = $this->siteUtil->getQueryString('token', $request);
-
+    
         // escape image token
         $token = $this->securityUtil->escapeString($token);
-
-        // default image
-        $image_content = null;
-
+    
         // get image data
         $imageRepo = $this->entityManager->getRepository(Image::class)->findOneBy(['token' => $token]);
-        
+    
         // check if image found
         if ($imageRepo !== null) {
-
+    
             // get image & decrypt
             $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
-
+    
             // check if image is decrypted
             if ($image_content == null) {
                 $this->errorManager->handleError('Error to decrypt aes image', 500);
             }
-
-            // log paste view
-            $this->logManager->log('image-uploader', 'visitor viewed paste: '.$token);
-            
-            // decode image data
-            $image_data = base64_decode($image_content);
-
-            // init response
-            $response = new Response($image_data);
-
-            // set response type header
-            $response->headers->set('Content-Type', 'image/jpg');
-
-            // return image response
+    
+            // set content type header to image/jpeg
+            $headers = [
+                'Content-Type' => 'image/jpeg',
+            ];
+    
+            // create a streamed response with image content
+            $response = new StreamedResponse(function () use ($image_content) {
+                echo base64_decode($image_content);
+            }, Response::HTTP_OK, $headers);
+    
             return $response;
-
+    
         } else {
             return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         }
