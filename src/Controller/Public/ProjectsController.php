@@ -60,7 +60,7 @@ class ProjectsController extends AbstractController
      * @return Response The response containing the rendered projects page.
      */
     #[Route('/projects', methods: ['GET'], name: 'public_projects')]
-    public function index(): Response
+    public function projectsList(): Response
     {
         // render projects page
         return $this->render('public/projects.html.twig', [

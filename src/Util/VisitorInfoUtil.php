@@ -67,7 +67,6 @@ class VisitorInfoUtil
     {
         // get user agent
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
-        
         return $user_agent !== null ? $user_agent : 'Unknown';
     }
 
@@ -217,48 +216,40 @@ class VisitorInfoUtil
      */
     public function getLocation(string $ip_address): ?array
     {
-        // check if site running on localhost
+        // check if site is running on localhost
         if ($this->siteUtil->isRunningLocalhost()) {
             return ['city' => 'locale', 'country' => 'host'];
-        } else {
- 
-            try {
-                // get geoplugin url form app enviroment
-                $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
-
-                // get data from geoplugin
-                $geoplugin_data = file_get_contents($geoplugin_url.'/json.gp?ip='.$ip_address);
-
-                // decode data
-                $details = json_decode($geoplugin_data);
-        
-                // get country
-                $country = $details->geoplugin_countryCode;
-
-                // check if city name defined
-                if (!empty(explode('/', $details->geoplugin_timezone)[1])) {
-                        
-                    // get city name from timezone (explode /)
-                    $city = explode('/', $details->geoplugin_timezone)[1];
-                } else {
-                    $city = null;
-                }
-            } catch (\Exception) {
-
-                // set null if data not getted
-                $country = null;
-                $city = null;
-            }   
         }
 
-        // empty set to null
-        if (empty($country)) {
-            $country = 'Unknown';
+        try {
+            // get geoplugin URL from environment variables
+            $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
+    
+            // get data from geoplugin
+            $geoplugin_data = file_get_contents("$geoplugin_url/json.gp?ip=$ip_address");
+    
+            // decode data
+            $details = json_decode($geoplugin_data);
+    
+            // get country
+            $country = $details->geoplugin_countryCode;
+    
+            // extract city name from timezone
+            $city = null;
+            if (!empty($details->geoplugin_timezone)) {
+                $timezone_parts = explode('/', $details->geoplugin_timezone);
+                $city = $timezone_parts[1] ?? null;
+            }
+        } catch (\Exception) {
+            // handle exception gracefully
+            $country = null;
+            $city = null;
         }
-        if (empty($city)) {
-            $city = 'Unknown';
-        }
-
+    
+        // set default values if data not retrieved
+        $country = $country ?: 'Unknown';
+        $city = $city ?: 'Unknown';
+    
         return ['city' => $city, 'country' => $country];
     }
 }

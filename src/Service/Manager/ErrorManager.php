@@ -38,8 +38,8 @@ class ErrorManager
     /**
      * ErrorManager constructor.
      *
-     * @param Environment $twig
-     * @param SiteUtil    $siteUtil
+     * @param Environment              $twig
+     * @param SiteUtil                 $siteUtil
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(Environment $twig, SiteUtil $siteUtil, EventDispatcherInterface $eventDispatcher)

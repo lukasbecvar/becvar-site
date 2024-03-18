@@ -46,23 +46,31 @@ class SiteUtil
      */
     public function isRunningLocalhost(): bool 
     {
-        // get host URL
+		$localhost = false;
+
+        // get host url
         $host = $this->getHttpHost();
-    
+
         // check if host is null
-        if ($host == null) {
-            return false;
+        if ($host != null) {
+
+            // check if running on url localhost
+            if (str_starts_with($host, 'localhost')) {
+                $localhost = true;
+            } 
+                
+            // check if running on localhost ip
+            if (str_starts_with($host, '127.0.0.1')) {
+                $localhost = true;
+            }
+            
+            // check if running on private ip
+            if (str_starts_with($host, '10.0.0.93')) {
+                $localhost = true;
+            }
         }
-    
-        // check if running on localhost
-        switch ($host) {
-            case 'localhost':
-            case '127.0.0.1':
-            case '10.0.0.93':
-                return true;
-            default:
-                return false;
-        }
+
+        return $localhost;
     }
 
     /**
@@ -72,7 +80,7 @@ class SiteUtil
      */
     public function isSsl(): bool 
     {
-        // xheck if HTTPS header is set and its value is either 1 or 'on'
+        // check if HTTPS header is set and its value is either 1 or 'on'
         return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 1 || strtolower($_SERVER['HTTPS']) === 'on');
     }
 

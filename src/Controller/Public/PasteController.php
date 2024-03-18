@@ -89,7 +89,7 @@ class PasteController extends AbstractController
         // check if paste submited
         if (isset($_POST['data'])) {
         
-            // get data from post & escape
+            // get data from post request
             $content = $_POST['data'];
             $name = $this->securityUtil->escapeString($_POST['file']);
 
@@ -102,7 +102,7 @@ class PasteController extends AbstractController
                 // redirect error
                 return $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
             } else {
-                // save paste to mysql table
+                // save paste data
                 if (!empty($content)) {
 
                     // init paste entity
@@ -172,6 +172,7 @@ class PasteController extends AbstractController
             return $this->errorManager->handleError('error paste not found', 404);
         }
 
+        // return code paste view
         return $this->render('public/paste/paste-view.html.twig', ['file' => $token, 'paste_content' => $content]);
     }
 }

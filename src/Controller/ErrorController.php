@@ -56,10 +56,10 @@ class ErrorController extends AbstractController
 
         // block handeling (maintenance, banned use only from app logic)
         if ($code == 'maintenance' or $code == 'banned' or $code == null) {
-            return new Response($this->errorManager->handleErrorView('unknown'));
-        } else {
-            return new Response($this->errorManager->handleErrorView($code));
+            $code = 'unknown';
         }
+
+        return new Response($this->errorManager->handleErrorView($code));
     }
 
     /**

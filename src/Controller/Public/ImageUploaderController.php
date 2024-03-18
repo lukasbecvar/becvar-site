@@ -186,7 +186,7 @@ class ImageUploaderController extends AbstractController
                 return $this->redirectToRoute('public_image_viewer', ['token' => $token]);
 
             } else {
-                // handle error
+                // handle error (translation key)
                 $error_msg = 'image.uploader.file.format.error';
             }
         }

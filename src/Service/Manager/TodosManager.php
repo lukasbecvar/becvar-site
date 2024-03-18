@@ -114,7 +114,7 @@ class TodosManager
     /**
      * Adds a new todo item.
      *
-     * @param string $text  The text for the new todo item.
+     * @param string $text The text for the new todo item.
      *
      * @return void
      */
@@ -156,8 +156,8 @@ class TodosManager
     /**
      * Edit a todo item.
      *
-     * @param string $id             The ID of the todo item to be edited.
-     * @param string $new_todo_text  The new text for the todo item.
+     * @param string $id The ID of the todo item to be edited.
+     * @param string $new_todo_text The new text for the todo item.
      *
      * @return void
      */
