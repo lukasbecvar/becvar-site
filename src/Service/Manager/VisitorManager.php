@@ -121,10 +121,16 @@ class VisitorManager
      *
      * @return int
      */
-    public function getVisitorID(string $ip_address): ?int 
+    public function getVisitorID(string $ip_address): int 
     {
         // get visitor id
-        return $this->getVisitorRepository($ip_address)->getID();
+        $visitor = $this->getVisitorRepository($ip_address);
+
+        if ($visitor == null) {
+            return 1;
+        } else {
+            return $visitor->getID();
+        }
     }
 
     /**

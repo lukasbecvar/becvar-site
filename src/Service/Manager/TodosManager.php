@@ -99,6 +99,7 @@ class TodosManager
                         'id' => $todo->getId(),
                         'text' => $todo_text
                     ];
+                    
                     array_push($todo_data, $todo_item);
                 }
                 

@@ -33,20 +33,21 @@ class JsonUtil
         // create request context
         $context = stream_context_create($opts);
 
-        // try get contents data
         try {
             // get data
             $data = file_get_contents($target, false, $context);
 
-            // check if data is null
+            // return null if data retrieval fails
             if ($data == null) {
-                return null; // return null if data retrieval fails
+                return null; 
             }
 
             // decode & return json
             return json_decode($data, true);
         } catch (\Exception) {
-            return null; // return null on any exception
+
+            // return null on any exception
+            return null;
         }
     }
 }

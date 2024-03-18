@@ -200,9 +200,7 @@ class MessagesManager
         if ($message !== null) {
             try {
                 // close message
-                $message->setStatus('closed');
-                
-                // update in database
+                $message->setStatus('closed');                
                 $this->entityManager->flush();
             } catch (\Exception $e) {
                 $this->errorManager->handleError('error to close message: '.$id.', '.$e->getMessage(), 500);

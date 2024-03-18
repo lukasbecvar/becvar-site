@@ -180,7 +180,7 @@ class BanManager
         $repository = $this->entityManager->getRepository(Visitor::class);
 
         try {
-            // get banned users list
+            // count banned users
             return $repository->count(['banned_status' => 'yes']);
         } catch (\Exception $e) {
             $this->errorManager->handleError('find error: '.$e->getMessage(), 500);

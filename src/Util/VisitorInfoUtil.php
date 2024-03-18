@@ -42,21 +42,20 @@ class VisitorInfoUtil
      */
     public function getIP(): ?string 
     {
-        $address = null;
-
-        // check client ip
+        // check client IP
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $address = $_SERVER['HTTP_CLIENT_IP'];
-
-        // check forwarded ip (get ip from cloudflare visitors) 
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-
-            // default header
-            $address = $_SERVER['REMOTE_ADDR'];
+            return $_SERVER['HTTP_CLIENT_IP'];
+        } 
+        
+        // check forwarded IP (get IP from cloudflare visitors) 
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } 
+        
+        // default addr get
+        else {
+            return $_SERVER['REMOTE_ADDR'];
         }
-        return $address;
     }
 
     /**
@@ -66,17 +65,10 @@ class VisitorInfoUtil
      */
     public function getBrowser(): ?string 
     {
-        $user_agent = null;
-
         // get user agent
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-
-        // check if user agent found
-        if ($user_agent != null) {
-            return $user_agent;
-        } else {
-            return 'Unknown';
-        }
+        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+        
+        return $user_agent !== null ? $user_agent : 'Unknown';
     }
 
     /**
@@ -89,100 +81,76 @@ class VisitorInfoUtil
     public function getBrowserShortify(string $user_agent): ?string 
     {
         $output = null;
-
+    
         // identify shortify array [ID: str_contains, Value: replacement]
         $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json');
-
+    
         // check if browser list found
         if ($browser_list != null) {
-
             // check all user agents
             foreach ($browser_list as $index => $value) {
-
                 // check if index found in agent
                 if (str_contains($user_agent, $index)) {
                     $output = $index;
+                    break;
                 }
             }
         }
-
+    
         // check if output is not found in browser list
         if ($output == null) {
-
-            // identify Internet explorer
-            if(preg_match('/MSIE (\d+\.\d+);/', $user_agent)) {
-                $output = 'Internet Explore';
-
-            } else if (str_contains($user_agent, 'MSIE')) {
-                $output = 'Internet Explore';   
-
-            // identify Google chrome
-            } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent) ) {
-                $output = 'Chrome';
-            
-            // identify Internet edge
-            } else if (preg_match('/Edge\/\d+/', $user_agent)) {
-                $output = 'Edge';
-            
-            // identify Firefox
-            } else if (preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent)) {
-                $output = 'Firefox';
-
-            } else if (str_contains($user_agent, 'Firefox/96')) {
-                $output = 'Firefox/96';  
-                
-            // identify Safari
-            } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent)) {
-                $output = 'Safari';
-                
-            // identify UC Browser
-            } else if (str_contains($user_agent, 'UCWEB')) {
-                $output = 'UC Browser';
-
-            // identify UCBrowser Browser
-            } else if (str_contains($user_agent, 'UCBrowser')) {
-                $output = 'UC Browser';
-
-            // identify IceApe Browser
-            } else if (str_contains($user_agent, 'Iceape')) {
-                $output = 'IceApe Browser';
-
-            // identify Maxthon Browser
-            } else if (str_contains($user_agent, 'maxthon')) {
-                $output = 'Maxthon Browser';
-
-            // identify Konqueror Browser
-            } else if (str_contains($user_agent, 'konqueror')) {
-                $output = 'Konqueror Browser';
-
-            // identify NetFront Browser
-            } else if (str_contains($user_agent, 'NetFront')) {
-                $output = 'NetFront Browser';
-
-            // identify Midori Browser
-            } else if (str_contains($user_agent, 'Midori')) {
-                $output = 'Midori Browser';
-
-            // identify Opera
-            } else if (preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent)) {
-                $output = 'Opera';
-
-            } else if (preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent)) {
-                $output = 'Opera';
+            // identify common browsers using switch statement
+            switch (true) {
+                case preg_match('/MSIE (\d+\.\d+);/', $user_agent):
+                case str_contains($user_agent, 'MSIE'):
+                    $output = 'Internet Explore';
+                    break;
+                case preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent):
+                    $output = 'Chrome';
+                    break;
+                case preg_match('/Edge\/\d+/', $user_agent):
+                    $output = 'Edge';
+                    break;
+                case preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent):
+                case str_contains($user_agent, 'Firefox/96'):
+                    $output = 'Firefox';
+                    break;
+                case preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent):
+                    $output = 'Safari';
+                    break;
+                case str_contains($user_agent, 'UCWEB'):
+                case str_contains($user_agent, 'UCBrowser'):
+                    $output = 'UC Browser';
+                    break;
+                case str_contains($user_agent, 'Iceape'):
+                    $output = 'IceApe Browser';
+                    break;
+                case str_contains($user_agent, 'maxthon'):
+                    $output = 'Maxthon Browser';
+                    break;
+                case str_contains($user_agent, 'konqueror'):
+                    $output = 'Konqueror Browser';
+                    break;
+                case str_contains($user_agent, 'NetFront'):
+                    $output = 'NetFront Browser';
+                    break;
+                case str_contains($user_agent, 'Midori'):
+                    $output = 'Midori Browser';
+                    break;
+                case preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent):
+                case preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent):
+                    $output = 'Opera';
+                    break;
+                default:
+                    // if not found, check user agent length
+                    if (str_contains($user_agent, ' ') || strlen($user_agent) >= 39) {
+                        $output = 'Unknown';
+                    } else {
+                        $output = $user_agent;
+                    }
             }
         }
-
-        // if not found
-        if ($output == null) {
-
-            // check user agent length 
-            if (str_contains($user_agent, ' ') or strlen($user_agent) >= 39) {
-                $output = 'Unknown';
-            } else {
-                $output = $user_agent;
-            }
-        }
-
+    
         return $output;
     }
 

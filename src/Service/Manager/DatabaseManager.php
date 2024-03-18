@@ -175,7 +175,7 @@ class DatabaseManager
         // escape name from sql query
         $table_name = $this->connection->quoteIdentifier($table_name);
     
-        // Calculate the offset based on the page number
+        // calculate the offset based on the page number
         $offset = ($page - 1) * $itemsPerPage;
     
         // get data with LIMIT and OFFSET

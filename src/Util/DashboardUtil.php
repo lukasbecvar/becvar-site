@@ -53,7 +53,7 @@ class DashboardUtil
      * Get the count of entities in the database.
      *
      * @param object $entity The entity class.
-     * @param array<string, mixed>|null $search Additional search criteria.
+     * @param array<string,mixed>|null $search Additional search criteria.
      *
      * @return int The count of entities.
      */
@@ -218,7 +218,7 @@ class DashboardUtil
         } else {
             return false;
         }
-   }
+    }
 
     /**
      * Check if the system is running Linux.
@@ -232,7 +232,7 @@ class DashboardUtil
             return true;
         } else {
             return false;
-        }       
+        }
     }
 
     /**
@@ -257,7 +257,7 @@ class DashboardUtil
      */
     public function isBrowserListFound(): bool 
     {
-        // check if list is null
+        // check if list is found
         if ($this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json') != null) {
             return true;
         } else {

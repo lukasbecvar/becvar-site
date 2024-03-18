@@ -45,7 +45,6 @@ class TranslationsMiddleware
      */
     public function onKernelRequest(): void
     {
-        // get visitor language
         $language = $this->visitorManager->getVisitorLanguage();
 
         // check unidentified languages

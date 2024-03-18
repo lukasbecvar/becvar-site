@@ -303,7 +303,7 @@ class LogManager
         $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
 
         try {
-            $query = $this->entityManager->createQuery($dql)->execute();
+            $this->entityManager->createQuery($dql)->execute();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to set readed logs: '.$e->getMessage(), 500);
         }

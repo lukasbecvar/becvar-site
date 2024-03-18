@@ -214,7 +214,7 @@ class ProjectsManager
     public function getProjectsCount(): ?int
     {
         try {
-            return count($this->entityManager->getRepository(Project::class)->findAll());
+            return $this->entityManager->getRepository(Project::class)->count([]);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
             return null;

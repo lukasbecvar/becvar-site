@@ -136,10 +136,7 @@ class VisitorSystemMiddleware
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ip_address)) {
 
-                // get ban reason 
                 $reason = $this->banManager->getBanReason($ip_address);
-
-                // log access to database
                 $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
 
                 // render banned page
@@ -173,7 +170,7 @@ class VisitorSystemMiddleware
             $this->logManager->log('geolocate-error', 'error to geolocate ip: '.$ip_address);
         }
 
-        // prevent maximal useragent to save
+        // prevent maximal user agent length
         if (strlen($browser) >= 200) {
             $browser = substr($browser, 0, 197) . "...";
         }
@@ -196,7 +193,7 @@ class VisitorSystemMiddleware
         $visitorEntity->setStatus('online');
         $visitorEntity->setStatusUpdateTime(strval(time()));
             
-        // insert new visitor
+        // try to insert new visitor
         try {
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();

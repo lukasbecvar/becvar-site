@@ -46,31 +46,23 @@ class SiteUtil
      */
     public function isRunningLocalhost(): bool 
     {
-		$localhost = false;
-
-        // get host url
+        // get host URL
         $host = $this->getHttpHost();
-
+    
         // check if host is null
-        if ($host != null) {
-
-            // check if running on url localhost
-            if (str_starts_with($host, 'localhost')) {
-                $localhost = true;
-            } 
-                
-            // check if running on localhost ip
-            if (str_starts_with($host, '127.0.0.1')) {
-                $localhost = true;
-            }
-            
-            // check if running on private ip
-            if (str_starts_with($host, '10.0.0.93')) {
-                $localhost = true;
-            }
+        if ($host == null) {
+            return false;
         }
-
-        return $localhost;
+    
+        // check if running on localhost
+        switch ($host) {
+            case 'localhost':
+            case '127.0.0.1':
+            case '10.0.0.93':
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -80,22 +72,8 @@ class SiteUtil
      */
     public function isSsl(): bool 
     {
-        // check if set https header
-        if (isset($_SERVER['HTTPS'])) {
-
-            // https value (1)
-            if ($_SERVER['HTTPS'] == 1) {
-                return true;
-
-            // check https value (on)
-            } elseif ($_SERVER['HTTPS'] == 'on') {
-                return true;
-            } else {
-                return false;   
-            }
-        } else {
-            return false;   
-        }
+        // xheck if HTTPS header is set and its value is either 1 or 'on'
+        return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 1 || strtolower($_SERVER['HTTPS']) === 'on');
     }
 
     /**
@@ -141,7 +119,6 @@ class SiteUtil
         // get query value
         $value = $request->query->get($query);
 
-        // set return to 1 if value is null
         if ($value == null) {
             return '1';
         } else {
