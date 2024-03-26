@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Todo;
 use App\Util\SiteUtil;
-use App\Util\SecurityUtil;
 use App\Form\NewTodoFormType;
 use App\Service\Manager\AuthManager;
 use App\Service\Manager\ErrorManager;
@@ -42,12 +41,6 @@ class TodoManagerController extends AbstractController
     private TodosManager $todosManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * @var ErrorManager
      * Instance of the ErrorManager for handling error-related functionality.
      */
@@ -59,20 +52,17 @@ class TodoManagerController extends AbstractController
      * @param SiteUtil      $siteUtil
      * @param AuthManager   $authManager
      * @param TodosManager  $todosManager
-     * @param SecurityUtil  $securityUtil
      * @param ErrorManager  $errorManager
      */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,
         TodosManager $todosManager,
-        SecurityUtil $securityUtil,
         ErrorManager $errorManager,
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->todosManager = $todosManager;
-        $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
     }
 
@@ -180,9 +170,6 @@ class TodoManagerController extends AbstractController
                 if (empty($new_todo_text)) {
                     $error_msg = 'Please add todo text!';
                 } else {
-                        
-                    // escape todo text
-                    $new_todo_text = $this->securityUtil->escapeString($new_todo_text);
 
                     // save change
                     $this->todosManager->editTodo($id, $new_todo_text);

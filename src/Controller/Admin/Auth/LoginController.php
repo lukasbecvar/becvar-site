@@ -80,7 +80,7 @@ class LoginController extends AbstractController
                 $username = $form->get('username')->getData();
                 $password = $form->get('password')->getData();
                 $remember = $form->get('remember')->getData();
-
+                
                 // check if user exist
                 if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                     

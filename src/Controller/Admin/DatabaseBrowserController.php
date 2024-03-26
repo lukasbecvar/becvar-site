@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Util\SiteUtil;
-use App\Util\SecurityUtil;
 use App\Service\Manager\AuthManager;
 use App\Service\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +33,6 @@ class DatabaseBrowserController extends AbstractController
     private AuthManager $authManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * @var DatabaseManager
      * Instance of the DatabaseManager for handling database-related functionality.
      */
@@ -50,18 +43,15 @@ class DatabaseBrowserController extends AbstractController
      *
      * @param SiteUtil        $siteUtil
      * @param AuthManager     $authManager
-     * @param SecurityUtil    $securityUtil
      * @param DatabaseManager $databaseManager
      */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager, 
-        SecurityUtil $securityUtil,
         DatabaseManager $databaseManager
     ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
-        $this->securityUtil = $securityUtil;
         $this->databaseManager = $databaseManager;
     }
 
@@ -96,9 +86,6 @@ class DatabaseBrowserController extends AbstractController
         // get query parameters
         $table = $this->siteUtil->getQueryString('table', $request);
         $page = intval($this->siteUtil->getQueryString('page', $request));
-
-        // escape table name
-        $table = $this->securityUtil->escapeString($table);
 
         // get table data
         $table_data = $this->databaseManager->getTableDataByPage($table, $page);
@@ -141,10 +128,7 @@ class DatabaseBrowserController extends AbstractController
         $page = intval($this->siteUtil->getQueryString('page', $request));
         $id = intval($this->siteUtil->getQueryString('id', $request));
         $table = $this->siteUtil->getQueryString('table', $request);
-
-        // escape table name
-        $table = $this->securityUtil->escapeString($table);
-            
+ 
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
 
@@ -170,8 +154,8 @@ class DatabaseBrowserController extends AbstractController
                             break;
                         }
                     } else {
-                        // get value & escape
-                        $value = $this->securityUtil->escapeString($request->request->get($row));
+                        // get value
+                        $value = $request->request->get($row);
 
                         // update value
                         $this->databaseManager->updateValue($table, $row, $value, $id);
@@ -225,9 +209,6 @@ class DatabaseBrowserController extends AbstractController
         $table = $this->siteUtil->getQueryString('table', $request);
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
-        // escape table name
-        $table = $this->securityUtil->escapeString($table);
-
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
 
@@ -249,7 +230,7 @@ class DatabaseBrowserController extends AbstractController
                         $column_value = $request->request->get($column);
                         if (!empty($column_value)) {
                             $columnsBuilder[] = $column;
-                            $valuesBuilder[] = $this->securityUtil->escapeString($column_value);
+                            $valuesBuilder[] = $column_value;
                         } else {
                             $error_msg = 'value: '.$column.' is empty';
                             break;
@@ -304,9 +285,6 @@ class DatabaseBrowserController extends AbstractController
         $page = intval($this->siteUtil->getQueryString('page', $request));
         $id = $this->siteUtil->getQueryString('id', $request);
         $table = $this->siteUtil->getQueryString('table', $request);
-
-        // escape table name
-        $table = $this->securityUtil->escapeString($table);
 
         // delete row
         $this->databaseManager->deleteRowFromTable($table, $id);

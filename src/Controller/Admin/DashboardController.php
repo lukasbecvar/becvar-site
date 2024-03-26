@@ -9,7 +9,6 @@ use App\Entity\Paste;
 use App\Util\SiteUtil;
 use App\Entity\Message;
 use App\Entity\Visitor;
-use App\Util\SecurityUtil;
 use App\Util\DashboardUtil;
 use App\Service\Manager\LogManager;
 use App\Service\Manager\BanManager;
@@ -57,12 +56,6 @@ class DashboardController extends AbstractController
     private AuthManager $authManager;
 
     /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
-    private SecurityUtil $securityUtil;
-
-    /**
      * @var DashboardUtil
      * Instance of the DashboardUtil for handling dashboard-related functionality.
      */
@@ -87,7 +80,6 @@ class DashboardController extends AbstractController
      * @param BanManager     $banManager
      * @param LogManager     $logManager
      * @param AuthManager    $authManager
-     * @param SecurityUtil   $securityUtil
      * @param DashboardUtil  $dashboardUtil
      * @param ServiceManager $serviceManager
      * @param VisitorManager $visitorManager
@@ -97,7 +89,6 @@ class DashboardController extends AbstractController
         BanManager $banManager,
         LogManager $logManager,
         AuthManager $authManager, 
-        SecurityUtil $securityUtil,
         DashboardUtil $dashboardUtil,
         ServiceManager $serviceManager,
         VisitorManager $visitorManager
@@ -106,7 +97,6 @@ class DashboardController extends AbstractController
         $this->banManager = $banManager;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
-        $this->securityUtil = $securityUtil;
         $this->dashboardUtil = $dashboardUtil;
         $this->serviceManager = $serviceManager;
         $this->visitorManager = $visitorManager;
@@ -176,10 +166,6 @@ class DashboardController extends AbstractController
         $service_name = $this->siteUtil->getQueryString('service', $request);
         $action = $this->siteUtil->getQueryString('action', $request);
 
-        // escape values
-        $service_name = $this->securityUtil->escapeString($service_name);
-        $action = $this->securityUtil->escapeString($action);
-
         // check if action is emergency shutdown
         if ($service_name == 'emergency' && $action == 'shutdown') {
             return $this->redirectToRoute('admin_emergency_shutdown'); 
@@ -218,12 +204,8 @@ class DashboardController extends AbstractController
                 // check if codes submited
                 if (isset($shutdown_code) && isset($confirm_code)) {
 
-                    // escape post data
-                    $code_1 = $this->securityUtil->escapeString($shutdown_code);
-                    $code_2 = $this->securityUtil->escapeString($confirm_code);
-    
                     // check if codes is valid
-                    if ($code_1 == $code_2) {
+                    if ($shutdown_code == $confirm_code) {
             
                         // ! execute shutdown !
                         $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');

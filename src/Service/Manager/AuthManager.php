@@ -5,14 +5,10 @@ namespace App\Service\Manager;
 use App\Entity\User;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
-use App\Event\LoginEvent;
 use App\Util\SecurityUtil;
-use App\Event\LogoutEvent;
-use App\Event\RegisterEvent;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AuthManager
@@ -24,6 +20,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class AuthManager
 {
+    /**
+     * @var LogManager
+     * Instance of the LogManager for handling log-related functionality.
+     */
+    private LogManager $logManager;
+
     /**
      * @var CookieUtil
      * Instance of the CookieUtil for handling cookie-related functionality.
@@ -67,14 +69,9 @@ class AuthManager
     private EntityManagerInterface $entityManager;
 
     /**
-     * @var EventDispatcherInterface
-     * Instance of the EventDispatcherInterface for dispatch custom events.
-     */
-    private EventDispatcherInterface $eventDispatcher;
-
-    /**
      * AuthManager constructor.
      *
+     * @param LogManager               $logManager
      * @param CookieUtil               $cookieUtil
      * @param SessionUtil              $sessionUtil
      * @param ErrorManager             $errorManager
@@ -82,18 +79,18 @@ class AuthManager
      * @param VisitorManager           $visitorManager
      * @param VisitorInfoUtil          $visitorInfoUtil
      * @param EntityManagerInterface   $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
+        LogManager $logManager,
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
+        EntityManagerInterface $entityManager
     ) {
+        $this->logManager = $logManager;
         $this->cookieUtil = $cookieUtil;
         $this->sessionUtil = $sessionUtil;
         $this->errorManager = $errorManager;
@@ -101,7 +98,6 @@ class AuthManager
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -156,9 +152,9 @@ class AuthManager
                 // update last login time
                 $this->updateUserData();
 
-                // dispatch login event
-                $this->eventDispatcher->dispatch(new LoginEvent($username), LoginEvent::NAME);
-                
+                // log auth action
+                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
+
             } else {
                 $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
             }
@@ -177,9 +173,9 @@ class AuthManager
             // init user
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
-            // dispatch logout event
-            $this->eventDispatcher->dispatch(new LogoutEvent($user->getUsername()), LogoutEvent::NAME);
-            
+            // log logout event
+            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
+
             // unset login cookie
             $this->cookieUtil->unset('login-token-cookie');
 
@@ -303,8 +299,8 @@ class AuthManager
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            // dispatch register event
-            $this->eventDispatcher->dispatch(new RegisterEvent($username), RegisterEvent::NAME);
+            // log registration event
+            $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
 
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to register new user: '.$e->getMessage(), 400);

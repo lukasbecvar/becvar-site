@@ -108,7 +108,8 @@ class ErrorManager
         // list of error patterns that should block event dispatch
         $blocked_error_patterns = [
             'log-error:', 
-            'Unknown database'
+            'Unknown database',
+            'Base table or view not found'
         ];
         
         // loop through each blocked error pattern
