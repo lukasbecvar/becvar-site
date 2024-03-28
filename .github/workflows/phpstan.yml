@@ -1,20 +1,21 @@
 name: PHPStan
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
-    phpstan:
-        runs-on: ubuntu-latest
+  phpstan:
+    runs-on: ubuntu-latest
 
     steps:
-        - name: Checkout repository
-            uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-        - name: Install dependencies
-            run: composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
 
-        - name: Run PHPStan
-            run: ./vendor/bin/phpstan analyse --configuration phpstan.neon
+      - name: Run PHPStan
+        run: ./vendor/bin/phpstan analyse --configuration phpstan.neon
