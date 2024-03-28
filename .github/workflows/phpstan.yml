@@ -7,7 +7,7 @@ on:
 
 jobs:
   phpstan:
-    name: Check Code with PHPStan
+    name: PHPStan analyse
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +16,6 @@ jobs:
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
 
     - name: Install dependencies
       run: composer install
