@@ -57,7 +57,7 @@ class AccountSettingsTest extends WebTestCase
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('h2', 'Account settings');
         $this->assertSelectorTextContains('body', 'profile-pic');
-        $this->assertSelectorTextContains('body', 'usernamell');
+        $this->assertSelectorTextContains('body', 'username');
         $this->assertSelectorTextContains('body', 'password');
     }
 
