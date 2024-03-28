@@ -43,8 +43,8 @@ class MaintenanceMiddleware
      */
     public function onKernelRequest(): void
     {
-        $this->errorManager->handleErrorView('maintenance');  
-        
+        $this->errorManager->handleError('maintenance', 500);  
+
         // check if MAINTENANCE_MODE enabled
         if ($this->siteUtil->isMaintenance()) {
             $this->errorManager->handleErrorView('maintenance');            
