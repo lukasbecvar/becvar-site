@@ -13,7 +13,6 @@ jobs:
     services:
       mysql:
         image: mysql:latest
-        container_name: becvar_site_test_mysql
         environment:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
