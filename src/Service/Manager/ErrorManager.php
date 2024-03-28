@@ -59,6 +59,11 @@ class ErrorManager
      */
     public function handleError(string $msg, int $code): Response
     {
+        // handle maintenance
+        if ($msg == 'maintenance') {
+            return die($this->handleErrorView('maintenance'));
+        }
+
         // dispatch error event
         if ($this->canBeEventDispatched($msg)) {
             $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
