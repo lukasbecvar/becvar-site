@@ -32,8 +32,6 @@ jobs:
       - name: Install dependencies
         run: composer install --no-progress --no-suggest --no-interaction --prefer-dist
 
-      - name: Prepare PHPUnit config
-
       - name: Create database and run migrations
         run: |
           php bin/console doctrine:database:create --if-not-exists
