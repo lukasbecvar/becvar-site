@@ -30,7 +30,7 @@ jobs:
           extensions: mbstring, intl, pdo_mysql, pdo, mysqli, zip
 
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist
+        run: sh scripts/install.sh
 
       - name: Create database and run migrations
         run: |
