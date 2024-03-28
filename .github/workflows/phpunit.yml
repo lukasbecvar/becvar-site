@@ -1,4 +1,4 @@
-name: PHPUnit
+name: PHP PHPUnit Tests
 
 on:
   push:
@@ -6,46 +6,36 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run PHPUnit tests
+  phpunit:
+    name: Run PHPUnit
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:latest
-        environment:
-            - MYSQL_ROOT_PASSWORD=root
-        volumes:
-            - ./docker/configs/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: becvar_site_test
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
         ports:
           - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: 8.3
+          extensions: mbstring, intl, pdo_mysql, pdo, mysqli, zip
 
-      - name: Install Composer dependencies
-        run: composer install
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --no-interaction --prefer-dist
 
-      - name: Create and migrate database
-        env:
-          DB_HOST: ${{ env.DATABASE_HOST }}
-          DB_PORT: ${{ env.DATABASE_PORT }}
-          DB_DATABASE: ${{ env.DATABASE_NAME }}
-          DB_USERNAME: ${{ env.DATABASE_USERNAME }}
-          DB_PASSWORD: ${{ env.DATABASE_PASSWORD }}
-        run: php bin/console doctrine:database:create --env=dev && php bin/console doctrine:migrations:migrate --env=dev --no-interaction
+      - name: Prepare PHPUnit config
 
       - name: Run PHPUnit tests
-        env:
-          DB_HOST: ${{ env.DATABASE_HOST }}
-          DB_PORT: ${{ env.DATABASE_PORT }}
-          DB_DATABASE: ${{ env.DATABASE_NAME }}
-          DB_USERNAME: ${{ env.DATABASE_USERNAME }}
-          DB_PASSWORD: ${{ env.DATABASE_PASSWORD }}
         run: vendor/bin/phpunit
