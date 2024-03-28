@@ -4,18 +4,23 @@ on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   phpstan:
+    name: Check Code with PHPStan
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: composer install --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
 
-      - name: Run PHPStan
-        run: ./vendor/bin/phpstan analyse --configuration phpstan.neon
+    - name: Install dependencies
+      run: composer install
+
+    - name: Run PHPStan
+      run: ./vendor/bin/phpstan analyse --configuration phpstan.neon
