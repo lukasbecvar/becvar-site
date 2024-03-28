@@ -13,14 +13,13 @@ jobs:
     services:
       mysql:
         image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ env.DATABASE_PASSWORD }}
-          MYSQL_DATABASE: ${{ env.DATABASE_NAME }}
-          MYSQL_USER: ${{ env.DATABASE_USERNAME }}
-          MYSQL_PASSWORD: ${{ env.DATABASE_PASSWORD }}
+        container_name: becvar_site_test_mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - ./docker/configs/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
