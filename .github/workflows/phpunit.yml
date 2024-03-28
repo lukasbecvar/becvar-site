@@ -32,8 +32,10 @@ jobs:
       - name: Install dependencies
         run: sh scripts/install.sh
 
-      - name: Create database and run migrations
+      - name: Create database
         run: sh scripts/create-database.sh
+      
+      - name: Migrate database
         run: sh scripts/migrate.sh
 
       - name: Run PHPUnit tests
