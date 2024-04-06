@@ -22,8 +22,8 @@ jobs:
         port: 22
         script: |
           cd /services/website/becvar.xyz
-          systemctl stop apache2
+          sudo systemctl stop apache2
           sh scripts/clear.sh
           git clone git@github.com:lordbecvold/becvar-site.git
           sh scripts/install.sh
-          systemctl start apache2
+          sudo systemctl start apache2
