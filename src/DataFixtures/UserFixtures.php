@@ -62,6 +62,22 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $testUser = new User();
+
+        // add test user
+        $testUser->setUsername('test');
+        $testUser->setPassword($this->securityUtil->genBcryptHash('test', 10));
+        $testUser->setRole('Owner');
+        $testUser->setIpAddress('127.0.0.1');
+        $testUser->setToken(ByteString::fromRandom(32)->toString());
+        $testUser->setRegistedTime(date('Y-m-d H:i:s'));
+        $testUser->setLastLoginTime('not logged');
+        $testUser->setProfilePic('profile_pic');
+        $testUser->setVisitorId('1');
+
+        // persist the entity
+        $manager->persist($testUser);
+
         // flush data to the database
         $manager->flush();
     }

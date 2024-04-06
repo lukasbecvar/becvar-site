@@ -220,8 +220,14 @@ class VisitorManager
      */
     public function getVisitorStatus(int $id): ?string 
     {
-        // get visitor status
-        return $this->getVisitorRepositoryByID($id)->getStatus();
+        $visitor = $this->getVisitorRepositoryByID($id);
+
+        // check if visitor found
+        if ($visitor !== null) {
+            return $visitor->getStatus();
+        } else {
+            return null;
+        }
     }
 
     /**

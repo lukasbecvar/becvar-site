@@ -486,7 +486,7 @@ class AuthManager
      * Retrieves a list of users with the specified online or offline status.
      *
      * @param string $status The status to filter users by (e.g., 'online' or 'offline').
-     * @return array<array<string, int|string|null>>|null An array of users with the specified status or null if not found.
+     * @return array<array<string,int|string|null>>|null An array of users with the specified status or null if not found.
      */
     public function getUsersWhereStatus(string $status): ?array
     {
