@@ -1,7 +1,8 @@
+# App deploy action
 name: Deploy
 
 on:
-  release:
+  release: # trigger the workflow when a new release is created
     types: [created]
   
 jobs:
@@ -12,6 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # deploy to the server using SSH
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -19,6 +21,8 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
+
+        # script to run on the server
         script: |
           cd /services/website/becvar.xyz
           sudo systemctl stop apache2
