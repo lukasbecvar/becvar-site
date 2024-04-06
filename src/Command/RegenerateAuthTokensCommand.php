@@ -19,17 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'auth:tokens:regenerate', description: 'Regenerate all users tokens in database')]
 class RegenerateAuthTokensCommand extends Command
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
 
-    /**
-     * RegenerateAuthTokensCommand constructor.
-     *
-     * @param AuthManager $authManager The AuthManager service responsible for token regeneration.
-     */
     public function __construct(AuthManager $authManager)
     {
         $this->authManager = $authManager;

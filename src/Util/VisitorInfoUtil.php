@@ -11,24 +11,9 @@ namespace App\Util;
  */
 class VisitorInfoUtil
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var JsonUtil
-     * Instance of the JsonUtil for handling JSON-related utilities.
-     */
     private JsonUtil $jsonUtil;
 
-    /**
-     * VisitorInfoUtil constructor.
-     *
-     * @param SiteUtil $siteUtil The SiteUtil instance.
-     * @param JsonUtil $jsonUtil The JsonUtil instance.
-     */
     public function __construct(SiteUtil $siteUtil, JsonUtil $jsonUtil)
     {
         $this->siteUtil = $siteUtil;

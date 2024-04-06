@@ -17,17 +17,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
  */
 class UserFixtures extends Fixture
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
 
-    /**
-     * UserFixtures constructor.
-     *
-     * @param SecurityUtil $securityUtil The security utility class for generating password hashes.
-     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

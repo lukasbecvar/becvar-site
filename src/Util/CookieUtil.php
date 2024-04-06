@@ -13,17 +13,8 @@ use App\Util\SecurityUtil;
  */
 class CookieUtil
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
 
-    /**
-     * CookieUtil constructor.
-     *
-     * @param SecurityUtil $securityUtil The security utility.
-     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

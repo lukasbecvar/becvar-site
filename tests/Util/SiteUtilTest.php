@@ -15,11 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class SiteUtilTest extends TestCase
 {
-    /** @var SiteUtil */
-    private $siteUtil;
-
-    /** @var SecurityUtil|\PHPUnit\Framework\MockObject\MockObject */
-    private $securityUtilMock;
+    private SiteUtil $siteUtil;
+    private SecurityUtil $securityUtilMock;
 
     protected function setUp(): void
     {

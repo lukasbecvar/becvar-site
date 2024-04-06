@@ -15,31 +15,10 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class VisitorManager
 {
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * VisitorManager constructor.
-     *
-     * @param ErrorManager           $errorManager
-     * @param VisitorInfoUtil        $visitorInfoUtil
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         ErrorManager $errorManager,
         VisitorInfoUtil $visitorInfoUtil,

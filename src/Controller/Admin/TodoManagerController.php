@@ -22,38 +22,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class TodoManagerController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var TodosManager
-     * Instance of the TodosManager for handling to-do related functionality.
-     */
     private TodosManager $todosManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
 
-    /**
-     * TodoManagerController constructor.
-     *
-     * @param SiteUtil      $siteUtil
-     * @param AuthManager   $authManager
-     * @param TodosManager  $todosManager
-     * @param ErrorManager  $errorManager
-     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,

@@ -21,45 +21,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class TerminalApiController extends AbstractController
 {
-    /**
-     * @var JsonUtil
-     * Instance of the JsonUtil for handling JSON-related utilities.
-     */
     private JsonUtil $jsonUtil;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var SessionUtil
-     * Instance of the SessionUtil for handling session-related utilities.
-     */
     private SessionUtil $sessionUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-    
-    /**
-     * TerminalApiController constructor.
-     *
-     * @param JsonUtil     $jsonUtil
-     * @param LogManager   $logManager
-     * @param AuthManager  $authManager
-     * @param SessionUtil  $sessionUtil
-     * @param SecurityUtil $securityUtil
-     */
+
     public function __construct(
         JsonUtil $jsonUtil,
         LogManager $logManager,

@@ -16,24 +16,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class AuthentificatedCheckMiddleware
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var UrlGeneratorInterface
-     * Instance of the UrlGeneratorInterface for login redirect functionality.
-     */
     private UrlGeneratorInterface $urlGenerator;
 
-    /**
-     * AuthentificatedCheckMiddleware constructor.
-     *
-     * @param AuthManager           $authManager
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(AuthManager $authManager, UrlGeneratorInterface $urlGenerator)
     {
         $this->authManager = $authManager;

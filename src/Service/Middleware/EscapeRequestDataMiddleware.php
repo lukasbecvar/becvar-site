@@ -14,17 +14,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class EscapeRequestDataMiddleware
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
 
-    /**
-     * Constructs the EscapeRequestDataMiddleware.
-     *
-     * @param SecurityUtil $securityUtil The security utility.
-     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

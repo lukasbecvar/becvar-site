@@ -19,24 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class ErrorController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
 
-    /**
-     * ErrorController constructor.
-     *
-     * @param SiteUtil     $siteUtil
-     * @param ErrorManager $errorManager
-     */
     public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager) 
     {
         $this->siteUtil = $siteUtil;

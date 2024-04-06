@@ -22,31 +22,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class LoginController extends AbstractController
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling logging functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
 
-    /**
-     * LoginController constructor.
-     *
-     * @param LogManager   $logManager
-     * @param AuthManager  $authManager
-     * @param SecurityUtil $securityUtil
-     */
     public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) 
     {
         $this->logManager = $logManager;

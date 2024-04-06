@@ -50,7 +50,6 @@ the public part of the site contains information about me and my projects.
 Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
 ## TODO
-- [ ] Custom repo methods
 - [ ] Recode error manager
 - [ ] Recode cookie util
 - [ ] Recode session util

@@ -17,31 +17,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ErrorManager
 {
-    /**
-     * @var Environment
-     * Instance of the Twig\Environment for rendering templates with Twig.
-     */
     private Environment $twig;
-
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var EventDispatcherInterface
-     * Instance of the EventDispatcherInterface for dispatch custom events.
-     */
     private EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * ErrorManager constructor.
-     *
-     * @param Environment              $twig
-     * @param SiteUtil                 $siteUtil
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(Environment $twig, SiteUtil $siteUtil, EventDispatcherInterface $eventDispatcher)
     {
         $this->twig = $twig;

@@ -21,45 +21,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class LogReaderController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var DatabaseManager
-     * Instance of the DatabaseManager for handling database-related functionality.
-     */
     private DatabaseManager $databaseManager;
 
-    /**
-     * LogReaderController constructor.
-     *
-     * @param SiteUtil        $siteUtil
-     * @param LogManager      $logManager
-     * @param AuthManager     $authManager
-     * @param SecurityUtil    $securityUtil
-     * @param DatabaseManager $databaseManager
-     */
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager,

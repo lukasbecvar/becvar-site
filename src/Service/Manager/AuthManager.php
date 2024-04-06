@@ -20,66 +20,15 @@ use Symfony\Component\String\ByteString;
  */
 class AuthManager
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var CookieUtil
-     * Instance of the CookieUtil for handling cookie-related functionality.
-     */
     private CookieUtil $cookieUtil;
-
-    /**
-     * @var SessionUtil
-     * Instance of the SessionUtil for handling session-related utilities.
-     */
     private SessionUtil $sessionUtil;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * AuthManager constructor.
-     *
-     * @param LogManager               $logManager
-     * @param CookieUtil               $cookieUtil
-     * @param SessionUtil              $sessionUtil
-     * @param ErrorManager             $errorManager
-     * @param SecurityUtil             $securityUtil
-     * @param VisitorManager           $visitorManager
-     * @param VisitorInfoUtil          $visitorInfoUtil
-     * @param EntityManagerInterface   $entityManager
-     */
     public function __construct(
         LogManager $logManager,
         CookieUtil $cookieUtil,

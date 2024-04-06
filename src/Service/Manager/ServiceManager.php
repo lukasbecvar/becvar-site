@@ -13,38 +13,11 @@ use App\Util\JsonUtil;
 */
 class ServiceManager
 {
-    /**
-     * @var JsonUtil
-     * Instance of the JsonUtil for handling JSON-related utilities.
-     */
     private JsonUtil $jsonUtil;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
 
-    /**
-     * ServiceManager constructor.
-     *
-     * @param JsonUtil     $jsonUtil
-     * @param LogManager   $logManager
-     * @param AuthManager  $authManager
-     * @param ErrorManager $errorManager
-     */
     public function __construct(
         JsonUtil $jsonUtil, 
         LogManager $logManager,

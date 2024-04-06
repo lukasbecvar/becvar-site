@@ -23,38 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 */
 class ContactController extends AbstractController
 {   
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
-
-    /**
-     * @var MessagesManager
-     * Instance of the MessagesManager for handling messages-related functionality.
-     */
     private MessagesManager $messagesManager;
 
-    /**
-     * ContactController constructor.
-     *
-     * @param LogManager      $logManager      
-     * @param VisitorManager  $visitorManager  
-     * @param VisitorInfoUtil $visitorInfoUtil
-     * @param MessagesManager $messagesManager 
-     */
     public function __construct(
         LogManager $logManager, 
         VisitorManager $visitorManager,

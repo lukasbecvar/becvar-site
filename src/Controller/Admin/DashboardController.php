@@ -31,59 +31,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DashboardController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var BanManager
-     * Instance of the BanManager for handling ban-related functionality.
-     */
     private BanManager $banManager;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var DashboardUtil
-     * Instance of the DashboardUtil for handling dashboard-related functionality.
-     */
     private DashboardUtil $dashboardUtil;
-
-    /**
-     * @var ServiceManager
-     * Instance of the ServiceManager for handling service-related functionality.
-     */
     private ServiceManager $serviceManager;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
 
-    /**
-     * DashboardController constructor.
-     *
-     * @param SiteUtil       $siteUtil
-     * @param BanManager     $banManager
-     * @param LogManager     $logManager
-     * @param AuthManager    $authManager
-     * @param DashboardUtil  $dashboardUtil
-     * @param ServiceManager $serviceManager
-     * @param VisitorManager $visitorManager
-     */
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,

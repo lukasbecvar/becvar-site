@@ -18,28 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class AntilogController extends AbstractController
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
 
-    /**
-     * AntilogController constructor.
-     *
-     * @param LogManager  $logManager
-     * @param AuthManager $authManager
-     */
-    public function __construct(
-        LogManager $logManager,
-        AuthManager $authManager
-    ) {
+    public function __construct(LogManager $logManager, AuthManager $authManager) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
     }

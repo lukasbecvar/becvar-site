@@ -16,36 +16,11 @@ use App\Service\Manager\AuthManager;
  */
 class AutoLoginMiddleware
 {
-    /**
-     * @var CookieUtil
-     * Instance of the CookieUtil for handling cookie-related functionality.
-     */
     private CookieUtil $cookieUtil;
-
-    /**
-     * @var SessionUtil
-     * Instance of the SessionUtil for handling session-related utilities.
-     */
     private SessionUtil $sessionUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
 
-    /**
-     * AutoLoginMiddleware constructor.
-     *
-     * @param CookieUtil  $cookieUtil
-     * @param SessionUtil $sessionUtil
-     * @param AuthManager $authManager
-     */
-    public function __construct(
-        CookieUtil $cookieUtil,
-        SessionUtil $sessionUtil,
-        AuthManager $authManager 
-    ) {
+    public function __construct(CookieUtil $cookieUtil, SessionUtil $sessionUtil, AuthManager $authManager) {
         $this->cookieUtil = $cookieUtil;
         $this->sessionUtil = $sessionUtil;
         $this->authManager = $authManager;

@@ -14,45 +14,12 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class BanManager
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
-    
-    /**
-     * BanManager constructor.
-     *
-     * @param LogManager             $logManager
-     * @param AuthManager            $authManager
-     * @param ErrorManager           $errorManager
-     * @param VisitorManager         $visitorManager
-     * @param EntityManagerInterface $entityManager
-     */
+
     public function __construct(
         LogManager $logManager,
         AuthManager $authManager,

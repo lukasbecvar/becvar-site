@@ -15,16 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ErrorEventSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var LogManager The instance of LogManager.
-     */
     private LogManager $logManager;
 
-    /**
-     * Constructor of the class.
-     *
-     * @param LogManager $logManager The instance of LogManager.
-     */
     public function __construct(LogManager $logManager)
     {
         $this->logManager = $logManager;

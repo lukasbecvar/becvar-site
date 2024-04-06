@@ -19,36 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class InboxController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var MessagesManager
-     * Instance of the MessagesManager for handling messages-related functionality.
-     */
     private MessagesManager $messagesManager;
 
-    /**
-     * InboxController constructor.
-     *
-     * @param SiteUtil        $siteUtil
-     * @param AuthManager     $authManager
-     * @param MessagesManager $messagesManager
-     */
-    public function __construct(
-        SiteUtil $siteUtil,
-        AuthManager $authManager,
-        MessagesManager $messagesManager
-    ) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, MessagesManager $messagesManager) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;

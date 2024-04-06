@@ -14,8 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SecurityUtilTest extends TestCase
 {
-    /** @var SecurityUtil */
-    private $securityUtil;
+    private SecurityUtil $securityUtil;
 
     protected function setUp(): void
     {

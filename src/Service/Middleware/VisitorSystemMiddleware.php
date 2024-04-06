@@ -21,66 +21,15 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class VisitorSystemMiddleware
 {
-    /**
-     * @var Environment
-     * Instance of the Twig\Environment for rendering templates with Twig.
-     */
     private Environment $twig;
-
-    /**
-     * @var BanManager
-     * Instance of the BanManager for handling ban-related functionality.
-     */
     private BanManager $banManager;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * VisitorSystemMiddleware Constructor.
-     *
-     * @param Environment            $twig               The Twig environment for rendering templates.
-     * @param LogManager             $logManager         The log manager for handling log-related tasks.
-     * @param BanManager             $banManager         The manager for handling user bans.
-     * @param ErrorManager           $errorManager       The manager for handling errors.
-     * @param SecurityUtil           $securityUtil       The utility class for security-related tasks.
-     * @param VisitorManager         $visitorManager     The manager for handling visitors.
-     * @param VisitorInfoUtil        $visitorInfoUtil    The utility class for retrieving visitor information.
-     * @param EntityManagerInterface $entityManager      The Doctrine EntityManager for database interactions.
-     */
     public function __construct(
         Environment $twig,
         LogManager $logManager,

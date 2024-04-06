@@ -19,31 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class ProjectsController extends AbstractController
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var ProjectsManager
-     * Instance of the ProjectsManager for handling projects-related functionality.
-     */
     private ProjectsManager $projectsManager;
 
-    /**
-     * ProjectsController constructor.
-     *
-     * @param AuthManager     $authManager
-     * @param ErrorManager    $errorManager
-     * @param ProjectsManager $projectsManager
-     */
     public function __construct(
         AuthManager $authManager, 
         ErrorManager $errorManager, 

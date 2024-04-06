@@ -18,24 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class LogoutController extends AbstractController
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
 
-    /**
-     * LogoutController constructor.
-     *
-     * @param AuthManager  $authManager
-     * @param ErrorManager $errorManager
-     */
     public function __construct(AuthManager $authManager, ErrorManager $errorManager) 
     {
         $this->authManager = $authManager;

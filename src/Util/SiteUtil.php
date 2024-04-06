@@ -13,17 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SiteUtil
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
 
-    /**
-     * SiteUtil constructor.
-     *
-     * @param SecurityUtil $securityUtil The SecurityUtil instance.
-     */
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

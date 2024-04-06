@@ -23,45 +23,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VisitorManagerController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var BanManager
-     * Instance of the BanManager for handling ban-related functionality.
-     */
     private BanManager $banManager;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
 
-    /**
-     * VisitorManagerController constructor.
-     *
-     * @param SiteUtil        $siteUtil
-     * @param BanManager      $banManager
-     * @param AuthManager     $authManager
-     * @param VisitorManager  $visitorManager
-     * @param VisitorInfoUtil $visitorInfoUtil
-     */
     public function __construct(
         SiteUtil $siteUtil,
         BanManager $banManager,

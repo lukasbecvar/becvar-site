@@ -19,31 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VisitorApiController extends AbstractController
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var VisitorInfoUtil
-     * Instance of the VisitorInfoUtil for handling visitor information-related utilities.
-     */
     private VisitorInfoUtil $visitorInfoUtil;
 
-    /**
-     * VisitorApiController constructor.
-     *
-     * @param LogManager      $logManager
-     * @param VisitorManager  $visitorManager
-     * @param VisitorInfoUtil $visitorInfoUtil
-     */
     public function __construct(
         LogManager $logManager, 
         VisitorManager $visitorManager,

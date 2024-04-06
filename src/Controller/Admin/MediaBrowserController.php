@@ -19,36 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class MediaBrowserController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var DatabaseManager
-     * Instance of the DatabaseManager for handling database-related functionality.
-     */
     private DatabaseManager $databaseManager;
 
-    /**
-     * MediaBrowserController constructor.
-     *
-     * @param SiteUtil        $siteUtil
-     * @param AuthManager     $authManager
-     * @param DatabaseManager $databaseManager
-     */
-    public function __construct(
-        SiteUtil $siteUtil, 
-        AuthManager $authManager, 
-        DatabaseManager $databaseManager
-    ) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;

@@ -23,45 +23,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class PasteController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * PasteController constructor.
-     *
-     * @param SiteUtil               $siteUtil
-     * @param LogManager             $logManager
-     * @param ErrorManager           $errorManager
-     * @param SecurityUtil           $securityUtil
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         SiteUtil $siteUtil,
         LogManager $logManager, 

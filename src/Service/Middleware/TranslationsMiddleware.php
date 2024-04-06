@@ -14,28 +14,10 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
  */
 class TranslationsMiddleware
 {
-    /**
-     * @var VisitorManager
-     * Instance of the VisitorManager for handling visitor-related functionality.
-     */
     private VisitorManager $visitorManager;
-
-    /**
-     * @var LocaleAwareInterface
-     * Instance of the LocaleAwareInterface for handling locale-aware translation.
-     */
     private LocaleAwareInterface $translator;
     
-    /**
-     * TranslationsMiddleware constructor.
-     *
-     * @param VisitorManager       $visitorManager
-     * @param LocaleAwareInterface $translator
-     */
-    public function __construct(
-        VisitorManager $visitorManager,
-        LocaleAwareInterface $translator 
-    ) {
+    public function __construct(VisitorManager $visitorManager, LocaleAwareInterface $translator) {
         $this->translator = $translator;
         $this->visitorManager = $visitorManager;
     }

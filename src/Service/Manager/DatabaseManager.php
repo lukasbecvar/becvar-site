@@ -14,45 +14,12 @@ use Doctrine\DBAL\Connection;
  */
 class DatabaseManager
 {
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var Connection
-     * Instance of the Doctrine\DBAL\Connection for interacting with the database.
-     */
     private Connection $connection;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-        
-    /**
-     * DatabaseManager constructor.
-     *
-     * @param LogManager   $logManager
-     * @param Connection   $connection
-     * @param AuthManager  $authManager
-     * @param SecurityUtil $securityUtil
-     * @param ErrorManager $errorManager
-     */
+
     public function __construct(
         LogManager $logManager,
         Connection $connection,

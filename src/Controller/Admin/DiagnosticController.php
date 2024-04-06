@@ -19,38 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DiagnosticController extends AbstractController
 {
-    /**
-     * @var SiteUtil
-     * Instance of the SiteUtil for handling site-related utilities.
-     */
     private SiteUtil $siteUtil;
-
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
-
-    /**
-     * @var DashboardUtil
-     * Instance of the DashboardUtil for handling dashboard-related functionality.
-     */
     private DashboardUtil $dashboardUtil;
-
-    /**
-     * @var ServiceManager
-     * Instance of the ServiceManager for handling service-related functionality.
-     */
     private ServiceManager $serviceManager;
 
-    /**
-     * DiagnosticController constructor.
-     *
-     * @param SiteUtil       $siteUtil
-     * @param AuthManager    $authManager
-     * @param DashboardUtil  $dashboardUtil
-     * @param ServiceManager $serviceManager
-     */
     public function __construct(
         SiteUtil $siteUtil,
         AuthManager $authManager,

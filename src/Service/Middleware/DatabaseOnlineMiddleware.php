@@ -14,24 +14,9 @@ use \Doctrine\DBAL\Connection as Connection;
  */
 class DatabaseOnlineMiddleware
 {
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var Connection
-     * Instance of the Doctrine\DBAL\Connection for interacting with the database.
-     */
     private Connection $doctrineConnection;
 
-    /**
-     * DatabaseOnlineMiddleware constructor.
-     *
-     * @param ErrorManager $errorManager
-     * @param Connection   $doctrineConnection
-     */
     public function __construct(ErrorManager $errorManager, Connection $doctrineConnection) 
     {
         $this->errorManager = $errorManager;

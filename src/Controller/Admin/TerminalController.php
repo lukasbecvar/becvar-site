@@ -16,17 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class TerminalController extends AbstractController
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
 
-    /**
-     * TerminalController constructor.
-     *
-     * @param AuthManager $authManager
-     */
     public function __construct(AuthManager $authManager)
     {
         $this->authManager = $authManager;

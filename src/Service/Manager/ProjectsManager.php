@@ -16,45 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
 */
 class ProjectsManager
 {
-    /**
-     * @var JsonUtil
-     * Instance of the JsonUtil for handling JSON-related utilities.
-     */
     private JsonUtil $jsonUtil;
-
-    /**
-     * @var LogManager
-     * Instance of the LogManager for handling log-related functionality.
-     */
     private LogManager $logManager;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
-
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var EntityManagerInterface
-     * Instance of the EntityManagerInterface for interacting with the database.
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * ProjectsManager constructor.
-     *
-     * @param JsonUtil               $jsonUtil
-     * @param LogManager             $logManager
-     * @param ErrorManager           $errorManager
-     * @param SecurityUtil           $securityUtil
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         JsonUtil $jsonUtil, 
         LogManager $logManager, 

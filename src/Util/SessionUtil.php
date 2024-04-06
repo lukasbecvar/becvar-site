@@ -13,24 +13,9 @@ use App\Service\Manager\ErrorManager;
  */
 class SessionUtil
 {
-    /**
-     * @var SecurityUtil
-     * Instance of the SecurityUtil for handling security-related utilities.
-     */
     private SecurityUtil $securityUtil;
-
-    /**
-     * @var ErrorManager
-     * Instance of the ErrorManager for handling error-related functionality.
-     */
     private ErrorManager $errorManager;
 
-    /**
-     * SessionUtil constructor.
-     *
-     * @param SecurityUtil $securityUtil The SecurityUtil instance.
-     * @param ErrorManager $errorManager The ErrorManager instance.
-     */
     public function __construct(SecurityUtil $securityUtil, ErrorManager $errorManager)
     {
         $this->securityUtil = $securityUtil;

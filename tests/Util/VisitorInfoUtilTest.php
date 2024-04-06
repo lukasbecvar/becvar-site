@@ -16,14 +16,9 @@ use PHPUnit\Framework\TestCase;
  */
 class VisitorInfoUtilTest extends TestCase
 {
-    /** @var VisitorInfoUtil */
-    private $visitorInfoUtil;
-
-    /** @var SiteUtil|\PHPUnit\Framework\MockObject\MockObject */
-    private $siteUtilMock;
-
-    /** @var JsonUtil|\PHPUnit\Framework\MockObject\MockObject */
-    private $jsonUtilMock;
+    private SiteUtil $siteUtilMock;
+    private JsonUtil $jsonUtilMock;
+    private VisitorInfoUtil $visitorInfoUtil;
 
     protected function setUp(): void
     {

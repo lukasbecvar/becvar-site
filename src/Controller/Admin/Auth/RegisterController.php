@@ -21,20 +21,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class RegisterController extends AbstractController
 {
-    /**
-     * @var AuthManager
-     * Instance of the AuthManager for handling authentication-related functionality.
-     */
     private AuthManager $authManager;
 
-    /**
-     * RegisterController constructor.
-     *
-     * @param AuthManager   $authManager
-     */
-    public function __construct(
-        AuthManager $authManager, 
-    ) {
+    public function __construct(AuthManager $authManager) {
         $this->authManager = $authManager;
     }
 
@@ -75,7 +64,6 @@ class RegisterController extends AbstractController
                     if ($password != $repassword) {
                         $error_msg = 'Your passwords dont match';
                     } else {
-
                         $this->authManager->registerNewUser($username, $password);
                         return $this->redirectToRoute('admin_dashboard');
                     }
