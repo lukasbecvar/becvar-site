@@ -24,6 +24,6 @@ jobs:
           cd /services/website/becvar.xyz
           sudo systemctl stop apache2
           sh scripts/clear.sh
-          git clone git@github.com:lordbecvold/becvar-site.git
+          git pull --no-rebase --no-commit && git checkout HEAD .env && git pull && git reset --hard HEAD
           sh scripts/install.sh
           sudo systemctl start apache2
