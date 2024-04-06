@@ -16,9 +16,14 @@ jobs:
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.SSH_HOST }}
+        host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          sudo mkdir /fofofofofofofo
+          cd /services/website/becvar.xyz
+          systemctl stop apache2
+          sh scripts/clear.sh
+          git clone git@github.com:lordbecvold/becvar-site.git
+          sh scripts/install.sh
+          systemctl start apache2
