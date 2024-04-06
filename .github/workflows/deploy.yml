@@ -1,0 +1,43 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: SSH to server
+      run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
+      shell: bash
+
+    - name: Navigate to website directory
+      run: cd /services/website/becvar.xyz
+      shell: bash
+
+    - name: Stop Apache
+      run: sudo systemctl stop apache2
+      shell: bash
+
+    - name: Run clear.sh
+      run: sh scripts/clear.sh
+      shell: bash
+
+    - name: Run install.sh
+      run: sh scripts/install.sh
+      shell: bash
+
+    - name: Start Apache
+      run: sudo systemctl start apache2
+      shell: bash
