@@ -30,12 +30,19 @@ class LoginFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // get current env name
+        $environment = $_ENV['APP_ENV'];
+
+        // set default value
+        $default_value = $environment === 'dev' ? 'test' : null;
+
         $builder
         ->add('username', TextType::class, [
             'label' => false,
             'attr' => [
                 'class' => 'text-input',
                 'placeholder' => 'Username',
+                'value' => $default_value
             ],
             'mapped' => true,
             'constraints' => [
@@ -50,6 +57,7 @@ class LoginFormType extends AbstractType
             'attr' => [
                 'class' => 'text-input',
                 'placeholder' => 'Password',
+                'value' => $default_value
             ],
             'mapped' => true,
             'constraints' => [
