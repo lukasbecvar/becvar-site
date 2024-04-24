@@ -15,8 +15,8 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
-            - ./docker/configs/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
-            - ./docker/services/mysql_database:/var/lib/mysql
+            - ./_docker/configs/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
+            - ./_docker/services/mysql_database:/var/lib/mysql
         ports:
             - "3306:3306"
         networks:
@@ -26,7 +26,7 @@ services:
     apache_php:
         build:
             context: .
-            dockerfile: ./docker/Dockerfile
+            dockerfile: ./_docker/Dockerfile
         container_name: becvar_site_apache
         restart: always
         depends_on:
@@ -36,8 +36,8 @@ services:
             - DATABASE_HOST=mysql
             - DATABASE_PORT=3306
         volumes:
-            - ./docker/configs/apache-site.conf:/etc/apache2/sites-available/000-default.conf
-            - ./docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
+            - ./_docker/configs/apache-site.conf:/etc/apache2/sites-available/000-default.conf
+            - ./_docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
             - ./:/var/www
         ports:
             - "80:80"
