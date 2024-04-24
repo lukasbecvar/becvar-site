@@ -38,10 +38,6 @@ jobs:
       # install dependencies
       - name: Install dependencies
         run: sh scripts/install.sh
-
-      # create database
-      - name: Create database
-        run: sh scripts/create-database.sh
       
       # migrate database
       - name: Migrate database
