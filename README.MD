@@ -57,6 +57,14 @@ Docker is used only for development in this application. The production version 
  - nodejs 18 or <
  - npm 10 or <
 
+## TODOS
+- [ ] Clean app functions
+- [ ] Rework database structure
+- [ ] Cache manager
+- [ ] Cache projects
+- [ ] Recode visitors system
+- [ ] Recode todo manager
+
 ## Dependencies 
 * Symfony
    * [Website](https://symfony.com/)   
