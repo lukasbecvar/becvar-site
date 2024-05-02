@@ -14,7 +14,7 @@
             <a class="selector-button btn-small" href="/admin/visitors/delete?page={{ page }}"><strong>Delete all</strong></a>
         </li>     
         <li class="count-text-in-menu">
-            Online visitors: <strong>{{ online_count }}</strong>,
+            Online visitors: <strong>{{ online_visitors|length }}</strong>,
             Banned visitors: <strong>{{ banned_count }}</strong>
         </li>
     </ul>
@@ -30,6 +30,7 @@
                     <th scope='col'>City</th>
                     <th scope='col'>Country</th>
                     <th scope='col'>Address</th>
+                    <th scope='col'>Status</th>
                     <th scope='col'>Banned</th>
                     <th scope='col'>BAN</th>
                     <th scope='col'>X</th>
@@ -84,6 +85,12 @@
                                     <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link">{{ row.ipAddress|e }}</a>
                                 </th>
                             {% endif %}
+                            {# <===== BANNED-STATUS =====> #}
+                            {% if row.id in online_visitors %}
+                                <th scope='row' class='text-success'>online</th>
+                            {% else %}
+                                <th scope='row' class='text-red'>offline</th>
+                            {% endif %}     
                             {# <===== BANNED-STATUS =====> #}
                             {% if row.bannedStatus == 'yes' %}
                                 <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
