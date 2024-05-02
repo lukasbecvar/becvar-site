@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
-use App\Service\Manager\VisitorManager;
+use App\Manager\VisitorManager;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 /**
@@ -10,7 +10,7 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
  *
  * This middleware sets translations based on the visitor's language.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class TranslationsMiddleware
 {

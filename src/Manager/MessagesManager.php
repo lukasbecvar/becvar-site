@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Manager;
 
 use App\Entity\Message;
 use App\Util\SecurityUtil;
@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * Messages manager provides methods for managing inbox/contact system
  * 
- * @package App\Service\Manager
+ * @package App\Manager
 */
 class MessagesManager
 {

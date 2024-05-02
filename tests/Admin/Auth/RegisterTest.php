@@ -3,7 +3,7 @@
 namespace App\Tests\Admin\Auth;
 
 use App\Entity\User;
-use App\Service\Manager\AuthManager;
+use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

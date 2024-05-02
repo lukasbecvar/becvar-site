@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
 use App\Entity\User;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
-use App\Service\Manager\AuthManager;
+use App\Manager\AuthManager;
 
 /**
  * Class AutoLoginMiddleware
  *
  * This middleware checks if the required auto-login function should be triggered.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class AutoLoginMiddleware
 {

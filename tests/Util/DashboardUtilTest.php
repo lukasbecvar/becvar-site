@@ -4,8 +4,8 @@ namespace App\Tests\Util;
 
 use App\Util\JsonUtil;
 use App\Util\DashboardUtil;
+use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
-use App\Service\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**

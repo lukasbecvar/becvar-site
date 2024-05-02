@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
-use App\Service\Manager\ErrorManager;
+use App\Manager\ErrorManager;
 use \Doctrine\DBAL\Connection as Connection;
 
 /**
@@ -10,7 +10,7 @@ use \Doctrine\DBAL\Connection as Connection;
  *
  * This middleware is used to check the availability of the database.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class DatabaseOnlineMiddleware
 {

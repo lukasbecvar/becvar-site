@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
-use App\Service\Manager\AuthManager;
+use App\Manager\AuthManager;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * 
  * Middleware for checking authentication status before accessing admin routes.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class AuthentificatedCheckMiddleware
 {

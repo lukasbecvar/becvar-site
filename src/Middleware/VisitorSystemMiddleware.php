@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
 use Twig\Environment;
 use App\Entity\Visitor;
 use App\Util\SecurityUtil;
+use App\Manager\BanManager;
+use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
-use App\Service\Manager\BanManager;
-use App\Service\Manager\LogManager;
-use App\Service\Manager\ErrorManager;
-use App\Service\Manager\VisitorManager;
+use App\Manager\ErrorManager;
+use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * Visitor system provides basic visitors managment
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class VisitorSystemMiddleware
 {

@@ -3,7 +3,7 @@
 namespace App\Event\Subscriber;
 
 use App\Event\ErrorEvent;
-use App\Service\Manager\LogManager;
+use App\Manager\LogManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

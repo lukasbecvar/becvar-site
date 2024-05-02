@@ -2,7 +2,7 @@
 
 namespace App\Util;
 
-use App\Service\Manager\ErrorManager;
+use App\Manager\ErrorManager;
 
 /**
  * Class SessionUtil

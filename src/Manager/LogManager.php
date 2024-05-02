@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Manager;
 
 use App\Entity\Log;
 use App\Util\SiteUtil;
@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * 
  * LogManager provides log functions for saving events to a database table.
  * 
- * @package App\Service\Manager
+ * @package App\Manager
  */
 class LogManager
 {

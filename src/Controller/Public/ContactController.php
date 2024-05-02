@@ -3,11 +3,11 @@
 namespace App\Controller\Public;
 
 use App\Entity\Message;
+use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
-use App\Service\Manager\LogManager;
-use App\Service\Manager\VisitorManager;
-use App\Service\Manager\MessagesManager;
+use App\Manager\VisitorManager;
+use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

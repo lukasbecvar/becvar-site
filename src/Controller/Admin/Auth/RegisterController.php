@@ -3,8 +3,8 @@
 namespace App\Controller\Admin\Auth;
 
 use App\Entity\User;
+use App\Manager\AuthManager;
 use App\Form\RegisterFormType;
-use App\Service\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

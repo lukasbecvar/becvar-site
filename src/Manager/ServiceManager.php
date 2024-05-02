@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Manager;
 
 use App\Util\JsonUtil;
 
@@ -9,7 +9,7 @@ use App\Util\JsonUtil;
  * 
  * Service manager provides all services methods (start, stop, status)
  * 
- * @package App\Service\Manager
+ * @package App\Manager
 */
 class ServiceManager
 {
@@ -262,6 +262,6 @@ class ServiceManager
      */
     public function getServicesJson(): ?array
     {
-        return $this->jsonUtil->getJson(__DIR__.'/../../../config/becwork/services.json');
+        return $this->jsonUtil->getJson(__DIR__.'/../../config/becwork/services.json');
     }
 }

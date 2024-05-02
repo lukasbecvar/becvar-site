@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Manager;
 
 use Twig\Environment;
 use App\Util\SiteUtil;
@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * 
  * ErrorManager provides error handling operations.
  * 
- * @package App\Service\Manager
+ * @package App\Manager
  */
 class ErrorManager
 {

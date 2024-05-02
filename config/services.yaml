@@ -31,47 +31,47 @@ services:
             - { name: kernel.event_subscriber }
 
     # check user auth for admin sites
-    App\Service\Middleware\AuthentificatedCheckMiddleware:
+    App\Middleware\AuthentificatedCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
 
     # translations set checker
-    App\Service\Middleware\TranslationsMiddleware:
+    App\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
     # resources build checker
-    App\Service\Middleware\AssetsCheckMiddleware:
+    App\Middleware\AssetsCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
 
     # maintenance mode checker
-    App\Service\Middleware\MaintenanceMiddleware:
+    App\Middleware\MaintenanceMiddleware:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 6 }
 
     # visitor system service
-    App\Service\Middleware\VisitorSystemMiddleware:
+    App\Middleware\VisitorSystemMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
 
     # auto login service
-    App\Service\Middleware\AutoLoginMiddleware:
+    App\Middleware\AutoLoginMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
     # security check service
-    App\Service\Middleware\SecurityCheckMiddleware:
+    App\Middleware\SecurityCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
     # database online checker
-    App\Service\Middleware\DatabaseOnlineMiddleware:
+    App\Middleware\DatabaseOnlineMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
     # escape request data
-    App\Service\Middleware\EscapeRequestDataMiddleware:
+    App\Middleware\EscapeRequestDataMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }
     # --------------------------------------------------------------------------------- #

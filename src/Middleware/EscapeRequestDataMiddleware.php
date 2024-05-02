@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
 use App\Util\SecurityUtil;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  * 
  * Middleware to escape request data for security purposes.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class EscapeRequestDataMiddleware
 {

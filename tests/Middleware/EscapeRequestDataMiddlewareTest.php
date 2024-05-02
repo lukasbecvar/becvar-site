@@ -5,8 +5,8 @@ namespace App\Tests\Middleware;
 use App\Util\SecurityUtil;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use App\Middleware\EscapeRequestDataMiddleware;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use App\Service\Middleware\EscapeRequestDataMiddleware;
 
 /**
  * Class EscapeRequestDataMiddlewareTest

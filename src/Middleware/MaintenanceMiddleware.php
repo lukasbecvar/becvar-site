@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Service\Middleware;
+namespace App\Middleware;
 
 use App\Util\SiteUtil;
-use App\Service\Manager\ErrorManager;
+use App\Manager\ErrorManager;
 
 /**
  * Class MaintenanceMiddleware
  *
  * This middleware is used to check if the application is in maintenance mode.
  * 
- * @package App\Service\Middleware
+ * @package App\Middleware
  */
 class MaintenanceMiddleware
 {
