@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Visitor;
 use App\Util\VisitorInfoUtil;
+use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -15,61 +16,24 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class VisitorManager
 {
+    private CacheManager $cacheManager;
     private ErrorManager $errorManager;
     private VisitorInfoUtil $visitorInfoUtil;
+    private VisitorRepository $visitorRepository;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        CacheManager $cacheManager,
         ErrorManager $errorManager,
         VisitorInfoUtil $visitorInfoUtil,
+        VisitorRepository $visitorRepository,
         EntityManagerInterface $entityManager
     ) {
+        $this->cacheManager = $cacheManager;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
-    }
-
-    /**
-     * Update visitors' online status based on session timeout.
-     */
-    public function updateVisitorsStatus(): void
-    {
-        // timeout (seconds)
-        $session_timeout_seconds = 60;
-
-        // get current timestamp
-        $current_time = time();
-        
-        // get visitor repository
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
-            
-        // check if visitor found
-        if ($visitorRepository !== null) {
-                
-            // get visitors list
-            $visitors = $visitorRepository->findAll();
-
-            // update all offline statuses
-            foreach ($visitors as $visitor) {
-
-                // get timestamp
-                $last_activity_timestamp = $visitor->getStatusUpdateTime();
-
-                // update only online visitors
-                if ($visitor->getStatus() === 'online') {
-                    if ($current_time - intval($last_activity_timestamp) >= $session_timeout_seconds) {
-                        $visitor->setStatus('offline');
-                    }
-                }
-            }
-        
-            // update visitor status
-            try {
-                $this->entityManager->flush();
-            } catch (\Exception $e) {
-                $this->errorManager->handleError('error to update visitor status: '.$e->getMessage(), 500);
-            }
-        }
+        $this->visitorRepository = $visitorRepository;
     }
 
     /**
@@ -191,25 +155,6 @@ class VisitorManager
     }
 
     /**
-     * Get the visitor status by ID.
-     *
-     * @param int $id
-     *
-     * @return string|null
-     */
-    public function getVisitorStatus(int $id): ?string 
-    {
-        $visitor = $this->getVisitorRepositoryByID($id);
-
-        // check if visitor found
-        if ($visitor !== null) {
-            return $visitor->getStatus();
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Get a visitor repository by ID.
      *
      * @param int $id
@@ -246,14 +191,61 @@ class VisitorManager
     }
 
     /**
-     * Get visitors by status.
+     * Retrieves the status of a visitor with the given ID.
      *
-     * @param string $status
+     * This method constructs a cache key for the specified visitor ID, retrieves the status from the cache manager,
+     * and returns the status if found. If the status is not found in the cache or if it's offline, 'offline' is returned.
      *
-     * @return Visitor[]|null
+     * @param int $id The ID of the visitor.
+     * @return string The status of the visitor ('online' if online, 'offline' if not found or offline).
      */
-    public function getVisitorsWhereStstus(string $status): ?array
+    public function getVisitorStatus(int $id): string 
     {
-        return $this->entityManager->getRepository(Visitor::class)->findBy(['status' => $status]);
+        $user_cache_key = 'online_user_'.$id;
+
+        // get user status
+        $status = $this->cacheManager->getValue($user_cache_key);
+
+        // check if status found
+        if ($status->get() != null) {
+            // check user status
+            if ($status->get() == 'online') {
+                return $status->get();
+            } else {
+                return 'offline';
+            }
+        } else {
+            return 'offline';
+        }
+    }
+
+    /**
+     * Retrieves an array of IDs of online visitors.
+     *
+     * This method retrieves a list of all visitor IDs from the visitor repository,
+     * checks the status of each visitor using the getVisitorStatus() method,
+     * and returns an array containing IDs of visitors who are currently online.
+     *
+     * @return array<int> An array containing IDs of visitors who are currently online.
+     */
+    public function getOnlineVisitorIDs(): array
+    {
+        $online_visitors = [];
+
+        // get all visitors id list
+        $visitor_ids = $this->visitorRepository->getAllIds();
+
+        foreach ($visitor_ids as $visitor_id) {
+
+            // get visitor status
+            $status = $this->getVisitorStatus($visitor_id);
+
+            // check visitor status
+            if ($status == 'online') {
+                array_push($online_visitors, $visitor_id);
+            }
+        }
+
+        return $online_visitors;
     }
 }

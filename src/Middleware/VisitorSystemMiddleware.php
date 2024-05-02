@@ -61,9 +61,6 @@ class VisitorSystemMiddleware
      */
     public function onKernelRequest(): void
     {
-        // update visitors stats list
-        $this->visitorManager->updateVisitorsStatus();
-
         // get data to insert
         $date = date('d.m.Y H:i');
         $os = $this->visitorInfoUtil->getOS();
@@ -139,8 +136,6 @@ class VisitorSystemMiddleware
         $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');
-        $visitorEntity->setStatus('online');
-        $visitorEntity->setStatusUpdateTime(strval(time()));
             
         // try to insert new visitor
         try {

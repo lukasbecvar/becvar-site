@@ -20,4 +20,25 @@ class VisitorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Visitor::class);
     }
+
+    /**
+     * Retrieves a list of all IDs from the database.
+     *
+     * This method constructs a query to select all IDs from the entity represented by this repository.
+     * It then executes the query and returns an array containing only the IDs extracted from the result set.
+     *
+     * @return array<int> An array containing all IDs from the database.
+     */
+    public function getAllIds(): array
+    {
+        // select ids
+        $queryBuilder = $this->createQueryBuilder('v')->select('v.id');
+        $query = $queryBuilder->getQuery();
+    
+        // get results
+        $results = $query->getScalarResult();
+    
+        // return id list
+        return array_column($results, 'id');
+    }
 }

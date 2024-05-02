@@ -64,7 +64,7 @@ class VisitorManagerController extends AbstractController
             // visitor manager data
             'page' => $page,
             'current_ip' => $this->visitorInfoUtil->getIP(),
-            'online_count' => count($this->visitorManager->getVisitorsWhereStstus('online')),
+            'online_count' => count($this->visitorManager->getOnlineVisitorIDs()),
             'banned_count' => $this->banManager->getBannedCount(),
             'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],
             'visitors_data' => $this->visitorManager->getVisitors($page),

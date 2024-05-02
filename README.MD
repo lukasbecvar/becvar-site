@@ -58,9 +58,10 @@ Docker is used only for development in this application. The production version 
  - npm 10 or <
 
 ## TODOS
-- [ ] Cache manager
-- [ ] Recode visitors system
+- [ ] Projects update command
+- [ ] Testing data fixtures
 - [ ] Recode todo manager
+- [ ] Complete code refactor
 
 ## Dependencies 
 * Symfony

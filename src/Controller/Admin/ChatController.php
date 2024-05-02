@@ -38,7 +38,7 @@ class ChatController extends AbstractController
             'user_pic' => $this->authManager->getUserProfilePic(),
 
             // chat data
-            'online_users' => $this->authManager->getUsersWhereStatus('online')
+            'online_users' => $this->authManager->getOnlineUsersList()
         ]);
     }
 }

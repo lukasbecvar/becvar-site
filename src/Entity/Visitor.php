@@ -47,12 +47,6 @@ class Visitor
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $status_update_time = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -186,30 +180,6 @@ class Visitor
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getStatusUpdateTime(): ?string
-    {
-        return $this->status_update_time;
-    }
-
-    public function setStatusUpdateTime(string $status_update_time): static
-    {
-        $this->status_update_time = $status_update_time;
 
         return $this;
     }

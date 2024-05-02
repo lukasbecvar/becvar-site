@@ -31,7 +31,6 @@
                     <th scope='col'>Country</th>
                     <th scope='col'>Address</th>
                     <th scope='col'>Banned</th>
-                    <th scope='col'>Status</th>
                     <th scope='col'>BAN</th>
                     <th scope='col'>X</th>
                 </tr>
@@ -90,13 +89,7 @@
                                 <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
                             {% else %}
                                 <th scope='row' class='text-success'>{{ row.bannedStatus|e }}</th>
-                            {% endif %}
-                            {# <===== STATUS =====> #}
-                            {% if row.status == 'offline' %}
-                                <th scope='row' class='text-red'>{{ row.status|e }}</th>
-                            {% else %}
-                                <th scope='row' class='text-success'>{{ row.status|e }}</th>
-                            {% endif %}                           
+                            {% endif %}                        
                             {# <===== BUTTONS =====> #}
                             <td>
                                 {% if row.bannedStatus == 'yes' %}

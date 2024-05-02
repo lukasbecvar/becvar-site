@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
@@ -25,6 +26,7 @@ class AuthManager
     private SessionUtil $sessionUtil;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
+    private UserRepository $userRepository;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
@@ -35,6 +37,7 @@ class AuthManager
         SessionUtil $sessionUtil,
         ErrorManager $errorManager, 
         SecurityUtil $securityUtil,
+        UserRepository $userRepository,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
@@ -45,6 +48,7 @@ class AuthManager
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -432,40 +436,6 @@ class AuthManager
     }
 
     /**
-     * Retrieves a list of users with the specified online or offline status.
-     *
-     * @param string $status The status to filter users by (e.g., 'online' or 'offline').
-     * @return array<array<string,int|string|null>>|null An array of users with the specified status or null if not found.
-     */
-    public function getUsersWhereStatus(string $status): ?array
-    {
-        $online_users = [];
-
-        // get all users data
-        $users = $this->entityManager->getRepository(User::class)->findAll();
-
-        // check all users status
-        foreach ($users as $user) {
-            // get user data
-            $id = intval($user->getVisitorId());
-            $username = $user->getUsername();
-            $role = $user->getRole();
-
-            // check user status
-            if ($this->visitorManager->getVisitorStatus($id) == $status) {
-                $user_item = [
-                    'id' => $id,
-                    'username' => $username,
-                    'role' => $role
-                ];
-                array_push($online_users, $user_item);
-            }
-        }
-
-        return $online_users;
-    }
-
-    /**
      * Generate a unique token for a user.
      *
      * @return string The generated user token.
@@ -526,5 +496,37 @@ class AuthManager
         }
 
         return $state;
+    }
+
+    /**
+     * Retrieves a list of all users along with their associated visitor IDs.
+     *
+     * This method constructs a query to select usernames, roles, and visitor IDs from the entity represented by this repository.
+     * It then executes the query and returns an array containing associative arrays for each user,
+     * with keys 'username', 'role', and 'visitor_id' representing the respective user details.
+     *
+     * @return array<array<string>> An array containing details of all users along with their associated visitor IDs.
+     *               Each element of the array is an associative array with keys 'username', 'role', and 'visitor_id',
+     *               representing the username, role, and associated visitor ID respectively.
+     */
+    public function getOnlineUsersList(): array
+    {
+        $online_visitors = [];
+
+        // get all users list
+        $users = $this->userRepository->getAllUsersWithVisitorId();
+
+        foreach ($users as $user) {
+
+            // get visitor status
+            $status = $this->visitorManager->getVisitorStatus(intval($user['visitor_id']));
+
+            // check visitor status
+            if ($status == 'online') {
+                array_push($online_visitors, $user);
+            }
+        }
+
+        return $online_visitors;
     }
 }
