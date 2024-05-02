@@ -31,4 +31,6 @@ jobs:
           sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
           sh scripts/install.sh
           php bin/console doctrine:migrations:migrate --no-interaction --env=prod
+          php bin/console projects:list:update
+          php bin/console auth:tokens:regenerate
           sudo systemctl start apache2
