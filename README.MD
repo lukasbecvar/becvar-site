@@ -58,8 +58,13 @@ Docker is used only for development in this application. The production version 
  - npm 10 or <
 
 ## TODOS
-- [ ] Testing data fixtures
 - [ ] Recode todo manager
+ - [ ] Multiple todo lists (todo category)
+ - [ ] TODO add, close, edit
+ - [ ] TODO priority move (up or down)
+ - [ ] List completed todos
+ - [ ] Delete completed todo
+   - [ ] Recalculate todo IDs
 - [ ] Complete code refactor
 
 ## Dependencies 

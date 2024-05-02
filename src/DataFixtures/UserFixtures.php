@@ -31,8 +31,23 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        // add test user
+        $testUser = new User();
+        $testUser->setUsername('test');
+        $testUser->setPassword($this->securityUtil->genBcryptHash('test', 10));
+        $testUser->setRole('Owner');
+        $testUser->setIpAddress('127.0.0.1');
+        $testUser->setToken(ByteString::fromRandom(32)->toString());
+        $testUser->setRegistedTime(date('Y-m-d H:i:s'));
+        $testUser->setLastLoginTime('not logged');
+        $testUser->setProfilePic('profile_pic');
+        $testUser->setVisitorId('1');
+
+        // persist the entity
+        $manager->persist($testUser);
+
         // generate testing users
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 2; $i < 50; $i++) {
             $user = new User();
             
             // generate a random username
@@ -47,27 +62,11 @@ class UserFixtures extends Fixture
             $user->setRegistedTime(date('Y-m-d H:i:s'));
             $user->setLastLoginTime('not logged');
             $user->setProfilePic('profile_pic');
-            $user->setVisitorId('1');
+            $user->setVisitorId(strval($i));
 
             // persist the entity
             $manager->persist($user);
         }
-
-        $testUser = new User();
-
-        // add test user
-        $testUser->setUsername('test');
-        $testUser->setPassword($this->securityUtil->genBcryptHash('test', 10));
-        $testUser->setRole('Owner');
-        $testUser->setIpAddress('127.0.0.1');
-        $testUser->setToken(ByteString::fromRandom(32)->toString());
-        $testUser->setRegistedTime(date('Y-m-d H:i:s'));
-        $testUser->setLastLoginTime('not logged');
-        $testUser->setProfilePic('profile_pic');
-        $testUser->setVisitorId('1');
-
-        // persist the entity
-        $manager->persist($testUser);
 
         // flush data to the database
         $manager->flush();
