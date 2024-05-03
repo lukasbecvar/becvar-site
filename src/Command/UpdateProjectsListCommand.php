@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Manager\AuthManager;
 use App\Manager\ProjectsManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -40,6 +39,7 @@ class UpdateProjectsListCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        // fix get CLI ip address
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
         try {

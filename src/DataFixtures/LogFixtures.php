@@ -212,7 +212,7 @@ class LogFixtures extends Fixture
                 'browser' => 'Mozilla/5.0 (Linux x86_64; rv:114.0) Gecko/20100101 Firefox/114.0',
                 'status' => 'unreaded',
                 'visitor_id' => '814',
-            ],
+            ]
         ];
 
         foreach ($logs_data as $log_data) {

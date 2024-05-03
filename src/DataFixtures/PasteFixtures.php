@@ -41,7 +41,7 @@ class PasteFixtures extends Fixture
                 'name' => 'izDXZvrKqSAjJlG',
                 'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Aliquam erat volutpat. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Integer tempor. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Duis pulvinar. Vivamus porttitor turpis ac leo. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Nam quis nulla. Nullam at arcu a est sollicitudin euismod.',
                 'time' => '02.05.2024 12:11:17',
-            ],
+            ]
         ];
 
         // persist paste fixtures
