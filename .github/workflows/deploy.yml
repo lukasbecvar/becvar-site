@@ -6,35 +6,51 @@ on:
     types: [created]
   
 jobs:
-  deploy:
+  checkout-code:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # deploy to the server using SSH
-    - name: Deploy to server
+  setup-environment:
+    runs-on: ubuntu-latest
+    needs: checkout-code
+    steps:
+    - name: Set up environment
+      run: |
+        cd /services/website/becvar.xyz
+        sudo systemctl stop apache2
+        sh scripts/clear.sh
+        git pull
+        sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
+        sh scripts/install.sh
+
+  database-migrations:
+    runs-on: ubuntu-latest
+    needs: setup-environment
+    steps:
+    - name: Database migrations
+      run: |
+        rm -rf migrations
+        mkdir migrations
+        cd /services/website/becvar.xyz
+        php bin/console doctrine:database:create --if-not-exists
+        php bin/console make:migration --no-interaction
+        php bin/console doctrine:migrations:migrate --no-interaction
+
+  final-setup-and-deploy:
+    runs-on: ubuntu-latest
+    needs: database-migrations
+    steps:
+    - name: Final setup and deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-
-        # script to run on the server
         script: |
           cd /services/website/becvar.xyz
-          sudo systemctl stop apache2
-          sh scripts/clear.sh
-          git pull
-          sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
-          sh scripts/install.sh
-          rm -rf migrations
-          mkdir migrations
-          php bin/console doctrine:database:create --if-not-exists
-          php bin/console make:migration --no-interaction
-          php bin/console doctrine:migrations:migrate --no-interaction
           php bin/console projects:list:update
           php bin/console auth:tokens:regenerate
           sudo chmod -R 777 var/
