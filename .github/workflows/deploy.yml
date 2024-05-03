@@ -30,8 +30,8 @@ jobs:
           git pull
           sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
           sh scripts/install.sh
-          sudo chmod -R 777 var/
           php bin/console doctrine:migrations:migrate --no-interaction --env=prod
           php bin/console projects:list:update
           php bin/console auth:tokens:regenerate
+          sudo chmod -R 777 var/
           sudo systemctl start apache2
