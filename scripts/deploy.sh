@@ -9,7 +9,7 @@ fi
 # pre deploy actions
 cd /services/website/becvar.xyz
 sudo systemctl stop apache2
-sh scripts/clear.sh
+sudo sh scripts/clear.sh
           
 # pull new version
 git pull
