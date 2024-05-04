@@ -8,8 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_ACTIONS: true
 
     steps:
     - name: Checkout repository
@@ -27,4 +25,4 @@ jobs:
         # script to run on the server
         script: |
           cd /services/website/becvar.xyz
-          sh scripts/deploy.sh
+          sh scripts/deploy.sh pkn3tdo9kdn

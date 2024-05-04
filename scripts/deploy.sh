@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # check if script is running from GitHub Actions
-if [ -z "$GITHUB_ACTIONS" ]; then
-  echo "This script can only be executed from GitHub Actions."
-  exit 1
+if [ "$1" != "pkn3tdo9kdn" ]; then
+    echo "This script can only be executed from GitHub Actions."
+    exit 1
 fi
 
 # pre deploy actions
