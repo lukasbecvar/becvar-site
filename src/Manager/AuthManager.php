@@ -61,20 +61,19 @@ class AuthManager
     public function isUserLogedin(): bool 
     {
         // check if session exist
-        if ($this->sessionUtil->checkSession('login-token')) {
-
-            // get login token form session
-            $login_token = $this->sessionUtil->getSessionValue('login-token');
-
-            // check if token exist in database
-            if ($this->getUserRepository(['token' => $login_token]) != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (!$this->sessionUtil->checkSession('login-token')) {
             return false;
         }
+
+        // get login token form session
+        $login_token = $this->sessionUtil->getSessionValue('login-token');
+
+        // check if token exist in database
+        if ($this->getUserRepository(['token' => $login_token]) != null) {
+            return true;
+        } 
+
+        return false;
     }
 
     /**
@@ -273,20 +272,19 @@ class AuthManager
     public function getUserToken(): ?string 
     {
         // check if session exist
-        if ($this->sessionUtil->checkSession('login-token')) {
-
-            // get login token form session
-            $login_token = $this->sessionUtil->getSessionValue('login-token');
-
-            // check if token exist in database
-            if ($this->getUserRepository(['token' => $login_token]) != null) {
-                return $login_token;
-            } else {
-                return null;
-            }
-        } else {
+        if (!$this->sessionUtil->checkSession('login-token')) {
             return null;
         }
+
+        // get login token form session
+        $login_token = $this->sessionUtil->getSessionValue('login-token');
+
+        // check if token exist in database
+        if ($this->getUserRepository(['token' => $login_token]) != null) {
+            return $login_token;
+        }
+            
+        return null;
     }
 
     /**
@@ -308,9 +306,9 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getUsername();
-        } else {
-            return null;
-        }
+        } 
+
+        return null;
     }
 
     /**
@@ -332,9 +330,9 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getRole();
-        } else {
-            return null;
-        }
+        } 
+
+        return null;
     }
 
     /**
@@ -356,9 +354,9 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getProfilePic();
-        } else {
-            return null;
-        }
+        } 
+
+        return null;
     }
 
     /**
@@ -376,9 +374,9 @@ class AuthManager
         // check if count is zero
         if ($count == 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -416,9 +414,9 @@ class AuthManager
         // check if user role is admin
         if ($role == 'Owner' || $role == 'Admin') {
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     /**
@@ -430,9 +428,8 @@ class AuthManager
     {
         if ($this->isUsersEmpty() or ($this->isUserLogedin() && $this->isAdmin())) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

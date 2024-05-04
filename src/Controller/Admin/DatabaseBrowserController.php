@@ -97,6 +97,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
+        // init default resources
         $error_msg = null;
 
         // get query parameters
@@ -178,6 +179,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
+        // init default resources
         $error_msg = null;
 
         // get query parameters

@@ -45,10 +45,10 @@ class RegenerateAuthTokensCommand extends Command
         // check if regeneration is success
         if ($regenerate_state['status']) {
             $io->success('All tokens is regenerated');
+            return Command::SUCCESS;
         } else {
             $io->error('Token regeneration error: '.$regenerate_state['message']);
+            return Command::FAILURE;
         }
-            
-        return Command::SUCCESS;
     }
 }

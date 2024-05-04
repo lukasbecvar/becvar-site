@@ -1,3 +1,4 @@
+# becvar-site testing docker file (only-dev env)
 FROM php:8.3-apache
 
 # set default apache working directory

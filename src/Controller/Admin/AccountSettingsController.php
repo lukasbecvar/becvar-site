@@ -75,6 +75,7 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
+        // init default resources
         $user = new User();
         $error_msg = null;
 
@@ -141,6 +142,7 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
+        // init default resources
         $user = new User();
         $error_msg = null;
 
@@ -194,6 +196,7 @@ class AccountSettingsController extends AbstractController
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
+        // init default resources
         $user = new User();
         $error_msg = null;
 

@@ -22,7 +22,6 @@ Encore
 
     // register error-page assets
     .addEntry('error-page-css', './assets/css/error-page.css')
-    .addEntry('fluid-animation-js', './assets/js/fluid-animation.js')
 
     // register code-paste assets
     .addEntry('atom-one-dark-css', './assets/css/atom-one-dark.css')

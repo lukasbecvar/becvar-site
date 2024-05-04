@@ -6,6 +6,7 @@ use Twig\Environment;
 use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
+use App\Manager\CacheManager;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
@@ -24,6 +25,7 @@ class VisitorSystemMiddleware
     private Environment $twig;
     private BanManager $banManager;
     private LogManager $logManager;
+    private CacheManager $cacheManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
@@ -34,6 +36,7 @@ class VisitorSystemMiddleware
         Environment $twig,
         LogManager $logManager,
         BanManager $banManager,
+        CacheManager $cacheManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
@@ -43,6 +46,7 @@ class VisitorSystemMiddleware
         $this->twig = $twig;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
+        $this->cacheManager = $cacheManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
@@ -160,6 +164,9 @@ class VisitorSystemMiddleware
     {
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+
+        // cache online visitor
+        $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
 
         // prevent maximal useragent to save
         if (strlen($browser) >= 200) {

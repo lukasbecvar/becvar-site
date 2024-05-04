@@ -34,25 +34,27 @@ class AntilogController extends AbstractController
     #[Route('/antilog/5369362536', methods: ['GET'], name: 'antilog')]
     public function toggleAntiLog(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            // get logged username
-            $username = $this->authManager->getUsername();
-
-            // check if user have set antilog
-            if ($this->logManager->isEnabledAntiLog()) {
-                $this->logManager->unsetAntiLogCookie();
-                $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
-            } else {
-                $this->logManager->setAntiLogCookie();
-                $this->logManager->log('anti-log', 'user: '.$username.' set antilog');
-            }
-        } else {
+        // check if user authorized
+        if (!$this->authManager->isUserLogedin()) {
             return $this->json([
                 'status' => 'error',
                 'code' => 401,
                 'message' => 'error to set anti-log for non authentificated users!'
             ], 401);
         }
+            
+        // get logged username
+        $username = $this->authManager->getUsername();
+
+        // check if user have set antilog
+        if ($this->logManager->isEnabledAntiLog()) {
+            $this->logManager->unsetAntiLogCookie();
+            $this->logManager->log('anti-log', 'user: '.$username.' unset antilog');
+        } else {
+            $this->logManager->setAntiLogCookie();
+            $this->logManager->log('anti-log', 'user: '.$username.' set antilog');
+        }
+        
         return $this->redirectToRoute('admin_dashboard');
     }
 }

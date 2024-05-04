@@ -89,24 +89,6 @@ class TerminalApiTest extends WebTestCase
     }
 
     /**
-     * Test executing terminal command with a GET request.
-     */
-    public function testTerminalExecGet(): void
-    {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make request
-        $this->client->request('GET', '/api/system/terminal');
-
-        // get response data
-        $responseData = json_decode($this->client->getResponse()->getContent(), true);
-
-        $this->assertResponseStatusCodeSame(500);
-        $this->assertEquals('error', $responseData['status']);
-        $this->assertEquals('POST request required!', $responseData['message']);
-    }
-
-    /**
      * Test executing a valid terminal command.
      */
     public function testTerminalExecValid(): void

@@ -62,16 +62,17 @@ class ProjectsController extends AbstractController
     #[Route('/projects/update', methods: ['GET'], name: 'public_projects_update')]
     public function projectsUpdate(): Response
     {
-        if ($this->authManager->isUserLogedin()) {
-            // update projects list
-            $this->projectsManager->updateProjectList();
-            
-            return $this->redirectToRoute('admin_database_browser', [
-                'table' => 'projects',
-                'page' => 1
-            ]);
-        } else {
+        // check if user authorized
+        if (!$this->authManager->isUserLogedin()) {
             return $this->errorManager->handleError('error to update project list: please login first', 401);
         }
+
+        // update projects list
+        $this->projectsManager->updateProjectList();
+            
+        return $this->redirectToRoute('admin_database_browser', [
+            'table' => 'projects',
+            'page' => 1
+        ]);
     }
 }

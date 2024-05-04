@@ -46,28 +46,27 @@ class VisitorApiController extends AbstractController
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
         // check if visitor found
-        if ($visitor != null) {
-            // update visitor status
-            try {
-                
-                // cache online visitor
-                $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
-
-            } catch (\Exception $e) {
-                $this->logManager->log('system-error', 'error to update visitor status: '.$e->getMessage());
-                return $this->json([
-                    'status' => 'error',
-                    'message' => 'error to update visitor status'
-                ], 500);
-            }
-    
-            return $this->json([
-                'status' => 'success'
-            ], 200);
-        } else {
+        if ($visitor == null) {
             return $this->json([
                 'status' => 'error',
                 'message' => 'error visitor not found'
+            ], 500);
+        }
+            
+        // update visitor status
+        try {
+                
+            // cache online visitor
+            $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
+        
+            return $this->json([
+                'status' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $this->logManager->log('system-error', 'error to update visitor status: '.$e->getMessage());
+            return $this->json([
+                'status' => 'error',
+                'message' => 'error to update visitor status'
             ], 500);
         }
     }

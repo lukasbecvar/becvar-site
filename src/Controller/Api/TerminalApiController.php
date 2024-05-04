@@ -49,147 +49,152 @@ class TerminalApiController extends AbstractController
      *
      * @throws \Exception Throws an exception if there is an error during the terminal command execution.
      */
-    #[Route('/api/system/terminal', methods: ['GET', 'POST'], name: 'api_terminal')]
+    #[Route('/api/system/terminal', methods: ['POST'], name: 'api_terminal')]
     public function terminalAction(Request $request): Response
     {
-        if ($this->authManager->isUserLogedin() && $this->authManager->isAdmin()) {
-            if ($request->isMethod('POST')) {
-
-                // get username
-                $username = $this->authManager->getUsername();
-
-                // set default working dir
-                if ($this->sessionUtil->checkSession('terminal-dir')) {
-                    $currentDir = $this->sessionUtil->getSessionValue('terminal-dir');
-                    if (!file_exists($currentDir)) {
-                        $currentDir = '/';
-                    }
-                    chdir($currentDir);
-                } else {
-                    chdir('/');
-                }
-
-                // get command
-                $command = $request->request->get('command');
-
-                // check if command empty
-                if (!empty($command)) {
-
-                    // escape command
-                    $command = $this->securityUtil->escapeString($command);
-
-                    // check if blocked commands config found
-                    if (file_exists((__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json'))) {
-                        // get blocked command list
-                        try {
-                            $blockedCommands = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json');
-                        } catch (\Exception $e) {
-                            return new Response($e->getMessage());
-                        }
-
-                        // check if command is blocked
-                        foreach ($blockedCommands as $blockedCommand) {
-                            if (str_starts_with($command, $blockedCommand)) {
-                                return new Response('command: ' . $command . ' is not allowed!');
-                            }
-                        }
-                    }
-
-                    // check if aliases config found
-                    if (file_exists(__DIR__ . '/../../../config/becwork/terminal-aliases.json')) {
-                        // get aliases list
-                        try {
-                            $aliases = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-aliases.json');
-                        } catch (\Exception $e) {
-                            return new Response($e->getMessage());
-                        }
-
-                        // replace aliases with runnable command
-                        foreach ($aliases as $index => $value) {
-                            if ($command == $index) {
-                                $command = $value;
-                            }
-                        }
-                    }
-
-                    // get cwd (system get)
-                    if ($command === 'get_current_path_1181517815187484') {
-                        return new Response(getcwd());
-                    }
-
-                    // get user (system get)
-                    if ($command === 'get_current_hostname_1181517815187484') {
-                        return new Response(gethostname());
-                    }
-
-                    // update cwd (system get)
-                    if (str_starts_with($command, 'cd ')) {
-                        $newDir = str_replace('cd ', '', $command);
-
-                        // check if dir is / root dir
-                        if (!str_starts_with($newDir, '/')) {
-                            $finalDir = getcwd() . '/' . $newDir;
-                        } else {
-                            $finalDir = $newDir;
-                        }
-
-                        // check if directory exists
-                        if (file_exists($finalDir)) {
-                            $this->sessionUtil->setSession('terminal-dir', $finalDir);
-                            return new Response('', 200);
-                        } else {
-                            return new Response('error directory: ' . $finalDir . ' not found');
-                        }
-                    } else {
-
-                        // execute command
-                        exec('sudo '.$command, $output, $return_code);
-
-                        // check if command run valid
-                        if ($return_code !== 0) {
-
-                            // check if command not found
-                            if ($return_code == 127) {
-                                $this->logManager->log('terminal', $username.' executed not found command: '.$command);
-                                return new Response('command: ' . $command . ' not found');
-                            } else {
-                                $this->logManager->log('terminal', $username.' executed command: '.$command.' with error code: '.$return_code);
-                                return new Response('error to execute command: ' . $command);
-                            }
-                        } else {
-
-                            $this->logManager->log('terminal', $username.' executed command: '.$command);
-
-                            // get output
-                            $output = implode("\n", $output);
-
-                            // escape output
-                            $output = $this->securityUtil->escapeString($output);
-
-                            // return output
-                            return new Response($output);
-                        }
-                    }
-                } else {
-                    return $this->json([
-                        'status' => 'error',
-                        'code' => 500,
-                        'message' => 'command data is empty!'
-                    ], 500);
-                }
-            } else {
-                return $this->json([
-                    'status' => 'error',
-                    'code' => 500,
-                    'message' => 'POST request required!'
-                ], 500);
-            }
-        } else {
+        // check if user authorized
+        if (!$this->authManager->isUserLogedin() || !$this->authManager->isAdmin()) {
             return $this->json([
                 'status' => 'error',
                 'code' => 401,
                 'message' => 'error this function is only for authentificated users!'
             ], 401);
         }
+
+        // check request type
+        if (!$request->isMethod('POST')) {
+            return $this->json([
+                'status' => 'error',
+                'code' => 500,
+                'message' => 'POST request required!'
+            ], 500);
+        }
+
+        // get username
+        $username = $this->authManager->getUsername();
+
+        // set default working dir
+        if ($this->sessionUtil->checkSession('terminal-dir')) {
+
+            // get curret working directory
+            $current_dir = $this->sessionUtil->getSessionValue('terminal-dir');
+
+            // check if directory exist
+            if (!file_exists($current_dir)) {
+                chdir('/');
+            } else {
+                chdir($current_dir);
+            }
+        } else {
+            chdir('/');
+        }
+
+        // get command
+        $command = $request->request->get('command');
+
+        // check if command empty
+        if (empty($command)) {
+            return $this->json([
+                'status' => 'error',
+                'code' => 500,
+                'message' => 'command data is empty!'
+            ], 500);
+        }
+
+        // escape command
+        $command = $this->securityUtil->escapeString($command);
+
+        // check if blocked commands config found
+        if (file_exists((__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json'))) {
+            // get blocked command list
+            try {
+                $blocked_commands = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json');
+            } catch (\Exception $e) {
+                return new Response($e->getMessage());
+            }
+
+            // check if command is blocked
+            foreach ($blocked_commands as $blockedCommand) {
+                if (str_starts_with($command, $blockedCommand)) {
+                    return new Response('command: ' . $command . ' is not allowed!');
+                }
+            }
+        }
+
+        // check if aliases config found
+        if (file_exists(__DIR__ . '/../../../config/becwork/terminal-aliases.json')) {
+            // get aliases list
+            try {
+                $aliases = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-aliases.json');
+            } catch (\Exception $e) {
+                return new Response($e->getMessage());
+            }
+
+            // replace aliases with runnable command
+            foreach ($aliases as $index => $value) {
+                if ($command == $index) {
+                    $command = $value;
+                }
+            }
+        }
+
+        // get cwd (system get)
+        if ($command === 'get_current_path_1181517815187484') {
+            return new Response(getcwd());
+        }
+
+        // get user (system get)
+        if ($command === 'get_current_hostname_1181517815187484') {
+            return new Response(gethostname());
+        }
+
+        // update cwd (system get)
+        if (str_starts_with($command, 'cd ')) {
+            $new_dir = str_replace('cd ', '', $command);
+
+            // check if dir is / root dir
+            if (!str_starts_with($new_dir, '/')) {
+                $final_dir = getcwd() . '/' . $new_dir;
+            } else {
+                $final_dir = $new_dir;
+            }
+
+            // check if directory exists
+            if (file_exists($final_dir)) {
+                $this->sessionUtil->setSession('terminal-dir', $final_dir);
+                return new Response('', 200);
+            } else {
+                return new Response('error directory: ' . $final_dir . ' not found');
+            }
+        } else {
+
+            // execute command
+            exec('sudo '.$command, $output, $return_code);
+
+            // check if command run valid
+            if ($return_code !== 0) {
+
+                // check if command not found
+                if ($return_code == 127) {
+                    $this->logManager->log('terminal', $username.' executed not found command: '.$command);
+                    return new Response('command: ' . $command . ' not found');
+                } 
+                    
+                $this->logManager->log('terminal', $username.' executed command: '.$command.' with error code: '.$return_code);
+                return new Response('error to execute command: ' . $command);    
+            }
+
+            // log execute action
+            $this->logManager->log('terminal', $username.' executed command: '.$command);
+
+            // get output
+            $output = implode("\n", $output);
+
+            // escape output
+            $output = $this->securityUtil->escapeString($output);
+
+            // return output
+            return new Response($output);            
+        }    
     }
 }

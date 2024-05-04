@@ -223,9 +223,9 @@ class ServiceManager
         // check if services list exist
         if ($this->getServicesJson() != null) {
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
     
     /**

@@ -29,10 +29,8 @@ class SecurityCheckMiddleware
     public function onKernelRequest(): void
     {
         // check if SSL check enabled
-        if ($this->siteUtil->isSSLOnly()) {
-            if (!$this->siteUtil->isSsl()) {
-                $this->errorManager->handleError('SSL error: connection not running on ssl protocol', 500);
-            }
+        if ($this->siteUtil->isSSLOnly() && !$this->siteUtil->isSsl() ) {
+            $this->errorManager->handleError('SSL error: connection not running on ssl protocol', 500);
         }
     }
 }

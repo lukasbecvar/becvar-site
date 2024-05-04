@@ -33,14 +33,12 @@ class VisitorInfoUtil
         } 
         
         // check forwarded IP (get IP from cloudflare visitors) 
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         } 
         
         // default addr get
-        else {
-            return $_SERVER['REMOTE_ADDR'];
-        }
+        return $_SERVER['REMOTE_ADDR'];
     }
 
     /**

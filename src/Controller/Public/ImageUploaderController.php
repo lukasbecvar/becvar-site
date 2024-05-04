@@ -64,31 +64,24 @@ class ImageUploaderController extends AbstractController
         $imageRepo = $this->entityManager->getRepository(Image::class)->findOneBy(['token' => $token]);
     
         // check if image found
-        if ($imageRepo !== null) {
-    
-            // get image & decrypt
-            $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
-    
-            // check if image is decrypted
-            if ($image_content == null) {
-                $this->errorManager->handleError('Error to decrypt aes image', 500);
-            }
-    
-            // set content type header to image/jpeg
-            $headers = [
-                'Content-Type' => 'image/jpeg',
-            ];
-    
-            // create a streamed response with image content
-            $response = new StreamedResponse(function () use ($image_content) {
-                echo base64_decode($image_content);
-            }, Response::HTTP_OK, $headers);
-    
-            return $response;
-    
-        } else {
+        if ($imageRepo == null) {
             return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
         }
+    
+        // get image & decrypt
+        $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
+    
+        // check if image is decrypted
+        if ($image_content == null) {
+            $this->errorManager->handleError('Error to decrypt aes image', 500);
+        }
+            
+        // create a streamed response with image content
+        return new StreamedResponse(function () use ($image_content) {
+            echo base64_decode($image_content);
+        }, Response::HTTP_OK, [
+            'Content-Type' => 'image/jpeg',
+        ]);
     }
 
     /**

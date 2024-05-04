@@ -27,10 +27,8 @@ class SessionUtil
      */
     public function startSession(): void 
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            if (!headers_sent()) {
-                session_start();
-            }
+        if (session_status() == PHP_SESSION_NONE && (!headers_sent())) {
+            session_start();
         }
     }
 

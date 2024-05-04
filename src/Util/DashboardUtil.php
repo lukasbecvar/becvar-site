@@ -190,9 +190,9 @@ class DashboardUtil
         // check if length is valid
         if ($len == 4) {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        
+        return false;
     }
 
     /**
@@ -205,9 +205,9 @@ class DashboardUtil
         // check if system is linux
         if (strtolower(substr(PHP_OS, 0, 3)) == 'lin') {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        
+        return false;
     }
 
     /**
@@ -235,8 +235,8 @@ class DashboardUtil
         // check if list is found
         if ($this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json') != null) {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        
+        return false;
     }
 }

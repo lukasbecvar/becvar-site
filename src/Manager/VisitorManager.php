@@ -71,9 +71,9 @@ class VisitorManager
 
         if ($visitor == null) {
             return 1;
-        } else {
-            return $visitor->getID();
         }
+
+        return $visitor->getID();
     }
 
     /**
@@ -149,9 +149,9 @@ class VisitorManager
         // check visitor found
         if ($repo !== null) {
             return strtolower($repo->getCountry());   
-        } else {
-            return null;
-        }
+        } 
+        
+        return null;
     }
 
     /**
@@ -207,16 +207,11 @@ class VisitorManager
         $status = $this->cacheManager->getValue($user_cache_key);
 
         // check if status found
-        if ($status->get() != null) {
-            // check user status
-            if ($status->get() == 'online') {
-                return $status->get();
-            } else {
-                return 'offline';
-            }
-        } else {
+        if ($status->get() == null) {
             return 'offline';
         }
+
+        return $status->get();
     }
 
     /**

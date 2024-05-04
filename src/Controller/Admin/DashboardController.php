@@ -140,6 +140,7 @@ class DashboardController extends AbstractController
     #[Route('/admin/dashboard/emergency/shutdown', methods: ['GET', 'POST'], name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
     {
+        // init default resources
         $error_msg = null;
 
         // generate configmation code

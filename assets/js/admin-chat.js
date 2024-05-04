@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.status === 'message saved') {
+                if (data.status === 'success') {
                     // clear the message input after sending
                     message_input.value = '';
                 } else {
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
     getChatMessages();
 
     // set an interval to periodically fetch chat messages (every 1000 milliseconds)
-    setInterval(getChatMessages, 1000);
+    setInterval(getChatMessages, 500);
 
     // add a click event listener to the send button to send messages
     send_button.addEventListener('click', sendMessage);
@@ -101,10 +101,5 @@ document.addEventListener("DOMContentLoaded", function() {
             sendMessage();
             message_input.value = '';
         }
-    });
-
-    // set command input to lower case
-    document.getElementById('command').addEventListener('input', function () {
-        this.value = this.value.toLowerCase();
     });
 });

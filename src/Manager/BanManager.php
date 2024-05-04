@@ -123,16 +123,14 @@ class BanManager
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
         
         // check if visitor found
-        if ($visitor === null) {
-            return false;
-        } else {
+        if ($visitor != null) {
             // check if visitor banned
             if ($visitor->getBannedStatus() == 'yes') {
                 return true;
-            } else {
-                return false;
-            }
+            } 
         }
+
+        return false;
     }
 
     /**
@@ -168,12 +166,12 @@ class BanManager
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
 
         // check if visitor found
-        if ($visitor == null) {
-            return null;
-        } else {
+        if ($visitor != null) {
             // return ban reason string
             return $visitor->getBanReason();
         }
+        
+        return null;
     }
 
     /**

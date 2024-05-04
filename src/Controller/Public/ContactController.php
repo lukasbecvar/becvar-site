@@ -116,7 +116,6 @@ class ContactController extends AbstractController
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
-
                     // save message & get return boolean
                     $save = $this->messagesManager->saveMessage($name, $email, $message_input, $ip_address, $visitor_id);
 
