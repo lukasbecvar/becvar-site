@@ -76,12 +76,18 @@ class VisitorSystemMiddleware
         $ip_address = $this->securityUtil->escapeString($ip_address);
         $browser = $this->securityUtil->escapeString($browser);
 
+        // get visitor data
+        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+
         // check if visitor found in database
-        if ($this->visitorManager->getVisitorRepository($ip_address) == null) {
+        if ($visitor == null) {
 
             // save new visitor data
             $this->insertNewVisitor($date, $ip_address, $browser, $os, $location);
         } else {
+
+            // cache online visitor
+            $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
 
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ip_address)) {
@@ -164,9 +170,6 @@ class VisitorSystemMiddleware
     {
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ip_address);
-
-        // cache online visitor
-        $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
 
         // prevent maximal useragent to save
         if (strlen($browser) >= 200) {

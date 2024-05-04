@@ -77,14 +77,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 // execute the command
                 executeCommand(command);
 
-                // update and display the current hostname and path
-                getCurrentHostname();
-                getCurrentPath();
-
                 // scroll to the bottom of the terminal
                 scrollToBottom();
             }
         }
+        // update and display the current hostname and path
+        getCurrentHostname();
+        getCurrentPath();
     });
 
     // event listener to focus on the command input when clicking outside of it

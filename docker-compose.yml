@@ -43,3 +43,4 @@ services:
             - "80:80"
         networks:
             - dev
+        command: sh -c "chown root:root /etc/sudoers && chmod 440 /etc/sudoers
