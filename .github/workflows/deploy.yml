@@ -8,7 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+      ALLOWED_FROM: "github-actions"
+      
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -25,23 +27,4 @@ jobs:
         # script to run on the server
         script: |
           cd /services/website/becvar.xyz
-          sudo systemctl stop apache2
-          sh scripts/clear.sh
-          git pull
-          sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
-          sh scripts/install.sh
-
-          # migrate database
-          rm -rf migrations
-          mkdir migrations
-          php bin/console doctrine:database:create --if-not-exists
-          php bin/console make:migration --no-interaction
-          php bin/console doctrine:migrations:migrate --no-interaction
-          
-          # regenerate & update
-          php bin/console projects:list:update
-          php bin/console auth:tokens:regenerate
-          
-          # start apache
-          sudo chmod -R 777 var/
-          sudo systemctl start apache2
+          sh scripts/deploy.sh
