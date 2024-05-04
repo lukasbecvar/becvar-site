@@ -1,5 +1,5 @@
 ## About becvar-site
-Personal website built with the Symfony framework, Bootstrap & Webpack Encore.
+Personal website builded with the Symfony framework, Bootstrap & Webpack Encore.
 
 ## Admin site
 The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
