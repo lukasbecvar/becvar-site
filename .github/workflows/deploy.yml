@@ -9,8 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ALLOWED_FROM: "github-actions"
-      
+      GITHUB_ACTIONS: true
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
