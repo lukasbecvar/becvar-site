@@ -32,9 +32,10 @@ class TranslationsMiddleware
         // check unidentified languages
         if ($language == null or $language == 'host' or $language == 'unknown') {
             $this->translator->setLocale('en');
+        } else {
+
+            // set visitor locale
+            $this->translator->setLocale($language);
         }
-        
-        // set visitor locale
-        $this->translator->setLocale($language);
     }
 }
