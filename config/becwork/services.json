@@ -13,10 +13,5 @@
         "service_name": "mysql",
         "display_name": "Mysql",
         "enable": true 
-    },
-    "minecraft": {
-        "service_name": "minecraft",
-        "display_name": "Minecraft",
-        "enable": true 
     }
 }
