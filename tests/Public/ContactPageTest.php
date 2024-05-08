@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ContactPageTest
- * 
+ *
  * Test cases for the Contact page.
  *
  * @package App\Tests\Public
@@ -23,7 +23,7 @@ class ContactPageTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class ContactPageTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/contact');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('form[name="contact_form"]');
         $this->assertSelectorExists('input[name="contact_form[name]"]');

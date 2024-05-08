@@ -9,7 +9,7 @@ use App\Manager\ErrorManager;
  * Class SecurityCheckMiddleware
  *
  * This middleware checks if the connection is secure.
- * 
+ *
  * @package App\Middleware
  */
 class SecurityCheckMiddleware
@@ -29,7 +29,7 @@ class SecurityCheckMiddleware
     public function onKernelRequest(): void
     {
         // check if SSL check enabled
-        if ($this->siteUtil->isSSLOnly() && !$this->siteUtil->isSsl() ) {
+        if ($this->siteUtil->isSSLOnly() && !$this->siteUtil->isSsl()) {
             $this->errorManager->handleError('SSL error: connection not running on ssl protocol', 500);
         }
     }

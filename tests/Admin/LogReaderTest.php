@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class LogReaderTest
- * 
+ *
  * Admin log reader component test
  *
  * @package App\Tests\Admin
@@ -52,7 +52,8 @@ class LogReaderTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs?page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | logs');
         $this->assertSelectorTextContains('body', 'Delete all');
         $this->assertSelectorTextContains('body', 'Readed all');
@@ -71,7 +72,8 @@ class LogReaderTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs/delete');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');
         $this->assertSelectorTextContains('body', 'Yes');

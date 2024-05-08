@@ -13,10 +13,10 @@ use Symfony\Component\String\ByteString;
 
 /**
  * Class AuthManager
- * 
+ *
  * AuthManager provides login/logout methods.
  * Note: Login uses its own Authenticator, not Symfony auth.
- * 
+ *
  * @package App\Manager
  */
 class AuthManager
@@ -35,7 +35,7 @@ class AuthManager
         LogManager $logManager,
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
-        ErrorManager $errorManager, 
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         UserRepository $userRepository,
         VisitorManager $visitorManager,
@@ -58,7 +58,7 @@ class AuthManager
      *
      * @return bool
      */
-    public function isUserLogedin(): bool 
+    public function isUserLogedin(): bool
     {
         // check if session exist
         if (!$this->sessionUtil->checkSession('login-token')) {
@@ -71,7 +71,7 @@ class AuthManager
         // check if token exist in database
         if ($this->getUserRepository(['token' => $login_token]) != null) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -85,7 +85,7 @@ class AuthManager
      *
      * @return void
      */
-    public function login(string $username, string $user_token, bool $remember): void 
+    public function login(string $username, string $user_token, bool $remember): void
     {
         // check if user not logged in
         if (!$this->isUserLogedin()) {
@@ -97,7 +97,7 @@ class AuthManager
                 // check if remember set (autologin cookie)
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieUtil->set('login-token-cookie', $user_token, time() + (60*60*24*7*365));
+                        $this->cookieUtil->set('login-token-cookie', $user_token, time() + (60 * 60 * 24 * 7 * 365));
                     }
                 }
 
@@ -105,10 +105,9 @@ class AuthManager
                 $this->updateUserData();
 
                 // log auth action
-                $this->logManager->log('authenticator', 'user: '.$username.' logged in');
-
+                $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
-                $this->errorManager->handleError('error to login user with token: '.$user_token, 500);
+                $this->errorManager->handleError('error to login user with token: ' . $user_token, 500);
             }
         }
     }
@@ -118,7 +117,7 @@ class AuthManager
      *
      * @return void
      */
-    public function logout(): void 
+    public function logout(): void
     {
         // check if user logged in
         if ($this->isUserLogedin()) {
@@ -126,14 +125,14 @@ class AuthManager
             $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
             // log logout event
-            $this->logManager->log('authenticator', 'user: '.$user->getUsername().' logout');
+            $this->logManager->log('authenticator', 'user: ' . $user->getUsername() . ' logout');
 
             // unset login cookie
             $this->cookieUtil->unset('login-token-cookie');
 
             // unset login session
-            $this->sessionUtil->destroySession();   
-        } 
+            $this->sessionUtil->destroySession();
+        }
     }
 
     /**
@@ -143,7 +142,7 @@ class AuthManager
      *
      * @return void
      */
-    public function updateUserData(): void 
+    public function updateUserData(): void
     {
         // get date & time
         $date = date('d.m.Y H:i:s');
@@ -159,7 +158,6 @@ class AuthManager
 
         // check if user repo found
         if ($user != null) {
-
             // update last login time
             $user->setLastLoginTime($date);
 
@@ -170,9 +168,9 @@ class AuthManager
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
             }
-        }     
+        }
     }
 
     /**
@@ -182,7 +180,7 @@ class AuthManager
      * @param string $password The password for the new user.
      *
      * @throws \Exception If there is an error during the registration process.
-     * 
+     *
      * @return void
      */
     public function registerNewUser(string $username, string $password): void
@@ -195,10 +193,10 @@ class AuthManager
 
         // get user ip
         $ip_address = $this->visitorInfoUtil->getIP();
-                    
+
         // generate token
         $token = ByteString::fromRandom(32)->toString();
-                        
+
         // get visitor id
         $visitor_id = $this->visitorManager->getVisitorID($ip_address);
 
@@ -245,17 +243,16 @@ class AuthManager
         $user->setLastLoginTime('not logged');
         $user->setProfilePic($image_base64);
         $user->setVisitorId(strval($visitor_id));
-        
+
         // insert new user
         try {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
             // log registration event
-            $this->logManager->log('authenticator', 'registration new user: '.$username.' registred');
-
+            $this->logManager->log('authenticator', 'registration new user: ' . $username . ' registred');
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to register new user: '.$e->getMessage(), 400);
+            $this->errorManager->handleError('error to register new user: ' . $e->getMessage(), 400);
         }
 
         // set user token (login-token session)
@@ -269,7 +266,7 @@ class AuthManager
      *
      * @return string|null The login token or null if not found or invalid.
      */
-    public function getUserToken(): ?string 
+    public function getUserToken(): ?string
     {
         // check if session exist
         if (!$this->sessionUtil->checkSession('login-token')) {
@@ -283,7 +280,7 @@ class AuthManager
         if ($this->getUserRepository(['token' => $login_token]) != null) {
             return $login_token;
         }
-            
+
         return null;
     }
 
@@ -293,7 +290,7 @@ class AuthManager
      * @param string $token The user token to retrieve the username for.
      * @return string|null The username or null if not found.
      */
-    public function getUsername(string $token = 'self'): ?string 
+    public function getUsername(string $token = 'self'): ?string
     {
         // get token
         if ($token == 'self') {
@@ -306,7 +303,7 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getUsername();
-        } 
+        }
 
         return null;
     }
@@ -317,7 +314,7 @@ class AuthManager
      * @param string $token The user token to retrieve the role for.
      * @return string|null The user role or null if not found.
      */
-    public function getUserRole(string $token = 'self'): ?string 
+    public function getUserRole(string $token = 'self'): ?string
     {
         // get token
         if ($token == 'self') {
@@ -330,7 +327,7 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getRole();
-        } 
+        }
 
         return null;
     }
@@ -341,7 +338,7 @@ class AuthManager
      * @param string $token The user token to retrieve the profile picture URL for.
      * @return string|null The profile picture URL or null if not found.
      */
-    public function getUserProfilePic(string $token = 'self'): ?string 
+    public function getUserProfilePic(string $token = 'self'): ?string
     {
         // get token
         if ($token == 'self') {
@@ -354,7 +351,7 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             return $user->getProfilePic();
-        } 
+        }
 
         return null;
     }
@@ -383,12 +380,12 @@ class AuthManager
      * Retrieves a user entity from the repository based on the provided criteria.
      *
      * @param array<string> $array The criteria to search for in the repository.
-     * 
+     *
      * @throws \Exception If there is an error during the database query.
-     * 
+     *
      * @return object|null The user entity or null if not found.
      */
-    public function getUserRepository(array $array): ?object 
+    public function getUserRepository(array $array): ?object
     {
         $userRepository = $this->entityManager->getRepository(User::class);
 
@@ -396,7 +393,7 @@ class AuthManager
         try {
             return $userRepository->findOneBy($array);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('find error: ' . $e->getMessage(), 500);
             return null;
         }
     }
@@ -415,7 +412,7 @@ class AuthManager
         if ($role == 'Owner' || $role == 'Admin') {
             return true;
         }
-        
+
         return false;
     }
 
@@ -474,17 +471,16 @@ class AuthManager
 
         // regenerate all users tokens
         foreach ($user_repo as $user) {
-
             // regenerate new token
             $new_token = $this->generateUserToken();
-            
+
             // set new token
             $user->setToken($new_token);
 
             // flush data
             try {
                 $this->entityManager->flush();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $state = [
                     'status' => false,
                     'message' => $e->getMessage()
@@ -514,7 +510,6 @@ class AuthManager
         $users = $this->userRepository->getAllUsersWithVisitorId();
 
         foreach ($users as $user) {
-
             // get visitor status
             $status = $this->visitorManager->getVisitorStatus(intval($user['visitor_id']));
 

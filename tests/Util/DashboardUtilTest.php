@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class DashboardUtilTest
- * 
+ *
  * @package App\Tests\Util
  */
 class DashboardUtilTest extends TestCase
@@ -76,9 +76,10 @@ class DashboardUtilTest extends TestCase
             ->method('getRepository')
             ->willReturn($repositoryMock);
 
-        // Act
+        // act
         $result = $this->dashboardUtil->getDatabaseEntityCount($entityMock, $search_criteria);
 
+        // assert
         $this->assertEquals(2, $result);
     }
 
@@ -98,6 +99,7 @@ class DashboardUtilTest extends TestCase
         // act
         $result = $this->dashboardUtil->isBrowserListFound();
 
+        // assert
         $this->assertTrue($result);
     }
 }

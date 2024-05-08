@@ -15,9 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class VisitorSystemMiddleware
- * 
+ *
  * Visitor system provides basic visitors managment
- * 
+ *
  * @package App\Middleware
  */
 class VisitorSystemMiddleware
@@ -41,7 +41,7 @@ class VisitorSystemMiddleware
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager
     ) {
         $this->twig = $twig;
         $this->banManager = $banManager;
@@ -81,27 +81,23 @@ class VisitorSystemMiddleware
 
         // check if visitor found in database
         if ($visitor == null) {
-
             // save new visitor data
             $this->insertNewVisitor($date, $ip_address, $browser, $os, $location);
         } else {
-
             // cache online visitor
-            $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
+            $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
 
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ip_address)) {
-
                 $reason = $this->banManager->getBanReason($ip_address);
-                $this->logManager->log('ban-system', 'visitor with ip: '.$ip_address.' trying to access page, but visitor banned for: '.$reason);
+                $this->logManager->log('ban-system', 'visitor with ip: ' . $ip_address . ' trying to access page, but visitor banned for: ' . $reason);
 
                 // render banned page
                 die($this->twig->render('errors/error-banned.html.twig', [
                     'message' => $reason,
                     'contact_email' => $_ENV['CONTACT_EMAIL']
                 ]));
-
-            } else {   
+            } else {
                 // update exist visitor
                 $this->updateVisitor($date, $ip_address, $browser, $os);
             }
@@ -119,11 +115,11 @@ class VisitorSystemMiddleware
      *
      * @throws \Exception If an error occurs during the database flush.
      */
-    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, array $location): void 
+    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, array $location): void
     {
         // log geolocate error
         if ($location == 'Unknown') {
-            $this->logManager->log('geolocate-error', 'error to geolocate ip: '.$ip_address);
+            $this->logManager->log('geolocate-error', 'error to geolocate ip: ' . $ip_address);
         }
 
         // prevent maximal user agent length
@@ -146,13 +142,13 @@ class VisitorSystemMiddleware
         $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setBannedTime(('non-banned'));
         $visitorEntity->setEmail('unknown');
-            
+
         // try to insert new visitor
         try {
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
         }
     }
 
@@ -178,9 +174,8 @@ class VisitorSystemMiddleware
 
         // check if visitor data found
         if (!$visitor != null) {
-            $this->errorManager->handleError('unexpected visitor with ip: '.$ip_address.' update error, please check database structure', 500);
+            $this->errorManager->handleError('unexpected visitor with ip: ' . $ip_address . ' update error, please check database structure', 500);
         } else {
-
             // update values
             $visitor->setLastVisit($date);
             $visitor->setBrowser($browser);
@@ -190,7 +185,7 @@ class VisitorSystemMiddleware
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
             }
         }
     }

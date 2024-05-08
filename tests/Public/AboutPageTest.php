@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AboutPageTest
- * 
+ *
  * Test cases for the About page.
  *
  * @package App\Tests\Public
@@ -23,7 +23,7 @@ class AboutPageTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class AboutPageTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/about');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

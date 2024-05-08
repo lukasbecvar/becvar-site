@@ -17,10 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ImageUploaderController
- * 
+ *
  * Image uploader/view controller provides image upload/view component
  * Page for storing images in database and sharing via url
- * 
+ *
  * @package App\Controller\Public
 */
 class ImageUploaderController extends AbstractController
@@ -35,7 +35,7 @@ class ImageUploaderController extends AbstractController
         SiteUtil $siteUtil,
         LogManager $logManager,
         ErrorManager $errorManager,
-        SecurityUtil $securityUtil, 
+        SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->siteUtil = $siteUtil;
@@ -56,26 +56,26 @@ class ImageUploaderController extends AbstractController
     {
         // get image token
         $token = $this->siteUtil->getQueryString('token', $request);
-    
+
         // escape image token
         $token = $this->securityUtil->escapeString($token);
-    
+
         // get image data
         $imageRepo = $this->entityManager->getRepository(Image::class)->findOneBy(['token' => $token]);
-    
+
         // check if image found
         if ($imageRepo == null) {
-            return $this->errorManager->handleError('not found error, image: '.$token.', not found in database', 404);
+            return $this->errorManager->handleError('not found error, image: ' . $token . ', not found in database', 404);
         }
-    
+
         // get image & decrypt
         $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
-    
+
         // check if image is decrypted
         if ($image_content == null) {
             $this->errorManager->handleError('Error to decrypt aes image', 500);
         }
-            
+
         // create a streamed response with image content
         return new StreamedResponse(function () use ($image_content) {
             echo base64_decode($image_content);
@@ -86,7 +86,7 @@ class ImageUploaderController extends AbstractController
 
     /**
      * Image upload controller.
-     * 
+     *
      * @return Response Returns a Response object representing the HTTP response.
      *
      * @throws \Exception Throws an exception if there is an error during the image upload process.
@@ -97,29 +97,27 @@ class ImageUploaderController extends AbstractController
         $error_msg = null;
 
         // check if form is submited
-        if (isset($_POST['submitUpload'])) { 
-        
+        if (isset($_POST['submitUpload'])) {
             // extract file extension
-            $ext = substr(strrchr($_FILES['userfile']['name'], '.'), 1);      
-            
+            $ext = substr(strrchr($_FILES['userfile']['name'], '.'), 1);
+
             // check if file is image
-            if ($ext == 'gif' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'png') {		
-                
+            if ($ext == 'gif' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'png') {
                 // generate img_spec value
                 $token = ByteString::fromRandom(32)->toByteString();
-                
+
                 // get image file
                 $image_file = file_get_contents($_FILES['userfile']['tmp_name']);
-    
+
                 // encode file
                 $image_file = base64_encode($image_file);
 
                 // escape image string
                 $image_file = $this->securityUtil->escapeString($image_file);
-    
+
                 // get current data
                 $date = date('d.m.Y H:i:s');
-    
+
                 // init image entity
                 $image = new Image();
 
@@ -136,15 +134,14 @@ class ImageUploaderController extends AbstractController
                     $this->entityManager->persist($image);
                     $this->entityManager->flush();
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload image: '.$token.', '.$e->getMessage(), 400);
+                    return $this->errorManager->handleError('error to upload image: ' . $token . ', ' . $e->getMessage(), 400);
                 }
 
                 // log image upload
-                $this->logManager->log('image-uploader', 'uploaded new image: '.$token);	
+                $this->logManager->log('image-uploader', 'uploaded new image: ' . $token);
 
                 // redirect to image view
                 return $this->redirectToRoute('public_image_viewer', ['token' => $token]);
-
             } else {
                 // handle error (translation key)
                 $error_msg = 'image.uploader.file.format.error';

@@ -6,9 +6,9 @@ use App\Util\SecurityUtil;
 
 /**
  * Class CookieUtil
- * 
+ *
  * CookieUtil provides cookie management functionalities.
- * 
+ *
  * @package App\Util
  */
 class CookieUtil
@@ -29,7 +29,7 @@ class CookieUtil
      *
      * @throws \Exception If headers have already been sent.
      */
-    public function set($name, $value, $expiration): void 
+    public function set($name, $value, $expiration): void
     {
         if (!headers_sent()) {
             $value = $this->securityUtil->encryptAes($value);
@@ -45,7 +45,7 @@ class CookieUtil
      *
      * @return string|null The decrypted value of the cookie.
      */
-    public function get($name): ?string 
+    public function get($name): ?string
     {
         $value = base64_decode($_COOKIE[$name]);
         return $this->securityUtil->decryptAes($value);
@@ -58,10 +58,10 @@ class CookieUtil
      *
      * @throws \Exception If the URI is invalid.
      */
-    public function unset($name): void 
-    {   
+    public function unset($name): void
+    {
         if (!headers_sent()) {
-            $host = $_SERVER['HTTP_HOST'];   
+            $host = $_SERVER['HTTP_HOST'];
             $domain = explode(':', $host)[0];
             $uri = $_SERVER['REQUEST_URI'];
             $uri = rtrim(explode('?', $uri)[0], '/');
@@ -72,9 +72,9 @@ class CookieUtil
 
             $parts = explode('/', $uri);
             $cookie_path = '';
-                
-            foreach ($parts as $part) {  
-                $cookie_path = '/'.ltrim($cookie_path.'/'.$part, '//');
+
+            foreach ($parts as $part) {
+                $cookie_path = '/' . ltrim($cookie_path . '/' . $part, '//');
                 setcookie($name, '', 1, $cookie_path);
                 do {
                     setcookie($name, '', 1, $cookie_path, $domain);

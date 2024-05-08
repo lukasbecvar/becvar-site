@@ -6,9 +6,9 @@ use App\Util\JsonUtil;
 
 /**
  * Class AuthManager
- * 
+ *
  * Service manager provides all services methods (start, stop, status)
- * 
+ *
  * @package App\Manager
 */
 class ServiceManager
@@ -19,7 +19,7 @@ class ServiceManager
     private ErrorManager $errorManager;
 
     public function __construct(
-        JsonUtil $jsonUtil, 
+        JsonUtil $jsonUtil,
         LogManager $logManager,
         AuthManager $authManager,
         ErrorManager $errorManager
@@ -35,21 +35,18 @@ class ServiceManager
      *
      * @return array<array<string>>
      */
-    public function getServices(): ?array 
+    public function getServices(): ?array
     {
-        // get services list from services.json 
+        // get services list from services.json
         $services_list = $this->getServicesJson();
-        $services = [];  
+        $services = [];
 
         // check if services list load valid
         if ($services_list != null) {
-           
             // execute separate service row
             foreach ($services_list as $value) {
-                
                 // check if service is enabled
                 if ($value['enable']) {
-
                     // build service array
                     $service_array = [
                         'service_name' => $value['service_name'],
@@ -92,16 +89,15 @@ class ServiceManager
             // check if action is emergency shutdown
             if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
                 $this->emergencyShutdown();
-            
             } elseif ($service_name == 'ufw') {
-                $command = 'sudo ufw '.$action;
+                $command = 'sudo ufw ' . $action;
             } else {
                 // build action
-                $command = 'sudo systemctl '.$action.' '.$service_name;
+                $command = 'sudo systemctl ' . $action . ' ' . $service_name;
             }
 
             // log action
-            $this->logManager->log('action-runner', $this->authManager->getUsername().' '.$action.'ed '.$service_name);
+            $this->logManager->log('action-runner', $this->authManager->getUsername() . ' ' . $action . 'ed ' . $service_name);
 
             // executed final command
             $this->executeCommand($command);
@@ -119,8 +115,8 @@ class ServiceManager
      */
     public function isServiceInstalled(string $service_name): bool
     {
-        exec('dpkg -l | grep '.escapeshellarg($service_name), $output, $return_code);
-        
+        exec('dpkg -l | grep ' . escapeshellarg($service_name), $output, $return_code);
+
         if ($return_code === 0) {
             return true;
         } else {
@@ -135,10 +131,10 @@ class ServiceManager
      *
      * @return bool
      */
-    public function isServiceRunning(string $service): bool 
+    public function isServiceRunning(string $service): bool
     {
-        $output = shell_exec('systemctl is-active '.$service);
-        
+        $output = shell_exec('systemctl is-active ' . $service);
+
         // check if service running
         if (trim($output) == 'active') {
             return true;
@@ -146,7 +142,7 @@ class ServiceManager
             return false;
         }
     }
-    
+
     /**
      * Checks if a socket is open.
      *
@@ -155,7 +151,7 @@ class ServiceManager
      *
      * @return string
      */
-    public function isSocktOpen(string $ip, int $port): string 
+    public function isSocktOpen(string $ip, int $port): string
     {
         // default response output
         $response_output = 'Offline';
@@ -164,7 +160,7 @@ class ServiceManager
         $service = @fsockopen($ip, $port);
 
         // check is service online
-        if($service >= 1) {
+        if ($service >= 1) {
             $response_output = 'Online';
         }
 
@@ -178,12 +174,12 @@ class ServiceManager
      *
      * @return bool
      */
-    public function isProcessRunning(string $process): bool 
+    public function isProcessRunning(string $process): bool
     {
-        exec('pgrep '.$process, $pids);
-        
+        exec('pgrep ' . $process, $pids);
+
         // check if outputed pid
-        if(empty($pids)) {
+        if (empty($pids)) {
             return true;
         } else {
             return false;
@@ -195,12 +191,12 @@ class ServiceManager
      *
      * @return bool
      */
-    public function isUfwRunning(): bool 
+    public function isUfwRunning(): bool
     {
         try {
             // execute cmd
             $output = shell_exec('sudo ufw status');
-    
+
             // check if ufw running
             if (str_starts_with($output, 'Status: active')) {
                 return true;
@@ -208,26 +204,26 @@ class ServiceManager
                 return false;
             }
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get ufw status'.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get ufw status' . $e->getMessage(), 500);
             return false;
         }
     }
-    
+
     /**
      * Checks if the services list file exists.
      *
      * @return bool
      */
-    public function isServicesListExist(): bool 
+    public function isServicesListExist(): bool
     {
         // check if services list exist
         if ($this->getServicesJson() != null) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Executes a command.
      *
@@ -235,12 +231,12 @@ class ServiceManager
      *
      * @return void
      */
-    public function executeCommand($command): void 
+    public function executeCommand($command): void
     {
         try {
             shell_exec($command);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to executed command: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to executed command: ' . $e->getMessage(), 500);
         }
     }
 
@@ -251,7 +247,7 @@ class ServiceManager
      */
     public function emergencyShutdown(): void
     {
-        $this->logManager->log('action-runner', $this->authManager->getUsername().' initiated emergency-shutdown');
+        $this->logManager->log('action-runner', $this->authManager->getUsername() . ' initiated emergency-shutdown');
         $this->executeCommand('sudo poweroff');
     }
 
@@ -262,6 +258,6 @@ class ServiceManager
      */
     public function getServicesJson(): ?array
     {
-        return $this->jsonUtil->getJson(__DIR__.'/../../config/becwork/services.json');
+        return $this->jsonUtil->getJson(__DIR__ . '/../../config/becwork/services.json');
     }
 }

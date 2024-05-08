@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ChatApiController
- * 
+ *
  * This controller provides API functions for saving and retrieving chat messages.
- * 
+ *
  * @package App\Controller\Api
  */
 class ChatApiController extends AbstractController
@@ -88,7 +88,7 @@ class ChatApiController extends AbstractController
                 'message' => 'chat message not saved'
             ], 400);
         }
-        
+
         // escape message (XSS protection)
         $chat_message = $this->securityUtil->escapeString($data['message']);
 
@@ -121,7 +121,7 @@ class ChatApiController extends AbstractController
                 'message' => 'chat message saved'
             ], 200);
         } catch (\Exception $e) {
-            $this->logManager->log('system-error', 'chat message save error: '.$e->getMessage());
+            $this->logManager->log('system-error', 'chat message save error: ' . $e->getMessage());
             return $this->errorManager->handleError('error to save message: ' . $e->getMessage(), 401);
         }
     }
@@ -142,7 +142,7 @@ class ChatApiController extends AbstractController
                 'message' => 'error to get messages: only for authenticated users!'
             ], 401);
         }
-            
+
         // get max message limit
         $limit = intval($_ENV['ITEMS_PER_PAGE']);
 
@@ -156,7 +156,6 @@ class ChatApiController extends AbstractController
 
         // build message data
         foreach ($messages as $message) {
-
             // get sender token
             $sender = $message->getSender();
 
@@ -179,7 +178,7 @@ class ChatApiController extends AbstractController
                 'message' => $decrypted_message
             ];
         }
-    
+
         // return messages json
         return $this->json($messages_data);
     }

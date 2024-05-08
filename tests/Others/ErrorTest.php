@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ErrorTest
- * 
+ *
  * Test cases for handling different error scenarios.
  *
  * @package App\Tests\Others
@@ -23,7 +23,7 @@ class ErrorTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
@@ -54,7 +54,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=banned');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
@@ -70,7 +70,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=maintenance');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
@@ -86,7 +86,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=400');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Bad request');
         $this->assertSelectorTextContains('.error-page-msg', 'Request error');
@@ -102,7 +102,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=401');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Unauthorized');
         $this->assertSelectorTextContains('.error-page-msg', 'You do not have permission to access this page');
@@ -118,7 +118,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=403');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Forbidden');
         $this->assertSelectorTextContains('.error-page-msg', 'You do not have permission to access this page');
@@ -134,7 +134,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=404');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Page not found');
         $this->assertSelectorTextContains('.error-page-msg', 'Error this page was not found');
@@ -150,7 +150,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=429');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Too Many Requests');
         $this->assertSelectorTextContains('body', 'Too Many Requests');
@@ -167,7 +167,7 @@ class ErrorTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/error?code=500');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Internal Server Error');
         $this->assertSelectorTextContains('.error-page-msg', 'The server encountered an unexpected condition that prevented it from fulfilling the reques');

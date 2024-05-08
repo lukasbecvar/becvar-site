@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class RegisterTest
- * 
+ *
  * Register component test.
  *
  * @package App\Tests\Admin\Auth
@@ -18,7 +18,7 @@ class RegisterTest extends WebTestCase
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
+    */
     private $client;
 
     /**
@@ -73,7 +73,7 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | Login');
         $this->assertSelectorTextContains('.form-title', 'Register admin account');
@@ -96,12 +96,13 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     /**
      * Test if the register form handles empty submission correctly.
-     */ 
+     */
     public function testRegisterEmptySubmit(): void
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -117,7 +118,7 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -142,7 +143,7 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords dont match');
     }

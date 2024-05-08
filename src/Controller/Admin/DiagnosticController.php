@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class DiagnosticController
- * 
+ *
  * Diagnostic controller provides diagnostics with web & host server errors scan.
- * 
+ *
  * @package App\Controller\Admin
  */
 class DiagnosticController extends AbstractController
@@ -48,8 +48,8 @@ class DiagnosticController extends AbstractController
             // user data
             'user_name' => $this->authManager->getUsername(),
             'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),    
-                
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
             // system diagnostic
             'is_system_linux' => $this->dashboardUtil->isSystemLinux(),
             'drive_usage' => $this->dashboardUtil->getDriveUsage(),
@@ -57,12 +57,12 @@ class DiagnosticController extends AbstractController
             'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],
             'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
             'web_service_username' => $this->dashboardUtil->getWebUsername(),
-                
+
             // web diagnostics
             'is_ssl' => $this->siteUtil->isSsl(),
             'is_www_subdomain' => str_starts_with($_SERVER['HTTP_HOST'], 'www'),
             'is_dev_mode' => $this->siteUtil->isDevMode(),
-            'is_maintenance' => $this->siteUtil->isMaintenance(),   
+            'is_maintenance' => $this->siteUtil->isMaintenance(),
             'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
             'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound()
         ]);

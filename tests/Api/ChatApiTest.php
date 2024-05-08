@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ChatTest
- * 
+ *
  * Admin chat API test
  *
  * @package App\Tests\Api
@@ -57,13 +57,12 @@ class ChatTest extends WebTestCase
         ]));
 
         // get response data
-        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+        $response_data = json_decode($this->client->getResponse()->getContent(), true);
 
-        // test response
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertEquals('success', $responseData['status']);
-        $this->assertEquals('chat message saved', $responseData['message']);
+        $this->assertEquals('success', $response_data['status']);
+        $this->assertEquals('chat message saved', $response_data['message']);
     }
 
     /**
@@ -80,8 +79,8 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // test response
-        $this->assertResponseStatusCodeSame(400);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('chat message not saved', $responseData['message']);
     }
@@ -102,7 +101,8 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertResponseStatusCodeSame(401);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertEquals('error to save message: only for authenticated users!', $responseData['message']);
     }
 
@@ -116,6 +116,7 @@ class ChatTest extends WebTestCase
         // make request
         $this->client->request('GET', '/api/chat/get/messages');
 
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -132,7 +133,8 @@ class ChatTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertResponseStatusCodeSame(401);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertEquals('error to get messages: only for authenticated users!', $responseData['message']);
     }
 }

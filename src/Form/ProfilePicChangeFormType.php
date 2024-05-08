@@ -11,11 +11,11 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Class ProfilePicChangeFormType
- * 
+ *
  * ProfilePicChangeFormType provides a form for changing the profile picture in the account settings.
  *
  * @see AbstractType
- * 
+ *
  * @package App\Form
  */
 class ProfilePicChangeFormType extends AbstractType

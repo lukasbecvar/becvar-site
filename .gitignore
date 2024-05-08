@@ -25,3 +25,7 @@ package-lock.json
 
 # phpunit
 .phpunit.result.cache
+
+# php-codesniffer
+/.phpcs-cache
+/phpcs.xml

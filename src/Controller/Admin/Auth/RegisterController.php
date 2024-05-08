@@ -12,18 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class RegisterController
- * 
+ *
  * Register controller provides user register function.
  * Note: This function is enabled only if users table is empty or for owner users
  * Note: Login uses its own authenticator, not Symfony auth.
- * 
+ *
  * @package App\Controller\Admin\Auth
  */
 class RegisterController extends AbstractController
 {
     private AuthManager $authManager;
 
-    public function __construct(AuthManager $authManager) {
+    public function __construct(AuthManager $authManager)
+    {
         $this->authManager = $authManager;
     }
 
@@ -38,9 +39,9 @@ class RegisterController extends AbstractController
     {
         // check if user table is empty or if registrant is admin
         if (!$this->authManager->isRegisterPageAllowed()) {
-            return $this->redirectToRoute('auth_login');   
+            return $this->redirectToRoute('auth_login');
         }
-            
+
         // init default resources
         $user = new User();
         $error_msg = null;
@@ -51,7 +52,6 @@ class RegisterController extends AbstractController
 
         // check if form submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get form data
             $username = $form->get('username')->getData();
             $password = $form->get('password')->getData();
@@ -61,7 +61,6 @@ class RegisterController extends AbstractController
             if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                 $error_msg = 'This username is already in use';
             } else {
-
                 // check if passwords not match
                 if ($password != $repassword) {
                     $error_msg = 'Your passwords dont match';

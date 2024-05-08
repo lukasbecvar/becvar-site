@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AccountSettingsTest
- * 
+ *
  * Admin account settings test
  *
  * @package App\Tests\Admin
@@ -52,7 +52,7 @@ class AccountSettingsTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('h2', 'Account settings');
@@ -71,7 +71,7 @@ class AccountSettingsTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/pic');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change profile image');
@@ -88,7 +88,7 @@ class AccountSettingsTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/username');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change username');
@@ -109,6 +109,7 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
+        // assert
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
@@ -128,6 +129,7 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
+        // assert
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
@@ -143,7 +145,7 @@ class AccountSettingsTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/password');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change password');
@@ -154,7 +156,7 @@ class AccountSettingsTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page handles a password change form submission with non-matching passwords correctly.
+     * Test account settings table page handles a password change form submission with no-matching passwords correctly.
      */
     public function testAccountSettingsTableChangePasswordNotMatchForm(): void
     {
@@ -168,7 +170,7 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords is not match!');
     }
@@ -188,6 +190,7 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
+        // assert
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -209,6 +212,7 @@ class AccountSettingsTest extends WebTestCase
             ],
         ]);
 
+        // assert
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');

@@ -15,10 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class PasteController
- * 
+ *
  * Paste controller provides save/view code paste component
  * Page for storing code in the database and sharing via URL.
- * 
+ *
  * @package App\Controller\Public
  */
 class PasteController extends AbstractController
@@ -31,8 +31,8 @@ class PasteController extends AbstractController
 
     public function __construct(
         SiteUtil $siteUtil,
-        LogManager $logManager, 
-        ErrorManager $errorManager, 
+        LogManager $logManager,
+        ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
@@ -55,23 +55,20 @@ class PasteController extends AbstractController
     {
         // check if paste submited
         if (isset($_POST['data'])) {
-        
             // get data from post request
             $content = $_POST['data'];
             $name = $this->securityUtil->escapeString($_POST['file']);
 
             // get upload date
             $date = date('d.m.Y H:i:s');
-                
+
             // check if maximum lenght reached
             if (strlen($content) > 60001) {
-
                 // redirect error
                 return $this->errorManager->handleError('error: this paste reached maximum characters 60000', 400);
             } else {
                 // save paste data
                 if (!empty($content)) {
-
                     // init paste entity
                     $paste = new Paste();
 
@@ -88,12 +85,12 @@ class PasteController extends AbstractController
                         $this->entityManager->persist($paste);
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
-                        return $this->errorManager->handleError('error to save new paste, error: '.$e->getMessage(), 500);
-                    } 
-                    
+                        return $this->errorManager->handleError('error to save new paste, error: ' . $e->getMessage(), 500);
+                    }
+
                     // log new paste
-                    $this->logManager->log('code-paste', 'saved new paste: '.$name);
-                } 
+                    $this->logManager->log('code-paste', 'saved new paste: ' . $name);
+                }
             }
         }
 
@@ -110,7 +107,7 @@ class PasteController extends AbstractController
     public function pasteView(Request $request): Response
     {
         $content = null;
-     
+
         // get paste token
         $token = $this->siteUtil->getQueryString('token', $request);
 
@@ -119,10 +116,9 @@ class PasteController extends AbstractController
 
         // get paste data
         $pasteContent = $this->entityManager->getRepository(Paste::class)->findOneBy(['name' => $name]);
-        
+
         // check if paste found
         if ($pasteContent !== null) {
-
             // get content & decrypt
             $content = $this->securityUtil->decryptAes($pasteContent->getContent());
 
@@ -134,7 +130,7 @@ class PasteController extends AbstractController
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);
 
-            $this->logManager->log('code-paste', 'visitor viewed paste: '.$name);
+            $this->logManager->log('code-paste', 'visitor viewed paste: ' . $name);
         } else {
             return $this->errorManager->handleError('error paste not found', 404);
         }

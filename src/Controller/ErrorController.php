@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ErrorController
- * 
+ *
  * Error controller is a handler for visitors redirect.
  * Main controller that shows error pages by error code.
- * 
+ *
  * @package App\Controller
  */
 class ErrorController extends AbstractController
@@ -22,7 +22,7 @@ class ErrorController extends AbstractController
     private SiteUtil $siteUtil;
     private ErrorManager $errorManager;
 
-    public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager) 
+    public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager)
     {
         $this->siteUtil = $siteUtil;
         $this->errorManager = $errorManager;

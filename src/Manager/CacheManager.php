@@ -8,7 +8,7 @@ use Psr\Cache\CacheItemPoolInterface;
  * Class CacheManager
  *
  * Manages caching operations using a cache item pool.
- * 
+ *
  * @package App\Manager
  */
 class CacheManager
@@ -34,9 +34,9 @@ class CacheManager
         try {
             return $this->cacheItemPoolInterface->getItem($key)->isHit();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get cache value: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get cache value: ' . $e->getMessage(), 500);
             return false;
-        } 
+        }
     }
 
     /**
@@ -52,9 +52,9 @@ class CacheManager
             // get cache value
             return $this->cacheItemPoolInterface->getItem($key);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get cache value: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get cache value: ' . $e->getMessage(), 500);
             return null;
-        } 
+        }
     }
 
     /**
@@ -77,7 +77,7 @@ class CacheManager
             // save value
             $this->cacheItemPoolInterface->save($cache_item);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to store cache value: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to store cache value: ' . $e->getMessage(), 500);
         }
     }
 
@@ -93,7 +93,7 @@ class CacheManager
         try {
             $this->cacheItemPoolInterface->deleteItem($key);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to delete cache value: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to delete cache value: ' . $e->getMessage(), 500);
         }
     }
 }

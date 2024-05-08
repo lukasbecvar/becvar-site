@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class DatabaseBrowserTest
- * 
+ *
  * Admin database browser component test
  *
  * @package App\Tests\Admin
@@ -54,7 +54,8 @@ class DatabaseBrowserTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Select table');
         $this->assertSelectorExists('a[class="db-browser-select-link"]');
@@ -70,7 +71,8 @@ class DatabaseBrowserTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Sorry you dont have permission to this page');
         $this->assertSelectorNotExists('a[class="db-browser-select-link"]');
@@ -86,7 +88,8 @@ class DatabaseBrowserTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database/table?table=users&page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('body', 'NEW');
         $this->assertSelectorNotExists('i[class="fa-arrow-left"]');
@@ -102,7 +105,8 @@ class DatabaseBrowserTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database/add?table=users&page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.title', 'Add new: users');
     }

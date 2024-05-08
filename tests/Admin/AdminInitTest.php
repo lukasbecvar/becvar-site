@@ -3,11 +3,12 @@
 namespace App\Tests\Admin;
 
 use App\Manager\AuthManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AdminInitTest
- * 
+ *
  * Admin init component test
  *
  * @package App\Tests\Admin
@@ -51,7 +52,8 @@ class AdminInitTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin');
 
-        $this->assertResponseStatusCodeSame(302); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }
 }

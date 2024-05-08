@@ -9,15 +9,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class TodoFixtures
- * 
+ *
  * TodoFixtures loads sample Todo data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class TodoFixtures extends Fixture
 {
     private SecurityUtil $securityUtil;
-        
+
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

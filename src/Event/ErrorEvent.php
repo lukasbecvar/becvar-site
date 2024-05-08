@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  * Class ErrorEvent
  *
  * Represents an error event.
- * 
+ *
  * @package App\Event
  */
 class ErrorEvent extends Event

@@ -10,9 +10,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class UserFixtures
- * 
+ *
  * Fixture class to generate testing users.
- * 
+ *
  * @package App\DataFixtures
  */
 class UserFixtures extends Fixture
@@ -49,10 +49,10 @@ class UserFixtures extends Fixture
         // generate testing users
         for ($i = 2; $i < 50; $i++) {
             $user = new User();
-            
+
             // generate a random username
             $username = 'user_' . $i . '_' . uniqid();
-            
+
             // set user properties
             $user->setUsername($username);
             $user->setPassword($this->securityUtil->genBcryptHash('testtest', 10));

@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class HomeTest
- * 
+ *
  * Test cases for the Home component.
  *
  * @package App\Tests\Public
@@ -23,7 +23,7 @@ class HomeTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class HomeTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/home');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -52,7 +52,7 @@ class HomeTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

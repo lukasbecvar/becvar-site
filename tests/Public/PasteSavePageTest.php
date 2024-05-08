@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class PasteSavePageTest
- * 
+ *
  * Test cases for the Paste Save component.
  *
  * @package App\Tests\Public
@@ -38,7 +38,7 @@ class PasteSavePageTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/paste');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

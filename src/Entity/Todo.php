@@ -20,7 +20,7 @@ class Todo
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
-    
+
     #[ORM\Column(length: 255)]
     private ?string $added_time = null;
 

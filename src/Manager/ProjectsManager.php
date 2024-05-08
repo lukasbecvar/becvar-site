@@ -9,9 +9,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class AuthManager
- * 
+ *
  * Projects manager provides methods to get/update the projects list
- * 
+ *
  * @package App\Manager
 */
 class ProjectsManager
@@ -23,8 +23,8 @@ class ProjectsManager
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        JsonUtil $jsonUtil, 
-        LogManager $logManager, 
+        JsonUtil $jsonUtil,
+        LogManager $logManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
@@ -41,7 +41,7 @@ class ProjectsManager
      *
      * @return void
      */
-    public function updateProjectList(): void 
+    public function updateProjectList(): void
     {
         // get github link
         $github_link = $_ENV['GITHUB_LINK'];
@@ -51,7 +51,7 @@ class ProjectsManager
         $github_user = str_replace('/', '', $github_user);
 
         // get repos form github
-        $repos = $this->jsonUtil->getJson('https://api.github.com/users/'.$github_user.'/repos');
+        $repos = $this->jsonUtil->getJson('https://api.github.com/users/' . $github_user . '/repos');
 
         // delete all projects from table
         $this->dropProjects();
@@ -60,8 +60,7 @@ class ProjectsManager
         $this->resetIndex();
 
         // update projects
-        foreach($repos as $repo) {
-
+        foreach ($repos as $repo) {
             // get & escape values
             $name = $repo['name'];
             $language = $repo['language'];
@@ -71,17 +70,14 @@ class ProjectsManager
             if ($repo['description'] == null) {
                 $description = $repo['name'];
             } else {
-
                 // get repository description (with escape)
                 $description = $this->securityUtil->escapeString($repo['description']);
             }
-            
+
             // check if repo is profile readme
             if ($name != $github_user) {
-
                 // check if repo is not fork
                 if ($repo['fork'] != true) {
-
                     // check if repo archived
                     if ($repo['archived'] == true) {
                         $status = 'closed';
@@ -105,7 +101,7 @@ class ProjectsManager
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
                         $this->logManager->log('project-update', 'error to update project list');
-                        $this->errorManager->handleError('error to save project: '.$e->getMessage(), 500);
+                        $this->errorManager->handleError('error to save project: ' . $e->getMessage(), 500);
                     }
                 }
             }
@@ -119,11 +115,11 @@ class ProjectsManager
      *
      * @return void
      */
-    public function dropProjects(): void 
+    public function dropProjects(): void
     {
         // get projects repository
         $repository = $this->entityManager->getRepository(Project::class);
-        
+
         // get projects entitys
         $data = $repository->findAll();
 
@@ -136,7 +132,7 @@ class ProjectsManager
         try {
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to delete projects list: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to delete projects list: ' . $e->getMessage(), 500);
         }
     }
 
@@ -145,14 +141,14 @@ class ProjectsManager
      *
      * @return void
      */
-    public function resetIndex(): void 
+    public function resetIndex(): void
     {
-        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName(); 
-        $sql = 'ALTER TABLE '.$tableName.' AUTO_INCREMENT = 0';
+        $tableName = $this->entityManager->getClassMetadata(Project::class)->getTableName();
+        $sql = 'ALTER TABLE ' . $tableName . ' AUTO_INCREMENT = 0';
         try {
             $this->entityManager->getConnection()->executeQuery($sql);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to reset projects index: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to reset projects index: ' . $e->getMessage(), 500);
         }
     }
 
@@ -163,12 +159,12 @@ class ProjectsManager
      *
      * @return Project[]|null
      */
-    public function getProjectsList(string $status): ?array 
+    public function getProjectsList(string $status): ?array
     {
         try {
             return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get projects list: ' . $e->getMessage(), 500);
             return null;
         }
     }
@@ -183,8 +179,8 @@ class ProjectsManager
         try {
             return $this->entityManager->getRepository(Project::class)->count([]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get projects list: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get projects list: ' . $e->getMessage(), 500);
             return null;
-        }   
+        }
     }
 }

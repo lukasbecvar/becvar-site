@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class VisitorApiController
- * 
+ *
  * This controller provides API functions for updating visitor status.
- * 
+ *
  * @package App\Controller\Api
  */
 class VisitorApiController extends AbstractController
@@ -25,7 +25,7 @@ class VisitorApiController extends AbstractController
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
-        LogManager $logManager, 
+        LogManager $logManager,
         CacheManager $cacheManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
@@ -52,18 +52,17 @@ class VisitorApiController extends AbstractController
                 'message' => 'error visitor not found'
             ], 500);
         }
-            
+
         // update visitor status
         try {
-                
             // cache online visitor
-            $this->cacheManager->setValue('online_user_'.$visitor->getId(), 'online', 300);
-        
+            $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
+
             return $this->json([
                 'status' => 'success'
             ], 200);
         } catch (\Exception $e) {
-            $this->logManager->log('system-error', 'error to update visitor status: '.$e->getMessage());
+            $this->logManager->log('system-error', 'error to update visitor status: ' . $e->getMessage());
             return $this->json([
                 'status' => 'error',
                 'message' => 'error to update visitor status'

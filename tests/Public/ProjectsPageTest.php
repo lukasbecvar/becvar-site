@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ProjectsPageTest
- * 
+ *
  * Test cases for the Projects component.
  *
  * @package App\Tests\Public
@@ -23,7 +23,7 @@ class ProjectsPageTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
@@ -38,7 +38,7 @@ class ProjectsPageTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/projects');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

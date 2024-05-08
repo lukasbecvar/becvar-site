@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class TodoManagerController
- * 
+ *
  * Todo manager controller provides view/add/delete todos.
- * 
+ *
  * @package App\Controller\Admin
  */
 class TodoManagerController extends AbstractController
@@ -50,7 +50,7 @@ class TodoManagerController extends AbstractController
     {
         // init todo entity
         $todo = new Todo();
-            
+
         // get todos data
         $todos = $this->todosManager->getTodos(['status' => 'non-completed']);
 
@@ -60,13 +60,11 @@ class TodoManagerController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get text
             $text = $form->get('text')->getData();
 
             // check if text is empty
             if (!empty($text)) {
-                    
                 // save new todo
                 $this->todosManager->addTodo($text);
                 return $this->redirectToRoute('admin_todos');
@@ -110,7 +108,7 @@ class TodoManagerController extends AbstractController
             'todos_data' => $todos,
         ]);
     }
-    
+
     /**
      * Edit a todo.
      *
@@ -132,10 +130,9 @@ class TodoManagerController extends AbstractController
         if ($request->isMethod('POST')) {
             // get submit button value
             $submited = $request->get('submitTodoEdit');
-                
+
             // check if edit form submited
             if (isset($submited)) {
-
                 // get new todo text
                 $new_todo_text = $request->get('new-todo-text');
 
@@ -143,7 +140,6 @@ class TodoManagerController extends AbstractController
                 if (empty($new_todo_text)) {
                     $error_msg = 'Please add todo text!';
                 } else {
-
                     // save change
                     $this->todosManager->editTodo($id, $new_todo_text);
 
@@ -155,14 +151,14 @@ class TodoManagerController extends AbstractController
 
         // check if todo not found
         if (empty($todo_data)) {
-            return $this->errorManager->handleError('error todo: '.$id.' not found', 404);
+            return $this->errorManager->handleError('error todo: ' . $id . ' not found', 404);
         } else {
             return $this->render('admin/todo-manager.html.twig', [
                 // user data
                 'user_name' => $this->authManager->getUsername(),
                 'user_role' => $this->authManager->getUserRole(),
                 'user_pic' => $this->authManager->getUserProfilePic(),
-    
+
                 'todo_editor' => true,
                 'todo_edited_data' => $todo_data,
                 'error_msg' => $error_msg

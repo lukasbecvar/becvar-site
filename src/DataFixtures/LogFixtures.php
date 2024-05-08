@@ -8,9 +8,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class LogFixtures
- * 
+ *
  * LogFixtures loads sample log data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class LogFixtures extends Fixture

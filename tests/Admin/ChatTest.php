@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ChatTest
- * 
+ *
  * Admin chat component test
  *
  * @package App\Tests\Admin
@@ -54,7 +54,7 @@ class ChatTest extends WebTestCase
         // make post request to admin chat controller
         $this->client->request('GET', '/admin/chat');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | chat');
         $this->assertSelectorTextContains('h2', 'Chat');

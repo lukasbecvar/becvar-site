@@ -9,7 +9,7 @@ use App\Manager\ErrorManager;
  * Class MaintenanceMiddleware
  *
  * This middleware is used to check if the application is in maintenance mode.
- * 
+ *
  * @package App\Middleware
  */
 class MaintenanceMiddleware
@@ -30,7 +30,7 @@ class MaintenanceMiddleware
     {
         // check if MAINTENANCE_MODE enabled
         if ($this->siteUtil->isMaintenance()) {
-            $this->errorManager->handleError('maintenance', 520);            
+            $this->errorManager->handleError('maintenance', 520);
         }
     }
 }

@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class LogReaderController
- * 
+ *
  * Log reader controller provides read logs from the database table.
- * 
+ *
  * @package App\Controller\Admin
  */
 class LogReaderController extends AbstractController
@@ -131,11 +131,11 @@ class LogReaderController extends AbstractController
             'user_name' => $this->authManager->getUsername(),
             'user_role' => $this->authManager->getUserRole(),
             'user_pic' => $this->authManager->getUserProfilePic(),
-    
+
             // delete confirmation data
             'page' => $page
         ]);
-    } 
+    }
 
     /**
      * Set all logs as read.
@@ -146,6 +146,6 @@ class LogReaderController extends AbstractController
     public function setReadedAllLogs(): Response
     {
         $this->logManager->setReaded();
-        return $this->redirectToRoute('admin_dashboard');    
-    } 
+        return $this->redirectToRoute('admin_dashboard');
+    }
 }

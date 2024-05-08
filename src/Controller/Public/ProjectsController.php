@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ProjectsController
- * 
+ *
  * Projects controller provides a public list of projects.
  * The project page displays projects from the database that are downloaded from the GitHub API.
- * 
+ *
  * @package App\Controller\Public
  */
 class ProjectsController extends AbstractController
@@ -24,13 +24,13 @@ class ProjectsController extends AbstractController
     private ProjectsManager $projectsManager;
 
     public function __construct(
-        AuthManager $authManager, 
-        ErrorManager $errorManager, 
+        AuthManager $authManager,
+        ErrorManager $errorManager,
         ProjectsManager $projectsManager
     ) {
-        $this->authManager = $authManager;    
-        $this->errorManager = $errorManager;    
-        $this->projectsManager = $projectsManager;    
+        $this->authManager = $authManager;
+        $this->errorManager = $errorManager;
+        $this->projectsManager = $projectsManager;
     }
 
     /**
@@ -69,7 +69,7 @@ class ProjectsController extends AbstractController
 
         // update projects list
         $this->projectsManager->updateProjectList();
-            
+
         return $this->redirectToRoute('admin_database_browser', [
             'table' => 'projects',
             'page' => 1

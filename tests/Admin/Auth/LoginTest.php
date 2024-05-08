@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class LoginTest
- * 
+ *
  * Login component test.
  *
  * @package App\Tests\Admin\Auth
@@ -24,18 +24,17 @@ class LoginTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {        
+    {
         // create client instance
         $this->client = static::createClient();
 
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $userRepository = $entityManager->getRepository(\App\Entity\User::class);
-        
+
         $existingUser = $userRepository->findOneBy(['username' => 'test_username']);
-    
+
         // check if user exist
         if (!$existingUser) {
-
             // create a new User entity
             $user = new User();
             $user->setUsername('test_username');
@@ -47,7 +46,7 @@ class LoginTest extends WebTestCase
             $user->setLastLoginTime('22.11.2023 11:42:40');
             $user->setProfilePic('image');
             $user->setVisitorId('1');
-    
+
             // persist and flush new user to the database
             $entityManager->persist($user);
             $entityManager->flush();
@@ -73,14 +72,14 @@ class LoginTest extends WebTestCase
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $userRepository = $entityManager->getRepository(User::class);
         $fakeUser = $userRepository->findOneBy(['username' => 'test_username']);
-    
+
         // check if user exist
         if ($fakeUser) {
             $id = $fakeUser->getId();
-    
+
             $entityManager->remove($fakeUser);
             $entityManager->flush();
-    
+
             // reset auto-increment
             $connection = $entityManager->getConnection();
             $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
@@ -94,7 +93,7 @@ class LoginTest extends WebTestCase
     {
         $this->client->request('GET', '/login');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Remember me');
@@ -120,7 +119,7 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -141,7 +140,7 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
@@ -163,7 +162,7 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
@@ -183,7 +182,7 @@ class LoginTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
@@ -206,7 +205,7 @@ class LoginTest extends WebTestCase
         // check if login success
         $crawler = $this->client->followRedirect();
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
     }

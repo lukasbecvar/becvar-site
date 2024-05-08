@@ -3,11 +3,12 @@
 namespace App\Tests\Others;
 
 use App\Manager\AuthManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AntiLogTest
- * 
+ *
  * Test cases for the AntiLog functionality.
  *
  * @package App\Tests\Others
@@ -53,7 +54,8 @@ class AntiLogTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/antilog/5369362536');
 
-        $this->assertResponseStatusCodeSame(302); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }
 
@@ -70,7 +72,8 @@ class AntiLogTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertResponseStatusCodeSame(401);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertEquals('error to set anti-log for non authentificated users!', $responseData['message']);
     }
 }

@@ -4,9 +4,9 @@ namespace App\Util;
 
 /**
  * Class VisitorInfoUtil
- * 
+ *
  * VisitorInfoUtil provides methods to get information about visitors.
- * 
+ *
  * @package App\Util
  */
 class VisitorInfoUtil
@@ -25,18 +25,18 @@ class VisitorInfoUtil
      *
      * @return string|null The client's IP address.
      */
-    public function getIP(): ?string 
+    public function getIP(): ?string
     {
         // check client IP
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             return $_SERVER['HTTP_CLIENT_IP'];
-        } 
-        
-        // check forwarded IP (get IP from cloudflare visitors) 
+        }
+
+        // check forwarded IP (get IP from cloudflare visitors)
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } 
-        
+        }
+
         // default addr get
         return $_SERVER['REMOTE_ADDR'];
     }
@@ -46,7 +46,7 @@ class VisitorInfoUtil
      *
      * @return string|null The user agent.
      */
-    public function getBrowser(): ?string 
+    public function getBrowser(): ?string
     {
         // get user agent
         $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
@@ -60,13 +60,13 @@ class VisitorInfoUtil
      *
      * @return string|null The short browser name.
      */
-    public function getBrowserShortify(string $user_agent): ?string 
+    public function getBrowserShortify(string $user_agent): ?string
     {
         $output = null;
-    
+
         // identify shortify array [ID: str_contains, Value: replacement]
-        $browser_list = $this->jsonUtil->getJson(__DIR__.'/../../config/becwork/browser-list.json');
-    
+        $browser_list = $this->jsonUtil->getJson(__DIR__ . '/../../config/becwork/browser-list.json');
+
         // check if browser list found
         if ($browser_list != null) {
             // check all user agents
@@ -78,7 +78,7 @@ class VisitorInfoUtil
                 }
             }
         }
-    
+
         // check if output is not found in browser list
         if ($output == null) {
             // identify common browsers using switch statement
@@ -132,7 +132,7 @@ class VisitorInfoUtil
                     }
             }
         }
-    
+
         return $output;
     }
 
@@ -141,13 +141,13 @@ class VisitorInfoUtil
      *
      * @return string|null The operating system.
      */
-    public function getOS(): ?string 
-    { 
+    public function getOS(): ?string
+    {
         $os = 'Unknown OS';
 
         // get browser agent
         $agent = $this->getBrowser();
-        
+
         // OS list
         $os_array = array (
             '/windows nt 5.2/i'     =>  'Windows Server_2003',
@@ -176,7 +176,7 @@ class VisitorInfoUtil
             '/ipod/i'               =>  'iPod',
             '/ipad/i'               =>  'iPad'
         );
-        
+
         // find os
         foreach ($os_array as $regex => $value) {
             // check if os found
@@ -186,7 +186,7 @@ class VisitorInfoUtil
                 }
             }
         }
-        
+
         return $os;
     }
 
@@ -207,16 +207,16 @@ class VisitorInfoUtil
         try {
             // get geoplugin URL from environment variables
             $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
-    
+
             // get data from geoplugin
             $geoplugin_data = file_get_contents("$geoplugin_url/json.gp?ip=$ip_address");
-    
+
             // decode data
             $details = json_decode($geoplugin_data);
-    
+
             // get country
             $country = $details->geoplugin_countryCode;
-    
+
             // extract city name from timezone
             $city = null;
             if (!empty($details->geoplugin_timezone)) {
@@ -228,11 +228,11 @@ class VisitorInfoUtil
             $country = null;
             $city = null;
         }
-    
+
         // set default values if data not retrieved
         $country = $country ?: 'Unknown';
         $city = $city ?: 'Unknown';
-    
+
         return ['city' => $city, 'country' => $country];
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Tests\Admin\Auth;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class NonAuthRedirectTest
- * 
+ *
  * Non-auth redirect authenticator test.
  * Test all admin routes in the default state when the user is not logged in
  *
@@ -23,14 +24,14 @@ class NonAuthRedirectTest extends WebTestCase
      * Set up before each test.
      */
     protected function setUp(): void
-    {    
+    {
         $this->client = static::createClient();
         parent::setUp();
     }
 
     /**
      * Admin routes list
-     * 
+     *
      * @return array<array<string>>
      */
     public function provideAdminUrls(): array
@@ -76,7 +77,8 @@ class NonAuthRedirectTest extends WebTestCase
     {
         $this->client->request('GET', $url);
 
-        $this->assertResponseStatusCodeSame(302); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
     }
 }

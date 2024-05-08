@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ImageUploaderTest
- * 
+ *
  * Test cases for the Image Uploader component.
  *
  * @package App\Tests\Public
@@ -40,7 +40,7 @@ class ImageUploaderTest extends WebTestCase
         // make get request
         $this->client->request('GET', '/image/uploader');
 
-        $this->assertResponseIsSuccessful();
+        // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('p[class=form-title]');
         $this->assertSelectorExists('input[name=userfile]');

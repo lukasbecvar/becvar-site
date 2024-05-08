@@ -9,9 +9,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class AuthManager
- * 
+ *
  * Visitor manager provides methods for managing visitors.
- * 
+ *
  * @package App\Manager
  */
 class VisitorManager
@@ -44,7 +44,7 @@ class VisitorManager
      * @return Visitor|null
      */
     public function getRepositoryByArray(array $search): ?object
-    {        
+    {
         // get visitor repository
         $visitorRepository = $this->entityManager->getRepository(Visitor::class);
 
@@ -52,7 +52,7 @@ class VisitorManager
         try {
             return $visitorRepository->findOneBy($search);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('find error: ' . $e->getMessage(), 500);
             return null;
         }
     }
@@ -64,7 +64,7 @@ class VisitorManager
      *
      * @return int
      */
-    public function getVisitorID(string $ip_address): int 
+    public function getVisitorID(string $ip_address): int
     {
         // get visitor id
         $visitor = $this->getVisitorRepository($ip_address);
@@ -94,8 +94,8 @@ class VisitorManager
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: '.$e->getMessage(), 500);
-            }           
+                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
+            }
         }
     }
 
@@ -110,26 +110,25 @@ class VisitorManager
     {
         $repo = $this->entityManager->getRepository(Visitor::class);
         $per_page = $_ENV['ITEMS_PER_PAGE'];
-        
+
         // calculate offset
         $offset = ($page - 1) * $per_page;
-    
+
         // get visitors from database
         try {
             $queryBuilder = $repo->createQueryBuilder('l')
-                ->setFirstResult($offset)  
+                ->setFirstResult($offset)
                 ->setMaxResults($per_page);
-    
-            $visitors = $queryBuilder->getQuery()->getResult();
 
+            $visitors = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get visitors: ' . $e->getMessage(), 500);
             $visitors = [];
         }
-    
+
         // replace browser with formated value for log reader
         foreach ($visitors as $visitor) {
-            $user_agent = $visitor->getBrowser();   
+            $user_agent = $visitor->getBrowser();
             $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
             $visitor->setBrowser($formated_browser);
         }
@@ -145,12 +144,12 @@ class VisitorManager
     public function getVisitorLanguage(): ?string
     {
         $repo = $this->getVisitorRepository($this->visitorInfoUtil->getIP());
-     
+
         // check visitor found
         if ($repo !== null) {
-            return strtolower($repo->getCountry());   
-        } 
-        
+            return strtolower($repo->getCountry());
+        }
+
         return null;
     }
 
@@ -161,7 +160,7 @@ class VisitorManager
      *
      * @return Visitor|null
      */
-    public function getVisitorRepositoryByID(int $id): ?object 
+    public function getVisitorRepositoryByID(int $id): ?object
     {
         return $this->getRepositoryByArray(['id' => $id]);
     }
@@ -173,11 +172,11 @@ class VisitorManager
      *
      * @return Visitor|null
      */
-    public function getVisitorRepository(string $ip_address): ?object 
+    public function getVisitorRepository(string $ip_address): ?object
     {
         return $this->getRepositoryByArray(['ip_address' => $ip_address]);
     }
-    
+
     /**
      * Get the count of visitors for a given page.
      *
@@ -199,9 +198,9 @@ class VisitorManager
      * @param int $id The ID of the visitor.
      * @return string The status of the visitor ('online' if online, 'offline' if not found or offline).
      */
-    public function getVisitorStatus(int $id): string 
+    public function getVisitorStatus(int $id): string
     {
-        $user_cache_key = 'online_user_'.$id;
+        $user_cache_key = 'online_user_' . $id;
 
         // get user status
         $status = $this->cacheManager->getValue($user_cache_key);
@@ -231,7 +230,6 @@ class VisitorManager
         $visitor_ids = $this->visitorRepository->getAllIds();
 
         foreach ($visitor_ids as $visitor_id) {
-
             // get visitor status
             $status = $this->getVisitorStatus($visitor_id);
 

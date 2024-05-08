@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class AuthManager
- * 
+ *
  * Todos manager provides methods for admin todo manager
- * 
+ *
  * @package App\Manager
 */
 class TodosManager
@@ -25,7 +25,7 @@ class TodosManager
         LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
-        ErrorManager $errorManager, 
+        ErrorManager $errorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->logManager = $logManager;
@@ -53,7 +53,6 @@ class TodosManager
                 $todos = $repository->findBy($search_array);
 
                 foreach ($todos as $todo) {
-
                     // decrypt todo text
                     $todo_text = $this->securityUtil->decryptAes($todo->getText());
 
@@ -66,13 +65,13 @@ class TodosManager
                         'id' => $todo->getId(),
                         'text' => $todo_text
                     ];
-                    
+
                     array_push($todo_data, $todo_item);
                 }
-                
+
                 return array_reverse($todo_data);
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to get todos: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('error to get todos: ' . $e->getMessage(), 500);
                 return null;
             }
         }
@@ -95,7 +94,7 @@ class TodosManager
 
         // get username
         $username = $this->authManager->getUsername();
-                
+
         // encrypt todo
         $text = $this->securityUtil->encryptAes($text);
 
@@ -113,10 +112,9 @@ class TodosManager
             $this->entityManager->flush();
 
             // log event
-            $this->logManager->log('todo-manager', 'user: '.$username.' add new todo');
-
+            $this->logManager->log('todo-manager', 'user: ' . $username . ' add new todo');
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to add todo: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to add todo: ' . $e->getMessage(), 500);
         }
     }
 
@@ -144,10 +142,9 @@ class TodosManager
             $this->entityManager->flush();
 
             // log event
-            $this->logManager->log('todo-manager', 'user: '.$this->authManager->getUsername().' edit todo: '.$id);
-
+            $this->logManager->log('todo-manager', 'user: ' . $this->authManager->getUsername() . ' edit todo: ' . $id);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to flush update todo: '.$id.', error: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to flush update todo: ' . $id . ', error: ' . $e->getMessage(), 500);
         }
     }
 
@@ -183,10 +180,10 @@ class TodosManager
                 $this->entityManager->flush();
 
                 // log event
-                $this->logManager->log('todo-manager', 'user: '.$this->authManager->getUsername().' close todo: '.$id);
+                $this->logManager->log('todo-manager', 'user: ' . $this->authManager->getUsername() . ' close todo: ' . $id);
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to close todo: '.$id.', '.$e->getMessage(), 500);
+                $this->errorManager->handleError('error to close todo: ' . $id . ', ' . $e->getMessage(), 500);
             }
-        }  
+        }
     }
 }

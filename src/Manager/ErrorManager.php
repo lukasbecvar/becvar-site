@@ -10,9 +10,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AuthManager
- * 
+ *
  * ErrorManager provides error handling operations.
- * 
+ *
  * @package App\Manager
  */
 class ErrorManager
@@ -56,14 +56,14 @@ class ErrorManager
                 'code' => $code,
                 'message' => $msg
             ];
-            
+
             // return JSON response
             return die(json_encode($data));
         } else {
             // return an error view response
             return die($this->handleErrorView(strval($code)));
         }
-    }    
+    }
 
     /**
      * Renders an error view based on the error code.
@@ -75,7 +75,7 @@ class ErrorManager
     public function handleErrorView(string|int $code)
     {
         try {
-            return $this->twig->render('errors/error-'.$code.'.html.twig');
+            return $this->twig->render('errors/error-' . $code . '.html.twig');
         } catch (\Exception) {
             return $this->twig->render('errors/error-unknown.html.twig');
         }
@@ -91,11 +91,11 @@ class ErrorManager
     {
         // list of error patterns that should block event dispatch
         $blocked_error_patterns = [
-            'log-error:', 
+            'log-error:',
             'Unknown database',
             'Base table or view not found'
         ];
-        
+
         // loop through each blocked error pattern
         foreach ($blocked_error_patterns as $pattern) {
             // check if the current pattern exists in the error message
@@ -104,7 +104,7 @@ class ErrorManager
                 return false;
             }
         }
-        
+
         // if no blocked patterns are found, return true
         return true;
     }

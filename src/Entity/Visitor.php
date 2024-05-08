@@ -42,7 +42,7 @@ class Visitor
     private ?string $ban_reason = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $banned_time = null; 
+    private ?string $banned_time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;

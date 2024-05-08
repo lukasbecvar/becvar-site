@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class TerminalApiController
- * 
+ *
  * This controller provides API functions for executing terminal commands.
- * 
+ *
  * @package App\Controller\Api
  */
 class TerminalApiController extends AbstractController
@@ -75,7 +75,6 @@ class TerminalApiController extends AbstractController
 
         // set default working dir
         if ($this->sessionUtil->checkSession('terminal-dir')) {
-
             // get curret working directory
             $current_dir = $this->sessionUtil->getSessionValue('terminal-dir');
 
@@ -167,25 +166,23 @@ class TerminalApiController extends AbstractController
                 return new Response('error directory: ' . $final_dir . ' not found');
             }
         } else {
-
             // execute command
-            exec('sudo '.$command, $output, $return_code);
+            exec('sudo ' . $command, $output, $return_code);
 
             // check if command run valid
             if ($return_code !== 0) {
-
                 // check if command not found
                 if ($return_code == 127) {
-                    $this->logManager->log('terminal', $username.' executed not found command: '.$command);
+                    $this->logManager->log('terminal', $username . ' executed not found command: ' . $command);
                     return new Response('command: ' . $command . ' not found');
-                } 
-                    
-                $this->logManager->log('terminal', $username.' executed command: '.$command.' with error code: '.$return_code);
-                return new Response('error to execute command: ' . $command);    
+                }
+
+                $this->logManager->log('terminal', $username . ' executed command: ' . $command . ' with error code: ' . $return_code);
+                return new Response('error to execute command: ' . $command);
             }
 
             // log execute action
-            $this->logManager->log('terminal', $username.' executed command: '.$command);
+            $this->logManager->log('terminal', $username . ' executed command: ' . $command);
 
             // get output
             $output = implode("\n", $output);
@@ -194,7 +191,7 @@ class TerminalApiController extends AbstractController
             $output = $this->securityUtil->escapeString($output);
 
             // return output
-            return new Response($output);            
-        }    
+            return new Response($output);
+        }
     }
 }

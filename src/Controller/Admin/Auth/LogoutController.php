@@ -10,10 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class LogoutController
- * 
+ *
  * Logout controller provides user logout function.
  * Note: Login uses its own authenticator, not Symfony auth.
- * 
+ *
  * @package App\Controller\Admin\Auth
  */
 class LogoutController extends AbstractController
@@ -21,7 +21,7 @@ class LogoutController extends AbstractController
     private AuthManager $authManager;
     private ErrorManager $errorManager;
 
-    public function __construct(AuthManager $authManager, ErrorManager $errorManager) 
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager)
     {
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
@@ -43,7 +43,7 @@ class LogoutController extends AbstractController
         // verify user logout
         if (!$this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('auth_login');
-        } 
+        }
 
         return $this->errorManager->handleError('logout error: unknown error in logout function', 500);
     }

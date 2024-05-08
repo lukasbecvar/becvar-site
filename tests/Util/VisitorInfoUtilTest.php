@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class VisitorInfoUtilTest
- * 
+ *
  * @covers \App\Util\VisitorInfoUtil
- * 
+ *
  * @package App\Tests\Util
  */
 class VisitorInfoUtilTest extends TestCase
@@ -25,7 +25,7 @@ class VisitorInfoUtilTest extends TestCase
         $this->siteUtilMock = $this->createMock(SiteUtil::class);
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
         $this->visitorInfoUtil = new VisitorInfoUtil($this->siteUtilMock, $this->jsonUtilMock);
-    
+
         parent::setUp();
     }
 
@@ -40,6 +40,7 @@ class VisitorInfoUtilTest extends TestCase
         // act
         $result = $this->visitorInfoUtil->getIP();
 
+        // assert
         $this->assertEquals('192.168.0.1', $result);
     }
 
@@ -49,11 +50,14 @@ class VisitorInfoUtilTest extends TestCase
     public function testGetBrowser(): void
     {
         // mock $_SERVER['HTTP_USER_AGENT']
-        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)';
+        $_SERVER['HTTP_USER_AGENT'] =
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+        ;
 
         // act
         $result = $this->visitorInfoUtil->getBrowser();
 
+        // assert
         $this->assertEquals('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)', $result);
     }
 }

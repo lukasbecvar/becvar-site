@@ -1,4 +1,4 @@
-name: PHP PHPUnit Tests
+name: PHPUnit Tests
 
 # specify when the workflow should be triggered
 on:

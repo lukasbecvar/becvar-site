@@ -14,10 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class LoginController
- * 
+ *
  * Login controller provides user login function.
  * Note: Login uses its own authenticator, not Symfony auth.
- * 
+ *
  * @package App\Controller\Admin\Auth
  */
 class LoginController extends AbstractController
@@ -26,7 +26,7 @@ class LoginController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
 
-    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil) 
+    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil)
     {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
@@ -44,9 +44,9 @@ class LoginController extends AbstractController
     {
         // check if user is already loggedin
         if ($this->authManager->isUserLogedin()) {
-            return $this->redirectToRoute('admin_dashboard');   
+            return $this->redirectToRoute('admin_dashboard');
         }
-            
+
         // init default resources
         $user = new User();
         $error_msg = null;
@@ -57,31 +57,28 @@ class LoginController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get form data
             $username = $form->get('username')->getData();
             $password = $form->get('password')->getData();
             $remember = $form->get('remember')->getData();
-                    
+
             // get user data
             $user_data = $this->authManager->getUserRepository(['username' => $username]);
 
             // check if user exist
             if ($user_data != null) {
-                        
                 // get user password form database
                 $user_password = $user_data->getPassword();
 
                 // check if password valid
                 if ($this->securityUtil->hashValidate($password, $user_password)) {
                     $this->authManager->login($username, $user_data->getToken(), $remember);
-
                 } else { // invalid password error
-                    $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
+                    $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
                     $error_msg = 'Incorrect username or password.';
                 }
             } else { // user not exist error
-                $this->logManager->log('authenticator', 'trying to login with: '.$username.':'.$password);
+                $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
                 $error_msg = 'Incorrect username or password.';
             }
 
@@ -96,6 +93,6 @@ class LoginController extends AbstractController
             'error_msg' => $error_msg,
             'is_users_empty' => $this->authManager->isRegisterPageAllowed(),
             'login_form' => $form->createView()
-        ]);        
+        ]);
     }
 }

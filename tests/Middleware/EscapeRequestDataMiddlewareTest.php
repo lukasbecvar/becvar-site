@@ -33,7 +33,7 @@ class EscapeRequestDataMiddlewareTest extends TestCase
         );
 
         // create an instance of the SecurityMiddleware
-        $securityMiddleware = new EscapeRequestDataMiddleware(new SecurityUtil);
+        $securityMiddleware = new EscapeRequestDataMiddleware(new SecurityUtil());
 
         // call the onKernelRequest method of the middleware
         $securityMiddleware->onKernelRequest($requestEvent);

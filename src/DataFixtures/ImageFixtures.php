@@ -9,15 +9,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class ImageFixtures
- * 
+ *
  * ImageFixtures loads sample image data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class ImageFixtures extends Fixture
 {
     private SecurityUtil $securityUtil;
-        
+
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

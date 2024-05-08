@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Class ErrorEventSubscriber
  *
  * Event subscriber for handling error events.
- * 
+ *
  * @package App\EventSubscriber
  */
 class ErrorEventSubscriber implements EventSubscriberInterface

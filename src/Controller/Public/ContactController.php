@@ -13,23 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/** 
+/**
  * Class ContactController
- * 
+ *
  * Contact controller provides contact links & contact form
  * Page to display contact information and a form that stores messages in the database
- * 
+ *
  * @package App\Controller\Public
 */
 class ContactController extends AbstractController
-{   
+{
     private LogManager $logManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private MessagesManager $messagesManager;
 
     public function __construct(
-        LogManager $logManager, 
+        LogManager $logManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
@@ -81,37 +81,35 @@ class ContactController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get form data
             $name = $form->get('name')->getData();
             $email = $form->get('email')->getData();
             $message_input = $form->get('message')->getData();
 
-            // get honeypot value 
+            // get honeypot value
             $honeypot = $form->get('websiteIN')->getData();
 
             // check if values empty
             if (empty($name)) {
                 $error_msg = 'contact.error.username.empty';
-            } else if (empty($email)) {
+            } elseif (empty($email)) {
                 $error_msg = 'contact.error.email.empty';
-            } else if (empty($message_input)) {
+            } elseif (empty($message_input)) {
                 $error_msg = 'contact.error.message.empty';
-            } else if (strlen($message_input) > 2000) {
+            } elseif (strlen($message_input) > 2000) {
                 $error_msg = 'contact.error.characters.limit.reached';
 
             // check if honeypot is empty
-            } else if (isset($honeypot)) {
+            } elseif (isset($honeypot)) {
                 $error_msg = 'contact.error.blocked.message';
-                $this->logManager->log('message-sender', 'message by: '.$email.', has been blocked: honeypot used');
+                $this->logManager->log('message-sender', 'message by: ' . $email . ', has been blocked: honeypot used');
             } else {
-
                 // get others data
                 $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
 
                 // check if user have unclosed messages
                 if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
-                    $this->logManager->log('message-sender', 'visitor: '.$visitor_id.' trying send new message but he has open messages');
+                    $this->logManager->log('message-sender', 'visitor: ' . $visitor_id . ' trying send new message but he has open messages');
 
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);

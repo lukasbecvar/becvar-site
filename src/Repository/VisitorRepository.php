@@ -34,10 +34,10 @@ class VisitorRepository extends ServiceEntityRepository
         // select ids
         $queryBuilder = $this->createQueryBuilder('v')->select('v.id');
         $query = $queryBuilder->getQuery();
-    
+
         // get results
         $results = $query->getScalarResult();
-    
+
         // return id list
         return array_column($results, 'id');
     }

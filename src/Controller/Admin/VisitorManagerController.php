@@ -16,9 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class VisitorManagerController
- * 
+ *
  * Visitor manager controller provides view/ban/delete visitor.
- * 
+ *
  * @package App\Controller\Admin
  */
 class VisitorManagerController extends AbstractController
@@ -89,11 +89,11 @@ class VisitorManagerController extends AbstractController
             'user_name' => $this->authManager->getUsername(),
             'user_role' => $this->authManager->getUserRole(),
             'user_pic' => $this->authManager->getUserProfilePic(),
-    
+
             // delete confirmation data
             'page' => $page
         ]);
-    } 
+    }
 
     /**
      * Ban a visitor.
@@ -117,7 +117,6 @@ class VisitorManagerController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get ban reason
             $ban_reason = $form->get('ban_reason')->getData();
 
@@ -136,7 +135,7 @@ class VisitorManagerController extends AbstractController
             if ($request->query->get('referer') == 'inbox') {
                 return $this->redirectToRoute('admin_inbox', [
                     'page' => $page
-                ]);              
+                ]);
             }
 
             // redirect back to visitor page
@@ -150,7 +149,7 @@ class VisitorManagerController extends AbstractController
             'user_name' => $this->authManager->getUsername(),
             'user_role' => $this->authManager->getUserRole(),
             'user_pic' => $this->authManager->getUserProfilePic(),
-    
+
             // ban form data
             'ban_id' => $id,
             'ban_form' => $form,
@@ -173,7 +172,7 @@ class VisitorManagerController extends AbstractController
 
         // get visitor ip
         $ip_address = $this->banManager->getVisitorIP($id);
-            
+
         // check if banned
         if ($this->banManager->isVisitorBanned($ip_address)) {
             // unban visitor
@@ -182,6 +181,6 @@ class VisitorManagerController extends AbstractController
 
         return $this->redirectToRoute('admin_visitor_manager', [
             'page' => $page
-        ]);    
+        ]);
     }
 }

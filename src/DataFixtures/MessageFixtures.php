@@ -9,15 +9,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class MessageFixtures
- * 
+ *
  * MessageFixtures loads sample inbox data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class MessageFixtures extends Fixture
 {
     private SecurityUtil $securityUtil;
-        
+
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

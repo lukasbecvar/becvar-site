@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class SecurityUtilTest
- * 
+ *
  * @covers \App\Util\SecurityUtil
- * 
+ *
  * @package App\Tests\Util
  */
 class SecurityUtilTest extends TestCase
@@ -84,40 +84,48 @@ class SecurityUtilTest extends TestCase
     public function testEscapeString(string $input, string $expected): void
     {
         $result = $this->securityUtil->escapeString($input);
+
+        // assert
         $this->assertSame($expected, $result);
     }
 
     /**
      * @dataProvider hashValidateDataProvider
-     * @param string $plainText
+     * @param string $plain_text
      * @param string $hash
      * @param bool $expected
      */
-    public function testHashValidate(string $plainText, string $hash, bool $expected): void
+    public function testHashValidate(string $plain_text, string $hash, bool $expected): void
     {
-        $result = $this->securityUtil->hashValidate($plainText, $hash);
+        $result = $this->securityUtil->hashValidate($plain_text, $hash);
+
+        // assert
         $this->assertSame($expected, $result);
     }
 
     /**
      * @dataProvider genBcryptHashDataProvider
-     * @param string $plainText
+     * @param string $plain_text
      * @param int $cost
      */
-    public function testGenBcryptHash(string $plainText, int $cost): void
+    public function testGenBcryptHash(string $plain_text, int $cost): void
     {
-        $result = $this->securityUtil->genBcryptHash($plainText, $cost);
-        $this->assertTrue(password_verify($plainText, $result));
+        $result = $this->securityUtil->genBcryptHash($plain_text, $cost);
+
+        // assert
+        $this->assertTrue(password_verify($plain_text, $result));
     }
 
     /**
      * @dataProvider encryptAesDataProvider
-     * @param string $plainText
+     * @param string $plain_text
      */
-    public function testEncryptAes(string $plainText): void
+    public function testEncryptAes(string $plain_text): void
     {
-        $encryptedData = $this->securityUtil->encryptAes($plainText);
-        $decryptedData = $this->securityUtil->decryptAes($encryptedData);
-        $this->assertSame($plainText, $decryptedData);
+        $encrypted_data = $this->securityUtil->encryptAes($plain_text);
+        $decrypted_data = $this->securityUtil->decryptAes($encrypted_data);
+
+        // assert
+        $this->assertSame($plain_text, $decrypted_data);
     }
 }

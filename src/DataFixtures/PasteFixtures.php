@@ -9,15 +9,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class PasteFixtures
- * 
+ *
  * PasteFixtures loads sample Paste data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class PasteFixtures extends Fixture
 {
     private SecurityUtil $securityUtil;
-        
+
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

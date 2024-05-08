@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class HomeController
- * 
+ *
  * Home controller is a main app controller for homepage
- * 
+ *
  * @package App\Controller\Public
 */
 class HomeController extends AbstractController

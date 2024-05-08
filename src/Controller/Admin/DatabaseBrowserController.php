@@ -12,10 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class DatabaseBrowserController
- * 
+ *
  * Database browser controller provides a database tables browser/editor.
  * Database browser components: table list, table view, edit row, insert row, update projects list.
- * 
+ *
  * @package App\Controller\Admin
  */
 class DatabaseBrowserController extends AbstractController
@@ -24,7 +24,8 @@ class DatabaseBrowserController extends AbstractController
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager)
+    {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
@@ -104,7 +105,7 @@ class DatabaseBrowserController extends AbstractController
         $page = intval($this->siteUtil->getQueryString('page', $request));
         $id = intval($this->siteUtil->getQueryString('id', $request));
         $table = $this->siteUtil->getQueryString('table', $request);
- 
+
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
 
@@ -113,20 +114,17 @@ class DatabaseBrowserController extends AbstractController
 
         // check request is post
         if ($request->isMethod('POST')) {
-
             // get form submit status
             $form_submit = $request->request->get('submitEdit');
 
             // check if user submit edit form
             if (isset($form_submit)) {
-
                 // update values
-                foreach($columns as $row) { 
-
+                foreach ($columns as $row) {
                     // check if form value is empty
                     if (empty($_POST[$row])) {
                         if ($row != 'id') {
-                            $error_msg = $row.' is empty';
+                            $error_msg = $row . ' is empty';
                             break;
                         }
                     } else {
@@ -146,7 +144,7 @@ class DatabaseBrowserController extends AbstractController
                     ]);
                 }
             }
-        }          
+        }
 
         return $this->render('admin/database-browser.html.twig', [
             // user data
@@ -167,7 +165,7 @@ class DatabaseBrowserController extends AbstractController
             'editor_page' => $page,
             'editor_referer' => $referer,
             'error_msg' => $error_msg
-        ]);  
+        ]);
     }
 
     /**
@@ -191,16 +189,14 @@ class DatabaseBrowserController extends AbstractController
 
         // check request is post
         if ($request->isMethod('POST')) {
-
             // get form submit status
             $form_submit = $request->request->get('submitSave');
 
             // check if form submited
             if (isset($form_submit)) {
-
                 $columnsBuilder = [];
                 $valuesBuilder = [];
-                
+
                 // build columns and values list
                 foreach ($columns as $column) {
                     if ($column != 'id') {
@@ -209,17 +205,17 @@ class DatabaseBrowserController extends AbstractController
                             $columnsBuilder[] = $column;
                             $valuesBuilder[] = $column_value;
                         } else {
-                            $error_msg = 'value: '.$column.' is empty';
+                            $error_msg = 'value: ' . $column . ' is empty';
                             break;
                         }
                     }
                 }
-                    
+
                 // execute new row insert
                 if ($error_msg == null) {
                     $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
                 }
-    
+
                 // redirect back to browser
                 if ($error_msg == null) {
                     return $this->redirectToRoute('admin_database_browser', [
@@ -265,31 +261,31 @@ class DatabaseBrowserController extends AbstractController
 
         // delete row
         $this->databaseManager->deleteRowFromTable($table, $id);
-            
+
         // check if deleted by log-reader
         if ($request->query->get('referer') == 'log_reader') {
             return $this->redirectToRoute('admin_log_list', [
                 'page' => $page
-            ]);              
+            ]);
         }
 
         // check if deleted by visitors-manager
         if ($request->query->get('referer') == 'visitor_manager') {
             return $this->redirectToRoute('admin_visitor_manager', [
                 'page' => $page
-            ]);              
+            ]);
         }
 
         // check if deleted by media-browser
         if ($request->query->get('referer') == 'media_browser') {
             return $this->redirectToRoute('admin_media_browser', [
                 'page' => $page
-            ]);              
+            ]);
         }
 
         // check if deleted by todo-manager
         if ($request->query->get('referer') == 'todo_manager') {
-            return $this->redirectToRoute('admin_todos_completed');              
+            return $this->redirectToRoute('admin_todos_completed');
         }
 
         return $this->redirectToRoute('admin_database_browser', [

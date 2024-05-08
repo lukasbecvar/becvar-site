@@ -3,11 +3,12 @@
 namespace App\Tests\Api;
 
 use App\Manager\AuthManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class TerminalApiTest
- * 
+ *
  * Admin terminal API test
  *
  * @package App\Tests\Api
@@ -63,7 +64,8 @@ class TerminalApiTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertResponseStatusCodeSame(401);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('error this function is only for authentificated users!', $responseData['message']);
     }
@@ -83,7 +85,8 @@ class TerminalApiTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertResponseStatusCodeSame(500);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
         $this->assertEquals('error', $responseData['status']);
         $this->assertEquals('command data is empty!', $responseData['message']);
     }
@@ -100,7 +103,8 @@ class TerminalApiTest extends WebTestCase
             'command' => 'whoami',
         ]);
 
-        $this->assertResponseStatusCodeSame(200);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -115,7 +119,8 @@ class TerminalApiTest extends WebTestCase
             'command' => 'get_current_path_1181517815187484',
         ]);
 
-        $this->assertResponseStatusCodeSame(200);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -130,6 +135,7 @@ class TerminalApiTest extends WebTestCase
             'command' => 'get_current_hostname_1181517815187484',
         ]);
 
-        $this->assertResponseStatusCodeSame(200);
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

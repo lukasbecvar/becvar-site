@@ -6,9 +6,9 @@ use App\Manager\ErrorManager;
 
 /**
  * Class SessionUtil
- * 
+ *
  * SessionUtil provides session management functions.
- * 
+ *
  * @package App\Util
  */
 class SessionUtil
@@ -25,7 +25,7 @@ class SessionUtil
     /**
      * Start a new session if not already started.
      */
-    public function startSession(): void 
+    public function startSession(): void
     {
         if (session_status() == PHP_SESSION_NONE && (!headers_sent())) {
             session_start();
@@ -35,7 +35,7 @@ class SessionUtil
     /**
      * Destroy the current session.
      */
-    public function destroySession(): void 
+    public function destroySession(): void
     {
         $this->startSession();
         session_destroy();
@@ -48,7 +48,7 @@ class SessionUtil
      *
      * @return bool Whether the session exists.
      */
-    public function checkSession(string $session_name): bool 
+    public function checkSession(string $session_name): bool
     {
         $this->startSession();
         return isset($_SESSION[$session_name]);
@@ -60,7 +60,7 @@ class SessionUtil
      * @param string $session_name The name of the session.
      * @param string $session_value The value to set for the session.
      */
-    public function setSession(string $session_name, string $session_value): void 
+    public function setSession(string $session_name, string $session_value): void
     {
         $this->startSession();
         $_SESSION[$session_name] = $this->securityUtil->encryptAes($session_value);
@@ -73,7 +73,7 @@ class SessionUtil
      *
      * @return mixed The decrypted session value.
      */
-    public function getSessionValue(string $session_name): mixed 
+    public function getSessionValue(string $session_name): mixed
     {
         $this->startSession();
 

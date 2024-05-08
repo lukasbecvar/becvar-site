@@ -9,9 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class TerminalController
- * 
+ *
  * Terminal controller provides an admin server shell.
- * 
+ *
  * @package App\Controller\Admin
  */
 class TerminalController extends AbstractController

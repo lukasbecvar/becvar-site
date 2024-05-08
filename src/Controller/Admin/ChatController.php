@@ -9,16 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ChatController
- * 
+ *
  * Chat controller provides an admin chat box.
- * 
+ *
  * @package App\Controller\Admin
  */
 class ChatController extends AbstractController
 {
     private AuthManager $authManager;
-    
-    public function __construct(AuthManager $authManager) 
+
+    public function __construct(AuthManager $authManager)
     {
         $this->authManager = $authManager;
     }

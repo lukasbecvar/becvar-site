@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class MessageInboxTest
- * 
+ *
  * Admin message inbox component test
  *
  * @package App\Tests\Admin
@@ -54,7 +54,8 @@ class MessageInboxTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | inbox');
     }
 
@@ -68,7 +69,8 @@ class MessageInboxTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | inbox');
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');
     }

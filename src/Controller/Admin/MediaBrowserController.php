@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class MediaBrowserController
- * 
+ *
  * Media browser controller provides an image-uploader browser.
- * 
+ *
  * @package App\Controller\Admin
  */
 class MediaBrowserController extends AbstractController
@@ -23,7 +23,8 @@ class MediaBrowserController extends AbstractController
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager)
+    {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
@@ -52,7 +53,7 @@ class MediaBrowserController extends AbstractController
 
             // media browser data
             'page' => $page,
-            'media_data' => $media, 
+            'media_data' => $media,
             'media_count' => count($media),
             'media_limit' => $_ENV['ITEMS_PER_PAGE']
         ]);

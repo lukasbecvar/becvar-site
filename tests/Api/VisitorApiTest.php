@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class VisitorApiTest
- * 
+ *
  * Visitor (status) API test
  *
  * @package App\Tests\Api
@@ -36,6 +36,7 @@ class VisitorApiTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/api/visitor/update/activity');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

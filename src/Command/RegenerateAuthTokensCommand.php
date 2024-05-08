@@ -11,9 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class RegenerateAuthTokensCommand
- * 
+ *
  * Command to regenerate all users' authentication tokens in the database.
- * 
+ *
  * @package App\Command
  */
 #[AsCommand(name: 'auth:tokens:regenerate', description: 'Regenerate all users tokens in database')]
@@ -47,7 +47,7 @@ class RegenerateAuthTokensCommand extends Command
             $io->success('All tokens is regenerated');
             return Command::SUCCESS;
         } else {
-            $io->error('Token regeneration error: '.$regenerate_state['message']);
+            $io->error('Token regeneration error: ' . $regenerate_state['message']);
             return Command::FAILURE;
         }
     }

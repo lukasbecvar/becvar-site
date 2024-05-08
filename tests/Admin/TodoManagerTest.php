@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class TodoManagerTest
- * 
+ *
  * Admin todo manager component test
  *
  * @package App\Tests\Admin
@@ -52,7 +52,8 @@ class TodoManagerTest extends WebTestCase
         // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | todos');
         $this->assertSelectorTextContains('body', 'Completed');
         $this->assertSelectorExists('form[name="new_todo_form"]');
@@ -70,7 +71,8 @@ class TodoManagerTest extends WebTestCase
         // make post request to todo manager controller
         $this->client->request('GET', '/admin/todos/completed');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | todos');
         $this->assertSelectorTextContains('body', 'Uncompleted');
         $this->assertSelectorNotExists('form[name="new_todo_form"]');

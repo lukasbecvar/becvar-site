@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class AuthentificatedCheckMiddleware
- * 
+ *
  * Middleware for checking authentication status before accessing admin routes.
- * 
+ *
  * @package App\Middleware
  */
 class AuthentificatedCheckMiddleware
@@ -41,10 +41,9 @@ class AuthentificatedCheckMiddleware
         if (str_starts_with($path_info, '/admin')) {
             // check if user is loggedin
             if (!$this->authManager->isUserLogedin()) {
-                
                 // get login page route url
-                $login_url = $this->urlGenerator->generate('auth_login'); 
-                
+                $login_url = $this->urlGenerator->generate('auth_login');
+
                 // redirect to login page
                 $event->setResponse(new RedirectResponse($login_url));
             }

@@ -17,10 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class AccountSettingsController
- * 
+ *
  * Account settings controller provides user account changes.
  * Configurable values: username, password, profile-pic
- * 
+ *
  * @package App\Controller\Admin
  */
 class AccountSettingsController extends AbstractController
@@ -31,7 +31,7 @@ class AccountSettingsController extends AbstractController
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        AuthManager $authManager, 
+        AuthManager $authManager,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
         EntityManagerInterface $entityManager
@@ -85,17 +85,15 @@ class AccountSettingsController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get image data
             $image = $form->get('profile-pic')->getData();
             $extension = $image->getClientOriginalExtension();
 
             // check if file is image
             if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
-
                 // get user repository
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
-                    
+
                 // get image content
                 $file_contents = file_get_contents($image);
 
@@ -110,8 +108,8 @@ class AccountSettingsController extends AbstractController
                     // redirect back to values table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-                }  
+                    return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+                }
             } else {
                 $error_msg = 'please select image file';
             }
@@ -152,8 +150,7 @@ class AccountSettingsController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // get username 
+            // get username
             $username = $form->get('username')->getData();
 
             // get user repository
@@ -165,12 +162,11 @@ class AccountSettingsController extends AbstractController
 
                 // redirect back to values table
                 return $this->redirectToRoute('admin_account_settings_table');
-
             } catch (\Exception $e) {
-                return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-            }  
+                return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+            }
         }
-            
+
         return $this->render('admin/account-settings.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -184,7 +180,7 @@ class AccountSettingsController extends AbstractController
             'error_msg' => $error_msg
         ]);
     }
-    
+
     /**
      * Change of password in the admin account settings.
      *
@@ -206,7 +202,6 @@ class AccountSettingsController extends AbstractController
 
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
-
             // get passwords
             $password = $form->get('password')->getData();
             $repassword = $form->get('repassword')->getData();
@@ -217,7 +212,6 @@ class AccountSettingsController extends AbstractController
             if ($password != $repassword) {
                 $error_msg = 'Your passwords is not match!';
             } else {
-
                 try {
                     // hash password
                     $password_hash = $this->securityUtil->genBcryptHash($password, 10);
@@ -230,8 +224,8 @@ class AccountSettingsController extends AbstractController
 
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: '.$e->getMessage(), 500);
-                }  
+                    return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+                }
             }
         }
 

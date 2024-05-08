@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AdminDiagnosticTest
- * 
+ *
  * Admin diagnostics component test
  *
  * @package App\Tests\Admin
@@ -52,7 +52,8 @@ class AdminDiagnosticTest extends WebTestCase
         // make post request to diagnostic page
         $this->client->request('GET', '/admin/diagnostic');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | diagnostic');
         $this->assertSelectorTextContains('body', 'System diagnostics');
         $this->assertSelectorTextContains('body', 'Website diagnostics');

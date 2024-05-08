@@ -9,15 +9,15 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class ChatMessageFixtures
- * 
+ *
  * ChatMessageFixtures loads sample chat data into the database.
- * 
+ *
  * @package App\DataFixtures
  */
 class ChatMessageFixtures extends Fixture
 {
     private SecurityUtil $securityUtil;
-        
+
     public function __construct(SecurityUtil $securityUtil)
     {
         $this->securityUtil = $securityUtil;

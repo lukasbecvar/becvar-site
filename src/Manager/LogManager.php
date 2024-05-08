@@ -11,9 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class AuthManager
- * 
+ *
  * LogManager provides log functions for saving events to a database table.
- * 
+ *
  * @package App\Manager
  */
 class LogManager
@@ -30,7 +30,7 @@ class LogManager
         SiteUtil $siteUtil,
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
-        SecurityUtil $securityUtil, 
+        SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
@@ -53,12 +53,12 @@ class LogManager
      *
      * @return void
      */
-    public function log(string $name, string $value, bool $bypass_antilog = false): void 
-    {        
+    public function log(string $name, string $value, bool $bypass_antilog = false): void
+    {
         // check if log can be saved
         if (str_contains($value, 'Connection refused')) {
             if ($this->siteUtil->isDevMode()) {
-                die('Database error: '.$value);
+                die('Database error: ' . $value);
             } else {
                 die('Internal server error');
             }
@@ -71,8 +71,8 @@ class LogManager
 
             // value character shortifiy
             if (mb_strlen($value) >= 512) {
-                $value = mb_substr($value, 0, 512).'...';
-            } 
+                $value = mb_substr($value, 0, 512) . '...';
+            }
 
             // disable database log for level 1 & 2
             if ($name == 'database' && $level < 3) {
@@ -101,25 +101,25 @@ class LogManager
             $value = $this->securityUtil->escapeString($value);
             $browser = $this->securityUtil->escapeString($browser);
             $ip_address = $this->securityUtil->escapeString($ip_address);
-                
+
             // create new log enity
             $LogEntity = new Log();
 
             // set log entity values
-            $LogEntity->setName($name); 
-            $LogEntity->setValue($value); 
-            $LogEntity->setTime($date); 
-            $LogEntity->setIpAddress($ip_address); 
-            $LogEntity->setBrowser($browser); 
-            $LogEntity->setStatus('unreaded'); 
+            $LogEntity->setName($name);
+            $LogEntity->setValue($value);
+            $LogEntity->setTime($date);
+            $LogEntity->setIpAddress($ip_address);
+            $LogEntity->setBrowser($browser);
+            $LogEntity->setStatus('unreaded');
             $LogEntity->setVisitorId($visitor_id);
-                
+
             // try insert row
             try {
                 $this->entityManager->persist($LogEntity);
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('log-error: '.$e->getMessage(), 500);
+                $this->errorManager->handleError('log-error: ' . $e->getMessage(), 500);
             }
         }
     }
@@ -137,25 +137,25 @@ class LogManager
     {
         $repo = $this->entityManager->getRepository(Log::class);
         $per_page = $_ENV['ITEMS_PER_PAGE'];
-        
+
         // calculate offset
         $offset = ($page - 1) * $per_page;
-    
+
         // get logs from database
         try {
             $queryBuilder = $repo->createQueryBuilder('l')
                 ->where('l.ip_address = :ip_address')
                 ->orderBy('l.id', 'DESC')
                 ->setParameter('ip_address', $ip_address)
-                ->setFirstResult($offset)  
+                ->setFirstResult($offset)
                 ->setMaxResults($per_page);
-    
+
             $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
             $logs = [];
         }
-    
+
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -181,25 +181,25 @@ class LogManager
     {
         $repo = $this->entityManager->getRepository(Log::class);
         $per_page = $_ENV['ITEMS_PER_PAGE'];
-        
+
         // calculate offset
         $offset = ($page - 1) * $per_page;
-    
+
         // get logs from database
         try {
             $queryBuilder = $repo->createQueryBuilder('l')
                 ->where('l.status = :status')
                 ->orderBy('l.id', 'DESC')
                 ->setParameter('status', $status)
-                ->setFirstResult($offset)  
+                ->setFirstResult($offset)
                 ->setMaxResults($per_page);
-    
+
             $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
             $logs = [];
         }
-    
+
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -224,11 +224,11 @@ class LogManager
         $repo = $this->entityManager->getRepository(Log::class);
 
         try {
-            return $repo->count(['status' => $status]);   
+            return $repo->count(['status' => $status]);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
             return null;
-        } 
+        }
     }
 
     /**
@@ -241,11 +241,11 @@ class LogManager
         $repo = $this->entityManager->getRepository(Log::class);
 
         try {
-            return $repo->count(['name' => 'authenticator']);   
+            return $repo->count(['name' => 'authenticator']);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
             return null;
-        } 
+        }
     }
 
     /**
@@ -260,7 +260,7 @@ class LogManager
         try {
             $this->entityManager->createQuery($dql)->execute();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to set readed logs: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to set readed logs: ' . $e->getMessage(), 500);
         }
     }
 
@@ -269,7 +269,7 @@ class LogManager
      *
      * @return bool
      */
-    public function isLogsEnabled(): bool 
+    public function isLogsEnabled(): bool
     {
         // check if logs enabled
         if ($_ENV['LOGS_ENABLED'] == 'true') {
@@ -288,7 +288,6 @@ class LogManager
     {
         // check if cookie set
         if (isset($_COOKIE['anti-log-cookie'])) {
-
             // get cookie token
             $token = $this->cookieUtil->get('anti-log-cookie');
 
@@ -301,7 +300,7 @@ class LogManager
         } else {
             return false;
         }
-    } 
+    }
 
     /**
      * Sets the anti-log cookie.
@@ -310,7 +309,7 @@ class LogManager
      */
     public function setAntiLogCookie(): void
     {
-        $this->cookieUtil->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60*60*24*7*365));
+        $this->cookieUtil->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60 * 60 * 24 * 7 * 365));
     }
 
     /**

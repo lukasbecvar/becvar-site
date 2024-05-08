@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class InboxController
- * 
+ *
  * Inbox controller provides contact form message reader/ban/close messages.
- * 
+ *
  * @package App\Controller\Admin
  */
 class InboxController extends AbstractController
@@ -23,7 +23,8 @@ class InboxController extends AbstractController
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, MessagesManager $messagesManager) {
+    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, MessagesManager $messagesManager)
+    {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
@@ -51,7 +52,7 @@ class InboxController extends AbstractController
 
             // inbox data
             'page' => $page,
-            'inbox_data' => $messages, 
+            'inbox_data' => $messages,
             'message_count' => count($messages),
             'message_limit' => $_ENV['ITEMS_PER_PAGE']
         ]);

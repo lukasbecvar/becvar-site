@@ -2,11 +2,12 @@
 
 namespace App\Tests\Admin\Auth;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class LogoutTest
- * 
+ *
  * Logout component test.
  *
  * @package App\Tests\Admin\Auth
@@ -34,9 +35,9 @@ class LogoutTest extends WebTestCase
     {
         $this->client->request('GET', '/logout');
 
+        // assert
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
-        $this->assertResponseStatusCodeSame(302); 
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertResponseNotHasCookie('login-token-cookie');
     }
 }
- 

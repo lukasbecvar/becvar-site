@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class DashboardTest
- * 
+ *
  * Admin dashboard component test
  *
  * @package App\Tests\Admin
@@ -55,7 +55,8 @@ class DashboardTest extends WebTestCase
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorExists('img[alt="profile_picture"]');
@@ -91,7 +92,8 @@ class DashboardTest extends WebTestCase
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard/emergency/shutdown');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorTextContains('.form-title', 'Confirmation');

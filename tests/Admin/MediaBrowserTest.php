@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class MediaBrowserTest
- * 
+ *
  * Admin media browser component test
  *
  * @package App\Tests\Admin
@@ -52,7 +52,8 @@ class MediaBrowserTest extends WebTestCase
         // make post request to media browser controller
         $this->client->request('GET', '/admin/media/browser?page=1');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | images');
     }
 }

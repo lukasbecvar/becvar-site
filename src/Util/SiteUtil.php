@@ -6,9 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SiteUtil
- * 
+ *
  * SiteUtil provides basic site-related methods.
- * 
+ *
  * @package App\Util
  */
 class SiteUtil
@@ -35,26 +35,25 @@ class SiteUtil
      *
      * @return bool Whether the application is running on localhost.
      */
-    public function isRunningLocalhost(): bool 
+    public function isRunningLocalhost(): bool
     {
-		$localhost = false;
+        $localhost = false;
 
         // get host url
         $host = $this->getHttpHost();
 
         // check if host is null
         if ($host != null) {
-
             // check if running on url localhost
             if (str_starts_with($host, 'localhost')) {
                 $localhost = true;
-            } 
-                
+            }
+
             // check if running on localhost ip
             if (str_starts_with($host, '127.0.0.1')) {
                 $localhost = true;
             }
-            
+
             // check if running on private ip
             if (str_starts_with($host, '10.0.0.93')) {
                 $localhost = true;
@@ -69,7 +68,7 @@ class SiteUtil
      *
      * @return bool Whether the connection is secure.
      */
-    public function isSsl(): bool 
+    public function isSsl(): bool
     {
         // check if HTTPS header is set and its value is either 1 or 'on'
         return isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 1 || strtolower($_SERVER['HTTPS']) === 'on');

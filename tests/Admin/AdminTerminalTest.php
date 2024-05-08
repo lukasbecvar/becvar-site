@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AdminTerminalTest
- * 
+ *
  * Admin terminal component test
  *
  * @package App\Tests\Admin
@@ -60,7 +60,8 @@ class AdminTerminalTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/terminal');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | terminal');
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');
     }
@@ -75,7 +76,8 @@ class AdminTerminalTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/terminal');
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); 
+        // assert
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | terminal');
         $this->assertSelectorTextContains('body', '$');
     }

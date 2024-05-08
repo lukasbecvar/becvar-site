@@ -6,11 +6,11 @@ use App\Entity\Message;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 
-/** 
+/**
  * Class AuthManager
- * 
+ *
  * Messages manager provides methods for managing inbox/contact system
- * 
+ *
  * @package App\Manager
 */
 class MessagesManager
@@ -19,11 +19,11 @@ class MessagesManager
     private ErrorManager $errorManager;
     private VisitorManager $visitorManager;
     private EntityManagerInterface $entityManager;
-    
+
     public function __construct(
-        SecurityUtil $securityUtil, 
+        SecurityUtil $securityUtil,
         ErrorManager $errorManager,
-        VisitorManager $visitorManager, 
+        VisitorManager $visitorManager,
         EntityManagerInterface $entityManager
     ) {
         $this->securityUtil = $securityUtil;
@@ -55,7 +55,7 @@ class MessagesManager
 
         // ecrypt message
         $message_input = $this->securityUtil->encryptAes($message_input);
-        
+
         // set message entity values
         $message->setName($name);
         $message->setEmail($email);
@@ -64,12 +64,12 @@ class MessagesManager
         $message->setIpAddress($ip_address);
         $message->setStatus('open');
         $message->setVisitorID($visitor_id);
-        
+
         // insert new message
         try {
             $this->entityManager->persist($message);
             $this->entityManager->flush();
-                                    
+
             return true;
         } catch (\Exception) {
             return false;
@@ -93,12 +93,12 @@ class MessagesManager
         // set query parameter
         $query->setParameter('status', 'open');
         $query->setParameter('ip_address', $ip_address);
-    
+
         // execute query
         try {
             return $query->getSingleScalarResult();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get messages count: '.$e->getMessage(), 500);
+            $this->errorManager->handleError('error to get messages count: ' . $e->getMessage(), 500);
             return 0;
         }
     }
@@ -115,17 +115,16 @@ class MessagesManager
     {
         $repository = $this->entityManager->getRepository(Message::class);
         $limit = $_ENV['ITEMS_PER_PAGE'];
-        
+
         // calculate offset
         $offset = ($page - 1) * $limit;
-    
+
         // get messages entity from database
         try {
             $inbox = $repository->findBy(['status' => $status], null, $limit, $offset);
             $messages = [];
 
             foreach ($inbox as $inbox_message) {
-
                 // decrypt message
                 $message_decrypted = $this->securityUtil->decryptAes($inbox_message->getMessage());
 
@@ -144,14 +143,13 @@ class MessagesManager
                     'ip_address' => $inbox_message->getIpAddress(),
                     'status' => $inbox_message->getStatus(),
                     'visitor_id' => $inbox_message->getVisitorId()
-                ];  
+                ];
 
                 // add message to final list
                 array_push($messages, $message);
             }
-            
+
             return $messages;
-        
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get messages: ' . $e->getMessage(), 500);
             return null;
@@ -165,7 +163,7 @@ class MessagesManager
      *
      * @return void
      */
-    public function closeMessage(int $id): void 
+    public function closeMessage(int $id): void
     {
         $message = $this->entityManager->getRepository(Message::class)->find($id);
 
@@ -173,10 +171,10 @@ class MessagesManager
         if ($message !== null) {
             try {
                 // close message
-                $message->setStatus('closed');                
+                $message->setStatus('closed');
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to close message: '.$id.', '.$e->getMessage(), 500);
+                $this->errorManager->handleError('error to close message: ' . $id . ', ' . $e->getMessage(), 500);
             }
         }
     }

@@ -7,9 +7,9 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Class EscapeRequestDataMiddleware
- * 
+ *
  * Middleware to escape request data for security purposes.
- * 
+ *
  * @package App\Middleware
  */
 class EscapeRequestDataMiddleware
@@ -35,7 +35,6 @@ class EscapeRequestDataMiddleware
 
         // check if request is post or get
         if ($request->isMethod('POST') || $request->isMethod('GET')) {
-
             // get form data
             if ($request->isMethod('POST')) {
                 $formData = $request->request->all();
