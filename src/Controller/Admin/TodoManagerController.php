@@ -173,7 +173,8 @@ class TodoManagerController extends AbstractController
      * @return Response
      */
     #[Route('/admin/todos/close', methods: ['GET'], name: 'admin_todo_close')]
-    public function closeTodo(Request $request): Response {
+    public function closeTodo(Request $request): Response
+    {
         // get todo category
         $category = $this->siteUtil->getQueryString('category', $request);
 
