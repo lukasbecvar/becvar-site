@@ -7,8 +7,7 @@ clear
 
 # static code analyze
 yellow_echo 'STATIC-ANALYZE: testing...'
-php vendor/bin/phpstan analyze
-php vendor/bin/phpcs
+sh scripts/static-analyze.sh
 
 # PHPUnit tests
 yellow_echo 'PHPUnit: testing...'
