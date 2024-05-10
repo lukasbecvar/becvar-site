@@ -19,3 +19,6 @@ if [ ! -d 'public/build/' ]
 then
     sh scripts/build.sh
 fi
+
+# fix storage permissions
+sudo chmod -R 777 var/

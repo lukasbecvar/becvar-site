@@ -31,6 +31,8 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console projects:list:update
 php bin/console auth:tokens:regenerate
           
-# start apache
+# fix storage permissions
 sudo chmod -R 777 var/
+
+# start apache
 sudo systemctl start apache2

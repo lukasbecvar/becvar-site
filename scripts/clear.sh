@@ -15,7 +15,7 @@ rm -rf package-lock.json
 rm -rf public/build/
 
 # delete symfony cache folder
-rm -rf var/
+sudo rm -rf var/
 
 # delete docker services data
 sudo rm -rf _docker/services/
