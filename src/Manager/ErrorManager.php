@@ -93,7 +93,8 @@ class ErrorManager
         $blocked_error_patterns = [
             'log-error:',
             'Unknown database',
-            'Base table or view not found'
+            'Base table or view not found',
+            'An exception occurred in the driver'
         ];
 
         // loop through each blocked error pattern

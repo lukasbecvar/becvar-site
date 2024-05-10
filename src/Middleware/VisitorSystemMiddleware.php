@@ -70,7 +70,6 @@ class VisitorSystemMiddleware
         $os = $this->visitorInfoUtil->getOS();
         $ip_address = $this->visitorInfoUtil->getIP();
         $browser = $this->visitorInfoUtil->getBrowser();
-        $location = $this->visitorInfoUtil->getLocation($ip_address);
 
         // escape inputs
         $ip_address = $this->securityUtil->escapeString($ip_address);
@@ -82,7 +81,7 @@ class VisitorSystemMiddleware
         // check if visitor found in database
         if ($visitor == null) {
             // save new visitor data
-            $this->insertNewVisitor($date, $ip_address, $browser, $os, $location);
+            $this->insertNewVisitor($date, $ip_address, $browser, $os);
         } else {
             // cache online visitor
             $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
@@ -111,12 +110,14 @@ class VisitorSystemMiddleware
      * @param string $ip_address The IP address of the visitor.
      * @param string $browser The browser used by the visitor.
      * @param string $os The operating system of the visitor.
-     * @param array<string, string> $location The location information of the visitor, including 'city' and 'country'.
      *
      * @throws \Exception If an error occurs during the database flush.
      */
-    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os, array $location): void
+    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os): void
     {
+        // get visitor ip address
+        $location = $this->visitorInfoUtil->getLocation($ip_address);
+
         // log geolocate error
         if ($location['city'] == 'Unknown' || $location['country'] == 'Unknown') {
             $this->logManager->log('geolocate-error', 'error to geolocate ip: ' . $ip_address);
