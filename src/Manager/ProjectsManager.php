@@ -75,7 +75,7 @@ class ProjectsManager
             }
 
             // check if repo is profile readme
-            if ($name != $htmlUrl) {
+            if ($name != $githubUser) {
                 // check if repo is not fork
                 if ($repo['fork'] != true) {
                     // check if repo archived
