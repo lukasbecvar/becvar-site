@@ -62,8 +62,6 @@ Docker is used only for development in this application. The production version 
    * [Website](https://symfony.com/)   
 * Adminer
    * [Website](https://www.adminer.org/)
-* Geo-Plugin
-   * [Website](http://www.geoplugin.net/)
 * Bootstrap
    * [Website](https://getbootstrap.com/)
 * Boxicons
