@@ -31,4 +31,4 @@ systemctl --no-pager status mysql
 npm run watch &
 
 # start Symfony server in background
-symfony server:start 
+symfony server:start

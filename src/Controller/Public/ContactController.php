@@ -49,25 +49,26 @@ class ContactController extends AbstractController
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response
     {
-        $error_msg = null;
-        $success_msg = null;
+        // init default resources
+        $errorMsg = null;
+        $successMsg = null;
 
         // get visitor ip address
-        $ip_address = $this->visitorInfoUtil->getIP();
+        $ipAddress = $this->visitorInfoUtil->getIP();
 
         // handle success status
         if ($request->query->get('status') == 'ok') {
-            $success_msg = 'contact.success.message';
+            $successMsg = 'contact.success.message';
         }
 
         // handle limit reached status
         if ($request->query->get('status') == 'reached') {
-            $error_msg = 'contact.error.limit.reached.message';
+            $errorMsg = 'contact.error.limit.reached.message';
         }
 
         // handle error status
         if ($request->query->get('status') == 'ko') {
-            $error_msg = 'contact.error.ko.message';
+            $errorMsg = 'contact.error.ko.message';
         }
 
         // create message entity
@@ -84,38 +85,38 @@ class ContactController extends AbstractController
             // get form data
             $name = $form->get('name')->getData();
             $email = $form->get('email')->getData();
-            $message_input = $form->get('message')->getData();
+            $messageInput = $form->get('message')->getData();
 
             // get honeypot value
             $honeypot = $form->get('websiteIN')->getData();
 
             // check if values empty
             if (empty($name)) {
-                $error_msg = 'contact.error.username.empty';
+                $errorMsg = 'contact.error.username.empty';
             } elseif (empty($email)) {
-                $error_msg = 'contact.error.email.empty';
-            } elseif (empty($message_input)) {
-                $error_msg = 'contact.error.message.empty';
-            } elseif (strlen($message_input) > 2000) {
-                $error_msg = 'contact.error.characters.limit.reached';
+                $errorMsg = 'contact.error.email.empty';
+            } elseif (empty($messageInput)) {
+                $errorMsg = 'contact.error.message.empty';
+            } elseif (strlen($messageInput) > 2000) {
+                $errorMsg = 'contact.error.characters.limit.reached';
 
             // check if honeypot is empty
             } elseif (isset($honeypot)) {
-                $error_msg = 'contact.error.blocked.message';
+                $errorMsg = 'contact.error.blocked.message';
                 $this->logManager->log('message-sender', 'message by: ' . $email . ', has been blocked: honeypot used');
             } else {
                 // get others data
-                $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
+                $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
 
                 // check if user have unclosed messages
-                if ($this->messagesManager->getMessageCountByIpAddress($ip_address) >= 5) {
-                    $this->logManager->log('message-sender', 'visitor: ' . $visitor_id . ' trying send new message but he has open messages');
+                if ($this->messagesManager->getMessageCountByIpAddress($ipAddress) >= 5) {
+                    $this->logManager->log('message-sender', 'visitor: ' . $visitorId . ' trying send new message but he has open messages');
 
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
                     // save message & get return boolean
-                    $save = $this->messagesManager->saveMessage($name, $email, $message_input, $ip_address, $visitor_id);
+                    $save = $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitorId);
 
                     // check if message saved
                     if ($save) {
@@ -135,8 +136,8 @@ class ContactController extends AbstractController
             'twitter_link' => $_ENV['TWITTER_LINK'],
             'github_link' => $_ENV['GITHUB_LINK'],
             'contact_form' => $form->createView(),
-            'success_msg' => $success_msg,
-            'error_msg' => $error_msg
+            'success_msg' => $successMsg,
+            'error_msg' => $errorMsg
         ]);
     }
 }

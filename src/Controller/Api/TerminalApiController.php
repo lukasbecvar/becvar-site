@@ -76,13 +76,13 @@ class TerminalApiController extends AbstractController
         // set default working dir
         if ($this->sessionUtil->checkSession('terminal-dir')) {
             // get curret working directory
-            $current_dir = $this->sessionUtil->getSessionValue('terminal-dir');
+            $currentDir = $this->sessionUtil->getSessionValue('terminal-dir');
 
             // check if directory exist
-            if (!file_exists($current_dir)) {
+            if (!file_exists($currentDir)) {
                 chdir('/');
             } else {
-                chdir($current_dir);
+                chdir($currentDir);
             }
         } else {
             chdir('/');
@@ -107,13 +107,13 @@ class TerminalApiController extends AbstractController
         if (file_exists((__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json'))) {
             // get blocked command list
             try {
-                $blocked_commands = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json');
+                $blockedCommands = $this->jsonUtil->getJson(__DIR__ . '/../../../config/becwork/terminal-blocked-commands.json');
             } catch (\Exception $e) {
                 return new Response($e->getMessage());
             }
 
             // check if command is blocked
-            foreach ($blocked_commands as $blockedCommand) {
+            foreach ($blockedCommands as $blockedCommand) {
                 if (str_starts_with($command, $blockedCommand)) {
                     return new Response('command: ' . $command . ' is not allowed!');
                 }
@@ -149,35 +149,35 @@ class TerminalApiController extends AbstractController
 
         // update cwd (system get)
         if (str_starts_with($command, 'cd ')) {
-            $new_dir = str_replace('cd ', '', $command);
+            $newDir = str_replace('cd ', '', $command);
 
             // check if dir is / root dir
-            if (!str_starts_with($new_dir, '/')) {
-                $final_dir = getcwd() . '/' . $new_dir;
+            if (!str_starts_with($newDir, '/')) {
+                $finalDir = getcwd() . '/' . $newDir;
             } else {
-                $final_dir = $new_dir;
+                $finalDir = $newDir;
             }
 
             // check if directory exists
-            if (file_exists($final_dir)) {
-                $this->sessionUtil->setSession('terminal-dir', $final_dir);
+            if (file_exists($finalDir)) {
+                $this->sessionUtil->setSession('terminal-dir', $finalDir);
                 return new Response('', 200);
             } else {
-                return new Response('error directory: ' . $final_dir . ' not found');
+                return new Response('error directory: ' . $finalDir . ' not found');
             }
         } else {
             // execute command
-            exec('sudo ' . $command, $output, $return_code);
+            exec('sudo ' . $command, $output, $returnCode);
 
             // check if command run valid
-            if ($return_code !== 0) {
+            if ($returnCode !== 0) {
                 // check if command not found
-                if ($return_code == 127) {
+                if ($returnCode == 127) {
                     $this->logManager->log('terminal', $username . ' executed not found command: ' . $command);
                     return new Response('command: ' . $command . ' not found');
                 }
 
-                $this->logManager->log('terminal', $username . ' executed command: ' . $command . ' with error code: ' . $return_code);
+                $this->logManager->log('terminal', $username . ' executed command: ' . $command . ' with error code: ' . $returnCode);
                 return new Response('error to execute command: ' . $command);
             }
 

@@ -40,14 +40,14 @@ class RegenerateAuthTokensCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         // regenerate all tokens and get state
-        $regenerate_state = $this->authManager->regenerateUsersTokens();
+        $regenerateState = $this->authManager->regenerateUsersTokens();
 
         // check if regeneration is success
-        if ($regenerate_state['status']) {
+        if ($regenerateState['status']) {
             $io->success('All tokens is regenerated');
             return Command::SUCCESS;
         } else {
-            $io->error('Token regeneration error: ' . $regenerate_state['message']);
+            $io->error('Token regeneration error: ' . $regenerateState['message']);
             return Command::FAILURE;
         }
     }

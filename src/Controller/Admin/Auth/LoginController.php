@@ -49,7 +49,7 @@ class LoginController extends AbstractController
 
         // init default resources
         $user = new User();
-        $error_msg = null;
+        $errorMsg = null;
 
         // create register form
         $form = $this->createForm(LoginFormType::class, $user);
@@ -63,34 +63,34 @@ class LoginController extends AbstractController
             $remember = $form->get('remember')->getData();
 
             // get user data
-            $user_data = $this->authManager->getUserRepository(['username' => $username]);
+            $userData = $this->authManager->getUserRepository(['username' => $username]);
 
             // check if user exist
-            if ($user_data != null) {
+            if ($userData != null) {
                 // get user password form database
-                $user_password = $user_data->getPassword();
+                $userPassword = $userData->getPassword();
 
                 // check if password valid
-                if ($this->securityUtil->hashValidate($password, $user_password)) {
-                    $this->authManager->login($username, $user_data->getToken(), $remember);
+                if ($this->securityUtil->hashValidate($password, $userPassword)) {
+                    $this->authManager->login($username, $userData->getToken(), $remember);
                 } else { // invalid password error
                     $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
-                    $error_msg = 'Incorrect username or password.';
+                    $errorMsg = 'Incorrect username or password.';
                 }
             } else { // user not exist error
                 $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
-                $error_msg = 'Incorrect username or password.';
+                $errorMsg = 'Incorrect username or password.';
             }
 
             // redirect to admin (if login OK)
-            if ($error_msg == null && $this->authManager->isUserLogedin()) {
+            if ($errorMsg == null && $this->authManager->isUserLogedin()) {
                 return $this->redirectToRoute('admin_dashboard');
             }
         }
 
         // render login view
         return $this->render('admin/auth/login.html.twig', [
-            'error_msg' => $error_msg,
+            'error_msg' => $errorMsg,
             'is_users_empty' => $this->authManager->isRegisterPageAllowed(),
             'login_form' => $form->createView()
         ]);

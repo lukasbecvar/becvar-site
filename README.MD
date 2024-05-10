@@ -57,7 +57,7 @@ Docker is used only for development in this application. The production version 
  - nodejs 18 or <
  - npm 10 or <
 
-## Dependencies 
+## Dependencies
 * Symfony
    * [Website](https://symfony.com/)   
 * Adminer

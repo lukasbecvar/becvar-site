@@ -49,18 +49,18 @@ class VisitorInfoUtil
     public function getBrowser(): ?string
     {
         // get user agent
-        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
-        return $user_agent !== null ? $user_agent : 'Unknown';
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+        return $userAgent !== null ? $userAgent : 'Unknown';
     }
 
     /**
      * Get a short version of the browser name.
      *
-     * @param string $user_agent The user agent string.
+     * @param string $userAgent The user agent string.
      *
      * @return string|null The short browser name.
      */
-    public function getBrowserShortify(string $user_agent): ?string
+    public function getBrowserShortify(string $userAgent): ?string
     {
         $output = null;
 
@@ -72,7 +72,7 @@ class VisitorInfoUtil
             // check all user agents
             foreach ($browser_list as $index => $value) {
                 // check if index found in agent
-                if (str_contains($user_agent, $index)) {
+                if (str_contains($userAgent, $index)) {
                     $output = $index;
                     break;
                 }
@@ -83,52 +83,52 @@ class VisitorInfoUtil
         if ($output == null) {
             // identify common browsers using switch statement
             switch (true) {
-                case preg_match('/MSIE (\d+\.\d+);/', $user_agent):
-                case str_contains($user_agent, 'MSIE'):
+                case preg_match('/MSIE (\d+\.\d+);/', $userAgent):
+                case str_contains($userAgent, 'MSIE'):
                     $output = 'Internet Explore';
                     break;
-                case preg_match('/Chrome[\/\s](\d+\.\d+)/', $user_agent):
+                case preg_match('/Chrome[\/\s](\d+\.\d+)/', $userAgent):
                     $output = 'Chrome';
                     break;
-                case preg_match('/Edge\/\d+/', $user_agent):
+                case preg_match('/Edge\/\d+/', $userAgent):
                     $output = 'Edge';
                     break;
-                case preg_match('/Firefox[\/\s](\d+\.\d+)/', $user_agent):
-                case str_contains($user_agent, 'Firefox/96'):
+                case preg_match('/Firefox[\/\s](\d+\.\d+)/', $userAgent):
+                case str_contains($userAgent, 'Firefox/96'):
                     $output = 'Firefox';
                     break;
-                case preg_match('/Safari[\/\s](\d+\.\d+)/', $user_agent):
+                case preg_match('/Safari[\/\s](\d+\.\d+)/', $userAgent):
                     $output = 'Safari';
                     break;
-                case str_contains($user_agent, 'UCWEB'):
-                case str_contains($user_agent, 'UCBrowser'):
+                case str_contains($userAgent, 'UCWEB'):
+                case str_contains($userAgent, 'UCBrowser'):
                     $output = 'UC Browser';
                     break;
-                case str_contains($user_agent, 'Iceape'):
+                case str_contains($userAgent, 'Iceape'):
                     $output = 'IceApe Browser';
                     break;
-                case str_contains($user_agent, 'maxthon'):
+                case str_contains($userAgent, 'maxthon'):
                     $output = 'Maxthon Browser';
                     break;
-                case str_contains($user_agent, 'konqueror'):
+                case str_contains($userAgent, 'konqueror'):
                     $output = 'Konqueror Browser';
                     break;
-                case str_contains($user_agent, 'NetFront'):
+                case str_contains($userAgent, 'NetFront'):
                     $output = 'NetFront Browser';
                     break;
-                case str_contains($user_agent, 'Midori'):
+                case str_contains($userAgent, 'Midori'):
                     $output = 'Midori Browser';
                     break;
-                case preg_match('/OPR[\/\s](\d+\.\d+)/', $user_agent):
-                case preg_match('/Opera[\/\s](\d+\.\d+)/', $user_agent):
+                case preg_match('/OPR[\/\s](\d+\.\d+)/', $userAgent):
+                case preg_match('/Opera[\/\s](\d+\.\d+)/', $userAgent):
                     $output = 'Opera';
                     break;
                 default:
                     // if not found, check user agent length
-                    if (str_contains($user_agent, ' ') || strlen($user_agent) >= 39) {
+                    if (str_contains($userAgent, ' ') || strlen($userAgent) >= 39) {
                         $output = 'Unknown';
                     } else {
-                        $output = $user_agent;
+                        $output = $userAgent;
                     }
             }
         }
@@ -149,7 +149,7 @@ class VisitorInfoUtil
         $agent = $this->getBrowser();
 
         // OS list
-        $os_array = array (
+        $osArray = array (
             '/windows nt 5.2/i'     =>  'Windows Server_2003',
             '/windows nt 6.0/i'     =>  'Windows Vista',
             '/windows nt 5.0/i'     =>  'Windows 2000',
@@ -178,7 +178,7 @@ class VisitorInfoUtil
         );
 
         // find os
-        foreach ($os_array as $regex => $value) {
+        foreach ($osArray as $regex => $value) {
             // check if os found
             if ($regex != null && $agent != null) {
                 if (preg_match($regex, $agent)) {
@@ -193,52 +193,49 @@ class VisitorInfoUtil
     /**
      * Get the location based on IP address.
      *
-     * @param string $ip_address The IP address.
+     * @param string $ipAddress The IP address.
      *
      * @return array<string,string>|null The location information (city, country) or null on failure.
      */
-    public function getLocation(string $ip_address): ?array
+    public function getLocation(string $ipAddress): ?array
     {
         // check if site is running on localhost
         if ($this->siteUtil->isRunningLocalhost()) {
             return ['city' => 'locale', 'country' => 'host'];
         }
 
+        // create stream context with timeout of 1 second
+        $context = stream_context_create(array(
+            'http' => array(
+                'timeout' => 3
+            )
+        ));
+
         try {
-            // get geoplugin URL from environment variables
-            $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
+            // get response
+            $response = file_get_contents($_ENV['GEOLOCATION_APU_URL'] . '/json/' . $ipAddress, false, $context);
 
-            // create stream context with timeout of 1 second
-            $context = stream_context_create(array(
-                'http' => array(
-                    'timeout' => 1
-                )
-            ));
+            // decode response
+            $data = json_decode($response);
 
-            // get data from geoplugin
-            $geoplugin_data = file_get_contents("$geoplugin_url/json.gp?ip=$ip_address", false, $context);
-
-            // decode data
-            $details = json_decode($geoplugin_data);
-
-            // get country
-            $country = $details->geoplugin_countryCode;
-
-            // extract city name from timezone
-            $city = null;
-            if (!empty($details->geoplugin_timezone)) {
-                $timezone_parts = explode('/', $details->geoplugin_timezone);
-                $city = $timezone_parts[1] ?? null;
+            // check if country code seted
+            if (isset($data->countryCode)) {
+                $country = $data->countryCode;
+            } else {
+                $country = 'Unknown';
             }
-        } catch (\Exception) {
-            $country = null;
-            $city = null;
+
+            // check if city seted
+            if (isset($data->city)) {
+                $city = $data->city;
+            } else {
+                $city = 'Unknown';
+            }
+
+            // return data
+            return ['city' => $city, 'country' => $country];
+        } catch (\Exception $e) {
+            return ['city' => 'Unknown', 'country' => 'Unknown'];
         }
-
-        // set default values if data not retrieved
-        $country = $country ?: 'Unknown';
-        $city = $city ?: 'Unknown';
-
-        return ['city' => $city, 'country' => $country];
     }
 }

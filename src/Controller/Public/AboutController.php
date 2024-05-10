@@ -25,8 +25,8 @@ class AboutController extends AbstractController
     public function aboutPage(): Response
     {
         // calculate lukas becvar age xD
-        $date_of_birth = '1999-05-28';
-        $age = date_diff(date_create($date_of_birth), date_create('today'))->y;
+        $dateOfBirth = '1999-05-28';
+        $age = date_diff(date_create($dateOfBirth), date_create('today'))->y;
 
         return $this->render('public/about.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],

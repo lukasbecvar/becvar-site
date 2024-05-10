@@ -35,17 +35,17 @@ class AuthentificatedCheckMiddleware
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $path_info = $request->getPathInfo();
+        $pathInfo = $request->getPathInfo();
 
         // check if route is admin
-        if (str_starts_with($path_info, '/admin')) {
+        if (str_starts_with($pathInfo, '/admin')) {
             // check if user is loggedin
             if (!$this->authManager->isUserLogedin()) {
                 // get login page route url
-                $login_url = $this->urlGenerator->generate('auth_login');
+                $loginUrl = $this->urlGenerator->generate('auth_login');
 
                 // redirect to login page
-                $event->setResponse(new RedirectResponse($login_url));
+                $event->setResponse(new RedirectResponse($loginUrl));
             }
         }
     }

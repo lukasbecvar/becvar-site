@@ -31,7 +31,7 @@ class ChatMessageFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $chat_messages = [
+        $chatMessages = [
             [
                 'message' => 'testing message 1',
                 'sender' => 'sender 1',
@@ -58,7 +58,7 @@ class ChatMessageFixtures extends Fixture
             ]
         ];
 
-        foreach ($chat_messages as $message) {
+        foreach ($chatMessages as $message) {
             $newMessage = new ChatMessage();
             $newMessage->setMessage($this->securityUtil->encryptAes($message['message']))
                 ->setSender($message['sender'])

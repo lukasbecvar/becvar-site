@@ -4,7 +4,9 @@ yellow_echo () { echo "\033[33m\033[1m$1\033[0m"; }
 
 # delete old migrations
 rm -rf migrations
-mkdir migrations # create migrations dir
+
+# create migrations dir
+mkdir migrations
 
 # create database
 yellow_echo "[DB-Create]: creating databases"

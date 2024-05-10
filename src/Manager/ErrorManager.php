@@ -84,13 +84,13 @@ class ErrorManager
     /**
      * Checks if an event can be dispatched based on the error message.
      *
-     * @param string $error_message The error message to be checked.
+     * @param string $errorMessage The error message to be checked.
      * @return bool Returns true if the event can be dispatched, otherwise false.
      */
-    public function canBeEventDispatched(string $error_message): bool
+    public function canBeEventDispatched(string $errorMessage): bool
     {
         // list of error patterns that should block event dispatch
-        $blocked_error_patterns = [
+        $blockedErrorPatterns = [
             'log-error:',
             'Unknown database',
             'Base table or view not found',
@@ -98,9 +98,9 @@ class ErrorManager
         ];
 
         // loop through each blocked error pattern
-        foreach ($blocked_error_patterns as $pattern) {
+        foreach ($blockedErrorPatterns as $pattern) {
             // check if the current pattern exists in the error message
-            if (strpos($error_message, $pattern) !== false) {
+            if (strpos($errorMessage, $pattern) !== false) {
                 // if a blocked pattern is found, return false
                 return false;
             }

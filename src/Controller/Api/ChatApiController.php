@@ -90,9 +90,10 @@ class ChatApiController extends AbstractController
         }
 
         // escape message (XSS protection)
-        $chat_message = $this->securityUtil->escapeString($data['message']);
+        $chatMessage = $this->securityUtil->escapeString($data['message']);
 
-        if (empty(trim($chat_message))) {
+        // check if message is empty
+        if (empty(trim($chatMessage))) {
             return $this->json([
                 'status' => 'error',
                 'message' => 'message input is empty'
@@ -100,13 +101,13 @@ class ChatApiController extends AbstractController
         }
 
         // encrypt message
-        $chat_message = $this->securityUtil->encryptAes($chat_message);
+        $chatMessage = $this->securityUtil->encryptAes($chatMessage);
 
         // init chat message entity
         $message = new ChatMessage();
 
         // set message data
-        $message->setMessage($chat_message);
+        $message->setMessage($chatMessage);
         $message->setSender($token);
         $message->setDay($day);
         $message->setTime($time);
@@ -152,7 +153,8 @@ class ChatApiController extends AbstractController
         // sort messages reverse
         $messages = array_reverse($messages);
 
-        $messages_data = [];
+        // response messages array
+        $messagesData = [];
 
         // build message data
         foreach ($messages as $message) {
@@ -160,26 +162,26 @@ class ChatApiController extends AbstractController
             $sender = $message->getSender();
 
             // decrypt message
-            $decrypted_message = $this->securityUtil->decryptAes($message->getMessage());
+            $decryptedMessage = $this->securityUtil->decryptAes($message->getMessage());
 
             // check if message is decrypted
-            if ($decrypted_message == null) {
+            if ($decryptedMessage == null) {
                 $this->errorManager->handleError('Error to decrypt aes message', 500);
             }
 
             // build message
-            $messages_data[] = [
+            $messagesData[] = [
                 'id' => $message->getId(),
                 'day' => $message->getDay(),
                 'time' => $message->getTime(),
                 'sender' => $this->authManager->getUsername($sender),
                 'role' => $this->authManager->getUserRole($sender),
                 'pic' => $this->authManager->getUserProfilePic($sender),
-                'message' => $decrypted_message
+                'message' => $decryptedMessage
             ];
         }
 
         // return messages json
-        return $this->json($messages_data);
+        return $this->json($messagesData);
     }
 }

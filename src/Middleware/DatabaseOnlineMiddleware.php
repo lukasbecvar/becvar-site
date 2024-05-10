@@ -3,7 +3,7 @@
 namespace App\Middleware;
 
 use App\Manager\ErrorManager;
-use Doctrine\DBAL\Connection as Connection;
+use Doctrine\DBAL\Connection;
 
 /**
  * Class DatabaseOnlineMiddleware

@@ -91,13 +91,13 @@ class SecurityUtilTest extends TestCase
 
     /**
      * @dataProvider hashValidateDataProvider
-     * @param string $plain_text
+     * @param string $plainText
      * @param string $hash
      * @param bool $expected
      */
-    public function testHashValidate(string $plain_text, string $hash, bool $expected): void
+    public function testHashValidate(string $plainText, string $hash, bool $expected): void
     {
-        $result = $this->securityUtil->hashValidate($plain_text, $hash);
+        $result = $this->securityUtil->hashValidate($plainText, $hash);
 
         // assert
         $this->assertSame($expected, $result);
@@ -105,27 +105,27 @@ class SecurityUtilTest extends TestCase
 
     /**
      * @dataProvider genBcryptHashDataProvider
-     * @param string $plain_text
+     * @param string $plainText
      * @param int $cost
      */
-    public function testGenBcryptHash(string $plain_text, int $cost): void
+    public function testGenBcryptHash(string $plainText, int $cost): void
     {
-        $result = $this->securityUtil->genBcryptHash($plain_text, $cost);
+        $result = $this->securityUtil->genBcryptHash($plainText, $cost);
 
         // assert
-        $this->assertTrue(password_verify($plain_text, $result));
+        $this->assertTrue(password_verify($plainText, $result));
     }
 
     /**
      * @dataProvider encryptAesDataProvider
-     * @param string $plain_text
+     * @param string $plainText
      */
-    public function testEncryptAes(string $plain_text): void
+    public function testEncryptAes(string $plainText): void
     {
-        $encrypted_data = $this->securityUtil->encryptAes($plain_text);
-        $decrypted_data = $this->securityUtil->decryptAes($encrypted_data);
+        $encryptedData = $this->securityUtil->encryptAes($plainText);
+        $decryptedData = $this->securityUtil->decryptAes($encryptedData);
 
         // assert
-        $this->assertSame($plain_text, $decrypted_data);
+        $this->assertSame($plainText, $decryptedData);
     }
 }

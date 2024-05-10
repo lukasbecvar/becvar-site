@@ -31,7 +31,7 @@ class PasteFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // paste data
-        $paste_data = [
+        $pasteData = [
             [
                 'name' => 'h7T7QxJdxycfaqc',
                 'content' => 'testing paste',
@@ -45,7 +45,7 @@ class PasteFixtures extends Fixture
         ];
 
         // persist paste fixtures
-        foreach ($paste_data as $data) {
+        foreach ($pasteData as $data) {
             $paste = new Paste();
             $paste->setName($data['name']);
             $paste->setContent($this->securityUtil->encryptAes($data['content']));

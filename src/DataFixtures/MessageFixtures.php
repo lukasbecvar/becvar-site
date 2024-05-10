@@ -32,7 +32,7 @@ class MessageFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         // message data
-        $message_data = [
+        $messageData = [
             [ 'message' => 'test message 1' ],
             [ 'message' => 'test message 2' ],
             [ 'message' => 'test message 3' ],
@@ -40,7 +40,7 @@ class MessageFixtures extends Fixture
             [ 'message' => 'test message 5' ]
         ];
 
-        foreach ($message_data as $data) {
+        foreach ($messageData as $data) {
             $message = new Message();
 
             $message->setName('Lukáš Bečvář');

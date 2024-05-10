@@ -71,13 +71,13 @@ class CookieUtil
             }
 
             $parts = explode('/', $uri);
-            $cookie_path = '';
+            $cookiePath = '';
 
             foreach ($parts as $part) {
-                $cookie_path = '/' . ltrim($cookie_path . '/' . $part, '//');
-                setcookie($name, '', 1, $cookie_path);
+                $cookiePath = '/' . ltrim($cookiePath . '/' . $part, '//');
+                setcookie($name, '', 1, $cookiePath);
                 do {
-                    setcookie($name, '', 1, $cookie_path, $domain);
+                    setcookie($name, '', 1, $cookiePath, $domain);
                 } while (strpos($domain, '.') !== false && $domain = substr($domain, 1 + strpos($domain, '.')));
             }
         }

@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // get html elements
     const chat = document.getElementById('chat');
     const messages = document.getElementById('messages');
-    const message_input = document.getElementById('message');
-    const send_button = document.getElementById('send');
+    const messageInput = document.getElementById('message');
+    const sendButton = document.getElementById('send');
     
     // init variables
     let lastMessageId = 0; // keeps track of the last displayed message's ID
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // send a chat message to the server
     function sendMessage() {
-        const message = message_input.value;
+        const message = messageInput.value;
         if (message) {
             // send a POST request to save the message
             fetch('/api/chat/save/message', {
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 if (data.status === 'success') {
                     // clear the message input after sending
-                    message_input.value = '';
+                    messageInput.value = '';
                 } else {
                     console.error('Failed to save message');
                 }
@@ -93,13 +93,13 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(getChatMessages, 500);
 
     // add a click event listener to the send button to send messages
-    send_button.addEventListener('click', sendMessage);
+    sendButton.addEventListener('click', sendMessage);
 
     // add a keypress event listener to send a message when the Enter key is pressed
-    message_input.addEventListener("keypress", function(e) {
+    messageInput.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             sendMessage();
-            message_input.value = '';
+            messageInput.value = '';
         }
     });
 });

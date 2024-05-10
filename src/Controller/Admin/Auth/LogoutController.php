@@ -43,8 +43,9 @@ class LogoutController extends AbstractController
         // verify user logout
         if (!$this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('auth_login');
+        } else {
+            // handle logpout error
+            return $this->errorManager->handleError('logout error: unknown error in logout function', 500);
         }
-
-        return $this->errorManager->handleError('logout error: unknown error in logout function', 500);
     }
 }

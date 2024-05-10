@@ -60,14 +60,14 @@ class VisitorManager
     /**
      * Get the visitor ID by IP address.
      *
-     * @param string $ip_address
+     * @param string $ipAddress
      *
      * @return int
      */
-    public function getVisitorID(string $ip_address): int
+    public function getVisitorID(string $ipAddress): int
     {
         // get visitor id
-        $visitor = $this->getVisitorRepository($ip_address);
+        $visitor = $this->getVisitorRepository($ipAddress);
 
         if ($visitor == null) {
             return 1;
@@ -79,12 +79,12 @@ class VisitorManager
     /**
      * Update visitor email by IP address.
      *
-     * @param string $ip_address
+     * @param string $ipAddress
      * @param string $email
      */
-    public function updateVisitorEmail(string $ip_address, string $email): void
+    public function updateVisitorEmail(string $ipAddress, string $email): void
     {
-        $visitor = $this->getVisitorRepository($ip_address);
+        $visitor = $this->getVisitorRepository($ipAddress);
 
         // check visitor found
         if ($visitor !== null) {
@@ -109,16 +109,16 @@ class VisitorManager
     public function getVisitors(int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Visitor::class);
-        $per_page = $_ENV['ITEMS_PER_PAGE'];
+        $perPage = $_ENV['ITEMS_PER_PAGE'];
 
         // calculate offset
-        $offset = ($page - 1) * $per_page;
+        $offset = ($page - 1) * $perPage;
 
         // get visitors from database
         try {
             $queryBuilder = $repo->createQueryBuilder('l')
                 ->setFirstResult($offset)
-                ->setMaxResults($per_page);
+                ->setMaxResults($perPage);
 
             $visitors = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
@@ -128,9 +128,9 @@ class VisitorManager
 
         // replace browser with formated value for log reader
         foreach ($visitors as $visitor) {
-            $user_agent = $visitor->getBrowser();
-            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
-            $visitor->setBrowser($formated_browser);
+            $userAgent = $visitor->getBrowser();
+            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
+            $visitor->setBrowser($formatedBrowser);
         }
 
         return $visitors;
@@ -168,13 +168,13 @@ class VisitorManager
     /**
      * Get a visitor repository by IP address.
      *
-     * @param string $ip_address
+     * @param string $ipAddress
      *
      * @return Visitor|null
      */
-    public function getVisitorRepository(string $ip_address): ?object
+    public function getVisitorRepository(string $ipAddress): ?object
     {
-        return $this->getRepositoryByArray(['ip_address' => $ip_address]);
+        return $this->getRepositoryByArray(['ip_address' => $ipAddress]);
     }
 
     /**
@@ -200,10 +200,10 @@ class VisitorManager
      */
     public function getVisitorStatus(int $id): string
     {
-        $user_cache_key = 'online_user_' . $id;
+        $userCacheKey = 'online_user_' . $id;
 
         // get user status
-        $status = $this->cacheManager->getValue($user_cache_key);
+        $status = $this->cacheManager->getValue($userCacheKey);
 
         // check if status found
         if ($status->get() == null) {
@@ -224,21 +224,21 @@ class VisitorManager
      */
     public function getOnlineVisitorIDs(): array
     {
-        $online_visitors = [];
+        $onlineVisitors = [];
 
         // get all visitors id list
-        $visitor_ids = $this->visitorRepository->getAllIds();
+        $visitorIds = $this->visitorRepository->getAllIds();
 
-        foreach ($visitor_ids as $visitor_id) {
+        foreach ($visitorIds as $visitorId) {
             // get visitor status
-            $status = $this->getVisitorStatus($visitor_id);
+            $status = $this->getVisitorStatus($visitorId);
 
             // check visitor status
             if ($status == 'online') {
-                array_push($online_visitors, $visitor_id);
+                array_push($onlineVisitors, $visitorId);
             }
         }
 
-        return $online_visitors;
+        return $onlineVisitors;
     }
 }

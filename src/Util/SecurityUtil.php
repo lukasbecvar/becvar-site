@@ -25,49 +25,49 @@ class SecurityUtil
     /**
      * Validate a plain text against a bcrypt hash.
      *
-     * @param string $plain_text The plain text to validate.
+     * @param string $plainText The plain text to validate.
      * @param string $hash The bcrypt hash for comparison.
      * @return bool True if the validation succeeds, false otherwise.
      */
-    public function hashValidate(string $plain_text, string $hash): bool
+    public function hashValidate(string $plainText, string $hash): bool
     {
-        return password_verify($plain_text, $hash);
+        return password_verify($plainText, $hash);
     }
 
     /**
      * Generate a bcrypt hash for a plain text.
      *
-     * @param string $plain_text The plain text to hash.
+     * @param string $plainText The plain text to hash.
      * @param int $cost The cost parameter for bcrypt.
      * @return string The generated bcrypt hash.
      */
-    public function genBcryptHash(string $plain_text, int $cost): string
+    public function genBcryptHash(string $plainText, int $cost): string
     {
-        return password_hash($plain_text, PASSWORD_BCRYPT, ['cost' => $cost]);
+        return password_hash($plainText, PASSWORD_BCRYPT, ['cost' => $cost]);
     }
 
     /**
      * Encrypt a string using AES encryption.
      *
-     * @param string $plain_text The plain text to encrypt.
+     * @param string $plainText The plain text to encrypt.
      * @param string $method The encryption method (default: AES-128-CBC).
      * @return string The base64-encoded encrypted string.
      */
-    public function encryptAes(string $plain_text, string $method = 'AES-128-CBC'): string
+    public function encryptAes(string $plainText, string $method = 'AES-128-CBC'): string
     {
         $key = $_ENV['APP_SECRET'];
 
         // derive a fixed-size key using PBKDF2 with SHA-256
-        $derived_key = hash_pbkdf2("sha256", $key, "", 10000, 32);
+        $derivedKey = hash_pbkdf2("sha256", $key, "", 10000, 32);
 
         // generate a random Initialization Vector (IV) for added security
         $iv = openssl_random_pseudo_bytes(16);
 
         // encrypt the plain text using AES encryption with the derived key and IV
-        $encrypted_data = openssl_encrypt($plain_text, $method, $derived_key, 0, $iv);
+        $encryptedData = openssl_encrypt($plainText, $method, $derivedKey, 0, $iv);
 
         // IV and encrypted data, then base64 encode the result
-        $result = $iv . $encrypted_data;
+        $result = $iv . $encryptedData;
 
         return base64_encode($result);
     }
@@ -75,34 +75,34 @@ class SecurityUtil
     /**
      * Decrypt an AES-encrypted string.
      *
-     * @param string $encrypted_data The base64-encoded encrypted string.
+     * @param string $encryptedData The base64-encoded encrypted string.
      * @param string $method The encryption method (default: AES-128-CBC).
      * @return string|null The decrypted string or null on error.
      */
-    public function decryptAes(string $encrypted_data, string $method = 'AES-128-CBC'): ?string
+    public function decryptAes(string $encryptedData, string $method = 'AES-128-CBC'): ?string
     {
         $key = $_ENV['APP_SECRET'];
 
         // derive a fixed-size key using PBKDF2 with SHA-256
-        $derived_key = hash_pbkdf2("sha256", $key, "", 10000, 32);
+        $derivedKey = hash_pbkdf2("sha256", $key, "", 10000, 32);
 
         // decode the base64-encoded encrypted data
-        $decoded_data = base64_decode($encrypted_data);
+        $decodedData = base64_decode($encryptedData);
 
         // extract the Initialization Vector (IV) from the decoded data
-        $iv = substr($decoded_data, 0, 16);
+        $iv = substr($decodedData, 0, 16);
 
         // extract the encrypted data (remaining bytes) from the decoded data
-        $encrypted_data = substr($decoded_data, 16);
+        $encryptedData = substr($decodedData, 16);
 
         // decrypt the data using AES decryption with the derived key and IV
-        $decrypted_data = openssl_decrypt($encrypted_data, $method, $derived_key, 0, $iv);
+        $decryptedData = openssl_decrypt($encryptedData, $method, $derivedKey, 0, $iv);
 
         // check if decryption was successful
-        if ($decrypted_data === false) {
-            $decrypted_data = null;
+        if ($decryptedData === false) {
+            $decryptedData = null;
         }
 
-        return $decrypted_data;
+        return $decryptedData;
     }
 }

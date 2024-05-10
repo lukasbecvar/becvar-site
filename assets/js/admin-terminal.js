@@ -2,10 +2,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     // get html element list
     const terminal = document.getElementById('output-container');
-    const command_container = document.getElementById('command-container');
-    const command_input = document.getElementById('command');
-    const hostname_element = document.getElementById('user');
-    const path_element = document.getElementById('path');
+    const commandContainer = document.getElementById('command-container');
+    const commandInput = document.getElementById('command');
+    const hostnameElement = document.getElementById('user');
+    const pathElement = document.getElementById('path');
 
     // main api url
     const api_url = '/api/system/terminal';
@@ -14,16 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentHostname = '';
 
     // focus command input
-    command_input.focus();
+    commandInput.focus();
 
     // update cwd
     function updatePath() {
-        path_element.textContent = currentPath;
+        pathElement.textContent = currentPath;
     }
 
     // update hostname
     function updateHostname() {
-        hostname_element.textContent = 'root@' + currentHostname;
+        hostnameElement.textContent = 'root@' + currentHostname;
     }
 
     // scroll the bottom
@@ -64,12 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
     getCurrentPath();
 
     // event listener for keypress in the command input
-    command_input.addEventListener("keypress", function(e) {
+    commandInput.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             const command = this.value.trim();
             if (command.length > 0) {
                 // display command in the terminal
-                terminal.innerHTML += '<div class="prompr-reset" id="prompt-line"><span id="user">' + hostname_element.textContent + '</span><span class="color-white">:</span><span id="path">' + path_element.textContent + '</span><span id="prompt" class="color-white">$ ' + command + '</span></div>';
+                terminal.innerHTML += '<div class="prompr-reset" id="prompt-line"><span id="user">' + hostnameElement.textContent + '</span><span class="color-white">:</span><span id="path">' + pathElement.textContent + '</span><span id="prompt" class="color-white">$ ' + command + '</span></div>';
                 
                 // clear the input
                 this.value = '';
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("click", function(e) {
         var isInsideTerminalComponent = e.target.closest('.terminal-component') !== null;
     
-        if (isInsideTerminalComponent && e.target !== command_input) {
-            command_input.focus();
+        if (isInsideTerminalComponent && e.target !== commandInput) {
+            commandInput.focus();
         }
     });
     
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
             terminal.innerHTML = '';
         } else {
             // hide the command container during command execution
-            command_container.style.display = 'none';
+            commandContainer.style.display = 'none';
 
             // send the command to the server
             const xhr = new XMLHttpRequest();
@@ -120,13 +120,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         terminal.innerHTML += '<div>' + xhr.responseText + '</div>';
 
                         // show the command container again
-                        command_container.style.display = '';
+                        commandContainer.style.display = '';
 
                         // scroll to the bottom of the terminal
                         scrollToBottom();
 
                         // focus on the command input
-                        command_input.focus();
+                        commandInput.focus();
                     } else {
                         // log an error and display a warning in the terminal
                         console.log(xhr.responseText);
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         scrollToBottom();
                         
                         // focus on the command input
-                        command_input.focus();
+                        commandInput.focus();
                     }
                 }
             };

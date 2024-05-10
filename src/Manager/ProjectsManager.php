@@ -44,14 +44,14 @@ class ProjectsManager
     public function updateProjectList(): void
     {
         // get github link
-        $github_link = $_ENV['GITHUB_LINK'];
+        $githubLink = $_ENV['GITHUB_LINK'];
 
         // strip link
-        $github_user = str_replace('https://github.com/', '', $github_link);
-        $github_user = str_replace('/', '', $github_user);
+        $githubUser = str_replace('https://github.com/', '', $githubLink);
+        $githubUser = str_replace('/', '', $githubUser);
 
         // get repos form github
-        $repos = $this->jsonUtil->getJson('https://api.github.com/users/' . $github_user . '/repos');
+        $repos = $this->jsonUtil->getJson('https://api.github.com/users/' . $githubUser . '/repos');
 
         // delete all projects from table
         $this->dropProjects();
@@ -64,7 +64,7 @@ class ProjectsManager
             // get & escape values
             $name = $repo['name'];
             $language = $repo['language'];
-            $html_url = $repo['html_url'];
+            $htmlUrl = $repo['html_url'];
 
             // check if description is null
             if ($repo['description'] == null) {
@@ -75,7 +75,7 @@ class ProjectsManager
             }
 
             // check if repo is profile readme
-            if ($name != $github_user) {
+            if ($name != $htmlUrl) {
                 // check if repo is not fork
                 if ($repo['fork'] != true) {
                     // check if repo archived
@@ -92,7 +92,7 @@ class ProjectsManager
                     $project->setName($name);
                     $project->setDescription($description);
                     $project->setTechnology($language);
-                    $project->setLink($html_url);
+                    $project->setLink($htmlUrl);
                     $project->setStatus($status);
 
                     // try to insert project

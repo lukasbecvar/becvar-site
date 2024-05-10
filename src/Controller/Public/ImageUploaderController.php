@@ -69,16 +69,16 @@ class ImageUploaderController extends AbstractController
         }
 
         // get image & decrypt
-        $image_content = $this->securityUtil->decryptAes($imageRepo->getImage());
+        $imageContent = $this->securityUtil->decryptAes($imageRepo->getImage());
 
         // check if image is decrypted
-        if ($image_content == null) {
+        if ($imageContent == null) {
             $this->errorManager->handleError('Error to decrypt aes image', 500);
         }
 
         // create a streamed response with image content
-        return new StreamedResponse(function () use ($image_content) {
-            echo base64_decode($image_content);
+        return new StreamedResponse(function () use ($imageContent) {
+            echo base64_decode($imageContent);
         }, Response::HTTP_OK, [
             'Content-Type' => 'image/jpeg',
         ]);
@@ -94,7 +94,8 @@ class ImageUploaderController extends AbstractController
     #[Route('/image/uploader', methods: ['GET', 'POST'], name: 'public_image_uploader')]
     public function uploadImage(): Response
     {
-        $error_msg = null;
+        // init default resources
+        $errorMsg = null;
 
         // check if form is submited
         if (isset($_POST['submitUpload'])) {
@@ -107,13 +108,13 @@ class ImageUploaderController extends AbstractController
                 $token = ByteString::fromRandom(32)->toByteString();
 
                 // get image file
-                $image_file = file_get_contents($_FILES['userfile']['tmp_name']);
+                $imageFile = file_get_contents($_FILES['userfile']['tmp_name']);
 
                 // encode file
-                $image_file = base64_encode($image_file);
+                $imageFile = base64_encode($imageFile);
 
                 // escape image string
-                $image_file = $this->securityUtil->escapeString($image_file);
+                $imageFile = $this->securityUtil->escapeString($imageFile);
 
                 // get current data
                 $date = date('d.m.Y H:i:s');
@@ -122,11 +123,11 @@ class ImageUploaderController extends AbstractController
                 $image = new Image();
 
                 // encrypt image
-                $image_file = $this->securityUtil->encryptAes($image_file);
+                $imageFile = $this->securityUtil->encryptAes($imageFile);
 
                 // set image data
                 $image->setToken($token);
-                $image->setImage($image_file);
+                $image->setImage($imageFile);
                 $image->setTime($date);
 
                 // try to upload image
@@ -144,7 +145,7 @@ class ImageUploaderController extends AbstractController
                 return $this->redirectToRoute('public_image_viewer', ['token' => $token]);
             } else {
                 // handle error (translation key)
-                $error_msg = 'image.uploader.file.format.error';
+                $errorMsg = 'image.uploader.file.format.error';
             }
         }
 
@@ -154,7 +155,7 @@ class ImageUploaderController extends AbstractController
             'contact_email' => $_ENV['CONTACT_EMAIL'],
             'twitter_link' => $_ENV['TWITTER_LINK'],
             'github_link' => $_ENV['GITHUB_LINK'],
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 }

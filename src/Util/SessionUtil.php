@@ -44,41 +44,41 @@ class SessionUtil
     /**
      * Check if a session with the specified name exists.
      *
-     * @param string $session_name The name of the session to check.
+     * @param string $sessionName The name of the session to check.
      *
      * @return bool Whether the session exists.
      */
-    public function checkSession(string $session_name): bool
+    public function checkSession(string $sessionName): bool
     {
         $this->startSession();
-        return isset($_SESSION[$session_name]);
+        return isset($_SESSION[$sessionName]);
     }
 
     /**
      * Set a session value.
      *
-     * @param string $session_name The name of the session.
-     * @param string $session_value The value to set for the session.
+     * @param string $sessionName The name of the session.
+     * @param string $sessionValue The value to set for the session.
      */
-    public function setSession(string $session_name, string $session_value): void
+    public function setSession(string $sessionName, string $sessionValue): void
     {
         $this->startSession();
-        $_SESSION[$session_name] = $this->securityUtil->encryptAes($session_value);
+        $_SESSION[$sessionName] = $this->securityUtil->encryptAes($sessionValue);
     }
 
     /**
      * Get the decrypted value of a session.
      *
-     * @param string $session_name The name of the session.
+     * @param string $sessionName The name of the session.
      *
      * @return mixed The decrypted session value.
      */
-    public function getSessionValue(string $session_name): mixed
+    public function getSessionValue(string $sessionName): mixed
     {
         $this->startSession();
 
         // decrypt session value
-        $value = $this->securityUtil->decryptAes($_SESSION[$session_name]);
+        $value = $this->securityUtil->decryptAes($_SESSION[$sessionName]);
 
         // check if session data is decrypted
         if ($value == null) {

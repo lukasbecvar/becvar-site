@@ -101,7 +101,11 @@ class SiteUtil
      */
     public function isDevMode(): bool
     {
-        return $_ENV['APP_ENV'] === 'dev';
+        if ($_ENV['APP_ENV'] == 'dev' || $_ENV['APP_ENV'] == 'test') {
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -66,10 +66,10 @@ class AuthManager
         }
 
         // get login token form session
-        $login_token = $this->sessionUtil->getSessionValue('login-token');
+        $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
-        if ($this->getUserRepository(['token' => $login_token]) != null) {
+        if ($this->getUserRepository(['token' => $loginToken]) != null) {
             return true;
         }
 
@@ -80,24 +80,24 @@ class AuthManager
      * Logs in a user.
      *
      * @param string $username
-     * @param string $user_token
+     * @param string $userToken
      * @param bool   $remember
      *
      * @return void
      */
-    public function login(string $username, string $user_token, bool $remember): void
+    public function login(string $username, string $userToken, bool $remember): void
     {
         // check if user not logged in
         if (!$this->isUserLogedin()) {
             // check if user token is valid
-            if (!empty($user_token)) {
+            if (!empty($userToken)) {
                 // set login session
-                $this->sessionUtil->setSession('login-token', $user_token);
+                $this->sessionUtil->setSession('login-token', $userToken);
 
                 // check if remember set (autologin cookie)
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieUtil->set('login-token-cookie', $user_token, time() + (60 * 60 * 24 * 7 * 365));
+                        $this->cookieUtil->set('login-token-cookie', $userToken, time() + (60 * 60 * 24 * 7 * 365));
                     }
                 }
 
@@ -107,7 +107,7 @@ class AuthManager
                 // log auth action
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
-                $this->errorManager->handleError('error to login user with token: ' . $user_token, 500);
+                $this->errorManager->handleError('error to login user with token: ' . $userToken, 500);
             }
         }
     }
@@ -148,10 +148,10 @@ class AuthManager
         $date = date('d.m.Y H:i:s');
 
         // get current visitor ip address
-        $ip_address = $this->visitorInfoUtil->getIP();
+        $ipAddress = $this->visitorInfoUtil->getIP();
 
         // get visitor id
-        $visitor_id = $this->visitorManager->getVisitorRepository($ip_address)->getID();
+        $visitorId = $this->visitorManager->getVisitorRepository($ipAddress)->getID();
 
         // get user data
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
@@ -162,7 +162,7 @@ class AuthManager
             $user->setLastLoginTime($date);
 
             // update visitor id
-            $user->setVisitorId($visitor_id);
+            $user->setVisitorId($visitorId);
 
             // update user data
             try {
@@ -192,19 +192,19 @@ class AuthManager
         $date = date('d.m.Y H:i:s');
 
         // get user ip
-        $ip_address = $this->visitorInfoUtil->getIP();
+        $ipAddress = $this->visitorInfoUtil->getIP();
 
         // generate token
         $token = ByteString::fromRandom(32)->toString();
 
         // get visitor id
-        $visitor_id = $this->visitorManager->getVisitorID($ip_address);
+        $visitorId = $this->visitorManager->getVisitorID($ipAddress);
 
         // password hash
-        $hashed_password = $this->securityUtil->genBcryptHash($password, 10);
+        $hashedPassword = $this->securityUtil->genBcryptHash($password, 10);
 
         // default profile pics base64
-        $image_base64 = '
+        $imageBase64 = '
             /9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw4RDQ0OEA0QDhANDQ0NDw4NDhsNDg0
             OFREWFxcTFRUYICggGBolGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDi
             sZFRkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK
@@ -235,14 +235,14 @@ class AuthManager
 
         // set user entity data
         $user->setUsername($username);
-        $user->setPassword($hashed_password);
+        $user->setPassword($hashedPassword);
         $user->setRole('Owner');
-        $user->setIpAddress($ip_address);
+        $user->setIpAddress($ipAddress);
         $user->setToken($token);
         $user->setRegistedTime($date);
         $user->setLastLoginTime('not logged');
-        $user->setProfilePic($image_base64);
-        $user->setVisitorId(strval($visitor_id));
+        $user->setProfilePic($imageBase64);
+        $user->setVisitorId(strval($visitorId));
 
         // insert new user
         try {
@@ -274,11 +274,11 @@ class AuthManager
         }
 
         // get login token form session
-        $login_token = $this->sessionUtil->getSessionValue('login-token');
+        $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
-        if ($this->getUserRepository(['token' => $login_token]) != null) {
-            return $login_token;
+        if ($this->getUserRepository(['token' => $loginToken]) != null) {
+            return $loginToken;
         }
 
         return null;
@@ -440,10 +440,10 @@ class AuthManager
         $token = ByteString::fromRandom(32)->toString();
 
         // get users repository
-        $user_repo = $this->entityManager->getRepository(User::class);
+        $userRepo = $this->entityManager->getRepository(User::class);
 
         // check if user token is not already used
-        if ($user_repo->findOneBy(['token' => $token]) != null) {
+        if ($userRepo->findOneBy(['token' => $token]) != null) {
             $this->generateUserToken();
         }
 
@@ -467,15 +467,15 @@ class AuthManager
         ];
 
         // get all users in database
-        $user_repo = $this->entityManager->getRepository(User::class)->findAll();
+        $userRepo = $this->entityManager->getRepository(User::class)->findAll();
 
         // regenerate all users tokens
-        foreach ($user_repo as $user) {
+        foreach ($userRepo as $user) {
             // regenerate new token
-            $new_token = $this->generateUserToken();
+            $newToken = $this->generateUserToken();
 
             // set new token
-            $user->setToken($new_token);
+            $user->setToken($newToken);
 
             // flush data
             try {
@@ -504,7 +504,7 @@ class AuthManager
      */
     public function getOnlineUsersList(): array
     {
-        $online_visitors = [];
+        $onlineVisitors = [];
 
         // get all users list
         $users = $this->userRepository->getAllUsersWithVisitorId();
@@ -515,10 +515,10 @@ class AuthManager
 
             // check visitor status
             if ($status == 'online') {
-                array_push($online_visitors, $user);
+                array_push($onlineVisitors, $user);
             }
         }
 
-        return $online_visitors;
+        return $onlineVisitors;
     }
 }

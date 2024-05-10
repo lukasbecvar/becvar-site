@@ -86,14 +86,14 @@ class LogReaderController extends AbstractController
     public function logsWhereIp(Request $request): Response
     {
         // get query parameters
-        $ip_address = $this->siteUtil->getQueryString('ip', $request);
+        $ipAddress = $this->siteUtil->getQueryString('ip', $request);
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
         // get & escape ip
-        $ip_address = $this->securityUtil->escapeString($ip_address);
+        $ipAddress = $this->securityUtil->escapeString($ipAddress);
 
         // get logs data
-        $logs = $this->logManager->getLogsWhereIP($ip_address, $this->authManager->getUsername(), $page);
+        $logs = $this->logManager->getLogsWhereIP($ipAddress, $this->authManager->getUsername(), $page);
 
         return $this->render('admin/log-reader.html.twig', [
             // user data
@@ -111,7 +111,7 @@ class LogReaderController extends AbstractController
             'login_logs_count' => $this->logManager->getLoginLogsCount(),
             'visitor_data' => $this->databaseManager->getTableData('visitors', false),
             'limit_value' => $_ENV['ITEMS_PER_PAGE'],
-            'where_ip' => $ip_address
+            'where_ip' => $ipAddress
         ]);
     }
 

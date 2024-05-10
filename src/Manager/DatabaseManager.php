@@ -43,7 +43,7 @@ class DatabaseManager
      */
     public function getTables(): ?array
     {
-        $tables_list = [];
+        $tablesList = [];
         $tables = null;
 
         try {
@@ -56,22 +56,22 @@ class DatabaseManager
 
         // build tables list
         foreach ($tables as $value) {
-            array_push($tables_list, $value['Tables_in_' . $_ENV['DATABASE_NAME']]);
+            array_push($tablesList, $value['Tables_in_' . $_ENV['DATABASE_NAME']]);
         }
 
         $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
 
-        return $tables_list;
+        return $tablesList;
     }
 
     /**
      * Retrieves the columns of a specific table.
      *
-     * @param string $table_name The name of the table.
+     * @param string $tableName The name of the table.
      *
      * @return array<string> The list of column names.
      */
-    public function getTableColumns(string $table_name): array
+    public function getTableColumns(string $tableName): array
     {
         $table = null;
         $columns = [];
@@ -79,9 +79,9 @@ class DatabaseManager
 
         // get data
         try {
-            $table = $schema->getTable($table_name);
+            $table = $schema->getTable($tableName);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get columns from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+            $this->errorManager->handleError('error to get columns from table: ' . $tableName . ', ' . $e->getMessage(), 404);
         }
 
         foreach ($table->getColumns() as $column) {
@@ -94,29 +94,29 @@ class DatabaseManager
     /**
      * Retrieves the columns of a specific database table.
      *
-     * @param string $table_name  The name of the table for which columns should be retrieved.
+     * @param string $tableName  The name of the table for which columns should be retrieved.
      *
      * @throws \Exception If there is an error during the retrieval of the table columns or the table is not found.
      *
      * @return array<mixed> The array of column names if successful.
      */
-    public function getTableData(string $table_name, bool $log = true): array
+    public function getTableData(string $tableName, bool $log = true): array
     {
         $data = [];
 
         // escape name from sql query
-        $table_name = $this->connection->quoteIdentifier($table_name);
+        $tableName = $this->connection->quoteIdentifier($tableName);
 
         // get data
         try {
-            $data = $this->connection->executeQuery('SELECT * FROM ' . $table_name)->fetchAllAssociative();
+            $data = $this->connection->executeQuery('SELECT * FROM ' . $tableName)->fetchAllAssociative();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: ' . $tableName . ', ' . $e->getMessage(), 404);
         }
 
         // log to database
         if ($log) {
-            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $tableName);
         }
 
         return $data;
@@ -125,7 +125,7 @@ class DatabaseManager
     /**
      * Retrieves data from a specific database table with pagination.
      *
-     * @param string $table_name  The name of the table from which to retrieve data.
+     * @param string $tableName  The name of the table from which to retrieve data.
      * @param int    $page        The page number for pagination (default is 1).
      * @param bool   $log         Indicates whether to log the action (default is true).
      * @param bool   $raw         Whether to return raw data without decryption. Default is false.
@@ -134,36 +134,36 @@ class DatabaseManager
      *
      * @return array<mixed> The array of data from the specified table.
      */
-    public function getTableDataByPage(string $table_name, int $page = 1, bool $log = true, bool $raw = false): array
+    public function getTableDataByPage(string $tableName, int $page = 1, bool $log = true, bool $raw = false): array
     {
         $data = [];
         $itemsPerPage = $_ENV['ITEMS_PER_PAGE'];
 
         // escape name from sql query
-        $table_name = $this->connection->quoteIdentifier($table_name);
+        $tableName = $this->connection->quoteIdentifier($tableName);
 
         // calculate the offset based on the page number
         $offset = ($page - 1) * $itemsPerPage;
 
         // get data with LIMIT and OFFSET
         try {
-            $query = 'SELECT * FROM ' . $table_name . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
+            $query = 'SELECT * FROM ' . $tableName . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
             $data = $this->connection->executeQuery($query)->fetchAllAssociative();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: ' . $tableName . ', ' . $e->getMessage(), 404);
         }
 
         // log to database
         if ($log) {
-            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $table_name);
+            $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database table: ' . $tableName);
         }
 
         // decrypt database data (specify table names)
-        $decrypted_tables = ["`todos`", "`chat_messages`", "`code_paste`", "`images`", "`inbox_messages`", "`users`"];
+        $decryptedTables = ["`todos`", "`chat_messages`", "`code_paste`", "`images`", "`inbox_messages`", "`users`"];
 
         // build new data array (decrypt aes data)
-        if (in_array($table_name, $decrypted_tables)) {
-            $decrypted_data = [];
+        if (in_array($tableName, $decryptedTables)) {
+            $decryptedData = [];
             foreach ($data as $value) {
                 $arr = [];
                 foreach ($value as $key => $val) {
@@ -180,9 +180,9 @@ class DatabaseManager
                         ) ? '[encrypted-data]' : $val;
                     }
                 }
-                array_push($decrypted_data, $arr);
+                array_push($decryptedData, $arr);
             }
-            return $decrypted_data;
+            return $decryptedData;
         }
 
         return $data;
@@ -191,28 +191,28 @@ class DatabaseManager
     /**
      * Retrieves data from a specific row of a database table.
      *
-     * @param string $table_name  The name of the table from which to retrieve data.
+     * @param string $tableName  The name of the table from which to retrieve data.
      * @param int    $id          The unique identifier of the row.
      *
      * @throws \Exception If there is an error during the retrieval of the row data or the table is not found.
      *
      * @return array<mixed> The array of data from the specified row.
      */
-    public function selectRowData(string $table_name, int $id): array
+    public function selectRowData(string $tableName, int $id): array
     {
         $data = [];
         try {
             $queryBuilder = $this->connection->createQueryBuilder();
             $queryBuilder
                 ->select('*')
-                ->from($table_name)
+                ->from($tableName)
                 ->where('id = :id')
                 ->setParameter('id', $id);
 
             $statement = $queryBuilder->execute();
             $data = $statement->fetchAllAssociative();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get data from table: ' . $table_name . ', ' . $e->getMessage(), 404);
+            $this->errorManager->handleError('error to get data from table: ' . $tableName . ', ' . $e->getMessage(), 404);
         }
         return $data[0];
     }
@@ -220,7 +220,7 @@ class DatabaseManager
     /**
      * Adds a new row to a specific database table.
      *
-     * @param string $table_name  The name of the table to which the new row will be added.
+     * @param string $tableName  The name of the table to which the new row will be added.
      * @param array<string> $columns     The array of column names for the new row.
      * @param array<mixed> $values      The array of values corresponding to the columns for the new row.
      *
@@ -228,7 +228,7 @@ class DatabaseManager
      *
      * @return void
      */
-    public function addNew(string $table_name, array $columns, array $values): void
+    public function addNew(string $tableName, array $columns, array $values): void
     {
         // create placeholders for prepared statement
         $columnPlaceholders = array_fill(0, count($columns), '?');
@@ -236,46 +236,46 @@ class DatabaseManager
         $columnPlaceholderList = implode(', ', $columnPlaceholders);
 
         // construct the SQL query
-        $sql = "INSERT INTO `$table_name` ($columnList) VALUES ($columnPlaceholderList)";
+        $sql = "INSERT INTO `$tableName` ($columnList) VALUES ($columnPlaceholderList)";
 
         try {
             // execute query
             $this->connection->executeQuery($sql, $values);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error insert new row into: ' . $table_name . ', ' . $e->getMessage(), 500);
+            $this->errorManager->handleError('error insert new row into: ' . $tableName . ', ' . $e->getMessage(), 500);
         }
 
-        $this->logManager->log('database', $this->authManager->getUsername() . ' inserted new row to table: ' . $table_name);
+        $this->logManager->log('database', $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName);
     }
 
     /**
      * Deletes a row from a table.
      *
-     * @param string $table_name The name of the table.
+     * @param string $tableName The name of the table.
      * @param string $id The ID of the row to delete.
      *
      * @return void
      */
-    public function deleteRowFromTable(string $table_name, string $id): void
+    public function deleteRowFromTable(string $tableName, string $id): void
     {
         if ($id == 'all') {
-            $sql = 'DELETE FROM ' . $table_name . ' WHERE id=id';
+            $sql = 'DELETE FROM ' . $tableName . ' WHERE id=id';
             $this->connection->executeStatement($sql);
 
-            $sql_index_reset = 'ALTER TABLE ' . $table_name . ' AUTO_INCREMENT = 1';
-            $this->connection->executeStatement($sql_index_reset);
+            $sqlIndexReset = 'ALTER TABLE ' . $tableName . ' AUTO_INCREMENT = 1';
+            $this->connection->executeStatement($sqlIndexReset);
         } else {
-            $sql = 'DELETE FROM ' . $table_name . ' WHERE id = :id';
+            $sql = 'DELETE FROM ' . $tableName . ' WHERE id = :id';
             $params = ['id' => $id];
             $this->connection->executeStatement($sql, $params);
         }
-        $this->logManager->log('database', $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $table_name);
+        $this->logManager->log('database', $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $tableName);
     }
 
     /**
      * Updates a specific value in a row of a database table.
      *
-     * @param string $table_name  The name of the table in which the value will be updated.
+     * @param string $tableName  The name of the table in which the value will be updated.
      * @param string $row         The column name for which the value will be updated.
      * @param string $value       The new value to be set.
      * @param int    $id          The unique identifier of the row.
@@ -284,10 +284,10 @@ class DatabaseManager
      *
      * @return void
      */
-    public function updateValue(string $table_name, string $row, string $value, int $id): void
+    public function updateValue(string $tableName, string $row, string $value, int $id): void
     {
         // query builder
-        $query = "UPDATE $table_name SET $row = :value WHERE id = :id";
+        $query = "UPDATE $tableName SET $row = :value WHERE id = :id";
 
         try {
             $this->connection->executeStatement($query, [
@@ -295,9 +295,9 @@ class DatabaseManager
                 'id' => $id
             ]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to update value: ' . $value . ' in: ' . $table_name . ' id: ' . $id . ', error: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError('error to update value: ' . $value . ' in: ' . $tableName . ' id: ' . $id . ', error: ' . $e->getMessage(), 500);
         }
-        $this->logManager->log('database', $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $table_name);
+        $this->logManager->log('database', $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $tableName);
     }
 
     /**
@@ -312,24 +312,24 @@ class DatabaseManager
         $images = [];
 
         // get images list
-        $images_list = $this->getTableDataByPage('images', $page, true, true);
+        $imagesList = $this->getTableDataByPage('images', $page, true, true);
 
         // get image data (this is for decrypt image)
-        foreach ($images_list as $image) {
+        foreach ($imagesList as $image) {
             // decrypt image data
-            $image_data = $this->securityUtil->decryptAes($image['image']);
+            $imageData = $this->securityUtil->decryptAes($image['image']);
 
             // check if image data is decrypted
-            if ($image_data == null) {
+            if ($imageData == null) {
                 $this->errorManager->handleError('Error to decrypt aes image data', 500);
             }
 
-            $image_item = [
+            $imageItem = [
                 'id' => $image['id'],
                 'token' => $image['token'],
-                'image' => $image_data
+                'image' => $imageData
             ];
-            array_push($images, $image_item);
+            array_push($images, $imageItem);
         }
 
         return $images;
@@ -338,37 +338,37 @@ class DatabaseManager
     /**
      * Checks if a table exists in the database.
      *
-     * @param string $table_name The name of the table.
+     * @param string $tableName The name of the table.
      *
      * @return bool True if the table exists, false otherwise.
      */
-    public function isTableExist(string $table_name): bool
+    public function isTableExist(string $tableName): bool
     {
-        return $this->connection->createSchemaManager()->tablesExist([$table_name]);
+        return $this->connection->createSchemaManager()->tablesExist([$tableName]);
     }
 
     /**
      * Counts the total number of rows in a table.
      *
-     * @param string $table_name The name of the table.
+     * @param string $tableName The name of the table.
      *
      * @return int The total number of rows.
      */
-    public function countTableData(string $table_name): int
+    public function countTableData(string $tableName): int
     {
-        return count($this->getTableData($table_name, false));
+        return count($this->getTableData($tableName, false));
     }
 
     /**
      * Counts the number of rows on a specific page of a table.
      *
-     * @param string $table_name The name of the table.
+     * @param string $tableName The name of the table.
      * @param int $page The page number.
      *
      * @return int The number of rows on the page.
      */
-    public function countTableDataByPage(string $table_name, int $page): int
+    public function countTableDataByPage(string $tableName, int $page): int
     {
-        return count($this->getTableDataByPage($table_name, $page, false));
+        return count($this->getTableDataByPage($tableName, $page, false));
     }
 }

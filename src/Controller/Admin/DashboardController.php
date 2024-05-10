@@ -118,15 +118,15 @@ class DashboardController extends AbstractController
     public function serviceActionRunner(Request $request): Response
     {
         // get query parameters
-        $service_name = $this->siteUtil->getQueryString('service', $request);
+        $serviceName = $this->siteUtil->getQueryString('service', $request);
         $action = $this->siteUtil->getQueryString('action', $request);
 
         // check if action is emergency shutdown
-        if ($service_name == 'emergency' && $action == 'shutdown') {
+        if ($serviceName == 'emergency' && $action == 'shutdown') {
             return $this->redirectToRoute('admin_emergency_shutdown');
         } else {
             // run normal action
-            $this->serviceManager->runAction($service_name, $action);
+            $this->serviceManager->runAction($serviceName, $action);
         }
         return $this->redirectToRoute('admin_dashboard');
     }
@@ -141,31 +141,31 @@ class DashboardController extends AbstractController
     public function emergencyShutdown(Request $request): Response
     {
         // init default resources
-        $error_msg = null;
+        $errorMsg = null;
 
         // generate configmation code
-        $confirm_code = ByteString::fromRandom(16)->toString();
+        $confirmCode = ByteString::fromRandom(16)->toString();
 
         // check if request is post
         if ($request->isMethod('POST')) {
             // get post data
-            $form_submit = $request->request->get('submitShutdown');
-            $shutdown_code = $request->request->get('shutdownCode');
-            $confirm_code = $request->request->get('confirmCode');
+            $formSubmit = $request->request->get('submitShutdown');
+            $shutdownCode = $request->request->get('shutdownCode');
+            $confirmCode = $request->request->get('confirmCode');
 
             // check if form submited
-            if (isset($form_submit)) {
+            if (isset($formSubmit)) {
                 // check if codes submited
-                if (isset($shutdown_code) && isset($confirm_code)) {
+                if (isset($shutdownCode) && isset($confirmCode)) {
                     // check if codes is valid
-                    if ($shutdown_code == $confirm_code) {
+                    if ($shutdownCode == $confirmCode) {
                         // ! execute shutdown !
                         $this->serviceManager->runAction('emergency_cnA1OI5jBL', 'shutdown_MEjP9bqXF7');
                     } else {
-                        $error_msg = 'confirmation codes is not matched';
+                        $errorMsg = 'confirmation codes is not matched';
                     }
                 } else {
-                    $error_msg = 'You must enter all values';
+                    $errorMsg = 'You must enter all values';
                 }
             }
         }
@@ -177,8 +177,8 @@ class DashboardController extends AbstractController
             'user_pic' => $this->authManager->getUserProfilePic(),
 
             // form data
-            'error_msg' => $error_msg,
-            'confirm_code' => $confirm_code
+            'error_msg' => $errorMsg,
+            'confirm_code' => $confirmCode
         ]);
     }
 }

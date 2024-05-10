@@ -37,13 +37,13 @@ class MessagesManager
      *
      * @param string $name
      * @param string $email
-     * @param string $message_input
-     * @param string $ip_address
-     * @param string $visitor_id
+     * @param string $messageInput
+     * @param string $ipAddress
+     * @param string $visitorId
      *
      * @return bool
      */
-    public function saveMessage(string $name, string $email, string $message_input, string $ip_address, string $visitor_id): bool
+    public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, string $visitorId): bool
     {
         $message = new Message();
 
@@ -51,19 +51,19 @@ class MessagesManager
         $date = date('d.m.Y H:i:s');
 
         // update visitor email
-        $this->visitorManager->updateVisitorEmail($ip_address, $email);
+        $this->visitorManager->updateVisitorEmail($ipAddress, $email);
 
         // ecrypt message
-        $message_input = $this->securityUtil->encryptAes($message_input);
+        $messageInput = $this->securityUtil->encryptAes($messageInput);
 
         // set message entity values
         $message->setName($name);
         $message->setEmail($email);
-        $message->setMessage($message_input);
+        $message->setMessage($messageInput);
         $message->setTime($date);
-        $message->setIpAddress($ip_address);
+        $message->setIpAddress($ipAddress);
         $message->setStatus('open');
-        $message->setVisitorID($visitor_id);
+        $message->setVisitorID($visitorId);
 
         // insert new message
         try {
@@ -79,11 +79,11 @@ class MessagesManager
     /**
      * Gets the count of open messages from a specific IP address.
      *
-     * @param string $ip_address
+     * @param string $ipAddress
      *
      * @return int
      */
-    public function getMessageCountByIpAddress(string $ip_address): int
+    public function getMessageCountByIpAddress(string $ipAddress): int
     {
         // build query
         $query = $this->entityManager->createQuery(
@@ -92,7 +92,7 @@ class MessagesManager
 
         // set query parameter
         $query->setParameter('status', 'open');
-        $query->setParameter('ip_address', $ip_address);
+        $query->setParameter('ip_address', $ipAddress);
 
         // execute query
         try {
@@ -124,25 +124,25 @@ class MessagesManager
             $inbox = $repository->findBy(['status' => $status], null, $limit, $offset);
             $messages = [];
 
-            foreach ($inbox as $inbox_message) {
+            foreach ($inbox as $inboxMessage) {
                 // decrypt message
-                $message_decrypted = $this->securityUtil->decryptAes($inbox_message->getMessage());
+                $messageDecrypted = $this->securityUtil->decryptAes($inboxMessage->getMessage());
 
                 // check if message data is decrypted
-                if ($message_decrypted == null) {
+                if ($messageDecrypted == null) {
                     $this->errorManager->handleError('Error to decrypt aes message data', 500);
                 }
 
                 // build message content
                 $message = [
-                    'id' => $inbox_message->getId(),
-                    'name' => $inbox_message->getName(),
-                    'email' => $inbox_message->getEmail(),
-                    'message' => $message_decrypted,
-                    'time' => $inbox_message->getTime(),
-                    'ip_address' => $inbox_message->getIpAddress(),
-                    'status' => $inbox_message->getStatus(),
-                    'visitor_id' => $inbox_message->getVisitorId()
+                    'id' => $inboxMessage->getId(),
+                    'name' => $inboxMessage->getName(),
+                    'email' => $inboxMessage->getEmail(),
+                    'message' => $messageDecrypted,
+                    'time' => $inboxMessage->getTime(),
+                    'ip_address' => $inboxMessage->getIpAddress(),
+                    'status' => $inboxMessage->getStatus(),
+                    'visitor_id' => $inboxMessage->getVisitorId()
                 ];
 
                 // add message to final list

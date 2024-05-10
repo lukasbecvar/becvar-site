@@ -106,6 +106,7 @@ class PasteController extends AbstractController
     #[Route('/paste/view', methods: ['GET'], name: 'public_code_paste_view')]
     public function pasteView(Request $request): Response
     {
+        // init default resources
         $content = null;
 
         // get paste token
@@ -130,6 +131,7 @@ class PasteController extends AbstractController
             // replace xss (Escape [XSS Protection])
             $content = str_replace(array('&lt;', '&gt;'), array('<', '>'), $content);
 
+            // log paste view
             $this->logManager->log('code-paste', 'visitor viewed paste: ' . $name);
         } else {
             return $this->errorManager->handleError('error paste not found', 404);

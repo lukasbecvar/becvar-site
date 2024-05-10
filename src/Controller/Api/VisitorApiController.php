@@ -40,10 +40,10 @@ class VisitorApiController extends AbstractController
     public function updateStatus(): Response
     {
         // get user ip
-        $ip_address = $this->visitorInfoUtil->getIP();
+        $ipAddress = $this->visitorInfoUtil->getIP();
 
         // get visitor repository
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor == null) {

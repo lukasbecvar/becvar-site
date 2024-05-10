@@ -77,6 +77,7 @@ class TodoManagerController extends AbstractController
             'user_role' => $this->authManager->getUserRole(),
             'user_pic' => $this->authManager->getUserProfilePic(),
 
+            // editor data
             'todo_editor' => false,
             'completed_list' => false,
             'todos_data' => $todos,
@@ -102,6 +103,7 @@ class TodoManagerController extends AbstractController
             'user_role' => $this->authManager->getUserRole(),
             'user_pic' => $this->authManager->getUserProfilePic(),
 
+            // editor data
             'todo_editor' => false,
             'completed_list' => true,
             'todos_count' => count($todos),
@@ -118,13 +120,14 @@ class TodoManagerController extends AbstractController
     #[Route('/admin/todos/edit', methods: ['GET', 'POST'], name: 'admin_todo_edit')]
     public function editTodo(Request $request): Response
     {
-        $error_msg = null;
+        // init default data
+        $errorMsg = null;
 
         // get query parameter
         $id = $this->siteUtil->getQueryString('id', $request);
 
         // get todo data
-        $todo_data = $this->todosManager->getTodos(['id' => $id]);
+        $todoData = $this->todosManager->getTodos(['id' => $id]);
 
         // check if request is post
         if ($request->isMethod('POST')) {
@@ -134,14 +137,14 @@ class TodoManagerController extends AbstractController
             // check if edit form submited
             if (isset($submited)) {
                 // get new todo text
-                $new_todo_text = $request->get('new-todo-text');
+                $newTodoText = $request->get('new-todo-text');
 
                 // check if new todo text is not empty
-                if (empty($new_todo_text)) {
-                    $error_msg = 'Please add todo text!';
+                if (empty($newTodoText)) {
+                    $errorMsg = 'Please add todo text!';
                 } else {
                     // save change
-                    $this->todosManager->editTodo($id, $new_todo_text);
+                    $this->todosManager->editTodo($id, $newTodoText);
 
                     // return back to todo table
                     return $this->redirectToRoute('admin_todos');
@@ -150,20 +153,21 @@ class TodoManagerController extends AbstractController
         }
 
         // check if todo not found
-        if (empty($todo_data)) {
+        if (empty($todoData)) {
             return $this->errorManager->handleError('error todo: ' . $id . ' not found', 404);
-        } else {
-            return $this->render('admin/todo-manager.html.twig', [
-                // user data
-                'user_name' => $this->authManager->getUsername(),
-                'user_role' => $this->authManager->getUserRole(),
-                'user_pic' => $this->authManager->getUserProfilePic(),
-
-                'todo_editor' => true,
-                'todo_edited_data' => $todo_data,
-                'error_msg' => $error_msg
-            ]);
         }
+
+        return $this->render('admin/todo-manager.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
+            // editor data
+            'todo_editor' => true,
+            'todo_edited_data' => $todoData,
+            'error_msg' => $errorMsg
+        ]);
     }
 
     /**

@@ -37,20 +37,20 @@ class BanManager
     /**
      * Bans a visitor by setting the banned status and reason.
      *
-     * @param string $ip_address The IP address of the visitor to ban.
+     * @param string $ipAddress The IP address of the visitor to ban.
      * @param string $reason The reason for banning the visitor.
      *
      * @throws \Exception If there is an error during the update of the ban status or in case the visitor is not found.
      *
      * @return void
      */
-    public function banVisitor(string $ip_address, string $reason): void
+    public function banVisitor(string $ipAddress, string $reason): void
     {
         // get current date
         $date = date('d.m.Y H:i:s');
 
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor != null) {
@@ -60,35 +60,35 @@ class BanManager
             $visitor->setBannedTime($date);
 
             // log ban action
-            $this->logManager->log('ban-system', 'visitor with ip: ' . $ip_address . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername());
+            $this->logManager->log('ban-system', 'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername());
 
             try {
                 // update entity data
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to update ban status of visitor-ip: ' . $ip_address . ', message: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError('error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(), 500);
             }
 
             // close banned visitor messages
-            $this->closeAllVisitorMessages($ip_address);
+            $this->closeAllVisitorMessages($ipAddress);
         } else {
-            $this->errorManager->handleError('error to ban visitor with ip: ' . $ip_address . ', visitor not found in table', 400);
+            $this->errorManager->handleError('error to ban visitor with ip: ' . $ipAddress . ', visitor not found in table', 400);
         }
     }
 
     /**
      * Unbans a visitor by updating the banned status.
      *
-     * @param string $ip_address The IP address of the visitor to unban.
+     * @param string $ipAddress The IP address of the visitor to unban.
      *
      * @throws \Exception If there is an error during the update of the ban status or in case the visitor is not found.
      *
      * @return void
      */
-    public function unbanVisitor(string $ip_address): void
+    public function unbanVisitor(string $ipAddress): void
     {
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor != null) {
@@ -96,30 +96,30 @@ class BanManager
             $visitor->setBannedStatus('no');
 
             // log ban action
-            $this->logManager->log('ban-system', 'visitor with ip: ' . $ip_address . ' unbanned by ' . $this->authManager->getUsername());
+            $this->logManager->log('ban-system', 'visitor with ip: ' . $ipAddress . ' unbanned by ' . $this->authManager->getUsername());
 
             try {
                 // update visitor data
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to update ban status of visitor-ip: ' . $ip_address . ', message: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError('error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(), 500);
             }
         } else {
-            $this->errorManager->handleError('error to update ban status of visitor with ip: ' . $ip_address . ', visitor not found in table', 400);
+            $this->errorManager->handleError('error to update ban status of visitor with ip: ' . $ipAddress . ', visitor not found in table', 400);
         }
     }
 
     /**
      * Checks if a visitor is banned.
      *
-     * @param string $ip_address The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor.
      *
      * @return bool True if the visitor is banned, false otherwise.
      */
-    public function isVisitorBanned(string $ip_address): bool
+    public function isVisitorBanned(string $ipAddress): bool
     {
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor != null) {
@@ -155,14 +155,14 @@ class BanManager
     /**
      * Retrieves the ban reason for a visitor.
      *
-     * @param string $ip_address The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor.
      *
      * @return string|null The ban reason or null if not found.
      */
-    public function getBanReason(string $ip_address): ?string
+    public function getBanReason(string $ipAddress): ?string
     {
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor != null) {
@@ -176,13 +176,13 @@ class BanManager
     /**
      * Closes all messages associated with a specific visitor based on their IP address.
      *
-     * @param string $ip_address  The IP address of the visitor whose messages should be closed.
+     * @param string $ipAddress  The IP address of the visitor whose messages should be closed.
      *
      * @throws \Exception If there is an error during the execution of the query.
      *
      * @return void
      */
-    public function closeAllVisitorMessages(string $ip_address)
+    public function closeAllVisitorMessages(string $ipAddress)
     {
         // sql query builder
         $query = $this->entityManager->createQuery(
@@ -194,7 +194,7 @@ class BanManager
         try {
             // set closed message
             $query->setParameter('status', 'closed');
-            $query->setParameter('ip_address', $ip_address);
+            $query->setParameter('ip_address', $ipAddress);
 
             // execute query
             $query->execute();

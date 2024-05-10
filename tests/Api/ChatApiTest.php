@@ -57,12 +57,12 @@ class ChatTest extends WebTestCase
         ]));
 
         // get response data
-        $response_data = json_decode($this->client->getResponse()->getContent(), true);
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
         // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertEquals('success', $response_data['status']);
-        $this->assertEquals('chat message saved', $response_data['message']);
+        $this->assertEquals('success', $responseData['status']);
+        $this->assertEquals('chat message saved', $responseData['message']);
     }
 
     /**

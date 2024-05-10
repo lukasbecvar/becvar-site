@@ -75,10 +75,10 @@ class InboxController extends AbstractController
         $this->messagesManager->closeMessage($id);
 
         // get messages count
-        $messages_count = count($this->messagesManager->getMessages('open', 1));
+        $messagesCount = count($this->messagesManager->getMessages('open', 1));
 
         // check if messages count is 0
-        if ($messages_count == 0) {
+        if ($messagesCount == 0) {
             return $this->redirectToRoute('admin_dashboard');
         }
 

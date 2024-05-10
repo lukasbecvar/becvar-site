@@ -23,7 +23,7 @@ class ProjectFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // projects data
-        $projects_data = [
+        $projectsData = [
             [
                 'name' => 'becvar-site',
                 'description' => 'My personal website app built with Symfony framework.',
@@ -69,13 +69,13 @@ class ProjectFixtures extends Fixture
         ];
 
         // create projects from data array
-        foreach ($projects_data as $project_data) {
+        foreach ($projectsData as $projectData) {
             $project = new Project();
-            $project->setName($project_data['name']);
-            $project->setDescription($project_data['description']);
-            $project->setTechnology($project_data['technology']);
-            $project->setLink($project_data['link']);
-            $project->setStatus($project_data['status']);
+            $project->setName($projectData['name']);
+            $project->setDescription($projectData['description']);
+            $project->setTechnology($projectData['technology']);
+            $project->setLink($projectData['link']);
+            $project->setStatus($projectData['status']);
 
             $manager->persist($project);
         }

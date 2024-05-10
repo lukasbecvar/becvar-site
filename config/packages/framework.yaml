@@ -1,8 +1,6 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    test: true
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
     http_method_override: false
     handle_all_throwables: true
 
@@ -14,7 +12,11 @@ framework:
         cookie_samesite: lax
         storage_factory_id: session.storage.factory.native
 
-    #esi: true
-    #fragments: true
+    # php errors config
     php_errors:
         log: true
+
+# test env config
+when@test:
+    framework:
+        test: true

@@ -68,28 +68,28 @@ class VisitorSystemMiddleware
         // get data to insert
         $date = date('d.m.Y H:i');
         $os = $this->visitorInfoUtil->getOS();
-        $ip_address = $this->visitorInfoUtil->getIP();
+        $ipAddress = $this->visitorInfoUtil->getIP();
         $browser = $this->visitorInfoUtil->getBrowser();
 
         // escape inputs
-        $ip_address = $this->securityUtil->escapeString($ip_address);
+        $ipAddress = $this->securityUtil->escapeString($ipAddress);
         $browser = $this->securityUtil->escapeString($browser);
 
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found in database
         if ($visitor == null) {
             // save new visitor data
-            $this->insertNewVisitor($date, $ip_address, $browser, $os);
+            $this->insertNewVisitor($date, $ipAddress, $browser, $os);
         } else {
             // cache online visitor
             $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
 
             // check if visitor banned
-            if ($this->banManager->isVisitorBanned($ip_address)) {
-                $reason = $this->banManager->getBanReason($ip_address);
-                $this->logManager->log('ban-system', 'visitor with ip: ' . $ip_address . ' trying to access page, but visitor banned for: ' . $reason);
+            if ($this->banManager->isVisitorBanned($ipAddress)) {
+                $reason = $this->banManager->getBanReason($ipAddress);
+                $this->logManager->log('ban-system', 'visitor with ip: ' . $ipAddress . ' trying to access page, but visitor banned for: ' . $reason);
 
                 // render banned page
                 die($this->twig->render('errors/error-banned.html.twig', [
@@ -98,7 +98,7 @@ class VisitorSystemMiddleware
                 ]));
             } else {
                 // update exist visitor
-                $this->updateVisitor($date, $ip_address, $browser, $os);
+                $this->updateVisitor($date, $ipAddress, $browser, $os);
             }
         }
     }
@@ -107,20 +107,20 @@ class VisitorSystemMiddleware
      * Inserts a new visitor record into the database.
      *
      * @param string $date The date of the visit.
-     * @param string $ip_address The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor.
      * @param string $browser The browser used by the visitor.
      * @param string $os The operating system of the visitor.
      *
      * @throws \Exception If an error occurs during the database flush.
      */
-    public function insertNewVisitor(string $date, string $ip_address, string $browser, string $os): void
+    public function insertNewVisitor(string $date, string $ipAddress, string $browser, string $os): void
     {
         // get visitor ip address
-        $location = $this->visitorInfoUtil->getLocation($ip_address);
+        $location = $this->visitorInfoUtil->getLocation($ipAddress);
 
         // log geolocate error
         if ($location['city'] == 'Unknown' || $location['country'] == 'Unknown') {
-            $this->logManager->log('geolocate-error', 'error to geolocate ip: ' . $ip_address);
+            $this->logManager->log('geolocate-error', 'error to geolocate ip: ' . $ipAddress);
         }
 
         // prevent maximal user agent length
@@ -138,7 +138,7 @@ class VisitorSystemMiddleware
         $visitorEntity->setOs($os);
         $visitorEntity->setCity($location['city']);
         $visitorEntity->setCountry($location['country']);
-        $visitorEntity->setIpAddress($ip_address);
+        $visitorEntity->setIpAddress($ipAddress);
         $visitorEntity->setBannedStatus('no');
         $visitorEntity->setBanReason('non-banned');
         $visitorEntity->setBannedTime(('non-banned'));
@@ -157,16 +157,16 @@ class VisitorSystemMiddleware
      * Updates an existing visitor record in the database.
      *
      * @param string $date The date of the visit.
-     * @param string $ip_address The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor.
      * @param string $browser The updated browser used by the visitor.
      * @param string $os The updated operating system of the visitor.
      *
      * @throws \Exception If an error occurs during the database flush.
      */
-    public function updateVisitor(string $date, string $ip_address, string $browser, string $os): void
+    public function updateVisitor(string $date, string $ipAddress, string $browser, string $os): void
     {
         // get visitor data
-        $visitor = $this->visitorManager->getVisitorRepository($ip_address);
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // prevent maximal useragent to save
         if (strlen($browser) >= 200) {
@@ -175,7 +175,7 @@ class VisitorSystemMiddleware
 
         // check if visitor data found
         if (!$visitor != null) {
-            $this->errorManager->handleError('unexpected visitor with ip: ' . $ip_address . ' update error, please check database structure', 500);
+            $this->errorManager->handleError('unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure', 500);
         } else {
             // update values
             $visitor->setLastVisit($date);

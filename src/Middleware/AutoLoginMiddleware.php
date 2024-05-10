@@ -40,15 +40,15 @@ class AutoLoginMiddleware
                 $user = new User();
 
                 // get user token
-                $user_token = $this->cookieUtil->get('login-token-cookie');
+                $userToken = $this->cookieUtil->get('login-token-cookie');
 
                 // check if token exist in database
-                if ($this->authManager->getUserRepository(['token' => $user_token]) != null) {
+                if ($this->authManager->getUserRepository(['token' => $userToken]) != null) {
                     // get user data
-                    $user = $this->authManager->getUserRepository(['token' => $user_token]);
+                    $user = $this->authManager->getUserRepository(['token' => $userToken]);
 
                     // autologin user
-                    $this->authManager->login($user->getUsername(), $user_token, true);
+                    $this->authManager->login($user->getUsername(), $userToken, true);
                 } else {
                     $this->cookieUtil->unset('login-token-cookie');
 

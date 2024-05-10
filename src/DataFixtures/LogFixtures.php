@@ -23,7 +23,7 @@ class LogFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $logs_data = [
+        $logsData = [
             [
                 'name' => 'code-paste',
                 'value' => 'visitor viewed paste: HbfLDhh2c6qfOgg',
@@ -215,15 +215,15 @@ class LogFixtures extends Fixture
             ]
         ];
 
-        foreach ($logs_data as $log_data) {
+        foreach ($logsData as $logData) {
             $log = new Log();
-            $log->setName($log_data['name'])
-                ->setValue($log_data['value'])
-                ->setTime($log_data['time'])
-                ->setIpAddress($log_data['ip_address'])
-                ->setBrowser($log_data['browser'])
-                ->setStatus($log_data['status'])
-                ->setVisitorId($log_data['visitor_id']);
+            $log->setName($logData['name'])
+                ->setValue($logData['value'])
+                ->setTime($logData['time'])
+                ->setIpAddress($logData['ip_address'])
+                ->setBrowser($logData['browser'])
+                ->setStatus($logData['status'])
+                ->setVisitorId($logData['visitor_id']);
 
             $manager->persist($log);
         }

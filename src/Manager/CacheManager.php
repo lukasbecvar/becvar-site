@@ -70,12 +70,12 @@ class CacheManager
     {
         try {
             // set cache value data
-            $cache_item = $this->cacheItemPoolInterface->getItem($key);
-            $cache_item->set($value);
-            $cache_item->expiresAfter($expiration);
+            $cacheItem = $this->cacheItemPoolInterface->getItem($key);
+            $cacheItem->set($value);
+            $cacheItem->expiresAfter($expiration);
 
             // save value
-            $this->cacheItemPoolInterface->save($cache_item);
+            $this->cacheItemPoolInterface->save($cacheItem);
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to store cache value: ' . $e->getMessage(), 500);
         }

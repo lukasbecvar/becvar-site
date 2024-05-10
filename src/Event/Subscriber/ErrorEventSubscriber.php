@@ -43,10 +43,10 @@ class ErrorEventSubscriber implements EventSubscriberInterface
     public function onErrorEvent(ErrorEvent $event): void
     {
         // get error values
-        $error_name = $event->getErrorName();
-        $error_message = $event->getErrorMessage();
+        $errorName = $event->getErrorName();
+        $errorMessage = $event->getErrorMessage();
 
         // check if error is not log error
-        $this->logManager->log($error_name, $error_message, true);
+        $this->logManager->log($errorName, $errorMessage, true);
     }
 }

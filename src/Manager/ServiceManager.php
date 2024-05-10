@@ -38,17 +38,17 @@ class ServiceManager
     public function getServices(): ?array
     {
         // get services list from services.json
-        $services_list = $this->getServicesJson();
+        $servicesList = $this->getServicesJson();
         $services = [];
 
         // check if services list load valid
-        if ($services_list != null) {
+        if ($servicesList != null) {
             // execute separate service row
-            foreach ($services_list as $value) {
+            foreach ($servicesList as $value) {
                 // check if service is enabled
                 if ($value['enable']) {
                     // build service array
-                    $service_array = [
+                    $serviceArray = [
                         'service_name' => $value['service_name'],
                         'display_name' => $value['display_name'],
                         'enable' => $value['enable']
@@ -56,13 +56,13 @@ class ServiceManager
 
                     // get service status
                     if ($this->isServiceRunning($value['service_name'])) {
-                        $service_array += ['status' => 'online'];
+                        $serviceArray += ['status' => 'online'];
                     } else {
-                        $service_array += ['status' => 'offline'];
+                        $serviceArray += ['status' => 'offline'];
                     }
 
-                    // add service_array array to services
-                    array_push($services, $service_array);
+                    // add serviceArray array to services
+                    array_push($services, $serviceArray);
                 }
             }
         } else {
@@ -75,29 +75,29 @@ class ServiceManager
     /**
      * Runs an action on a specified service.
      *
-     * @param string $service_name
+     * @param string $serviceName
      * @param string $action
      *
      * @return void
      */
-    public function runAction(string $service_name, string $action): void
+    public function runAction(string $serviceName, string $action): void
     {
         // check if user logged in
         if ($this->authManager->isUserLogedin()) {
             $command = null;
 
             // check if action is emergency shutdown
-            if ($service_name == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
+            if ($serviceName == 'emergency_cnA1OI5jBL' && $action == 'shutdown_MEjP9bqXF7') {
                 $this->emergencyShutdown();
-            } elseif ($service_name == 'ufw') {
+            } elseif ($serviceName == 'ufw') {
                 $command = 'sudo ufw ' . $action;
             } else {
                 // build action
-                $command = 'sudo systemctl ' . $action . ' ' . $service_name;
+                $command = 'sudo systemctl ' . $action . ' ' . $serviceName;
             }
 
             // log action
-            $this->logManager->log('action-runner', $this->authManager->getUsername() . ' ' . $action . 'ed ' . $service_name);
+            $this->logManager->log('action-runner', $this->authManager->getUsername() . ' ' . $action . 'ed ' . $serviceName);
 
             // executed final command
             $this->executeCommand($command);
@@ -109,15 +109,15 @@ class ServiceManager
     /**
      * Checks if a service is installed.
      *
-     * @param string $service_name
+     * @param string $serviceName
      *
      * @return bool
      */
-    public function isServiceInstalled(string $service_name): bool
+    public function isServiceInstalled(string $serviceName): bool
     {
-        exec('dpkg -l | grep ' . escapeshellarg($service_name), $output, $return_code);
+        exec('dpkg -l | grep ' . escapeshellarg($serviceName), $output, $returnCode);
 
-        if ($return_code === 0) {
+        if ($returnCode === 0) {
             return true;
         } else {
             return false;
@@ -153,18 +153,15 @@ class ServiceManager
      */
     public function isSocktOpen(string $ip, int $port): string
     {
-        // default response output
-        $response_output = 'Offline';
-
         // open service socket
         $service = @fsockopen($ip, $port);
 
         // check is service online
         if ($service >= 1) {
-            $response_output = 'Online';
+            return 'Online';
         }
 
-        return $response_output;
+        return 'Offline';
     }
 
     /**
@@ -181,9 +178,9 @@ class ServiceManager
         // check if outputed pid
         if (empty($pids)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

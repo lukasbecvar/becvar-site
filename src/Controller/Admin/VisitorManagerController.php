@@ -118,18 +118,18 @@ class VisitorManagerController extends AbstractController
         // check form if submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get ban reason
-            $ban_reason = $form->get('ban_reason')->getData();
+            $banReason = $form->get('ban_reason')->getData();
 
             // check if reason set
-            if (empty($ban_reason)) {
-                $ban_reason = 'no-reason';
+            if (empty($banReason)) {
+                $banReason = 'no-reason';
             }
 
             // get visitor ip
-            $ip_address = $this->banManager->getVisitorIP($id);
+            $ipAddress = $this->banManager->getVisitorIP($id);
 
             // ban visitor
-            $this->banManager->banVisitor($ip_address, $ban_reason);
+            $this->banManager->banVisitor($ipAddress, $banReason);
 
             // check if banned by inbox
             if ($request->query->get('referer') == 'inbox') {
@@ -171,12 +171,12 @@ class VisitorManagerController extends AbstractController
         $id = intval($this->siteUtil->getQueryString('id', $request));
 
         // get visitor ip
-        $ip_address = $this->banManager->getVisitorIP($id);
+        $ipAddress = $this->banManager->getVisitorIP($id);
 
         // check if banned
-        if ($this->banManager->isVisitorBanned($ip_address)) {
+        if ($this->banManager->isVisitorBanned($ipAddress)) {
             // unban visitor
-            $this->banManager->unbanVisitor($ip_address);
+            $this->banManager->unbanVisitor($ipAddress);
         }
 
         return $this->redirectToRoute('admin_visitor_manager', [

@@ -44,7 +44,7 @@ class RegisterController extends AbstractController
 
         // init default resources
         $user = new User();
-        $error_msg = null;
+        $errorMsg = null;
 
         // create register form
         $form = $this->createForm(RegisterFormType::class, $user);
@@ -55,15 +55,15 @@ class RegisterController extends AbstractController
             // get form data
             $username = $form->get('username')->getData();
             $password = $form->get('password')->getData();
-            $repassword = $form->get('re-password')->getData();
+            $rePassword = $form->get('re-password')->getData();
 
             // check if username used
             if ($this->authManager->getUserRepository(['username' => $username]) != null) {
-                $error_msg = 'This username is already in use';
+                $errorMsg = 'This username is already in use';
             } else {
                 // check if passwords not match
-                if ($password != $repassword) {
-                    $error_msg = 'Your passwords dont match';
+                if ($password != $rePassword) {
+                    $errorMsg = 'Your passwords dont match';
                 } else {
                     $this->authManager->registerNewUser($username, $password);
                     return $this->redirectToRoute('admin_dashboard');
@@ -72,7 +72,7 @@ class RegisterController extends AbstractController
         }
 
         return $this->render('admin/auth/register.html.twig', [
-            'error_msg' => $error_msg,
+            'error_msg' => $errorMsg,
             'registration_form' => $form->createView()
         ]);
     }

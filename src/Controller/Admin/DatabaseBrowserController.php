@@ -63,9 +63,6 @@ class DatabaseBrowserController extends AbstractController
         $table = $this->siteUtil->getQueryString('table', $request);
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
-        // get table data
-        $table_data = $this->databaseManager->getTableDataByPage($table, $page);
-
         return $this->render('admin/database-browser.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -80,7 +77,7 @@ class DatabaseBrowserController extends AbstractController
             // table browser data
             'table_name' => $table,
             'table_exist' => $this->databaseManager->isTableExist($table),
-            'table_data' => $table_data,
+            'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
             'table_data_count_all' => $this->databaseManager->countTableData($table),
             'table_data_count' => $this->databaseManager->countTableDataByPage($table, $page),
             'table_columns' => $this->databaseManager->getTableColumns($table),
@@ -99,7 +96,7 @@ class DatabaseBrowserController extends AbstractController
     public function rowEdit(Request $request): Response
     {
         // init default resources
-        $error_msg = null;
+        $errorMsg = null;
 
         // get query parameters
         $page = intval($this->siteUtil->getQueryString('page', $request));
@@ -115,16 +112,16 @@ class DatabaseBrowserController extends AbstractController
         // check request is post
         if ($request->isMethod('POST')) {
             // get form submit status
-            $form_submit = $request->request->get('submitEdit');
+            $formSubmit = $request->request->get('submitEdit');
 
             // check if user submit edit form
-            if (isset($form_submit)) {
+            if (isset($formSubmit)) {
                 // update values
                 foreach ($columns as $row) {
                     // check if form value is empty
                     if (empty($_POST[$row])) {
                         if ($row != 'id') {
-                            $error_msg = $row . ' is empty';
+                            $errorMsg = $row . ' is empty';
                             break;
                         }
                     } else {
@@ -137,7 +134,7 @@ class DatabaseBrowserController extends AbstractController
                 }
 
                 // redirect back to browser
-                if ($error_msg == null) {
+                if ($errorMsg == null) {
                     return $this->redirectToRoute('admin_database_browser', [
                         'table' => $table,
                         'page' => $page
@@ -164,7 +161,7 @@ class DatabaseBrowserController extends AbstractController
             'editor_values' => $this->databaseManager->selectRowData($table, $id),
             'editor_page' => $page,
             'editor_referer' => $referer,
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 
@@ -178,7 +175,7 @@ class DatabaseBrowserController extends AbstractController
     public function rowAdd(Request $request): Response
     {
         // init default resources
-        $error_msg = null;
+        $errorMsg = null;
 
         // get query parameters
         $table = $this->siteUtil->getQueryString('table', $request);
@@ -190,34 +187,34 @@ class DatabaseBrowserController extends AbstractController
         // check request is post
         if ($request->isMethod('POST')) {
             // get form submit status
-            $form_submit = $request->request->get('submitSave');
+            $formSubmit = $request->request->get('submitSave');
 
             // check if form submited
-            if (isset($form_submit)) {
+            if (isset($formSubmit)) {
                 $columnsBuilder = [];
                 $valuesBuilder = [];
 
                 // build columns and values list
                 foreach ($columns as $column) {
                     if ($column != 'id') {
-                        $column_value = $request->request->get($column);
-                        if (!empty($column_value)) {
+                        $columnValue = $request->request->get($column);
+                        if (!empty($columnValue)) {
                             $columnsBuilder[] = $column;
-                            $valuesBuilder[] = $column_value;
+                            $valuesBuilder[] = $columnValue;
                         } else {
-                            $error_msg = 'value: ' . $column . ' is empty';
+                            $errorMsg = 'value: ' . $column . ' is empty';
                             break;
                         }
                     }
                 }
 
                 // execute new row insert
-                if ($error_msg == null) {
+                if ($errorMsg == null) {
                     $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
                 }
 
                 // redirect back to browser
-                if ($error_msg == null) {
+                if ($errorMsg == null) {
                     return $this->redirectToRoute('admin_database_browser', [
                         'table' => $table,
                         'page' => $page
@@ -241,7 +238,7 @@ class DatabaseBrowserController extends AbstractController
             'new_row_table' => $table,
             'new_row_page' => $page,
             'new_row_columns' => $columns,
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 

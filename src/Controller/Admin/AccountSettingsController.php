@@ -77,7 +77,7 @@ class AccountSettingsController extends AbstractController
     {
         // init default resources
         $user = new User();
-        $error_msg = null;
+        $errorMsg = null;
 
         // create pic form change
         $form = $this->createForm(ProfilePicChangeFormType::class, $user);
@@ -95,14 +95,14 @@ class AccountSettingsController extends AbstractController
                 $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
                 // get image content
-                $file_contents = file_get_contents($image);
+                $fileContents = file_get_contents($image);
 
                 // encode image
-                $image_code = base64_encode($file_contents);
+                $imageCode = base64_encode($fileContents);
 
                 try {
                     // update profile pics
-                    $userRepo->setProfilePic($image_code);
+                    $userRepo->setProfilePic($imageCode);
                     $this->entityManager->flush();
 
                     // redirect back to values table
@@ -111,7 +111,7 @@ class AccountSettingsController extends AbstractController
                     return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
                 }
             } else {
-                $error_msg = 'please select image file';
+                $errorMsg = 'please select image file';
             }
         }
 
@@ -125,7 +125,7 @@ class AccountSettingsController extends AbstractController
             'profile_pic_change_form' => $form->createView(),
             'username_change_form' => null,
             'password_change_form' => null,
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 
@@ -142,7 +142,7 @@ class AccountSettingsController extends AbstractController
     {
         // init default resources
         $user = new User();
-        $error_msg = null;
+        $errorMsg = null;
 
         // create username form change
         $form = $this->createForm(UsernameChangeFormType::class, $user);
@@ -177,7 +177,7 @@ class AccountSettingsController extends AbstractController
             'profile_pic_change_form' => null,
             'password_change_form' => null,
             'username_change_form' => $form,
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 
@@ -194,7 +194,7 @@ class AccountSettingsController extends AbstractController
     {
         // init default resources
         $user = new User();
-        $error_msg = null;
+        $errorMsg = null;
 
         // create username form change
         $form = $this->createForm(PasswordChangeFormType::class, $user);
@@ -204,20 +204,20 @@ class AccountSettingsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // get passwords
             $password = $form->get('password')->getData();
-            $repassword = $form->get('repassword')->getData();
+            $rePassword = $form->get('repassword')->getData();
 
             // get user repository
             $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
-            if ($password != $repassword) {
-                $error_msg = 'Your passwords is not match!';
+            if ($password != $rePassword) {
+                $errorMsg = 'Your passwords is not match!';
             } else {
                 try {
                     // hash password
-                    $password_hash = $this->securityUtil->genBcryptHash($password, 10);
+                    $passwordHash = $this->securityUtil->genBcryptHash($password, 10);
 
                     // update password
-                    $userRepo->setPassword($password_hash);
+                    $userRepo->setPassword($passwordHash);
 
                     // flush user data
                     $this->entityManager->flush();
@@ -240,7 +240,7 @@ class AccountSettingsController extends AbstractController
             'profile_pic_change_form' => null,
             'username_change_form' => null,
             'password_change_form' => $form,
-            'error_msg' => $error_msg
+            'error_msg' => $errorMsg
         ]);
     }
 }

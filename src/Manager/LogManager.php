@@ -49,11 +49,11 @@ class LogManager
      *
      * @param string $name
      * @param string $value
-     * @param bool $bypass_antilog
+     * @param bool $bypassAntilog
      *
      * @return void
      */
-    public function log(string $name, string $value, bool $bypass_antilog = false): void
+    public function log(string $name, string $value, bool $bypassAntilog = false): void
     {
         // check if log can be saved
         if (str_contains($value, 'Connection refused')) {
@@ -65,7 +65,7 @@ class LogManager
         }
 
         // check if logs enabled in config
-        if (($this->isLogsEnabled() && !$this->isEnabledAntiLog()) || $bypass_antilog) {
+        if (($this->isLogsEnabled() && !$this->isEnabledAntiLog()) || $bypassAntilog) {
             // get log level
             $level = $this->getLogLevel();
 
@@ -91,16 +91,16 @@ class LogManager
             $browser = $this->visitorInfoUtil->getBrowser();
 
             // get visitor ip address
-            $ip_address = $this->visitorInfoUtil->getIP();
+            $ipAddress = $this->visitorInfoUtil->getIP();
 
             // get visitor id
-            $visitor_id = strval($this->visitorManager->getVisitorID($ip_address));
+            $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
 
             // xss escape inputs
             $name = $this->securityUtil->escapeString($name);
             $value = $this->securityUtil->escapeString($value);
             $browser = $this->securityUtil->escapeString($browser);
-            $ip_address = $this->securityUtil->escapeString($ip_address);
+            $ipAddress = $this->securityUtil->escapeString($ipAddress);
 
             // create new log enity
             $LogEntity = new Log();
@@ -109,10 +109,10 @@ class LogManager
             $LogEntity->setName($name);
             $LogEntity->setValue($value);
             $LogEntity->setTime($date);
-            $LogEntity->setIpAddress($ip_address);
+            $LogEntity->setIpAddress($ipAddress);
             $LogEntity->setBrowser($browser);
             $LogEntity->setStatus('unreaded');
-            $LogEntity->setVisitorId($visitor_id);
+            $LogEntity->setVisitorId($visitorId);
 
             // try insert row
             try {
@@ -127,13 +127,13 @@ class LogManager
     /**
      * Retrieves logs based on IP address.
      *
-     * @param string $ip_address
+     * @param string $ipAddress
      * @param string $username
      * @param int $page
      *
      * @return Log[]|null
      */
-    public function getLogsWhereIP(string $ip_address, $username, int $page): ?array
+    public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);
         $per_page = $_ENV['ITEMS_PER_PAGE'];
@@ -146,7 +146,7 @@ class LogManager
             $queryBuilder = $repo->createQueryBuilder('l')
                 ->where('l.ip_address = :ip_address')
                 ->orderBy('l.id', 'DESC')
-                ->setParameter('ip_address', $ip_address)
+                ->setParameter('ip_address', $ipAddress)
                 ->setFirstResult($offset)
                 ->setMaxResults($per_page);
 
@@ -160,9 +160,9 @@ class LogManager
 
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
-            $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
-            $log->setBrowser($formated_browser);
+            $userAgent = $log->getBrowser();
+            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
+            $log->setBrowser($formatedBrowser);
         }
 
         return $logs;
@@ -180,10 +180,10 @@ class LogManager
     public function getLogs(string $status, $username, int $page): ?array
     {
         $repo = $this->entityManager->getRepository(Log::class);
-        $per_page = $_ENV['ITEMS_PER_PAGE'];
+        $perPage = $_ENV['ITEMS_PER_PAGE'];
 
         // calculate offset
-        $offset = ($page - 1) * $per_page;
+        $offset = ($page - 1) * $perPage;
 
         // get logs from database
         try {
@@ -192,7 +192,7 @@ class LogManager
                 ->orderBy('l.id', 'DESC')
                 ->setParameter('status', $status)
                 ->setFirstResult($offset)
-                ->setMaxResults($per_page);
+                ->setMaxResults($perPage);
 
             $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
@@ -204,9 +204,9 @@ class LogManager
 
         // replace browser with formated value for log reader
         foreach ($logs as $log) {
-            $user_agent = $log->getBrowser();
-            $formated_browser = $this->visitorInfoUtil->getBrowserShortify($user_agent);
-            $log->setBrowser($formated_browser);
+            $userAgent = $log->getBrowser();
+            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
+            $log->setBrowser($formatedBrowser);
         }
 
         return $logs;

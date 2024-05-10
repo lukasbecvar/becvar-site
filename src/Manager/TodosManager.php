@@ -38,38 +38,41 @@ class TodosManager
     /**
      * Gets todos based on the specified status.
      *
-     * @param array<string, mixed> $search_array
+     * @param array<string, mixed> $searchArray
      *
      * @return array<int, array{id: int, text: string}>|null
      */
-    public function getTodos(array $search_array): ?array
+    public function getTodos(array $searchArray): ?array
     {
         $repository = $this->entityManager->getRepository(Todo::class);
 
         // check if repository found
         if ($repository !== null) {
             try {
-                $todo_data = [];
-                $todos = $repository->findBy($search_array);
+                $todoData = [];
+
+                // get todos list
+                $todos = $repository->findBy($searchArray);
 
                 foreach ($todos as $todo) {
                     // decrypt todo text
-                    $todo_text = $this->securityUtil->decryptAes($todo->getText());
+                    $todoText = $this->securityUtil->decryptAes($todo->getText());
 
                     // check if message data is decrypted
-                    if ($todo_text == null) {
+                    if ($todoText == null) {
                         $this->errorManager->handleError('Error to decrypt aes todo data', 500);
                     }
 
-                    $todo_item = [
+                    // build todo item
+                    $todoItem = [
                         'id' => $todo->getId(),
-                        'text' => $todo_text
+                        'text' => $todoText
                     ];
 
-                    array_push($todo_data, $todo_item);
+                    array_push($todoData, $todoItem);
                 }
 
-                return array_reverse($todo_data);
+                return array_reverse($todoData);
             } catch (\Exception $e) {
                 $this->errorManager->handleError('error to get todos: ' . $e->getMessage(), 500);
                 return null;
@@ -122,20 +125,20 @@ class TodosManager
      * Edit a todo item.
      *
      * @param string $id The ID of the todo item to be edited.
-     * @param string $new_todo_text The new text for the todo item.
+     * @param string $newTodoText The new text for the todo item.
      *
      * @return void
      */
-    public function editTodo(string $id, string $new_todo_text): void
+    public function editTodo(string $id, string $newTodoText): void
     {
         // get todo repository
         $todo = $this->entityManager->getRepository(Todo::class)->find($id);
 
         // encrypt todo text
-        $new_todo_text = $this->securityUtil->encryptAes($new_todo_text);
+        $newTodoText = $this->securityUtil->encryptAes($newTodoText);
 
         // set new todo text
-        $todo->setText($new_todo_text);
+        $todo->setText($newTodoText);
 
         // update todo
         try {
