@@ -208,8 +208,15 @@ class VisitorInfoUtil
             // get geoplugin URL from environment variables
             $geoplugin_url = $_ENV['GEOPLUGIN_URL'];
 
+            // create stream context with timeout of 1 second
+            $context = stream_context_create(array(
+                'http' => array(
+                    'timeout' => 1
+                )
+            ));
+
             // get data from geoplugin
-            $geoplugin_data = file_get_contents("$geoplugin_url/json.gp?ip=$ip_address");
+            $geoplugin_data = file_get_contents("$geoplugin_url/json.gp?ip=$ip_address", false, $context);
 
             // decode data
             $details = json_decode($geoplugin_data);
@@ -224,7 +231,6 @@ class VisitorInfoUtil
                 $city = $timezone_parts[1] ?? null;
             }
         } catch (\Exception) {
-            // handle exception gracefully
             $country = null;
             $city = null;
         }
