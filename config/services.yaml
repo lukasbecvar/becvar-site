@@ -30,33 +30,33 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    # visitor system service
+    App\Middleware\VisitorSystemMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
+
     # resources build checker
     App\Middleware\AssetsCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
     # maintenance mode checker
     App\Middleware\MaintenanceMiddleware:
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 8 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 7 }
 
     # security check service
     App\Middleware\SecurityCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 
     # database online checker
     App\Middleware\DatabaseOnlineMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
 
     # escape request data
     App\Middleware\EscapeRequestDataMiddleware:
-        tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
-
-    # visitor system service
-    App\Middleware\VisitorSystemMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
@@ -75,3 +75,4 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }
     # --------------------------------------------------------------------------------- #
+    
