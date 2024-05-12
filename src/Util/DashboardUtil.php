@@ -83,14 +83,17 @@ class DashboardUtil
     {
         $load = 100;
         $loads = sys_getloadavg();
-        $coreNums = trim(shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l"));
-        $load = round($loads[0] / (intval($coreNums) + 1) * 100, 2);
+        $coreNums = shell_exec("grep -P '^processor' /proc/cpuinfo|wc -l");
+
+        // validate core nums
+        if ($coreNums !== null && trim($coreNums) !== '') {
+            $coreNums = trim($coreNums);
+            $load = round($loads[0] / (intval($coreNums) + 1) * 100, 2);
+        }
 
         // overload fix
         if ($load > 100) {
             $load = 100;
-        } else {
-            $load = $load;
         }
 
         return $load;

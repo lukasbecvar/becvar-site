@@ -42,8 +42,8 @@ class SiteUtil
         // get host url
         $host = $this->getHttpHost();
 
-        // check if host is null
-        if ($host != null) {
+        // check if output is string value
+        if (is_string($host)) {
             // check if running on url localhost
             if (str_starts_with($host, 'localhost')) {
                 $localhost = true;

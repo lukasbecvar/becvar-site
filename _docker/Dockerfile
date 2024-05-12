@@ -15,5 +15,9 @@ RUN apt-get update && apt-get install -y \
 # install OPCache
 RUN docker-php-ext-install opcache
 
+# install APCu
+RUN pecl install apcu \
+    && docker-php-ext-enable apcu
+
 # enable apache rewrite module
 RUN a2enmod rewrite

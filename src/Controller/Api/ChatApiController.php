@@ -93,7 +93,7 @@ class ChatApiController extends AbstractController
         $chatMessage = $this->securityUtil->escapeString($data['message']);
 
         // check if message is empty
-        if (empty(trim($chatMessage))) {
+        if (empty($chatMessage)) {
             return $this->json([
                 'status' => 'error',
                 'message' => 'message input is empty'

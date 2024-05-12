@@ -38,7 +38,7 @@ class AuthentificatedCheckMiddleware
         $pathInfo = $request->getPathInfo();
 
         // check if route is admin
-        if (str_starts_with($pathInfo, '/admin')) {
+        if (is_string($pathInfo) && str_starts_with($pathInfo, '/admin')) {
             // check if user is loggedin
             if (!$this->authManager->isUserLogedin()) {
                 // get login page route url

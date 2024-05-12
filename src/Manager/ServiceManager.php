@@ -135,12 +135,16 @@ class ServiceManager
     {
         $output = shell_exec('systemctl is-active ' . $service);
 
+        if ($output == null) {
+            return false;
+        }
+
         // check if service running
         if (trim($output) == 'active') {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -194,16 +198,18 @@ class ServiceManager
             // execute cmd
             $output = shell_exec('sudo ufw status');
 
-            // check if ufw running
-            if (str_starts_with($output, 'Status: active')) {
-                return true;
-            } else {
-                return false;
+            // check if output is string value
+            if (is_string($output)) {
+                // check if ufw running
+                if (str_starts_with($output, 'Status: active')) {
+                    return true;
+                }
             }
         } catch (\Exception $e) {
             $this->errorManager->handleError('error to get ufw status' . $e->getMessage(), 500);
-            return false;
         }
+
+        return false;
     }
 
     /**
