@@ -23,9 +23,9 @@ class SiteUtil
     /**
      * Get the HTTP host.
      *
-     * @return string The HTTP host.
+     * @return string|null The HTTP host.
      */
-    public function getHttpHost(): string
+    public function getHttpHost(): ?string
     {
         return $_SERVER['HTTP_HOST'];
     }
