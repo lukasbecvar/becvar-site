@@ -18,6 +18,7 @@ services:
             - ./_docker/configs/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
             - ./_docker/services/mysql_database:/var/lib/mysql
             - ./_docker/services/log:/var/log
+        mem_limit: 1g
         ports:
             - "3306:3306"
         networks:
@@ -41,6 +42,7 @@ services:
             - ./_docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
             - ./_docker/services/log:/var/log
             - ./:/var/www
+        mem_limit: 2g
         ports:
             - "80:80"
         networks:
