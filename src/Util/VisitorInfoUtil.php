@@ -191,19 +191,13 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the location based on IP address.
+     * Retrieves information about an IP address using a geolocation API.
      *
-     * @param string $ipAddress The IP address.
-     *
-     * @return array<string,string>|null The location information (city, country) or null on failure.
+     * @param string $ipAddress The IP address to look up.
+     * @return object|null The decoded JSON response from the geolocation API, or null if an error occurs.
      */
-    public function getLocation(string $ipAddress): ?array
+    public function getIpInfo(string $ipAddress): ?object
     {
-        // check if site is running on localhost
-        if ($this->siteUtil->isRunningLocalhost()) {
-            return ['city' => 'locale', 'country' => 'host'];
-        }
-
         // create stream context with timeout of 1 second
         $context = stream_context_create(array(
             'http' => array(
@@ -215,8 +209,29 @@ class VisitorInfoUtil
             // get response
             $response = file_get_contents($_ENV['GEOLOCATION_API_URL'] . '/json/' . $ipAddress, false, $context);
 
+            // decode response & return data
+            return json_decode($response);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the location (city and country) for a given IP address.
+     *
+     * @param string $ipAddress The IP address to look up.
+     * @return array<string>|null An associative array containing the city and country, or null if an error occurs.
+     */
+    public function getLocation(string $ipAddress): ?array
+    {
+        // check if site is running on localhost
+        if ($this->siteUtil->isRunningLocalhost()) {
+            return ['city' => 'locale', 'country' => 'host'];
+        }
+
+        try {
             // decode response
-            $data = json_decode($response);
+            $data = $this->getIpInfo($ipAddress);
 
             // check if country code seted
             if (isset($data->countryCode)) {

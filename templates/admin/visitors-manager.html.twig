@@ -19,110 +19,124 @@
         </li>
     </ul>
 
-    <div class="table-responsive center">
-        <table class="table table-dark">
-            <thead>
-                <tr class="line-item">  
-                    <th scope='col'>#</th>
-                    <th scope='col'>Visit(last)</th>
-                    <th scope='col'>Browser</th>
-                    <th scope='col'>OS</th>
-                    <th scope='col'>City</th>
-                    <th scope='col'>Country</th>
-                    <th scope='col'>Address</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>Banned</th>
-                    <th scope='col'>BAN</th>
-                    <th scope='col'>X</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {% for row in visitors_data %}
-                        <tr class="line-item" id="{{ row.id|e }}">
-                            {# <===== ID =====> #}
-                            <th scope='row'>{{ row.id|e }}</th>
-                            {# <===== LAST-VISIT-TIME =====> #}
-                            <th scope='row'>{{ row.lastVisit|e }}</th>
-                            {# <===== BROWSER =====> #}
-                            {% if row.browser == 'Unknown' %}
-                                <th scope='row' class='text-red'>{{ row.browser|e }}</th>
-                            {% else %}
-                                <th scope='row'>{{ row.browser|e }}</th>
-                            {% endif %}
-                            {# <===== OS =====> #}
-                            {% if row.os == 'Unknown OS' %}
-                                <th scope='row' lass='text-red'>{{ row.os|e }}</th>
-                            {% else %}
-                                <th scope='row'>{{ row.os }}</th>
-                            {% endif %}
-                            {# <===== CITY =====> #}
-                            {% if row.country|slice(0, 2)|lower == 'cz' %}
-                                <th scope='row' class='text-warning'>{{ row.city|e }}</th>
-                            {% else %}
-                                {% if row.city == 'Unknown' %}
-                                    <th scope='row' class='text-red'>{{ row.city|e }}</th>
+    {% if visitor_info_data != null %}
+        <div class="center-box">
+            <div class="ip-info-box">
+                <p class="ip-info-title">IP info: <span class="text-warning">{{current_ip}}:</span> <a href="/admin/logs/whereip?ip={{current_ip}}&page=1">view logs</a>
+                </p>
+                <ul class="ip-info-body">
+                    {% for key, value in visitor_info_data %}
+                        <li>{{ key|capitalize }}: {{ value }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <div class="table-responsive center">
+            <table class="table table-dark">
+                <thead>
+                    <tr class="line-item">  
+                        <th scope='col'>#</th>
+                        <th scope='col'>Visit(last)</th>
+                        <th scope='col'>Browser</th>
+                        <th scope='col'>OS</th>
+                        <th scope='col'>City</th>
+                        <th scope='col'>Country</th>
+                        <th scope='col'>Address</th>
+                        <th scope='col'>Status</th>
+                        <th scope='col'>Banned</th>
+                        <th scope='col'>BAN</th>
+                        <th scope='col'>X</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in visitors_data %}
+                            <tr class="line-item" id="{{ row.id|e }}">
+                                {# <===== ID =====> #}
+                                <th scope='row'>{{ row.id|e }}</th>
+                                {# <===== LAST-VISIT-TIME =====> #}
+                                <th scope='row'>{{ row.lastVisit|e }}</th>
+                                {# <===== BROWSER =====> #}
+                                {% if row.browser == 'Unknown' %}
+                                    <th scope='row' class='text-red'>{{ row.browser|e }}</th>
                                 {% else %}
-                                    <th scope='row'>{{ row.city|e }}</th>
+                                    <th scope='row'>{{ row.browser|e }}</th>
                                 {% endif %}
-                            {% endif %}
-                            {# <===== COUNTRY =====> #}
-                            {% if row.country|slice(0, 2)|lower == 'cz' %}
-                                <th scope='row' class='text-warning'>{{ row.country|e }}</th>
-                            {% else %}
-                                {% if row.country == 'Unknown' %}
-                                    <th scope='row' class='text-red'>{{ row.country|e }}</th>
+                                {# <===== OS =====> #}
+                                {% if row.os == 'Unknown OS' %}
+                                    <th scope='row' lass='text-red'>{{ row.os|e }}</th>
                                 {% else %}
-                                    <th scope='row'>{{ row.country|e }}</th>
+                                    <th scope='row'>{{ row.os }}</th>
                                 {% endif %}
-                            {% endif %}
-                            {# <===== IP-ADDRESS =====> #}
-                            {% if row.ipAddress == current_ip %}
-                                <th scope='row'class='text-warning'>
-                                    <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link text-warning">{{ row.ipAddress|e }}</a>
-                                </th>
-                            {% else %}
-                                <th scope='row'>
-                                    <a href="/admin/logs/whereip?ip={{ row.ipAddress|e }}&page=1" class="log-reader-link">{{ row.ipAddress|e }}</a>
-                                </th>
-                            {% endif %}
-                            {# <===== BANNED-STATUS =====> #}
-                            {% if row.id in online_visitors %}
-                                <th scope='row' class='text-success'>online</th>
-                            {% else %}
-                                <th scope='row' class='text-red'>offline</th>
-                            {% endif %}     
-                            {# <===== BANNED-STATUS =====> #}
-                            {% if row.bannedStatus == 'yes' %}
-                                <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
-                            {% else %}
-                                <th scope='row' class='text-success'>{{ row.bannedStatus|e }}</th>
-                            {% endif %}                        
-                            {# <===== BUTTONS =====> #}
-                            <td>
+                                {# <===== CITY =====> #}
+                                {% if row.country|slice(0, 2)|lower == 'cz' %}
+                                    <th scope='row' class='text-warning'>{{ row.city|e }}</th>
+                                {% else %}
+                                    {% if row.city == 'Unknown' %}
+                                        <th scope='row' class='text-red'>{{ row.city|e }}</th>
+                                    {% else %}
+                                        <th scope='row'>{{ row.city|e }}</th>
+                                    {% endif %}
+                                {% endif %}
+                                {# <===== COUNTRY =====> #}
+                                {% if row.country|slice(0, 2)|lower == 'cz' %}
+                                    <th scope='row' class='text-warning'>{{ row.country|e }}</th>
+                                {% else %}
+                                    {% if row.country == 'Unknown' %}
+                                        <th scope='row' class='text-red'>{{ row.country|e }}</th>
+                                    {% else %}
+                                        <th scope='row'>{{ row.country|e }}</th>
+                                    {% endif %}
+                                {% endif %}
+                                {# <===== IP-ADDRESS =====> #}
+                                {% if row.ipAddress == current_ip %}
+                                    <th scope='row'class='text-warning'>
+                                        <a href="/admin/visitors/ipinfo?ip={{ row.ipAddress|e }}" class="log-reader-link text-warning">{{ row.ipAddress|e }}</a>
+                                    </th>
+                                {% else %}
+                                    <th scope='row'>
+                                        <a href="/admin/visitors/ipinfo?ip={{ row.ipAddress|e }}" class="log-reader-link">{{ row.ipAddress|e }}</a>
+                                    </th>
+                                {% endif %}
+                                {# <===== BANNED-STATUS =====> #}
+                                {% if row.id in online_visitors %}
+                                    <th scope='row' class='text-success'>online</th>
+                                {% else %}
+                                    <th scope='row' class='text-red'>offline</th>
+                                {% endif %}     
+                                {# <===== BANNED-STATUS =====> #}
                                 {% if row.bannedStatus == 'yes' %}
-                                    <a class="delete-link-todos text-warning" href="/admin/visitors/unban?page={{ page }}&id={{ row.id|e }}">UNBAN</a>
+                                    <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
                                 {% else %}
-                                    <a class="delete-link-todos text-warning" href="/admin/visitors/ban?page={{ page }}&id={{ row.id|e }}">BAN</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a class="delete-link-todos" href="/admin/database/delete?table=visitors&page={{ page }}&id={{ row.id|e }}&referer=visitor_manager">X</a>
-                            </td>
-                        </tr>
-                    {% endfor %} 
-                </tbody>
-            </table>
-        </div>
-        <div class="page-button-box">
-            {% if page != 1 %}
-                <a class="back-page-button" href="/admin/visitors?page={{ page - 1 }}">Back</a>
-            {% endif %}
-            {% if visitors_limit == visitors_count %}
-                <a class="back-page-button" href="/admin/visitors?page={{ page + 1 }}">Next</a>
-            {% endif %}
-        </div>
-    {% if page != 1 or visitors_limit == visitors_count %}
-        <br>
+                                    <th scope='row' class='text-success'>{{ row.bannedStatus|e }}</th>
+                                {% endif %}                        
+                                {# <===== BUTTONS =====> #}
+                                <td>
+                                    {% if row.bannedStatus == 'yes' %}
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/unban?page={{ page }}&id={{ row.id|e }}">UNBAN</a>
+                                    {% else %}
+                                        <a class="delete-link-todos text-warning" href="/admin/visitors/ban?page={{ page }}&id={{ row.id|e }}">BAN</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="delete-link-todos" href="/admin/database/delete?table=visitors&page={{ page }}&id={{ row.id|e }}&referer=visitor_manager">X</a>
+                                </td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-button-box">
+                {% if page != 1 %}
+                    <a class="back-page-button" href="/admin/visitors?page={{ page - 1 }}">Back</a>
+                {% endif %}
+                {% if visitors_limit == visitors_count %}
+                    <a class="back-page-button" href="/admin/visitors?page={{ page + 1 }}">Next</a>
+                {% endif %}
+            </div>
+        {% if page != 1 or visitors_limit == visitors_count %}
+            <br>
+        {% endif %}
     {% endif %}
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -68,7 +68,43 @@ class VisitorManagerController extends AbstractController
             'banned_count' => $this->banManager->getBannedCount(),
             'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],
             'visitors_data' => $this->visitorManager->getVisitors($page),
-            'visitors_count' => $this->visitorManager->getVisitorsCount($page)
+            'visitors_count' => $this->visitorManager->getVisitorsCount($page),
+            'visitor_info_data' => null
+        ]);
+    }
+
+    /**
+     * Provides IP information for a given IP address to the admin panel.
+     *
+     * @param Request $request The request object containing the IP address.
+     * @return Response A response object containing the IP information.
+     */
+    #[Route('/admin/visitors/ipinfo', methods: ['GET'], name: 'admin_visitor_ipinfo')]
+    public function visitorIpInfo(Request $request): Response
+    {
+        $ipAddress = $this->siteUtil->getQueryString('ip', $request);
+
+        // check if ip parameter found
+        if ($ipAddress == 1) {
+            return $this->redirectToRoute('admin_visitor_manager');
+        }
+
+        // get ip info
+        $ipInfoData = $this->visitorInfoUtil->getIpInfo($ipAddress);
+        $ipInfoData = json_decode(json_encode($ipInfoData), true);
+
+        return $this->render('admin/visitors-manager.html.twig', [
+            // user data
+            'user_name' => $this->authManager->getUsername(),
+            'user_role' => $this->authManager->getUserRole(),
+            'user_pic' => $this->authManager->getUserProfilePic(),
+
+            // visitor manager data
+            'current_ip' => $ipAddress,
+            'visitor_info_data' => $ipInfoData,
+            'online_visitors' => $this->visitorManager->getOnlineVisitorIDs(),
+            'banned_count' => $this->banManager->getBannedCount(),
+            'page' => 1,
         ]);
     }
 

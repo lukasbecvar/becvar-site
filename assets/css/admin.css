@@ -78,6 +78,11 @@ textarea {
 	text-align: center;
 }
 
+.center-box {
+	display: flex;
+	justify-content: center;
+}
+
 .wrapper .sidebar {
 	background-color: #161616;
 	position: fixed;
@@ -941,6 +946,30 @@ button {
 	height: 5px;
 }
 
+.ip-info-box {
+	margin-top: 40px;
+	color: white;
+	border: 1px solid white;
+	position: absolute;
+	width: 50%;
+	background-color: rgb(27, 27, 27);
+	border: 1px solid rgb(177, 177, 177);
+}
+
+.ip-info-title {
+	font-size: 22px;
+	font-weight: bold;
+	border-bottom: 1px solid rgb(177, 177, 177);;
+	padding: 10px;
+	margin-bottom: -3px;
+}
+
+.ip-info-body li {
+	padding: 6px;
+	border-bottom: 1px solid rgb(177, 177, 177);
+	font-size: 18px;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
@@ -1079,6 +1108,18 @@ button {
 	}
 	.terminal-component #command {
 		font-size: 22px;
+	}
+	.ip-info-box {
+		margin-top: 0px;
+		width: 100%;
+	}
+	.ip-info-title {
+		font-size: 18px;
+		padding: 4px;
+	}
+	.ip-info-body li {
+		font-size: 13px;
+		padding: 3px;
 	}
 }
 
