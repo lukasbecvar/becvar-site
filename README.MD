@@ -24,22 +24,11 @@ The main part of this application is the admin panel, which contains functions a
  - Included adminer in the admin page
 
 ## Public site
-the public part of the site contains information about me and my projects.
+The public part of the site contains information about me and my projects.
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader / view
  - Code paste site
-
-## Installation (with apache)
- - install apache2, mysql8, composer, php, php-pdo, php-mysqli, php-xml, php-dom
- - clone repository to your /www dir
- - disable apache autoindex module
- - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
- - for production use only APP_ENV=prod! (in .env)
- - configure app enviroment in .env.prod
- - configure all values (mysql app secret etc)
- - install dependencies (scripts/install.sh)
- - migrate database structure (scripts/migrate.sh)
 
 ## Translations
  - Public page is automatically translated into visitor language (geolocation with ip address)
@@ -56,12 +45,35 @@ the public part of the site contains information about me and my projects.
 Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
 ## Required
- - php-8.2 or <
+ - apache 
+ - rpm
+ - openssl
+ - sudo
+ - systemd
  - mysql8
+ - php-8.3
  - php-curl
  - php-pdo
- - nodejs 18 or <
- - npm 10 or <
+ - php-intl
+ - php-dom
+ - php-xml
+ - php-mysqli
+ - nodejs-8 
+ - npm-10
+
+## Installation (with mysql/apache)
+ - clone repository to your /www dir
+ - disable apache autoindex module
+ - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
+ - for production use only APP_ENV=prod! (in .env)
+ - configure app enviroment in .env.prod
+ - configure all values (mysql app secret etc)
+ - install dependencies (scripts/install.sh)
+ - migrate database structure (scripts/migrate.sh)
+ - install opcache a acpu (optionally)
+
+## Deployment
+Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
 ## Dependencies
 * Symfony
