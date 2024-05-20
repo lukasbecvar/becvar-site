@@ -2,6 +2,12 @@
 Personal website builded with the Symfony framework, Bootstrap & Webpack Encore.
 
 ## Admin site
+![Dashboard](.github/images/admin-dashboard.png)
+
+## Public page
+![Homepage](.github/images/public-page.png)
+
+## Admin site
 The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
  - Account system with permissions
  - Warning system
