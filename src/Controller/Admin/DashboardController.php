@@ -80,6 +80,7 @@ class DashboardController extends AbstractController
             'is_services_list_exist' => $this->serviceManager->isServicesListExist(),
             'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound(),
             'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
+            'not_installed_requirements' => $this->serviceManager->getNotInstalledRequirements(),
 
             // dashboard (services controller)
             'services' => $this->serviceManager->getServices(),

@@ -107,7 +107,7 @@ class ServiceManager
     }
 
     /**
-     * Checks if a service is installed.
+     * Checks if a service is or is php extension installed.
      *
      * @param string $serviceName
      *
@@ -115,13 +115,19 @@ class ServiceManager
      */
     public function isServiceInstalled(string $serviceName): bool
     {
+        // check dpkg package
         exec('dpkg -l | grep ' . escapeshellarg($serviceName), $output, $returnCode);
 
         if ($returnCode === 0) {
             return true;
-        } else {
-            return false;
         }
+
+        // check php extension
+        if (extension_loaded($serviceName)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -262,5 +268,32 @@ class ServiceManager
     public function getServicesJson(): ?array
     {
         return $this->jsonUtil->getJson(__DIR__ . '/../../config/becwork/services.json');
+    }
+
+    /**
+     * Get a list of required applications that are not installed.
+     *
+     * This method reads a JSON file containing a list of required applications
+     * and checks if each application is installed. It returns an array of applications
+     * that are not found on the system.
+     *
+     * @return array<string> List of applications that are not installed.
+     */
+    public function getNotInstalledRequirements(): array
+    {
+        $notFoundApps = [];
+
+        // get list of required apps
+        $appList = $this->jsonUtil->getJson(__DIR__ . '/../../config/becwork/package-requirements.json');
+
+        // check if app is installed
+        foreach ($appList as $app) {
+            if (!$this->isServiceInstalled($app)) {
+                array_push($notFoundApps, $app);
+            }
+        }
+
+        // return not found requirements
+        return $notFoundApps;
     }
 }

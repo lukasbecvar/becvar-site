@@ -44,7 +44,7 @@ The public part of the site contains information about me and my projects.
 ## Docker
 Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
-## Required
+## Required packages & extensions
  - apache 
  - rpm
  - openssl
@@ -56,7 +56,6 @@ Docker is used only for development in this application. The production version 
  - php-pdo
  - php-intl
  - php-dom
- - php-xml
  - php-mysqli
  - nodejs-8 
  - npm-10
@@ -74,6 +73,11 @@ Docker is used only for development in this application. The production version 
 
 ## Deployment
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
+
+## Todos
+- [ ] Validate api inputs with symfony validator
+- [ ] IP-INFO
+- [ ] Implement symfony messenger
 
 ## Dependencies
 * Symfony

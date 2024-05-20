@@ -9,6 +9,27 @@
     <div class="card-phone card diag-card-phone text-white mb-3 diagnostic-card">
         <div class="card-header diagnostics-large-title">System diagnostics</div>
         <div class="card-body diagnostics-large">
+            {# <===== system requirements check =====> #}
+            {% if not_installed_requirements|length != 0 %}
+                <p class="card-text">
+                    <span class="text-warning">
+                        <span class="text-red">
+                            <i class="fa fa-exclamation-triangle"></i> 
+                        </span>
+                        Not found requirements: {{ not_installed_requirements|join(', ') }}
+                    </span>
+                </p>
+            {% else %}
+                <p class="card-text">
+                    <span class="text-warning">
+                        <span class="text-light-green">
+                            <i class="fa fa-check"></i> 
+                        </span>
+                        All requirements is installed
+                    </span>
+                </p>
+            {% endif %}
+            
             {# <===== linux system check =====> #}
             {% if is_system_linux == false %}
                 <p class="card-text">

@@ -57,6 +57,7 @@ class DiagnosticController extends AbstractController
             'ram_usage' => $this->dashboardUtil->getRamUsage()['used'],
             'is_web_user_sudo' => $this->dashboardUtil->isWebUserSudo(),
             'web_service_username' => $this->dashboardUtil->getWebUsername(),
+            'not_installed_requirements' => $this->serviceManager->getNotInstalledRequirements(),
 
             // web diagnostics
             'is_ssl' => $this->siteUtil->isSsl(),
