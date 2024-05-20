@@ -5,8 +5,8 @@ namespace App\Manager;
 use Twig\Environment;
 use App\Util\SiteUtil;
 use App\Event\ErrorEvent;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
@@ -31,10 +31,15 @@ class ErrorManager
     /**
      * Handles errors based on the application's mode.
      *
+     * This function returns void and kills the application process because it needs to be called outside of the main
+     * Symfony process and from void functions, hence this inelegant solution is used.
+     *
+     * If the application is in dev mode, it returns a JSON response.
+     *
      * @param string $msg The error message.
      * @param int $code The error code.
      *
-     * @return Response A Response object representing the error.
+     * @return Response.
      */
     public function handleError(string $msg, int $code): Response
     {
