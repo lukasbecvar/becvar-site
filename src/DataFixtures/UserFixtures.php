@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
         $testUser->setToken(ByteString::fromRandom(32)->toString());
         $testUser->setRegistedTime(date('Y-m-d H:i:s'));
         $testUser->setLastLoginTime('not logged');
-        $testUser->setProfilePic('profile_pic');
+        $testUser->setProfilePic('non-pic');
         $testUser->setVisitorId('1');
 
         // persist the entity
