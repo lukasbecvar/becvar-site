@@ -29,8 +29,7 @@ php bin/console doctrine:migrations:migrate --no-interaction
           
 # execute app commands
 php bin/console projects:list:update
-php bin/console auth:tokens:regenerate
-          
+
 # fix storage permissions
 sudo chmod -R 777 var/
 
