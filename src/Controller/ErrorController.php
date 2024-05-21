@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Util\SiteUtil;
 use App\Manager\ErrorManager;
+use App\Exception\AppErrorException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -68,17 +70,14 @@ class ErrorController extends AbstractController
     public function show(\Throwable $exception): Response
     {
         // get exception data
-        $statusCode = $exception->getCode();
-        $exceptionData = $exception->getMessage();
+        $statusCode = $exception instanceof HttpException ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
 
-        // decode exception data
-        $data = json_decode($exceptionData);
-
-        // return json for dev mode
+        // handle errors in dev mode
         if ($this->siteUtil->isDevMode()) {
-            return $this->json($data, $statusCode);
+            throw new AppErrorException($exception->getMessage());
         }
 
-        return new Response($this->errorManager->handleErrorView($statusCode), $statusCode);
+        // return error view
+        return new Response($this->errorManager->handleErrorView($statusCode));
     }
 }
