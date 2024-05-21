@@ -30,7 +30,7 @@ class ErrorEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ErrorEvent::NAME => 'onErrorEvent',
+            ErrorEvent::NAME => 'onErrorEvent'
         ];
     }
 

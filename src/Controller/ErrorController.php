@@ -57,4 +57,28 @@ class ErrorController extends AbstractController
     {
         return new Response($this->errorManager->handleErrorView(404));
     }
+
+    /**
+     * Handles all errors (this is for error manager handler).
+     *
+     * @param \Throwable $exception The thrown exception.
+     *
+     * @return Response The error response.
+     */
+    public function show(\Throwable $exception): Response
+    {
+        // get exception data
+        $statusCode = $exception->getCode();
+        $exceptionData = $exception->getMessage();
+
+        // decode exception data
+        $data = json_decode($exceptionData);
+
+        // return json for dev mode
+        if ($this->siteUtil->isDevMode()) {
+            return $this->json($data, $statusCode);
+        }
+
+        return new Response($this->errorManager->handleErrorView($statusCode), $statusCode);
+    }
 }

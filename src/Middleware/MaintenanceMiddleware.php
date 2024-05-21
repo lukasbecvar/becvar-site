@@ -30,7 +30,7 @@ class MaintenanceMiddleware
     {
         // check if MAINTENANCE_MODE enabled
         if ($this->siteUtil->isMaintenance()) {
-            $this->errorManager->handleError('maintenance', 520);
+            die($this->errorManager->handleErrorView('maintenance'));
         }
     }
 }

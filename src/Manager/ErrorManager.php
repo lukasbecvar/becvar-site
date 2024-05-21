@@ -5,11 +5,11 @@ namespace App\Manager;
 use Twig\Environment;
 use App\Util\SiteUtil;
 use App\Event\ErrorEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AuthManager
+ * Class ErrorManager
  *
  * ErrorManager provides error handling operations.
  *
@@ -31,43 +31,34 @@ class ErrorManager
     /**
      * Handles errors based on the application's mode.
      *
-     * This function returns void and kills the application process because it needs to be called outside of the main
-     * Symfony process and from void functions, hence this inelegant solution is used.
-     *
-     * If the application is in dev mode, it returns a JSON response.
-     *
      * @param string $msg The error message.
      * @param int $code The error code.
      *
-     * @return Response.
+     * @throws HttpException
+     *
+     * @return mixed
      */
-    public function handleError(string $msg, int $code): Response
+    public function handleError(string $msg, int $code): mixed
     {
-        // handle maintenance
-        if ($msg == 'maintenance') {
-            return die($this->handleErrorView('maintenance'));
-        }
-
         // dispatch error event
         if ($this->canBeEventDispatched($msg)) {
             $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
         }
 
-        // check if app is in dev mode
-        if ($this->siteUtil->isDevMode()) {
-            // build app error message
-            $data = [
-                'status' => 'error',
-                'code' => $code,
-                'message' => $msg
-            ];
-
-            // return JSON response
-            return die(json_encode($data));
-        } else {
-            // return an error view response
-            return die($this->handleErrorView(strval($code)));
+        // protect message on production env
+        if (!$this->siteUtil->isDevMode()) {
+            $msg = 'internal-error';
         }
+
+        // build app error message
+        $data = [
+            'status' => 'error',
+            'code' => $code,
+            'message' => $msg
+        ];
+
+        // throw HttpException with JSON response
+        throw new HttpException($code, json_encode($data), null, [], $code);
     }
 
     /**
@@ -77,7 +68,7 @@ class ErrorManager
      *
      * @return string The rendered error view.
      */
-    public function handleErrorView(string|int $code)
+    public function handleErrorView(string|int $code): string
     {
         try {
             return $this->twig->render('errors/error-' . $code . '.html.twig');
