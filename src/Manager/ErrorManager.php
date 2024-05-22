@@ -50,15 +50,8 @@ class ErrorManager
             $msg = 'internal-error';
         }
 
-        // build app error message
-        $data = [
-            'status' => 'error',
-            'code' => $code,
-            'message' => $msg
-        ];
-
         // throw HttpException with JSON response
-        throw new HttpException($code, json_encode($data), null, [], $code);
+        throw new HttpException($code, $msg, null, [], $code);
     }
 
     /**

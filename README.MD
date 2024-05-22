@@ -75,7 +75,6 @@ Docker is used only for development in this application. The production version 
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
 ## Todos
-- [ ] Chat sender identify with user ID
 - [ ] Implement symfony messenger for async process
 
 ## Dependencies
