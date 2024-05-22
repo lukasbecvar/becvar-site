@@ -2,13 +2,9 @@
 Personal website builded with the Symfony framework, Bootstrap & Webpack Encore.
 
 ## Admin site
+The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
 ![Dashboard](.github/images/admin-dashboard.png)
 
-## Public page
-![Homepage](.github/images/public-page.png)
-
-## Admin site
-The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
  - Account system with permissions
  - Warning system
  - Server dashboard
@@ -25,6 +21,8 @@ The main part of this application is the admin panel, which contains functions a
 
 ## Public site
 The public part of the site contains information about me and my projects.
+![Homepage](.github/images/public-page.png)
+
  - Main components: about, projects list, contact, etc...
  - Projects component gets repos from github (closed, open / Archived, Unarchived)
  - Image uploader / view
