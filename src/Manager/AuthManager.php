@@ -359,7 +359,7 @@ class AuthManager
     /**
      * Retrieves a user entity from the repository based on the provided criteria.
      *
-     * @param array<string> $array The criteria to search for in the repository.
+     * @param array<mixed> $array The criteria to search for in the repository.
      *
      * @throws \Exception If there is an error during the database query.
      *

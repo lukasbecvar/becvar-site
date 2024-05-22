@@ -19,7 +19,7 @@ class ChatMessage
     private ?string $message = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $sender = null;
+    private ?int $sender = null;
 
     #[ORM\Column(length: 255)]
     private ?string $day = null;
@@ -44,12 +44,12 @@ class ChatMessage
         return $this;
     }
 
-    public function getSender(): ?string
+    public function getSender(): ?int
     {
         return $this->sender;
     }
 
-    public function setSender(string $sender): static
+    public function setSender(int $sender): static
     {
         $this->sender = $sender;
 

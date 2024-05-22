@@ -34,25 +34,25 @@ class ChatMessageFixtures extends Fixture
         $chatMessages = [
             [
                 'message' => 'testing message 1',
-                'sender' => 'sender 1',
+                'sender' => 1,
                 'day' => '03.05.2024',
                 'time' => '11:56'
             ],
             [
                 'message' => 'testing message 2',
-                'sender' => 'sender 2',
+                'sender' => 2,
                 'day' => '01.05.2024',
                 'time' => '09:56'
             ],
             [
                 'message' => 'testing message 3',
-                'sender' => 'sender 3',
+                'sender' => 3,
                 'day' => '09.05.2024',
                 'time' => '10:56'
             ],
             [
                 'message' => 'testing message 4',
-                'sender' => 'sender 4',
+                'sender' => 4,
                 'day' => '03.05.2024',
                 'time' => '13:56'
             ]

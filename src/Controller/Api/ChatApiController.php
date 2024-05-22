@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Util\SecurityUtil;
 use App\Entity\ChatMessage;
+use App\Entity\User;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
@@ -78,6 +79,12 @@ class ChatApiController extends AbstractController
         // get user token
         $token = $this->authManager->getUserToken();
 
+        // get user repo
+        $userRepo = $this->authManager->getUserRepository(['token' => $token]);
+
+        // get user id
+        $userId = $userRepo->getId();
+
         // get message data
         $data = json_decode($request->getContent(), true);
 
@@ -108,7 +115,7 @@ class ChatApiController extends AbstractController
 
         // set message data
         $message->setMessage($chatMessage);
-        $message->setSender($token);
+        $message->setSender($userId);
         $message->setDay($day);
         $message->setTime($time);
 
@@ -161,25 +168,35 @@ class ChatApiController extends AbstractController
             // get sender token
             $sender = $message->getSender();
 
-            // decrypt message
-            $decryptedMessage = $this->securityUtil->decryptAes($message->getMessage());
+            // get sender data
+            $sender = $this->authManager->getUserRepository(['id' => $sender]);
 
-            // check if message is decrypted
-            if ($decryptedMessage == null) {
-                $this->errorManager->handleError('Error to decrypt aes message', 500);
+            // check if sender exists
+            if ($sender != null) {
+                // get sender token
+                $token = $sender->getToken();
+
+                // decrypt message
+                $decryptedMessage = $this->securityUtil->decryptAes($message->getMessage());
+
+                // check if message is decrypted
+                if ($decryptedMessage == null) {
+                    $this->errorManager->handleError('Error to decrypt aes message', 500);
+                }
+
+                // build message
+                $messagesData[] = [
+                    'id' => $message->getId(),
+                    'day' => $message->getDay(),
+                    'time' => $message->getTime(),
+                    'sender' => $this->authManager->getUsername($token),
+                    'role' => $this->authManager->getUserRole($token),
+                    'pic' => $this->authManager->getUserProfilePic($token),
+                    'message' => $decryptedMessage
+                ];
             }
-
-            // build message
-            $messagesData[] = [
-                'id' => $message->getId(),
-                'day' => $message->getDay(),
-                'time' => $message->getTime(),
-                'sender' => $this->authManager->getUsername($sender),
-                'role' => $this->authManager->getUserRole($sender),
-                'pic' => $this->authManager->getUserProfilePic($sender),
-                'message' => $decryptedMessage
-            ];
         }
+
 
         // return messages json
         return $this->json($messagesData);

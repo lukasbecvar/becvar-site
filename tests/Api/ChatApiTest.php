@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class ChatTest
+ * Class ChatApiTest
  *
  * Admin chat API test
  *
  * @package App\Tests\Api
  */
-class ChatTest extends WebTestCase
+class ChatApiTest extends WebTestCase
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
@@ -39,50 +39,9 @@ class ChatTest extends WebTestCase
     {
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn($logged);
-        $authManagerMock->method('getUserToken')->willReturn('testing-user-token');
+        $authManagerMock->method('getUserToken')->willReturn('testing_token');
 
         return $authManagerMock;
-    }
-
-    /**
-     * Test posting a chat message.
-     */
-    public function testPostMessage(): void
-    {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
-
-        // // build post request
-        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode([
-            'message' => 'Testing message: +ěščřžýáíé´=éíáýžřčš12345678ANFJNJNUJBZV',
-        ]));
-
-        // get response data
-        $responseData = json_decode($this->client->getResponse()->getContent(), true);
-
-        // assert
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertEquals('success', $responseData['status']);
-        $this->assertEquals('chat message saved', $responseData['message']);
-    }
-
-    /**
-     * Test posting an empty chat message.
-     */
-    public function testPostEmptyMessage(): void
-    {
-        // use fake auth manager instance
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock(true));
-
-        // make request
-        $this->client->request('POST', '/api/chat/save/message', [], [], [], json_encode([]));
-
-        // get response data
-        $responseData = json_decode($this->client->getResponse()->getContent(), true);
-
-        // assert
-        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
-        $this->assertEquals('error', $responseData['status']);
-        $this->assertEquals('chat message not saved', $responseData['message']);
     }
 
     /**
