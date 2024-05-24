@@ -74,15 +74,6 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
 
 ## TODO
 - [ ] Exception event log
-- [ ] Email service
-- [ ] Security alert email
-- [ ] Remote error & log handler
-- [ ] Monitoring component
-   - [ ] Monitor systemctl services
-   - [ ] Monitor websites (status & response time)
-   - [ ] Async command monitor loop (check all services)
-   - [ ] Report offline status with email alert
-   - [ ] Monitoring admin dashboard
 
 ## Dependencies
 * Symfony
