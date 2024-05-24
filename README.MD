@@ -76,6 +76,7 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
 - [ ] Exception event log
 - [ ] Email service
 - [ ] Security alert email
+- [ ] Remote error & log handler
 - [ ] Monitoring component
    - [ ] Monitor systemctl services
    - [ ] Monitor websites (status & response time)
