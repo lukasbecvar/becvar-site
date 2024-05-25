@@ -3,6 +3,7 @@
 namespace App\Event\Subscriber;
 
 use App\Manager\LogManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,9 +18,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ExceptionEventSubscriber implements EventSubscriberInterface
 {
     private LogManager $logManager;
+    private LoggerInterface $logger;
 
-    public function __construct(LogManager $logManager)
+    public function __construct(LogManager $logManager, LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->logManager = $logManager;
     }
 
@@ -52,6 +55,9 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
             // log the exception
             $this->logManager->log('exception', $message);
         }
+
+        // log the error message with monolog
+        $this->logger->error($message);
     }
 
     /**
