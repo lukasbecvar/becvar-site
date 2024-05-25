@@ -3,10 +3,7 @@
 namespace App\Manager;
 
 use Twig\Environment;
-use App\Util\SiteUtil;
-use App\Event\ErrorEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ErrorManager
@@ -18,14 +15,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ErrorManager
 {
     private Environment $twig;
-    private SiteUtil $siteUtil;
-    private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(Environment $twig, SiteUtil $siteUtil, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-        $this->siteUtil = $siteUtil;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -40,16 +33,6 @@ class ErrorManager
      */
     public function handleError(string $msg, int $code): mixed
     {
-        // dispatch error event
-        if ($this->canBeEventDispatched($msg)) {
-            $this->eventDispatcher->dispatch(new ErrorEvent($code, 'internal-error', $msg), ErrorEvent::NAME);
-        }
-
-        // protect message on production env
-        if (!$this->siteUtil->isDevMode()) {
-            $msg = 'internal-error';
-        }
-
         // throw HttpException with JSON response
         throw new HttpException($code, $msg, null, [], $code);
     }
@@ -68,34 +51,5 @@ class ErrorManager
         } catch (\Exception) {
             return $this->twig->render('errors/error-unknown.html.twig');
         }
-    }
-
-    /**
-     * Checks if an event can be dispatched based on the error message.
-     *
-     * @param string $errorMessage The error message to be checked.
-     * @return bool Returns true if the event can be dispatched, otherwise false.
-     */
-    public function canBeEventDispatched(string $errorMessage): bool
-    {
-        // list of error patterns that should block event dispatch
-        $blockedErrorPatterns = [
-            'log-error:',
-            'Unknown database',
-            'Base table or view not found',
-            'An exception occurred in the driver'
-        ];
-
-        // loop through each blocked error pattern
-        foreach ($blockedErrorPatterns as $pattern) {
-            // check if the current pattern exists in the error message
-            if (strpos($errorMessage, $pattern) !== false) {
-                // if a blocked pattern is found, return false
-                return false;
-            }
-        }
-
-        // if no blocked patterns are found, return true
-        return true;
     }
 }

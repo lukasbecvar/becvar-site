@@ -30,8 +30,8 @@ services:
         arguments:
             $controller: 'App\Controller\ErrorController::show'
 
-    # error event subscriber
-    App\Event\Subscriber\ErrorEventSubscriber:
+    # internal exception error event
+    App\Event\Subscriber\ExceptionEventSubscriber:
         tags:
             - { name: kernel.event_subscriber }
 
