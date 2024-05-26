@@ -72,6 +72,12 @@ Docker is used only for development in this application. The production version 
 ## Deployment
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
+## TODO
+- [ ] Email service
+- [ ] New login security email alert
+- [ ] Email send admin component
+- [ ] Managers, middlewares & events unit tests
+
 ## Dependencies
 * Symfony
    * [Website](https://symfony.com/)   
