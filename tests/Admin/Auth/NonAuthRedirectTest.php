@@ -67,6 +67,7 @@ class NonAuthRedirectTest extends WebTestCase
             ['/admin/visitors/delete'],
             ['/admin/visitors/ban'],
             ['/admin/visitors/unban'],
+            ['/admin/email/send'],
         ];
     }
 

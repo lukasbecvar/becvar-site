@@ -113,11 +113,10 @@ class AuthManager
                 // send login email security alert
                 if (!$this->logManager->isEnabledAntiLog() && $_ENV['MAILER_ENABLED'] == 'true') {
                     $this->emailManager->sendEmail(
-                        [$_ENV['CONTACT_EMAIL']],
-                        'User login alert',
-                        'becvar-site new admin login',
+                        $_ENV['CONTACT_EMAIL'],
+                        'becvar-site User login alert',
                         'New user login: ' . $username . ' in becvar-site detected!',
-                        $_ENV['MAILER_USERNAME']
+                        false
                     );
                 }
             } else {

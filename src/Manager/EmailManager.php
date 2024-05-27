@@ -30,36 +30,41 @@ class EmailManager
     }
 
     /**
-     * Send email to recipients with title, subject and message
+     * Send email to recipient with subject and message
      *
-     * @param array<string> $recipients The list of recipients
-     * @param string $title The title of the email
+     * @param string $recipient The list of recipients
      * @param string $subject The subject of the email
      * @param string $message The message of the email
-     * @param string $from The sender of the email
      *
      * @return void
      */
-    public function sendEmail(array $recipients, string $title, string $subject, string $message, string $from): void
+    public function sendEmail(string $recipient, string $subject, string $message, bool $ipProtect = true): void
     {
         // check if mailer is enabled
         if ($_ENV['MAILER_ENABLED'] == 'false') {
             return;
         }
 
+        // init IP address variable
+        $ipAddress = 'protected';
+
+        // get visitor IP address
+        if ($ipProtect == false) {
+            $ipAddress = $this->visitorInfoUtil->getIP();
+        }
+
         // render email template
         $body = $this->twig->render('email/default.html.twig', [
-            'title' => $title,
             'subject' => $subject,
             'time' => date('d.m.Y H:i:s'),
             'message' => $message,
-            'ip_address' => $this->visitorInfoUtil->getIP(),
+            'ip_address' => $ipAddress,
         ]);
 
         // create email object
         $email = (new Email())
-            ->from($from)
-            ->to(...$recipients)
+            ->from($_ENV['MAILER_USERNAME'])
+            ->to($recipient)
             ->subject($subject)
             ->html($body);
 
