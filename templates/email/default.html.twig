@@ -30,8 +30,20 @@
             color: #ececec;
             margin: 0;
         }
+        .subject h2 span {
+            float: right;
+            color: rgb(189, 189, 189)
+        }
         .message {
             color: #e0e0e0;
+            font-weight: bold;
+        }
+        .message div {
+            color: #c7c7c7;
+            position: fixed;
+            bottom: 0;
+            font-size: 16px;
+            margin-bottom: 5px;
         }
         a {
             color: #bb86fc;
@@ -47,10 +59,11 @@
         <h1>{{ title }}</h1>
     </div>
     <div class="subject">
-        <h2>{{ subject }}</h2>
+        <h2>{{ subject }} <span>{{ time }}</span></h2>
     </div>
     <div class="message">
         <p>{{ message }}</p>
+        <div>{{ ip_address }}</div>
     </div>
 </body>
 </html>

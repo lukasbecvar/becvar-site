@@ -24,6 +24,7 @@ class AuthManager
     private LogManager $logManager;
     private CookieUtil $cookieUtil;
     private SessionUtil $sessionUtil;
+    private EmailManager $emailManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private UserRepository $userRepository;
@@ -35,6 +36,7 @@ class AuthManager
         LogManager $logManager,
         CookieUtil $cookieUtil,
         SessionUtil $sessionUtil,
+        EmailManager $emailManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         UserRepository $userRepository,
@@ -45,6 +47,7 @@ class AuthManager
         $this->logManager = $logManager;
         $this->cookieUtil = $cookieUtil;
         $this->sessionUtil = $sessionUtil;
+        $this->emailManager = $emailManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
@@ -106,6 +109,17 @@ class AuthManager
 
                 // log auth action
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
+
+                // send login email security alert
+                if (!$this->logManager->isEnabledAntiLog() && $_ENV['MAILER_ENABLED'] == 'true') {
+                    $this->emailManager->sendEmail(
+                        [$_ENV['CONTACT_EMAIL']],
+                        'User login alert',
+                        'becvar-site new admin login',
+                        'New user login: ' . $username . ' in becvar-site detected!',
+                        $_ENV['MAILER_USERNAME']
+                    );
+                }
             } else {
                 $this->errorManager->handleError('error to login user with token: ' . $userToken, 500);
             }

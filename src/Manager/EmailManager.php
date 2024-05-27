@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use Twig\Environment;
+use App\Util\VisitorInfoUtil;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 
@@ -18,12 +19,14 @@ class EmailManager
     private Environment $twig;
     private MailerInterface $mailer;
     private ErrorManager $errorManager;
+    private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(MailerInterface $mailer, Environment $twig, ErrorManager $errorManager)
+    public function __construct(MailerInterface $mailer, Environment $twig, ErrorManager $errorManager, VisitorInfoUtil $visitorInfoUtil)
     {
         $this->twig = $twig;
         $this->mailer = $mailer;
         $this->errorManager = $errorManager;
+        $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
     /**
@@ -48,7 +51,9 @@ class EmailManager
         $body = $this->twig->render('email/default.html.twig', [
             'title' => $title,
             'subject' => $subject,
+            'time' => date('d.m.Y H:i:s'),
             'message' => $message,
+            'ip_address' => $this->visitorInfoUtil->getIP(),
         ]);
 
         // create email object
