@@ -76,6 +76,7 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
 - [ ] Email service
 - [ ] New login security email alert
 - [ ] Email send admin component
+- [ ] Replace bcrypt hash with argon
 - [ ] Managers, middlewares & events unit tests
 - [ ] Service monitoring
    - [ ] Monitor TCP/UDP/HTTP services status
