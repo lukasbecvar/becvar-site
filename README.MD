@@ -71,7 +71,7 @@ Docker is used only for development in this application. The production version 
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
 ## TODO
-- [ ] Email service
+- [X] Email service
 - [ ] New login security email alert
 - [ ] Email send admin component
 - [ ] Replace bcrypt hash with argon
