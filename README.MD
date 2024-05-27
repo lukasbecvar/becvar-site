@@ -77,6 +77,12 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
 - [ ] New login security email alert
 - [ ] Email send admin component
 - [ ] Managers, middlewares & events unit tests
+- [ ] Service monitoring
+  - [ ] Monitor TCP/UDP/HTTP services status
+  - [ ] Monitor HTTP response time
+  - [ ] Admin monitroing dashboard
+  - [ ] Monitoring async process
+  - [ ] Send offline status email alert in email
 
 ## Dependencies
 * Symfony
