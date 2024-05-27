@@ -17,14 +17,16 @@ use Symfony\Component\Mailer\MailerInterface;
 class EmailManager
 {
     private Environment $twig;
+    private LogManager $logManager;
     private MailerInterface $mailer;
     private ErrorManager $errorManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
-    public function __construct(MailerInterface $mailer, Environment $twig, ErrorManager $errorManager, VisitorInfoUtil $visitorInfoUtil)
+    public function __construct(MailerInterface $mailer, LogManager $logManager, Environment $twig, ErrorManager $errorManager, VisitorInfoUtil $visitorInfoUtil)
     {
         $this->twig = $twig;
         $this->mailer = $mailer;
+        $this->logManager = $logManager;
         $this->errorManager = $errorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -67,6 +69,9 @@ class EmailManager
             ->to($recipient)
             ->subject($subject)
             ->html($body);
+
+        // log email sending
+        $this->logManager->log('email-send', 'Email sent to ' . $recipient . ' with subject: ' . $subject);
 
         // send email
         try {
