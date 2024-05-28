@@ -19,3 +19,6 @@ sudo rm -rf var/
 
 # delete docker services data
 sudo rm -rf _docker/services/
+
+# delete phpdoc cache files
+sudo rm -rf .phpdoc
