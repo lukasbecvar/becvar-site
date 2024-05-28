@@ -47,9 +47,9 @@ class LogManager
     /**
      * Logs an event.
      *
-     * @param string $name
-     * @param string $value
-     * @param bool $bypassAntilog
+     * @param string $name The name of the log.
+     * @param string $value The value of the log.
+     * @param bool $bypassAntilog Bypass the anti-log cookie.
      *
      * @return void
      */
@@ -127,11 +127,11 @@ class LogManager
     /**
      * Retrieves logs based on IP address.
      *
-     * @param string $ipAddress
-     * @param string $username
-     * @param int $page
+     * @param string $ipAddress The IP address of the user.
+     * @param string $username The username of the user.
+     * @param int $page The page number.
      *
-     * @return Log[]|null
+     * @return Log[]|null $logs The logs based on IP address.
      */
     public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
     {
@@ -171,11 +171,11 @@ class LogManager
     /**
      * Retrieves logs based on status, paginated.
      *
-     * @param string $status
-     * @param string $username
-     * @param int $page
+     * @param string $status The status of the logs.
+     * @param string $username The username of the user.
+     * @param int $page The page number.
      *
-     * @return Log[]|null
+     * @return Log[]|null $logs The logs based on status, paginated.
      */
     public function getLogs(string $status, $username, int $page): ?array
     {
@@ -217,7 +217,7 @@ class LogManager
      *
      * @param string $status
      *
-     * @return int|null
+     * @return int|null $count The count of logs based on status.
      */
     public function getLogsCount(string $status): ?int
     {
@@ -234,7 +234,7 @@ class LogManager
     /**
      * Retrieves the count of login logs.
      *
-     * @return int|null
+     * @return int|null $count The count of login logs.
      */
     public function getLoginLogsCount(): ?int
     {
@@ -267,7 +267,7 @@ class LogManager
     /**
      * Checks if logs are enabled.
      *
-     * @return bool
+     * @return bool $enabled True if logs are enabled, false otherwise.
      */
     public function isLogsEnabled(): bool
     {
@@ -282,7 +282,7 @@ class LogManager
     /**
      * Checks if the anti-log cookie is enabled.
      *
-     * @return bool
+     * @return bool $enabled True if the anti-log cookie is enabled, false otherwise.
      */
     public function isEnabledAntiLog(): bool
     {
@@ -325,7 +325,7 @@ class LogManager
     /**
      * Retrieves the log level from the environment configuration.
      *
-     * @return int
+     * @return int $level The log level from the environment configuration.
      */
     public function getLogLevel(): int
     {

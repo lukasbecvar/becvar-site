@@ -28,6 +28,8 @@ class CookieUtil
      * @param int $expiration The expiration time for the cookie.
      *
      * @throws \Exception If headers have already been sent.
+     *
+     * @return void
      */
     public function set($name, $value, $expiration): void
     {
@@ -57,6 +59,8 @@ class CookieUtil
      * @param string $name The name of the cookie.
      *
      * @throws \Exception If the URI is invalid.
+     *
+     * @return void
      */
     public function unset($name): void
     {
@@ -73,6 +77,7 @@ class CookieUtil
             $parts = explode('/', $uri);
             $cookiePath = '';
 
+            // unset the cookie for each part of the URI.
             foreach ($parts as $part) {
                 $cookiePath = '/' . ltrim($cookiePath . '/' . $part, '//');
                 setcookie($name, '', 1, $cookiePath);

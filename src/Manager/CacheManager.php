@@ -60,9 +60,9 @@ class CacheManager
     /**
      * Sets a value in the cache with the specified key and expiration time.
      *
-     * @param mixed $key        The key under which to store the value in the cache.
-     * @param mixed $value      The value to store in the cache.
-     * @param int $expiration   The expiration time in seconds for the cached value.
+     * @param mixed $key The key under which to store the value in the cache.
+     * @param mixed $value The value to store in the cache.
+     * @param int $expiration The expiration time in seconds for the cached value.
      *
      * @return void
      */

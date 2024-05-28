@@ -24,8 +24,11 @@ class EmailSendServiceController extends AbstractController
     private AuthManager $authManager;
     private EmailManager $emailManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, EmailManager $emailManager)
-    {
+    public function __construct(
+        SiteUtil $siteUtil,
+        AuthManager $authManager,
+        EmailManager $emailManager
+    ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->emailManager = $emailManager;
@@ -72,6 +75,7 @@ class EmailSendServiceController extends AbstractController
             'status' => $status,
             'form' => $form->createView(),
 
+            // mailer state (enabled/disabled)
             'mailer_state' => $_ENV['MAILER_ENABLED']
         ]);
     }

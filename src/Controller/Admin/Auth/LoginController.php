@@ -26,8 +26,11 @@ class LoginController extends AbstractController
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
 
-    public function __construct(LogManager $logManager, AuthManager $authManager, SecurityUtil $securityUtil)
-    {
+    public function __construct(
+        LogManager $logManager,
+        AuthManager $authManager,
+        SecurityUtil $securityUtil
+    ) {
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -36,8 +39,9 @@ class LoginController extends AbstractController
     /**
      * User login action.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response

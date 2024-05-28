@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class AdminDiagnosticTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -44,6 +39,8 @@ class AdminDiagnosticTest extends WebTestCase
 
     /**
      * Test if the diagnostic page is loaded successfully.
+     *
+     * @return void
      */
     public function testDiagnostic(): void
     {

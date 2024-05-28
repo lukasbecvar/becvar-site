@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Admin\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class NonAuthRedirectTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -72,7 +67,13 @@ class NonAuthRedirectTest extends WebTestCase
     }
 
     /**
+     * Test non-authenticated admin redirect
+     *
      * @dataProvider provideAdminUrls
+     *
+     * @param string $url The admin route URL
+     *
+     * @return void
      */
     public function testNonAuthAdminRedirect(string $url): void
     {

@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class TodoManagerTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -44,6 +39,8 @@ class TodoManagerTest extends WebTestCase
 
     /**
      * Test if the todo manager page loads successfully.
+     *
+     * @return void
      */
     public function testTodoManager(): void
     {
@@ -63,6 +60,8 @@ class TodoManagerTest extends WebTestCase
 
     /**
      * Test if the completed todo manager page loads successfully.
+     *
+     * @return void
      */
     public function testTodoManagerCompleted(): void
     {

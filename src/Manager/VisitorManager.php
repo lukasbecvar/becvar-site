@@ -39,9 +39,9 @@ class VisitorManager
     /**
      * Get a visitor repository by array search criteria.
      *
-     * @param array<string, mixed> $search
+     * @param array<string,mixed> $search The search criteria.
      *
-     * @return Visitor|null
+     * @return Visitor|null The visitor entity if found, null otherwise.
      */
     public function getRepositoryByArray(array $search): ?object
     {
@@ -60,9 +60,9 @@ class VisitorManager
     /**
      * Get the visitor ID by IP address.
      *
-     * @param string $ipAddress
+     * @param string $ipAddress The IP address of the visitor.
      *
-     * @return int
+     * @return int The ID of the visitor.
      */
     public function getVisitorID(string $ipAddress): int
     {
@@ -79,8 +79,10 @@ class VisitorManager
     /**
      * Update visitor email by IP address.
      *
-     * @param string $ipAddress
-     * @param string $email
+     * @param string $ipAddress The IP address of the visitor.
+     * @param string $email The email address of the visitor.
+     *
+     * @return void
      */
     public function updateVisitorEmail(string $ipAddress, string $email): void
     {
@@ -102,9 +104,9 @@ class VisitorManager
     /**
      * Get a paginated list of visitors.
      *
-     * @param int $page
+     * @param int $page The page number.
      *
-     * @return Visitor[]|null
+     * @return Visitor[]|null The list of visitors if found, null otherwise.
      */
     public function getVisitors(int $page): ?array
     {
@@ -139,7 +141,7 @@ class VisitorManager
     /**
      * Get the visitor language based on IP address.
      *
-     * @return string|null
+     * @return string|null The language of the visitor.
      */
     public function getVisitorLanguage(): ?string
     {
@@ -156,9 +158,9 @@ class VisitorManager
     /**
      * Get a visitor repository by ID.
      *
-     * @param int $id
+     * @param int $id The ID of the visitor.
      *
-     * @return Visitor|null
+     * @return Visitor|null The visitor entity if found, null otherwise.
      */
     public function getVisitorRepositoryByID(int $id): ?object
     {
@@ -168,9 +170,9 @@ class VisitorManager
     /**
      * Get a visitor repository by IP address.
      *
-     * @param string $ipAddress
+     * @param string $ipAddress The IP address of the visitor.
      *
-     * @return Visitor|null
+     * @return Visitor|null The visitor entity if found, null otherwise.
      */
     public function getVisitorRepository(string $ipAddress): ?object
     {
@@ -180,9 +182,9 @@ class VisitorManager
     /**
      * Get the count of visitors for a given page.
      *
-     * @param int $page
+     * @param int $page The page number.
      *
-     * @return int
+     * @return int The count of visitors for the given page.
      */
     public function getVisitorsCount(int $page): int
     {

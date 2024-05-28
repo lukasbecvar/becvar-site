@@ -155,9 +155,9 @@ class ProjectsManager
     /**
      * Gets the list of projects based on their status.
      *
-     * @param string $status
+     * @param string $status The status of the projects to get
      *
-     * @return Project[]|null
+     * @return Project[]|null The list of projects
      */
     public function getProjectsList(string $status): ?array
     {
@@ -172,7 +172,7 @@ class ProjectsManager
     /**
      * Gets the total count of projects.
      *
-     * @return int
+     * @return int The total count of projects
      */
     public function getProjectsCount(): ?int
     {

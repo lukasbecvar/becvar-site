@@ -27,7 +27,7 @@ class SendEmailTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @return object
+     * @return object The mock object
      */
     private function createAuthManagerMock(): object
     {

@@ -4,7 +4,6 @@ namespace App\Controller\Api;
 
 use App\Util\SecurityUtil;
 use App\Entity\ChatMessage;
-use App\Entity\User;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
@@ -47,9 +46,10 @@ class ChatApiController extends AbstractController
      * API endpoint for saving a chat message.
      *
      * @param Request $request The request object.
-     * @return Response Returns a Response with the status and message indicating the result of the operation.
      *
      * @throws \Exception Throws an exception if there is an error during the message save process.
+     *
+     * @return Response Returns a Response with the status and message indicating the result of the operation.
      */
     #[Route('/api/chat/save/message', methods: ['POST'], name: 'api_chat_save')]
     public function saveMessage(Request $request): Response
@@ -137,7 +137,7 @@ class ChatApiController extends AbstractController
     /**
      * Get chat messages.
      *
-     * @return Response
+     * @return Response object with messages data.
      */
     #[Route('/api/chat/get/messages', methods: ['GET'], name: 'api_chat_get')]
     public function getMessages(): Response
@@ -196,7 +196,6 @@ class ChatApiController extends AbstractController
                 ];
             }
         }
-
 
         // return messages json
         return $this->json($messagesData);

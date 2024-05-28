@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class DatabaseBrowserTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -32,8 +27,9 @@ class DatabaseBrowserTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @param string $role
-     * @return object
+     * @param string $role The role of the user
+     *
+     * @return object The mock object
      */
     private function createAuthManagerMock(string $role): object
     {
@@ -46,6 +42,8 @@ class DatabaseBrowserTest extends WebTestCase
 
     /**
      * Test if the database browser list page loads successfully for an admin.
+     *
+     * @return void
      */
     public function testDatabaseBrowserList(): void
     {
@@ -63,6 +61,8 @@ class DatabaseBrowserTest extends WebTestCase
 
     /**
      * Test if the database browser list page restricts access for non-admin users.
+     *
+     * @return void
      */
     public function testDatabaseBrowserListNonPermissions(): void
     {
@@ -80,6 +80,8 @@ class DatabaseBrowserTest extends WebTestCase
 
     /**
      * Test if the database browser table viewer page loads successfully for an admin.
+     *
+     * @return void
      */
     public function testDatabaseBrowserTableViewer(): void
     {
@@ -97,6 +99,8 @@ class DatabaseBrowserTest extends WebTestCase
 
     /**
      * Test if the database browser new row adder page loads successfully for an admin.
+     *
+     * @return void
      */
     public function testDatabaseBrowserNewRowAdder(): void
     {

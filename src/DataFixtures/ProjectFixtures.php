@@ -19,6 +19,8 @@ class ProjectFixtures extends Fixture
      * Load project fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
+     * @return void
      */
     public function load(ObjectManager $manager): void
     {
@@ -71,15 +73,19 @@ class ProjectFixtures extends Fixture
         // create projects from data array
         foreach ($projectsData as $projectData) {
             $project = new Project();
-            $project->setName($projectData['name']);
-            $project->setDescription($projectData['description']);
-            $project->setTechnology($projectData['technology']);
-            $project->setLink($projectData['link']);
-            $project->setStatus($projectData['status']);
 
+            // set project data
+            $project->setName($projectData['name'])
+                ->setDescription($projectData['description'])
+                ->setTechnology($projectData['technology'])
+                ->setLink($projectData['link'])
+                ->setStatus($projectData['status']);
+
+            // persist the project
             $manager->persist($project);
         }
 
+        // save all the projects
         $manager->flush();
     }
 }

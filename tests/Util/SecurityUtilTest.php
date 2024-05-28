@@ -25,7 +25,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for escapeString method.
      *
-     * @return array<array<string>>
+     * @return array<array<string>> The test data
      */
     public function escapeStringDataProvider(): array
     {
@@ -39,7 +39,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for genBcryptHash method.
      *
-     * @return array<array<string|int>>
+     * @return array<array<string|int>> The test data
      */
     public function genBcryptHashDataProvider(): array
     {
@@ -52,7 +52,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for hashValidate method.
      *
-     * @return array<array<string|bool>>
+     * @return array<array<string|bool>> The test data
      */
     public function hashValidateDataProvider(): array
     {
@@ -65,7 +65,7 @@ class SecurityUtilTest extends TestCase
     /**
      * Data provider for encryptAes method.
      *
-     * @return array<array<string>>
+     * @return array<array<string>> The test data
      */
     public function encryptAesDataProvider(): array
     {
@@ -81,8 +81,8 @@ class SecurityUtilTest extends TestCase
      *
      * @dataProvider escapeStringDataProvider
      *
-     * @param string $input
-     * @param string $expected
+     * @param string $input The input string
+     * @param string $expected The expected output string
      *
      * @return void
      */
@@ -99,9 +99,9 @@ class SecurityUtilTest extends TestCase
      *
      * @dataProvider hashValidateDataProvider
      *
-     * @param string $plainText
-     * @param string $hash
-     * @param bool $expected
+     * @param string $plainText The plain text
+     * @param string $hash The hash
+     * @param bool $expected The expected result
      *
      * @return void
      */
@@ -118,8 +118,8 @@ class SecurityUtilTest extends TestCase
      *
      * @dataProvider genBcryptHashDataProvider
      *
-     * @param string $plainText
-     * @param int $cost
+     * @param string $plainText The plain text
+     * @param int $cost The cost
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class SecurityUtilTest extends TestCase
      *
      * @dataProvider encryptAesDataProvider
      *
-     * @param string $plainText
+     * @param string $plainText The plain text
      *
      * @return void
      */

@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Admin\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -14,14 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class LogoutTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -30,6 +25,8 @@ class LogoutTest extends WebTestCase
 
     /**
      * Test the logout functionality.
+     *
+     * @return void
      */
     public function testLogout(): void
     {

@@ -27,6 +27,8 @@ class PasteFixtures extends Fixture
      * Load paste fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
+     * @return void
      */
     public function load(ObjectManager $manager): void
     {

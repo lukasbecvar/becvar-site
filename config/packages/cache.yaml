@@ -1,5 +1,4 @@
 framework:
     cache:
-        # this is only file system cache config
         app: cache.adapter.filesystem
         system: cache.adapter.system

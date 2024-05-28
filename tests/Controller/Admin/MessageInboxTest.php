@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class MessageInboxTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -32,9 +27,10 @@ class MessageInboxTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @param string $role
-     * @return object
-     */
+     * @param string $role The role of the user
+     *
+     * @return object The mock object
+    */
     private function createAuthManagerMock(string $role): object
     {
         $authManagerMock = $this->createMock(AuthManager::class);
@@ -46,6 +42,8 @@ class MessageInboxTest extends WebTestCase
 
     /**
      * Test if the inbox page loads successfully for an admin user.
+     *
+     * @return void
      */
     public function testInboxLoad(): void
     {
@@ -61,6 +59,8 @@ class MessageInboxTest extends WebTestCase
 
     /**
      * Test if the inbox page displays a permission error for a non-admin user.
+     *
+     * @return void
      */
     public function testInboxLoadNoPermissions(): void
     {

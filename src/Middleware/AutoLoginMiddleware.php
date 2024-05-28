@@ -29,6 +29,8 @@ class AutoLoginMiddleware
 
     /**
      * Check if auto-login should be performed.
+     *
+     * @return void
      */
     public function onKernelRequest(): void
     {

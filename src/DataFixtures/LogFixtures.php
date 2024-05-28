@@ -19,6 +19,7 @@ class LogFixtures extends Fixture
      * Load log fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager)
@@ -215,6 +216,7 @@ class LogFixtures extends Fixture
             ]
         ];
 
+        // create objects with the given data
         foreach ($logsData as $logData) {
             $log = new Log();
             $log->setName($logData['name'])
@@ -228,6 +230,7 @@ class LogFixtures extends Fixture
             $manager->persist($log);
         }
 
+        // save all the objects to the database
         $manager->flush();
     }
 }

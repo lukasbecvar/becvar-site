@@ -75,8 +75,8 @@ class ServiceManager
     /**
      * Runs an action on a specified service.
      *
-     * @param string $serviceName
-     * @param string $action
+     * @param string $serviceName The name of the service.
+     * @param string $action The action to run on the service.
      *
      * @return void
      */
@@ -109,9 +109,9 @@ class ServiceManager
     /**
      * Checks if a service is or is php extension installed.
      *
-     * @param string $serviceName
+     * @param string $serviceName The name of the service.
      *
-     * @return bool
+     * @return bool The service is installed, false otherwise.
      */
     public function isServiceInstalled(string $serviceName): bool
     {
@@ -133,9 +133,9 @@ class ServiceManager
     /**
      * Checks if a service is running.
      *
-     * @param string $service
+     * @param string $service The name of the service.
      *
-     * @return bool
+     * @return bool The service is running, false otherwise.
      */
     public function isServiceRunning(string $service): bool
     {
@@ -156,10 +156,10 @@ class ServiceManager
     /**
      * Checks if a socket is open.
      *
-     * @param string $ip
-     * @param int $port
+     * @param string $ip The IP address.
+     * @param int $port The port number.
      *
-     * @return string
+     * @return string Online if the socket is open, Offline otherwise.
      */
     public function isSocktOpen(string $ip, int $port): string
     {
@@ -177,9 +177,9 @@ class ServiceManager
     /**
      * Checks if a process is running.
      *
-     * @param string $process
+     * @param string $process The name of the process.
      *
-     * @return bool
+     * @return bool The process is running, false otherwise.
      */
     public function isProcessRunning(string $process): bool
     {
@@ -196,7 +196,7 @@ class ServiceManager
     /**
      * Checks if UFW (Uncomplicated Firewall) is running.
      *
-     * @return bool
+     * @return bool UFW is running, false otherwise.
      */
     public function isUfwRunning(): bool
     {
@@ -221,7 +221,7 @@ class ServiceManager
     /**
      * Checks if the services list file exists.
      *
-     * @return bool
+     * @return bool The services list file exists, false otherwise.
      */
     public function isServicesListExist(): bool
     {
@@ -236,7 +236,7 @@ class ServiceManager
     /**
      * Executes a command.
      *
-     * @param string $command
+     * @param string $command The command to execute.
      *
      * @return void
      */
@@ -263,7 +263,7 @@ class ServiceManager
     /**
      * Gets the services list from the services.json file.
      *
-     * @return array<object>
+     * @return array<object> The services list.
      */
     public function getServicesJson(): ?array
     {

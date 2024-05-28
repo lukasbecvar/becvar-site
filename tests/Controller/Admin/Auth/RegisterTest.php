@@ -5,6 +5,7 @@ namespace App\Tests\Controller\Admin\Auth;
 use App\Entity\User;
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -16,23 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class RegisterTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-    */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
         parent::setUp();
     }
 
-    /**
-     * Tear down after each test.
-     */
     protected function tearDown(): void
     {
         $this->removeFakeData();
@@ -41,6 +33,8 @@ class RegisterTest extends WebTestCase
 
     /**
      * Remove fake user data after each test.
+     *
+     * @return void
      */
     private function removeFakeData(): void
     {
@@ -63,6 +57,8 @@ class RegisterTest extends WebTestCase
 
     /**
      * Test if the register page is loaded when registration is allowed.
+     *
+     * @return void
      */
     public function testRegisterAllowedLoaded(): void
     {
@@ -86,6 +82,8 @@ class RegisterTest extends WebTestCase
 
     /**
      * Test if the register page redirects when registration is not allowed.
+     *
+     * @return void
      */
     public function testRegisterNonAllowedLoaded(): void
     {
@@ -102,6 +100,8 @@ class RegisterTest extends WebTestCase
 
     /**
      * Test if the register form handles empty submission correctly.
+     *
+     * @return void
      */
     public function testRegisterEmptySubmit(): void
     {
@@ -127,6 +127,8 @@ class RegisterTest extends WebTestCase
 
     /**
      * Test if the register form handles passwords that do not match correctly.
+     *
+     * @return void
      */
     public function testRegisterNotMatchPasswordsSubmit(): void
     {

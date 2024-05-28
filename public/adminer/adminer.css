@@ -602,13 +602,13 @@ label {
  
 @media print {
 	.logout {
-	display: none;
+		display: none;
 	}	 
 	#breadcrumb {
-	position: static;
+		position: static;
 	}
 	#content {
-	margin: 0;
+		margin: 0;
 	}
 }
 

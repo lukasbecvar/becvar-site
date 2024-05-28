@@ -24,8 +24,11 @@ class DatabaseBrowserController extends AbstractController
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager)
-    {
+    public function __construct(
+        SiteUtil $siteUtil,
+        AuthManager $authManager,
+        DatabaseManager $databaseManager
+    ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
@@ -34,7 +37,7 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Display the list of database tables.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
@@ -53,8 +56,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Display the view of a specific database table.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
@@ -63,6 +67,7 @@ class DatabaseBrowserController extends AbstractController
         $table = $this->siteUtil->getQueryString('table', $request);
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
+        // render table view
         return $this->render('admin/database-browser.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -89,8 +94,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Edit a specific row in a database table.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
@@ -143,6 +149,7 @@ class DatabaseBrowserController extends AbstractController
             }
         }
 
+        // render row editor view
         return $this->render('admin/database-browser.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -168,8 +175,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Add a new row to a database table.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
@@ -223,6 +231,7 @@ class DatabaseBrowserController extends AbstractController
             }
         }
 
+        // render new row view
         return $this->render('admin/database-browser.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -245,8 +254,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Delete a row from a database table.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
@@ -285,6 +295,7 @@ class DatabaseBrowserController extends AbstractController
             return $this->redirectToRoute('admin_todos_completed');
         }
 
+        // redirect back to browser
         return $this->redirectToRoute('admin_database_browser', [
             'table' => $table,
             'page' => $page

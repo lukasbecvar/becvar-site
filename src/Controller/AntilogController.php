@@ -56,6 +56,7 @@ class AntilogController extends AbstractController
             $this->logManager->log('anti-log', 'user: ' . $username . ' set antilog');
         }
 
+        // redirect to the admin dashboard
         return $this->redirectToRoute('admin_dashboard');
     }
 }

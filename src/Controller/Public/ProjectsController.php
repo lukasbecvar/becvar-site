@@ -70,6 +70,7 @@ class ProjectsController extends AbstractController
         // update projects list
         $this->projectsManager->updateProjectList();
 
+        // redirect to the admin database browser
         return $this->redirectToRoute('admin_database_browser', [
             'table' => 'projects',
             'page' => 1

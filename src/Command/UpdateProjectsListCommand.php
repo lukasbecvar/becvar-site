@@ -30,7 +30,7 @@ class UpdateProjectsListCommand extends Command
     /**
      * Executes the command to update projects list.
      *
-     * @param InputInterface  $input  The input interface.
+     * @param InputInterface $input The input interface.
      * @param OutputInterface $output The output interface.
      *
      * @return int The exit code of the command.
@@ -43,7 +43,10 @@ class UpdateProjectsListCommand extends Command
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
         try {
+            // update projects list
             $this->projectsManager->updateProjectList();
+
+            // success message
             $io->success('Projects list updated!');
             return Command::SUCCESS;
         } catch (\Exception $e) {

@@ -27,6 +27,7 @@ class ChatMessageFixtures extends Fixture
      * Load chat fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager)
@@ -58,6 +59,7 @@ class ChatMessageFixtures extends Fixture
             ]
         ];
 
+        // create new chat messages
         foreach ($chatMessages as $message) {
             $newMessage = new ChatMessage();
             $newMessage->setMessage($this->securityUtil->encryptAes($message['message']))
@@ -68,6 +70,7 @@ class ChatMessageFixtures extends Fixture
             $manager->persist($newMessage);
         }
 
+        // save all the fixtures
         $manager->flush();
     }
 }

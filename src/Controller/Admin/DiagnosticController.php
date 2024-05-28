@@ -39,7 +39,7 @@ class DiagnosticController extends AbstractController
     /**
      * Display diagnostics information.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/diagnostic', methods: ['GET'], name: 'admin_diagnostics')]
     public function diagnostic(): Response

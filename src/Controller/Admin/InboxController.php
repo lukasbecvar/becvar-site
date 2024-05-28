@@ -23,8 +23,11 @@ class InboxController extends AbstractController
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, MessagesManager $messagesManager)
-    {
+    public function __construct(
+        SiteUtil $siteUtil,
+        AuthManager $authManager,
+        MessagesManager $messagesManager
+    ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
@@ -33,17 +36,20 @@ class InboxController extends AbstractController
     /**
      * Display inbox messages.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
     {
+        // get page from query string
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
         // get messages data
         $messages = $this->messagesManager->getMessages('open', $page);
 
+        // render inbox view
         return $this->render('admin/inbox.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -61,8 +67,9 @@ class InboxController extends AbstractController
     /**
      * Close a message in the inbox.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response

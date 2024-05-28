@@ -30,7 +30,7 @@ class LogoutController extends AbstractController
     /**
      * Handles user logout.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/logout', methods: ['GET'], name: 'auth_logout')]
     public function logout(): Response

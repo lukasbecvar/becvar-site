@@ -154,7 +154,7 @@ class TodosManager
     /**
      * Closes a todo by updating its status, completion time, and the user who closed it.
      *
-     * @param int $id
+     * @param int $id The ID of the todo item to be closed.
      *
      * @return void
      */

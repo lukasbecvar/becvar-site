@@ -45,7 +45,7 @@ class AccountSettingsController extends AbstractController
     /**
      * Display account settings table.
      *
-     * @return Response
+     * @return Response Returns a Response object representing the HTTP response.
      */
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
@@ -68,9 +68,10 @@ class AccountSettingsController extends AbstractController
      * Change of profile picture in the admin account settings.
      *
      * @param Request $request The request object.
-     * @return Response Returns a Response object representing the HTTP response.
      *
      * @throws \Exception Throws an exception if there is an error during the profile picture upload.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
@@ -115,6 +116,7 @@ class AccountSettingsController extends AbstractController
             }
         }
 
+        // render profile pic change form view
         return $this->render('admin/account-settings.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -133,9 +135,10 @@ class AccountSettingsController extends AbstractController
      * Change of username in the admin account settings.
      *
      * @param Request $request The request object.
-     * @return Response Returns a Response object representing the HTTP response.
      *
      * @throws \Exception Throws an exception if there is an error during the username update.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
@@ -167,6 +170,7 @@ class AccountSettingsController extends AbstractController
             }
         }
 
+        // render username change form
         return $this->render('admin/account-settings.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -185,9 +189,10 @@ class AccountSettingsController extends AbstractController
      * Change of password in the admin account settings.
      *
      * @param Request $request The request object.
-     * @return Response Returns a Response object representing the HTTP response.
      *
      * @throws \Exception Throws an exception if there is an error during the password update.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
@@ -209,6 +214,7 @@ class AccountSettingsController extends AbstractController
             // get user repository
             $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
+            // check if passwords match
             if ($password != $rePassword) {
                 $errorMsg = 'Your passwords is not match!';
             } else {

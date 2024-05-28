@@ -125,10 +125,10 @@ class DatabaseManager
     /**
      * Retrieves data from a specific database table with pagination.
      *
-     * @param string $tableName  The name of the table from which to retrieve data.
-     * @param int    $page        The page number for pagination (default is 1).
-     * @param bool   $log         Indicates whether to log the action (default is true).
-     * @param bool   $raw         Whether to return raw data without decryption. Default is false.
+     * @param string $tableName The name of the table from which to retrieve data.
+     * @param int $page The page number for pagination (default is 1).
+     * @param bool $log Indicates whether to log the action (default is true).
+     * @param bool $raw Whether to return raw data without decryption. Default is false.
      *
      * @throws \Exception If there is an error during the retrieval of the table data or the table is not found.
      *
@@ -191,8 +191,8 @@ class DatabaseManager
     /**
      * Retrieves data from a specific row of a database table.
      *
-     * @param string $tableName  The name of the table from which to retrieve data.
-     * @param int    $id          The unique identifier of the row.
+     * @param string $tableName The name of the table from which to retrieve data.
+     * @param int $id The unique identifier of the row.
      *
      * @throws \Exception If there is an error during the retrieval of the row data or the table is not found.
      *
@@ -220,9 +220,9 @@ class DatabaseManager
     /**
      * Adds a new row to a specific database table.
      *
-     * @param string $tableName  The name of the table to which the new row will be added.
-     * @param array<string> $columns     The array of column names for the new row.
-     * @param array<mixed> $values      The array of values corresponding to the columns for the new row.
+     * @param string $tableName The name of the table to which the new row will be added.
+     * @param array<string> $columns The array of column names for the new row.
+     * @param array<mixed> $values The array of values corresponding to the columns for the new row.
      *
      * @throws \Exception If there is an error during the insertion of the new row or the table is not found.
      *
@@ -275,10 +275,10 @@ class DatabaseManager
     /**
      * Updates a specific value in a row of a database table.
      *
-     * @param string $tableName  The name of the table in which the value will be updated.
-     * @param string $row         The column name for which the value will be updated.
-     * @param string $value       The new value to be set.
-     * @param int    $id          The unique identifier of the row.
+     * @param string $tableName The name of the table in which the value will be updated.
+     * @param string $row The column name for which the value will be updated.
+     * @param string $value The new value to be set.
+     * @param int $id The unique identifier of the row.
      *
      * @throws \Exception If there is an error during the update of the value or the table is not found.
      *

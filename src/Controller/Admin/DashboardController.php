@@ -60,7 +60,7 @@ class DashboardController extends AbstractController
     /**
      * Display the admin dashboard.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response
@@ -112,8 +112,9 @@ class DashboardController extends AbstractController
     /**
      * Run service action.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/dashboard/runner', methods: ['GET'], name: 'admin_service_manager')]
     public function serviceActionRunner(Request $request): Response
@@ -135,8 +136,9 @@ class DashboardController extends AbstractController
     /**
      * Emergency shutdown page.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/dashboard/emergency/shutdown', methods: ['GET', 'POST'], name: 'admin_emergency_shutdown')]
     public function emergencyShutdown(Request $request): Response
@@ -171,6 +173,7 @@ class DashboardController extends AbstractController
             }
         }
 
+        // render emergency shutdown page view
         return $this->render('admin/elements/confirmation/emergency-shutdown.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),

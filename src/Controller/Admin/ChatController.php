@@ -26,7 +26,7 @@ class ChatController extends AbstractController
     /**
      * Display the admin chat box.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/chat', methods: ['GET'], name: 'admin_chat')]
     public function chat(): Response

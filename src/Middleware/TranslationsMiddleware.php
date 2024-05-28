@@ -25,6 +25,8 @@ class TranslationsMiddleware
 
     /**
      * Set translations based on the visitor's language.
+     *
+     * @return void
      */
     public function onKernelRequest(): void
     {

@@ -27,6 +27,7 @@ class MessageFixtures extends Fixture
      * Load inbox fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager)
@@ -40,6 +41,7 @@ class MessageFixtures extends Fixture
             [ 'message' => 'test message 5' ]
         ];
 
+        // create message fixtures
         foreach ($messageData as $data) {
             $message = new Message();
 

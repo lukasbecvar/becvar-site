@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,10 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class AdminTerminalTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
     /**
      * Set up before each test.
@@ -32,8 +30,9 @@ class AdminTerminalTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @param string $role
-     * @return object
+     * @param string $role The role of the user
+     *
+     * @return object The mock object
      */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
@@ -46,12 +45,13 @@ class AdminTerminalTest extends WebTestCase
         }
 
         $authManagerMock->method('getUserRole')->willReturn($role);
-
         return $authManagerMock;
     }
 
     /**
      * Test if the user with no permissions is redirected.
+     *
+     * @return void
      */
     public function testAdminTerminalNoPermissions(): void
     {
@@ -68,6 +68,8 @@ class AdminTerminalTest extends WebTestCase
 
     /**
      * Test if the admin terminal page is accessible.
+     *
+     * @return void
      */
     public function testAdminTerminal(): void
     {

@@ -25,6 +25,8 @@ class MaintenanceMiddleware
 
     /**
      * Check if the application is in maintenance mode.
+     *
+     * @return void
      */
     public function onKernelRequest(): void
     {

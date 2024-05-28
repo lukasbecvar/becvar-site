@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Api;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ChatApiTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -32,8 +27,9 @@ class ChatApiTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @param bool $logged
-     * @return object
+     * @param bool $logged The user logged in status
+     *
+     * @return object The mock object
      */
     private function createAuthManagerMock(bool $logged): object
     {
@@ -46,6 +42,8 @@ class ChatApiTest extends WebTestCase
 
     /**
      * Test posting a chat message without authentication.
+     *
+     * @return void
      */
     public function testPostNonAuthMessage(): void
     {
@@ -67,6 +65,8 @@ class ChatApiTest extends WebTestCase
 
     /**
      * Test getting chat messages.
+     *
+     * @return void
      */
     public function testGetMessages(): void
     {
@@ -81,6 +81,8 @@ class ChatApiTest extends WebTestCase
 
     /**
      * Test getting chat messages without authentication.
+     *
+     * @return void
      */
     public function testNonAuthGetMessages(): void
     {

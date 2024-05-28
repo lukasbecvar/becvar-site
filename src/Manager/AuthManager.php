@@ -82,9 +82,9 @@ class AuthManager
     /**
      * Logs in a user.
      *
-     * @param string $username
-     * @param string $userToken
-     * @param bool   $remember
+     * @param string $username The username of the user to log in.
+     * @param string $userToken The token of the user to log in.
+     * @param bool $remember Whether to remember the user's login.
      *
      * @return void
      */
@@ -126,7 +126,7 @@ class AuthManager
     }
 
     /**
-     * Logs out a user.
+     * User logout action.
      *
      * @return void
      */
@@ -274,6 +274,7 @@ class AuthManager
      * Retrieves the username associated with the given token.
      *
      * @param string $token The user token to retrieve the username for.
+     *
      * @return string|null The username or null if not found.
      */
     public function getUsername(string $token = 'self'): ?string
@@ -298,6 +299,7 @@ class AuthManager
      * Retrieves the role associated with the given token.
      *
      * @param string $token The user token to retrieve the role for.
+     *
      * @return string|null The user role or null if not found.
      */
     public function getUserRole(string $token = 'self'): ?string
@@ -322,6 +324,7 @@ class AuthManager
      * Retrieves the profile picture URL associated with the given token.
      *
      * @param string $token The user token to retrieve the profile picture URL for.
+     *
      * @return string|null The profile picture URL or null if not found.
      */
     public function getUserProfilePic(string $token = 'self'): ?string

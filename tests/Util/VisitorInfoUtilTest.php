@@ -36,7 +36,7 @@ class VisitorInfoUtilTest extends TestCase
     }
 
     /**
-     * Test getIP method
+     * Test getIP method for getting the visitor's IP address.
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class VisitorInfoUtilTest extends TestCase
     }
 
     /**
-     * Test getCountry method
+     * Test getCountry method for getting the visitor's country.
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class VisitorInfoUtilTest extends TestCase
     }
 
     /**
-     * Test getBrowserShortify method
+     * Test getBrowserShortify method for getting the visitor's browser.
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class VisitorInfoUtilTest extends TestCase
     }
 
     /**
-     * Test getOS method
+     * Test getOS method for getting the visitor's operating system.
      *
      * @return void
      */

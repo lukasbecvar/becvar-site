@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin\Auth;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class LoginTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         // create client instance
@@ -55,9 +50,6 @@ class LoginTest extends WebTestCase
         parent::setUp();
     }
 
-    /**
-     * Tear down after each test.
-     */
     protected function tearDown(): void
     {
         $this->removeFakeData();
@@ -66,6 +58,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Remove fake data from the database.
+     *
+     * @return void
      */
     private function removeFakeData(): void
     {
@@ -88,6 +82,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test loading the login page.
+     *
+     * @return void
      */
     public function testLoadLoginPage(): void
     {
@@ -106,6 +102,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test submitting the login form with empty fields.
+     *
+     * @return void
      */
     public function testEmptyLoginSubmit(): void
     {
@@ -127,6 +125,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test submitting the login form with incorrect credentials.
+     *
+     * @return void
      */
     public function testIncorrectLoginSubmit(): void
     {
@@ -169,6 +169,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test submitting the login form with an incorrect password.
+     *
+     * @return void
      */
     public function testIncorrectPassordLoginSubmit(): void
     {
@@ -189,6 +191,8 @@ class LoginTest extends WebTestCase
 
     /**
      * Test submitting the login form with valid credentials.
+     *
+     * @return void
      */
     public function testValidLoginSubmit(): void
     {

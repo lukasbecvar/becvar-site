@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class MediaBrowserTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -32,7 +27,7 @@ class MediaBrowserTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @return object
+     * @return object The mock object
      */
     private function createAuthManagerMock(): object
     {
@@ -44,6 +39,8 @@ class MediaBrowserTest extends WebTestCase
 
     /**
      * Test if the media browser page loads successfully.
+     *
+     * @return void
      */
     public function testMediaBrowser(): void
     {

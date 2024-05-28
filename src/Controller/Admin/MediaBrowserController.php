@@ -23,8 +23,11 @@ class MediaBrowserController extends AbstractController
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
-    public function __construct(SiteUtil $siteUtil, AuthManager $authManager, DatabaseManager $databaseManager)
-    {
+    public function __construct(
+        SiteUtil $siteUtil,
+        AuthManager $authManager,
+        DatabaseManager $databaseManager
+    ) {
         $this->siteUtil = $siteUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
@@ -33,8 +36,9 @@ class MediaBrowserController extends AbstractController
     /**
      * Display the media browser with image-uploader.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/media/browser', methods: ['GET'], name: 'admin_media_browser')]
     public function mediaBrowser(Request $request): Response
@@ -45,6 +49,7 @@ class MediaBrowserController extends AbstractController
         // get images data
         $media = $this->databaseManager->getImages($page);
 
+        // render media browser view
         return $this->render('admin/media-browser.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),

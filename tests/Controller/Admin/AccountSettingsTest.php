@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class AccountSettingsTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -44,6 +39,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page is loaded successfully.
+     *
+     * @return void
      */
     public function testAccountSettingsTable(): void
     {
@@ -63,6 +60,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page for changing the profile picture is loaded successfully.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangePicForm(): void
     {
@@ -80,6 +79,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page for changing the username is loaded successfully.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangeUsernameForm(): void
     {
@@ -97,6 +98,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page handles an empty username change form submission correctly.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangeUsernameEmptyForm(): void
     {
@@ -117,6 +120,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page handles a short username change form submission correctly.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangeUsernameShortForm(): void
     {
@@ -137,6 +142,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page for changing the password is loaded successfully.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangePasswordForm(): void
     {
@@ -157,6 +164,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test account settings table page handles a password change form submission with no-matching passwords correctly.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangePasswordNotMatchForm(): void
     {
@@ -177,6 +186,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page handles an empty password change form submission correctly.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangePasswordEmptyForm(): void
     {
@@ -199,6 +210,8 @@ class AccountSettingsTest extends WebTestCase
 
     /**
      * Test if the account settings table page handles a short password change form submission correctly.
+     *
+     * @return void
      */
     public function testAccountSettingsTableChangePasswordShortForm(): void
     {

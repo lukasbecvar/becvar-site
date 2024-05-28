@@ -42,8 +42,9 @@ class TodoManagerController extends AbstractController
     /**
      * Display the table of non-completed todos and handle new todo creation.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/todos', methods: ['GET', 'POST'], name: 'admin_todos')]
     public function todosTable(Request $request): Response
@@ -71,6 +72,7 @@ class TodoManagerController extends AbstractController
             }
         }
 
+        // render todo page view
         return $this->render('admin/todo-manager.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -89,7 +91,7 @@ class TodoManagerController extends AbstractController
     /**
      * Display the table of completed todos.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/todos/completed', methods: ['GET'], name: 'admin_todos_completed')]
     public function completedTodosTable(): Response
@@ -97,6 +99,7 @@ class TodoManagerController extends AbstractController
         // get todos data
         $todos = $this->todosManager->getTodos(['status' => 'completed']);
 
+        // render completed todo page view
         return $this->render('admin/todo-manager.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -114,8 +117,9 @@ class TodoManagerController extends AbstractController
     /**
      * Edit a todo.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/todos/edit', methods: ['GET', 'POST'], name: 'admin_todo_edit')]
     public function editTodo(Request $request): Response
@@ -157,6 +161,7 @@ class TodoManagerController extends AbstractController
             return $this->errorManager->handleError('error todo: ' . $id . ' not found', 404);
         }
 
+        // return todo editor view
         return $this->render('admin/todo-manager.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -173,8 +178,9 @@ class TodoManagerController extends AbstractController
     /**
      * Close a todo.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/todos/close', methods: ['GET'], name: 'admin_todo_close')]
     public function closeTodo(Request $request): Response

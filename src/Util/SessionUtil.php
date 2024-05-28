@@ -24,6 +24,8 @@ class SessionUtil
 
     /**
      * Start a new session if not already started.
+     *
+     * @return void
      */
     public function startSession(): void
     {
@@ -34,6 +36,8 @@ class SessionUtil
 
     /**
      * Destroy the current session.
+     *
+     * @return void
      */
     public function destroySession(): void
     {
@@ -59,6 +63,8 @@ class SessionUtil
      *
      * @param string $sessionName The name of the session.
      * @param string $sessionValue The value to set for the session.
+     *
+     * @return void
      */
     public function setSession(string $sessionName, string $sessionValue): void
     {

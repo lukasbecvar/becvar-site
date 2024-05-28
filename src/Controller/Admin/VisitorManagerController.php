@@ -46,8 +46,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Display the table of visitors and their details.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object containing the page number.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/visitors', methods: ['GET'], name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
@@ -55,6 +56,7 @@ class VisitorManagerController extends AbstractController
         // get page int
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
+        // return visitor manager view
         return $this->render('admin/visitors-manager.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -77,11 +79,13 @@ class VisitorManagerController extends AbstractController
      * Provides IP information for a given IP address to the admin panel.
      *
      * @param Request $request The request object containing the IP address.
+     *
      * @return Response A response object containing the IP information.
      */
     #[Route('/admin/visitors/ipinfo', methods: ['GET'], name: 'admin_visitor_ipinfo')]
     public function visitorIpInfo(Request $request): Response
     {
+        // get ip address from query string
         $ipAddress = $this->siteUtil->getQueryString('ip', $request);
 
         // check if ip parameter found
@@ -93,6 +97,7 @@ class VisitorManagerController extends AbstractController
         $ipInfoData = $this->visitorInfoUtil->getIpInfo($ipAddress);
         $ipInfoData = json_decode(json_encode($ipInfoData), true);
 
+        // return visitor manager view
         return $this->render('admin/visitors-manager.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -111,8 +116,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Display the confirmation form for deleting all visitors.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object containing the page number.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
@@ -120,6 +126,7 @@ class VisitorManagerController extends AbstractController
         // get page int
         $page = $this->siteUtil->getQueryString('page', $request);
 
+        // return delete confirmation view
         return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -134,8 +141,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Ban a visitor.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
@@ -180,6 +188,7 @@ class VisitorManagerController extends AbstractController
             ]);
         }
 
+        // render ban form
         return $this->render('admin/elements/forms/ban-form.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -196,8 +205,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Unban a visitor.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response
@@ -215,6 +225,7 @@ class VisitorManagerController extends AbstractController
             $this->banManager->unbanVisitor($ipAddress);
         }
 
+        // redirect back to visitor page
         return $this->redirectToRoute('admin_visitor_manager', [
             'page' => $page
         ]);

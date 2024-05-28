@@ -19,6 +19,8 @@ class EscapeRequestDataMiddlewareTest extends TestCase
 {
     /**
      * Tests HTML character escaping in request input data.
+     *
+     * @return void
      */
     public function testHtmlCharsEscape(): void
     {

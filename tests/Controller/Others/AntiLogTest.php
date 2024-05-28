@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Others;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,13 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class AntiLogTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
     /**
      * Set up before each test.
+     *
+     * @return void
      */
     protected function setUp(): void
     {
@@ -33,6 +33,7 @@ class AntiLogTest extends WebTestCase
      * Create a mock instance of the AuthManager.
      *
      * @param bool $logged Whether the user is logged in or not.
+     *
      * @return object The mock AuthManager instance.
      */
     private function createAuthManagerMock(bool $logged = true): object
@@ -46,6 +47,8 @@ class AntiLogTest extends WebTestCase
 
     /**
      * Test setting AntiLog for an authenticated user.
+     *
+     * @return void
      */
     public function testAntiLogSet(): void
     {
@@ -61,6 +64,8 @@ class AntiLogTest extends WebTestCase
 
     /**
      * Test setting AntiLog for a non-authenticated user.
+     *
+     * @return void
      */
     public function testAntiLogNonAuth(): void
     {

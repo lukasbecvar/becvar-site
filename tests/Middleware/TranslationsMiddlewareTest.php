@@ -8,6 +8,13 @@ use App\Middleware\TranslationsMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
+/**
+ * Class TranslationsMiddleware
+ *
+ * Test the TranslationsMiddleware class.
+ *
+ * @package App\Tests\Middleware
+ */
 class TranslationsMiddlewareTest extends TestCase
 {
     private MockObject|TranslationsMiddleware $middleware;

@@ -27,6 +27,7 @@ class ImageFixtures extends Fixture
      * Load image fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
      * @return void
      */
     public function load(ObjectManager $manager)

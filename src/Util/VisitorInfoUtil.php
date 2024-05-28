@@ -194,6 +194,7 @@ class VisitorInfoUtil
      * Retrieves information about an IP address using a geolocation API.
      *
      * @param string $ipAddress The IP address to look up.
+     *
      * @return object|null The decoded JSON response from the geolocation API, or null if an error occurs.
      */
     public function getIpInfo(string $ipAddress): ?object
@@ -220,6 +221,7 @@ class VisitorInfoUtil
      * Retrieves the location (city and country) for a given IP address.
      *
      * @param string $ipAddress The IP address to look up.
+     *
      * @return array<string>|null An associative array containing the city and country, or null if an error occurs.
      */
     public function getLocation(string $ipAddress): ?array

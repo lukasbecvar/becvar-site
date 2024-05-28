@@ -28,6 +28,7 @@ class AboutController extends AbstractController
         $dateOfBirth = '1999-05-28';
         $age = date_diff(date_create($dateOfBirth), date_create('today'))->y;
 
+        // render about page
         return $this->render('public/about.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],

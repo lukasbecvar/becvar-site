@@ -85,6 +85,8 @@ class TodoFixtures extends Fixture
      * Load todo fixtures into the database.
      *
      * @param ObjectManager $manager
+     *
+     * @return void
      */
     public function load(ObjectManager $manager): void
     {
@@ -98,6 +100,7 @@ class TodoFixtures extends Fixture
             $todo->setAddedBy('test');
             $todo->setClosedBy('non-closed');
 
+            // persist the todo entity
             $manager->persist($todo);
         }
 
@@ -111,9 +114,11 @@ class TodoFixtures extends Fixture
             $todo->setAddedBy('test');
             $todo->setClosedBy('test');
 
+            // persist the todo entity
             $manager->persist($todo);
         }
 
+        // flush all the persisted entities
         $manager->flush();
     }
 }

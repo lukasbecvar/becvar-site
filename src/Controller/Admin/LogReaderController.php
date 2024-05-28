@@ -44,8 +44,9 @@ class LogReaderController extends AbstractController
     /**
      * Display logs from the database table.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/logs', methods: ['GET'], name: 'admin_log_list')]
     public function logsTable(Request $request): Response
@@ -56,6 +57,7 @@ class LogReaderController extends AbstractController
         // get logs data
         $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
 
+        // render log reader view
         return $this->render('admin/log-reader.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -79,8 +81,9 @@ class LogReaderController extends AbstractController
     /**
      * Display logs filtered by IP address.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_where_ip')]
     public function logsWhereIp(Request $request): Response
@@ -95,6 +98,7 @@ class LogReaderController extends AbstractController
         // get logs data
         $logs = $this->logManager->getLogsWhereIP($ipAddress, $this->authManager->getUsername(), $page);
 
+        // render log reader view
         return $this->render('admin/log-reader.html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -118,14 +122,17 @@ class LogReaderController extends AbstractController
     /**
      * Display a confirmation page for deleting all logs.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
     {
+        // get page from query string
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
+        // render delete confirmation view
         return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
             // user data
             'user_name' => $this->authManager->getUsername(),
@@ -140,12 +147,15 @@ class LogReaderController extends AbstractController
     /**
      * Set all logs as read.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {
+        // set all logs as readed
         $this->logManager->setReaded();
+
+        // redirect back to dashboard
         return $this->redirectToRoute('admin_dashboard');
     }
 }

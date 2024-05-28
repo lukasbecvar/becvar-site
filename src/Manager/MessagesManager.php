@@ -41,7 +41,7 @@ class MessagesManager
      * @param string $ipAddress
      * @param string $visitorId
      *
-     * @return bool
+     * @return bool True if the message is saved successfully, false otherwise.
      */
     public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, string $visitorId): bool
     {
@@ -81,7 +81,7 @@ class MessagesManager
      *
      * @param string $ipAddress
      *
-     * @return int
+     * @return int The count of open messages from the IP address.
      */
     public function getMessageCountByIpAddress(string $ipAddress): int
     {
@@ -106,8 +106,8 @@ class MessagesManager
     /**
      * Gets messages based on status and pagination.
      *
-     * @param string $status
-     * @param int $page
+     * @param string $status The status of the messages.
+     * @param int $page The page number.
      *
      * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs.
      */
@@ -159,7 +159,7 @@ class MessagesManager
     /**
      * Closes a message by updating its status to 'closed'.
      *
-     * @param int $id
+     * @param int $id The ID of the message to close.
      *
      * @return void
      */

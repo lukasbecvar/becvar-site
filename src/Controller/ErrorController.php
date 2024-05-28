@@ -34,11 +34,13 @@ class ErrorController extends AbstractController
      * Handles errors based on the provided error code.
      *
      * @param Request $request The HTTP request.
+     *
      * @return Response The error response.
      */
     #[Route('/error', methods: ['GET'], name: 'error_by_code')]
     public function errorHandle(Request $request): Response
     {
+        // get error code
         $code = $this->siteUtil->getQueryString('code', $request);
 
         // block handeling (maintenance, banned use only from app logic)
@@ -46,6 +48,7 @@ class ErrorController extends AbstractController
             $code = 'unknown';
         }
 
+        // return error view
         return new Response($this->errorManager->handleErrorView($code));
     }
 

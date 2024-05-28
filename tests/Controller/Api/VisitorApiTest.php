@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Api;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -14,14 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class VisitorApiTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -30,6 +25,8 @@ class VisitorApiTest extends WebTestCase
 
     /**
      * Test the Visitor Status API.
+     *
+     * @return void
      */
     public function testVisitorStatusAPI(): void
     {

@@ -15,6 +15,7 @@ class SecurityUtil
      * Escape special characters in a string to prevent HTML injection.
      *
      * @param string $string The input string to escape.
+     *
      * @return string|null The escaped string or null on error.
      */
     public function escapeString(string $string): ?string
@@ -27,6 +28,7 @@ class SecurityUtil
      *
      * @param string $plainText The plain text to validate.
      * @param string $hash The bcrypt hash for comparison.
+     *
      * @return bool True if the validation succeeds, false otherwise.
      */
     public function hashValidate(string $plainText, string $hash): bool
@@ -39,6 +41,7 @@ class SecurityUtil
      *
      * @param string $plainText The plain text to hash.
      * @param int $cost The cost parameter for bcrypt.
+     *
      * @return string The generated bcrypt hash.
      */
     public function genBcryptHash(string $plainText, int $cost): string
@@ -51,6 +54,7 @@ class SecurityUtil
      *
      * @param string $plainText The plain text to encrypt.
      * @param string $method The encryption method (default: AES-128-CBC).
+     *
      * @return string The base64-encoded encrypted string.
      */
     public function encryptAes(string $plainText, string $method = 'AES-128-CBC'): string
@@ -77,6 +81,7 @@ class SecurityUtil
      *
      * @param string $encryptedData The base64-encoded encrypted string.
      * @param string $method The encryption method (default: AES-128-CBC).
+     *
      * @return string|null The decrypted string or null on error.
      */
     public function decryptAes(string $encryptedData, string $method = 'AES-128-CBC'): ?string

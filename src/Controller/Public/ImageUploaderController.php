@@ -49,6 +49,7 @@ class ImageUploaderController extends AbstractController
      * Displays the image view page.
      *
      * @param Request $request The HTTP request.
+     *
      * @return Response The response containing the rendered image view page.
      */
     #[Route('/image/view', methods: ['GET'], name: 'public_image_viewer')]
@@ -87,9 +88,9 @@ class ImageUploaderController extends AbstractController
     /**
      * Image upload controller.
      *
-     * @return Response Returns a Response object representing the HTTP response.
-     *
      * @throws \Exception Throws an exception if there is an error during the image upload process.
+     *
+     * @return Response Returns a Response object representing the HTTP response.
      */
     #[Route('/image/uploader', methods: ['GET', 'POST'], name: 'public_image_uploader')]
     public function uploadImage(): Response
@@ -149,6 +150,7 @@ class ImageUploaderController extends AbstractController
             }
         }
 
+        // render image uploader page
         return $this->render('public/image-uploader.html.twig', [
             'instagram_link' => $_ENV['INSTAGRAM_LINK'],
             'telegram_link' => $_ENV['TELEGRAM_LINK'],

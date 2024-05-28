@@ -36,6 +36,11 @@ class VisitorApiController extends AbstractController
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
 
+    /**
+     * API endpoint for updating visitor status.
+     *
+     * @return Response object representing the HTTP response.
+     */
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(): Response
     {
@@ -58,11 +63,15 @@ class VisitorApiController extends AbstractController
             // cache online visitor
             $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
 
+            // update visitor status
             return $this->json([
                 'status' => 'success'
             ], 200);
         } catch (\Exception $e) {
+            // log error
             $this->logManager->log('system-error', 'error to update visitor status: ' . $e->getMessage());
+
+            // return error
             return $this->json([
                 'status' => 'error',
                 'message' => 'error to update visitor status'

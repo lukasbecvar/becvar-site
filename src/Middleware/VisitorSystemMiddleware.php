@@ -112,6 +112,8 @@ class VisitorSystemMiddleware
      * @param string $os The operating system of the visitor.
      *
      * @throws \Exception If an error occurs during the database flush.
+     *
+     * @return void
      */
     public function insertNewVisitor(string $date, string $ipAddress, string $browser, string $os): void
     {
@@ -162,6 +164,8 @@ class VisitorSystemMiddleware
      * @param string $os The updated operating system of the visitor.
      *
      * @throws \Exception If an error occurs during the database flush.
+     *
+     * @return void
      */
     public function updateVisitor(string $date, string $ipAddress, string $browser, string $os): void
     {

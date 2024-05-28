@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -15,14 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class VisitorManagerTest extends WebTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser Instance for making requests.
-     */
-    private $client;
+    private KernelBrowser $client;
 
-    /**
-     * Set up before each test.
-     */
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -32,8 +27,9 @@ class VisitorManagerTest extends WebTestCase
     /**
      * Create a mock object for AuthManager.
      *
-     * @param string $role
-     * @return object
+     * @param string $role The role of the user
+     *
+     * @return object The mock object
      */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
@@ -46,6 +42,8 @@ class VisitorManagerTest extends WebTestCase
 
     /**
      * Test if the visitor manager page loads successfully.
+     *
+     * @return void
      */
     public function testVisitorManager(): void
     {

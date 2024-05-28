@@ -31,8 +31,9 @@ class RegisterController extends AbstractController
     /**
      * Handles user registration.
      *
-     * @param Request $request
-     * @return Response
+     * @param Request $request object representing the HTTP request.
+     *
+     * @return Response object representing the HTTP response.
      */
     #[Route('/register', methods: ['GET', 'POST'], name: 'auth_register')]
     public function register(Request $request): Response
@@ -65,12 +66,14 @@ class RegisterController extends AbstractController
                 if ($password != $rePassword) {
                     $errorMsg = 'Your passwords dont match';
                 } else {
+                    // register new user
                     $this->authManager->registerNewUser($username, $password);
                     return $this->redirectToRoute('admin_dashboard');
                 }
             }
         }
 
+        // render registration form view
         return $this->render('admin/auth/register.html.twig', [
             'error_msg' => $errorMsg,
             'registration_form' => $form->createView()

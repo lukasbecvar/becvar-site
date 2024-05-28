@@ -46,9 +46,9 @@ class PasteController extends AbstractController
     /**
      * Insertion of code pastes.
      *
-     * @return Response Returns a Response object representing the HTTP response.
-     *
      * @throws \Exception Throws an exception if there is an error during the code paste insertion process.
+     *
+     * @return Response Returns a Response object representing the HTTP response.
      */
     #[Route('/paste', methods: ['GET', 'POST'], name: 'public_code_paste')]
     public function pasteInsert(): Response
@@ -94,6 +94,7 @@ class PasteController extends AbstractController
             }
         }
 
+        // return code paste save
         return $this->render('public/paste/paste-save.html.twig');
     }
 
@@ -101,6 +102,7 @@ class PasteController extends AbstractController
      * Displays the page for viewing a code paste.
      *
      * @param Request $request The HTTP request.
+     *
      * @return Response The response containing the rendered paste view page.
      */
     #[Route('/paste/view', methods: ['GET'], name: 'public_code_paste_view')]

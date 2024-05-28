@@ -26,7 +26,7 @@ class TerminalController extends AbstractController
     /**
      * Display the admin server shell.
      *
-     * @return Response
+     * @return Response object representing the HTTP response.
      */
     #[Route('/admin/terminal', methods: ['GET'], name: 'admin_terminal')]
     public function admin(): Response

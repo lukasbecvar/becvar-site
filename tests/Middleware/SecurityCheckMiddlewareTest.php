@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 use App\Middleware\SecurityCheckMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * Class SecurityCheckMiddlewareTest
+ *
+ * Test the SecurityCheckMiddleware class.
+ *
+ * @package App\Tests\Middleware
+ */
 class SecurityCheckMiddlewareTest extends TestCase
 {
     private MockObject|SecurityCheckMiddleware $middleware;
