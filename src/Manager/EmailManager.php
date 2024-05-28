@@ -58,7 +58,6 @@ class EmailManager
         // render email template
         $body = $this->twig->render('email/default.html.twig', [
             'subject' => $subject,
-            'time' => date('d.m.Y H:i:s'),
             'message' => $message,
             'ip_address' => $ipAddress,
         ]);

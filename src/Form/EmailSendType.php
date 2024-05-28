@@ -38,7 +38,8 @@ class EmailSendType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Email recipient',
                     'class' => 'text-input',
-                    'maxlength' => 255
+                    'maxlength' => 255,
+                    'name' => 'email'
                 ],
                 'constraints' => [
                     new NotBlank(),
@@ -51,7 +52,8 @@ class EmailSendType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Subject',
                     'class' => 'text-input',
-                    'maxlength' => 255
+                    'maxlength' => 255,
+                    'name' => 'subject'
                 ],
                 'constraints' => [
                     new NotBlank(),
