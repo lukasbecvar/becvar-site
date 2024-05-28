@@ -5,7 +5,7 @@
 /.env.*.local
 
 # database migrations
-./migrations
+/migrations/
 
 # exclude docker env data
 /_docker/services/
