@@ -27,7 +27,9 @@ class SiteUtilTest extends TestCase
     }
 
     /**
-     * @covers \App\Util\SiteUtil::getHttpHost
+     * Test getHttpHost method with HTTP_HOST
+     *
+     * @return void
      */
     public function testGetHttpHost(): void
     {
@@ -42,7 +44,9 @@ class SiteUtilTest extends TestCase
     }
 
     /**
-     * @covers \App\Util\SiteUtil::isRunningLocalhost
+     * Test getHttpHost method with SERVER_NAME
+     *
+     * @return void
      */
     public function testIsRunningLocalhost(): void
     {
@@ -57,7 +61,9 @@ class SiteUtilTest extends TestCase
     }
 
     /**
-     * @covers \App\Util\SiteUtil::isSsl
+     * Test getHttpHost method with SERVER_NAME
+     *
+     * @return void
      */
     public function testIsSsl(): void
     {
@@ -72,7 +78,9 @@ class SiteUtilTest extends TestCase
     }
 
     /**
-     * @covers \App\Util\SiteUtil::isMaintenance
+     * Test isMaintenance method
+     *
+     * @return void
      */
     public function testIsMaintenance(): void
     {
@@ -87,7 +95,9 @@ class SiteUtilTest extends TestCase
     }
 
     /**
-     * @covers \App\Util\SiteUtil::isDevMode
+     * Test isDevMode method
+     *
+     * @return void
      */
     public function testIsDevMode(): void
     {

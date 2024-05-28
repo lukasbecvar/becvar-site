@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Util;
+namespace Tests\Unit\Util;
 
-use App\Util\JsonUtil;
 use App\Util\SiteUtil;
+use App\Util\JsonUtil;
 use App\Util\VisitorInfoUtil;
 use PHPUnit\Framework\TestCase;
 
@@ -12,52 +12,86 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \App\Util\VisitorInfoUtil
  *
- * @package App\Tests\Util
+ * @package Tests\Unit\Util
  */
 class VisitorInfoUtilTest extends TestCase
 {
-    private SiteUtil $siteUtilMock;
-    private JsonUtil $jsonUtilMock;
-    private VisitorInfoUtil $visitorInfoUtil;
+    protected VisitorInfoUtil $visitorInfoUtil;
 
     protected function setUp(): void
     {
-        $this->siteUtilMock = $this->createMock(SiteUtil::class);
-        $this->jsonUtilMock = $this->createMock(JsonUtil::class);
-        $this->visitorInfoUtil = new VisitorInfoUtil($this->siteUtilMock, $this->jsonUtilMock);
-
         parent::setUp();
+        // mock dependencies
+        $siteUtil = $this->createMock(SiteUtil::class);
+        $siteUtil->method('isRunningLocalhost')->willReturn(false);
+
+        $jsonUtil = $this->createMock(JsonUtil::class);
+        $jsonUtil->method('getJson')->willReturn([
+            'Chrome' => 'Google Chrome',
+            'Firefox' => 'Mozilla Firefox'
+        ]);
+
+        // create instance of VisitorInfoUtil with mocked dependencies
+        $this->visitorInfoUtil = new VisitorInfoUtil($siteUtil, $jsonUtil);
     }
 
     /**
-     * @covers \App\Util\VisitorInfoUtil::getIP
+     * Test getIP method
+     *
+     * @return void
      */
-    public function testGetIp(): void
+    public function testGetIP(): void
     {
-        // mock $_SERVER['HTTP_CLIENT_IP']
-        $_SERVER['HTTP_CLIENT_IP'] = '192.168.0.1';
+        // test with known IP addresses
+        $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.1';
+        $this->assertEquals('192.168.1.1', $this->visitorInfoUtil->getIP());
 
-        // act
-        $result = $this->visitorInfoUtil->getIP();
+        // test with unknown IP addresses
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '192.168.1.2';
+        unset($_SERVER['HTTP_CLIENT_IP']);
+        $this->assertEquals('192.168.1.2', $this->visitorInfoUtil->getIP());
 
-        // assert
-        $this->assertEquals('192.168.0.1', $result);
+        // test with unknown IP addresses
+        unset($_SERVER['HTTP_X_FORWARDED_FOR']);
+        $_SERVER['REMOTE_ADDR'] = '192.168.1.3';
+        $this->assertEquals('192.168.1.3', $this->visitorInfoUtil->getIP());
     }
 
     /**
-     * @covers \App\Util\VisitorInfoUtil::getBrowser
+     * Test getCountry method
+     *
+     * @return void
      */
     public function testGetBrowser(): void
     {
-        // mock $_SERVER['HTTP_USER_AGENT']
-        $_SERVER['HTTP_USER_AGENT'] =
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
-        ;
+        // test with known user agent
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36';
+        $this->assertEquals('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36', $this->visitorInfoUtil->getBrowser());
+    }
 
-        // act
-        $result = $this->visitorInfoUtil->getBrowser();
+    /**
+     * Test getBrowserShortify method
+     *
+     * @return void
+     */
+    public function testGetBrowserShortify(): void
+    {
+        // test with known user agent
+        $this->assertEquals('Chrome', $this->visitorInfoUtil->getBrowserShortify('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36'));
 
-        // assert
-        $this->assertEquals('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)', $result);
+        // test with unknown user agent
+        $this->assertEquals('Unknown', $this->visitorInfoUtil->getBrowserShortify('Unknown User Agent'));
+    }
+
+    /**
+     * Test getOS method
+     *
+     * @return void
+     */
+    public function testGetOS(): void
+    {
+        // test with known user agent
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.9999.999 Safari/537.36';
+        $this->assertEquals('Windows', $this->visitorInfoUtil->getOS());
     }
 }

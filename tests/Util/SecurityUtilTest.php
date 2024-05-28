@@ -77,9 +77,14 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
+     * Test escapeString method.
+     *
      * @dataProvider escapeStringDataProvider
+     *
      * @param string $input
      * @param string $expected
+     *
+     * @return void
      */
     public function testEscapeString(string $input, string $expected): void
     {
@@ -90,10 +95,15 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
+     * Test hashValidate method.
+     *
      * @dataProvider hashValidateDataProvider
+     *
      * @param string $plainText
      * @param string $hash
      * @param bool $expected
+     *
+     * @return void
      */
     public function testHashValidate(string $plainText, string $hash, bool $expected): void
     {
@@ -104,9 +114,14 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
+     * Test genBcryptHash method.
+     *
      * @dataProvider genBcryptHashDataProvider
+     *
      * @param string $plainText
      * @param int $cost
+     *
+     * @return void
      */
     public function testGenBcryptHash(string $plainText, int $cost): void
     {
@@ -117,8 +132,13 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
+     * Test encryptAes method.
+     *
      * @dataProvider encryptAesDataProvider
+     *
      * @param string $plainText
+     *
+     * @return void
      */
     public function testEncryptAes(string $plainText): void
     {

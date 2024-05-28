@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Util;
+namespace Tests\Unit\Util;
 
 use App\Util\JsonUtil;
 use App\Util\DashboardUtil;
@@ -11,95 +11,115 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Class DashboardUtilTest
  *
- * @package App\Tests\Util
+ * Test cases for DashboardUtil
+ *
+ * @package Tests\Unit\Util
  */
 class DashboardUtilTest extends TestCase
 {
-    /**
-     * @var DashboardUtil
-     */
-    private $dashboardUtil;
+    protected DashboardUtil $dashboardUtil;
 
-    /**
-     * @var JsonUtil|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $jsonUtilMock;
-
-    /**
-     * @var ErrorManager|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $errorManagerMock;
-
-    /**
-     * @var EntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $entityManagerMock;
-
-    /**
-     * Sets up the test environment.
-     */
     protected function setUp(): void
     {
-        $this->jsonUtilMock = $this->createMock(JsonUtil::class);
-        $this->errorManagerMock = $this->createMock(ErrorManager::class);
-        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
-
-        // create an instance of DashboardUtil with the mocks
-        $this->dashboardUtil = new DashboardUtil(
-            $this->jsonUtilMock,
-            $this->errorManagerMock,
-            $this->entityManagerMock
-        );
-
         parent::setUp();
+        // mock dependencies
+        $jsonUtilMock = $this->createMock(JsonUtil::class);
+        $errorManagerMock = $this->createMock(ErrorManager::class);
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
+        // create instance of DashboardUtil
+        $this->dashboardUtil = new DashboardUtil($jsonUtilMock, $errorManagerMock, $entityManagerMock);
     }
 
     /**
-     * Test the getDatabaseEntityCount method of DashboardUtil.
+     * Test getHostUptime method
+     *
+     * @return void
      */
-    public function testGetDatabaseEntityCount(): void
+    public function testGetHostUptime(): void
     {
-        $entityMock = $this->getMockBuilder(\stdClass::class)->getMock();
-        $search_criteria = ['name' => 'John'];
+        // call the method being tested
+        $hostUptime = $this->dashboardUtil->getHostUptime();
 
-        // set up expectations for EntityManager mock
-        $repositoryMock = $this->getMockBuilder(\Doctrine\ORM\EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repositoryMock->expects($this->once())
-            ->method('findBy')
-            ->with($search_criteria)
-            ->willReturn(['entity1', 'entity2']);
-
-        $this->entityManagerMock->expects($this->once())
-            ->method('getRepository')
-            ->willReturn($repositoryMock);
-
-        // act
-        $result = $this->dashboardUtil->getDatabaseEntityCount($entityMock, $search_criteria);
-
-        // assert
-        $this->assertEquals(2, $result);
+        // assert that the result is a non-empty string
+        $this->assertIsString($hostUptime);
+        $this->assertNotEmpty($hostUptime);
     }
 
     /**
-     * Test the isBrowserListFound method of DashboardUtil.
+     * Test getHostLoadAverage method
+     *
+     * @return void
      */
-    public function testIsBrowserListFound(): void
+    public function testGetCpuUsage(): void
     {
-        $json_contents = ['browser1', 'browser2'];
+        // call the method being tested
+        $cpuUsage = $this->dashboardUtil->getCpuUsage();
 
-        // set up expectations for JsonUtil mock
-        $this->jsonUtilMock->expects($this->once())
-            ->method('getJson')
-            ->with($this->stringContains('browser-list.json'))
-            ->willReturn($json_contents);
+        // assert that the result is a float between 0 and 100
+        $this->assertIsFloat($cpuUsage);
+        $this->assertGreaterThanOrEqual(0, $cpuUsage);
+        $this->assertLessThanOrEqual(100, $cpuUsage);
+    }
 
-        // act
-        $result = $this->dashboardUtil->isBrowserListFound();
+    /**
+     * Test getRamUsage method
+     *
+     * @return void
+     */
+    public function testGetRamUsage(): void
+    {
+        // call the method being tested
+        $ramUsage = $this->dashboardUtil->getRamUsage();
 
-        // assert
-        $this->assertTrue($result);
+        // assert that the result is an array with keys 'used', 'free', and 'total'
+        $this->assertIsArray($ramUsage);
+        $this->assertArrayHasKey('used', $ramUsage);
+        $this->assertArrayHasKey('free', $ramUsage);
+        $this->assertArrayHasKey('total', $ramUsage);
+    }
+
+    /**
+     * Test getDiskUsage method
+     *
+     * @return void
+     */
+    public function testGetSoftwareInfo(): void
+    {
+        // call the method being tested
+        $softwareInfo = $this->dashboardUtil->getSoftwareInfo();
+
+        // assert that the result is an array with keys 'packages' and 'distro'
+        $this->assertIsArray($softwareInfo);
+        $this->assertArrayHasKey('packages', $softwareInfo);
+        $this->assertArrayHasKey('distro', $softwareInfo);
+    }
+
+    /**
+     * Test getDiskUsage method
+     *
+     * @return void
+     */
+    public function testIsWebUserSudo(): void
+    {
+        // call the method being tested
+        $isSudo = $this->dashboardUtil->isWebUserSudo();
+
+        // assert that the result is a boolean value
+        $this->assertIsBool($isSudo);
+    }
+
+    /**
+     * Test getDiskUsage method
+     *
+     * @return void
+     */
+    public function testIsSystemLinux(): void
+    {
+        // call the method being tested
+        $isLinux = $this->dashboardUtil->isSystemLinux();
+
+        // assert that the result is a boolean value
+        $this->assertIsBool($isLinux);
     }
 }

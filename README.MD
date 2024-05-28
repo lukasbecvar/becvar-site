@@ -71,10 +71,6 @@ Docker is used only for development in this application. The production version 
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
 ## TODO
-- [X] Email service
-- [X] New login security email alert
-- [X] Email send admin component
-- [ ] Managers, middlewares & events unit tests
 - [ ] Service monitoring
    - [ ] Monitor TCP/UDP/HTTP services status
    - [ ] Monitor HTTP response time

@@ -4,6 +4,9 @@
 /.env.local.php
 /.env.*.local
 
+# database migrations
+./migrations
+
 # exclude docker env data
 /_docker/services/
 
