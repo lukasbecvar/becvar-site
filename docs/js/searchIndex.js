@@ -2161,16 +2161,6 @@ Search.appendIndex(
             "summary": "Configures\u0020the\u0020options\u0020for\u0020this\u0020form.",
             "url": "classes/App-Form-ContactFormType.html#method_configureOptions"
         },                {
-            "fqsen": "\\App\\Form\\EmailSendType",
-            "name": "EmailSendType",
-            "summary": "Class\u0020EmailSendType",
-            "url": "classes/App-Form-EmailSendType.html"
-        },                {
-            "fqsen": "\\App\\Form\\EmailSendType\u003A\u003AbuildForm\u0028\u0029",
-            "name": "buildForm",
-            "summary": "Builds\u0020the\u0020form.",
-            "url": "classes/App-Form-EmailSendType.html#method_buildForm"
-        },                {
             "fqsen": "\\App\\Form\\LoginFormType",
             "name": "LoginFormType",
             "summary": "Class\u0020LoginFormType",
