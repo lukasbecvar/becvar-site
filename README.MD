@@ -73,15 +73,6 @@ Docker is used only for development in this application. The production version 
 ## Deployment
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
-## TODO
-- [ ] Service monitoring
-   - [ ] Monitor TCP/UDP/HTTP services status
-   - [ ] Monitor HTTP response time
-   - [ ] Admin monitroing dashboard
-   - [ ] Monitoring async process
-   - [ ] Send offline status email alert in email
-   - [ ] Alert contact value in service config
-
 ## Dependencies
 * Symfony
    * [Website](https://symfony.com/)   
