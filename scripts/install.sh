@@ -11,13 +11,13 @@ fi
 # install node modules
 if [ ! -d 'node_modules/' ]
 then
-    npm install
+    npm install --loglevel=error
 fi
 
 # build assets
 if [ ! -d 'public/build/' ]
 then
-    sh scripts/build.sh
+    npm run build
 fi
 
 # fix storage permissions

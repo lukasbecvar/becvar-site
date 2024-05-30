@@ -31,7 +31,6 @@ package-lock.json
 
 # php-codesniffer
 .phpcs-cache
-phpcs.xml
 
 # php-documenter
 .phpdoc/

@@ -5,9 +5,14 @@ yellow_echo () { echo "\033[33m\033[1m$1\033[0m"; }
 # clear console
 clear
 
-# static code analyze
-yellow_echo 'STATIC-ANALYZE: testing...'
-sh scripts/static-analyze.sh
+# run phpcs process
+yellow_echo 'PHPCS: testing...'
+php vendor/bin/phpcbf
+php vendor/bin/phpcs
+
+# analyze phpstan
+yellow_echo 'PHPSTAN: testing...'
+php vendor/bin/phpstan analyze
 
 # PHPUnit tests
 yellow_echo 'PHPUnit: testing...'
