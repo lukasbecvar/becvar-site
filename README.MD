@@ -2,7 +2,7 @@
 Personal website builded with the Symfony framework, Bootstrap & Webpack Encore.
 
 ## Documentation
-The complete source documentation can be found [here](https://lordbecvold.github.io/becvar-site/)
+The complete source documentation is [here](https://lordbecvold.github.io/becvar-site/)
 
 ## Admin site
 The main part of this application is the admin panel, which contains functions and components for the administration of the host Linux server.
