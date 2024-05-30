@@ -84,6 +84,7 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
    - [ ] Monitoring async process
    - [ ] Send offline status email alert in email
    - [ ] Alert contact value in service config
+- [ ] Refactor
 
 ## Dependencies
 * Symfony
