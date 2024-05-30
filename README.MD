@@ -74,9 +74,9 @@ Docker is used only for development in this application. The production version 
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
 
 ## TODO
-- [ ] Email service
-- [ ] New login security alert
+- [X] Email service
 - [ ] Implement symfony messenger
+- [ ] New login security alert
 - [ ] Service monitoring
    - [ ] Monitor TCP/UDP/HTTP services status
    - [ ] Monitor HTTP response time
