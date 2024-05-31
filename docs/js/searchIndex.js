@@ -2596,41 +2596,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Manager-DatabaseManager.html#property_errorManager"
         },                {
-            "fqsen": "\\App\\Manager\\EmailManager",
-            "name": "EmailManager",
-            "summary": "Class\u0020EmailManager",
-            "url": "classes/App-Manager-EmailManager.html"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-Manager-EmailManager.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003AsendDefaultEmail\u0028\u0029",
-            "name": "sendDefaultEmail",
-            "summary": "Sends\u0020a\u0020default\u0020email\u0020with\u0020a\u0020subject\u0020and\u0020message\u0020to\u0020a\u0020recipient.",
-            "url": "classes/App-Manager-EmailManager.html#method_sendDefaultEmail"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003AsendEmail\u0028\u0029",
-            "name": "sendEmail",
-            "summary": "Sends\u0020an\u0020email\u0020with\u0020a\u0020subject\u0020and\u0020context\u0020to\u0020a\u0020recipient.",
-            "url": "classes/App-Manager-EmailManager.html#method_sendEmail"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003A\u0024logManager",
-            "name": "logManager",
-            "summary": "",
-            "url": "classes/App-Manager-EmailManager.html#property_logManager"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003A\u0024mailer",
-            "name": "mailer",
-            "summary": "",
-            "url": "classes/App-Manager-EmailManager.html#property_mailer"
-        },                {
-            "fqsen": "\\App\\Manager\\EmailManager\u003A\u003A\u0024errorManager",
-            "name": "errorManager",
-            "summary": "",
-            "url": "classes/App-Manager-EmailManager.html#property_errorManager"
-        },                {
             "fqsen": "\\App\\Manager\\ErrorManager",
             "name": "ErrorManager",
             "summary": "Class\u0020ErrorManager",
