@@ -29,12 +29,6 @@ The public part of the site contains information about me and my projects.
  - Image uploader / view
  - Code paste site
 
-## Translations
- - Public page is automatically translated into visitor language (geolocation with ip address)
-
-## Assets builder
- - Webpack (symfony-encore), scripts/build.sh
-
 ## Authenticator
  - This project uses my own authentication system, not Symfony security!
  - This authentication is designed to authenticate across my internal apps.
@@ -72,19 +66,6 @@ Docker is used only for development in this application. The production version 
 
 ## Deployment
 Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
-
-## TODO
-- [X] Email service
-- [ ] Implement symfony messenger
-- [ ] New login security alert
-- [ ] Service monitoring
-   - [ ] Monitor TCP/UDP/HTTP services status
-   - [ ] Monitor HTTP response time
-   - [ ] Admin monitroing dashboard
-   - [ ] Monitoring async process
-   - [ ] Send offline status email alert in email
-   - [ ] Alert contact value in service config
-- [ ] Refactor
 
 ## Dependencies
 * Symfony
