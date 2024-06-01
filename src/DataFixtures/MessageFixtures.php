@@ -45,13 +45,14 @@ class MessageFixtures extends Fixture
         foreach ($messageData as $data) {
             $message = new Message();
 
-            $message->setName('Lukáš Bečvář');
-            $message->setEmail('becvarlukas99@gmail.com	');
-            $message->setMessage($this->securityUtil->encryptAes($data['message']));
-            $message->setTime('02.05.2024 12:21:39');
-            $message->setIpAddress('172.18.0.1');
-            $message->setStatus('open');
-            $message->setVisitorID('1');
+            // set message data
+            $message->setName('Lukáš Bečvář')
+                ->setEmail('becvarlukas99@gmail.com	')
+                ->setMessage($this->securityUtil->encryptAes($data['message']))
+                ->setTime('02.05.2024 12:21:39')
+                ->setIpAddress('172.18.0.1')
+                ->setStatus('open')
+                ->setVisitorID('1');
 
             // persist message fixtures
             $manager->persist($message);

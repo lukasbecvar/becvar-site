@@ -102,12 +102,12 @@ class TodosManager
         $text = $this->securityUtil->encryptAes($text);
 
         // set todo data
-        $todo->setText($text);
-        $todo->setStatus('non-completed');
-        $todo->setAddedTime($date);
-        $todo->setCompletedTime('non-completed');
-        $todo->setAddedBy($username);
-        $todo->setClosedBy('non-closed');
+        $todo->setText($text)
+            ->setStatus('non-completed')
+            ->setAddedTime($date)
+            ->setCompletedTime('non-completed')
+            ->setAddedBy($username)
+            ->setClosedBy('non-closed');
 
         // save new todo
         try {

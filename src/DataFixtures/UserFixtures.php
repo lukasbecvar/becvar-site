@@ -35,15 +35,15 @@ class UserFixtures extends Fixture
     {
         // add test user
         $testUser = new User();
-        $testUser->setUsername('test');
-        $testUser->setPassword($this->securityUtil->genBcryptHash('test', 10));
-        $testUser->setRole('Owner');
-        $testUser->setIpAddress('127.0.0.1');
-        $testUser->setToken(ByteString::fromRandom(32)->toString());
-        $testUser->setRegistedTime(date('Y-m-d H:i:s'));
-        $testUser->setLastLoginTime('not logged');
-        $testUser->setProfilePic('non-pic');
-        $testUser->setVisitorId('1');
+        $testUser->setUsername('test')
+            ->setPassword($this->securityUtil->genBcryptHash('test', 10))
+            ->setRole('Owner')
+            ->setIpAddress('127.0.0.1')
+            ->setToken(ByteString::fromRandom(32)->toString())
+            ->setRegistedTime(date('Y-m-d H:i:s'))
+            ->setLastLoginTime('not logged')
+            ->setProfilePic('non-pic')
+            ->setVisitorId('1');
 
         // persist the entity
         $manager->persist($testUser);
@@ -56,15 +56,15 @@ class UserFixtures extends Fixture
             $username = 'user_' . $i . '_' . uniqid();
 
             // set user properties
-            $user->setUsername($username);
-            $user->setPassword($this->securityUtil->genBcryptHash('testtest', 10));
-            $user->setRole('User');
-            $user->setIpAddress('127.0.0.1');
-            $user->setToken(ByteString::fromRandom(32)->toString());
-            $user->setRegistedTime(date('Y-m-d H:i:s'));
-            $user->setLastLoginTime('not logged');
-            $user->setProfilePic('profile_pic');
-            $user->setVisitorId(strval($i));
+            $user->setUsername($username)
+                ->setPassword($this->securityUtil->genBcryptHash('testtest', 10))
+                ->setRole('User')
+                ->setIpAddress('127.0.0.1')
+                ->setToken(ByteString::fromRandom(32)->toString())
+                ->setRegistedTime(date('Y-m-d H:i:s'))
+                ->setLastLoginTime('not logged')
+                ->setProfilePic('profile_pic')
+                ->setVisitorId(strval($i));
 
             // persist the entity
             $manager->persist($user);

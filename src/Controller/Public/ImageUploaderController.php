@@ -127,9 +127,9 @@ class ImageUploaderController extends AbstractController
                 $imageFile = $this->securityUtil->encryptAes($imageFile);
 
                 // set image data
-                $image->setToken($token);
-                $image->setImage($imageFile);
-                $image->setTime($date);
+                $image->setToken($token)
+                    ->setImage($imageFile)
+                    ->setTime($date);
 
                 // try to upload image
                 try {

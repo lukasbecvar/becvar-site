@@ -57,13 +57,13 @@ class MessagesManager
         $messageInput = $this->securityUtil->encryptAes($messageInput);
 
         // set message entity values
-        $message->setName($name);
-        $message->setEmail($email);
-        $message->setMessage($messageInput);
-        $message->setTime($date);
-        $message->setIpAddress($ipAddress);
-        $message->setStatus('open');
-        $message->setVisitorID($visitorId);
+        $message->setName($name)
+            ->setEmail($email)
+            ->setMessage($messageInput)
+            ->setTime($date)
+            ->setIpAddress($ipAddress)
+            ->setStatus('open')
+            ->setVisitorID($visitorId);
 
         // insert new message
         try {

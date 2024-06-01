@@ -55,9 +55,9 @@ class BanManager
         // check if visitor found
         if ($visitor != null) {
             // update ban data
-            $visitor->setBannedStatus('yes');
-            $visitor->setBanReason($reason);
-            $visitor->setBannedTime($date);
+            $visitor->setBannedStatus('yes')
+                ->setBanReason($reason)
+                ->setBannedTime($date);
 
             // log ban action
             $this->logManager->log('ban-system', 'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername());

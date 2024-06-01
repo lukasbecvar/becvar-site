@@ -93,12 +93,14 @@ class TodoFixtures extends Fixture
         // create 50 non-completed todos
         for ($i = 0; $i < 50; $i++) {
             $todo = new Todo();
-            $todo->setText($this->securityUtil->encryptAes($this->todos[array_rand($this->todos)]));
-            $todo->setStatus('non-completed');
-            $todo->setAddedTime(date('Y-m-d H:i:s'));
-            $todo->setCompletedTime('non-completed');
-            $todo->setAddedBy('test');
-            $todo->setClosedBy('non-closed');
+
+            // set the todo entity properties
+            $todo->setText($this->securityUtil->encryptAes($this->todos[array_rand($this->todos)]))
+                ->setStatus('non-completed')
+                ->setAddedTime(date('Y-m-d H:i:s'))
+                ->setCompletedTime('non-completed')
+                ->setAddedBy('test')
+                ->setClosedBy('non-closed');
 
             // persist the todo entity
             $manager->persist($todo);
@@ -107,12 +109,14 @@ class TodoFixtures extends Fixture
         // create 50 completed todos
         for ($i = 0; $i < 50; $i++) {
             $todo = new Todo();
-            $todo->setText($this->securityUtil->encryptAes($this->todos[array_rand($this->todos)]));
-            $todo->setStatus('completed');
-            $todo->setAddedTime(date('Y-m-d H:i:s', strtotime("-$i days")));
-            $todo->setCompletedTime(date('Y-m-d H:i:s'));
-            $todo->setAddedBy('test');
-            $todo->setClosedBy('test');
+
+            // set the todo entity properties
+            $todo->setText($this->securityUtil->encryptAes($this->todos[array_rand($this->todos)]))
+                ->setStatus('completed')
+                ->setAddedTime(date('Y-m-d H:i:s', strtotime("-$i days")))
+                ->setCompletedTime(date('Y-m-d H:i:s'))
+                ->setAddedBy('test')
+                ->setClosedBy('test');
 
             // persist the todo entity
             $manager->persist($todo);

@@ -207,15 +207,15 @@ class AuthManager
         $imageBase64 = 'non-pic';
 
         // set user entity data
-        $user->setUsername($username);
-        $user->setPassword($hashedPassword);
-        $user->setRole('Owner');
-        $user->setIpAddress($ipAddress);
-        $user->setToken($token);
-        $user->setRegistedTime($date);
-        $user->setLastLoginTime('not logged');
-        $user->setProfilePic($imageBase64);
-        $user->setVisitorId(strval($visitorId));
+        $user->setUsername($username)
+            ->setPassword($hashedPassword)
+            ->setRole('Owner')
+            ->setIpAddress($ipAddress)
+            ->setToken($token)
+            ->setRegistedTime($date)
+            ->setLastLoginTime('not logged')
+            ->setProfilePic($imageBase64)
+            ->setVisitorId(strval($visitorId));
 
         // insert new user
         try {

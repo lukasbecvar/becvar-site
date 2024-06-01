@@ -134,17 +134,17 @@ class VisitorSystemMiddleware
         $visitorEntity = new Visitor();
 
         // set visitor data
-        $visitorEntity->setFirstVisit($date);
-        $visitorEntity->setLastVisit($date);
-        $visitorEntity->setBrowser($browser);
-        $visitorEntity->setOs($os);
-        $visitorEntity->setCity($location['city']);
-        $visitorEntity->setCountry($location['country']);
-        $visitorEntity->setIpAddress($ipAddress);
-        $visitorEntity->setBannedStatus('no');
-        $visitorEntity->setBanReason('non-banned');
-        $visitorEntity->setBannedTime(('non-banned'));
-        $visitorEntity->setEmail('unknown');
+        $visitorEntity->setFirstVisit($date)
+            ->setLastVisit($date)
+            ->setBrowser($browser)
+            ->setOs($os)
+            ->setCity($location['city'])
+            ->setCountry($location['country'])
+            ->setIpAddress($ipAddress)
+            ->setBannedStatus('no')
+            ->setBanReason('non-banned')
+            ->setBannedTime(('non-banned'))
+            ->setEmail('unknown');
 
         // try to insert new visitor
         try {

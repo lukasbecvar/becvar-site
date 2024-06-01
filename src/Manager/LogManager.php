@@ -106,13 +106,13 @@ class LogManager
             $LogEntity = new Log();
 
             // set log entity values
-            $LogEntity->setName($name);
-            $LogEntity->setValue($value);
-            $LogEntity->setTime($date);
-            $LogEntity->setIpAddress($ipAddress);
-            $LogEntity->setBrowser($browser);
-            $LogEntity->setStatus('unreaded');
-            $LogEntity->setVisitorId($visitorId);
+            $LogEntity->setName($name)
+                ->setValue($value)
+                ->setTime($date)
+                ->setIpAddress($ipAddress)
+                ->setBrowser($browser)
+                ->setStatus('unreaded')
+                ->setVisitorId($visitorId);
 
             // try insert row
             try {

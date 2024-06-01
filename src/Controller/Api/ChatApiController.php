@@ -114,10 +114,10 @@ class ChatApiController extends AbstractController
         $message = new ChatMessage();
 
         // set message data
-        $message->setMessage($chatMessage);
-        $message->setSender($userId);
-        $message->setDay($day);
-        $message->setTime($time);
+        $message->setMessage($chatMessage)
+            ->setSender($userId)
+            ->setDay($day)
+            ->setTime($time);
 
         // save message data
         try {

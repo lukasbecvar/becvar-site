@@ -62,11 +62,14 @@ class ChatMessageFixtures extends Fixture
         // create new chat messages
         foreach ($chatMessages as $message) {
             $newMessage = new ChatMessage();
+
+            // set message properties
             $newMessage->setMessage($this->securityUtil->encryptAes($message['message']))
                 ->setSender($message['sender'])
                 ->setDay($message['day'])
                 ->setTime($message['time']);
 
+            // persist the entity
             $manager->persist($newMessage);
         }
 

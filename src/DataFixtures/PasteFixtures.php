@@ -49,9 +49,13 @@ class PasteFixtures extends Fixture
         // persist paste fixtures
         foreach ($pasteData as $data) {
             $paste = new Paste();
-            $paste->setName($data['name']);
-            $paste->setContent($this->securityUtil->encryptAes($data['content']));
-            $paste->setTime($data['time']);
+
+            // set paste data
+            $paste->setName($data['name'])
+                ->setContent($this->securityUtil->encryptAes($data['content']))
+                ->setTime($data['time']);
+
+            // persist paste
             $manager->persist($paste);
         }
 

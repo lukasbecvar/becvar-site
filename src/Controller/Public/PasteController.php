@@ -76,9 +76,9 @@ class PasteController extends AbstractController
                     $content = $this->securityUtil->encryptAes($content);
 
                     // set paste data
-                    $paste->setName($name);
-                    $paste->setContent($content);
-                    $paste->setTime($date);
+                    $paste->setName($name)
+                        ->setContent($content)
+                        ->setTime($date);
 
                     // insert new paste
                     try {

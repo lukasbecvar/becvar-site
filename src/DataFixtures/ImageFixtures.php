@@ -42,10 +42,13 @@ class ImageFixtures extends Fixture
 
         foreach ($imageData as $data) {
             $image = new Image();
+
+            // set the data
             $image->setToken($data['token'])
                 ->setImage($this->securityUtil->encryptAes($data['image']))
                 ->setTime($data['time']);
 
+            // persist the data
             $manager->persist($image);
         }
 

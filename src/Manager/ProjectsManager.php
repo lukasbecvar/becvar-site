@@ -89,11 +89,11 @@ class ProjectsManager
                     $project = new Project();
 
                     // set project value
-                    $project->setName($name);
-                    $project->setDescription($description);
-                    $project->setTechnology($language);
-                    $project->setLink($htmlUrl);
-                    $project->setStatus($status);
+                    $project->setName($name)
+                        ->setDescription($description)
+                        ->setTechnology($language)
+                        ->setLink($htmlUrl)
+                        ->setStatus($status);
 
                     // try to insert project
                     try {

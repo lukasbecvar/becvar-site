@@ -73,17 +73,19 @@ class VisitorFixtures extends Fixture
         for ($i = 0; $i < 50; $i++) {
             // build new visitor entity
             $visitor = new Visitor();
-            $visitor->setFirstVisit(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s'));
-            $visitor->setLastVisit(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s'));
-            $visitor->setBrowser($this->browsers[array_rand($this->browsers)]);
-            $visitor->setOs($this->os[array_rand($this->os)]);
-            $visitor->setCity($this->city[array_rand($this->city)]);
-            $visitor->setCountry($this->county[array_rand($this->county)]);
-            $visitor->setIpAddress('192.168.1.' . $i);
-            $visitor->setBannedStatus($i % 2 === 0 ? 'yes' : 'no');
-            $visitor->setBanReason($i % 2 === 0 ? 'reason for ban' : 'non-banned');
-            $visitor->setBannedTime($i % 2 === 0 ? \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s') : 'non-banned'); // Set an empty string for non-banned users
-            $visitor->setEmail($i % 2 === 0 ? 'unknown' : 'visitor' . $i . '@example.com');
+
+            // set visitor entity data
+            $visitor->setFirstVisit(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s'))
+                ->setLastVisit(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s'))
+                ->setBrowser($this->browsers[array_rand($this->browsers)])
+                ->setOs($this->os[array_rand($this->os)])
+                ->setCity($this->city[array_rand($this->city)])
+                ->setCountry($this->county[array_rand($this->county)])
+                ->setIpAddress('192.168.1.' . $i)
+                ->setBannedStatus($i % 2 === 0 ? 'yes' : 'no')
+                ->setBanReason($i % 2 === 0 ? 'reason for ban' : 'non-banned')
+                ->setBannedTime($i % 2 === 0 ? \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime("-$i days")))->format('Y-m-d H:i:s') : 'non-banned')
+                ->setEmail($i % 2 === 0 ? 'unknown' : 'visitor' . $i . '@example.com');
 
             // persist new visitor entity
             $manager->persist($visitor);

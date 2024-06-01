@@ -219,6 +219,8 @@ class LogFixtures extends Fixture
         // create objects with the given data
         foreach ($logsData as $logData) {
             $log = new Log();
+
+            // set the object's properties
             $log->setName($logData['name'])
                 ->setValue($logData['value'])
                 ->setTime($logData['time'])
@@ -227,6 +229,7 @@ class LogFixtures extends Fixture
                 ->setStatus($logData['status'])
                 ->setVisitorId($logData['visitor_id']);
 
+            // persist the object
             $manager->persist($log);
         }
 
