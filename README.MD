@@ -1,6 +1,6 @@
 ## About becvar-site
 Personal website builded with the Symfony framework, Bootstrap & Webpack Encore.
-
+ 
 ## Documentation
 The complete source documentation is [here](https://lordbecvold.github.io/becvar-site/)
 
