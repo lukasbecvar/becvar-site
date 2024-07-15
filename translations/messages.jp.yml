@@ -91,16 +91,3 @@ contact.error.ko.message: "エラーが発生したため、メッセージは�
 contact.error.blocked.message: "メッセージはブロックされました"
 contact.error.limit.reached.message: "エラー：未読のメッセージが5つあります。最初のメッセージへの返信をお待ちください"
 contact.success.message: "メッセージは送信されました。Lukášは最大で24時間以内に返信します"
-
-# image uploader
-image.uploader.title: "画像アップローダー"
-image.uploader.form.title: "画像をアップロード"
-image.uploader.form.description: "画像をドラッグ＆ドロップまたは選択してください"
-image.uploader.form.remove.button: "削除"
-image.uploader.form.submit.button: "画像をアップロード"
-image.uploader.file.format.error: "エラー：ファイル形式が正しくありません"
-image.viewer.title: "画像"
-
-# code paste
-code.paste.title: "コードをペースト"
-code.view.title: "表示"

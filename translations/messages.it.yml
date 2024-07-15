@@ -91,16 +91,3 @@ contact.error.ko.message: "Il tuo messaggio non è stato inviato a causa di un e
 contact.error.blocked.message: "Il tuo messaggio è stato bloccato"
 contact.error.limit.reached.message: "Errore: Hai 5 messaggi non letti, attendi la risposta al primo messaggio"
 contact.success.message: "Il tuo messaggio è stato inviato, Lukáš risponderà entro 24 ore al massimo"
-
-# image uploader
-image.uploader.title: "Uploader di immagini"
-image.uploader.form.title: "Carica un'immagine"
-image.uploader.form.description: "Trascina e rilascia o seleziona un'immagine"
-image.uploader.form.remove.button: "Rimuovi"
-image.uploader.form.submit.button: "Carica l'immagine"
-image.uploader.file.format.error: "Errore: Formato del file non corretto!"
-image.viewer.title: "Immagine"
-
-# code paste
-code.paste.title: "Incolla il codice"
-code.view.title: "Visualizzazione"

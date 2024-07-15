@@ -872,68 +872,6 @@ button {
 	color: rgb(235, 201, 50) !important;
 }
 
-.terminal-component {
-	background-color: rgb(12, 12, 12);
-	height: 100%;
-}
-
-.terminal-component #terminal {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	color: #FFFFFF;
-	font-family: monospace !important;
-	display: flex;
-	flex-direction: column;
-	padding-left: 5px !important;
-}
-
-.terminal-component #user {
-	color: #ff4a4a;
-}
-
-.terminal-component #output-container {
-	overflow: auto; 
-	max-height: 100%;
-	padding-top: 8px;
-	padding-right: 8px;
-	padding-left: 8px;
-	font-size: 23px !important;
-	margin-bottom: 0px;
-	overflow-x: hidden;
-	color: #FFFFFF;
-}
-
-.terminal-component #command-container {
-	display: flex;
-	align-items: center;
-}
-
-.terminal-component #prompt {
-	display: inline-block;
-}
-
-.terminal-component #prompt-line {
-	white-space: nowrap;
-	color: #6262ff;
-	font-size: 22px !important;
-}
-
-.terminal-component .prompr-reset {
-	margin-left: -8px;
-}
-
-.terminal-component #command {
-	width: 100%;
-	background-color: transparent;
-	border: none;
-	outline: none;
-	margin-left: 5px;
-	color: white;
-	font-size: 22px !important;
-	text-transform: lowercase;
-}
-
 .file-input-control {
 	padding: 5px;
 	border-radius: 5px;
@@ -1099,15 +1037,6 @@ button {
 	}
 	.user-panel {
 		display: none;
-	}
-	.terminal-component #output-container {
-		font-size: 22px;
-	}
-	.terminal-component #prompt-line {
-		font-size: 22px;
-	}
-	.terminal-component #command {
-		font-size: 22px;
 	}
 	.ip-info-box {
 		margin-top: 0px;

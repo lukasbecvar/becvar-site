@@ -91,16 +91,3 @@ contact.error.ko.message: "Dėl klaidos jūsų žinutė nebuvo išsiųsta, praš
 contact.error.blocked.message: "Jūsų žinutė buvo užblokuota"
 contact.error.limit.reached.message: "klaida: turite 5 neskaitytus laiškus, prašome palaukti pirmo laiško atsakymo"
 contact.success.message: "Jūsų žinutė išsiųsta, Lukáš atsakys per daugiausiai 24 valandas"
-
-# image uploader
-image.uploader.title: "Nuotraukų įkėlėjas"
-image.uploader.form.title: "Įkelti nuotrauką"
-image.uploader.form.description: "Nuvilinkite arba pasirinkite nuotrauką"
-image.uploader.form.remove.button: "Pašalinti"
-image.uploader.form.submit.button: "Įkelti nuotrauką"
-image.uploader.file.format.error: "Klaida: Netinkamas failo formatas!"
-image.viewer.title: "Nuotrauka"
-
-# code paste
-code.paste.title: "Įklijuoti kodą"
-code.view.title: "Peržiūra"

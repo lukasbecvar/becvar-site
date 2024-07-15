@@ -91,16 +91,3 @@ contact.error.ko.message: "Your message was not sent due to an error, please try
 contact.error.blocked.message: "Your message has been blocked"
 contact.error.limit.reached.message: "error you have 5 unreaded messages, please wait for the response to the first messags"
 contact.success.message: "Your message has been sent, Lukáš replies within 24 hours at most"
-
-# image uploaded
-image.uploader.title: "Image uploader"
-image.uploader.form.title: "Image upload"
-image.uploader.form.description: "Drag/drop or select image"
-image.uploader.form.remove.button: "Remove"
-image.uploader.form.submit.button: "Upload Image"
-image.uploader.file.format.error: "Error file have wrong format!"
-image.viewer.title: "Image"
-
-# code paste
-code.paste.title: "Code paste"
-code.view.title: "Viewing"

@@ -8,60 +8,41 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
 
-    // register common assets
+    // common assets
     .addEntry('scrollbar-css', './assets/css/scrollbar.css')
-    .addEntry('page-loading-css', './assets/css/page-loading.css')
     .addEntry('page-loading-js', './assets/js/page-loading.js')
+    .addEntry('page-loading-css', './assets/css/page-loading.css')
 
-    // register public-page assets
-    .addEntry('public-css', './assets/css/public.css')
+    // public page assets
     .addEntry('public-js', './assets/js/public.js')
+    .addEntry('public-css', './assets/css/public.css')
 
-    // registr admin-page assets
+    // admin page assets
     .addEntry('admin-css', './assets/css/admin.css')
 
-    // register error-page assets
+    // error page assets
     .addEntry('error-page-css', './assets/css/error-page.css')
 
-    // register code-paste assets
-    .addEntry('atom-one-dark-css', './assets/css/atom-one-dark.css')
-    .addEntry('paste-add-css', './assets/css/paste-add.css')
-    .addEntry('paste-view-css', './assets/css/paste-view.css')
-    .addEntry('code-paste-js', './assets/js/code-paste.js')
-
-    // register lightgallery 
-    .addEntry('lightgallery-css', './assets/lightgallery/css/lightgallery.css')
-    .addEntry('lg-transitions-css', './assets/lightgallery/css/lg-transitions.css')
-    .addEntry('lightgallery-js', './assets/lightgallery/js/lightgallery.js')
-    .addEntry('lg-autoplay-js', './assets/lightgallery/js/lg-autoplay.js')
-    .addEntry('lg-zoom-js', './assets/lightgallery/js/lg-zoom.js')
-
-    // register bootstrap
+    // bootstrap
     .addEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')
     .addEntry('bootstrap-js', './node_modules/bootstrap/dist/js/bootstrap.bundle.js')
     .addEntry('bootstrap-icons-css', './node_modules/bootstrap-icons/font/bootstrap-icons.css')
 
-    // register boxicons
+    // boxicons
     .addEntry('boxicons-css', './node_modules/boxicons/css/boxicons.css')
 
-    // register fontawesome
+    // fontawesome
     .addEntry('fontawesome-css', './node_modules/@fortawesome/fontawesome-free/css/all.css')
 
-    // register purecounter
+    // purecounter
     .addEntry('purecounter-js', './assets/js/purecounter.js')
 
-    // register waypoints
+    // waypoints
     .addEntry('skills-progress-js', './assets/js/skills-progress.js')
 
-    // register visitor status updater
+    // visitor status updater
     .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')
-
-    // register admin chat function
-    .addEntry('admin-chat-js', './assets/js/admin-chat.js')
-
-    // register admin terminal function
-    .addEntry('admin-terminal', './assets/js/admin-terminal.js')
-
+    
     // copy static assets
     .copyFiles(
         {

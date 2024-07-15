@@ -7,7 +7,7 @@
 # database migrations
 /migrations/
 
-# exclude docker env data
+# docker env data
 /_docker/services/
 
 # cache files
@@ -29,8 +29,5 @@ package-lock.json
 # phpunit
 .phpunit.result.cache
 
-# php-codesniffer
+# php code sniffer
 .phpcs-cache
-
-# php-documenter
-.phpdoc/

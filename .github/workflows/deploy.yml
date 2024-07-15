@@ -1,8 +1,8 @@
-# App deploy action
+# deploy app to the production server
 name: Deploy
 
 on:
-  release: # trigger the workflow when a new release is created
+  release:
     types: [created]
   
 jobs:
@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    # code checkout
+    - name: Checkout code
       uses: actions/checkout@v2
 
     # deploy to the server using SSH

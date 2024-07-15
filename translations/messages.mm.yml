@@ -91,16 +91,3 @@ contact.error.ko.message: "Таны зурвас алдаатай байна, д
 contact.error.blocked.message: "Таны зурвас цуглуулсан байна"
 contact.error.limit.reached.message: "Алдаа: Танд 5 уншигдангүй зурвас байна, эхний зурвасны хариуг хүлээж хүлээнэ үү"
 contact.success.message: "Таны зурвас илгээгдлээ, Лукас хамтдаа хариулна уу 24 цагийн дараа хамгийн их"
-
-# image uploader
-image.uploader.title: "Зургийн хуулаагч"
-image.uploader.form.title: "Зураг оруулах"
-image.uploader.form.description: "Зургийг цуглаа, сонгоод оруулна уу"
-image.uploader.form.remove.button: "Арилгах"
-image.uploader.form.submit.button: "Зураг оруулах"
-image.uploader.file.format.error: "Алдаа: Зургийн формат буруу байна!"
-image.viewer.title: "Зураг үзэх"
-
-# code paste
-code.paste.title: "Код оруулах"
-code.view.title: "Харах"

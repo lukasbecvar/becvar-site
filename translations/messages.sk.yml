@@ -90,16 +90,3 @@ contact.error.ko.message: "Vaša správa nebola odoslaná kvôli chybe. Skúste 
 contact.error.blocked.message: "Vaša správa bola zablokovaná"
 contact.error.limit.reached.message: "chyba: máte 5 neprečítaných správ. Počkajte na odpoveď na prvé správy."
 contact.success.message: "Vaša správa bola odoslaná. Lukáš odpovie najneskôr do 24 hodín"
-
-# image uploader
-image.uploader.title: "Nahrávač obrázkov"
-image.uploader.form.title: "Nahrať obrázok"
-image.uploader.form.description: "Potiahnite/upustite alebo vyberte obrázok"
-image.uploader.form.remove.button: "Odstrániť"
-image.uploader.form.submit.button: "Nahrať obrázok"
-image.uploader.file.format.error: "Chyba: súbor má nesprávny formát!"
-image.viewer.title: "Obrázok"
-
-# code paste
-code.paste.title: "Vložiť kód"
-code.view.title: "Kód"

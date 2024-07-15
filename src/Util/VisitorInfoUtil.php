@@ -65,7 +65,7 @@ class VisitorInfoUtil
         $output = null;
 
         // identify shortify array [ID: str_contains, Value: replacement]
-        $browser_list = $this->jsonUtil->getJson(__DIR__ . '/../../config/becwork/browser-list.json');
+        $browser_list = $this->jsonUtil->getJson(__DIR__ . '/../../config/browser-list.json');
 
         // check if browser list found
         if ($browser_list != null) {

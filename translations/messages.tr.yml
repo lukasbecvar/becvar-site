@@ -91,16 +91,3 @@ contact.error.ko.message: "Mesajınız bir hatadan dolayı gönderilmedi. Lütfe
 contact.error.blocked.message: "Mesajınız engellendi"
 contact.error.limit.reached.message: "hata: 5 okunmamış mesajınız var, lütfen ilk mesaja yanıt bekleyin"
 contact.success.message: "Mesajınız gönderildi, Lukáš en fazla 24 saat içinde yanıt verir"
-
-# image uploader
-image.uploader.title: "Resim Yükleyici"
-image.uploader.form.title: "Resim Yükle"
-image.uploader.form.description: "Resmi sürükle/bırak veya seç"
-image.uploader.form.remove.button: "Kaldır"
-image.uploader.form.submit.button: "Resmi Yükle"
-image.uploader.file.format.error: "Hata: Dosyanın yanlış biçimi var!"
-image.viewer.title: "Resim"
-
-# code paste
-code.paste.title: "Kod Yapıştır"
-code.view.title: "Görüntüleme"

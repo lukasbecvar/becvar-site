@@ -91,16 +91,3 @@ contact.error.ko.message: "Ihre Nachricht wurde aufgrund eines Fehlers nicht ges
 contact.error.blocked.message: "Ihre Nachricht wurde blockiert"
 contact.error.limit.reached.message: "Fehler: Sie haben 5 ungelesene Nachrichten. Bitte warten Sie auf die Antwort auf die ersten Nachrichten"
 contact.success.message: "Ihre Nachricht wurde gesendet. Lukáš antwortet innerhalb von maximal 24 Stunden"
-
-# image uploade
-image.uploader.title: "Bildhochlader"
-image.uploader.form.title: "Bild hochladen"
-image.uploader.form.description: "Bild ziehen/ablegen oder auswählen"
-image.uploader.form.remove.button: "Entfernen"
-image.uploader.form.submit.button: "Bild hochladen"
-image.uploader.file.format.error: "Fehler: Die Datei hat das falsche Format!"
-image.viewer.title: "Bild"
-
-# code paste
-code.paste.title: "Code einfügen"
-code.view.title: "Anzeigen"

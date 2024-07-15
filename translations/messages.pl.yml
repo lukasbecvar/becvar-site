@@ -91,16 +91,3 @@ contact.error.ko.message: "Twoja wiadomość nie została wysłana z powodu bł�
 contact.error.blocked.message: "Twoja wiadomość została zablokowana"
 contact.error.limit.reached.message: "błąd: masz 5 nieprzeczytanych wiadomości. Poczekaj na odpowiedź na pierwszą wiadomość"
 contact.success.message: "Twoja wiadomość została wysłana. Lukáš odpowie w ciągu maksymalnie 24 godzin"
-
-# image uploader
-image.uploader.title: "Wgraj obraz"
-image.uploader.form.title: "Wgraj obraz"
-image.uploader.form.description: "Przeciągnij i upuść lub wybierz obraz"
-image.uploader.form.remove.button: "Usuń"
-image.uploader.form.submit.button: "Wgraj obraz"
-image.uploader.file.format.error: "Błąd: plik ma niepoprawny format!"
-image.viewer.title: "Obraz"
-
-# code paste
-code.paste.title: "Wklej kod"
-code.view.title: "Przeglądanie"

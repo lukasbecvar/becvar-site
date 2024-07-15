@@ -5,12 +5,12 @@ yellow_echo () { echo "\033[33m\033[1m$1\033[0m"; }
 # clear console
 clear
 
-# run phpcs process
+# PHPcs check # fix
 yellow_echo 'PHPCS: testing...'
 php vendor/bin/phpcbf
 php vendor/bin/phpcs
 
-# analyze phpstan
+# PHPstan analyze
 yellow_echo 'PHPSTAN: testing...'
 php vendor/bin/phpstan analyze
 

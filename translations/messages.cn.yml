@@ -91,16 +91,3 @@ contact.error.ko.message: "由于错误，您的消息未发送，请稍后再�
 contact.error.blocked.message: "您的消息已被阻止"
 contact.error.limit.reached.message: "错误：您有5条未读消息，请等待第一条消息的回复"
 contact.success.message: "您的消息已发送，Lukáš将在最多24小时内回复"
-
-# image uploader
-image.uploader.title: "图像上传者"
-image.uploader.form.title: "上传图像"
-image.uploader.form.description: "拖放或选择图像"
-image.uploader.form.remove.button: "删除"
-image.uploader.form.submit.button: "上传图像"
-image.uploader.file.format.error: "错误：文件格式不正确！"
-image.viewer.title: "图像"
-
-# code paste
-code.paste.title: "粘贴代码"
-code.view.title: "查看"

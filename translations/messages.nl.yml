@@ -91,16 +91,3 @@ contact.error.ko.message: "Je bericht is niet verzonden vanwege een fout, probee
 contact.error.blocked.message: "Je bericht is geblokkeerd"
 contact.error.limit.reached.message: "fout: je hebt 5 ongelezen berichten, wacht op een antwoord op het eerste bericht"
 contact.success.message: "Je bericht is verzonden, Lukáš reageert binnen 24 uur op zijn laatst"
-
-# image uploader
-image.uploader.title: "Afbeelding uploader"
-image.uploader.form.title: "Afbeelding uploaden"
-image.uploader.form.description: "Sleep of selecteer een afbeelding"
-image.uploader.form.remove.button: "Verwijderen"
-image.uploader.form.submit.button: "Afbeelding uploaden"
-image.uploader.file.format.error: "Fout bestand heeft het verkeerde formaat!"
-image.viewer.title: "Afbeelding"
-
-# code paste
-code.paste.title: "Code plakken"
-code.view.title: "Weergave"
