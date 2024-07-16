@@ -209,7 +209,9 @@ class VisitorInfoUtil
         try {
             // get response
             $response = file_get_contents(
-                $_ENV['GEOLOCATION_API_URL'] . '/json/' . $ipAddress, false, $context
+                $_ENV['GEOLOCATION_API_URL'] . '/json/' . $ipAddress,
+                false,
+                $context
             );
 
             // decode response & return data

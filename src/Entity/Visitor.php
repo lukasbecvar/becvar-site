@@ -7,9 +7,9 @@ use App\Repository\VisitorRepository;
 
 /**
  * Class Visitor
- * 
+ *
  * The Visitor entity represents a visitor table in the database
- * 
+ *
  * @package App\Entity
  */
 #[ORM\Table(name: 'visitors')]

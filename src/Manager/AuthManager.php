@@ -83,7 +83,7 @@ class AuthManager
      * @param string $username The username of the user to log in
      * @param string $userToken The token of the user to log in
      * @param bool $remember Whether to remember the user's login
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error the login process
      *
      * @return void
@@ -101,8 +101,8 @@ class AuthManager
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
                         $this->cookieUtil->set(
-                            name: 'login-token-cookie', 
-                            value: $userToken, 
+                            name: 'login-token-cookie',
+                            value: $userToken,
                             expiration: time() + (60 * 60 * 24 * 7 * 365)
                         );
                     }
@@ -115,7 +115,7 @@ class AuthManager
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
                 $this->errorManager->handleError(
-                    'error to login user with token: ' . $userToken, 
+                    'error to login user with token: ' . $userToken,
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }

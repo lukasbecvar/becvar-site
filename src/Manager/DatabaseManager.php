@@ -124,7 +124,7 @@ class DatabaseManager
         // log to database
         if ($log) {
             $this->logManager->log(
-                name: 'database', 
+                name: 'database',
                 value: $this->authManager->getUsername() . ' viewed database table: ' . $tableName
             );
         }
@@ -169,7 +169,7 @@ class DatabaseManager
         // log to database
         if ($log) {
             $this->logManager->log(
-                'database', 
+                'database',
                 $this->authManager->getUsername() . ' viewed database table: ' . $tableName
             );
         }
@@ -265,7 +265,7 @@ class DatabaseManager
         }
 
         $this->logManager->log(
-            'database', 
+            'database',
             $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName
         );
     }
@@ -292,7 +292,7 @@ class DatabaseManager
             $this->connection->executeStatement($sql, $params);
         }
         $this->logManager->log(
-            'database', 
+            'database',
             $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $tableName
         );
     }
@@ -326,11 +326,11 @@ class DatabaseManager
             );
         }
         $this->logManager->log(
-            'database', 
+            'database',
             $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $tableName
         );
     }
-    
+
     /**
      * Counts the total number of rows in a table
      *

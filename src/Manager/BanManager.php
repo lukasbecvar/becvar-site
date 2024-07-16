@@ -62,7 +62,7 @@ class BanManager
 
             // log ban action
             $this->logManager->log(
-                name: 'ban-system', 
+                name: 'ban-system',
                 value:'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername()
             );
 
@@ -107,7 +107,7 @@ class BanManager
 
             // log ban action
             $this->logManager->log(
-                name: 'ban-system', 
+                name: 'ban-system',
                 value: 'visitor with ip: ' . $ipAddress . ' unbanned by ' . $this->authManager->getUsername()
             );
 
@@ -167,7 +167,7 @@ class BanManager
             return $repository->count(['banned_status' => 'yes']);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(), 
+                'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
             return null;

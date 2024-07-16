@@ -47,7 +47,7 @@ class LogManager
      * @param string $name The name of the log
      * @param string $value The value of the log
      * @param bool $bypassAntilog Bypass the anti-log cookie
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to log message
      *
      * @return void
@@ -128,7 +128,7 @@ class LogManager
      * @param string $ipAddress The IP address of the user
      * @param string $username The username of the user
      * @param int $page The page number
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get logs
      *
      * @return Log[]|null $logs The logs based on IP address
@@ -177,7 +177,7 @@ class LogManager
      * @param string $status The status of the logs
      * @param string $username The username of the user
      * @param int $page The page number
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get logs
      *
      * @return Log[]|null $logs The logs based on status, paginated
@@ -226,7 +226,7 @@ class LogManager
      * @param string $status
      *
      * @throws \App\Exception\AppErrorException Error to get logs count
-     * 
+     *
      * @return int|null $count The count of logs based on status
      */
     public function getLogsCount(string $status): ?int
@@ -246,7 +246,7 @@ class LogManager
 
     /**
      * Get the count of login logs
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get login logs count
      *
      * @return int|null $count The count of login logs
@@ -268,7 +268,7 @@ class LogManager
 
     /**
      * Sets the status of all logs to 'readed'
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to set logs status
      *
      * @return void
@@ -334,8 +334,9 @@ class LogManager
     {
         $this->cookieUtil->set(
             name: 'anti-log-cookie',
-            value: $_ENV['ANTI_LOG_COOKIE'], 
-            expiration: time() + (60 * 60 * 24 * 7 * 365));
+            value: $_ENV['ANTI_LOG_COOKIE'],
+            expiration: time() + (60 * 60 * 24 * 7 * 365)
+        );
     }
 
     /**

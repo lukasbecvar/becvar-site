@@ -8,9 +8,9 @@ use App\Repository\UserRepository;
 
 /**
  * Class User
- * 
+ *
  * The User entity represents a user table in the database
- * 
+ *
  * @package App\Entity
  */
 #[ORM\Table(name: 'users')]

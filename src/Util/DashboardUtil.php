@@ -34,7 +34,7 @@ class DashboardUtil
      *
      * @param object $entity The entity class
      * @param array<string,mixed>|null $search Additional search criteria
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error get database entity count
      *
      * @return int The count of entities
@@ -56,7 +56,7 @@ class DashboardUtil
             }
         } catch (\Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(), 
+                'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }

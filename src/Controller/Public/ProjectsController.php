@@ -56,7 +56,7 @@ class ProjectsController extends AbstractController
 
     /**
      * Updates the projects list
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error the user is not logged in
      *
      * @return Response The response for updating projects, redirects to the admin database browser
@@ -67,7 +67,7 @@ class ProjectsController extends AbstractController
         // check if user authorized
         if (!$this->authManager->isUserLogedin()) {
             return $this->errorManager->handleError(
-                'error to update project list: please login first', 
+                'error to update project list: please login first',
                 Response::HTTP_UNAUTHORIZED
             );
         }

@@ -112,7 +112,7 @@ class AccountSettingsController extends AbstractController
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
                     return $this->errorManager->handleError(
-                        'error to upload profile pic: ' . $e->getMessage(), 
+                        'error to upload profile pic: ' . $e->getMessage(),
                         Response::HTTP_INTERNAL_SERVER_ERROR
                     );
                 }
@@ -174,7 +174,7 @@ class AccountSettingsController extends AbstractController
                 return $this->redirectToRoute('admin_account_settings_table');
             } catch (\Exception $e) {
                 return $this->errorManager->handleError(
-                    'error to upload profile pic: ' . $e->getMessage(), 
+                    'error to upload profile pic: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }

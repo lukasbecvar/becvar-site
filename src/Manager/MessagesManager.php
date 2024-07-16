@@ -41,7 +41,7 @@ class MessagesManager
      * @param string $messageInput The message input
      * @param string $ipAddress The IP address of the sender
      * @param string $visitorId The ID of the visitor associated with the sender
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to save message
      *
      * @return bool True if the message is saved successfully, false otherwise
@@ -87,7 +87,7 @@ class MessagesManager
      * Gets the count of open messages from a specific IP address
      *
      * @param string $ipAddress The IP address of the user
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get messages count
      *
      * @return int The count of open messages from the IP address
@@ -120,7 +120,7 @@ class MessagesManager
      *
      * @param string $status The status of the messages
      * @param int $page The page number
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get messages
      *
      * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs
@@ -180,7 +180,7 @@ class MessagesManager
      * Closes a message by updating its status to 'closed'
      *
      * @param int $id The ID of the message to close
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to close message
      *
      * @return void

@@ -29,7 +29,7 @@ class LogoutController extends AbstractController
 
     /**
      * User logout handler
-     * 
+     *
      * @throws \App\Exception\AppErrorException Logout process error
      *
      * @return Response object representing the HTTP response

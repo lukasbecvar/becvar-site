@@ -41,7 +41,7 @@ class VisitorManager
      * Get a visitor repository by array search criteria
      *
      * @param array<string,mixed> $search The search criteria
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error get visitor
      *
      * @return Visitor|null The visitor entity if found, null otherwise
@@ -87,7 +87,7 @@ class VisitorManager
      *
      * @param string $ipAddress The IP address of the visitor
      * @param string $email The email address of the visitor
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to update visitor email
      *
      * @return void

@@ -107,7 +107,7 @@ class ContactController extends AbstractController
                 $this->logManager->log(
                     name: 'message-sender',
                     value: 'message by: ' . $email . ', has been blocked: honeypot used'
-                ); 
+                );
             } else {
                 // get others data
                 $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
@@ -115,7 +115,7 @@ class ContactController extends AbstractController
                 // check if user have unclosed messages
                 if ($this->messagesManager->getMessageCountByIpAddress($ipAddress) >= 5) {
                     $this->logManager->log(
-                        name: 'message-sender', 
+                        name: 'message-sender',
                         value: 'visitor: ' . $visitorId . ' trying send new message but he has open messages'
                     );
 

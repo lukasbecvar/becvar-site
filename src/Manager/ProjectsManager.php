@@ -39,7 +39,7 @@ class ProjectsManager
 
     /**
      * Updates the project list from a GitHub user's repositories
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to update project list
      *
      * @return void
@@ -119,7 +119,7 @@ class ProjectsManager
 
     /**
      * Drops all projects from the database
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to drop projects
      *
      * @return void
@@ -150,7 +150,7 @@ class ProjectsManager
 
     /**
      * Resets the AUTO_INCREMENT value for the projects table
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to reset projects index
      *
      * @return void
@@ -173,7 +173,7 @@ class ProjectsManager
      * Gets the list of projects based on their status
      *
      * @param string $status The status of the projects to get
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error to get projects list
      *
      * @return Project[]|null The list of projects
@@ -195,7 +195,7 @@ class ProjectsManager
      * Gets the total count of projects
      *
      * @throws \App\Exception\AppErrorException Error to get projects count
-     * 
+     *
      * @return int The total count of projects
      */
     public function getProjectsCount(): ?int

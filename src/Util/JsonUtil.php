@@ -25,7 +25,7 @@ class JsonUtil
      * Get JSON data from a file or URL
      *
      * @param string $target The file path or URL
-     * 
+     *
      * @throws \App\Exception\AppErrorException Error get json content
      *
      * @return array<mixed>|null The decoded JSON data as an associative array or null on failure
