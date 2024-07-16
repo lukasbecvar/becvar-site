@@ -17,6 +17,10 @@ error.403.message: "Sie haben keine Berechtigung, auf diese Seite zuzugreifen"
 # error 404
 error.404.title: "Fehler: Seite nicht gefunden"
 error.404.message: "Fehler, diese Seite wurde nicht gefunden"
+# error 426
+error.426.title: "Fehler: Protokoll-Upgrade"
+error.426.message: "Ihr Browser unterstützt das Protokoll HTTPS nicht"
+error.426.submessage: "Bitte versuchen Sie, auf diese Seite mit dem Protokoll HTTPS zuzugreifen"
 # error 429
 error.429.title: "Fehler: Zu viele Anfragen"
 error.429.message: "Zu viele Anfragen"

@@ -11,7 +11,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class UserFixtures
  *
- * Fixture class to generate testing users.
+ * Fixture class to generate testing users
  *
  * @package App\DataFixtures
  */
@@ -25,9 +25,9 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * Load data fixtures with the passed EntityManager.
+     * Load data fixtures with the passed EntityManager
      *
-     * @param ObjectManager $manager The EntityManager instance.
+     * @param ObjectManager $manager The EntityManager instance
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
         $manager->persist($testUser);
 
         // generate testing users
-        for ($i = 2; $i < 50; $i++) {
+        for ($i = 2; $i < 20; $i++) {
             $user = new User();
 
             // generate a random username

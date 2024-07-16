@@ -10,7 +10,7 @@ use App\Manager\AuthManager;
 /**
  * Class AutoLoginMiddleware
  *
- * This middleware checks if the required auto-login function should be triggered.
+ * This middleware checks if the required auto-login function should be triggered
  *
  * @package App\Middleware
  */
@@ -31,7 +31,7 @@ class AutoLoginMiddleware
     }
 
     /**
-     * Check if auto-login should be performed.
+     * Check if auto-login should be performed
      *
      * @return void
      */

@@ -17,6 +17,10 @@ error.403.message: "Vous n'avez pas la permission d'accéder à cette page"
 # error 404
 error.404.title: "Erreur : Page non trouvée"
 error.404.message: "Erreur, cette page n'a pas été trouvée"
+# error 426
+error.426.title: "Erreur : Protocole de mise à niveau"
+error.426.message: "Votre navigateur ne prend pas en charge le protocole HTTPS"
+error.426.submessage: "Veuillez essayer d'utiliser le protocole HTTPS pour accéder à cette page"
 # error 429
 error.429.title: "Erreur : Trop de requêtes"
 error.429.message: "Trop de requêtes"

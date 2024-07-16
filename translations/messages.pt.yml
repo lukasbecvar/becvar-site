@@ -17,6 +17,10 @@ error.403.message: "Você não tem permissão para acessar esta página"
 # error 404
 error.404.title: "Erro: Página não encontrada"
 error.404.message: "Erro, esta página não foi encontrada"
+# error 426
+error.426.title: "Erro: Atualizar protocolo"
+error.426.message: "Seu navegador não suporta o protocolo HTTPS"
+error.426.submessage: "Por favor, tente usar o protocolo HTTPS para acessar esta página"
 # error 429
 error.429.title: "Erro: Muitas solicitações"
 error.429.message: "Muitas solicitações"

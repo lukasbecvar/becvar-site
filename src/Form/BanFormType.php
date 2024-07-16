@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 /**
  * Class BanFormType
  *
- * Ban form provides a visitor ban form with a reason value.
+ * Ban form provides a visitor ban form with a reason value
  *
  * @see AbstractType
  *
@@ -20,10 +20,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class BanFormType extends AbstractType
 {
     /**
-     * Builds the form for banning a visitor.
+     * Builds the form for banning a visitor
      *
-     * @param FormBuilderInterface $builder The form builder.
-     * @param array<string> $options The options for building the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string> $options The options for building the form
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class BanFormType extends AbstractType
         ->add('ban_reason', TextareaType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'todo-area feedback-input',
+                'class' => 'ban-area ban-input',
                 'placeholder' => 'Reason',
                 'maxlength' => 120
             ],
@@ -45,9 +45,9 @@ class BanFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form.
+     * Configures the options for this form
      *
-     * @param OptionsResolver $resolver The resolver for the form options.
+     * @param OptionsResolver $resolver The resolver for the form options
      *
      * @return void
      */

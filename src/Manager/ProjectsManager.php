@@ -6,6 +6,7 @@ use App\Util\JsonUtil;
 use App\Entity\Project;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
@@ -37,7 +38,9 @@ class ProjectsManager
     }
 
     /**
-     * Updates the project list from a GitHub user's repositories.
+     * Updates the project list from a GitHub user's repositories
+     * 
+     * @throws \App\Exception\AppErrorException Error to update project list
      *
      * @return void
      */
@@ -101,17 +104,23 @@ class ProjectsManager
                         $this->entityManager->flush();
                     } catch (\Exception $e) {
                         $this->logManager->log('project-update', 'error to update project list');
-                        $this->errorManager->handleError('error to save project: ' . $e->getMessage(), 500);
+                        $this->errorManager->handleError(
+                            'error to save project: ' . $e->getMessage(),
+                            Response::HTTP_INTERNAL_SERVER_ERROR
+                        );
                     }
                 }
             }
         }
 
+        // log process success
         $this->logManager->log('project-update', 'project list updated!');
     }
 
     /**
-     * Drops all projects from the database.
+     * Drops all projects from the database
+     * 
+     * @throws \App\Exception\AppErrorException Error to drop projects
      *
      * @return void
      */
@@ -132,12 +141,17 @@ class ProjectsManager
         try {
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to delete projects list: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to delete projects list: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Resets the AUTO_INCREMENT value for the projects table.
+     * Resets the AUTO_INCREMENT value for the projects table
+     * 
+     * @throws \App\Exception\AppErrorException Error to reset projects index
      *
      * @return void
      */
@@ -148,14 +162,19 @@ class ProjectsManager
         try {
             $this->entityManager->getConnection()->executeQuery($sql);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to reset projects index: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to reset projects index: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Gets the list of projects based on their status.
+     * Gets the list of projects based on their status
      *
      * @param string $status The status of the projects to get
+     * 
+     * @throws \App\Exception\AppErrorException Error to get projects list
      *
      * @return Project[]|null The list of projects
      */
@@ -164,14 +183,19 @@ class ProjectsManager
         try {
             return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get projects list: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get projects list: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Gets the total count of projects.
+     * Gets the total count of projects
      *
+     * @throws \App\Exception\AppErrorException Error to get projects count
+     * 
      * @return int The total count of projects
      */
     public function getProjectsCount(): ?int
@@ -179,7 +203,10 @@ class ProjectsManager
         try {
             return $this->entityManager->getRepository(Project::class)->count([]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get projects list: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get projects list: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }

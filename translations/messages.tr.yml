@@ -17,6 +17,10 @@ error.403.message: "Bu sayfaya erişim izniniz yok"
 # error 404
 error.404.title: "Hata: Sayfa bulunamadı"
 error.404.message: "Hata, bu sayfa bulunamadı"
+# error 426
+error.426.title: "Hata: Yükseltme protokolü"
+error.426.message: "Tarayıcınız HTTPS protokolü desteklemiyor"
+error.426.submessage: "Lütfen bu sayfaya erişmek için HTTPS protokolünü kullanın"
 # error 429
 error.429.title: "Hata: Çok Fazla İstek"
 error.429.message: "Çok Fazla İstek"

@@ -9,14 +9,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class VisitorFixtures
  *
- * VisitorFixtures loads sample visitor data into the database.
+ * VisitorFixtures loads sample visitor data into the database
  *
  * @package App\DataFixtures
  */
 class VisitorFixtures extends Fixture
 {
     /**
-     * User agents for different browsers.
+     * User agents for different browsers
      *
      * @var array<string>
      */
@@ -29,7 +29,7 @@ class VisitorFixtures extends Fixture
     ];
 
     /**
-     * Operating systems list.
+     * Operating systems list
      *
      * @var array<string>
      */
@@ -40,7 +40,7 @@ class VisitorFixtures extends Fixture
     ];
 
     /**
-     * Countries list.
+     * Countries list
      *
      * @var array<string>
      */
@@ -51,7 +51,7 @@ class VisitorFixtures extends Fixture
     ];
 
     /**
-     * Cities list.
+     * Cities list
      *
      * @var array<string>
      */
@@ -62,7 +62,7 @@ class VisitorFixtures extends Fixture
     ];
 
     /**
-     * Load visitor fixtures into the database.
+     * Load visitor fixtures into the database
      *
      * @param ObjectManager $manager
      *
@@ -70,7 +70,7 @@ class VisitorFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             // build new visitor entity
             $visitor = new Visitor();
 

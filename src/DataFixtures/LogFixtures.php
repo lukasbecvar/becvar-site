@@ -9,14 +9,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class LogFixtures
  *
- * LogFixtures loads sample log data into the database.
+ * LogFixtures loads sample log data into the database
  *
  * @package App\DataFixtures
  */
 class LogFixtures extends Fixture
 {
     /**
-     * Load log fixtures into the database.
+     * Load log fixtures into the database
      *
      * @param ObjectManager $manager
      *
@@ -25,15 +25,6 @@ class LogFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $logsData = [
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: HbfLDhh2c6qfOgg',
-                'time' => '29.03.2024 20:35:21',
-                'ip_address' => '35.237.4.214',
-                'browser' => 'Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)',
-                'status' => 'unreaded',
-                'visitor_id' => '48',
-            ],
             [
                 'name' => 'internal-error',
                 'value' => 'find error: An exception occurred in the driver: SQLSTATE[HY000] [2002] No such file or directory',
@@ -53,24 +44,6 @@ class LogFixtures extends Fixture
                 'visitor_id' => '82',
             ],
             [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: cDrkcZe61cg1xfi',
-                'time' => '01.04.2024 14:05:59',
-                'ip_address' => '35.227.62.178',
-                'browser' => 'Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)',
-                'status' => 'unreaded',
-                'visitor_id' => '11',
-            ],
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: 3WgdkFcLAhKDSf9',
-                'time' => '01.04.2024 15:33:11',
-                'ip_address' => '2a00:1028:838e:71a6:cbde:333b:9ae2:f1b',
-                'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-                'status' => 'unreaded',
-                'visitor_id' => '130',
-            ],
-            [
                 'name' => 'internal-error',
                 'value' => 'not found error, image: wd7icA2dTKTv9vp5SseaqBPf8kiszAdQ, not found in database',
                 'time' => '03.04.2024 11:47:19',
@@ -78,42 +51,6 @@ class LogFixtures extends Fixture
                 'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11.6; rv:92.0) Gecko/20100101 Firefox/92.0',
                 'status' => 'unreaded',
                 'visitor_id' => '193',
-            ],
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: Y6Ve3164NMwk0Ia',
-                'time' => '03.04.2024 13:33:18',
-                'ip_address' => '77.48.24.24',
-                'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                'status' => 'unreaded',
-                'visitor_id' => '194',
-            ],
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: qsX2jZBnhgKlzI7',
-                'time' => '03.04.2024 13:33:27',
-                'ip_address' => '77.48.24.24',
-                'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                'status' => 'unreaded',
-                'visitor_id' => '194',
-            ],
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: Y6Ve3164NMwk0Ia',
-                'time' => '03.04.2024 13:33:33',
-                'ip_address' => '77.48.24.24',
-                'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                'status' => 'unreaded',
-                'visitor_id' => '194',
-            ],
-            [
-                'name' => 'code-paste',
-                'value' => 'visitor viewed paste: qsX2jZBnhgKlzI7',
-                'time' => '03.04.2024 13:33:53',
-                'ip_address' => '77.48.24.24',
-                'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                'status' => 'unreaded',
-                'visitor_id' => '194',
             ],
             [
                 'name' => 'authenticator',

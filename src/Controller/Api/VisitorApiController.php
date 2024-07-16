@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class VisitorApiController
  *
- * This controller provides API functions for updating visitor status.
+ * This controller provides API functions for updating visitor status
  *
  * @package App\Controller\Api
  */
@@ -37,9 +37,9 @@ class VisitorApiController extends AbstractController
     }
 
     /**
-     * API endpoint for updating visitor status.
+     * API endpoint for updating visitor status
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(): Response
@@ -55,7 +55,7 @@ class VisitorApiController extends AbstractController
             return $this->json([
                 'status' => 'error',
                 'message' => 'error visitor not found'
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         // update visitor status
@@ -66,16 +66,19 @@ class VisitorApiController extends AbstractController
             // update visitor status
             return $this->json([
                 'status' => 'success'
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (\Exception $e) {
             // log error
-            $this->logManager->log('system-error', 'error to update visitor status: ' . $e->getMessage());
+            $this->logManager->log(
+                name: 'system-error',
+                value: 'error to update visitor status: ' . $e->getMessage()
+            );
 
             // return error
             return $this->json([
                 'status' => 'error',
                 'message' => 'error to update visitor status'
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

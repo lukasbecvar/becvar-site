@@ -13,9 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class RegisterController
  *
- * Register controller provides user register function.
+ * Register controller provides user register function
  * Note: This function is enabled only if users table is empty or for owner users
- * Note: Login uses its own authenticator, not Symfony auth.
+ * Note: Login uses its own authenticator (not Symfony auth)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -29,11 +29,11 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * Handles user registration.
+     * User registration handler
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/register', methods: ['GET', 'POST'], name: 'auth_register')]
     public function register(Request $request): Response
@@ -74,9 +74,9 @@ class RegisterController extends AbstractController
         }
 
         // render registration form view
-        return $this->render('admin/auth/register.html.twig', [
-            'error_msg' => $errorMsg,
-            'registration_form' => $form->createView()
+        return $this->render('admin/auth/register.twig', [
+            'errorMsg' => $errorMsg,
+            'registrationForm' => $form->createView()
         ]);
     }
 }

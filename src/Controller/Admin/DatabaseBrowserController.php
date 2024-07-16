@@ -13,8 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class DatabaseBrowserController
  *
- * Database browser controller provides a database tables browser/editor.
- * Database browser components: table list, table view, edit row, insert row, update projects list.
+ * Database browser controller provides a database tables browser/editor
+ * Database browser components: table list, table view, edit row, insert row, update projects list
  *
  * @package App\Controller\Admin
  */
@@ -35,18 +35,19 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Display the list of database tables.
+     * Display the list of database tables
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
     {
-        return $this->render('admin/database-browser.html.twig', [
+        // return database tables list
+        return $this->render('admin/database-browser.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // tables list data
             'tables' => $this->databaseManager->getTables()
@@ -54,11 +55,11 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Display the view of a specific database table.
+     * Display the view of a specific database table
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
@@ -68,35 +69,36 @@ class DatabaseBrowserController extends AbstractController
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
         // render table view
-        return $this->render('admin/database-browser.html.twig', [
+        return $this->render('admin/database-browser.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // disable not used components
             'tables' => null,
-            'editor_table' => null,
-            'new_row_table' => null,
+            'editorTable' => null,
+            'newRowTable' => null,
 
             // table browser data
-            'table_name' => $table,
-            'table_exist' => $this->databaseManager->isTableExist($table),
-            'table_data' => $this->databaseManager->getTableDataByPage($table, $page),
-            'table_data_count_all' => $this->databaseManager->countTableData($table),
-            'table_data_count' => $this->databaseManager->countTableDataByPage($table, $page),
-            'table_columns' => $this->databaseManager->getTableColumns($table),
-            'limit' => $_ENV['ITEMS_PER_PAGE'],
-            'page' => $page
+            'tableName' => $table,
+            'tableColumns' => $this->databaseManager->getTableColumns($table),
+            'tableDataCountAll' => $this->databaseManager->countTableData($table),
+            'tableData' => $this->databaseManager->getTableDataByPage($table, $page),
+            'tableDataCount' => $this->databaseManager->countTableDataByPage($table, $page),
+
+            // filter properties
+            'page' => $page,
+            'limit' => $_ENV['ITEMS_PER_PAGE']
         ]);
     }
 
     /**
-     * Edit a specific row in a database table.
+     * Edit a specific row in a database table
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
@@ -105,9 +107,9 @@ class DatabaseBrowserController extends AbstractController
         $errorMsg = null;
 
         // get query parameters
-        $page = intval($this->siteUtil->getQueryString('page', $request));
-        $id = intval($this->siteUtil->getQueryString('id', $request));
         $table = $this->siteUtil->getQueryString('table', $request);
+        $id = intval($this->siteUtil->getQueryString('id', $request));
+        $page = intval($this->siteUtil->getQueryString('page', $request));
 
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
@@ -150,34 +152,34 @@ class DatabaseBrowserController extends AbstractController
         }
 
         // render row editor view
-        return $this->render('admin/database-browser.html.twig', [
+        return $this->render('admin/database-browser.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // disable not used components
             'tables' => null,
-            'table_name' => null,
-            'new_row_table' => null,
+            'tableName' => null,
+            'newRowTable' => null,
 
             // row editor data
-            'editor_table' => $table,
-            'editor_id' => $id,
-            'editor_field' => $columns,
-            'editor_values' => $this->databaseManager->selectRowData($table, $id),
-            'editor_page' => $page,
-            'editor_referer' => $referer,
-            'error_msg' => $errorMsg
+            'editorId' => $id,
+            'editorPage' => $page,
+            'errorMsg' => $errorMsg,
+            'editorTable' => $table,
+            'editorField' => $columns,
+            'editorReferer' => $referer,
+            'editorValues' => $this->databaseManager->selectRowData($table, $id)
         ]);
     }
 
     /**
-     * Add a new row to a database table.
+     * Add a new row to a database table
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
@@ -232,39 +234,39 @@ class DatabaseBrowserController extends AbstractController
         }
 
         // render new row view
-        return $this->render('admin/database-browser.html.twig', [
+        return $this->render('admin/database-browser.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // disable not used components
             'tables' => null,
-            'table_name' => null,
-            'editor_table' => null,
+            'tableName' => null,
+            'editorTable' => null,
 
             // new row data
-            'new_row_table' => $table,
-            'new_row_page' => $page,
-            'new_row_columns' => $columns,
-            'error_msg' => $errorMsg
+            'newRowPage' => $page,
+            'errorMsg' => $errorMsg,
+            'newRowTable' => $table,
+            'newRowColumns' => $columns
         ]);
     }
 
     /**
-     * Delete a row from a database table.
+     * Delete a row from a database table
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
     {
         // get query parameters
-        $page = intval($this->siteUtil->getQueryString('page', $request));
         $id = $this->siteUtil->getQueryString('id', $request);
         $table = $this->siteUtil->getQueryString('table', $request);
+        $page = intval($this->siteUtil->getQueryString('page', $request));
 
         // delete row
         $this->databaseManager->deleteRowFromTable($table, $id);

@@ -12,8 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class ProjectsController
  *
- * Projects controller provides a public list of projects.
- * The project page displays projects from the database that are downloaded from the GitHub API.
+ * Projects controller provides a public list of projects
+ * The project page displays projects from the database that are downloaded from the GitHub API
  *
  * @package App\Controller\Public
  */
@@ -34,37 +34,42 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Displays the public projects page.
+     * Displays the public projects page
      *
-     * @return Response The response containing the rendered projects page.
+     * @return Response The response containing the rendered projects page
      */
     #[Route('/projects', methods: ['GET'], name: 'public_projects')]
     public function projectsList(): Response
     {
         // render projects page
-        return $this->render('public/projects.html.twig', [
-            'instagram_link' => $_ENV['INSTAGRAM_LINK'],
-            'telegram_link' => $_ENV['TELEGRAM_LINK'],
-            'contact_email' => $_ENV['CONTACT_EMAIL'],
-            'twitter_link' => $_ENV['TWITTER_LINK'],
-            'github_link' => $_ENV['GITHUB_LINK'],
-            'projects_count' => $this->projectsManager->getProjectsCount(),
-            'open_projects' => $this->projectsManager->getProjectsList('open'),
-            'closed_projects' => $this->projectsManager->getProjectsList('closed'),
+        return $this->render('public/projects.twig', [
+            'githubLink' => $_ENV['GITHUB_LINK'],
+            'twitterLink' => $_ENV['TWITTER_LINK'],
+            'contactEmail' => $_ENV['CONTACT_EMAIL'],
+            'telegramLink' => $_ENV['TELEGRAM_LINK'],
+            'instagramLink' => $_ENV['INSTAGRAM_LINK'],
+            'projectsCount' => $this->projectsManager->getProjectsCount(),
+            'openProjects' => $this->projectsManager->getProjectsList('open'),
+            'closedProjects' => $this->projectsManager->getProjectsList('closed'),
         ]);
     }
 
     /**
-     * Updates the projects list.
+     * Updates the projects list
+     * 
+     * @throws \App\Exception\AppErrorException Error the user is not logged in
      *
-     * @return Response The response for updating projects, redirects to the admin database browser.
+     * @return Response The response for updating projects, redirects to the admin database browser
      */
     #[Route('/projects/update', methods: ['GET'], name: 'public_projects_update')]
     public function projectsUpdate(): Response
     {
         // check if user authorized
         if (!$this->authManager->isUserLogedin()) {
-            return $this->errorManager->handleError('error to update project list: please login first', 401);
+            return $this->errorManager->handleError(
+                'error to update project list: please login first', 
+                Response::HTTP_UNAUTHORIZED
+            );
         }
 
         // update projects list
@@ -72,8 +77,8 @@ class ProjectsController extends AbstractController
 
         // redirect to the admin database browser
         return $this->redirectToRoute('admin_database_browser', [
-            'table' => 'projects',
-            'page' => 1
+            'page' => 1,
+            'table' => 'projects'
         ]);
     }
 }

@@ -1,0 +1,59 @@
+<div class="sidebar">
+    <div class="profile">
+		<img src="data:image/jpeg;base64,{{ userPic|e }}" alt="profile_picture">
+        <h3>{{ userName|e }}</h3>
+        <span class="role-line">
+			{% if userRole == 'Owner' or userRole == 'Admin' %}
+				<span class="text-red">{{ userRole|e }}</span>
+			{% elseif userRole == 'User' %}
+				<span class="green-text">{{ userRole|e }}</span>
+			{% else %}
+				{{ userRole|e }}
+			{% endif %}
+		</span>
+    </div>
+    <ul>
+        <li>
+            <a class="s-menu-button" target="_blank" href="/">
+                <span class="icon"><i class="fas fa-globe"></i></span>
+                <span class="item">Main site</span>
+            </a>
+        </li>
+        <li>
+            <a class="s-menu-button" href={{ path('admin_dashboard') }}>
+				<span class="icon"><i class="fas fa-desktop"></i></span>
+				<span class="item">Dashboard</span>
+			</a>
+		</li>
+        <li>
+		    <a class="s-menu-button" href={{ path('admin_database_list') }}>
+				<span class="icon"><i class="fas fa-database"></i></span>
+				<span class="item">Database</span>
+			</a>
+		</li>
+        <li>
+			<a class="s-menu-button" href={{ path('admin_log_list', {'page': 1}) }}>
+			    <span class="icon"><i class="fas fa-file"></i></span>
+			    <span class="item">Logs</span>
+	    	</a>
+		</li>
+		<li>
+			<a class="s-menu-button" href={{ path('admin_visitor_manager', {'page': 1}) }}>
+			    <span class="icon"><i class="fas fa-user"></i></span>
+			    <span class="item">Visitors manager</span>
+	    	</a>
+		</li>
+        <li>
+			<a class="s-menu-button" href={{ path('admin_inbox', {'page': 1}) }}>
+				<span class="icon"><i class="fas fa-envelope"></i></span>
+				<span class="item">Inbox</span>
+			</a>
+		</li>		
+		<li>
+			<a class="s-menu-button" href={{ path('admin_account_settings_table') }}>
+	    		<span class="icon"><i class="fas fa-user-cog"></i></span>
+				<span class="item">Account settings</span>
+			</a>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,48 @@
+{% extends 'common/bases/admin-base.twig' %}
+
+{% block title %}
+    inbox
+{% endblock %}
+
+{# CONTACT MESSAGES INBOX PAGE COMPONENT #}
+{% block component %}
+<div class="admin-panel">
+    {% if userRole != 'Owner' and userRole != 'Admin' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+        {% if inboxData != null %}
+            <center>
+                {% for message in inboxData %}
+                    <div class='card text-white mb-3 msg-box'>
+                        <div class="card-body">
+                            <a class='delete-link' href={{ path('admin_inbox_close', {'page': page, 'id':  message.id|e}) }}>X</a>
+                            <a class='delete-link text-warning' href={{ path('admin_visitor_ban', {'page': page, 'id':  message.visitor_id|e, 'referer': 'inbox'}) }}>
+                                BAN
+                            </a>
+                            <h5 class="left-center card-title">{{ message.name|e }}
+                                <span class='text-success phone-none'>[{{ message.time|e }}]</span><span class="phone-none">, </span>
+                                <span class='text-warning phone-none'>[{{ message.ip_address|e }}]</span>
+                                <p class="left-centers email-line text-warning">
+                                    <span class="text-white">Email: </span>{{ message.email|e }}
+                                </p>
+                            </h5>
+                            <p class="left-center card-text">{{message.message|linkify|raw}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </center>
+            <div class="page-button-box">
+                {% if page != 1 %}
+                    <a class="back-page-button" href={{ path('admin_inbox', {'page': page - 1}) }}>Back</a>
+                {% endif %}
+                {% if messageLimit == messageCount %}
+                    <a class="back-page-button" href={{ path('admin_inbox', {'page': page + 1}) }}>Next</a>
+                {% endif %}
+            </div>
+            <br>
+        {% else %}
+            <h2 class="page-title">no messages found</h2>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -18,8 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AccountSettingsController
  *
- * Account settings controller provides user account changes.
- * Configurable values: username, password, profile-pic
+ * Account settings controller provides user account changes
+ * Configurable properties: username, password, profile picture
  *
  * @package App\Controller\Admin
  */
@@ -43,35 +43,35 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Display account settings table.
+     * Display account settings table
      *
-     * @return Response Returns a Response object representing the HTTP response.
+     * @return Response Returns a Response object representing the HTTP response
      */
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
-        return $this->render('admin/account-settings.html.twig', [
+        return $this->render('admin/account-settings.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // account settings froms data
-            'profile_pic_change_form' => null,
-            'username_change_form' => null,
-            'password_change_form' => null,
-            'error_msg' => null
+            'profilePicChangeForm' => null,
+            'usernameChangeForm' => null,
+            'passwordChangeForm' => null,
+            'errorMsg' => null
         ]);
     }
 
     /**
-     * Change of profile picture in the admin account settings.
+     * Change of profile picture in the admin account settings
      *
-     * @param Request $request The request object.
+     * @param Request $request The request object
      *
-     * @throws \Exception Throws an exception if there is an error during the profile picture upload.
+     * @throws \App\Exception\AppErrorException Error the profile picture upload
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
@@ -93,7 +93,9 @@ class AccountSettingsController extends AbstractController
             // check if file is image
             if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
                 // get user repository
-                $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+                $userRepo = $this->authManager->getUserRepository(
+                    ['username' => $this->authManager->getUsername()]
+                );
 
                 // get image content
                 $fileContents = file_get_contents($image);
@@ -109,7 +111,10 @@ class AccountSettingsController extends AbstractController
                     // redirect back to values table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+                    return $this->errorManager->handleError(
+                        'error to upload profile pic: ' . $e->getMessage(), 
+                        Response::HTTP_INTERNAL_SERVER_ERROR
+                    );
                 }
             } else {
                 $errorMsg = 'please select image file';
@@ -117,28 +122,28 @@ class AccountSettingsController extends AbstractController
         }
 
         // render profile pic change form view
-        return $this->render('admin/account-settings.html.twig', [
+        return $this->render('admin/account-settings.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // account settings froms data
-            'profile_pic_change_form' => $form->createView(),
-            'username_change_form' => null,
-            'password_change_form' => null,
-            'error_msg' => $errorMsg
+            'profilePicChangeForm' => $form->createView(),
+            'usernameChangeForm' => null,
+            'passwordChangeForm' => null,
+            'errorMsg' => $errorMsg
         ]);
     }
 
     /**
-     * Change of username in the admin account settings.
+     * Change of username in the admin account settings
      *
-     * @param Request $request The request object.
+     * @param Request $request The request object
      *
-     * @throws \Exception Throws an exception if there is an error during the username update.
+     * @throws \App\Exception\AppErrorException Error the username update
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
@@ -157,7 +162,9 @@ class AccountSettingsController extends AbstractController
             $username = $form->get('username')->getData();
 
             // get user repository
-            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+            $userRepo = $this->authManager->getUserRepository(
+                ['username' => $this->authManager->getUsername()]
+            );
 
             try { // update username
                 $userRepo->setUsername($username);
@@ -166,33 +173,36 @@ class AccountSettingsController extends AbstractController
                 // redirect back to values table
                 return $this->redirectToRoute('admin_account_settings_table');
             } catch (\Exception $e) {
-                return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+                return $this->errorManager->handleError(
+                    'error to upload profile pic: ' . $e->getMessage(), 
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
 
         // render username change form
-        return $this->render('admin/account-settings.html.twig', [
+        return $this->render('admin/account-settings.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // account settings froms data
-            'profile_pic_change_form' => null,
-            'password_change_form' => null,
-            'username_change_form' => $form,
-            'error_msg' => $errorMsg
+            'profilePicChangeForm' => null,
+            'passwordChangeForm' => null,
+            'usernameChangeForm' => $form,
+            'errorMsg' => $errorMsg
         ]);
     }
 
     /**
-     * Change of password in the admin account settings.
+     * Change of password in the admin account settings
      *
-     * @param Request $request The request object.
+     * @param Request $request The request object
      *
-     * @throws \Exception Throws an exception if there is an error during the password update.
+     * @throws \App\Exception\AppErrorException Error the password update
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
@@ -212,7 +222,9 @@ class AccountSettingsController extends AbstractController
             $rePassword = $form->get('repassword')->getData();
 
             // get user repository
-            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
+            $userRepo = $this->authManager->getUserRepository(
+                ['username' => $this->authManager->getUsername()]
+            );
 
             // check if passwords match
             if ($password != $rePassword) {
@@ -230,23 +242,26 @@ class AccountSettingsController extends AbstractController
 
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError('error to upload profile pic: ' . $e->getMessage(), 500);
+                    return $this->errorManager->handleError(
+                        'error to upload profile pic: ' . $e->getMessage(),
+                        Response::HTTP_INTERNAL_SERVER_ERROR
+                    );
                 }
             }
         }
 
         // render password change form
-        return $this->render('admin/account-settings.html.twig', [
+        return $this->render('admin/account-settings.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // account settings froms data
-            'profile_pic_change_form' => null,
-            'username_change_form' => null,
-            'password_change_form' => $form,
-            'error_msg' => $errorMsg
+            'profilePicChangeForm' => null,
+            'usernameChangeForm' => null,
+            'passwordChangeForm' => $form,
+            'errorMsg' => $errorMsg
         ]);
     }
 }

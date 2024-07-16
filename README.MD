@@ -39,7 +39,7 @@ Deployment of the new version is ensured by a deploy GitHub Action when a new re
 - [X] Remove server admin functions
 - [X] Visitor manager online filter
 - [X] Ip info redesign
-- [ ] Complete refactor 
+- [X] Complete refactor 
 - [ ] New tests
 
 ## Dependencies

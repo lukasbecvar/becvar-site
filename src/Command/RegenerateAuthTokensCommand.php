@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class RegenerateAuthTokensCommand
  *
- * Command to regenerate all users' authentication tokens in the database.
+ * Command to regenerate all users' authentication tokens in the database
  *
  * @package App\Command
  */
@@ -28,12 +28,12 @@ class RegenerateAuthTokensCommand extends Command
     }
 
     /**
-     * Executes the command to regenerate all users' authentication tokens.
+     * Executes the command to regenerate all users' authentication tokens
      *
-     * @param InputInterface $input The input interface.
-     * @param OutputInterface $output The output interface.
+     * @param InputInterface $input The input interface
+     * @param OutputInterface $output The output interface
      *
-     * @return int The exit code of the command.
+     * @return int The exit code of the command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -44,10 +44,10 @@ class RegenerateAuthTokensCommand extends Command
 
         // check if regeneration is success
         if ($regenerateState['status']) {
-            $io->success('All tokens is regenerated');
+            $io->success('All tokens is regenerated!');
             return Command::SUCCESS;
         } else {
-            $io->error('Token regeneration error: ' . $regenerateState['message']);
+            $io->error('Process error: ' . $regenerateState['message']);
             return Command::FAILURE;
         }
     }

@@ -6,12 +6,13 @@ use Twig\Environment;
 use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
-use App\Manager\CacheManager;
 use App\Manager\LogManager;
+use App\Manager\CacheManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class VisitorSystemMiddleware
@@ -89,12 +90,15 @@ class VisitorSystemMiddleware
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ipAddress)) {
                 $reason = $this->banManager->getBanReason($ipAddress);
-                $this->logManager->log('ban-system', 'visitor with ip: ' . $ipAddress . ' trying to access page, but visitor banned for: ' . $reason);
+                $this->logManager->log(
+                    name: 'ban-system',
+                    value: 'visitor with ip: ' . $ipAddress . ' trying to access page, but visitor banned for: ' . $reason
+                );
 
                 // render banned page
-                die($this->twig->render('errors/error-banned.html.twig', [
+                die($this->twig->render('errors/error-banned.twig', [
                     'message' => $reason,
-                    'contact_email' => $_ENV['CONTACT_EMAIL']
+                    'contactEmail' => $_ENV['CONTACT_EMAIL']
                 ]));
             } else {
                 // update exist visitor
@@ -111,7 +115,7 @@ class VisitorSystemMiddleware
      * @param string $browser The browser used by the visitor.
      * @param string $os The operating system of the visitor.
      *
-     * @throws \Exception If an error occurs during the database flush.
+     * @throws \App\Exception\AppErrorException If an error occurs during the database flush.
      *
      * @return void
      */
@@ -151,7 +155,10 @@ class VisitorSystemMiddleware
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'flush error: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -163,7 +170,7 @@ class VisitorSystemMiddleware
      * @param string $browser The updated browser used by the visitor.
      * @param string $os The updated operating system of the visitor.
      *
-     * @throws \Exception If an error occurs during the database flush.
+     * @throws \App\Exception\AppErrorException If an error occurs during the database flush.
      *
      * @return void
      */
@@ -179,7 +186,10 @@ class VisitorSystemMiddleware
 
         // check if visitor data found
         if (!$visitor != null) {
-            $this->errorManager->handleError('unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure', 500);
+            $this->errorManager->handleError(
+                'unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         } else {
             // update values
             $visitor->setLastVisit($date);
@@ -190,7 +200,10 @@ class VisitorSystemMiddleware
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError(
+                    'flush error: ' . $e->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }

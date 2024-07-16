@@ -5,6 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProjectRepository;
 
+/**
+ * Class Project
+ *
+ * The Project entity represents a project table in the database
+ *
+ * @package App\Entity
+ */
 #[ORM\Table(name: 'projects')]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project

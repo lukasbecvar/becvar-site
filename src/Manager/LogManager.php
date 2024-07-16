@@ -3,22 +3,21 @@
 namespace App\Manager;
 
 use App\Entity\Log;
-use App\Util\SiteUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
  *
- * LogManager provides log functions for saving events to a database table.
+ * LogManager provides log functions for saving events to a database table
  *
  * @package App\Manager
  */
 class LogManager
 {
-    private SiteUtil $siteUtil;
     private CookieUtil $cookieUtil;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
@@ -27,7 +26,6 @@ class LogManager
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
@@ -35,7 +33,6 @@ class LogManager
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
-        $this->siteUtil = $siteUtil;
         $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -45,11 +42,13 @@ class LogManager
     }
 
     /**
-     * Logs an event.
+     * Logs an event
      *
-     * @param string $name The name of the log.
-     * @param string $value The value of the log.
-     * @param bool $bypassAntilog Bypass the anti-log cookie.
+     * @param string $name The name of the log
+     * @param string $value The value of the log
+     * @param bool $bypassAntilog Bypass the anti-log cookie
+     * 
+     * @throws \App\Exception\AppErrorException Error to log message
      *
      * @return void
      */
@@ -57,11 +56,7 @@ class LogManager
     {
         // check if log can be saved
         if (str_contains($value, 'Connection refused')) {
-            if ($this->siteUtil->isDevMode()) {
-                die('Database error: ' . $value);
-            } else {
-                die('Internal server error');
-            }
+            return;
         }
 
         // check if logs enabled in config
@@ -79,8 +74,8 @@ class LogManager
                 return;
             }
 
-            // disable paste, image-uploader log for level 1
-            if (($name == 'todo-manager' || $name == 'code-paste' || $name == 'image-uploader' || $name == 'message-sender') && $level < 2) {
+            // disable message-sender log for level 1
+            if ($name == 'message-sender' && $level < 2) {
                 return;
             }
 
@@ -119,19 +114,24 @@ class LogManager
                 $this->entityManager->persist($LogEntity);
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('log-error: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError(
+                    'log-error: ' . $e->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }
 
     /**
-     * Retrieves logs based on IP address.
+     * Get logs based on IP address
      *
-     * @param string $ipAddress The IP address of the user.
-     * @param string $username The username of the user.
-     * @param int $page The page number.
+     * @param string $ipAddress The IP address of the user
+     * @param string $username The username of the user
+     * @param int $page The page number
+     * 
+     * @throws \App\Exception\AppErrorException Error to get logs
      *
-     * @return Log[]|null $logs The logs based on IP address.
+     * @return Log[]|null $logs The logs based on IP address
      */
     public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
     {
@@ -152,7 +152,10 @@ class LogManager
 
             $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get logs: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             $logs = [];
         }
 
@@ -169,13 +172,15 @@ class LogManager
     }
 
     /**
-     * Retrieves logs based on status, paginated.
+     * Get logs based on status, paginated
      *
-     * @param string $status The status of the logs.
-     * @param string $username The username of the user.
-     * @param int $page The page number.
+     * @param string $status The status of the logs
+     * @param string $username The username of the user
+     * @param int $page The page number
+     * 
+     * @throws \App\Exception\AppErrorException Error to get logs
      *
-     * @return Log[]|null $logs The logs based on status, paginated.
+     * @return Log[]|null $logs The logs based on status, paginated
      */
     public function getLogs(string $status, $username, int $page): ?array
     {
@@ -196,7 +201,10 @@ class LogManager
 
             $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get logs: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             $logs = [];
         }
 
@@ -213,11 +221,13 @@ class LogManager
     }
 
     /**
-     * Retrieves the count of logs based on status.
+     * Get the count of logs based on status
      *
      * @param string $status
      *
-     * @return int|null $count The count of logs based on status.
+     * @throws \App\Exception\AppErrorException Error to get logs count
+     * 
+     * @return int|null $count The count of logs based on status
      */
     public function getLogsCount(string $status): ?int
     {
@@ -226,15 +236,20 @@ class LogManager
         try {
             return $repo->count(['status' => $status]);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get logs: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Retrieves the count of login logs.
+     * Get the count of login logs
+     * 
+     * @throws \App\Exception\AppErrorException Error to get login logs count
      *
-     * @return int|null $count The count of login logs.
+     * @return int|null $count The count of login logs
      */
     public function getLoginLogsCount(): ?int
     {
@@ -243,13 +258,18 @@ class LogManager
         try {
             return $repo->count(['name' => 'authenticator']);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get logs: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get logs: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Sets the status of all logs to 'readed'.
+     * Sets the status of all logs to 'readed'
+     * 
+     * @throws \App\Exception\AppErrorException Error to set logs status
      *
      * @return void
      */
@@ -260,14 +280,17 @@ class LogManager
         try {
             $this->entityManager->createQuery($dql)->execute();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to set readed logs: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to set readed logs: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Checks if logs are enabled.
+     * Checks if logs are enabled
      *
-     * @return bool $enabled True if logs are enabled, false otherwise.
+     * @return bool $enabled True if logs are enabled, false otherwise
      */
     public function isLogsEnabled(): bool
     {
@@ -280,9 +303,9 @@ class LogManager
     }
 
     /**
-     * Checks if the anti-log cookie is enabled.
+     * Checks if the anti-log cookie is enabled
      *
-     * @return bool $enabled True if the anti-log cookie is enabled, false otherwise.
+     * @return bool $enabled True if the anti-log cookie is enabled, false otherwise
      */
     public function isEnabledAntiLog(): bool
     {
@@ -303,17 +326,20 @@ class LogManager
     }
 
     /**
-     * Sets the anti-log cookie.
+     * Sets the anti-log cookie
      *
      * @return void
      */
     public function setAntiLogCookie(): void
     {
-        $this->cookieUtil->set('anti-log-cookie', $_ENV['ANTI_LOG_COOKIE'], time() + (60 * 60 * 24 * 7 * 365));
+        $this->cookieUtil->set(
+            name: 'anti-log-cookie',
+            value: $_ENV['ANTI_LOG_COOKIE'], 
+            expiration: time() + (60 * 60 * 24 * 7 * 365));
     }
 
     /**
-     * Unsets the anti-log cookie.
+     * Unsets the anti-log cookie
      *
      * @return void
      */
@@ -323,9 +349,9 @@ class LogManager
     }
 
     /**
-     * Retrieves the log level from the environment configuration.
+     * Retrieves the log level from the environment configuration
      *
-     * @return int $level The log level from the environment configuration.
+     * @return int $level The log level from the environment configuration
      */
     public function getLogLevel(): int
     {

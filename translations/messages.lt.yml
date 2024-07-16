@@ -17,6 +17,10 @@ error.403.message: "Neturite teisės prieiti prie šios puslapio"
 # error 404
 error.404.title: "Klaida: Puslapis nerastas"
 error.404.message: "Klaida, šis puslapis nerastas"
+# error 426
+error.426.title: "Klaida: Atnaujinimo protokolas"
+error.426.message: "Jūsų naršyklė nepalaiko HTTPS protokolo"
+error.426.submessage: "Prašome bandyti naudoti HTTPS protokolą prisijungti prie šios puslapio"
 # error 429
 error.429.title: "Klaida: Per daug užklausų"
 error.429.message: "Per daug užklausų"

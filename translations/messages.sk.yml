@@ -17,6 +17,10 @@ error.403.message: "Nemáte oprávnenie na prístup k tejto stránke"
 # error 404
 error.404.title: "Chyba: Stránka sa nenašla"
 error.404.message: "Chyba, táto stránka sa nenašla"
+# error 426
+error.426.title: "Chyba: Upgrade protokol"
+error.426.message: "Váš prehliadač nepodporuje protokol HTTPS"
+error.426.submessage: "Skúste použiť protokol HTTPS na prístup k tejto stránke"
 # error 429
 error.429.title: "Chyba: Príliš veľa požiadaviek"
 error.429.message: "Príliš veľa požiadaviek"

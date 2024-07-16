@@ -1,0 +1,24 @@
+{% extends 'common/bases/auth-base.twig' %}
+
+{# ADMIN USER REGISTER PAGE COMPONENT #}
+{% block component %}
+<main class="register-page color-white">
+    {# ERROR MSG BOX #}
+    {% if errorMsg != null %}
+        {% include "common/alerts/error-alert.twig" %}
+    {% endif %}
+
+    {# REGISTER FORM #}
+    <div class="form-pos-y form">
+        <h2 class="form-title">Register admin account</h2>
+        
+        {{ form_start(registrationForm) }}
+
+            {{ form_widget(registrationForm) }}
+            <div class="right-position mr-1">
+                <button type="submit" class="input-button">Register</button>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</main>
+{% endblock %}

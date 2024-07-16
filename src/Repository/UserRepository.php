@@ -22,15 +22,10 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieves a list of all users along with their associated visitor IDs.
+     * Retrieves a list of all users along with their associated visitor IDs
      *
-     * This method constructs a query to select usernames, roles, and visitor IDs from the entity represented by this repository.
-     * It then executes the query and returns an array containing associative arrays for each user,
-     * with keys 'username', 'role', and 'visitor_id' representing the respective user details.
      *
-     * @return array<array<string>> An array containing details of all users along with their associated visitor IDs.
-     *               Each element of the array is an associative array with keys 'username', 'role', and 'visitor_id',
-     *               representing the username, role, and associated visitor ID respectively.
+     * @return array<array<string>> User list with associated visitor IDs
      */
     public function getAllUsersWithVisitorId(): array
     {

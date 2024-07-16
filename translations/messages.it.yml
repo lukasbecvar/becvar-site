@@ -17,6 +17,10 @@ error.403.message: "Non hai il permesso di accedere a questa pagina"
 # error 404
 error.404.title: "Errore: Pagina non trovata"
 error.404.message: "Errore, questa pagina non è stata trovata"
+# error 426
+error.426.title: "Errore: Protocollo di aggiornamento"
+error.426.message: "Il tuo browser non supporta il protocollo HTTPS"
+error.426.submessage: "Si prega di provare ad utilizzare il protocollo HTTPS per accedere a questa pagina"
 # error 429
 error.429.title: "Errore: Troppe richieste"
 error.429.message: "Troppe richieste"

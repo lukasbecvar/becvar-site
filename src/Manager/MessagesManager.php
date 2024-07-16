@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Message;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
@@ -33,15 +34,17 @@ class MessagesManager
     }
 
     /**
-     * Saves a new message to the database.
+     * Saves a new message to the database
      *
-     * @param string $name
-     * @param string $email
-     * @param string $messageInput
-     * @param string $ipAddress
-     * @param string $visitorId
+     * @param string $name The name of the sender
+     * @param string $email The email address of the sender
+     * @param string $messageInput The message input
+     * @param string $ipAddress The IP address of the sender
+     * @param string $visitorId The ID of the visitor associated with the sender
+     * 
+     * @throws \App\Exception\AppErrorException Error to save message
      *
-     * @return bool True if the message is saved successfully, false otherwise.
+     * @return bool True if the message is saved successfully, false otherwise
      */
     public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, string $visitorId): bool
     {
@@ -71,17 +74,23 @@ class MessagesManager
             $this->entityManager->flush();
 
             return true;
-        } catch (\Exception) {
+        } catch (\Exception $e) {
+            $this->errorManager->handleError(
+                'error to save message: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return false;
         }
     }
 
     /**
-     * Gets the count of open messages from a specific IP address.
+     * Gets the count of open messages from a specific IP address
      *
-     * @param string $ipAddress
+     * @param string $ipAddress The IP address of the user
+     * 
+     * @throws \App\Exception\AppErrorException Error to get messages count
      *
-     * @return int The count of open messages from the IP address.
+     * @return int The count of open messages from the IP address
      */
     public function getMessageCountByIpAddress(string $ipAddress): int
     {
@@ -98,18 +107,23 @@ class MessagesManager
         try {
             return $query->getSingleScalarResult();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get messages count: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get messages count: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return 0;
         }
     }
 
     /**
-     * Gets messages based on status and pagination.
+     * Gets messages based on status and pagination
      *
-     * @param string $status The status of the messages.
-     * @param int $page The page number.
+     * @param string $status The status of the messages
+     * @param int $page The page number
+     * 
+     * @throws \App\Exception\AppErrorException Error to get messages
      *
-     * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs.
+     * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs
      */
     public function getMessages(string $status, int $page): ?array
     {
@@ -130,7 +144,10 @@ class MessagesManager
 
                 // check if message data is decrypted
                 if ($messageDecrypted == null) {
-                    $this->errorManager->handleError('Error to decrypt aes message data', 500);
+                    $this->errorManager->handleError(
+                        'Error to decrypt aes message data',
+                        Response::HTTP_INTERNAL_SERVER_ERROR
+                    );
                 }
 
                 // build message content
@@ -151,15 +168,20 @@ class MessagesManager
 
             return $messages;
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get messages: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get messages: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Closes a message by updating its status to 'closed'.
+     * Closes a message by updating its status to 'closed'
      *
-     * @param int $id The ID of the message to close.
+     * @param int $id The ID of the message to close
+     * 
+     * @throws \App\Exception\AppErrorException Error to close message
      *
      * @return void
      */
@@ -174,7 +196,10 @@ class MessagesManager
                 $message->setStatus('closed');
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('error to close message: ' . $id . ', ' . $e->getMessage(), 500);
+                $this->errorManager->handleError(
+                    'error to close message: ' . $id . ', ' . $e->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }

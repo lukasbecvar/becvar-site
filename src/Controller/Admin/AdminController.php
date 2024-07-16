@@ -9,21 +9,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AdminController
  *
- * Admin controller provides initialization of the admin site.
- * Controller redirects users to the login or dashboard component.
+ * Admin controller provides initialization of the admin site
+ * Controller redirects loggedin users to dashboard page
  *
  * @package App\Controller\Admin
  */
 class AdminController extends AbstractController
 {
     /**
-     * Initialize the admin site.
+     * Initialize the admin site
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin', methods: ['GET'], name: 'admin_init')]
     public function admin(): Response
     {
+        // rediret to dashboard page
         return $this->redirectToRoute('admin_dashboard');
     }
 }

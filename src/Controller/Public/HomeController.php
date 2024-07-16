@@ -16,19 +16,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * Renders the public home page.
+     * Renders the public home page
      *
-     * @return Response The response containing the rendered home page.
+     * @return Response The response containing the rendered home page
      */
     #[Route(['/', '/home'], methods: ['GET'], name: 'public_home')]
     public function homePage(): Response
     {
-        return $this->render('public/home.html.twig', [
-            'instagram_link' => $_ENV['INSTAGRAM_LINK'],
-            'telegram_link' => $_ENV['TELEGRAM_LINK'],
-            'contact_email' => $_ENV['CONTACT_EMAIL'],
-            'twitter_link' => $_ENV['TWITTER_LINK'],
-            'github_link' => $_ENV['GITHUB_LINK']
+        return $this->render('public/home.twig', [
+            'githubLink' => $_ENV['GITHUB_LINK'],
+            'twitterLink' => $_ENV['TWITTER_LINK'],
+            'telegramLink' => $_ENV['TELEGRAM_LINK'],
+            'contactEmail' => $_ENV['CONTACT_EMAIL'],
+            'instagramLink' => $_ENV['INSTAGRAM_LINK']
         ]);
     }
 }

@@ -41,11 +41,11 @@ class ContactController extends AbstractController
     }
 
     /**
-     * Renders the public contact page.
+     * Renders the public contact page
      *
-     * @param Request $request The HTTP request.
+     * @param Request $request The HTTP request
      *
-     * @return Response The response containing the rendered contact page.
+     * @return Response The response containing the rendered contact page
      */
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response
@@ -104,14 +104,20 @@ class ContactController extends AbstractController
             // check if honeypot is empty
             } elseif (isset($honeypot)) {
                 $errorMsg = 'contact.error.blocked.message';
-                $this->logManager->log('message-sender', 'message by: ' . $email . ', has been blocked: honeypot used');
+                $this->logManager->log(
+                    name: 'message-sender',
+                    value: 'message by: ' . $email . ', has been blocked: honeypot used'
+                ); 
             } else {
                 // get others data
                 $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
 
                 // check if user have unclosed messages
                 if ($this->messagesManager->getMessageCountByIpAddress($ipAddress) >= 5) {
-                    $this->logManager->log('message-sender', 'visitor: ' . $visitorId . ' trying send new message but he has open messages');
+                    $this->logManager->log(
+                        name: 'message-sender', 
+                        value: 'visitor: ' . $visitorId . ' trying send new message but he has open messages'
+                    );
 
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
@@ -130,15 +136,18 @@ class ContactController extends AbstractController
         }
 
         // render contact page
-        return $this->render('public/contact.html.twig', [
-            'instagram_link' => $_ENV['INSTAGRAM_LINK'],
-            'telegram_link' => $_ENV['TELEGRAM_LINK'],
-            'contact_email' => $_ENV['CONTACT_EMAIL'],
-            'twitter_link' => $_ENV['TWITTER_LINK'],
-            'github_link' => $_ENV['GITHUB_LINK'],
-            'contact_form' => $form->createView(),
-            'success_msg' => $successMsg,
-            'error_msg' => $errorMsg
+        return $this->render('public/contact.twig', [
+            // contact form data
+            'errorMsg' => $errorMsg,
+            'successMsg' => $successMsg,
+            'contactForm' => $form->createView(),
+
+            // contact data
+            'githubLink' => $_ENV['GITHUB_LINK'],
+            'twitterLink' => $_ENV['TWITTER_LINK'],
+            'contactEmail' => $_ENV['CONTACT_EMAIL'],
+            'telegramLink' => $_ENV['TELEGRAM_LINK'],
+            'instagramLink' => $_ENV['INSTAGRAM_LINK'],
         ]);
     }
 }

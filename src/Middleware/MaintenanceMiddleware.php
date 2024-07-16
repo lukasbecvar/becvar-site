@@ -8,7 +8,7 @@ use App\Manager\ErrorManager;
 /**
  * Class MaintenanceMiddleware
  *
- * This middleware is used to check if the application is in maintenance mode.
+ * This middleware is used to check if the application is in maintenance mode
  *
  * @package App\Middleware
  */
@@ -24,7 +24,7 @@ class MaintenanceMiddleware
     }
 
     /**
-     * Check if the application is in maintenance mode.
+     * Check if the application is in maintenance mode
      *
      * @return void
      */

@@ -17,6 +17,10 @@ error.403.message: "您没有权限访问此页面"
 # error 404
 error.404.title: "错误：页面未找到"
 error.404.message: "错误，找不到此页面"
+# error 426
+error.426.title: "错误：升级协议"
+error.426.message: "您的浏览器不支持 https 协议"
+error.426.submessage: "请尝试使用 https 协议访问此页面"
 # error 429
 error.429.title: "错误：请求过多"
 error.429.message: "请求过多"

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class SiteUtil
  *
- * SiteUtil provides basic site-related methods.
+ * SiteUtil provides basic site-related methods
  *
  * @package App\Util
  */
@@ -21,9 +21,9 @@ class SiteUtil
     }
 
     /**
-     * Get the HTTP host.
+     * Get the HTTP host
      *
-     * @return string|null The HTTP host.
+     * @return string|null The HTTP host
      */
     public function getHttpHost(): ?string
     {
@@ -31,9 +31,9 @@ class SiteUtil
     }
 
     /**
-     * Check if the application is running on localhost.
+     * Check if the application is running on localhost
      *
-     * @return bool Whether the application is running on localhost.
+     * @return bool Whether the application is running on localhost
      */
     public function isRunningLocalhost(): bool
     {
@@ -64,9 +64,9 @@ class SiteUtil
     }
 
     /**
-     * Check if the connection is secure (SSL).
+     * Check if the connection is secure (SSL)
      *
-     * @return bool Whether the connection is secure.
+     * @return bool Whether the connection is secure
      */
     public function isSsl(): bool
     {
@@ -75,9 +75,9 @@ class SiteUtil
     }
 
     /**
-     * Check if the application is in maintenance mode.
+     * Check if the application is in maintenance mode
      *
-     * @return bool Whether the application is in maintenance mode.
+     * @return bool Whether the application is in maintenance mode
      */
     public function isMaintenance(): bool
     {
@@ -85,9 +85,9 @@ class SiteUtil
     }
 
     /**
-     * Check if the ssl only mode.
+     * Check if the ssl only mode
      *
-     * @return bool Whether the application is under ssl only mode.
+     * @return bool Whether the application is under ssl only mode
      */
     public function isSSLOnly(): bool
     {
@@ -95,9 +95,9 @@ class SiteUtil
     }
 
     /**
-     * Check if the application is in development mode.
+     * Check if the application is in development mode
      *
-     * @return bool Whether the application is in development mode.
+     * @return bool Whether the application is in development mode
      */
     public function isDevMode(): bool
     {
@@ -109,12 +109,12 @@ class SiteUtil
     }
 
     /**
-     * Get the value of a query string parameter, with XSS protection.
+     * Get the value of a query string parameter, with XSS protection
      *
-     * @param string $query The query string parameter name.
-     * @param Request $request The Symfony request object.
+     * @param string $query The query string parameter name
+     * @param Request $request The Symfony request object
      *
-     * @return string|null The sanitized value of the query string parameter.
+     * @return string|null The sanitized value of the query string parameter
      */
     public function getQueryString(string $query, Request $request): ?string
     {

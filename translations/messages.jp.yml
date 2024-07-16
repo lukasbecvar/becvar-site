@@ -17,6 +17,10 @@ error.403.message: "このページへのアクセス許可がありません"
 # error 404
 error.404.title: "エラー：ページが見つかりません"
 error.404.message: "エラー、このページは見つかりませんでした"
+# error 426
+error.426.title: "エラー：アップグレードプロトコル"
+error.426.message: "お使いのブラウザは HTTPS プロトコルをサポートしていません"
+error.426.submessage: "このページにアクセスするには HTTPS プロトコルを使用してください"
 # error 429
 error.429.title: "エラー：リクエストが多すぎます"
 error.429.message: "リクエストが多すぎます"

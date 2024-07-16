@@ -5,6 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VisitorRepository;
 
+/**
+ * Class Visitor
+ * 
+ * The Visitor entity represents a visitor table in the database
+ * 
+ * @package App\Entity
+ */
 #[ORM\Table(name: 'visitors')]
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
 class Visitor

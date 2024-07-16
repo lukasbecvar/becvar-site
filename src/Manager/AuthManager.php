@@ -10,12 +10,13 @@ use App\Util\VisitorInfoUtil;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
  *
- * AuthManager provides login/logout methods.
- * Note: Login uses its own Authenticator, not Symfony auth.
+ * AuthManager provides login/logout methods
+ * Note: Login uses its own Authenticator, not Symfony auth
  *
  * @package App\Manager
  */
@@ -54,7 +55,7 @@ class AuthManager
     }
 
     /**
-     * Checks if a user is logged in.
+     * Checks if a user is logged in
      *
      * @return bool
      */
@@ -77,11 +78,13 @@ class AuthManager
     }
 
     /**
-     * Logs in a user.
+     * Logs in a user
      *
-     * @param string $username The username of the user to log in.
-     * @param string $userToken The token of the user to log in.
-     * @param bool $remember Whether to remember the user's login.
+     * @param string $username The username of the user to log in
+     * @param string $userToken The token of the user to log in
+     * @param bool $remember Whether to remember the user's login
+     * 
+     * @throws \App\Exception\AppErrorException Error the login process
      *
      * @return void
      */
@@ -97,7 +100,11 @@ class AuthManager
                 // check if remember set (autologin cookie)
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
-                        $this->cookieUtil->set('login-token-cookie', $userToken, time() + (60 * 60 * 24 * 7 * 365));
+                        $this->cookieUtil->set(
+                            name: 'login-token-cookie', 
+                            value: $userToken, 
+                            expiration: time() + (60 * 60 * 24 * 7 * 365)
+                        );
                     }
                 }
 
@@ -107,13 +114,16 @@ class AuthManager
                 // log auth action
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
-                $this->errorManager->handleError('error to login user with token: ' . $userToken, 500);
+                $this->errorManager->handleError(
+                    'error to login user with token: ' . $userToken, 
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }
 
     /**
-     * User logout action.
+     * User logout action
      *
      * @return void
      */
@@ -138,7 +148,7 @@ class AuthManager
     /**
      * Updates user data
      *
-     * @throws \Exception If there is an error during the flushing of the user data.
+     * @throws \App\Exception\AppErrorException Error the flushing of the user data
      *
      * @return void
      */
@@ -168,18 +178,21 @@ class AuthManager
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError(
+                    'flush error: ' . $e->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }
 
     /**
-     * Registers a new user.
+     * Registers a new user
      *
-     * @param string $username The username for the new user.
-     * @param string $password The password for the new user.
+     * @param string $username The username for the new user
+     * @param string $password The password for the new user
      *
-     * @throws \Exception If there is an error during the registration process.
+     * @throws \App\Exception\AppErrorException Error the registration process
      *
      * @return void
      */
@@ -225,7 +238,10 @@ class AuthManager
             // log registration event
             $this->logManager->log('authenticator', 'registration new user: ' . $username . ' registred');
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to register new user: ' . $e->getMessage(), 400);
+            $this->errorManager->handleError(
+                'error to register new user: ' . $e->getMessage(),
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         // set user token (login-token session)
@@ -235,9 +251,9 @@ class AuthManager
     }
 
     /**
-     * Retrieves the login token for the current user session.
+     * Get the login token for the current user session
      *
-     * @return string|null The login token or null if not found or invalid.
+     * @return string|null The login token or null if not found or invalid
      */
     public function getUserToken(): ?string
     {
@@ -258,11 +274,11 @@ class AuthManager
     }
 
     /**
-     * Retrieves the username associated with the given token.
+     * Get the username associated with the given token
      *
-     * @param string $token The user token to retrieve the username for.
+     * @param string $token The user token to retrieve the username for
      *
-     * @return string|null The username or null if not found.
+     * @return string|null The username or null if not found
      */
     public function getUsername(string $token = 'self'): ?string
     {
@@ -283,11 +299,11 @@ class AuthManager
     }
 
     /**
-     * Retrieves the role associated with the given token.
+     * Get the role associated with the given token
      *
-     * @param string $token The user token to retrieve the role for.
+     * @param string $token The user token to retrieve the role for
      *
-     * @return string|null The user role or null if not found.
+     * @return string|null The user role or null if not found
      */
     public function getUserRole(string $token = 'self'): ?string
     {
@@ -308,11 +324,11 @@ class AuthManager
     }
 
     /**
-     * Retrieves the profile picture URL associated with the given token.
+     * Get the profile picture URL associated with the given token
      *
-     * @param string $token The user token to retrieve the profile picture URL for.
+     * @param string $token The user token to retrieve the profile picture URL for
      *
-     * @return string|null The profile picture URL or null if not found.
+     * @return string|null The profile picture URL or null if not found
      */
     public function getUserProfilePic(string $token = 'self'): ?string
     {
@@ -340,16 +356,17 @@ class AuthManager
     }
 
     /**
-     * Checks if the user repository is empty.
+     * Checks if the user repository is empty
      *
-     * @return bool True if the user repository is empty, false otherwise.
+     * @return bool True if the user repository is empty, false otherwise
      */
     public function isUsersEmpty(): bool
     {
         $repository = $this->entityManager->getRepository(User::class);
 
         // get users count
-        $count = $repository->createQueryBuilder('p')->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
+        $count = $repository
+            ->createQueryBuilder('p')->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
 
         // check if count is zero
         if ($count == 0) {
@@ -360,13 +377,13 @@ class AuthManager
     }
 
     /**
-     * Retrieves a user entity from the repository based on the provided criteria.
+     * Get user entity from the repository based on the provided criteria
      *
-     * @param array<mixed> $array The criteria to search for in the repository.
+     * @param array<mixed> $array The criteria to search for in the repository
      *
-     * @throws \Exception If there is an error during the database query.
+     * @throws \App\Exception\AppErrorException Error get user repository
      *
-     * @return object|null The user entity or null if not found.
+     * @return object|null The user entity or null if not found
      */
     public function getUserRepository(array $array): ?object
     {
@@ -376,15 +393,18 @@ class AuthManager
         try {
             return $userRepository->findOneBy($array);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'find error: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Checks if the user associated with the current session is an administrator.
+     * Checks if the user associated with the current session is an administrator
      *
-     * @return bool True if the user is an administrator, false otherwise.
+     * @return bool True if the user is an administrator, false otherwise
      */
     public function isAdmin(): bool
     {
@@ -400,9 +420,9 @@ class AuthManager
     }
 
     /**
-     * Checks if the registration page is allowed based on the current system state.
+     * Checks if the registration page is allowed based on the current system state
      *
-     * @return bool True if the registration page is allowed, false otherwise.
+     * @return bool True if the registration page is allowed, false otherwise
      */
     public function isRegisterPageAllowed(): bool
     {
@@ -413,9 +433,9 @@ class AuthManager
     }
 
     /**
-     * Generate a unique token for a user.
+     * Generate a unique token for a user
      *
-     * @return string The generated user token.
+     * @return string The generated user token
      */
     public function generateUserToken(): string
     {
@@ -434,13 +454,11 @@ class AuthManager
     }
 
     /**
-     * Regenerate tokens for all users in the database.
+     * Regenerate tokens for all users in the database
      *
-     * This method regenerates tokens for all users in the database, ensuring uniqueness for each token.
+     * This method regenerates tokens for all users in the database, ensuring uniqueness for each token
      *
-     * @return array<bool|null|string> An array containing the status of the operation and any relevant message.
-     * - The 'status' key indicates whether the operation was successful (true) or not (false).
-     * - The 'message' key contains any relevant error message if the operation failed, otherwise it is null.
+     * @return array<bool|null|string> Regenerate status and message
      */
     public function regenerateUsersTokens(): array
     {
@@ -475,15 +493,9 @@ class AuthManager
     }
 
     /**
-     * Retrieves a list of all users along with their associated visitor IDs.
+     * Retrieves a list of all users along with their associated visitor IDs
      *
-     * This method constructs a query to select usernames, roles, and visitor IDs from the entity represented by this repository.
-     * It then executes the query and returns an array containing associative arrays for each user,
-     * with keys 'username', 'role', and 'visitor_id' representing the respective user details.
-     *
-     * @return array<array<string>> An array containing details of all users along with their associated visitor IDs.
-     *               Each element of the array is an associative array with keys 'username', 'role', and 'visitor_id',
-     *               representing the username, role, and associated visitor ID respectively.
+     * @return array<array<string>> The online users list
      */
     public function getOnlineUsersList(): array
     {

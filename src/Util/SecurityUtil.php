@@ -5,18 +5,18 @@ namespace App\Util;
 /**
  * Class SecurityUtil
  *
- * Utility class for security-related operations.
+ * Utility class for security-related operations
  *
  * @package App\Util
  */
 class SecurityUtil
 {
     /**
-     * Escape special characters in a string to prevent HTML injection.
+     * Escape special characters in a string to prevent HTML injection
      *
-     * @param string $string The input string to escape.
+     * @param string $string The input string to escape
      *
-     * @return string|null The escaped string or null on error.
+     * @return string|null The escaped string or null on error
      */
     public function escapeString(string $string): ?string
     {
@@ -24,12 +24,12 @@ class SecurityUtil
     }
 
     /**
-     * Validate a plain text against a bcrypt hash.
+     * Validate a plain text against a bcrypt hash
      *
-     * @param string $plainText The plain text to validate.
-     * @param string $hash The bcrypt hash for comparison.
+     * @param string $plainText The plain text to validate
+     * @param string $hash The bcrypt hash for comparison
      *
-     * @return bool True if the validation succeeds, false otherwise.
+     * @return bool True if the validation succeeds, false otherwise
      */
     public function hashValidate(string $plainText, string $hash): bool
     {
@@ -37,12 +37,12 @@ class SecurityUtil
     }
 
     /**
-     * Generate a bcrypt hash for a plain text.
+     * Generate a bcrypt hash for a plain text
      *
-     * @param string $plainText The plain text to hash.
-     * @param int $cost The cost parameter for bcrypt.
+     * @param string $plainText The plain text to hash
+     * @param int $cost The cost parameter for bcrypt
      *
-     * @return string The generated bcrypt hash.
+     * @return string The generated bcrypt hash
      */
     public function genBcryptHash(string $plainText, int $cost): string
     {
@@ -50,12 +50,12 @@ class SecurityUtil
     }
 
     /**
-     * Encrypt a string using AES encryption.
+     * Encrypt a string using AES encryption
      *
-     * @param string $plainText The plain text to encrypt.
-     * @param string $method The encryption method (default: AES-128-CBC).
+     * @param string $plainText The plain text to encrypt
+     * @param string $method The encryption method (default: AES-128-CBC)
      *
-     * @return string The base64-encoded encrypted string.
+     * @return string The base64-encoded encrypted string
      */
     public function encryptAes(string $plainText, string $method = 'AES-128-CBC'): string
     {
@@ -77,12 +77,12 @@ class SecurityUtil
     }
 
     /**
-     * Decrypt an AES-encrypted string.
+     * Decrypt an AES-encrypted string
      *
-     * @param string $encryptedData The base64-encoded encrypted string.
-     * @param string $method The encryption method (default: AES-128-CBC).
+     * @param string $encryptedData The base64-encoded encrypted string
+     * @param string $method The encryption method (default: AES-128-CBC)
      *
-     * @return string|null The decrypted string or null on error.
+     * @return string|null The decrypted string or null on error
      */
     public function decryptAes(string $encryptedData, string $method = 'AES-128-CBC'): ?string
     {

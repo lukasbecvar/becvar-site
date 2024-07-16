@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class ExceptionEventSubscriber
  *
- * Subscriber to handle internal (profiler) errors.
+ * Subscriber to handle internal (profiler) errors
  *
  * @package App\EventSubscriber
  */
@@ -27,7 +27,7 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Returns an array of event names this subscriber wants to listen to.
+     * Returns an array of event names this subscriber wants to listen to
      *
      * @return array<string> The event names to listen to
      */
@@ -39,7 +39,7 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Method called when the KernelEvents::EXCEPTION event is dispatched.
+     * Method called when the KernelEvents::EXCEPTION event is dispatched
      *
      * @param ExceptionEvent $event The event object
      *
@@ -61,11 +61,11 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Checks if an event can be logged based on the error message.
+     * Checks if an event can be logged based on the error message
      *
-     * @param string $errorMessage The error message to be checked.
+     * @param string $errorMessage The error message to be checked
      *
-     * @return bool Returns true if the event can be dispatched, otherwise false.
+     * @return bool Returns true if the event can be dispatched, otherwise false
      */
     public function canBeEventLogged(string $errorMessage): bool
     {

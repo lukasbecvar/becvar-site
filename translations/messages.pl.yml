@@ -17,6 +17,10 @@ error.403.message: "Nie masz uprawnień do dostępu do tej strony"
 # error 404
 error.404.title: "Błąd: Strona nie znaleziona"
 error.404.message: "Błąd, ta strona nie została znaleziona"
+# error 426
+error.426.title: "Błąd: Upgrade protokół"
+error.426.message: "Twoja przeglądarka nie obsługuje protokół HTTPS"
+error.426.submessage: "Proszę spróbować użyć protokołu HTTPS, aby uzyskać dostęp do tej strony"
 # error 429
 error.429.title: "Błąd: Zbyt wiele żądań"
 error.429.message: "Zbyt wiele żądań"

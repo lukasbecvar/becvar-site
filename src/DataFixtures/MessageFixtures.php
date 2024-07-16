@@ -10,7 +10,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class MessageFixtures
  *
- * MessageFixtures loads sample inbox data into the database.
+ * MessageFixtures loads sample inbox data into the database
  *
  * @package App\DataFixtures
  */
@@ -24,7 +24,7 @@ class MessageFixtures extends Fixture
     }
 
     /**
-     * Load inbox fixtures into the database.
+     * Load inbox fixtures into the database
      *
      * @param ObjectManager $manager
      *
@@ -34,11 +34,11 @@ class MessageFixtures extends Fixture
     {
         // message data
         $messageData = [
-            [ 'message' => 'test message 1' ],
-            [ 'message' => 'test message 2' ],
-            [ 'message' => 'test message 3' ],
-            [ 'message' => 'test message 4' ],
-            [ 'message' => 'test message 5' ]
+            ['message' => 'test message 1'],
+            ['message' => 'test message 2'],
+            ['message' => 'test message 3'],
+            ['message' => 'test message 4'],
+            ['message' => 'test message 5']
         ];
 
         // create message fixtures

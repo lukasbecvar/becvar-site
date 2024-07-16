@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 /**
  * Class ErrorManager
  *
- * ErrorManager provides error handling operations.
+ * ErrorManager provides error handling operations
  *
  * @package App\Manager
  */
@@ -22,10 +22,10 @@ class ErrorManager
     }
 
     /**
-     * Handles errors based on the application's mode.
+     * Handles errors based on the application's mode
      *
-     * @param string $msg The error message.
-     * @param int $code The error code.
+     * @param string $msg The error message
+     * @param int $code The error code
      *
      * @throws HttpException
      *
@@ -38,18 +38,18 @@ class ErrorManager
     }
 
     /**
-     * Renders an error view based on the error code.
+     * Renders an error view based on the error code
      *
-     * @param string|int $code The error code.
+     * @param string|int $code The error code
      *
-     * @return string The rendered error view.
+     * @return string The rendered error view
      */
     public function handleErrorView(string|int $code): string
     {
         try {
-            return $this->twig->render('errors/error-' . $code . '.html.twig');
+            return $this->twig->render('errors/error-' . $code . '.twig');
         } catch (\Exception) {
-            return $this->twig->render('errors/error-unknown.html.twig');
+            return $this->twig->render('errors/error-unknown.twig');
         }
     }
 }

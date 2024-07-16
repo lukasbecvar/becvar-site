@@ -6,6 +6,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 
+/**
+ * Class User
+ * 
+ * The User entity represents a user table in the database
+ * 
+ * @package App\Entity
+ */
 #[ORM\Table(name: 'users')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User

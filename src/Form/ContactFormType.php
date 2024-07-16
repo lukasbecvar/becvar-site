@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 /**
  * Class ContactFormType
  *
- * Contact form provides a contact message form.
+ * Contact form provides a contact message form
  *
  * @see AbstractType
  *
@@ -22,10 +22,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class ContactFormType extends AbstractType
 {
     /**
-     * Builds the form for contacting.
+     * Builds the form for contacting
      *
-     * @param FormBuilderInterface $builder The form builder.
-     * @param array<string> $options The options for building the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string> $options The options for building the form
      *
      * @return void
      */
@@ -74,9 +74,9 @@ class ContactFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form.
+     * Configures the options for this form
      *
-     * @param OptionsResolver $resolver The resolver for the form options.
+     * @param OptionsResolver $resolver The resolver for the form options
      *
      * @return void
      */

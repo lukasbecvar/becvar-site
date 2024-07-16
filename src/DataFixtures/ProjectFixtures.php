@@ -9,14 +9,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class ProjectFixtures
  *
- * ProjectFixtures loads sample Project data into the database.
+ * ProjectFixtures loads sample Project data into the database
  *
  * @package App\DataFixtures
  */
 class ProjectFixtures extends Fixture
 {
     /**
-     * Load project fixtures into the database.
+     * Load project fixtures into the database
      *
      * @param ObjectManager $manager
      *

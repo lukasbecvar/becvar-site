@@ -3,11 +3,12 @@
 namespace App\Manager;
 
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CacheManager
  *
- * Manages caching operations using a cache item pool.
+ * Manages caching operations using a cache item pool
  *
  * @package App\Manager
  */
@@ -23,28 +24,31 @@ class CacheManager
     }
 
     /**
-     * Checks if a key exists in the cache.
+     * Checks if a key exists in the cache
      *
-     * @param mixed $key The key to check in the cache.
+     * @param mixed $key The key to check in the cache
      *
-     * @return bool True if the key exists in the cache, otherwise false.
+     * @return bool True if the key exists in the cache, otherwise false
      */
     public function isCatched(mixed $key): bool
     {
         try {
             return $this->cacheItemPoolInterface->getItem($key)->isHit();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get cache value: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get cache value: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return false;
         }
     }
 
     /**
-     * Retrieves the value associated with a given key from the cache.
+     * Retrieves the value associated with a given key from the cache
      *
-     * @param mixed $key The key for which to retrieve the value.
+     * @param mixed $key The key for which to retrieve the value
      *
-     * @return mixed|null The cached value associated with the key, or null if not found.
+     * @return mixed|null The cached value associated with the key, or null if not found
      */
     public function getValue(mixed $key): mixed
     {
@@ -52,17 +56,20 @@ class CacheManager
             // get cache value
             return $this->cacheItemPoolInterface->getItem($key);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get cache value: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get cache value: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Sets a value in the cache with the specified key and expiration time.
+     * Sets a value in the cache with the specified key and expiration time
      *
-     * @param mixed $key The key under which to store the value in the cache.
-     * @param mixed $value The value to store in the cache.
-     * @param int $expiration The expiration time in seconds for the cached value.
+     * @param mixed $key The key under which to store the value in the cache
+     * @param mixed $value The value to store in the cache
+     * @param int $expiration The expiration time in seconds for the cached value
      *
      * @return void
      */
@@ -77,14 +84,17 @@ class CacheManager
             // save value
             $this->cacheItemPoolInterface->save($cacheItem);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to store cache value: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to store cache value: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     /**
-     * Deletes a value from the cache using the specified key.
+     * Deletes a value from the cache using the specified key
      *
-     * @param mixed $key The key of the value to delete from the cache.
+     * @param mixed $key The key of the value to delete from the cache
      *
      * @return void
      */
@@ -93,7 +103,10 @@ class CacheManager
         try {
             $this->cacheItemPoolInterface->deleteItem($key);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to delete cache value: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to delete cache value: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

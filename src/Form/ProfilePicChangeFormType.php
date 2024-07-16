@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 /**
  * Class ProfilePicChangeFormType
  *
- * ProfilePicChangeFormType provides a form for changing the profile picture in the account settings.
+ * ProfilePicChangeFormType provides a form for changing the profile picture in the account settings
  *
  * @see AbstractType
  *
@@ -21,10 +21,10 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class ProfilePicChangeFormType extends AbstractType
 {
     /**
-     * Builds the profile picture change form.
+     * Builds the profile picture change form
      *
-     * @param FormBuilderInterface $builder The form builder.
-     * @param array<string> $options The options for building the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string> $options The options for building the form
      *
      * @return void
      */
@@ -52,9 +52,9 @@ class ProfilePicChangeFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form.
+     * Configures the options for this form
      *
-     * @param OptionsResolver $resolver The resolver for the form options.
+     * @param OptionsResolver $resolver The resolver for the form options
      *
      * @return void
      */

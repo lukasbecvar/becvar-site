@@ -1,0 +1,132 @@
+{% extends 'common/bases/admin-base.twig' %}
+
+{% block title %}
+    database
+{% endblock %}
+
+{# DATABASE BROWSER PAGE COMPONENT #}
+{% block component %}
+<div class="admin-panel">
+    {% if userRole != 'Owner' and userRole != 'Admin' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+        {# TABLES-LIST #}
+        {% if tables != null %}
+            <h2 class="page-title">Select table</h2>
+            <br>
+            {% for table in tables %}
+                {% if table != 'doctrine_migration_versions' %}
+                    <a class='db-browser-select-link' href={{ path('admin_database_browser', {'table': table, 'page': 1}) }}>{{ table }}</a>
+                    <br><br>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {# ROW-EDITOR #}
+            {% if editorTable != null %}
+            {% include "admin/elements/database-navigation.twig" %}
+            {% if errorMsg != null %}
+                {% include "common/alerts/error-alert.twig" %}
+            {% endif %}
+            <center>
+                {% if editorReferer != null %}
+                    <form class="db-edit-form dark-table" action={{ path('admin_database_edit', {'table': editorTable, 'page': editorPage, 'id': editorId, 'referer': editorReferer}) }} method="post">
+                {% else %}
+                    <form class="db-edit-form dark-table" action={{ path('admin_database_edit', {'table': editorTable, 'page': editorPage, 'id': editorId}) }} method="post">
+                {% endif %}
+                    <p class="title">Edit {{ editorTable|e }}, row: {{ editorId|e }}<p></p>
+                    {% for field in editorField %}
+                        {% if field != 'id' %}
+                            <p class="text-input-title">{{ field|e }}</p>
+                            <input class="text-input" type="text" name="{{ field|e }}" value="{{ editorValues[field]|e }}" maxlength="200"><br>
+                        {% endif %}
+                    {% endfor %}
+                    <input class="input-button" type="submit" name="submitEdit" value="Edit">
+                </form>
+            </center>
+            {% else %}
+                {# NEW-ROW FORM #}
+                {% if newRowTable != null %}
+                    {% include "admin/elements/database-navigation.twig" %}
+                    {% if errorMsg != null %}
+                        {% include "common/alerts/error-alert.twig" %}
+                    {% endif %}
+                    <center>
+                        <form class="db-edit-form dark-table" action={{ path('admin_database_add', {'table': newRowTable|e, 'page': newRowPage}) }} method="post">
+                            <p class="title">Add new: {{ newRowTable|e }}<p></p>
+                            {% for field in newRowColumns %}
+                                {% if field != 'id' %}
+                                    <p class="text-input-title">{{ field|e }}</p>
+                                    <input class="text-input" type="text" name="{{ field|e }}" placeholder="{{ field|e }}" maxlength="200"><br>
+                                {% endif %}
+                            {% endfor %}
+                            <input class="input-button" type="submit" name="submitSave" value="SAVE">
+                        </form>
+                    </center>
+                {% else %}
+                    {# TABLES-BROWSER #}
+                    {% if tableName != null %}
+                        {% include "admin/elements/database-navigation.twig" %}
+                        {% if tableDataCount == 0 %}
+                            <h2 class="page-title">table: '{{ tableName }}' is empty</h2>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table table-dark text-nowrap">
+                                    <thead>
+                                        <tr class="line-item">  
+                                            {% if tableName == 'code_paste' %}
+                                                <th cope='col'>Link</th>
+                                            {% endif %}
+                                            {% for column in tableColumns %}
+                                                {% if column == 'id' %}
+                                                    <th scope='col'>#</th>
+                                                {% else %}                                                 
+                                                    <th scope='col'>{{ column|e }}</th>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if tableName != 'inbox_messages' %}
+                                                <th cope='col'>Edit</th>
+                                            {% endif %}
+                                            <th cope='col'>X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in tableData %}
+                                            <tr class="line-item">
+                                                {% for column in tableColumns %}
+                                                    <th scope='row'>
+                                                        {% set content = row[column] | slice(0, 200) %}
+                                                        {{ content ~ (row[column] | length > 200 ? '...' : '') }}
+                                                    </th>
+                                                {% endfor %}
+                                                {% if tableName != 'inbox_messages' %} 
+                                                    <td>
+                                                        <a class="text-warning db-delete-link" href={{ path('admin_database_edit', {'table': tableName|e, 'page': page, 'id': row.id|e}) }}>Edit</a>
+                                                    </td>
+                                                {% endif %}
+                                                <td>
+                                                    <a class="db-delete-link" href={{ path('admin_database_delete', {'table': tableName|e, 'page': page, 'id': row.id|e}) }}>X</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %} 
+                                    </tbody>
+                                </table> 
+                            </div>
+                            <div class="page-button-box">
+                                {% if page != 1 %}
+                                    <a class="back-page-button" href={{ path('admin_database_browser', {'table': tableName, 'page': page - 1}) }}>Back</a>
+                                {% endif %}
+                                {% if limit == tableDataCount %}
+                                    <a class="back-page-button" href={{ path('admin_database_browser', {'table': tableName, 'page': page + 1}) }}>Next</a>
+                                {% endif %}
+                            </div>
+                            {% if page != 1 or limit == tableDataCount %}
+                                <br>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

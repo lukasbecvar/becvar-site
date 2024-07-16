@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Class AuthentificatedCheckMiddleware
  *
- * Middleware for checking authentication status before accessing admin routes.
+ * Middleware for checking authentication status before accessing admin routes
  *
  * @package App\Middleware
  */
@@ -26,9 +26,9 @@ class AuthentificatedCheckMiddleware
     }
 
     /**
-     * Handles the kernel request event.
+     * Handles the kernel request event
      *
-     * @param RequestEvent $event The request event.
+     * @param RequestEvent $event The request event
      *
      * @return void
      */

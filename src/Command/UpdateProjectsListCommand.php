@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class UpdateProjectsListCommand
  *
- * Command for update projects list.
+ * Command for update projects list
  *
  * @package App\Command
  */
@@ -28,12 +28,12 @@ class UpdateProjectsListCommand extends Command
     }
 
     /**
-     * Executes the command to update projects list.
+     * Executes the command to update projects list
      *
-     * @param InputInterface $input The input interface.
-     * @param OutputInterface $output The output interface.
+     * @param InputInterface $input The input interface
+     * @param OutputInterface $output The output interface
      *
-     * @return int The exit code of the command.
+     * @return int The exit code of the command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -50,7 +50,7 @@ class UpdateProjectsListCommand extends Command
             $io->success('Projects list updated!');
             return Command::SUCCESS;
         } catch (\Exception $e) {
-            $io->error('Error to update project list: ' . $e->getMessage());
+            $io->error('process error: ' . $e->getMessage());
             return Command::FAILURE;
         }
     }

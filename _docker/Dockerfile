@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \ 
     unzip \
     zip \
-    rpm 
+    rpm
     
 # install necessary PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo intl

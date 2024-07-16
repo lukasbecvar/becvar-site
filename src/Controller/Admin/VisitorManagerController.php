@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class VisitorManagerController
  *
- * Visitor manager controller provides view/ban/delete visitor.
+ * Visitor manager controller provides view/ban/delete visitor
  *
  * @package App\Controller\Admin
  */
@@ -44,11 +44,11 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Display the table of visitors and their details.
+     * Display the table of visitors and their details
      *
-     * @param Request $request object containing the page number.
+     * @param Request $request object containing the page number
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/visitors', methods: ['GET'], name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
@@ -60,31 +60,31 @@ class VisitorManagerController extends AbstractController
         $filter = $this->siteUtil->getQueryString('filter', $request);
 
         // return visitor manager view
-        return $this->render('admin/visitors-manager.html.twig', [
+        return $this->render('admin/visitors-manager.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // visitor manager data
             'page' => $page,
             'filter' => $filter,
-            'current_ip' => $this->visitorInfoUtil->getIP(),
-            'online_visitors' => $this->visitorManager->getOnlineVisitorIDs(),
-            'banned_count' => $this->banManager->getBannedCount(),
-            'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],
-            'visitors_data' => $this->visitorManager->getVisitors($page, $filter),
-            'visitors_count' => $this->visitorManager->getVisitorsCount($page),
-            'visitor_info_data' => null
+            'visitorInfoData' => null,
+            'visitorsLimit' => $_ENV['ITEMS_PER_PAGE'],
+            'currentIp' => $this->visitorInfoUtil->getIP(),
+            'bannedCount' => $this->banManager->getBannedCount(),
+            'onlineVisitors' => $this->visitorManager->getOnlineVisitorIDs(),
+            'visitorsCount' => $this->visitorManager->getVisitorsCount($page),
+            'visitorsData' => $this->visitorManager->getVisitors($page, $filter)
         ]);
     }
 
     /**
-     * Provides IP information for a given IP address to the admin panel.
+     * Provides IP information for a given IP address to the admin panel
      *
-     * @param Request $request The request object containing the IP address.
+     * @param Request $request The request object containing the IP address
      *
-     * @return Response A response object containing the IP information.
+     * @return Response A response object containing the IP information
      */
     #[Route('/admin/visitors/ipinfo', methods: ['GET'], name: 'admin_visitor_ipinfo')]
     public function visitorIpInfo(Request $request): Response
@@ -102,28 +102,28 @@ class VisitorManagerController extends AbstractController
         $ipInfoData = json_decode(json_encode($ipInfoData), true);
 
         // return visitor manager view
-        return $this->render('admin/visitors-manager.html.twig', [
+        return $this->render('admin/visitors-manager.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // visitor manager data
-            'filter' => 1,
-            'current_ip' => $ipAddress,
-            'visitor_info_data' => $ipInfoData,
-            'online_visitors' => $this->visitorManager->getOnlineVisitorIDs(),
-            'banned_count' => $this->banManager->getBannedCount(),
             'page' => 1,
+            'filter' => 1,
+            'currentIp' => $ipAddress,
+            'visitorInfoData' => $ipInfoData,
+            'bannedCount' => $this->banManager->getBannedCount(),
+            'onlineVisitors' => $this->visitorManager->getOnlineVisitorIDs()
         ]);
     }
 
     /**
-     * Display the confirmation form for deleting all visitors.
+     * Display the confirmation form for deleting all visitors
      *
-     * @param Request $request object containing the page number.
+     * @param Request $request object containing the page number
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
@@ -132,11 +132,11 @@ class VisitorManagerController extends AbstractController
         $page = $this->siteUtil->getQueryString('page', $request);
 
         // return delete confirmation view
-        return $this->render('admin/elements/confirmation/delete-visitors.html.twig', [
+        return $this->render('admin/elements/confirmation/delete-visitors.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // delete confirmation data
             'page' => $page
@@ -144,11 +144,11 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Ban a visitor.
+     * Ban a visitor
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
@@ -194,25 +194,23 @@ class VisitorManagerController extends AbstractController
         }
 
         // render ban form
-        return $this->render('admin/elements/forms/ban-form.html.twig', [
+        return $this->render('admin/elements/forms/ban-form.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // ban form data
-            'ban_id' => $id,
-            'ban_form' => $form,
-            'return_page' => $page
+            'banForm' => $form
         ]);
     }
 
     /**
-     * Unban a visitor.
+     * Unban a visitor
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response

@@ -6,6 +6,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
 
+/**
+ * Class Message
+ *
+ * The Message entity represents a message table in the database
+ *
+ * @package App\Entity
+ */
 #[ORM\Table(name: 'inbox_messages')]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message

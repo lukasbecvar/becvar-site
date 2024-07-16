@@ -4,11 +4,12 @@ namespace App\Middleware;
 
 use App\Util\SiteUtil;
 use App\Manager\ErrorManager;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SecurityCheckMiddleware
  *
- * This middleware checks if the connection is secure.
+ * This middleware checks if the connection is secure
  *
  * @package App\Middleware
  */
@@ -24,7 +25,7 @@ class SecurityCheckMiddleware
     }
 
     /**
-     * Check if the connection is secure.
+     * Check if the connection is secure
      *
      * @return void
      */
@@ -32,7 +33,10 @@ class SecurityCheckMiddleware
     {
         // check if SSL check enabled
         if ($this->siteUtil->isSSLOnly() && !$this->siteUtil->isSsl()) {
-            $this->errorManager->handleError('SSL error: connection not running on ssl protocol', 500);
+            $this->errorManager->handleError(
+                'SSL error: connection not running on ssl protocol',
+                Response::HTTP_UPGRADE_REQUIRED
+            );
         }
     }
 }

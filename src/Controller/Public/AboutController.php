@@ -17,9 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AboutController extends AbstractController
 {
     /**
-     * Renders the public about page.
+     * Renders the public about page
      *
-     * @return Response The response containing the rendered about page.
+     * @return Response The response containing the rendered about page
      */
     #[Route('/about', methods: ['GET'], name: 'public_about')]
     public function aboutPage(): Response
@@ -29,13 +29,13 @@ class AboutController extends AbstractController
         $age = date_diff(date_create($dateOfBirth), date_create('today'))->y;
 
         // render about page
-        return $this->render('public/about.html.twig', [
-            'instagram_link' => $_ENV['INSTAGRAM_LINK'],
-            'telegram_link' => $_ENV['TELEGRAM_LINK'],
-            'contact_email' => $_ENV['CONTACT_EMAIL'],
-            'twitter_link' => $_ENV['TWITTER_LINK'],
-            'github_link' => $_ENV['GITHUB_LINK'],
-            'age' => $age
+        return $this->render('public/about.twig', [
+            'age' => $age,
+            'githubLink' => $_ENV['GITHUB_LINK'],
+            'twitterLink' => $_ENV['TWITTER_LINK'],
+            'telegramLink' => $_ENV['TELEGRAM_LINK'],
+            'contactEmail' => $_ENV['CONTACT_EMAIL'],
+            'instagramLink' => $_ENV['INSTAGRAM_LINK']
         ]);
     }
 }

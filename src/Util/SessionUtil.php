@@ -3,11 +3,12 @@
 namespace App\Util;
 
 use App\Manager\ErrorManager;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SessionUtil
  *
- * SessionUtil provides session management functions.
+ * SessionUtil provides session management functions
  *
  * @package App\Util
  */
@@ -23,7 +24,7 @@ class SessionUtil
     }
 
     /**
-     * Start a new session if not already started.
+     * Start a new session if not already started
      *
      * @return void
      */
@@ -35,7 +36,7 @@ class SessionUtil
     }
 
     /**
-     * Destroy the current session.
+     * Destroy the current session
      *
      * @return void
      */
@@ -46,11 +47,11 @@ class SessionUtil
     }
 
     /**
-     * Check if a session with the specified name exists.
+     * Check if a session with the specified name exists
      *
-     * @param string $sessionName The name of the session to check.
+     * @param string $sessionName The name of the session to check
      *
-     * @return bool Whether the session exists.
+     * @return bool Whether the session exists
      */
     public function checkSession(string $sessionName): bool
     {
@@ -61,8 +62,8 @@ class SessionUtil
     /**
      * Set a session value.
      *
-     * @param string $sessionName The name of the session.
-     * @param string $sessionValue The value to set for the session.
+     * @param string $sessionName The name of the session
+     * @param string $sessionValue The value to set for the session
      *
      * @return void
      */
@@ -73,11 +74,11 @@ class SessionUtil
     }
 
     /**
-     * Get the decrypted value of a session.
+     * Get the decrypted value of a session
      *
-     * @param string $sessionName The name of the session.
+     * @param string $sessionName The name of the session
      *
-     * @return mixed The decrypted session value.
+     * @return mixed The decrypted session value
      */
     public function getSessionValue(string $sessionName): mixed
     {
@@ -89,7 +90,10 @@ class SessionUtil
         // check if session data is decrypted
         if ($value == null) {
             $this->destroySession();
-            $this->errorManager->handleError('Error to decrypt session data', 500);
+            $this->errorManager->handleError(
+                'error to decrypt session data',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         return $value;

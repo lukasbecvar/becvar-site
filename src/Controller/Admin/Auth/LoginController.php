@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class LoginController
  *
- * Login controller provides user login function.
- * Note: Login uses its own authenticator, not Symfony auth.
+ * Login controller provides user login function
+ * Note: Login uses its own authenticator (not Symfony auth)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -37,11 +37,11 @@ class LoginController extends AbstractController
     }
 
     /**
-     * User login action.
+     * User login handler
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response
@@ -78,11 +78,17 @@ class LoginController extends AbstractController
                 if ($this->securityUtil->hashValidate($password, $userPassword)) {
                     $this->authManager->login($username, $userData->getToken(), $remember);
                 } else { // invalid password error
-                    $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
+                    $this->logManager->log(
+                        name: 'authenticator', 
+                        value: 'trying to login with: ' . $username . ':' . $password
+                    );
                     $errorMsg = 'Incorrect username or password.';
                 }
             } else { // user not exist error
-                $this->logManager->log('authenticator', 'trying to login with: ' . $username . ':' . $password);
+                $this->logManager->log(
+                    name: 'authenticator', 
+                    value: 'trying to login with: ' . $username . ':' . $password
+                );
                 $errorMsg = 'Incorrect username or password.';
             }
 
@@ -93,10 +99,10 @@ class LoginController extends AbstractController
         }
 
         // render login view
-        return $this->render('admin/auth/login.html.twig', [
-            'error_msg' => $errorMsg,
-            'is_users_empty' => $this->authManager->isRegisterPageAllowed(),
-            'login_form' => $form->createView()
+        return $this->render('admin/auth/login.twig', [
+            'errorMsg' => $errorMsg,
+            'isUsersEmpty' => $this->authManager->isRegisterPageAllowed(),
+            'loginForm' => $form->createView()
         ]);
     }
 }

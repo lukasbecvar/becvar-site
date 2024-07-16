@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AntilogController
  *
- * Antilog controller provides a function to block database logs.
- * Antilog for admin users disables logging via browser cookie.
+ * Antilog controller provides a function to block database logs
+ * Antilog for admin users disables logging via browser cookie
  *
  * @package App\Controller
  */
@@ -28,9 +28,9 @@ class AntilogController extends AbstractController
     }
 
     /**
-     * Sets or unsets antilog for admin users.
+     * Sets or unsets antilog for admin users
      *
-     * @return Response The response, redirects to the admin dashboard.
+     * @return Response The response, redirects to the admin dashboard
      */
     #[Route('/antilog/5369362536', methods: ['GET'], name: 'antilog')]
     public function toggleAntiLog(): Response
@@ -39,9 +39,9 @@ class AntilogController extends AbstractController
         if (!$this->authManager->isUserLogedin()) {
             return $this->json([
                 'status' => 'error',
-                'code' => 401,
+                'code' => Response::HTTP_UNAUTHORIZED,
                 'message' => 'error to set anti-log for non authentificated users!'
-            ], 401);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         // get logged username

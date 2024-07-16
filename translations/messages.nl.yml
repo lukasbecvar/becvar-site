@@ -17,6 +17,10 @@ error.403.message: "U heeft geen toestemming om toegang te krijgen tot deze pagi
 # error 404
 error.404.title: "Fout: Pagina niet gevonden"
 error.404.message: "Fout, deze pagina is niet gevonden"
+# error 426
+error.426.title: "Fout: Upgrade protocol"
+error.426.message: "Uw browser ondersteunt het HTTPS-protocol niet"
+error.426.submessage: "Probeer de HTTPS-protocol te gebruiken om toegang te krijgen tot deze pagina"
 # error 429
 error.429.title: "Fout: Te veel verzoeken"
 error.429.message: "Te veel verzoeken"

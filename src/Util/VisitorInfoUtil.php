@@ -5,7 +5,7 @@ namespace App\Util;
 /**
  * Class VisitorInfoUtil
  *
- * VisitorInfoUtil provides methods to get information about visitors.
+ * VisitorInfoUtil provides methods to get information about visitors
  *
  * @package App\Util
  */
@@ -21,9 +21,9 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the client's IP address.
+     * Get the client's IP address
      *
-     * @return string|null The client's IP address.
+     * @return string|null The client's IP address
      */
     public function getIP(): ?string
     {
@@ -42,9 +42,9 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the user agent (browser).
+     * Get the user agent (browser)
      *
-     * @return string|null The user agent.
+     * @return string|null The user agent
      */
     public function getBrowser(): ?string
     {
@@ -54,11 +54,11 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get a short version of the browser name.
+     * Get a short version of the browser name
      *
-     * @param string $userAgent The user agent string.
+     * @param string $userAgent The user agent string
      *
-     * @return string|null The short browser name.
+     * @return string|null The short browser name
      */
     public function getBrowserShortify(string $userAgent): ?string
     {
@@ -137,9 +137,9 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the operating system.
+     * Get the operating system
      *
-     * @return string|null The operating system.
+     * @return string|null The operating system
      */
     public function getOS(): ?string
     {
@@ -191,11 +191,11 @@ class VisitorInfoUtil
     }
 
     /**
-     * Retrieves information about an IP address using a geolocation API.
+     * Retrieves information about an IP address using a geolocation API
      *
-     * @param string $ipAddress The IP address to look up.
+     * @param string $ipAddress The IP address to look up
      *
-     * @return object|null The decoded JSON response from the geolocation API, or null if an error occurs.
+     * @return object|null The decoded JSON response from the geolocation API, or null if an error occurs
      */
     public function getIpInfo(string $ipAddress): ?object
     {
@@ -208,7 +208,9 @@ class VisitorInfoUtil
 
         try {
             // get response
-            $response = file_get_contents($_ENV['GEOLOCATION_API_URL'] . '/json/' . $ipAddress, false, $context);
+            $response = file_get_contents(
+                $_ENV['GEOLOCATION_API_URL'] . '/json/' . $ipAddress, false, $context
+            );
 
             // decode response & return data
             return json_decode($response);
@@ -218,11 +220,11 @@ class VisitorInfoUtil
     }
 
     /**
-     * Retrieves the location (city and country) for a given IP address.
+     * Retrieves the location (city and country) for a given IP address
      *
-     * @param string $ipAddress The IP address to look up.
+     * @param string $ipAddress The IP address to look up
      *
-     * @return array<string>|null An associative array containing the city and country, or null if an error occurs.
+     * @return array<string>|null An associative array containing the city and country, or null if an error occurs
      */
     public function getLocation(string $ipAddress): ?array
     {

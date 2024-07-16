@@ -4,11 +4,12 @@ namespace App\Middleware;
 
 use App\Manager\ErrorManager;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DatabaseOnlineMiddleware
  *
- * This middleware is used to check the availability of the database.
+ * This middleware is used to check the availability of the database
  *
  * @package App\Middleware
  */
@@ -24,7 +25,7 @@ class DatabaseOnlineMiddleware
     }
 
     /**
-     * Check the availability of the database on each kernel request.
+     * Check the availability of the database on each kernel request
      *
      * @return void
      */
@@ -35,7 +36,10 @@ class DatabaseOnlineMiddleware
             $this->doctrineConnection->executeQuery('SELECT 1');
         } catch (\Exception $e) {
             // handle error if database not connected
-            $this->errorManager->handleError('database connection error: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'database connection error: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

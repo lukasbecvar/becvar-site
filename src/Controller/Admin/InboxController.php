@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class InboxController
  *
- * Inbox controller provides contact form message reader/ban/close messages.
+ * Inbox controller provides contact form message reader/ban/close messages
  *
  * @package App\Controller\Admin
  */
@@ -34,11 +34,11 @@ class InboxController extends AbstractController
     }
 
     /**
-     * Display inbox messages.
+     * Display inbox messages
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
@@ -50,26 +50,26 @@ class InboxController extends AbstractController
         $messages = $this->messagesManager->getMessages('open', $page);
 
         // render inbox view
-        return $this->render('admin/inbox.html.twig', [
+        return $this->render('admin/inbox.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // inbox data
             'page' => $page,
-            'inbox_data' => $messages,
-            'message_count' => count($messages),
-            'message_limit' => $_ENV['ITEMS_PER_PAGE']
+            'inboxData' => $messages,
+            'messageCount' => count($messages),
+            'messageLimit' => $_ENV['ITEMS_PER_PAGE']
         ]);
     }
 
     /**
-     * Close a message in the inbox.
+     * Close a message in the inbox
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response

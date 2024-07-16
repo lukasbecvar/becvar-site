@@ -1,4 +1,4 @@
-# This Docker Compose configuration defines local development services
+# this docker compose configuration defines local development services
 version: '3'
 
 # docker network config

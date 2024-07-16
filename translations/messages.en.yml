@@ -17,6 +17,10 @@ error.403.message: "You do not have permission to access this page"
 # error 404
 error.404.title: "Error: Page not found"
 error.404.message: "Error this page was not found"
+# error 426
+error.426.title: "Error: Upgrade protocol"
+error.426.message: "Your browser does not support the HTTPS protocol"
+error.426.submessage: "Please try to use the HTTPS protocol to access this page"
 # error 429
 error.429.title: "Error: Too Many Requests"
 error.429.message: "Too Many Requests"

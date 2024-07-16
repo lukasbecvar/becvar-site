@@ -1,0 +1,29 @@
+<div class="container">
+    <h1><a href={{ path('admin_init') }}>Lukáš Bečvář</a></h1>
+    <h2>{{ "home.im"|trans }} <span>{{ 'home.main.text'|trans }}</span></h2>
+    {# <===== PUBLIC-PAGES-NAVIGATION =====> #}
+    <nav id="navbar" class="navbar">
+        <ul>
+            <li>
+                <a class="nav-link" href={{ path('public_home') }}>{{ 'navigation.home.link'|trans }}</a>
+            </li>
+            <li>
+                <a class="nav-link" href={{ path('public_about') }}>{{ 'navigation.about.link'|trans }}</a>
+            </li>
+            <li>
+                <a class="nav-link" href={{ path('public_projects') }}>{{ 'navigation.projects.link'|trans }}</a>
+            </li>
+            <li>
+                <a class="nav-link" href={{ path('public_contact') }}>{{ 'navigation.contact.link'|trans }}</a>
+            </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    {# <===== SOCIAL-LINKS =====> #}
+    <div class="social-links">
+        <a href={{ instagramLink }} target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href={{ twitterLink }} target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href={{ githubLink }} target="_blank" class="github"><i class="bi bi-github"></i></a>
+        <a href={{ telegramLink }} target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+    </div>
+</div>

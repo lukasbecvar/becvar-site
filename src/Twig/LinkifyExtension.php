@@ -8,16 +8,16 @@ use Twig\Extension\AbstractExtension;
 /**
  * Class LinkifyExtension
  *
- * LinkifyExtension is a custom Twig extension for converting links in text to clickable HTML links.
+ * LinkifyExtension is a custom Twig extension for converting links in text to clickable HTML links
  *
  * @package App\Twig
  */
 class LinkifyExtension extends AbstractExtension
 {
     /**
-     * Get the filters provided by this extension.
+     * Get the filters provided by this extension
      *
-     * @return array<TwigFilter> An array of Twig filters.
+     * @return array<TwigFilter> An array of Twig filters
      */
     public function getFilters(): array
     {
@@ -27,11 +27,11 @@ class LinkifyExtension extends AbstractExtension
     }
 
     /**
-     * Converts links in the given text to clickable HTML links.
+     * Converts links in the given text to clickable HTML links
      *
-     * @param string $text The input text.
+     * @param string $text The input text
      *
-     * @return string|null The text with clickable HTML links.
+     * @return string|null The text with clickable HTML links
      */
     public function linkifyText(string $text): ?string
     {

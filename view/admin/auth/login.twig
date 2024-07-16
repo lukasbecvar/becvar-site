@@ -1,0 +1,33 @@
+{% extends 'common/bases/auth-base.twig' %}
+
+{# ADMIN LOGIN PAGE COMPONENT #}
+{% block component %}
+<main class="login-page color-white">
+    {# REGISTER COMPONENT LINK #}
+    {% if isUsersEmpty %}
+        <center>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Users table is empty<br>
+                Please add admin user manually <strong/><a href={{ path('auth_register') }}>here</a></strong>
+            </div>
+        </center>
+    {% endif %}
+
+    {# ERROR MSG BOX #}
+    {% if errorMsg != null %}
+        {% include "common/alerts/error-alert.twig" %}
+    {% endif %}
+
+    {# LOGIN FORM #}
+    <div class="form-pos-y form">
+        <h2 class="form-title">Dashboard login</h2>
+
+        {{ form_start(loginForm) }}
+            {{ form_widget(loginForm) }}
+            <div class="right-position mr-1">
+                <button type="submit" class="input-button">Sign in</button>
+            </div>
+        {{ form_end(loginForm) }}
+    </div>
+</main>
+{% endblock %}

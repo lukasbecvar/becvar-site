@@ -18,63 +18,64 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class DashboardController
  *
- * Dashboard controller provides the homepage of the admin site.
- * Dashboard components: warning box, services controller, host info, server/database counters.
+ * Dashboard controller provides the homepage of the admin site
+ * Dashboard components: warning box, services controller, host info, server/database counters
  *
  * @package App\Controller\Admin
  */
 class DashboardController extends AbstractController
 {
-    private DashboardUtil $dashboardUtil;
     private SiteUtil $siteUtil;
     private BanManager $banManager;
     private LogManager $logManager;
     private AuthManager $authManager;
+    private DashboardUtil $dashboardUtil;
     private VisitorManager $visitorManager;
 
     public function __construct(
-        DashboardUtil $dashboardUtil,
         SiteUtil $siteUtil,
         BanManager $banManager,
         LogManager $logManager,
         AuthManager $authManager,
+        DashboardUtil $dashboardUtil,
         VisitorManager $visitorManager
     ) {
-        $this->dashboardUtil = $dashboardUtil;
         $this->siteUtil = $siteUtil;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
+        $this->dashboardUtil = $dashboardUtil;
         $this->visitorManager = $visitorManager;
     }
 
     /**
-     * Display the admin dashboard.
+     * Display the admin dashboard
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response
     {
-        return $this->render('admin/dashboard.html.twig', [
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+        // return dashboard page view
+        return $this->render('admin/dashboard.twig', [
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
-            'is_ssl' => $this->siteUtil->isSsl(),
-            'is_maintenance' => $this->siteUtil->isMaintenance(),
-            'is_dev_mode' => $this->siteUtil->isDevMode(),
-            'anti_log_enabled' => $this->logManager->isEnabledAntiLog(),
+            // warning box data
+            'isSsl' => $this->siteUtil->isSsl(),
+            'isDevMode' => $this->siteUtil->isDevMode(),
+            'isMaintenance' => $this->siteUtil->isMaintenance(),
+            'antiLogEnabled' => $this->logManager->isEnabledAntiLog(),
+            'isBrowserListExist' => $this->dashboardUtil->isBrowserListFound(),
 
-            'is_browser_list_exist' => $this->dashboardUtil->isBrowserListFound(),
-
-            'visitors_count' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor()),
-            'unreaded_logs_count' => $this->dashboardUtil->getDatabaseEntityCount(new Log(), ['status' => 'unreaded']),
-            'messages_count' => $this->dashboardUtil->getDatabaseEntityCount(new Message(), ['status' => 'open']),
-
-            'online_visitors_count' => count($this->visitorManager->getOnlineVisitorIDs()),
-            'banned_visitors_count' => $this->banManager->getBannedCount(),
+            // cards data
+            'banned_visitorsCount' => $this->banManager->getBannedCount(),
             'online_users_count' => count($this->authManager->getOnlineUsersList()),
+            'onlinevisitorsCount' => count($this->visitorManager->getOnlineVisitorIDs()),
+            'visitorsCount' => $this->dashboardUtil->getDatabaseEntityCount(new Visitor()),
+            'messagesCount' => $this->dashboardUtil->getDatabaseEntityCount(new Message(), ['status' => 'open']),
+            'unreadedLogsCount' => $this->dashboardUtil->getDatabaseEntityCount(new Log(), ['status' => 'unreaded'])
         ]);
     }
 }

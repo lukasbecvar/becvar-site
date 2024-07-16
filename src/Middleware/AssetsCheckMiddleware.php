@@ -8,16 +8,16 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 /**
  * Class AssetsCheckMiddleware
  *
- * Middleware for checking if assets are built.
+ * Middleware for checking if assets are builded
  *
  * @package App\Middleware
  */
 class AssetsCheckMiddleware
 {
     /**
-     * Check if assets are built.
+     * Check if assets are builded
      *
-     * @param RequestEvent $event The request event.
+     * @param RequestEvent $event The request event
      *
      * @return void
      */

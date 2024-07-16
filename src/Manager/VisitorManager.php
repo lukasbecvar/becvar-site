@@ -6,11 +6,12 @@ use App\Entity\Visitor;
 use App\Util\VisitorInfoUtil;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AuthManager
  *
- * Visitor manager provides methods for managing visitors.
+ * Visitor manager provides methods for managing visitors
  *
  * @package App\Manager
  */
@@ -37,11 +38,13 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by array search criteria.
+     * Get a visitor repository by array search criteria
      *
-     * @param array<string,mixed> $search The search criteria.
+     * @param array<string,mixed> $search The search criteria
+     * 
+     * @throws \App\Exception\AppErrorException Error get visitor
      *
-     * @return Visitor|null The visitor entity if found, null otherwise.
+     * @return Visitor|null The visitor entity if found, null otherwise
      */
     public function getRepositoryByArray(array $search): ?object
     {
@@ -52,17 +55,20 @@ class VisitorManager
         try {
             return $visitorRepository->findOneBy($search);
         } catch (\Exception $e) {
-            $this->errorManager->handleError('find error: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'find error: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             return null;
         }
     }
 
     /**
-     * Get the visitor ID by IP address.
+     * Get the visitor ID by IP address
      *
-     * @param string $ipAddress The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor
      *
-     * @return int The ID of the visitor.
+     * @return int The ID of the visitor
      */
     public function getVisitorID(string $ipAddress): int
     {
@@ -77,10 +83,12 @@ class VisitorManager
     }
 
     /**
-     * Update visitor email by IP address.
+     * Update visitor email by IP address
      *
-     * @param string $ipAddress The IP address of the visitor.
-     * @param string $email The email address of the visitor.
+     * @param string $ipAddress The IP address of the visitor
+     * @param string $email The email address of the visitor
+     * 
+     * @throws \App\Exception\AppErrorException Error to update visitor email
      *
      * @return void
      */
@@ -96,18 +104,21 @@ class VisitorManager
             try {
                 $this->entityManager->flush();
             } catch (\Exception $e) {
-                $this->errorManager->handleError('flush error: ' . $e->getMessage(), 500);
+                $this->errorManager->handleError(
+                    'flush error: ' . $e->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
             }
         }
     }
 
     /**
-     * Get a paginated list of visitors.
+     * Get a paginated list of visitors
      *
-     * @param int $page The page number.
-     * @param string $filter The filter value.
+     * @param int $page The page number
+     * @param string $filter The filter value
      *
-     * @return Visitor[]|null The list of visitors if found, null otherwise.
+     * @return Visitor[]|null The list of visitors if found, null otherwise
      */
     public function getVisitors(int $page, string $filter = '1'): ?array
     {
@@ -129,7 +140,10 @@ class VisitorManager
 
             $visitors = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
-            $this->errorManager->handleError('error to get visitors: ' . $e->getMessage(), 500);
+            $this->errorManager->handleError(
+                'error to get visitors: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
             $visitors = [];
         }
 
@@ -150,9 +164,9 @@ class VisitorManager
     }
 
     /**
-     * Get the visitor language based on IP address.
+     * Get the visitor language based on IP address
      *
-     * @return string|null The language of the visitor.
+     * @return string|null The language of the visitor
      */
     public function getVisitorLanguage(): ?string
     {
@@ -167,11 +181,11 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by ID.
+     * Get a visitor repository by ID
      *
-     * @param int $id The ID of the visitor.
+     * @param int $id The ID of the visitor
      *
-     * @return Visitor|null The visitor entity if found, null otherwise.
+     * @return Visitor|null The visitor entity if found, null otherwise
      */
     public function getVisitorRepositoryByID(int $id): ?object
     {
@@ -179,11 +193,11 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by IP address.
+     * Get a visitor repository by IP address
      *
-     * @param string $ipAddress The IP address of the visitor.
+     * @param string $ipAddress The IP address of the visitor
      *
-     * @return Visitor|null The visitor entity if found, null otherwise.
+     * @return Visitor|null The visitor entity if found, null otherwise
      */
     public function getVisitorRepository(string $ipAddress): ?object
     {
@@ -191,11 +205,11 @@ class VisitorManager
     }
 
     /**
-     * Get the count of visitors for a given page.
+     * Get the count of visitors for a given page
      *
-     * @param int $page The page number.
+     * @param int $page The page number
      *
-     * @return int The count of visitors for the given page.
+     * @return int The count of visitors for the given page
      */
     public function getVisitorsCount(int $page): int
     {
@@ -203,13 +217,10 @@ class VisitorManager
     }
 
     /**
-     * Retrieves the status of a visitor with the given ID.
-     *
-     * This method constructs a cache key for the specified visitor ID, retrieves the status from the cache manager,
-     * and returns the status if found. If the status is not found in the cache or if it's offline, 'offline' is returned.
+     * Get the status of a visitor with the given ID
      *
      * @param int $id The ID of the visitor.
-     * @return string The status of the visitor ('online' if online, 'offline' if not found or offline).
+     * @return string The status of the visitor ('online' if online, 'offline' if not found or offline)
      */
     public function getVisitorStatus(int $id): string
     {
@@ -227,13 +238,9 @@ class VisitorManager
     }
 
     /**
-     * Retrieves an array of IDs of online visitors.
+     * Get an array of IDs of online visitors
      *
-     * This method retrieves a list of all visitor IDs from the visitor repository,
-     * checks the status of each visitor using the getVisitorStatus() method,
-     * and returns an array containing IDs of visitors who are currently online.
-     *
-     * @return array<int> An array containing IDs of visitors who are currently online.
+     * @return array<int> An array containing IDs of visitors who are currently online
      */
     public function getOnlineVisitorIDs(): array
     {

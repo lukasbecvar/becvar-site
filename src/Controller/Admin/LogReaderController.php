@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class LogReaderController
  *
- * Log reader controller provides read logs from the database table.
+ * Log reader controller provides read logs from the database table
  *
  * @package App\Controller\Admin
  */
@@ -42,11 +42,11 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Display logs from the database table.
+     * Display logs from the database table
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/logs', methods: ['GET'], name: 'admin_log_list')]
     public function logsTable(Request $request): Response
@@ -58,34 +58,33 @@ class LogReaderController extends AbstractController
         $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
 
         // render log reader view
-        return $this->render('admin/log-reader.html.twig', [
+        return $this->render('admin/log-reader.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // log reader data
-            'reader_page' => $page,
-            'reader_limit' => $_ENV['ITEMS_PER_PAGE'],
-            'logs_data' => $logs,
-            'logs_count' => count($logs),
-            'logs_all_count' => $this->databaseManager->countTableData('logs'),
-            'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
-            'login_logs_count' => $this->logManager->getLoginLogsCount(),
-            'visitor_data' => $this->databaseManager->getTableData('visitors', false),
-            'limit_value' => $_ENV['ITEMS_PER_PAGE'],
-            'where_ip' => null
+            'whereIp' => null,
+            'logsData' => $logs,
+            'readerPage' => $page,
+            'logsCount' => count($logs),
+            'limitValue' => $_ENV['ITEMS_PER_PAGE'],
+            'loginLogsCount' => $this->logManager->getLoginLogsCount(),
+            'unreeadedCount' => $this->logManager->getLogsCount('unreaded'),
+            'logsAllCount' => $this->databaseManager->countTableData('logs'),
+            'visitorData' => $this->databaseManager->getTableData('visitors', false)
         ]);
     }
 
     /**
-     * Display logs filtered by IP address.
+     * Display logs filtered by IP address
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
-    #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_where_ip')]
+    #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_whereIp')]
     public function logsWhereIp(Request $request): Response
     {
         // get query parameters
@@ -99,32 +98,31 @@ class LogReaderController extends AbstractController
         $logs = $this->logManager->getLogsWhereIP($ipAddress, $this->authManager->getUsername(), $page);
 
         // render log reader view
-        return $this->render('admin/log-reader.html.twig', [
+        return $this->render('admin/log-reader.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // log reader data
-            'reader_page' => $page,
-            'reader_limit' => $_ENV['ITEMS_PER_PAGE'],
-            'logs_data' => $logs,
-            'logs_count' => count($logs),
-            'logs_all_count' => $this->databaseManager->countTableData('logs'),
-            'unreeaded_count' => $this->logManager->getLogsCount('unreaded'),
-            'login_logs_count' => $this->logManager->getLoginLogsCount(),
-            'visitor_data' => $this->databaseManager->getTableData('visitors', false),
-            'limit_value' => $_ENV['ITEMS_PER_PAGE'],
-            'where_ip' => $ipAddress
+            'logsData' => $logs,
+            'readerPage' => $page,
+            'whereIp' => $ipAddress,
+            'logsCount' => count($logs),
+            'limitValue' => $_ENV['ITEMS_PER_PAGE'],
+            'loginLogsCount' => $this->logManager->getLoginLogsCount(),
+            'unreeadedCount' => $this->logManager->getLogsCount('unreaded'),
+            'logsAllCount' => $this->databaseManager->countTableData('logs'),
+            'visitorData' => $this->databaseManager->getTableData('visitors', false)
         ]);
     }
 
     /**
-     * Display a confirmation page for deleting all logs.
+     * Display a confirmation page for deleting all logs
      *
-     * @param Request $request object representing the HTTP request.
+     * @param Request $request object representing the HTTP request
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
@@ -135,9 +133,9 @@ class LogReaderController extends AbstractController
         // render delete confirmation view
         return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
             // user data
-            'user_name' => $this->authManager->getUsername(),
-            'user_role' => $this->authManager->getUserRole(),
-            'user_pic' => $this->authManager->getUserProfilePic(),
+            'userName' => $this->authManager->getUsername(),
+            'userRole' => $this->authManager->getUserRole(),
+            'userPic' => $this->authManager->getUserProfilePic(),
 
             // delete confirmation data
             'page' => $page
@@ -145,9 +143,9 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Set all logs as read.
+     * Set all logs as read
      *
-     * @return Response object representing the HTTP response.
+     * @return Response object representing the HTTP response
      */
     #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
