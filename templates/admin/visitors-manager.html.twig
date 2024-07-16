@@ -39,13 +39,12 @@
     </ul>
 
     {% if visitor_info_data != null %}
-        <div class="center-box">
-            <div class="ip-info-box">
-                <p class="ip-info-title">IP info: <span class="text-warning">{{current_ip}}:</span> <a href="/admin/logs/whereip?ip={{current_ip}}&page=1">view logs</a>
-                </p>
-                <ul class="ip-info-body">
+        <div class="card-phone card text-white m-3">
+            <div class="card-header">IP info: <span class="text-warning">{{current_ip}}:</span> <a class="text-info" href="/admin/logs/whereip?ip={{current_ip}}&page=1">view logs</a></div>
+            <div class="card-body">
+                <ul class="list-unstyled">
                     {% for key, value in visitor_info_data %}
-                        <li>{{ key|capitalize }}: {{ value }}</li>
+                        <li class="border-bottom py-2">{{ key|capitalize }}: {{ value }}</li>
                     {% endfor %}
                 </ul>
             </div>
