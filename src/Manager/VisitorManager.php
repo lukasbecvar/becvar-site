@@ -105,10 +105,11 @@ class VisitorManager
      * Get a paginated list of visitors.
      *
      * @param int $page The page number.
+     * @param string $filter The filter value.
      *
      * @return Visitor[]|null The list of visitors if found, null otherwise.
      */
-    public function getVisitors(int $page, string $filter): ?array
+    public function getVisitors(int $page, string $filter = '1'): ?array
     {
         $repo = $this->entityManager->getRepository(Visitor::class);
         $perPage = $_ENV['ITEMS_PER_PAGE'];
@@ -118,7 +119,7 @@ class VisitorManager
 
         // get visitors from database
         try {
-            if ($filter == 1) {
+            if ($filter == '1') {
                 $queryBuilder = $repo->createQueryBuilder('l')
                     ->setFirstResult($offset)
                     ->setMaxResults($perPage);
@@ -198,7 +199,7 @@ class VisitorManager
      */
     public function getVisitorsCount(int $page): int
     {
-        return count($this->getVisitors($page, 'all'));
+        return count($this->getVisitors($page));
     }
 
     /**
