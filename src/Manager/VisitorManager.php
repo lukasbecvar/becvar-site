@@ -108,7 +108,7 @@ class VisitorManager
      *
      * @return Visitor[]|null The list of visitors if found, null otherwise.
      */
-    public function getVisitors(int $page): ?array
+    public function getVisitors(int $page, string $filter): ?array
     {
         $repo = $this->entityManager->getRepository(Visitor::class);
         $perPage = $_ENV['ITEMS_PER_PAGE'];
@@ -118,9 +118,13 @@ class VisitorManager
 
         // get visitors from database
         try {
-            $queryBuilder = $repo->createQueryBuilder('l')
-                ->setFirstResult($offset)
-                ->setMaxResults($perPage);
+            if ($filter == 1) {
+                $queryBuilder = $repo->createQueryBuilder('l')
+                    ->setFirstResult($offset)
+                    ->setMaxResults($perPage);
+            } else {
+                $queryBuilder = $repo->createQueryBuilder('l');
+            }
 
             $visitors = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
@@ -129,7 +133,13 @@ class VisitorManager
         }
 
         // replace browser with formated value for log reader
-        foreach ($visitors as $visitor) {
+        foreach ($visitors as $key => $visitor) {
+            if ($filter == 'online') {
+                if (!in_array($visitor->getId(), $this->getOnlineVisitorIDs())) {
+                    unset($visitors[$key]);
+                }
+            }
+
             $userAgent = $visitor->getBrowser();
             $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
             $visitor->setBrowser($formatedBrowser);
@@ -188,7 +198,7 @@ class VisitorManager
      */
     public function getVisitorsCount(int $page): int
     {
-        return count($this->getVisitors($page));
+        return count($this->getVisitors($page, 'all'));
     }
 
     /**

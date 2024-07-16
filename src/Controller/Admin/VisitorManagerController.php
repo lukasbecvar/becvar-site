@@ -56,6 +56,9 @@ class VisitorManagerController extends AbstractController
         // get page int
         $page = intval($this->siteUtil->getQueryString('page', $request));
 
+        // get filter value
+        $filter = $this->siteUtil->getQueryString('filter', $request);
+
         // return visitor manager view
         return $this->render('admin/visitors-manager.html.twig', [
             // user data
@@ -65,11 +68,12 @@ class VisitorManagerController extends AbstractController
 
             // visitor manager data
             'page' => $page,
+            'filter' => $filter,
             'current_ip' => $this->visitorInfoUtil->getIP(),
             'online_visitors' => $this->visitorManager->getOnlineVisitorIDs(),
             'banned_count' => $this->banManager->getBannedCount(),
             'visitors_limit' => $_ENV['ITEMS_PER_PAGE'],
-            'visitors_data' => $this->visitorManager->getVisitors($page),
+            'visitors_data' => $this->visitorManager->getVisitors($page, $filter),
             'visitors_count' => $this->visitorManager->getVisitorsCount($page),
             'visitor_info_data' => null
         ]);
@@ -105,6 +109,7 @@ class VisitorManagerController extends AbstractController
             'user_pic' => $this->authManager->getUserProfilePic(),
 
             // visitor manager data
+            'filter' => 1,
             'current_ip' => $ipAddress,
             'visitor_info_data' => $ipInfoData,
             'online_visitors' => $this->visitorManager->getOnlineVisitorIDs(),

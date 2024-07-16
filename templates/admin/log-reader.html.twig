@@ -8,13 +8,19 @@
 <div class="admin-panel">
     <ul class="breadcrumb"> 
         <li>
-            <a class="selector-button btn-small" href="/admin/database/table?table=logs&page={{ reader_page }}"><strong>Unfiltered</strong></a>
+            <a class="selector-button btn-small" href="/admin/database/table?table=logs&page={{ reader_page }}">
+                <strong><i class="fa fa-database" aria-hidden="true"></i></strong>
+            </a>
         </li>  
         <li>
-            <a class="selector-button btn-small" href="/admin/logs/readed/all"><strong>Readed all</strong></a>
+            <a class="selector-button btn-small" href="/admin/logs/readed/all">
+                <strong><i class="fa fa-check" aria-hidden="true"></i></strong>
+            </a>
         </li> 
         <li>
-            <a class="selector-button btn-small" href="/admin/logs/delete?page=1"><strong>Delete all</strong></a>
+            <a class="selector-button btn-small" href="/admin/logs/delete?page=1">
+                <strong><i class="fa fa-trash" aria-hidden="true"></i></strong>
+            </a>
         </li>    
         <li class="count-text-in-menu">Logs reader</li>
     </ul>

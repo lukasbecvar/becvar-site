@@ -32,7 +32,6 @@
                 <a class="selector-button btn-small" href="/admin/database/delete?table={{ table_name }}&page=1&id=all">
                     <strong>
                         <i class="fa fa-trash" aria-hidden="true"></i> 
-                        {{ table_name }}
                     </strong>
                 </a>
             </li>
@@ -40,7 +39,7 @@
             <li>    
                 {% if table_name != 'code_paste' and table_name != 'images' %}
                     <a class="selector-button btn-small" href="/admin/database/add?table={{ table_name }}&page={{ page }}">
-                        <strong>NEW</strong>
+                        <i class="fa fa-plus" aria-hidden="true"></i> 
                     </a>
                 {% endif %}
             </li>
@@ -55,7 +54,7 @@
         {# <===== REGISTER NEW USER BUTTON =====> #}
         {% if table_name == 'users' %}
             <li>
-                <a class="selector-button btn-small" href="/register"><strong>REGISTER</strong></a>
+                <a class="selector-button btn-small" href="/register"><strong>R</strong></a>
             </li>        
         {% endif %}
         <li class="count-text-in-menu">{{ table_name }} = {{ table_data_count_all }} rows</li>
