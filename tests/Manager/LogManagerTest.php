@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Tests\Manager;
+
+use App\Util\CookieUtil;
+use App\Util\SecurityUtil;
+use App\Manager\LogManager;
+use App\Util\VisitorInfoUtil;
+use App\Manager\ErrorManager;
+use App\Manager\VisitorManager;
+use PHPUnit\Framework\TestCase;
+use Doctrine\ORM\EntityManagerInterface;
+
+/**
+ * Class LogManagerTest
+ *
+ * Test the log manager class
+ *
+ * @package App\Tests\Manager
+ */
+class LogManagerTest extends TestCase
+{
+    /**
+     * Test save log
+     *
+     * @return void
+     */
+    public function testLog(): void
+    {
+        // mock dependencies
+        $cookieUtil = $this->createMock(CookieUtil::class);
+        $errorManager = $this->createMock(ErrorManager::class);
+        $securityUtil = $this->createMock(SecurityUtil::class);
+        $visitorManager = $this->createMock(VisitorManager::class);
+        $visitorInfoUtil = $this->createMock(VisitorInfoUtil::class);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+
+        // set up EntityManager mock to expect method calls
+        $entityManager->expects($this->once())
+            ->method('persist');
+        $entityManager->expects($this->once())
+            ->method('flush');
+
+        // mock the VisitorManager to return a visitor ID
+        $visitorManager->expects($this->once())
+            ->method('getVisitorID')
+            ->willReturn(1);
+
+        // mock the VisitorInfoUtil to return a browser and IP address
+        $visitorInfoUtil->expects($this->once())
+            ->method('getBrowser')
+            ->willReturn('Mozilla/5.0');
+        $visitorInfoUtil->expects($this->once())
+            ->method('getIP')
+            ->willReturn('127.0.0.1');
+
+        // mock the SecurityUtil to escape strings
+        $securityUtil->expects($this->exactly(4))
+            ->method('escapeString')
+            ->willReturnCallback(function ($value) {
+                return htmlspecialchars($value, ENT_QUOTES);
+            });
+
+        // instantiate LogManager with mocked dependencies
+        $logManager = new LogManager(
+            $cookieUtil,
+            $errorManager,
+            $securityUtil,
+            $visitorManager,
+            $visitorInfoUtil,
+            $entityManager
+        );
+
+        // call log method with test data
+        $logManager->log('test_name', 'test_value');
+    }
+}

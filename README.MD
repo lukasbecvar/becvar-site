@@ -30,15 +30,6 @@ Docker is used only for development in this application. The production version 
 ## Deployment
 Deployment of the new version with GitHub Action when a new release is created.
 
-## TODOS
-
-- [ ] New tests
-   - [X] Util tests
-   - [X] Middleware tests
-   - [ ] Manager tests
-   - [ ] Controller tests
-   - [ ] Command tests
-
 ## Dependencies
 * Symfony
    * [Website](https://symfony.com/)   
