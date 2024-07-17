@@ -60,8 +60,13 @@ class VisitorInfoUtil
      *
      * @return string|null The short browser name
      */
-    public function getBrowserShortify(string $userAgent): ?string
+    public function getBrowserShortify(string $userAgent = null): ?string
     {
+        // set useragent if not set
+        if ($userAgent == null) {
+            $userAgent = $this->getBrowser();
+        }
+
         $output = null;
 
         // identify shortify array [ID: str_contains, Value: replacement]

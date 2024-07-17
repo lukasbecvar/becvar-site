@@ -3,11 +3,11 @@
 namespace App\Middleware;
 
 use Twig\Environment;
+use App\Util\CacheUtil;
 use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
-use App\Manager\CacheManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
@@ -24,9 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 class VisitorSystemMiddleware
 {
     private Environment $twig;
+    private CacheUtil $cacheUtil;
     private BanManager $banManager;
     private LogManager $logManager;
-    private CacheManager $cacheManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
     private VisitorManager $visitorManager;
@@ -35,9 +35,9 @@ class VisitorSystemMiddleware
 
     public function __construct(
         Environment $twig,
+        CacheUtil $cacheUtil,
         LogManager $logManager,
         BanManager $banManager,
-        CacheManager $cacheManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         VisitorManager $visitorManager,
@@ -45,9 +45,9 @@ class VisitorSystemMiddleware
         EntityManagerInterface $entityManager
     ) {
         $this->twig = $twig;
+        $this->cacheUtil = $cacheUtil;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
-        $this->cacheManager = $cacheManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
@@ -85,7 +85,7 @@ class VisitorSystemMiddleware
             $this->insertNewVisitor($date, $ipAddress, $browser, $os);
         } else {
             // cache online visitor
-            $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
+            $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 300);
 
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ipAddress)) {

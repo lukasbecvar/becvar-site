@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Visitor;
+use App\Util\CacheUtil;
 use App\Util\VisitorInfoUtil;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,20 +18,20 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class VisitorManager
 {
-    private CacheManager $cacheManager;
+    private CacheUtil $cacheUtil;
     private ErrorManager $errorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private VisitorRepository $visitorRepository;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        CacheManager $cacheManager,
+        CacheUtil $cacheUtil,
         ErrorManager $errorManager,
         VisitorInfoUtil $visitorInfoUtil,
         VisitorRepository $visitorRepository,
         EntityManagerInterface $entityManager
     ) {
-        $this->cacheManager = $cacheManager;
+        $this->cacheUtil = $cacheUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -227,7 +228,7 @@ class VisitorManager
         $userCacheKey = 'online_user_' . $id;
 
         // get user status
-        $status = $this->cacheManager->getValue($userCacheKey);
+        $status = $this->cacheUtil->getValue($userCacheKey);
 
         // check if status found
         if ($status->get() == null) {

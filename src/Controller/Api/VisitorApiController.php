@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
+use App\Util\CacheUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
-use App\Manager\CacheManager;
 use App\Manager\VisitorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,19 +19,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VisitorApiController extends AbstractController
 {
+    private CacheUtil $cacheUtil;
     private LogManager $logManager;
-    private CacheManager $cacheManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
+        CacheUtil $cacheUtil,
         LogManager $logManager,
-        CacheManager $cacheManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
+        $this->cacheUtil = $cacheUtil;
         $this->logManager = $logManager;
-        $this->cacheManager = $cacheManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -61,7 +61,7 @@ class VisitorApiController extends AbstractController
         // update visitor status
         try {
             // cache online visitor
-            $this->cacheManager->setValue('online_user_' . $visitor->getId(), 'online', 300);
+            $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 300);
 
             // update visitor status
             return $this->json([

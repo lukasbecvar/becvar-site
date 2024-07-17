@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Manager;
+namespace App\Util;
 
+use App\Manager\ErrorManager;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CacheManager
+ * Class CacheUtil
  *
  * Manages caching operations using a cache item pool
  *
- * @package App\Manager
+ * @package App\Util
  */
-class CacheManager
+class CacheUtil
 {
     private ErrorManager $errorManager;
     private CacheItemPoolInterface $cacheItemPoolInterface;

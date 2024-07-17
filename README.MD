@@ -14,11 +14,6 @@ Personal website build with the Symfony framework & Bootstrap.
  - Inbox for contact form
  - Advanced log system
 
-## Authenticator
- - This project uses my own authentication system, not Symfony security!
- - This authentication is designed to authenticate across my internal apps.
- - AuthManager contains functions for registration, login, logout, and user token authentication.
-
 ## Docker
 Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
 
@@ -33,14 +28,7 @@ Docker is used only for development in this application. The production version 
  - install opcache & acpu (optionally)
 
 ## Deployment
-Deployment of the new version is ensured by a deploy GitHub Action when a new release is created, or you can use a deploy script.
-
-## TODOS
-- [X] Remove server admin functions
-- [X] Visitor manager online filter
-- [X] Ip info redesign
-- [X] Complete refactor 
-- [ ] New tests
+Deployment of the new version with GitHub Action when a new release is created.
 
 ## Dependencies
 * Symfony
