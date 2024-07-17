@@ -124,10 +124,10 @@ class ContactController extends AbstractController
                 } else {
                     // save message & get return boolean
                     $save = $this->messagesManager->saveMessage(
-                        $name, 
-                        $email, 
-                        $messageInput, 
-                        $ipAddress, 
+                        $name,
+                        $email,
+                        $messageInput,
+                        $ipAddress,
                         $visitorId
                     );
 
