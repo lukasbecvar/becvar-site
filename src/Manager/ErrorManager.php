@@ -44,7 +44,7 @@ class ErrorManager
      *
      * @return string The rendered error view
      */
-    public function handleErrorView(string|int $code): string
+    public function getErrorView(string|int $code): string
     {
         try {
             return $this->twig->render('errors/error-' . $code . '.twig');

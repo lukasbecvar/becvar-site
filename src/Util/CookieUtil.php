@@ -21,6 +21,16 @@ class CookieUtil
     }
 
     /**
+     * Check if the specified cookie is set
+     *
+     * @param string $name The name of the cookie
+     */
+    public function isCookieSet(string $name): bool
+    {
+        return isset($_COOKIE[$name]);
+    }
+
+    /**
      * Set a cookie with the specified name, value, and expiration
      *
      * @param string $name The name of the cookie

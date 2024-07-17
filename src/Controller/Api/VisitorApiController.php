@@ -61,7 +61,7 @@ class VisitorApiController extends AbstractController
         // update visitor status
         try {
             // cache online visitor
-            $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 300);
+            $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 400);
 
             // update visitor status
             return $this->json([
