@@ -126,6 +126,9 @@ class VisitorManager
         $repo = $this->entityManager->getRepository(Visitor::class);
         $perPage = $_ENV['ITEMS_PER_PAGE'];
 
+        // get online visitors list
+        $onlineVisitors = $this->getOnlineVisitorIDs();
+
         // calculate offset
         $offset = ($page - 1) * $perPage;
 
@@ -151,7 +154,7 @@ class VisitorManager
         // replace browser with formated value for log reader
         foreach ($visitors as $key => $visitor) {
             if ($filter == 'online') {
-                if (!in_array($visitor->getId(), $this->getOnlineVisitorIDs())) {
+                if (!in_array($visitor->getId(), $onlineVisitors)) {
                     unset($visitors[$key]);
                 }
             }

@@ -154,7 +154,7 @@
                 {% if page != 1 %}
                     <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page - 1}) }}>Back</a>
                 {% endif %}
-                {% if visitorsLimit == visitorsCount %}
+                {% if visitorsLimit == visitorsCount and filter == 1 %}
                     <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page + 1}) }}>Next</a>
                 {% endif %}
             </div>
