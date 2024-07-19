@@ -121,7 +121,7 @@ class SiteUtil
      */
     public function getHostServerIpAddress(): string
     {
-        $IpInfoApiUrl = $this->isSsl() ? 'https://' . $this->getHttpHost() . '/api/ipnfo' : 'http://' . $this->getHttpHost() . '/api/ipnfo';
+        $IpInfoApiUrl = $this->isSsl() ? 'https://' . $this->getHttpHost() . '/api/ipinfo' : 'http://' . $this->getHttpHost() . '/api/ipinfo';
 
         // check if host server ip address cached
         if ($this->cacheUtil->isCatched('host_server_ip_address')) {

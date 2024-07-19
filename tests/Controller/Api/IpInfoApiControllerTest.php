@@ -31,7 +31,7 @@ class IpInfoApiControllerTest extends WebTestCase
     public function testIpInfoAPI(): void
     {
         // make post request to admin init controller
-        $this->client->request('GET', '/api/ipnfo');
+        $this->client->request('GET', '/api/ipinfo');
 
         // assert
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

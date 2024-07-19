@@ -28,7 +28,7 @@ class IpInfoApiController extends AbstractController
      *
      * @return Response object representing the HTTP response
      */
-    #[Route('/api/ipnfo', methods: ['GET', 'POST'], name: 'api_ipinfo')]
+    #[Route('/api/ipinfo', methods: ['GET', 'POST'], name: 'api_ipinfo')]
     public function ipInfo(): Response
     {
         $textResponse = new Response($this->visitorInfoUtil->getIP(), 200);
