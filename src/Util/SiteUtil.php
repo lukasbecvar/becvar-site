@@ -121,6 +121,8 @@ class SiteUtil
      */
     public function getHostServerIpAddress(): string
     {
+        $IpInfoApiUrl = $this->isSsl() ? 'https://' . $this->getHttpHost() . '/api/ipnfo' : 'http://' . $this->getHttpHost() . '/api/ipnfo';
+
         // check if host server ip address cached
         if ($this->cacheUtil->isCatched('host_server_ip_address')) {
             // return cached host server ip address
@@ -129,7 +131,13 @@ class SiteUtil
 
         // get host server ip address
         try {
-            $hostServerIpAddress = file_get_contents('http://ipecho.net/plain', context: stream_context_create(['http' => ['timeout' => 3]]));
+            $hostServerIpAddress = file_get_contents(
+                $IpInfoApiUrl,
+                context: stream_context_create(
+                    ['http' => ['timeout' => 3]
+                    ]
+                )
+            );
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 msg: 'error to get host server ip address: ' . $e->getMessage(),
