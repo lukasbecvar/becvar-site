@@ -2,7 +2,9 @@
 
 namespace App\Util;
 
+use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SiteUtil
@@ -13,10 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SiteUtil
 {
+    private CacheUtil $cacheUtil;
+    private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
 
-    public function __construct(SecurityUtil $securityUtil)
+    public function __construct(CacheUtil $cacheUtil, ErrorManager $errorManager, SecurityUtil $securityUtil)
     {
+        $this->cacheUtil = $cacheUtil;
+        $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
     }
 
@@ -106,6 +112,37 @@ class SiteUtil
         }
 
         return false;
+    }
+
+    /**
+     * Get the host server ip address
+     *
+     * @return string The host server ip address
+     */
+    public function getHostServerIpAddress(): string
+    {
+        // check if host server ip address cached
+        if ($this->cacheUtil->isCatched('host_server_ip_address')) {
+            // return cached host server ip address
+            return $this->cacheUtil->getValue('host_server_ip_address')->get();
+        }
+
+        // get host server ip address
+        try {
+            $hostServerIpAddress = file_get_contents('http://ipecho.net/plain', context: stream_context_create(['http' => ['timeout' => 3]]));
+        } catch (\Exception $e) {
+            $this->errorManager->handleError(
+                msg: 'error to get host server ip address: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+            $hostServerIpAddress = '127.0.0.1';
+        }
+
+        // cache host server ip address
+        $this->cacheUtil->setValue('host_server_ip_address', $hostServerIpAddress, 86400);
+
+        // return host server ip address
+        return $hostServerIpAddress;
     }
 
     /**
