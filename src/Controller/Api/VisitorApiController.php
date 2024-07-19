@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Util\SiteUtil;
 use App\Util\CacheUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
@@ -20,20 +19,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VisitorApiController extends AbstractController
 {
-    private SiteUtil $siteUtil;
     private CacheUtil $cacheUtil;
     private LogManager $logManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
-        SiteUtil $siteUtil,
         CacheUtil $cacheUtil,
         LogManager $logManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
-        $this->siteUtil = $siteUtil;
         $this->cacheUtil = $cacheUtil;
         $this->logManager = $logManager;
         $this->visitorManager = $visitorManager;
@@ -48,14 +44,6 @@ class VisitorApiController extends AbstractController
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(): Response
     {
-        // check if updating visitor status from host server
-        if ($this->siteUtil->getHostServerIpAddress() == $this->visitorInfoUtil->getIP()) {
-            return $this->json([
-                'status' => 'error',
-                'message' => 'error cannot update visitor status from host server'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
         // get user ip
         $ipAddress = $this->visitorInfoUtil->getIP();
 

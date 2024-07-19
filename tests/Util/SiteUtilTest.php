@@ -3,9 +3,7 @@
 namespace App\Tests\Util;
 
 use App\Util\SiteUtil;
-use App\Util\CacheUtil;
 use App\Util\SecurityUtil;
-use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,16 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 class SiteUtilTest extends TestCase
 {
     private SiteUtil $siteUtil;
-    private CacheUtil|MockObject $cacheUtilMock;
-    private ErrorManager|MockObject $errorManagerMock;
     private SecurityUtil|MockObject $securityUtilMock;
 
     protected function setUp(): void
     {
-        $this->cacheUtilMock = $this->createMock(CacheUtil::class);
-        $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
-        $this->siteUtil = new SiteUtil($this->cacheUtilMock, $this->errorManagerMock, $this->securityUtilMock);
+        $this->siteUtil = new SiteUtil($this->securityUtilMock);
     }
 
     /**
@@ -123,16 +117,6 @@ class SiteUtilTest extends TestCase
 
         $_ENV['APP_ENV'] = 'prod';
         $this->assertFalse($this->siteUtil->isDevMode());
-    }
-
-    /**
-     * Test get host server ip address
-     *
-     * @return void
-     */
-    public function testGetHostServerIpAddress(): void
-    {
-        $this->assertIsString($this->siteUtil->getHostServerIpAddress());
     }
 
     /**
