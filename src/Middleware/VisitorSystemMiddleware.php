@@ -84,9 +84,6 @@ class VisitorSystemMiddleware
             // save new visitor data
             $this->insertNewVisitor($date, $ipAddress, $browser, $os);
         } else {
-            // cache online visitor
-            $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 300);
-
             // check if visitor banned
             if ($this->banManager->isVisitorBanned($ipAddress)) {
                 $reason = $this->banManager->getBanReason($ipAddress);
