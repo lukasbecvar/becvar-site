@@ -10,5 +10,5 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(sendOnlineStatus, 300000)
 
     // send online status on page init
-    setTimeout(sendOnlineStatus, 5000)
+    setTimeout(sendOnlineStatus, 1000)
 })
