@@ -89,7 +89,7 @@ class VisitorSystemMiddleware
             $this->insertNewVisitor($date, $ipAddress, $browser, $os);
         } else {
             // check if updating visitor status from host server
-            if ($this->siteUtil->getHostServerIpAddress() == $this->visitorInfoUtil->getIP()) {
+            if ($this->siteUtil->getHostServerIpAddress() != $this->visitorInfoUtil->getIP()) {
                 // cache online visitor
                 $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 300);
             }
