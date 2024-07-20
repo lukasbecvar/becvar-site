@@ -24,29 +24,35 @@ class SecurityUtil
     }
 
     /**
-     * Validate a plain text against a bcrypt hash
+     * Generate hash for a given password
      *
-     * @param string $plainText The plain text to validate
-     * @param string $hash The bcrypt hash for comparison
+     * @param string $password The password to hash
      *
-     * @return bool True if the validation succeeds, false otherwise
+     * @return string The hashed password
      */
-    public function hashValidate(string $plainText, string $hash): bool
+    public function generateHash(string $password): string
     {
-        return password_verify($plainText, $hash);
+        $options = [
+            'memory_cost' => 131072,
+            'time_cost' => 4,
+            'threads' => 4
+        ];
+
+        // generate hash
+        return password_hash($password, PASSWORD_ARGON2ID, $options);
     }
 
     /**
-     * Generate a bcrypt hash for a plain text
+     * Verify a password against a given Argon2 hash
      *
-     * @param string $plainText The plain text to hash
-     * @param int $cost The cost parameter for bcrypt
+     * @param string $password The password to verify
+     * @param string $hash The hash to verify against
      *
-     * @return string The generated bcrypt hash
+     * @return bool True if the password is valid, false otherwise
      */
-    public function genBcryptHash(string $plainText, int $cost): string
+    public function verifyPassword(string $password, string $hash): bool
     {
-        return password_hash($plainText, PASSWORD_BCRYPT, ['cost' => $cost]);
+        return password_verify($password, $hash);
     }
 
     /**

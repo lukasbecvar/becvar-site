@@ -75,7 +75,7 @@ class LoginController extends AbstractController
                 $userPassword = $userData->getPassword();
 
                 // check if password valid
-                if ($this->securityUtil->hashValidate($password, $userPassword)) {
+                if ($this->securityUtil->verifyPassword($password, $userPassword)) {
                     $this->authManager->login($username, $userData->getToken(), $remember);
                 } else { // invalid password error
                     $this->logManager->log(

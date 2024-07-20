@@ -10,9 +10,6 @@ WORKDIR /var/www
 # update packages and install necessary dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
-    libzip-dev \ 
-    unzip \
-    zip \
     rpm
     
 # install necessary PHP extensions

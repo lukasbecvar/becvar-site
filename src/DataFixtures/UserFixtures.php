@@ -36,7 +36,7 @@ class UserFixtures extends Fixture
         // add test user
         $testUser = new User();
         $testUser->setUsername('test')
-            ->setPassword($this->securityUtil->genBcryptHash('test', 10))
+            ->setPassword($this->securityUtil->generateHash('test'))
             ->setRole('Owner')
             ->setIpAddress('127.0.0.1')
             ->setToken(ByteString::fromRandom(32)->toString())
@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
         $manager->persist($testUser);
 
         // generate testing users
-        for ($i = 2; $i < 20; $i++) {
+        for ($i = 2; $i < 15; $i++) {
             $user = new User();
 
             // generate a random username
@@ -57,7 +57,7 @@ class UserFixtures extends Fixture
 
             // set user properties
             $user->setUsername($username)
-                ->setPassword($this->securityUtil->genBcryptHash('testtest', 10))
+                ->setPassword($this->securityUtil->generateHash('testtest'))
                 ->setRole('User')
                 ->setIpAddress('127.0.0.1')
                 ->setToken(ByteString::fromRandom(32)->toString())

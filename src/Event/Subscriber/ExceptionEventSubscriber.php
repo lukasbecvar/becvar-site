@@ -52,12 +52,12 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
 
         // check if the event can be logged
         if ($this->canBeEventLogged($message)) {
-            // log the exception
+            // log the exception to database
             $this->logManager->log('exception', $message);
         }
 
         // log the error message with monolog
-        $this->logger->error($message);
+        $this->logger->critical($message);
     }
 
     /**

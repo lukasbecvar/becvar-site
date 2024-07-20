@@ -231,8 +231,8 @@ class AccountSettingsController extends AbstractController
                 $errorMsg = 'Your passwords is not match!';
             } else {
                 try {
-                    // hash password
-                    $passwordHash = $this->securityUtil->genBcryptHash($password, 10);
+                    // hash password (Argon2)
+                    $passwordHash = $this->securityUtil->generateHash($password);
 
                     // update password
                     $userRepo->setPassword($passwordHash);

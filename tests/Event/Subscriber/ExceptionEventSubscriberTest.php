@@ -76,7 +76,7 @@ class ExceptionEventSubscriberTest extends TestCase
         // check if the logger logs the error message
         $this->logger
             ->expects($this->once())
-            ->method('error')
+            ->method('critical')
             ->with('Unknown database error');
 
         // handle the exception event

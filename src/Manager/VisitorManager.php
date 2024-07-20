@@ -134,12 +134,13 @@ class VisitorManager
 
         // get visitors from database
         try {
-            if ($filter == '1') {
-                $queryBuilder = $repo->createQueryBuilder('l')
-                    ->setFirstResult($offset)
-                    ->setMaxResults($perPage);
-            } else {
-                $queryBuilder = $repo->createQueryBuilder('l');
+            $queryBuilder = $repo->createQueryBuilder('l')
+                ->setFirstResult($offset)
+                ->setMaxResults($perPage);
+
+            // filter online visitors
+            if ($filter === 'online') {
+                $queryBuilder->andWhere('l.id IN (:onlineIds)')->setParameter('onlineIds', $onlineVisitors);
             }
 
             $visitors = $queryBuilder->getQuery()->getResult();
@@ -148,21 +149,15 @@ class VisitorManager
                 'error to get visitors: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            $visitors = [];
+            return [];
         }
 
         // replace browser with formated value for log reader
-        foreach ($visitors as $key => $visitor) {
-            if ($filter == 'online') {
-                if (!in_array($visitor->getId(), $onlineVisitors)) {
-                    unset($visitors[$key]);
-                }
-            }
-
+        array_walk($visitors, function ($visitor) {
             $userAgent = $visitor->getBrowser();
             $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
             $visitor->setBrowser($formatedBrowser);
-        }
+        });
 
         return $visitors;
     }

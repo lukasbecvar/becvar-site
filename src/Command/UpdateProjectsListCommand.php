@@ -50,7 +50,7 @@ class UpdateProjectsListCommand extends Command
             $io->success('Projects list updated!');
             return Command::SUCCESS;
         } catch (\Exception $e) {
-            $io->error('process error: ' . $e->getMessage());
+            $io->error('Process error: ' . $e->getMessage());
             return Command::FAILURE;
         }
     }

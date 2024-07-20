@@ -37,30 +37,29 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
-     * Test hash validation
+     * Test verify password
      *
      * @return void
      */
-    public function testHashValidate(): void
+    public function testVerifyPassword(): void
     {
-        $plainText = 'password123';
-        $hash = password_hash($plainText, PASSWORD_BCRYPT);
+        $password = 'password123';
+        $hash = password_hash($password, PASSWORD_ARGON2ID);
 
         // assert result
-        $this->assertTrue($this->securityUtil->hashValidate($plainText, $hash));
-        $this->assertFalse($this->securityUtil->hashValidate('wrongpassword', $hash));
+        $this->assertTrue($this->securityUtil->verifyPassword($password, $hash));
+        $this->assertFalse($this->securityUtil->verifyPassword('wrongpassword', $hash));
     }
 
     /**
-     * Test generate bcrypt hash
+     * Test generate password hash
      *
      * @return void
      */
-    public function testGenBcryptHash(): void
+    public function testGenerateHash(): void
     {
         $plainText = 'password123';
-        $cost = 10;
-        $hash = $this->securityUtil->genBcryptHash($plainText, $cost);
+        $hash = $this->securityUtil->generateHash($plainText);
 
         // assert result
         $this->assertTrue(password_verify($plainText, $hash));

@@ -214,7 +214,7 @@ class AuthManager
         $visitorId = $this->visitorManager->getVisitorID($ipAddress);
 
         // password hash
-        $hashedPassword = $this->securityUtil->genBcryptHash($password, 10);
+        $hashedPassword = $this->securityUtil->generateHash($password);
 
         // default profile pics base64
         $imageBase64 = 'non-pic';

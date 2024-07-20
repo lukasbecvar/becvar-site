@@ -82,6 +82,6 @@ class UpdateProjectsListCommandTest extends TestCase
         $output = $commandTester->getDisplay();
 
         // assert the output
-        $this->assertStringContainsString('process error: Something went wrong', $output);
+        $this->assertStringContainsString('Process error: Something went wrong', $output);
     }
 }
