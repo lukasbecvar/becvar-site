@@ -45,4 +45,4 @@ Deployment of the new version with GitHub Action when a new release is created.
    * [Github](https://github.com/indentno/phpunit-pretty-print)
    
 ## License
-The framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
+The framework is open-sourced software licensed under the [MIT license](https://github.com/lordbecvold/becvar-site/blob/main/LICENSE)
