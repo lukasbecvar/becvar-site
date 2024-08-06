@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Log;
+use App\Util\JsonUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LogManager
 {
+    private JsonUtil $jsonUtil;
     private CookieUtil $cookieUtil;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
@@ -26,6 +28,7 @@ class LogManager
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        JsonUtil $jsonUtil,
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
@@ -33,6 +36,7 @@ class LogManager
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->jsonUtil = $jsonUtil;
         $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -113,12 +117,46 @@ class LogManager
             try {
                 $this->entityManager->persist($LogEntity);
                 $this->entityManager->flush();
+
+                // send log to external log
+                $this->externalLog($value);
             } catch (\Exception $e) {
                 $this->errorManager->handleError(
                     'log-error: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
+        }
+    }
+
+    /**
+     * Send log to external log
+     *
+     * @param string $value The value of the log
+     *
+     * @throws \App\Exception\AppErrorException Error to send log to external log
+     *
+     * @return void
+     */
+    public function externalLog(string $value): void
+    {
+        if (!($_ENV['EXTERNAL_LOG_ENABLED'] == 'true')) {
+            return;
+        }
+
+        // get external log config
+        $externalLogUrl = $_ENV['EXTERNAL_LOG_URL'];
+        $externalLogToken = $_ENV['EXTERNAL_LOG_TOKEN'];
+
+        try {
+            $this->jsonUtil->getJson(
+                $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4'
+            );
+        } catch (\Exception $e) {
+            $this->errorManager->handleError(
+                'external-log-error: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 

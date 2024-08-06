@@ -2,6 +2,7 @@
 
 namespace App\Tests\Manager;
 
+use App\Util\JsonUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
@@ -28,6 +29,7 @@ class LogManagerTest extends TestCase
     public function testLog(): void
     {
         // mock dependencies
+        $jsonUtil = $this->createMock(JsonUtil::class);
         $cookieUtil = $this->createMock(CookieUtil::class);
         $errorManager = $this->createMock(ErrorManager::class);
         $securityUtil = $this->createMock(SecurityUtil::class);
@@ -63,6 +65,7 @@ class LogManagerTest extends TestCase
 
         // instantiate LogManager with mocked dependencies
         $logManager = new LogManager(
+            $jsonUtil,
             $cookieUtil,
             $errorManager,
             $securityUtil,
