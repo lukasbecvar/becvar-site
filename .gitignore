@@ -4,9 +4,6 @@
 /.env.local.php
 /.env.*.local
 
-# database migrations
-/migrations/
-
 # docker env data
 /_docker/services/
 
