@@ -25,17 +25,18 @@ class JsonUtil
      * Get JSON data from a file or URL
      *
      * @param string $target The file path or URL
+     * @param string $method The HTTP method to use
      *
      * @throws \App\Exception\AppErrorException Error get json content
      *
      * @return array<mixed>|null The decoded JSON data as an associative array or null on failure
      */
-    public function getJson($target): ?array
+    public function getJson(string $target, string $method = 'GET'): ?array
     {
         // request context
         $context = stream_context_create([
             'http' => [
-                'method' => 'GET',
+                'method' => $method,
                 'header' => [
                     'User-Agent: becvar-site'
                 ],

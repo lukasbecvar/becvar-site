@@ -150,7 +150,8 @@ class LogManager
 
         try {
             $this->jsonUtil->getJson(
-                $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4'
+                target: $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
+                method: 'POST'
             );
         } catch (\Exception $e) {
             $this->errorManager->handleError(
