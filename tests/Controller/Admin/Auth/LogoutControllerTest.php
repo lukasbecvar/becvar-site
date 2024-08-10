@@ -24,7 +24,7 @@ class LogoutControllerTest extends WebTestCase
     }
 
     /**
-     * Test the logout functionality.
+     * Test the logout functionality
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class LogoutControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/logout');
 
-        // assert
+        // assert response
         $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertResponseNotHasCookie('login-token-cookie');

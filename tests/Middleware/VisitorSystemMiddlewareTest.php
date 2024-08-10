@@ -48,7 +48,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         $this->visitorManagerMock = $this->createMock(\App\Manager\VisitorManager::class);
         $this->entityManagerMock = $this->createMock(\Doctrine\ORM\EntityManagerInterface::class);
 
-        // create instance of VisitorSystemMiddleware with mocks
+        // create instance of VisitorSystemMiddleware
         $this->middleware = new VisitorSystemMiddleware(
             $this->twigMock,
             $this->logManagerMock,
@@ -81,10 +81,8 @@ class VisitorSystemMiddlewareTest extends TestCase
             ->willReturn(['city' => 'Test City', 'country' => 'Test Country']);
 
         // mock entity manager
-        $this->entityManagerMock->expects($this->once())
-            ->method('persist');
-        $this->entityManagerMock->expects($this->once())
-            ->method('flush');
+        $this->entityManagerMock->expects($this->once())->method('persist');
+        $this->entityManagerMock->expects($this->once())->method('flush');
 
         // execute method
         $this->middleware->insertNewVisitor($date, $ipAddress, $browser, $os);
@@ -111,8 +109,7 @@ class VisitorSystemMiddlewareTest extends TestCase
             ->willReturn($visitor);
 
         // mock entity manager
-        $this->entityManagerMock->expects($this->once())
-            ->method('flush');
+        $this->entityManagerMock->expects($this->once())->method('flush');
 
         // execute method
         $this->middleware->updateVisitor($date, $ipAddress, $browser, $os);

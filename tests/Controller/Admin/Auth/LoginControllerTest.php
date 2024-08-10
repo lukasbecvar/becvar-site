@@ -57,7 +57,7 @@ class LoginControllerTest extends WebTestCase
     }
 
     /**
-     * Remove fake data from the database.
+     * Remove fake data from the database
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class LoginControllerTest extends WebTestCase
     }
 
     /**
-     * Test loading the login page.
+     * Test loading the login page
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class LoginControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/login');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Remember me');
@@ -101,7 +101,7 @@ class LoginControllerTest extends WebTestCase
     }
 
     /**
-     * Test submitting the login form with empty fields.
+     * Test submitting the login form with empty fields
      *
      * @return void
      */
@@ -117,14 +117,14 @@ class LoginControllerTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
     }
 
     /**
-     * Test submitting the login form with incorrect credentials.
+     * Test submitting the login form with incorrect credentials
      *
      * @return void
      */
@@ -140,13 +140,13 @@ class LoginControllerTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
     /**
-     * Test submitting the login form with an incorrect username.
+     * Test submitting the login form with an incorrect username
      *
      * @return void
      */
@@ -162,13 +162,13 @@ class LoginControllerTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
     /**
-     * Test submitting the login form with an incorrect password.
+     * Test submitting the login form with an incorrect password
      *
      * @return void
      */
@@ -184,13 +184,13 @@ class LoginControllerTest extends WebTestCase
         // submit form
         $this->client->submit($form);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
     }
 
     /**
-     * Test submitting the login form with valid credentials.
+     * Test submitting the login form with valid credentials
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class LoginControllerTest extends WebTestCase
         // check if login success
         $crawler = $this->client->followRedirect();
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
     }

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class RegisterTest
  *
- * Register component test.
+ * Register component test
  *
  * @package App\Tests\Admin\Auth
  */
@@ -32,7 +32,7 @@ class RegisterTest extends WebTestCase
     }
 
     /**
-     * Remove fake user data after each test.
+     * Remove fake user data after each test
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class RegisterTest extends WebTestCase
     }
 
     /**
-     * Test if the register page is loaded when registration is allowed.
+     * Test if the register page is loaded when registration is allowed
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | Login');
         $this->assertSelectorTextContains('.form-title', 'Register admin account');
@@ -81,7 +81,7 @@ class RegisterTest extends WebTestCase
     }
 
     /**
-     * Test if the register page redirects when registration is not allowed.
+     * Test if the register page redirects when registration is not allowed
      *
      * @return void
      */
@@ -94,12 +94,12 @@ class RegisterTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/register');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     /**
-     * Test if the register form handles empty submission correctly.
+     * Test if the register form handles empty submission correctly
      *
      * @return void
      */
@@ -118,7 +118,7 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -126,7 +126,7 @@ class RegisterTest extends WebTestCase
     }
 
     /**
-     * Test if the register form handles passwords that do not match correctly.
+     * Test if the register form handles passwords that do not match correctly
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class RegisterTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords dont match');
     }

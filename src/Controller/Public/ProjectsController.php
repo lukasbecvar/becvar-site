@@ -36,7 +36,7 @@ class ProjectsController extends AbstractController
     /**
      * Displays the public projects page
      *
-     * @return Response The response containing the rendered projects page
+     * @return Response The projects page view response
      */
     #[Route('/projects', methods: ['GET'], name: 'public_projects')]
     public function projectsList(): Response

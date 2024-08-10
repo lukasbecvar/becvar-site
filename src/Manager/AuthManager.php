@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class AuthManager
  *
  * AuthManager provides login/logout methods
- * Note: Login uses its own Authenticator, not Symfony auth
+ * Note: Login uses its own Authenticator, not Symfony security
  *
  * @package App\Manager
  */

@@ -32,44 +32,44 @@ class ContactFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('name', TextType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'form-control mt-3',
-                'placeholder' => 'Your name',
-            ],
-            'mapped' => true,
-            'translation_domain' => false
-        ])
-        ->add('email', EmailType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'form-control mt-3',
-                'placeholder' => 'Your Email',
-            ],
-            'mapped' => true,
-            'translation_domain' => false
-        ])
-        ->add('message', TextareaType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'form-control resize-disable mt-3',
-                'placeholder' => 'Message',
-                'maxlength' => 1024
-            ],
-            'mapped' => true,
-            'translation_domain' => false
-        ])
-        ->add('websiteIN', TextareaType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'websiteIN',
-                'placeholder' => 'Website',
-            ],
-            'mapped' => false,
-            'required' => false,
-            'translation_domain' => false
-        ])
+            ->add('name', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control mt-3',
+                    'placeholder' => 'Your name',
+                ],
+                'mapped' => true,
+                'translation_domain' => false
+            ])
+            ->add('email', EmailType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control mt-3',
+                    'placeholder' => 'Your Email',
+                ],
+                'mapped' => true,
+                'translation_domain' => false
+            ])
+            ->add('message', TextareaType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control resize-disable mt-3',
+                    'placeholder' => 'Message',
+                    'maxlength' => 1024
+                ],
+                'mapped' => true,
+                'translation_domain' => false
+            ])
+            ->add('websiteIN', TextareaType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'websiteIN',
+                    'placeholder' => 'Website',
+                ],
+                'mapped' => false,
+                'required' => false,
+                'translation_domain' => false
+            ])
         ;
     }
 

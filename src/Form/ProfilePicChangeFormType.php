@@ -31,23 +31,23 @@ class ProfilePicChangeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('profile-pic', FileType::class, [
-            'label' => false,
-            'multiple' => false,
-            'mapped' => false,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Please add image/s',
-                ])
-            ],
-            'attr' => [
-                'class' => 'file-input-control profile-pic-change',
-                'placeholder' => 'Profile picture',
-                'accept' => 'image/*',
-                'image_property' => 'image'
-            ],
-            'translation_domain' => false
-        ])
+            ->add('profile-pic', FileType::class, [
+                'label' => false,
+                'multiple' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please add image/s',
+                    ])
+                ],
+                'attr' => [
+                    'class' => 'file-input-control profile-pic-change',
+                    'placeholder' => 'Profile picture',
+                    'accept' => 'image/*',
+                    'image_property' => 'image'
+                ],
+                'translation_domain' => false
+            ])
         ;
     }
 

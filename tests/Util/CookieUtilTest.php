@@ -21,7 +21,10 @@ class CookieUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
+
+        // create instance of CookieUtil
         $this->cookieUtil = new CookieUtil($this->securityUtilMock);
     }
 

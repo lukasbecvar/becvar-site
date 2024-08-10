@@ -1,14 +1,12 @@
 #!/bin/bash
 
-# install all application requirements
-
-# install composer
+# install composer packages
 if [ ! -d 'vendor/' ]
 then
     composer install
 fi
 
-# install node modules
+# install node-modules packages
 if [ ! -d 'node_modules/' ]
 then
     npm install --loglevel=error

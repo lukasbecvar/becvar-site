@@ -18,6 +18,7 @@ class LinkifyExtensionTest extends TestCase
 
     protected function setUp(): void
     {
+        // create instance of LinkifyExtension
         $this->linkifyExtension = new LinkifyExtension();
     }
 
@@ -80,6 +81,7 @@ class LinkifyExtensionTest extends TestCase
      */
     public function testLinkifyText(string $input, string $expected): void
     {
+        // assert result
         $this->assertEquals($expected, $this->linkifyExtension->linkifyText($input));
     }
 }

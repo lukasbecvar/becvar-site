@@ -32,7 +32,7 @@ class MessageFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        // message data
+        // testing message data
         $messageData = [
             ['message' => 'test message 1'],
             ['message' => 'test message 2'],

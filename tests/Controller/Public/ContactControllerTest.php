@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class ContactControllerTest
  *
- * Test cases for the Contact page.
+ * Test cases for the Contact page
  *
  * @package App\Tests\Public
  */
@@ -24,16 +24,16 @@ class ContactControllerTest extends WebTestCase
     }
 
     /**
-     * Test accessing the Contact page.
+     * Test accessing the Contact page
      *
      * @return void
      */
-    public function testContactPage()
+    public function testContactPage(): void
     {
         // make get request
         $this->client->request('GET', '/contact');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('form[name="contact_form"]');
         $this->assertSelectorExists('input[name="contact_form[name]"]');

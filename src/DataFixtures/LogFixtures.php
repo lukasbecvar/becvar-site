@@ -24,6 +24,7 @@ class LogFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
+        // testing data
         $logsData = [
             [
                 'name' => 'internal-error',

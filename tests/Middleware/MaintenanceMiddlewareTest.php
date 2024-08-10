@@ -20,15 +20,26 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class MaintenanceMiddlewareTest extends TestCase
 {
+    /** tested middleware */
+    private MaintenanceMiddleware $middleware;
+
     private SiteUtil|MockObject $siteUtilMock;
     private LoggerInterface|MockObject $loggerMock;
     private ErrorManager|MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->siteUtilMock = $this->createMock(SiteUtil::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
+
+        // create instance of MaintenanceMiddleware
+        $this->middleware = new MaintenanceMiddleware(
+            $this->siteUtilMock,
+            $this->loggerMock,
+            $this->errorManagerMock
+        );
     }
 
     /**
@@ -38,23 +49,19 @@ class MaintenanceMiddlewareTest extends TestCase
      */
     public function testRequestWhenMaintenanceModeEnabled(): void
     {
-        $this->siteUtilMock->expects($this->once())
-            ->method('isMaintenance')
-            ->willReturn(true);
+        // mock the site util
+        $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(true);
 
-        $middleware = new MaintenanceMiddleware(
-            $this->siteUtilMock,
-            $this->loggerMock,
-            $this->errorManagerMock
-        );
-
+        // create a mock request event
         $event = $this->createMock(RequestEvent::class);
 
+        // mock the error manager
         $this->errorManagerMock->expects($this->once())
             ->method('getErrorView')
             ->with('maintenance')
             ->willReturn('Maintenance Mode Content');
 
+        // expect the response
         $event->expects($this->once())
             ->method('setResponse')
             ->with($this->callback(function ($response) {
@@ -63,7 +70,8 @@ class MaintenanceMiddlewareTest extends TestCase
                     $response->getContent() === 'Maintenance Mode Content';
             }));
 
-        $middleware->onKernelRequest($event);
+        // call the middleware method
+        $this->middleware->onKernelRequest($event);
     }
 
     /**
@@ -73,24 +81,19 @@ class MaintenanceMiddlewareTest extends TestCase
      */
     public function testRequestWhenMaintenanceModeDisabled(): void
     {
-        $this->siteUtilMock->expects($this->once())
-            ->method('isMaintenance')
-            ->willReturn(false);
+        // mock the site util
+        $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(false);
 
-        $middleware = new MaintenanceMiddleware(
-            $this->siteUtilMock,
-            $this->loggerMock,
-            $this->errorManagerMock
-        );
-
+        // create a mock request event
         $event = $this->createMock(RequestEvent::class);
 
-        $this->errorManagerMock->expects($this->never())
-            ->method('handleError');
+        // expect the error manager to not be called
+        $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        $event->expects($this->never())
-            ->method('setResponse');
+        // expect the response to be empty
+        $event->expects($this->never())->method('setResponse');
 
-        $middleware->onKernelRequest($event);
+        // call the middleware method
+        $this->middleware->onKernelRequest($event);
     }
 }

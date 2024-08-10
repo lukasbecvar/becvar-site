@@ -25,7 +25,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @return object
      */
@@ -38,7 +38,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page is loaded successfully.
+     * Test if the account settings table page is loaded successfully
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class AccountSettingsControllerTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('h2', 'Account settings');
@@ -59,7 +59,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page for changing the profile picture is loaded successfully.
+     * Test if the account settings table page for changing the profile picture is loaded successfully
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class AccountSettingsControllerTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/pic');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change profile image');
@@ -78,7 +78,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page for changing the username is loaded successfully.
+     * Test if the account settings table page for changing the username is loaded successfully
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class AccountSettingsControllerTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/username');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change username');
@@ -97,7 +97,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page handles an empty username change form submission correctly.
+     * Test if the account settings table page handles an empty username change form submission correctly
      *
      * @return void
      */
@@ -112,14 +112,14 @@ class AccountSettingsControllerTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
     }
 
     /**
-     * Test if the account settings table page handles a short username change form submission correctly.
+     * Test if the account settings table page handles a short username change form submission correctly
      *
      * @return void
      */
@@ -134,14 +134,14 @@ class AccountSettingsControllerTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
     }
 
     /**
-     * Test if the account settings table page for changing the password is loaded successfully.
+     * Test if the account settings table page for changing the password is loaded successfully
      *
      * @return void
      */
@@ -152,7 +152,7 @@ class AccountSettingsControllerTest extends WebTestCase
         // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/password');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change password');
@@ -163,7 +163,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test account settings table page handles a password change form submission with no-matching passwords correctly.
+     * Test account settings table page handles a password change form submission with no-matching passwords correctly
      *
      * @return void
      */
@@ -179,13 +179,13 @@ class AccountSettingsControllerTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords is not match!');
     }
 
     /**
-     * Test if the account settings table page handles an empty password change form submission correctly.
+     * Test if the account settings table page handles an empty password change form submission correctly
      *
      * @return void
      */
@@ -201,7 +201,7 @@ class AccountSettingsControllerTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
@@ -209,7 +209,7 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page handles a short password change form submission correctly.
+     * Test if the account settings table page handles a short password change form submission correctly
      *
      * @return void
      */
@@ -225,7 +225,7 @@ class AccountSettingsControllerTest extends WebTestCase
             ],
         ]);
 
-        // assert
+        // assert response
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');

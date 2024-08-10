@@ -25,7 +25,7 @@ class LogReaderControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @return object The mock object
      */
@@ -38,7 +38,7 @@ class LogReaderControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the log reader page loads successfully.
+     * Test if the log reader page loads successfully
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class LogReaderControllerTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs?page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | logs');
         $this->assertSelectorTextContains('body', 'Logs reader');
@@ -57,7 +57,7 @@ class LogReaderControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the log reader delete page loads successfully.
+     * Test if the log reader delete page loads successfully
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class LogReaderControllerTest extends WebTestCase
         // make post request to logs page
         $this->client->request('GET', '/admin/logs/delete');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
         $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');

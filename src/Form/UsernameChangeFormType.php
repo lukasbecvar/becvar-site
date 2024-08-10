@@ -32,26 +32,26 @@ class UsernameChangeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('username', TextType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'text-input',
-                'autocomplete' => 'username',
-                'placeholder' => 'Username',
-            ],
-            'mapped' => true,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Please enter a username',
-                ]),
-                new Length([
-                    'min' => 4,
-                    'minMessage' => 'Your username should be at least {{ limit }} characters',
-                    'max' => 50,
-                ]),
-            ],
-            'translation_domain' => false
-        ])
+            ->add('username', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'text-input',
+                    'autocomplete' => 'username',
+                    'placeholder' => 'Username',
+                ],
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a username',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Your username should be at least {{ limit }} characters',
+                        'max' => 50,
+                    ]),
+                ],
+                'translation_domain' => false
+            ])
         ;
     }
 

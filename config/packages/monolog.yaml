@@ -1,6 +1,6 @@
 monolog:
     handlers:
-        # exception log
+        # exception log handler
         exception:
             type: stream
             path: '%kernel.logs_dir%/exception.log'

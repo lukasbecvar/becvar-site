@@ -46,9 +46,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Display the table of visitors and their details
      *
-     * @param Request $request object containing the page number
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The visitor manager page view
      */
     #[Route('/admin/visitors', methods: ['GET'], name: 'admin_visitor_manager')]
     public function visitorsTable(Request $request): Response
@@ -82,9 +82,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Provides IP information for a given IP address to the admin panel
      *
-     * @param Request $request The request object containing the IP address
+     * @param Request $request The request object
      *
-     * @return Response A response object containing the IP information
+     * @return Response The IP information view
      */
     #[Route('/admin/visitors/ipinfo', methods: ['GET'], name: 'admin_visitor_ipinfo')]
     public function visitorIpInfo(Request $request): Response
@@ -121,9 +121,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Display the confirmation form for deleting all visitors
      *
-     * @param Request $request object containing the page number
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The delete confirmation page view
      */
     #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
@@ -146,9 +146,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Ban a visitor
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect back to visitor manager
      */
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
@@ -208,9 +208,9 @@ class VisitorManagerController extends AbstractController
     /**
      * Unban a visitor
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect back to visitor manager
      */
     #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response

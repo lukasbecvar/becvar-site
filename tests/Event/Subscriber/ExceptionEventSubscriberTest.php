@@ -20,14 +20,17 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
  */
 class ExceptionEventSubscriberTest extends TestCase
 {
-    private MockObject|LogManager $logManager;
-    private MockObject|LoggerInterface $logger;
+    private LogManager|MockObject $logManager;
+    private LoggerInterface|MockObject $logger;
     private ExceptionEventSubscriber $subscriber;
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->logManager = $this->createMock(LogManager::class);
         $this->logger = $this->createMock(LoggerInterface::class);
+
+        // create instance of ExceptionEventSubscriber
         $this->subscriber = new ExceptionEventSubscriber($this->logManager, $this->logger);
     }
 
@@ -44,7 +47,6 @@ class ExceptionEventSubscriberTest extends TestCase
         // test error message with blocked pattern
         $this->assertFalse($this->subscriber->canBeEventLogged('log-error: Something went wrong'));
     }
-
 
     /**
      * Test if message log is blocked
@@ -69,15 +71,10 @@ class ExceptionEventSubscriberTest extends TestCase
         );
 
         // check if the log manager logs the exception
-        $this->logManager
-            ->expects($this->never())
-            ->method('log');
+        $this->logManager->expects($this->never())->method('log');
 
         // check if the logger logs the error message
-        $this->logger
-            ->expects($this->once())
-            ->method('critical')
-            ->with('Unknown database error');
+        $this->logger->expects($this->once())->method('critical')->with('Unknown database error');
 
         // handle the exception event
         $this->subscriber->onKernelException($event);

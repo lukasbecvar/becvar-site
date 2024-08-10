@@ -36,9 +36,9 @@ class InboxController extends AbstractController
     /**
      * Display inbox messages
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The inbox page view
      */
     #[Route('/admin/inbox', methods: ['GET'], name: 'admin_inbox')]
     public function inbox(Request $request): Response
@@ -67,9 +67,9 @@ class InboxController extends AbstractController
     /**
      * Close a message in the inbox
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect back to inbox
      */
     #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
     public function close(Request $request): Response

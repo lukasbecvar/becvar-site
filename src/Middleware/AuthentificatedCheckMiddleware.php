@@ -26,7 +26,7 @@ class AuthentificatedCheckMiddleware
     }
 
     /**
-     * Handles the kernel request event
+     * Cheeck if user is loggedin
      *
      * @param RequestEvent $event The request event
      *

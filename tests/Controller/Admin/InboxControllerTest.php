@@ -25,7 +25,7 @@ class InboxControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @param string $role The role of the user
      *
@@ -41,7 +41,7 @@ class InboxControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the inbox page loads successfully for an admin user.
+     * Test if the inbox page loads successfully for an admin user
      *
      * @return void
      */
@@ -52,13 +52,13 @@ class InboxControllerTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | inbox');
     }
 
     /**
-     * Test if the inbox page displays a permission error for a non-admin user.
+     * Test if the inbox page displays a permission error for a non-admin user
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class InboxControllerTest extends WebTestCase
         // make post request to inbox page
         $this->client->request('GET', '/admin/inbox?page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | inbox');
         $this->assertSelectorTextContains('h2', 'Sorry you dont have permission to this page');

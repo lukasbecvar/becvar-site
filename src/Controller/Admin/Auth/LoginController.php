@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class LoginController
  *
- * Login controller provides user login function
- * Note: Login uses its own authenticator (not Symfony auth)
+ * Login controller provides user login functionality
+ * Note: Login uses its own authenticator (not Symfony security)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -37,11 +37,11 @@ class LoginController extends AbstractController
     }
 
     /**
-     * User login handler
+     * User login page handler
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The login page view or login redirect
      */
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response

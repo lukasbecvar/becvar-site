@@ -51,7 +51,7 @@ class DashboardController extends AbstractController
     /**
      * Display the admin dashboard
      *
-     * @return Response object representing the HTTP response
+     * @return Response The dashboard page view
      */
     #[Route('/admin/dashboard', methods: ['GET'], name: 'admin_dashboard')]
     public function dashboard(): Response

@@ -25,7 +25,7 @@ class AdminControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @return object
      */
@@ -38,7 +38,7 @@ class AdminControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the admin init controller redirects to the dashboard.
+     * Test if the admin init controller redirects to the dashboard
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class AdminControllerTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }

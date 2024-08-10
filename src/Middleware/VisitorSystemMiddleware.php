@@ -52,11 +52,11 @@ class VisitorSystemMiddleware
     }
 
     /**
-     * Handles actions to be performed on each kernel request.
+     * Handle visitor system functionality
      *
-     * - Updates visitors' statistics.
-     * - Retrieves and sanitizes visitor information.
-     * - Checks if the visitor is in the database and takes appropriate actions.
+     * - Updates visitors' statistics
+     * - Retrieves and sanitizes visitor information
+     * - Checks if the visitor is in the database and takes appropriate actions
      *
      * @return void
      */
@@ -101,14 +101,14 @@ class VisitorSystemMiddleware
     }
 
     /**
-     * Inserts a new visitor record into the database.
+     * Inserts a new visitor record into the database
      *
-     * @param string $date The date of the visit.
-     * @param string $ipAddress The IP address of the visitor.
-     * @param string $browser The browser used by the visitor.
-     * @param string $os The operating system of the visitor.
+     * @param string $date The date of the visit
+     * @param string $ipAddress The IP address of the visitor
+     * @param string $browser The browser used by the visitor
+     * @param string $os The operating system of the visitor
      *
-     * @throws \App\Exception\AppErrorException If an error occurs during the database flush.
+     * @throws \App\Exception\AppErrorException If an error occurs during the database flush
      *
      * @return void
      */
@@ -156,14 +156,14 @@ class VisitorSystemMiddleware
     }
 
     /**
-     * Updates an existing visitor record in the database.
+     * Updates an existing visitor record in the database
      *
-     * @param string $date The date of the visit.
-     * @param string $ipAddress The IP address of the visitor.
-     * @param string $browser The updated browser used by the visitor.
-     * @param string $os The updated operating system of the visitor.
+     * @param string $date The date of the visit
+     * @param string $ipAddress The IP address of the visitor
+     * @param string $browser The updated browser used by the visitor
+     * @param string $os The updated operating system of the visitor
      *
-     * @throws \App\Exception\AppErrorException If an error occurs during the database flush.
+     * @throws \App\Exception\AppErrorException If an error occurs during the database flush
      *
      * @return void
      */

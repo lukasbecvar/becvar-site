@@ -39,7 +39,7 @@ class VisitorApiController extends AbstractController
     /**
      * API endpoint for updating visitor status
      *
-     * @return Response object representing the HTTP response
+     * @return Response The update status response
      */
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(): Response

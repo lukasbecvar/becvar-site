@@ -38,27 +38,18 @@ class LogManagerTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
         // set up EntityManager mock to expect method calls
-        $entityManager->expects($this->once())
-            ->method('persist');
-        $entityManager->expects($this->once())
-            ->method('flush');
+        $entityManager->expects($this->once())->method('persist');
+        $entityManager->expects($this->once())->method('flush');
 
         // mock the VisitorManager to return a visitor ID
-        $visitorManager->expects($this->once())
-            ->method('getVisitorID')
-            ->willReturn(1);
+        $visitorManager->expects($this->once())->method('getVisitorID')->willReturn(1);
 
         // mock the VisitorInfoUtil to return a browser and IP address
-        $visitorInfoUtil->expects($this->once())
-            ->method('getBrowser')
-            ->willReturn('Mozilla/5.0');
-        $visitorInfoUtil->expects($this->once())
-            ->method('getIP')
-            ->willReturn('127.0.0.1');
+        $visitorInfoUtil->expects($this->once())->method('getBrowser')->willReturn('Mozilla/5.0');
+        $visitorInfoUtil->expects($this->once())->method('getIP')->willReturn('127.0.0.1');
 
         // mock the SecurityUtil to escape strings
-        $securityUtil->expects($this->exactly(4))
-            ->method('escapeString')
+        $securityUtil->expects($this->exactly(4))->method('escapeString')
             ->willReturnCallback(function ($value) {
                 return htmlspecialchars($value, ENT_QUOTES);
             });

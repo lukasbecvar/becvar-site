@@ -25,7 +25,7 @@ class DatabaseOnlineMiddleware
     }
 
     /**
-     * Check the availability of the database on each kernel request
+     * Check if database is online
      *
      * @return void
      */

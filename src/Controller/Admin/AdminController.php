@@ -19,7 +19,7 @@ class AdminController extends AbstractController
     /**
      * Initialize the admin site
      *
-     * @return Response object representing the HTTP response
+     * @return Response Redirect to dashboard page
      */
     #[Route('/admin', methods: ['GET'], name: 'admin_init')]
     public function admin(): Response

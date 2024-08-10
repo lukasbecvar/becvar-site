@@ -2,6 +2,7 @@
 
 namespace App\Exception;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -22,6 +23,6 @@ class AppErrorException extends HttpException
      */
     public function __construct(string $message = null, \Throwable $previous = null, array $headers = [])
     {
-        parent::__construct(500, $message, $previous, $headers);
+        parent::__construct(Response::HTTP_INTERNAL_SERVER_ERROR, $message, $previous, $headers);
     }
 }

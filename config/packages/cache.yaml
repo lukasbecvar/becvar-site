@@ -1,4 +1,5 @@
 framework:
     cache:
+        # file system cache (/var/cache)
         app: cache.adapter.filesystem
         system: cache.adapter.system

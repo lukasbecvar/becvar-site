@@ -31,7 +31,7 @@ class AutoLoginMiddleware
     }
 
     /**
-     * Check if auto-login should be performed
+     * Handle auto login functionality
      *
      * @return void
      */

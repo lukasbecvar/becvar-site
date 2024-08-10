@@ -36,45 +36,45 @@ class LoginFormType extends AbstractType
         $defaultValue = $_ENV['APP_ENV'] === 'dev' ? 'test' : null;
 
         $builder
-        ->add('username', TextType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'text-input',
-                'placeholder' => 'Username',
-                'value' => $defaultValue
-            ],
-            'mapped' => true,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Please enter a username',
-                ])
-            ],
-            'translation_domain' => false
-        ])
-        ->add('password', PasswordType::class, [
-            'label' => false,
-            'attr' => [
-                'class' => 'text-input',
-                'placeholder' => 'Password',
-                'value' => $defaultValue
-            ],
-            'mapped' => true,
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Please enter a password',
-                ])
-            ],
-            'translation_domain' => false
-        ])
-        ->add('remember', CheckboxType::class, [
-            'label' => 'Remember me',
-            'attr' => [
-                'class' => 'checkbox',
-            ],
-            'mapped' => false,
-            'required' => false,
-            'translation_domain' => false
-        ])
+            ->add('username', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'text-input',
+                    'placeholder' => 'Username',
+                    'value' => $defaultValue
+                ],
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a username',
+                    ])
+                ],
+                'translation_domain' => false
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'text-input',
+                    'placeholder' => 'Password',
+                    'value' => $defaultValue
+                ],
+                'mapped' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ])
+                ],
+                'translation_domain' => false
+            ])
+            ->add('remember', CheckboxType::class, [
+                'label' => 'Remember me',
+                'attr' => [
+                    'class' => 'checkbox',
+                ],
+                'mapped' => false,
+                'required' => false,
+                'translation_domain' => false
+            ])
         ;
     }
 

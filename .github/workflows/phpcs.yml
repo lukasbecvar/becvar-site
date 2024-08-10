@@ -1,3 +1,4 @@
+# run statc code analysis with PHP CodeSniffer
 name: PHP-CodeSniffer
 
 on:

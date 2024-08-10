@@ -44,9 +44,9 @@ class LogReaderController extends AbstractController
     /**
      * Display logs from the database table
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The log reader page view
      */
     #[Route('/admin/logs', methods: ['GET'], name: 'admin_log_list')]
     public function logsTable(Request $request): Response
@@ -80,9 +80,9 @@ class LogReaderController extends AbstractController
     /**
      * Display logs filtered by IP address
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The log reader page view (filtered by IP)
      */
     #[Route('/admin/logs/whereip', methods: ['GET'], name: 'admin_log_list_whereIp')]
     public function logsWhereIp(Request $request): Response
@@ -120,9 +120,9 @@ class LogReaderController extends AbstractController
     /**
      * Display a confirmation page for deleting all logs
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The delete confirmation page view
      */
     #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
@@ -145,7 +145,7 @@ class LogReaderController extends AbstractController
     /**
      * Set all logs as read
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect back to dashboard
      */
     #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response

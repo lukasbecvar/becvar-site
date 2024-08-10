@@ -20,57 +20,57 @@ services:
             - { name: 'twig.extension' }
 
     # --------------------------------------------------------------------------------- #
-    # error handeling controller for error manager
+    # error handeling controller for app exception
     Symfony\Component\HttpKernel\EventListener\ErrorListener:
         arguments:
             $controller: 'App\Controller\ErrorController::show'
 
-    # internal exception error event
+    # exception event subscriber
     App\Event\Subscriber\ExceptionEventSubscriber:
         tags:
             - { name: kernel.event_subscriber }
 
-    # resources build checker
+    # resource build check middleware
     App\Middleware\AssetsCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
 
-    # escape request data
+    # escape request data middleware
     App\Middleware\EscapeRequestDataMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
-    # database online checker
+    # check database online middleware
     App\Middleware\DatabaseOnlineMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
 
-    # security check service
+    # security check middleware
     App\Middleware\SecurityCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 
-    # maintenance mode checker
+    # handle maintenance mode middleware
     App\Middleware\MaintenanceMiddleware:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 5 }
 
-    # visitor system service
+    # visitor system middleware
     App\Middleware\VisitorSystemMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
-    # translations set
+    # set translations middleware
     App\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
-    # check user auth for admin sites
+    # authentification check middleware
     App\Middleware\AuthentificatedCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
-    # auto login service
+    # handle auto-login middleware
     App\Middleware\AutoLoginMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }

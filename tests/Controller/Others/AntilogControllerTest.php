@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class AntilogControllerTest
  *
- * Test cases for the AntiLog functionality.
+ * Test cases for the AntiLog functionality
  *
  * @package App\Tests\Others
  */
@@ -30,11 +30,11 @@ class AntilogControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock instance of the AuthManager.
+     * Create a mock instance of the AuthManager
      *
-     * @param bool $logged Whether the user is logged in or not.
+     * @param bool $logged Whether the user is logged in or not
      *
-     * @return object The mock AuthManager instance.
+     * @return object The mock AuthManager instance
      */
     private function createAuthManagerMock(bool $logged = true): object
     {
@@ -46,7 +46,7 @@ class AntilogControllerTest extends WebTestCase
     }
 
     /**
-     * Test setting AntiLog for an authenticated user.
+     * Test setting AntiLog for an authenticated user
      *
      * @return void
      */
@@ -57,13 +57,13 @@ class AntilogControllerTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/antilog/5369362536');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
     }
 
     /**
-     * Test setting AntiLog for a non-authenticated user.
+     * Test setting AntiLog for a non-authenticated user
      *
      * @return void
      */
@@ -77,7 +77,7 @@ class AntilogControllerTest extends WebTestCase
         // get response data
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertEquals('error to set anti-log for non authentificated users!', $responseData['message']);
     }

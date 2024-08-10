@@ -28,7 +28,7 @@ class DatabaseOnlineMiddlewareTest extends TestCase
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->doctrineConnectionMock = $this->createMock(Connection::class);
 
-        // create instance of DatabaseOnlineMiddleware with mocks
+        // create instance of DatabaseOnlineMiddleware
         $this->middleware = new DatabaseOnlineMiddleware(
             $this->errorManagerMock,
             $this->doctrineConnectionMock
@@ -43,13 +43,10 @@ class DatabaseOnlineMiddlewareTest extends TestCase
     public function testDatabaseConnectionSucceeds(): void
     {
         // mock successful database connection
-        $this->doctrineConnectionMock->expects($this->once())
-            ->method('executeQuery')
-            ->with('SELECT 1');
+        $this->doctrineConnectionMock->expects($this->once())->method('executeQuery')->with('SELECT 1');
 
         // expect no error handling called
-        $this->errorManagerMock->expects($this->never())
-            ->method('handleError');
+        $this->errorManagerMock->expects($this->never())->method('handleError');
 
         // execute method
         $this->middleware->onKernelRequest();

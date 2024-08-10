@@ -45,7 +45,7 @@ class AccountSettingsController extends AbstractController
     /**
      * Display account settings table
      *
-     * @return Response Returns a Response object representing the HTTP response
+     * @return Response The account settings table view
      */
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
@@ -71,7 +71,7 @@ class AccountSettingsController extends AbstractController
      *
      * @throws \App\Exception\AppErrorException Error the profile picture upload
      *
-     * @return Response object representing the HTTP response
+     * @return Response The picture change view
      */
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
@@ -143,7 +143,7 @@ class AccountSettingsController extends AbstractController
      *
      * @throws \App\Exception\AppErrorException Error the username update
      *
-     * @return Response object representing the HTTP response
+     * @return Response The username change view
      */
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
@@ -202,7 +202,7 @@ class AccountSettingsController extends AbstractController
      *
      * @throws \App\Exception\AppErrorException Error the password update
      *
-     * @return Response object representing the HTTP response
+     * @return Response The password change view
      */
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response

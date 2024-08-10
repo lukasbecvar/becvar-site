@@ -26,10 +26,12 @@ class DashboardUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->jsonUtil = $this->createMock(JsonUtil::class);
         $this->errorManager = $this->createMock(ErrorManager::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
+        // create instance of DashboardUtil
         $this->dashboardUtil = new DashboardUtil($this->jsonUtil, $this->errorManager, $this->entityManager);
     }
 
@@ -47,12 +49,16 @@ class DashboardUtilTest extends TestCase
             ->method('findAll')
             ->willReturn(['entity1', 'entity2', 'entity3']);
 
+        // mock entity manager
         $this->entityManager->expects($this->once())
             ->method('getRepository')
             ->with(get_class($entity))
             ->willReturn($repository);
 
+        // call the method
         $count = $this->dashboardUtil->getDatabaseEntityCount($entity);
+
+        // assert result
         $this->assertEquals(3, $count);
     }
 
@@ -72,12 +78,16 @@ class DashboardUtilTest extends TestCase
             ->with($searchCriteria)
             ->willReturn(['entity1', 'entity2']);
 
+        // mock entity manager
         $this->entityManager->expects($this->once())
             ->method('getRepository')
             ->with(get_class($entity))
             ->willReturn($repository);
 
+        // call the method
         $count = $this->dashboardUtil->getDatabaseEntityCount($entity, $searchCriteria);
+
+        // assert result
         $this->assertEquals(2, $count);
     }
 
@@ -88,12 +98,16 @@ class DashboardUtilTest extends TestCase
      */
     public function testIsBrowserListFound(): void
     {
+        // mock json util
         $this->jsonUtil->expects($this->once())
             ->method('getJson')
             ->with($this->stringContains('/../../config/browser-list.json'))
             ->willReturn(['some', 'data']);
 
+        // call the method
         $result = $this->dashboardUtil->isBrowserListFound();
+
+        // assert result
         $this->assertTrue($result);
     }
 
@@ -104,12 +118,16 @@ class DashboardUtilTest extends TestCase
      */
     public function testIsBrowserListNotFound(): void
     {
+        // mock json util
         $this->jsonUtil->expects($this->once())
             ->method('getJson')
             ->with($this->stringContains('/../../config/browser-list.json'))
             ->willReturn(null);
 
+        // call the method
         $result = $this->dashboardUtil->isBrowserListFound();
+
+        // assert result
         $this->assertFalse($result);
     }
 }

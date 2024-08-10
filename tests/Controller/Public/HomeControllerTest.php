@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class HomeControllerTest
  *
- * Test cases for the Home component.
+ * Test cases for the Home component
  *
  * @package App\Tests\Public
  */
@@ -24,30 +24,30 @@ class HomeControllerTest extends WebTestCase
     }
 
     /**
-     * Test accessing the Home page.
+     * Test accessing the Home page
      *
      * @return void
      */
-    public function testHomePage()
+    public function testHomePage(): void
     {
         // make get request
         $this->client->request('GET', '/home');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test accessing the Home page using the default route.
+     * Test accessing the Home page using the default route
      *
      * @return void
      */
-    public function testHomeDefaultRote()
+    public function testHomeDefaultRote(): void
     {
         // make get request
         $this->client->request('GET', '/');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

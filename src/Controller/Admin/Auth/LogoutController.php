@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class LogoutController
  *
- * Logout controller provides user logout function
- * Note: Login uses its own authenticator (not Symfony auth)
+ * Logout controller provides user logout functionality
+ * Note: Login uses its own authenticator (not Symfony security)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -32,7 +32,7 @@ class LogoutController extends AbstractController
      *
      * @throws \App\Exception\AppErrorException Logout process error
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect to login page
      */
     #[Route('/logout', methods: ['GET'], name: 'auth_logout')]
     public function logout(): Response

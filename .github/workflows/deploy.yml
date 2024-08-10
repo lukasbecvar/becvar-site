@@ -26,7 +26,7 @@ jobs:
         # script to run on the server
         script: |
           # go to the project directory
-          cd /services/website/becvar.xyz
+          cd /services/website/becvar-site
 
           # pull the latest changes
           git pull

@@ -25,10 +25,12 @@ class AutoLoginMiddlewareTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->cookieUtilMock = $this->createMock(CookieUtil::class);
         $this->sessionUtilMock = $this->createMock(SessionUtil::class);
         $this->authManagerMock = $this->createMock(AuthManager::class);
 
+        // create instance of AutoLoginMiddleware
         $this->middleware = new AutoLoginMiddleware(
             $this->cookieUtilMock,
             $this->sessionUtilMock,
@@ -44,13 +46,10 @@ class AutoLoginMiddlewareTest extends TestCase
     public function testRequestUserAlreadyLoggedIn(): void
     {
         // mock the auth manager
-        $this->authManagerMock->expects($this->once())
-            ->method('isUserLogedin')
-            ->willReturn(true);
+        $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(true);
 
         // mock the url generator
-        $this->cookieUtilMock->expects($this->never())
-            ->method('get');
+        $this->cookieUtilMock->expects($this->never())->method('get');
 
         // call the middleware method
         $this->middleware->onKernelRequest();
@@ -64,16 +63,13 @@ class AutoLoginMiddlewareTest extends TestCase
     public function testRequestCookieNotSet(): void
     {
         // mock the auth manager
-        $this->authManagerMock->expects($this->once())
-            ->method('isUserLogedin')
-            ->willReturn(false);
+        $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(false);
 
         // unser cookie token
         unset($_COOKIE['user-token']);
 
         // mock the cookie util
-        $this->cookieUtilMock->expects($this->never())
-            ->method('get');
+        $this->cookieUtilMock->expects($this->never())->method('get');
 
         // call the middleware method
         $this->middleware->onKernelRequest();

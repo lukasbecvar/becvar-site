@@ -31,11 +31,11 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles errors based on the provided error code.
+     * Handles errors based on the provided error code
      *
-     * @param Request $request The HTTP request.
+     * @param Request $request The request object
      *
-     * @return Response The error response.
+     * @return Response The error page response
      */
     #[Route('/error', methods: ['GET'], name: 'error_by_code')]
     public function errorHandle(Request $request): Response
@@ -53,9 +53,9 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles 404 error page.
+     * Handles 404 error page
      *
-     * @return Response The error response.
+     * @return Response The error page response
      */
     #[Route('/error/notfound', methods: ['GET'], name: 'error_404')]
     public function errorHandle404(): Response
@@ -64,11 +64,11 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles all errors (this is for error manager handler).
+     * Handles all errors (this is for error manager handler)
      *
-     * @param \Throwable $exception The thrown exception.
+     * @param \Throwable $exception The thrown exception
      *
-     * @return Response The error response.
+     * @return Response The error page response
      */
     public function show(\Throwable $exception): Response
     {

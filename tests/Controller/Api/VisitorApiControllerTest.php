@@ -24,7 +24,7 @@ class VisitorApiControllerTest extends WebTestCase
     }
 
     /**
-     * Test the Visitor Status API.
+     * Test the Visitor Status API
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class VisitorApiControllerTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/api/visitor/update/activity');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

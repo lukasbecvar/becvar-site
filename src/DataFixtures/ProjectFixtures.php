@@ -24,7 +24,7 @@ class ProjectFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        // projects data
+        // testing projects data
         $projectsData = [
             [
                 'name' => 'becvar-site',

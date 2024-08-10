@@ -25,8 +25,11 @@ class CacheUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->cacheItemPoolMock = $this->createMock(CacheItemPoolInterface::class);
+
+        // create instance of CacheUtil
         $this->cacheUtil = new CacheUtil($this->errorManagerMock, $this->cacheItemPoolMock);
     }
 
@@ -40,14 +43,15 @@ class CacheUtilTest extends TestCase
         $key = 'test_key';
         $cacheItemMock = $this->createMock(CacheItemInterface::class);
 
+        // mock cache item pool
         $this->cacheItemPoolMock->expects($this->once())
             ->method('getItem')
             ->with($key)
             ->willReturn($cacheItemMock);
 
+        // mock cache item
         $cacheItemMock->expects($this->once())
-            ->method('isHit')
-            ->willReturn(true);
+            ->method('isHit')->willReturn(true);
 
         // assert that the method returns true
         $this->assertTrue($this->cacheUtil->isCatched($key));
@@ -119,9 +123,7 @@ class CacheUtilTest extends TestCase
         $key = 'test_key';
 
         // set cache item mock expectations
-        $this->cacheItemPoolMock->expects($this->once())
-            ->method('deleteItem')
-            ->with($key);
+        $this->cacheItemPoolMock->expects($this->once())->method('deleteItem')->with($key);
 
         // call the method
         $this->cacheUtil->deleteValue($key);

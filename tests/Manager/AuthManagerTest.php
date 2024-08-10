@@ -38,6 +38,7 @@ class AuthManagerTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->logManager = $this->createMock(LogManager::class);
         $this->cookieUtil = $this->createMock(CookieUtil::class);
         $this->sessionUtil = $this->createMock(SessionUtil::class);
@@ -48,10 +49,12 @@ class AuthManagerTest extends TestCase
         $this->visitorInfoUtil = $this->createMock(VisitorInfoUtil::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
+        // mock user repository
         $this->entityManager
             ->method('getRepository')
             ->willReturn($this->userRepository);
 
+        // create instance of AuthManager
         $this->authManager = new AuthManager(
             $this->logManager,
             $this->cookieUtil,
@@ -73,22 +76,16 @@ class AuthManagerTest extends TestCase
     public function testIsUserLoggedInWhenSessionExists(): void
     {
         $token = 'valid-token';
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(true);
 
-        $this->sessionUtil
-            ->method('getSessionValue')
-            ->with('login-token')
-            ->willReturn($token);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
+        $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
+        // mock user repository
         $user = $this->createMock(User::class);
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
+        // assert output
         $this->assertTrue($this->authManager->isUserLogedin());
     }
 
@@ -99,11 +96,10 @@ class AuthManagerTest extends TestCase
      */
     public function testIsUserLoggedInWhenSessionDoesNotExist(): void
     {
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(false);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(false);
 
+        // assert output
         $this->assertFalse($this->authManager->isUserLogedin());
     }
 
@@ -116,22 +112,15 @@ class AuthManagerTest extends TestCase
     {
         $token = 'valid-token';
 
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(true);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
+        $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        $this->sessionUtil
-            ->method('getSessionValue')
-            ->with('login-token')
-            ->willReturn($token);
-
+        // mock user repository
         $user = $this->createMock(User::class);
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
+        // assert output
         $this->assertEquals($token, $this->authManager->getUserToken());
     }
 
@@ -142,11 +131,10 @@ class AuthManagerTest extends TestCase
      */
     public function testGetUserTokenWhenSessionDoesNotExist(): void
     {
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(false);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(false);
 
+        // assert output
         $this->assertNull($this->authManager->getUserToken());
     }
 
@@ -160,16 +148,14 @@ class AuthManagerTest extends TestCase
         $token = 'valid-token';
         $username = 'testuser';
 
+        // mock user
         $user = $this->createMock(User::class);
-        $user
-            ->method('getUsername')
-            ->willReturn($username);
+        $user->method('getUsername')->willReturn($username);
 
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
+        // mock user repository
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
+        // assert output
         $this->assertEquals($username, $this->authManager->getUsername($token));
     }
 
@@ -183,16 +169,14 @@ class AuthManagerTest extends TestCase
         $token = 'valid-token';
         $role = 'Admin';
 
+        // mock user
         $user = $this->createMock(User::class);
-        $user
-            ->method('getRole')
-            ->willReturn($role);
+        $user->method('getRole')->willReturn($role);
 
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
+        // mock user repository
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
+        // assert output
         $this->assertEquals($role, $this->authManager->getUserRole($token));
     }
 
@@ -206,26 +190,18 @@ class AuthManagerTest extends TestCase
         $token = 'valid-token';
         $role = 'Admin';
 
+        // mock user
         $user = $this->createMock(User::class);
-        $user
-            ->method('getRole')
-            ->willReturn($role);
+        $user->method('getRole')->willReturn($role);
 
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(true);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
+        $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        $this->sessionUtil
-            ->method('getSessionValue')
-            ->with('login-token')
-            ->willReturn($token);
+        // mock user repository
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
-
+        // assert output
         $this->assertTrue($this->authManager->isAdmin());
     }
 
@@ -239,26 +215,18 @@ class AuthManagerTest extends TestCase
         $token = 'valid-token';
         $role = 'User';
 
+        // mock user
         $user = $this->createMock(User::class);
-        $user
-            ->method('getRole')
-            ->willReturn($role);
+        $user->method('getRole')->willReturn($role);
 
-        $this->sessionUtil
-            ->method('checkSession')
-            ->with('login-token')
-            ->willReturn(true);
+        // mock session util
+        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
+        $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        $this->sessionUtil
-            ->method('getSessionValue')
-            ->with('login-token')
-            ->willReturn($token);
+        // mock user repository
+        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
-        $this->userRepository
-            ->method('findOneBy')
-            ->with(['token' => $token])
-            ->willReturn($user);
-
+        // assert output
         $this->assertFalse($this->authManager->isAdmin());
     }
 }

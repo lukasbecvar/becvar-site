@@ -23,8 +23,11 @@ class VisitorInfoUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->siteUtilMock = $this->createMock(SiteUtil::class);
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
+
+        // create instance of VisitorInfoUtil
         $this->visitorInfoUtil = new VisitorInfoUtil($this->siteUtilMock, $this->jsonUtilMock);
     }
 
@@ -73,6 +76,7 @@ class VisitorInfoUtilTest extends TestCase
             'Chrome' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
         ];
 
+        // mock json util
         $this->jsonUtilMock->method('getJson')->willReturn($browserList);
 
         // assert result
@@ -116,6 +120,7 @@ class VisitorInfoUtilTest extends TestCase
      */
     public function testGetLocation(): void
     {
+        // mock site util
         $this->siteUtilMock->method('isRunningLocalhost')->willReturn(true);
 
         // assert result

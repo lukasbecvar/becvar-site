@@ -25,7 +25,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @param string $role The role of the user
      *
@@ -41,7 +41,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the database browser list page loads successfully for an admin.
+     * Test if the database browser list page loads successfully for an admin
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Select table');
@@ -60,7 +60,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the database browser list page restricts access for non-admin users.
+     * Test if the database browser list page restricts access for non-admin users
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Sorry you dont have permission to this page');
@@ -79,7 +79,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the database browser table viewer page loads successfully for an admin.
+     * Test if the database browser table viewer page loads successfully for an admin
      *
      * @return void
      */
@@ -90,14 +90,14 @@ class DatabaseBrowserControllerTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database/table?table=users&page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorNotExists('i[class="fa-arrow-left"]');
     }
 
     /**
-     * Test if the database browser new row adder page loads successfully for an admin.
+     * Test if the database browser new row adder page loads successfully for an admin
      *
      * @return void
      */
@@ -108,7 +108,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
         // make post request to database browser
         $this->client->request('GET', '/admin/database/add?table=users&page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.title', 'Add new: users');

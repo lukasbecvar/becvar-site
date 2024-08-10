@@ -20,7 +20,7 @@ class TranslationsMiddlewareTest extends TestCase
         $this->visitorManagerMock = $this->createMock(VisitorManager::class);
         $this->translatorMock = $this->createMock(LocaleAwareInterface::class);
 
-        // create instance of TranslationsMiddleware with mocks
+        // create instance of TranslationsMiddleware
         $this->middleware = new TranslationsMiddleware(
             $this->visitorManagerMock,
             $this->translatorMock
@@ -36,8 +36,7 @@ class TranslationsMiddlewareTest extends TestCase
     {
         // mock visitor language as unidentified
         $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorLanguage')
-            ->willReturn(null);
+            ->method('getVisitorLanguage')->willReturn(null);
 
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())

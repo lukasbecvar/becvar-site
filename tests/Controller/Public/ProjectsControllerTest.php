@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class ProjectsControllerTest
  *
- * Test cases for the Projects component.
+ * Test cases for the Projects component
  *
  * @package App\Tests\Public
  */
@@ -24,16 +24,16 @@ class ProjectsControllerTest extends WebTestCase
     }
 
     /**
-     * Test accessing the Projects page.
+     * Test accessing the Projects page
      *
      * @return void
      */
-    public function testProjectsPage()
+    public function testProjectsPage(): void
     {
         // make get request
         $this->client->request('GET', '/projects');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

@@ -18,7 +18,7 @@ class HomeController extends AbstractController
     /**
      * Renders the public home page
      *
-     * @return Response The response containing the rendered home page
+     * @return Response The home page view response
      */
     #[Route(['/', '/home'], methods: ['GET'], name: 'public_home')]
     public function homePage(): Response

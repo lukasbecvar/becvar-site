@@ -25,7 +25,7 @@ class DashboardControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @return object The mock object
      */
@@ -41,7 +41,7 @@ class DashboardControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the admin dashboard page loads successfully.
+     * Test if the admin dashboard page loads successfully
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class DashboardControllerTest extends WebTestCase
         // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
         $this->assertSelectorExists('main[class="admin-page"]');

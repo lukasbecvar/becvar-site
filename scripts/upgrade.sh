@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# stop apache and clear cache
+# stop web server
 sudo systemctl stop apache2
+
+# clear requirements & cache
 sudo sh scripts/clear.sh
-                   
+
 # pull the latest changes
 git pull
 
@@ -13,7 +15,7 @@ sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
 # install dependencies
 sh scripts/install.sh
 
-# migrate database
+# migrate database to latest version
 php bin/console doctrine:database:create --if-not-exists
 php bin/console doctrine:migrations:migrate --no-interaction
                     
@@ -21,7 +23,7 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console projects:list:update
 php bin/console auth:tokens:regenerate
 
-# set permissions
+# fix storage permissions
 sudo chmod -R 777 var/
 sudo chown -R www-data:www-data var/
 

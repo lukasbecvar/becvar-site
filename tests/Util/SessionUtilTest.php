@@ -23,9 +23,11 @@ class SessionUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
 
+        // create instance of SessionUtil
         $this->sessionUtil = new SessionUtil($this->securityUtilMock, $this->errorManagerMock);
     }
 

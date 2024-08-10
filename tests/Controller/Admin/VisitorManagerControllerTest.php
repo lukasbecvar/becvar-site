@@ -25,7 +25,7 @@ class VisitorManagerControllerTest extends WebTestCase
     }
 
     /**
-     * Create a mock object for AuthManager.
+     * Create a mock object for AuthManager
      *
      * @param string $role The role of the user
      *
@@ -41,7 +41,7 @@ class VisitorManagerControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the visitor manager page loads successfully.
+     * Test if the visitor manager page loads successfully
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class VisitorManagerControllerTest extends WebTestCase
         // make post request to admin init controller
         $this->client->request('GET', '/admin/visitors?page=1');
 
-        // assert
+        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | visitors');
         $this->assertSelectorTextContains('body', 'Online visitors');

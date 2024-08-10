@@ -37,7 +37,7 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Display the list of database tables
      *
-     * @return Response object representing the HTTP response
+     * @return Response The database tables list view
      */
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
@@ -57,9 +57,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Display the view of a specific database table
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The database table view
      */
     #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
@@ -96,9 +96,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Edit a specific row in a database table
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The row editor view
      */
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
@@ -177,9 +177,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Add a new row to a database table
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The new row view
      */
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
@@ -256,9 +256,9 @@ class DatabaseBrowserController extends AbstractController
     /**
      * Delete a row from a database table
      *
-     * @param Request $request object representing the HTTP request
+     * @param Request $request The request object
      *
-     * @return Response object representing the HTTP response
+     * @return Response The redirect to browser
      */
     #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response

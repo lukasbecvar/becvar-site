@@ -24,7 +24,7 @@ class TranslationsMiddleware
     }
 
     /**
-     * Set translations based on the visitor's language
+     * Set translations based on the visitor language
      *
      * @return void
      */

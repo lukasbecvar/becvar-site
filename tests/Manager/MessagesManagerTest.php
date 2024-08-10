@@ -32,19 +32,14 @@ class MessagesManagerTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
         // mock EntityManager to expect method calls
-        $entityManager->expects($this->once())
-            ->method('persist');
-        $entityManager->expects($this->once())
-            ->method('flush');
+        $entityManager->expects($this->once())->method('persist');
+        $entityManager->expects($this->once())->method('flush');
 
         // mock VisitorManager behavior
-        $visitorManager->expects($this->once())
-            ->method('updateVisitorEmail');
+        $visitorManager->expects($this->once())->method('updateVisitorEmail');
 
         // mock SecurityUtil to encrypt message
-        $securityUtil->expects($this->once())
-            ->method('encryptAes')
-            ->willReturn('encrypted_message');
+        $securityUtil->expects($this->once())->method('encryptAes')->willReturn('encrypted_message');
 
         // instantiate MessagesManager with mocked dependencies
         $messagesManager = new MessagesManager(
@@ -55,7 +50,13 @@ class MessagesManagerTest extends TestCase
         );
 
         // call saveMessage method with test data
-        $result = $messagesManager->saveMessage('John Doe', 'john@example.com', 'Hello World', '127.0.0.1', 'visitor_123');
+        $result = $messagesManager->saveMessage(
+            name: 'John Doe',
+            email: 'john@example.com',
+            messageInput: 'Hello World',
+            ipAddress: '127.0.0.1',
+            visitorId: '123'
+        );
 
         // assert that the method returns true upon successful save
         $this->assertTrue($result);

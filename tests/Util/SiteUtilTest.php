@@ -22,7 +22,10 @@ class SiteUtilTest extends TestCase
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
+
+        // create instance of SiteUtil
         $this->siteUtil = new SiteUtil($this->securityUtilMock);
     }
 
@@ -133,8 +136,10 @@ class SiteUtilTest extends TestCase
         $request = new Request([], [], [], [], [], [], null);
         $request->query->set($query, $value);
 
+        // mock security util
         $this->securityUtilMock->method('escapeString')->with($value)->willReturn($escapedValue);
 
+        // assert result
         $this->assertEquals($escapedValue, $this->siteUtil->getQueryString($query, $request));
     }
 }

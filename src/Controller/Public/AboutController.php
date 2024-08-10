@@ -19,7 +19,7 @@ class AboutController extends AbstractController
     /**
      * Renders the public about page
      *
-     * @return Response The response containing the rendered about page
+     * @return Response The about page view response
      */
     #[Route('/about', methods: ['GET'], name: 'public_about')]
     public function aboutPage(): Response

@@ -43,9 +43,9 @@ class ContactController extends AbstractController
     /**
      * Renders the public contact page
      *
-     * @param Request $request The HTTP request
+     * @param Request $request The request object
      *
-     * @return Response The response containing the rendered contact page
+     * @return Response The contact page view response
      */
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response

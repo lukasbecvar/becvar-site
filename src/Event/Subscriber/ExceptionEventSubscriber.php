@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class ExceptionEventSubscriber
  *
- * Subscriber to handle internal (profiler) errors
+ * Subscriber to handle error exceptions
  *
  * @package App\EventSubscriber
  */
