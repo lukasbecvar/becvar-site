@@ -14,9 +14,6 @@ Personal website build with the Symfony framework & Bootstrap.
  - Inbox for contact form
  - Advanced log system
 
-## Docker
-Docker is used only for development in this application. The production version of the application runs directly on the host environment to simply connect the admin system to running services.
-
 ## Installation (with mysql/apache)
  - clone repository to your /www dir
  - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
