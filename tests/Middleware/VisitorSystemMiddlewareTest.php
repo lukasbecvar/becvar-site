@@ -3,6 +3,7 @@
 namespace App\Tests\Middleware;
 
 use Twig\Environment;
+use App\Util\CacheUtil;
 use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
@@ -27,6 +28,7 @@ class VisitorSystemMiddlewareTest extends TestCase
     /** tested middleware */
     private VisitorSystemMiddleware $middleware;
 
+    private CacheUtil|MockObject $cacheUtil;
     private Environment|MockObject $twigMock;
     private BanManager|MockObject $banManagerMock;
     private LogManager|MockObject $logManagerMock;
@@ -39,6 +41,7 @@ class VisitorSystemMiddlewareTest extends TestCase
     protected function setUp(): void
     {
         // mock dependencies
+        $this->cacheUtil = $this->createMock(CacheUtil::class);
         $this->twigMock = $this->createMock(\Twig\Environment::class);
         $this->visitorInfoUtilMock = $this->createMock(VisitorInfoUtil::class);
         $this->banManagerMock = $this->createMock(\App\Manager\BanManager::class);
@@ -51,6 +54,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         // create instance of VisitorSystemMiddleware
         $this->middleware = new VisitorSystemMiddleware(
             $this->twigMock,
+            $this->cacheUtil,
             $this->logManagerMock,
             $this->banManagerMock,
             $this->errorManagerMock,

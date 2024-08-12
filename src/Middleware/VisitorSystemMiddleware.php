@@ -4,6 +4,7 @@ namespace App\Middleware;
 
 use Twig\Environment;
 use App\Entity\Visitor;
+use App\Util\CacheUtil;
 use App\Util\SecurityUtil;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VisitorSystemMiddleware
 {
     private Environment $twig;
+    private CacheUtil $cacheUtil;
     private BanManager $banManager;
     private LogManager $logManager;
     private ErrorManager $errorManager;
@@ -33,6 +35,7 @@ class VisitorSystemMiddleware
 
     public function __construct(
         Environment $twig,
+        CacheUtil $cacheUtil,
         LogManager $logManager,
         BanManager $banManager,
         ErrorManager $errorManager,
@@ -42,6 +45,7 @@ class VisitorSystemMiddleware
         EntityManagerInterface $entityManager
     ) {
         $this->twig = $twig;
+        $this->cacheUtil = $cacheUtil;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
@@ -199,5 +203,8 @@ class VisitorSystemMiddleware
                 );
             }
         }
+
+        // cache online visitor
+        $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 10);
     }
 }
