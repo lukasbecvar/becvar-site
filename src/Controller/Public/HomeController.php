@@ -28,6 +28,7 @@ class HomeController extends AbstractController
             'twitterLink' => $_ENV['TWITTER_LINK'],
             'telegramLink' => $_ENV['TELEGRAM_LINK'],
             'contactEmail' => $_ENV['CONTACT_EMAIL'],
+            "linkedInLink" => $_ENV['LINKEDIN_LINK'],
             'instagramLink' => $_ENV['INSTAGRAM_LINK']
         ]);
     }

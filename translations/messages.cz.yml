@@ -38,6 +38,7 @@ error.maintenance.message: "Služba je dočasně nedostupná z důvodu údržby"
 error.banned.title: "Jste zablokován"
 error.banned.message: "Jste na této stránce trvale zablokován"
 error.banned.message.reason: "Jste na této stránce trvale zablokován z důvodu"
+error.banned.unban.email: "Žádost o odblokování směřujte na"
 
 # main navigation
 navigation.home.link: "Domů"
@@ -49,19 +50,18 @@ navigation.paste.link: "Vložit code"
 
 # home
 home.im: "Jsem"
-home.main.text: "full stack developer"
+home.main.text: "backend developer"
 
 # about
 about.title: "O mně"
 about.description: "PHP Vývojář"
-about.subdescription: "Jsem vývojář webů a serverových řešení"
+about.subdescription: "Jmenuji se Lukáš a zabývám se vývojem webových a hybridních aplikací. Zaměřuji se primárně na backend aplikací. Mám zkušenosti primárně s PHP frameworky Symfony a Laravel"
 about.birthday: "Datum narození"
 about.may: "Květen"
 about.age: "Věk"
-about.nationality: "Národnost: česká"
+about.nationality: "Národnost: Česká"
 about.projects.link.description: "Všechny mé veřejné projekty jsou dostupné"
-about.funfact.1: "Můj první programovací jazyk byl Pascal, začal jsem se učit v roce 2012"
-about.funfact.2: "Mými hlavními programovacími jazyky jsou v současné době Java a PHP"
+about.funfact: "Programování jsem se začal věnovat v roce 2012, a mými prvními programovacími jazyky byly Pascal a C++"
 about.counter.clients: "Klienti"
 about.counter.projects: "Projekty"
 about.counter.code.lines: "Řádky kódu"

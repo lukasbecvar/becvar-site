@@ -153,6 +153,7 @@ class ContactController extends AbstractController
             'twitterLink' => $_ENV['TWITTER_LINK'],
             'contactEmail' => $_ENV['CONTACT_EMAIL'],
             'telegramLink' => $_ENV['TELEGRAM_LINK'],
+            "linkedInLink" => $_ENV['LINKEDIN_LINK'],
             'instagramLink' => $_ENV['INSTAGRAM_LINK'],
         ]);
     }

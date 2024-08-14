@@ -1,67 +1,67 @@
-config.lang: "cs"
+config.lang: "sk"
 
 # common
 common.here: "tu"
 
 # common error messages
-error.url.check.message: "Prosím skontrolujte adresný riadok alebo kontaktujte vášho administrátora"
+error.url.check.message: "Skontrolujte adresný riadok alebo kontaktujte svojho správcu"
 # error 400
-error.400.title: "Chyba: Zlý požiadavok"
-error.400.message: "Chyba požiadavku"
+error.400.title: "Chyba: Nesprávna požiadavka"
+error.400.message: "Chyba požiadavky"
 # error 401
-error.401.title: "Chyba: Neoprávnený prístup"
-error.401.message: "Nemáte oprávnenie na prístup k tejto stránke"
+error.401.title: "Chyba: Prístup zamietnutý"
+error.401.message: "Nemáte oprávnenie na prístup na túto stránku"
 # error 403
-error.403.title: "Chyba: Zakázaný prístup"
-error.403.message: "Nemáte oprávnenie na prístup k tejto stránke"
+error.403.title: "Chyba: Prístup zakázaný"
+error.403.message: "Nemáte oprávnenie na prístup na túto stránku"
 # error 404
-error.404.title: "Chyba: Stránka sa nenašla"
-error.404.message: "Chyba, táto stránka sa nenašla"
+error.404.title: "Chyba: Stránka nenájdená"
+error.404.message: "Chyba, táto stránka nebola nájdená"
 # error 426
-error.426.title: "Chyba: Upgrade protokol"
+error.426.title: "Chyba protokolu"
 error.426.message: "Váš prehliadač nepodporuje protokol HTTPS"
 error.426.submessage: "Skúste použiť protokol HTTPS na prístup k tejto stránke"
 # error 429
 error.429.title: "Chyba: Príliš veľa požiadaviek"
 error.429.message: "Príliš veľa požiadaviek"
-error.429.submessage: "Skúste počkať a skúsiť to neskôr"
+error.429.submessage: "Skúste počkať a skúste to neskôr znova"
 # error 500
 error.500.title: "Chyba: Interná chyba servera"
-error.500.message: "Server narazil na neočakávanú podmienku, ktorá mu zabránila splniť požiadavku"
-# error unknown
+error.500.message: "Server narazil na neočakávanú chybu, ktorá mu bráni v splnení požiadavky"
+# unknown chyba
 error.unknown.title: "Chyba: neznáma chyba"
-error.unknown.message: "Neznáma chyba, kontaktujte prosím správcu služby"
-# error maintenance
-error.maintenance.title: "Chyba: stránka je nedostupná"
-error.maintenance.message: "Služba je dočasne nedostupná kvôli údržbe"
-# error banned
-error.banned.title: "Ste zakázaný"
-error.banned.message: "Ste trvalo zakázaný na tejto stránke"
-error.banned.message.reason: "Ste trvalo zakázaný na tejto stránke z dôvodu"
+error.unknown.message: "Neznáma chyba, kontaktujte správcu služby"
+# maintenance error
+error.maintenance.title: "Chyba: stránka nie je k dispozícii"
+error.maintenance.message: "Služba je dočasne nedostupná z dôvodu údržby"
+# banned
+error.banned.title: "Ste zablokovaný"
+error.banned.message: "Ste na tejto stránke trvale zablokovaný"
+error.banned.message.reason: "Ste na tejto stránke trvale zablokovaný z dôvodu"
+error.banned.unban.email: "Žiadosť o odblokovanie smerujte na"
 
 # main navigation
 navigation.home.link: "Domov"
-navigation.about.link: "O mně"
+navigation.about.link: "O mne"
 navigation.projects.link: "Projekty"
 navigation.contact.link: "Kontakt"
-navigation.uploader.link: "Nahrávač obrázkov"
+navigation.uploader.link: "Nahrať obrázok"
 navigation.paste.link: "Vložiť kód"
 
 # home
-home.im : "Som"
-home.main.text: "full stack developer"
+home.im: "Som"
+home.main.text: "backend developer"
 
 # about
-about.title: "O mně"
-about.description: "PHP developer"
-about.subdescription: "Som vývojár webu a serverových riešení"
-about.birthday: "Narodeniny"
+about.title: "O mne"
+about.description: "PHP Vývojár"
+about.subdescription: "Volám sa Lukáš a zaoberám sa vývojom webových a hybridných aplikácií. Zameriavam sa primárne na backend aplikácií. Mám skúsenosti primárne s PHP frameworkami Symfony a Laravel"
+about.birthday: "Dátum narodenia"
 about.may: "Máj"
 about.age: "Vek"
-about.nationality: "Národnosť: česká"
-about.projects.link.description: "Všetky moje verejné projekty sú k dispozícii"
-about.funfact.1: "Môj prvý programovací jazyk bol Pascal, začal som sa učiť v roku 2012"
-about.funfact.2: "Moje hlavné programovacie jazyky sú v súčasnosti Java a PHP"
+about.nationality: "Národnosť: Slovenská"
+about.projects.link.description: "Všetky moje verejné projekty sú dostupné"
+about.funfact: "Programovaniu som sa začal venovať v roku 2012, a mojimi prvými programovacími jazykmi boli Pascal a C++"
 about.counter.clients: "Klienti"
 about.counter.projects: "Projekty"
 about.counter.code.lines: "Riadky kódu"
@@ -71,9 +71,9 @@ about.my.skills.title: "Moje zručnosti"
 # projects
 projects.title: "Projekty"
 projects.open.title: "Otvorené"
-projects.closed.title: "Zatvorené"
+projects.closed.title: "Uzavreté"
 projects.project.language: "Jazyk"
-projects.project.source: "Zdroj"
+projects.project.source: "Repozitár"
 projects.list.empty.message: "Zoznam projektov je prázdny"
 projects.repos.link.description: "Všetky moje projekty nájdete tu"
 
@@ -86,11 +86,11 @@ contact.form.email.input: "Váš e-mail"
 contact.from.message.input: "Správa"
 contact.from.website.input: "Webová stránka"
 contact.form.submit.button: "Odoslať správu"
-contact.error.username.empty: "Prosím, zadajte svoje užívateľské meno"
+contact.error.username.empty: "Prosím, zadajte svoje používateľské meno"
 contact.error.email.empty: "Prosím, zadajte svoj e-mail"
 contact.error.message.empty: "Prosím, zadajte svoju správu"
 contact.error.characters.limit.reached: "Maximálna dĺžka správy je 2000 znakov"
-contact.error.ko.message: "Vaša správa nebola odoslaná kvôli chybe. Skúste to neskôr alebo skontrolujte svoje vstupy"
+contact.error.ko.message: "Vaša správa nebola odoslaná kvôli chybe. Skúste to neskôr alebo skontrolujte svoje údaje"
 contact.error.blocked.message: "Vaša správa bola zablokovaná"
-contact.error.limit.reached.message: "chyba: máte 5 neprečítaných správ. Počkajte na odpoveď na prvé správy."
+contact.error.limit.reached.message: "Chyba: Máte 5 neprečítaných správ. Počkajte na odpoveď na prvé správy."
 contact.success.message: "Vaša správa bola odoslaná. Lukáš odpovie najneskôr do 24 hodín"
