@@ -58,10 +58,10 @@ class VisitorInfoUtilTest extends TestCase
     public function testGetBrowser(): void
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0';
-        $this->assertEquals('Mozilla/5.0', $this->visitorInfoUtil->getBrowser());
+        $this->assertEquals('Mozilla/5.0', $this->visitorInfoUtil->getUserAgent());
 
         unset($_SERVER['HTTP_USER_AGENT']);
-        $this->assertEquals('Unknown', $this->visitorInfoUtil->getBrowser());
+        $this->assertEquals('Unknown', $this->visitorInfoUtil->getUserAgent());
     }
 
     /**

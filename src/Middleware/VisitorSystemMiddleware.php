@@ -70,11 +70,10 @@ class VisitorSystemMiddleware
         $date = date('d.m.Y H:i');
         $os = $this->visitorInfoUtil->getOS();
         $ipAddress = $this->visitorInfoUtil->getIP();
-        $browser = $this->visitorInfoUtil->getBrowser();
+        $browser = $this->visitorInfoUtil->getUserAgent();
 
         // escape inputs
         $ipAddress = $this->securityUtil->escapeString($ipAddress);
-        $browser = $this->securityUtil->escapeString($browser);
 
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ipAddress);

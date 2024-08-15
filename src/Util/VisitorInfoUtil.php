@@ -42,15 +42,22 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the user agent (browser)
+     * Get the user agent
      *
      * @return string|null The user agent
      */
-    public function getBrowser(): ?string
+    public function getUserAgent(): ?string
     {
         // get user agent
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
-        return $userAgent !== null ? $userAgent : 'Unknown';
+
+        /** @var string $browserAgent return user agent */
+        $browserAgent = $userAgent !== null ? $userAgent : 'Unknown';
+
+        // escape user agent
+        $browserAgent = htmlspecialchars($browserAgent, ENT_QUOTES | ENT_HTML5);
+
+        return $browserAgent;
     }
 
     /**
@@ -64,7 +71,7 @@ class VisitorInfoUtil
     {
         // set useragent if not set
         if ($userAgent == null) {
-            $userAgent = $this->getBrowser();
+            $userAgent = $this->getUserAgent();
         }
 
         $output = null;
@@ -151,7 +158,7 @@ class VisitorInfoUtil
         $os = 'Unknown OS';
 
         // get browser agent
-        $agent = $this->getBrowser();
+        $agent = $this->getUserAgent();
 
         // OS list
         $osArray = array (

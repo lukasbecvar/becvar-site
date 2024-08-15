@@ -87,7 +87,7 @@ class LogManager
             $date = date('d.m.Y H:i:s');
 
             // get visitor browser agent
-            $browser = $this->visitorInfoUtil->getBrowser();
+            $browser = $this->visitorInfoUtil->getUserAgent();
 
             // get visitor ip address
             $ipAddress = $this->visitorInfoUtil->getIP();
