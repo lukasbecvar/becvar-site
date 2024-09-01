@@ -189,7 +189,7 @@ class LogManager
                 ->setFirstResult($offset)
                 ->setMaxResults($per_page);
 
-            $logs = $queryBuilder->getQuery()->getResult();
+                $logs = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),

@@ -21,7 +21,7 @@ class Project
     #[ORM\GeneratedValue]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -30,7 +30,7 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $technology = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $link = null;
 
     #[ORM\Column(length: 255)]

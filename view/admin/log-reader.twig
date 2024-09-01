@@ -108,14 +108,14 @@
             <div class="page-button-box">
                 {% if readerPage != 1 %}
                     {% if whereIp != null %}
-                        <a class="back-page-button" href={{ path('admin_log_list_whereIp', {'page': readerPage - 1, 'whereIp': whereIp}) }}>Back</a>
+                        <a class="back-page-button" href={{ path('admin_log_list_whereIp', {'page': readerPage - 1, 'ip': whereIp}) }}>Back</a>
                     {% else %}
                         <a class="back-page-button" href={{ path('admin_log_list', {'page': readerPage - 1}) }}>Back</a>
                     {% endif %}
                 {% endif %}
                 {% if limitValue == logsCount %}
                     {% if whereIp != null %}
-                        <a class="back-page-button" href={{ path('admin_log_list_whereIp', {'page': readerPage + 1, 'whereIp': whereIp}) }}>Next</a>
+                        <a class="back-page-button" href={{ path('admin_log_list_whereIp', {'page': readerPage + 1, 'ip': whereIp}) }}>Next</a>
                     {% else %}
                         <a class="back-page-button" href={{ path('admin_log_list', {'page': readerPage + 1}) }}>Next</a>
                     {% endif %}

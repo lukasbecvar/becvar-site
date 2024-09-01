@@ -39,7 +39,7 @@ class Visitor
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $ip_address = null;
 
     #[ORM\Column(length: 255)]

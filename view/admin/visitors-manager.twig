@@ -44,7 +44,7 @@
         {# IP INFO CARD #}
         <div class="card-phone card text-white m-3">
             <div class="card-header">
-                IP info: <span class="text-warning">{{currentIp}}:</span> <a class="text-info" href={{ path('admin_log_list_whereIp', {'page': 1, 'whereIp': currentIp}) }}>view logs</a>
+                IP info: <span class="text-warning">{{currentIp}}:</span> <a class="text-info" href={{ path('admin_log_list_whereIp', {'page': 1, 'ip': currentIp}) }}>view logs</a>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">

@@ -22,7 +22,7 @@ class User
     #[ORM\GeneratedValue]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
@@ -34,7 +34,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $token = null;
 
     #[ORM\Column(length: 255)]
