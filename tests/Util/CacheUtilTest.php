@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 class CacheUtilTest extends TestCase
 {
     private CacheUtil $cacheUtil;
-    private ErrorManager|MockObject $errorManagerMock;
-    private CacheItemPoolInterface|MockObject $cacheItemPoolMock;
+    private ErrorManager&MockObject $errorManagerMock;
+    private CacheItemPoolInterface&MockObject $cacheItemPoolMock;
 
     protected function setUp(): void
     {

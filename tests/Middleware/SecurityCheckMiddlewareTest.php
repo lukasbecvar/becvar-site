@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SecurityCheckMiddlewareTest extends TestCase
 {
+    private SiteUtil&MockObject $siteUtilMock;
     private SecurityCheckMiddleware $middleware;
-    private SiteUtil|MockObject $siteUtilMock;
-    private ErrorManager|MockObject $errorManagerMock;
+    private ErrorManager&MockObject $errorManagerMock;
 
     protected function setUp(): void
     {

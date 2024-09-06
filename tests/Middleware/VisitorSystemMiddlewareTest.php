@@ -28,15 +28,15 @@ class VisitorSystemMiddlewareTest extends TestCase
     /** tested middleware */
     private VisitorSystemMiddleware $middleware;
 
-    private CacheUtil|MockObject $cacheUtil;
-    private Environment|MockObject $twigMock;
-    private BanManager|MockObject $banManagerMock;
-    private LogManager|MockObject $logManagerMock;
-    private ErrorManager|MockObject $errorManagerMock;
-    private SecurityUtil|MockObject $securityUtilMock;
-    private VisitorManager|MockObject $visitorManagerMock;
-    private VisitorInfoUtil|MockObject $visitorInfoUtilMock;
-    private EntityManagerInterface|MockObject $entityManagerMock;
+    private CacheUtil&MockObject $cacheUtil;
+    private Environment&MockObject $twigMock;
+    private BanManager&MockObject $banManagerMock;
+    private LogManager&MockObject $logManagerMock;
+    private ErrorManager&MockObject $errorManagerMock;
+    private SecurityUtil&MockObject $securityUtilMock;
+    private VisitorManager&MockObject $visitorManagerMock;
+    private VisitorInfoUtil&MockObject $visitorInfoUtilMock;
+    private EntityManagerInterface&MockObject $entityManagerMock;
 
     protected function setUp(): void
     {

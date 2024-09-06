@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 class DatabaseOnlineMiddlewareTest extends TestCase
 {
     private DatabaseOnlineMiddleware $middleware;
-    private ErrorManager|MockObject $errorManagerMock;
-    private Connection|MockObject $doctrineConnectionMock;
+    private ErrorManager&MockObject $errorManagerMock;
+    private Connection&MockObject $doctrineConnectionMock;
 
     protected function setUp(): void
     {

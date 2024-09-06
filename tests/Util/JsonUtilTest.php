@@ -22,6 +22,7 @@ class JsonUtilTest extends TestCase
     protected function setUp(): void
     {
         // mock dependencies
+        /** @var Environment $twigMock */
         $twigMock = $this->createMock(Environment::class);
         $this->errorManager = new ErrorManager($twigMock);
 

@@ -17,9 +17,9 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class VisitorInfoUtilTest extends TestCase
 {
-    private SiteUtil|MockObject $siteUtilMock;
-    private JsonUtil|MockObject $jsonUtilMock;
-    private VisitorInfoUtil|MockObject $visitorInfoUtil;
+    private VisitorInfoUtil $visitorInfoUtil;
+    private SiteUtil&MockObject $siteUtilMock;
+    private JsonUtil&MockObject $jsonUtilMock;
 
     protected function setUp(): void
     {

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SiteUtilTest extends TestCase
 {
     private SiteUtil $siteUtil;
-    private SecurityUtil|MockObject $securityUtilMock;
+    private SecurityUtil&MockObject $securityUtilMock;
 
     protected function setUp(): void
     {

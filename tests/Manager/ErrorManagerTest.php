@@ -25,6 +25,7 @@ class ErrorManagerTest extends TestCase
     public function testHandleError(): void
     {
         // create the twig mock
+        /** @var Environment $twigMock */
         $twigMock = $this->createMock(Environment::class);
 
         // create the error manager

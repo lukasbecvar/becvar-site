@@ -8,6 +8,7 @@ use App\Manager\VisitorManager;
 use PHPUnit\Framework\TestCase;
 use App\Manager\MessagesManager;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class MessagesManagerTest
@@ -26,9 +27,16 @@ class MessagesManagerTest extends TestCase
     public function testSaveMessage(): void
     {
         // mock dependencies
+        /** @var SecurityUtil&MockObject $securityUtil */
         $securityUtil = $this->createMock(SecurityUtil::class);
+
+        /** @var ErrorManager $errorManager */
         $errorManager = $this->createMock(ErrorManager::class);
+
+        /** @var VisitorManager&MockObject $visitorManager */
         $visitorManager = $this->createMock(VisitorManager::class);
+
+        /** @var EntityManagerInterface&MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
         // mock EntityManager to expect method calls

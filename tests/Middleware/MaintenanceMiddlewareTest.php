@@ -23,9 +23,9 @@ class MaintenanceMiddlewareTest extends TestCase
     /** tested middleware */
     private MaintenanceMiddleware $middleware;
 
-    private SiteUtil|MockObject $siteUtilMock;
-    private LoggerInterface|MockObject $loggerMock;
-    private ErrorManager|MockObject $errorManagerMock;
+    private SiteUtil&MockObject $siteUtilMock;
+    private LoggerInterface&MockObject $loggerMock;
+    private ErrorManager&MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
@@ -53,6 +53,7 @@ class MaintenanceMiddlewareTest extends TestCase
         $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(true);
 
         // create a mock request event
+        /** @var RequestEvent&MockObject $event */
         $event = $this->createMock(RequestEvent::class);
 
         // mock the error manager
@@ -85,6 +86,7 @@ class MaintenanceMiddlewareTest extends TestCase
         $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(false);
 
         // create a mock request event
+        /** @var RequestEvent&MockObject $event */
         $event = $this->createMock(RequestEvent::class);
 
         // expect the error manager to not be called

@@ -4,10 +4,12 @@ namespace App\Tests\Middleware;
 
 use App\Util\SecurityUtil;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use App\Middleware\EscapeRequestDataMiddleware;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Class EscapeRequestDataMiddlewareTest
@@ -26,6 +28,7 @@ class EscapeRequestDataMiddlewareTest extends TestCase
     public function testEscapeRequestData(): void
     {
         // arrange
+        /** @var SecurityUtil&MockObject $securityUtil */
         $securityUtil = $this->createMock(SecurityUtil::class);
         $securityUtil->method('escapeString')->willReturnCallback(function ($value) {
             return htmlspecialchars($value, ENT_QUOTES | ENT_HTML5);
@@ -44,10 +47,13 @@ class EscapeRequestDataMiddlewareTest extends TestCase
         $requestStack->push($request);
 
         // create a request event
+        /** @var MockObject&HttpKernelInterface $kernel */
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        /** @var MockObject&Request $request */
         $event = new RequestEvent(
-            $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface'),
+            $kernel,
             $request,
-            1
+            HttpKernelInterface::MAIN_REQUEST
         );
 
         // act

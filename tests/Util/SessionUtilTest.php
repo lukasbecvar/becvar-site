@@ -18,8 +18,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 class SessionUtilTest extends TestCase
 {
     private SessionUtil $sessionUtil;
-    private SecurityUtil|MockObject $securityUtilMock;
-    private ErrorManager|MockObject $errorManagerMock;
+    private SecurityUtil&MockObject $securityUtilMock;
+    private ErrorManager&MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
