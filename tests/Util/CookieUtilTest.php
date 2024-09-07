@@ -17,7 +17,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CookieUtilTest extends TestCase
 {
     private CookieUtil $cookieUtil;
-    private SecurityUtil&MockObject $securityUtilMock;
+    private SecurityUtil & MockObject $securityUtilMock;
 
     protected function setUp(): void
     {

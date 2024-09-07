@@ -33,6 +33,7 @@ class DatabaseBrowserControllerTest extends WebTestCase
      */
     private function createAuthManagerMock(string $role): object
     {
+        // create mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUserRole')->willReturn($role);

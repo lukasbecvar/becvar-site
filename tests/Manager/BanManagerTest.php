@@ -22,11 +22,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 class BanManagerTest extends TestCase
 {
     private BanManager $banManager;
-    private LogManager&MockObject $logManager;
-    private AuthManager&MockObject $authManager;
-    private ErrorManager&MockObject $errorManager;
-    private VisitorManager&MockObject $visitorManager;
-    private EntityManagerInterface&MockObject $entityManager;
+    private LogManager & MockObject $logManager;
+    private AuthManager & MockObject $authManager;
+    private ErrorManager & MockObject $errorManager;
+    private VisitorManager & MockObject $visitorManager;
+    private EntityManagerInterface & MockObject $entityManager;
 
     protected function setUp(): void
     {
@@ -68,11 +68,10 @@ class BanManagerTest extends TestCase
         $this->authManager->method('getUsername')->willReturn($username);
 
         // mock log manager
-        $this->logManager->expects($this->once())->method('log')
-            ->with(
-                'ban-system',
-                'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
-            );
+        $this->logManager->expects($this->once())->method('log')->with(
+            'ban-system',
+            'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
+        );
 
         // mock entity manager
         $this->entityManager->expects($this->once())->method('flush');

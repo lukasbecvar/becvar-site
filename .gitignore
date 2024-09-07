@@ -1,14 +1,10 @@
 # config files
 .env.prod
-/.env.local
-/.env.local.php
-/.env.*.local
 
 # docker env data
 /_docker/services/
 
 # cache files
-/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 
@@ -19,8 +15,6 @@ composer.lock
 # node files
 /node_modules/
 /public/build/
-npm-debug.log
-yarn-error.log
 package-lock.json
 
 # phpunit

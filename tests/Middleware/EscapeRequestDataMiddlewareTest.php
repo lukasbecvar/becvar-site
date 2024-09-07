@@ -28,7 +28,7 @@ class EscapeRequestDataMiddlewareTest extends TestCase
     public function testEscapeRequestData(): void
     {
         // arrange
-        /** @var SecurityUtil&MockObject $securityUtil */
+        /** @var SecurityUtil & MockObject $securityUtil */
         $securityUtil = $this->createMock(SecurityUtil::class);
         $securityUtil->method('escapeString')->willReturnCallback(function ($value) {
             return htmlspecialchars($value, ENT_QUOTES | ENT_HTML5);
@@ -47,9 +47,9 @@ class EscapeRequestDataMiddlewareTest extends TestCase
         $requestStack->push($request);
 
         // create a request event
-        /** @var MockObject&HttpKernelInterface $kernel */
+        /** @var HttpKernelInterface $kernel */
         $kernel = $this->createMock(HttpKernelInterface::class);
-        /** @var MockObject&Request $request */
+        /** @var Request $request */
         $event = new RequestEvent(
             $kernel,
             $request,

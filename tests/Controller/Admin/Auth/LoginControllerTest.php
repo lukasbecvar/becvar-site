@@ -23,9 +23,13 @@ class LoginControllerTest extends WebTestCase
         // create client instance
         $this->client = static::createClient();
 
+        // get entity manager
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+        // get user repository
         $userRepository = $entityManager->getRepository(\App\Entity\User::class);
 
+        // get user
         $existingUser = $userRepository->findOneBy(['username' => 'test_username']);
 
         // check if user exist
@@ -63,8 +67,13 @@ class LoginControllerTest extends WebTestCase
      */
     private function removeFakeData(): void
     {
+        // get entity manager
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+        // get user repository
         $userRepository = $entityManager->getRepository(User::class);
+
+        // get fake user
         $fakeUser = $userRepository->findOneBy(['username' => 'test_username']);
 
         // check if user exist

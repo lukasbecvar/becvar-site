@@ -39,16 +39,16 @@ class LogManagerTest extends TestCase
         /** @var ErrorManager $errorManager */
         $errorManager = $this->createMock(ErrorManager::class);
 
-        /** @var SecurityUtil&MockObject $securityUtil */
+        /** @var SecurityUtil & MockObject $securityUtil */
         $securityUtil = $this->createMock(SecurityUtil::class);
 
-        /** @var VisitorManager&MockObject $visitorManager */
+        /** @var VisitorManager & MockObject $visitorManager */
         $visitorManager = $this->createMock(VisitorManager::class);
 
-        /** @var VisitorInfoUtil&MockObject $visitorInfoUtil */
+        /** @var VisitorInfoUtil & MockObject $visitorInfoUtil */
         $visitorInfoUtil = $this->createMock(VisitorInfoUtil::class);
 
-        /** @var EntityManagerInterface&MockObject $entityManager */
+        /** @var EntityManagerInterface & MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
         // set up EntityManager mock to expect method calls

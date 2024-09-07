@@ -31,6 +31,7 @@ class LogReaderControllerTest extends WebTestCase
      */
     private function createAuthManagerMock(): object
     {
+        // create mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn(true);
 

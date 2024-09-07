@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 class CacheUtilTest extends TestCase
 {
     private CacheUtil $cacheUtil;
-    private ErrorManager&MockObject $errorManagerMock;
-    private CacheItemPoolInterface&MockObject $cacheItemPoolMock;
+    private ErrorManager & MockObject $errorManagerMock;
+    private CacheItemPoolInterface & MockObject $cacheItemPoolMock;
 
     protected function setUp(): void
     {
@@ -50,8 +50,7 @@ class CacheUtilTest extends TestCase
             ->willReturn($cacheItemMock);
 
         // mock cache item
-        $cacheItemMock->expects($this->once())
-            ->method('isHit')->willReturn(true);
+        $cacheItemMock->expects($this->once())->method('isHit')->willReturn(true);
 
         // assert that the method returns true
         $this->assertTrue($this->cacheUtil->isCatched($key));

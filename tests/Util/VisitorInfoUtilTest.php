@@ -18,8 +18,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 class VisitorInfoUtilTest extends TestCase
 {
     private VisitorInfoUtil $visitorInfoUtil;
-    private SiteUtil&MockObject $siteUtilMock;
-    private JsonUtil&MockObject $jsonUtilMock;
+    private SiteUtil & MockObject $siteUtilMock;
+    private JsonUtil & MockObject $jsonUtilMock;
 
     protected function setUp(): void
     {
@@ -36,7 +36,7 @@ class VisitorInfoUtilTest extends TestCase
      *
      * @return void
      */
-    public function testGetIP(): void
+    public function testGetIp(): void
     {
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.1';
         $this->assertEquals('192.168.1.1', $this->visitorInfoUtil->getIP());

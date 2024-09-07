@@ -33,6 +33,7 @@ class VisitorManagerControllerTest extends WebTestCase
      */
     private function createAuthManagerMock(string $role = 'Admin'): object
     {
+        // create a mock of AuthManager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUserRole')->willReturn($role);

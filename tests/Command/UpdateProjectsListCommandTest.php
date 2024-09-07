@@ -40,7 +40,7 @@ class UpdateProjectsListCommandTest extends TestCase
             ->expects($this->once())
             ->method('updateProjectList');
 
-        // create a Symfony Console Application
+        // create a symfony console
         $application = new Application();
         $application->add(new UpdateProjectsListCommand($this->projectsManagerMock));
 
@@ -69,7 +69,7 @@ class UpdateProjectsListCommandTest extends TestCase
             ->method('updateProjectList')
             ->willThrowException(new \Exception('Something went wrong'));
 
-        // create a Symfony Console Application
+        // create a symfony console
         $application = new Application();
         $application->add(new UpdateProjectsListCommand($this->projectsManagerMock));
 

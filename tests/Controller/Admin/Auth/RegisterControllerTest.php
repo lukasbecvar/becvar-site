@@ -38,8 +38,13 @@ class RegisterTest extends WebTestCase
      */
     private function removeFakeData(): void
     {
+        // get entity manager
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+        // get user repository
         $userRepository = $entityManager->getRepository(User::class);
+
+        // get fake user
         $fakeUser = $userRepository->findOneBy(['username' => 'testing_username']);
 
         // check if user exist
@@ -62,6 +67,7 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterAllowedLoaded(): void
     {
+        // mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
@@ -87,6 +93,7 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterNonAllowedLoaded(): void
     {
+        // mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(false);
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
@@ -105,6 +112,7 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterEmptySubmit(): void
     {
+        // mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
@@ -132,6 +140,7 @@ class RegisterTest extends WebTestCase
      */
     public function testRegisterNotMatchPasswordsSubmit(): void
     {
+        // mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
         $this->client->getContainer()->set(AuthManager::class, $authManagerMock);

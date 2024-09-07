@@ -20,9 +20,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 class DashboardUtilTest extends TestCase
 {
     private DashboardUtil $dashboardUtil;
-    private JsonUtil&MockObject $jsonUtil;
-    private ErrorManager&MockObject $errorManager;
-    private EntityManagerInterface&MockObject $entityManager;
+    private JsonUtil & MockObject $jsonUtil;
+    private ErrorManager & MockObject $errorManager;
+    private EntityManagerInterface & MockObject $entityManager;
 
     protected function setUp(): void
     {

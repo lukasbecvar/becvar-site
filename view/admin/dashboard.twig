@@ -11,6 +11,7 @@
     <div class="card-phone card text-white mb-3 dashbord-card" id="wrarning-box">
         <div class="card-header">Warnings</div>
         <div class="card-body" id="wraning-elements"> 
+            {# SSL CHECK #}
             {% if isSsl == false %}
                 <p class="card-text">
                     <span class="text-red">
@@ -21,24 +22,28 @@
                 </p>
             {% endif %}
 
+            {# MAINTENANCE CHECK #}
             {% if isMaintenance == true %}
                 <p class="card-text">
                     <span class="text-red"><strong>Maintenance is enabled!</strong></span>
                 </p>
             {% endif %}
 
+            {# DEV MODE CHECK #}
             {% if isDevMode == true %}
                 <p class="card-text">
                     <span class="text-red"><strong>Developer mode is enabled!</strong></span>
                 </p>
             {% endif %}
 
+            {# BROWSER LIST CHECK #}
             {% if isBrowserListExist == false %}
                 <p class="card-text text-red">
                     <strong>error to load file browser-list.json in app root</strong>
                 </p>
             {% endif %}
 
+            {# ANTILOG CHECK #}
             {% if antiLogEnabled == false %}
                 <p class="card-text text-warning">
                     <strong>
@@ -47,6 +52,7 @@
                 </p>
             {% endif %}
             
+            {# UNREADED LOGS CHECK #}
             {% if unreadedLogsCount != 0 %}
                 <p class="card-text text-warning">
                     <strong>
@@ -55,6 +61,7 @@
                 </p>
             {% endif %}
 
+            {# UNREADED MESSAGES CHECK #}
             {% if messagesCount != 0 %}
                 <p class="card-text text-warning">
                     <strong>
@@ -64,7 +71,7 @@
             {% endif %}
         </div>
     </div>
-    {#  VISITORS INFO CARD #}
+    {# VISITORS INFO CARD #}
     <div class="card-phone card text-white mb-3 dashbord-card">
         <div class="card-header">
             Visitors info <span>[<a href={{ path('admin_visitor_manager', {'page': 1}) }}>table</a>]</span>

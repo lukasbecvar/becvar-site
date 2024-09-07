@@ -38,6 +38,7 @@ class AntilogControllerTest extends WebTestCase
      */
     private function createAuthManagerMock(bool $logged = true): object
     {
+        // mock auth manager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn($logged);
         $authManagerMock->method('getUsername')->willReturn('testing-user');

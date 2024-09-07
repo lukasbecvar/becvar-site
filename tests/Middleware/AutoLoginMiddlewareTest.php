@@ -18,10 +18,12 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class AutoLoginMiddlewareTest extends TestCase
 {
+    /** tested middleware */
     private AutoLoginMiddleware $middleware;
-    private CookieUtil&MockObject $cookieUtilMock;
-    private SessionUtil&MockObject $sessionUtilMock;
-    private AuthManager&MockObject $authManagerMock;
+
+    private CookieUtil & MockObject $cookieUtilMock;
+    private SessionUtil & MockObject $sessionUtilMock;
+    private AuthManager & MockObject $authManagerMock;
 
     protected function setUp(): void
     {

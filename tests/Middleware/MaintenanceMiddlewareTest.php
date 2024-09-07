@@ -23,9 +23,9 @@ class MaintenanceMiddlewareTest extends TestCase
     /** tested middleware */
     private MaintenanceMiddleware $middleware;
 
-    private SiteUtil&MockObject $siteUtilMock;
-    private LoggerInterface&MockObject $loggerMock;
-    private ErrorManager&MockObject $errorManagerMock;
+    private SiteUtil & MockObject $siteUtilMock;
+    private LoggerInterface & MockObject $loggerMock;
+    private ErrorManager & MockObject $errorManagerMock;
 
     protected function setUp(): void
     {

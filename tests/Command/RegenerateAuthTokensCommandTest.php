@@ -41,7 +41,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
             ->method('regenerateUsersTokens')
             ->willReturn(['status' => true]);
 
-        // create a Symfony Console Application
+        // create a symfony console
         $application = new Application();
         $application->add(new RegenerateAuthTokensCommand($this->authManagerMock));
 
@@ -70,7 +70,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
             ->method('regenerateUsersTokens')
             ->willReturn(['status' => false, 'message' => 'Error message']);
 
-        // create a Symfony Console Application
+        // create a symfony console
         $application = new Application();
         $application->add(new RegenerateAuthTokensCommand($this->authManagerMock));
 

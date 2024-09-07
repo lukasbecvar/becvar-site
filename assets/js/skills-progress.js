@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // iterate through each progress bar and animate it
     progressBars.forEach(function (progressBar) {
-        var value = progressBar.getAttribute('aria-valuenow');      
+        var value = progressBar.getAttribute('aria-valuenow')  
         animateProgressBar(progressBar, value, 1000)
     })
 

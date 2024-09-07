@@ -41,7 +41,7 @@ class CookieUtil
      *
      * @return void
      */
-    public function set($name, $value, $expiration): void
+    public function set(string $name, string $value, int $expiration): void
     {
         if (!headers_sent()) {
             $value = $this->securityUtil->encryptAes($value);
@@ -57,7 +57,7 @@ class CookieUtil
      *
      * @return string|null The decrypted value of the cookie
      */
-    public function get($name): ?string
+    public function get(string $name): ?string
     {
         $value = base64_decode($_COOKIE[$name]);
         return $this->securityUtil->decryptAes($value);
@@ -72,7 +72,7 @@ class CookieUtil
      *
      * @return void
      */
-    public function unset($name): void
+    public function unset(string $name): void
     {
         if (!headers_sent()) {
             $host = $_SERVER['HTTP_HOST'];

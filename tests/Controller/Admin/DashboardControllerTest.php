@@ -31,6 +31,7 @@ class DashboardControllerTest extends WebTestCase
      */
     private function createAuthManagerMock(): object
     {
+        // create a mock of AuthManager
         $authManagerMock = $this->createMock(AuthManager::class);
         $authManagerMock->method('isUserLogedin')->willReturn(true);
         $authManagerMock->method('getUsername')->willReturn('phpunit-user');

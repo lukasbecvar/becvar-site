@@ -20,8 +20,8 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
  */
 class ExceptionEventSubscriberTest extends TestCase
 {
-    private LogManager&MockObject $logManager;
-    private LoggerInterface&MockObject $logger;
+    private LogManager & MockObject $logManager;
+    private LoggerInterface & MockObject $logger;
     private ExceptionEventSubscriber $subscriber;
 
     protected function setUp(): void
@@ -63,9 +63,9 @@ class ExceptionEventSubscriberTest extends TestCase
         $property->setValue($exception, $trace);
 
         // create a new exception event
-        /** @var MockObject&HttpKernelInterface $kernel */
+        /** @var HttpKernelInterface $kernel */
         $kernel = $this->createMock(HttpKernelInterface::class);
-        /** @var MockObject&Request $request */
+        /** @var Request $request */
         $request = $this->createMock(Request::class);
         $event = new ExceptionEvent(
             $kernel,

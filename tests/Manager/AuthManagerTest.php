@@ -26,15 +26,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 class AuthManagerTest extends TestCase
 {
     private AuthManager $authManager;
-    private LogManager&MockObject $logManager;
-    private CookieUtil&MockObject $cookieUtil;
-    private SessionUtil&MockObject $sessionUtil;
-    private ErrorManager&MockObject $errorManager;
-    private SecurityUtil&MockObject $securityUtil;
-    private UserRepository&MockObject $userRepository;
-    private VisitorManager&MockObject $visitorManager;
-    private VisitorInfoUtil&MockObject $visitorInfoUtil;
-    private EntityManagerInterface&MockObject $entityManager;
+    private LogManager & MockObject $logManager;
+    private CookieUtil & MockObject $cookieUtil;
+    private SessionUtil & MockObject $sessionUtil;
+    private ErrorManager & MockObject $errorManager;
+    private SecurityUtil & MockObject $securityUtil;
+    private UserRepository & MockObject $userRepository;
+    private VisitorManager & MockObject $visitorManager;
+    private VisitorInfoUtil & MockObject $visitorInfoUtil;
+    private EntityManagerInterface & MockObject $entityManager;
 
     protected function setUp(): void
     {

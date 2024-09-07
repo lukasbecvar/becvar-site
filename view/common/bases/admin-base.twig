@@ -42,39 +42,39 @@
 
                 // toggle a class on the body element
                 function manipulate() {
-                    document.querySelector("body").classList.toggle("active");
+                    document.querySelector("body").classList.toggle("active")
                 }
             
                 // initialize the sidebar
                 function sidebarInit() {
-                    var body = document.querySelector("body");
-                    var hamburger = document.querySelector(".hamburger");
+                    var body = document.querySelector("body")
+                    var hamburger = document.querySelector(".hamburger")
             
                     // adjust classes and event listener based on window width
                     if (window.innerWidth <= 1024) {
-                        body.classList.add("active");
-                        hamburger.addEventListener("click", manipulate);
+                        body.classList.add("active")
+                        hamburger.addEventListener("click", manipulate)
                     } else {
-                        body.classList.remove("active");
-                        hamburger.removeEventListener("click", manipulate);
+                        body.classList.remove("active")
+                        hamburger.removeEventListener("click", manipulate)
                     }
             
                     // additional condition for specific URL and window width
                     if (window.innerWidth > 1024) {
                         if (!window.location.href.includes("/admin/dashboard") || window.location.href.includes("/admin/dashboard/emergency/shutdown")) {
-                            manipulate();
-                            hamburger.addEventListener("click", manipulate);
+                            manipulate()
+                            hamburger.addEventListener("click", manipulate)
                         }
                     }
                 }
 
                 // initial call to sidebarInit
                 sidebarInit();
-            
+        
                 // event listener for window resize
                 window.addEventListener('resize', function() {
-                    sidebarInit();
-                });
+                    sidebarInit()
+                })
             </script>
         </div>
     </div>

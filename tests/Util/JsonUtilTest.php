@@ -6,6 +6,7 @@ use Twig\Environment;
 use App\Util\JsonUtil;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class JsonUtilTest
@@ -60,7 +61,7 @@ class JsonUtilTest extends TestCase
     public function testGetJsonWithInvalidTarget(): void
     {
         // set expect exception
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
 
         // call the method
         $this->jsonUtil->getJson('non_existent_file.json');

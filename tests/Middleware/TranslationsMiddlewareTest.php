@@ -10,9 +10,11 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class TranslationsMiddlewareTest extends TestCase
 {
+    /** tested middleware */
     private TranslationsMiddleware $middleware;
-    private VisitorManager&MockObject $visitorManagerMock;
-    private LocaleAwareInterface&MockObject $translatorMock;
+
+    private VisitorManager & MockObject $visitorManagerMock;
+    private LocaleAwareInterface & MockObject $translatorMock;
 
     protected function setUp(): void
     {
