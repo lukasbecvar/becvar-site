@@ -45,7 +45,6 @@ navigation.home.link: "Головна"
 navigation.about.link: "Про мене"
 navigation.projects.link: "Проекти"
 navigation.contact.link: "Контакт"
-navigation.uploader.link: "Завантажити зображення"
 navigation.paste.link: "Вставити код"
 
 # home

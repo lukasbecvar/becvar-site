@@ -45,7 +45,6 @@ navigation.home.link: "ホーム"
 navigation.about.link: "私について"
 navigation.projects.link: "プロジェクト"
 navigation.contact.link: "お問い合わせ"
-navigation.uploader.link: "画像をアップロード"
 navigation.paste.link: "コードを貼り付け"
 
 # home

@@ -45,7 +45,6 @@ navigation.home.link: "Strona główna"
 navigation.about.link: "O mnie"
 navigation.projects.link: "Projekty"
 navigation.contact.link: "Kontakt"
-navigation.uploader.link: "Prześlij zdjęcie"
 navigation.paste.link: "Wklej kod"
 
 # home

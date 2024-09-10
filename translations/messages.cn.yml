@@ -45,7 +45,6 @@ navigation.home.link: "主页"
 navigation.about.link: "关于我"
 navigation.projects.link: "项目"
 navigation.contact.link: "联系"
-navigation.uploader.link: "上传图片"
 navigation.paste.link: "粘贴代码"
 
 # home

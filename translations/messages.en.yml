@@ -45,7 +45,6 @@ navigation.home.link: "Home"
 navigation.about.link: "About"
 navigation.projects.link: "Projects"
 navigation.contact.link: "Contact"
-navigation.uploader.link: "Uploader"
 navigation.paste.link: "Paste"
 
 # home

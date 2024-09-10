@@ -45,7 +45,6 @@ navigation.home.link: "Início"
 navigation.about.link: "Sobre Mim"
 navigation.projects.link: "Projetos"
 navigation.contact.link: "Contato"
-navigation.uploader.link: "Enviar Imagem"
 navigation.paste.link: "Colar Código"
 
 # home

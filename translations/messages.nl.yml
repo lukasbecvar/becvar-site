@@ -45,7 +45,6 @@ navigation.home.link: "Home"
 navigation.about.link: "Over mij"
 navigation.projects.link: "Projecten"
 navigation.contact.link: "Contact"
-navigation.uploader.link: "Afbeelding uploaden"
 navigation.paste.link: "Code plakken"
 
 # home

@@ -45,7 +45,6 @@ navigation.home.link: "Domov"
 navigation.about.link: "O mne"
 navigation.projects.link: "Projekty"
 navigation.contact.link: "Kontakt"
-navigation.uploader.link: "Nahrať obrázok"
 navigation.paste.link: "Vložiť kód"
 
 # home
