@@ -76,9 +76,7 @@ class CookieUtilTest extends TestCase
 
         // mock the decryptAes method
         $this->securityUtilMock->expects($this->once())
-            ->method('decryptAes')
-            ->with($encryptedValue)
-            ->willReturn($decryptedValue);
+            ->method('decryptAes')->with($encryptedValue)->willReturn($decryptedValue);
 
         // call the get method
         $value = $this->cookieUtil->get($name);

@@ -1,4 +1,4 @@
-/* becvar-site: public page function */ 
+/* public page function */ 
 const select = (el, all = false) => {
     el = el.trim()
     if (all) {

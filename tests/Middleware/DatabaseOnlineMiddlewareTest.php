@@ -64,14 +64,11 @@ class DatabaseOnlineMiddlewareTest extends TestCase
         // mock database connection failure
         $exceptionMessage = 'Connection refused';
         $this->doctrineConnectionMock->expects($this->once())
-            ->method('executeQuery')
-            ->with('SELECT 1')
-            ->willThrowException(new \Exception($exceptionMessage));
+            ->method('executeQuery')->with('SELECT 1')->willThrowException(new \Exception($exceptionMessage));
 
         // expect error handling called with HTTP_INTERNAL_SERVER_ERROR status
         $this->errorManagerMock->expects($this->once())
-            ->method('handleError')
-            ->with(
+            ->method('handleError')->with(
                 'database connection error: ' . $exceptionMessage,
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );

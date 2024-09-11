@@ -37,13 +37,10 @@ class TranslationsMiddlewareTest extends TestCase
     public function testSetLocaleEnglishForUnidentifiedLanguages(): void
     {
         // mock visitor language as unidentified
-        $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorLanguage')->willReturn(null);
+        $this->visitorManagerMock->expects($this->once())->method('getVisitorLanguage')->willReturn(null);
 
         // expect setting locale to 'en'
-        $this->translatorMock->expects($this->once())
-            ->method('setLocale')
-            ->with('en');
+        $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
         // execute method
         $this->middleware->onKernelRequest();
@@ -57,14 +54,10 @@ class TranslationsMiddlewareTest extends TestCase
     public function testSetLocaleEnglishForHostLanguage(): void
     {
         // mock visitor language as 'host'
-        $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorLanguage')
-            ->willReturn('host');
+        $this->visitorManagerMock->expects($this->once())->method('getVisitorLanguage')->willReturn('host');
 
         // expect setting locale to 'en'
-        $this->translatorMock->expects($this->once())
-            ->method('setLocale')
-            ->with('en');
+        $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
         // execute method
         $this->middleware->onKernelRequest();
@@ -78,14 +71,10 @@ class TranslationsMiddlewareTest extends TestCase
     public function testSetLocaleEnglishForUnknownLanguage(): void
     {
         // mock visitor language as 'unknown'
-        $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorLanguage')
-            ->willReturn('unknown');
+        $this->visitorManagerMock->expects($this->once())->method('getVisitorLanguage')->willReturn('unknown');
 
         // expect setting locale to 'en'
-        $this->translatorMock->expects($this->once())
-            ->method('setLocale')
-            ->with('en');
+        $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
         // execute method
         $this->middleware->onKernelRequest();
@@ -99,14 +88,10 @@ class TranslationsMiddlewareTest extends TestCase
     public function testSetVisitorLanguageLocale(): void
     {
         // mock visitor language as 'fr' (example language code)
-        $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorLanguage')
-            ->willReturn('fr');
+        $this->visitorManagerMock->expects($this->once())->method('getVisitorLanguage')->willReturn('fr');
 
         // expect setting locale to 'fr'
-        $this->translatorMock->expects($this->once())
-            ->method('setLocale')
-            ->with('fr');
+        $this->translatorMock->expects($this->once())->method('setLocale')->with('fr');
 
         // execute method
         $this->middleware->onKernelRequest();

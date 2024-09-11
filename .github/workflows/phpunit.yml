@@ -1,4 +1,4 @@
-# run unit tests action
+# run PHPUnit tests action
 name: PHPUnit Tests
 
 on:
@@ -23,8 +23,7 @@ jobs:
 
     # phpunit tests process
     steps:
-      # checkout code
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       # setup PHP environment

@@ -80,9 +80,9 @@ class VisitorSystemMiddlewareTest extends TestCase
 
         // mock location info
         $this->visitorInfoUtilMock->expects($this->once())
-            ->method('getLocation')
-            ->with($ipAddress)
-            ->willReturn(['city' => 'Test City', 'country' => 'Test Country']);
+            ->method('getLocation')->with($ipAddress)->willReturn(
+                ['city' => 'Test City', 'country' => 'Test Country']
+            );
 
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('persist');
@@ -108,9 +108,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         // mock visitor entity
         $visitor = new Visitor();
         $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorRepository')
-            ->with($ipAddress)
-            ->willReturn($visitor);
+            ->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('flush');

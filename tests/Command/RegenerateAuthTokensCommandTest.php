@@ -36,10 +36,8 @@ class RegenerateAuthTokensCommandTest extends TestCase
     public function testRegenerateAuthTokensCommandSuccess(): void
     {
         // mock the return value of regenerateUsersTokens to simulate success
-        $this->authManagerMock
-            ->expects($this->once())
-            ->method('regenerateUsersTokens')
-            ->willReturn(['status' => true]);
+        $this->authManagerMock->expects($this->once())
+            ->method('regenerateUsersTokens')->willReturn(['status' => true]);
 
         // create a symfony console
         $application = new Application();
@@ -65,10 +63,8 @@ class RegenerateAuthTokensCommandTest extends TestCase
     public function testRegenerateAuthTokensCommandFailure(): void
     {
         // mock the return value of regenerateUsersTokens to simulate failure
-        $this->authManagerMock
-            ->expects($this->once())
-            ->method('regenerateUsersTokens')
-            ->willReturn(['status' => false, 'message' => 'Error message']);
+        $this->authManagerMock->expects($this->once())
+            ->method('regenerateUsersTokens')->willReturn(['status' => false, 'message' => 'Error message']);
 
         // create a symfony console
         $application = new Application();

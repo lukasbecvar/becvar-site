@@ -82,9 +82,7 @@ class SessionUtilTest extends TestCase
 
         // mock the encryptAes method
         $this->securityUtilMock->expects($this->once())
-            ->method('encryptAes')
-            ->with($sessionValue)
-            ->willReturn($encryptedValue);
+            ->method('encryptAes')->with($sessionValue)->willReturn($encryptedValue);
 
         // set the session
         $this->sessionUtil->setSession($sessionName, $sessionValue);
@@ -113,9 +111,7 @@ class SessionUtilTest extends TestCase
 
         // mock the decryptAes method
         $this->securityUtilMock->expects($this->once())
-            ->method('decryptAes')
-            ->with($encryptedValue)
-            ->willReturn($decryptedValue);
+            ->method('decryptAes')->with($encryptedValue)->willReturn($decryptedValue);
 
         // get the session value
         $value = $this->sessionUtil->getSessionValue($sessionName);

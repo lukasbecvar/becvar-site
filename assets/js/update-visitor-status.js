@@ -1,4 +1,4 @@
-/* becvar-site: front-end visitor status update */ 
+/* front-end visitor status update */ 
 document.addEventListener('DOMContentLoaded', function() {
     function sendOnlineStatus() {
         fetch('/api/visitor/update/activity', {
@@ -9,5 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // send online status after 5 minutes
     setInterval(sendOnlineStatus, 300000)
 
+    // send online status on page load
     sendOnlineStatus()
 })
