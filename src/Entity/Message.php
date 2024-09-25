@@ -14,6 +14,11 @@ use App\Repository\MessageRepository;
  * @package App\Entity
  */
 #[ORM\Table(name: 'inbox_messages')]
+#[ORM\Index(name: 'inbox_messages_name_idx', columns: ['name'])]
+#[ORM\Index(name: 'inbox_messages_email_idx', columns: ['email'])]
+#[ORM\Index(name: 'inbox_messages_status_idx', columns: ['status'])]
+#[ORM\Index(name: 'inbox_messages_ip_address_idx', columns: ['ip_address'])]
+#[ORM\Index(name: 'inbox_messages_visitor_id_idx', columns: ['visitor_id'])]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {

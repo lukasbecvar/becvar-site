@@ -13,6 +13,8 @@ use App\Repository\ProjectRepository;
  * @package App\Entity
  */
 #[ORM\Table(name: 'projects')]
+#[ORM\Index(name: 'projects_name_idx', columns: ['name'])]
+#[ORM\Index(name: 'projects_status_idx', columns: ['status'])]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
 {

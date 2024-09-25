@@ -14,6 +14,9 @@ use App\Repository\LogRepository;
  * @package App\Entity
  */
 #[ORM\Table(name: 'logs')]
+#[ORM\Index(name: 'logs_name_idx', columns: ['name'])]
+#[ORM\Index(name: 'logs_status_idx', columns: ['status'])]
+#[ORM\Index(name: 'logs_ip_address_idx', columns: ['ip_address'])]
 #[ORM\Entity(repositoryClass: LogRepository::class)]
 class Log
 {
