@@ -53,7 +53,7 @@ home.main.text: "backend developer"
 
 # about
 about.title: "O mne"
-about.description: "PHP Vývojár"
+about.description: "Backend Vývojár"
 about.subdescription: "Volám sa Lukáš a zaoberám sa vývojom webových a hybridných aplikácií. Zameriavam sa primárne na backend aplikácií. Mám skúsenosti primárne s PHP frameworkami Symfony a Laravel"
 about.birthday: "Dátum narodenia"
 about.may: "Máj"
