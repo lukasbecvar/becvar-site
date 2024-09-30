@@ -55,7 +55,7 @@ class LogFixtures extends Fixture
             ],
             [
                 'name' => 'authenticator',
-                'value' => 'user: lordbecvold logged in',
+                'value' => 'user: lukasbecvar logged in',
                 'time' => '06.04.2024 07:28:48',
                 'ip_address' => '2a00:1028:838e:71a6:ec0a:1029:dc19:fee1',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
@@ -64,7 +64,7 @@ class LogFixtures extends Fixture
             ],
             [
                 'name' => 'anti-log',
-                'value' => 'user: lordbecvold unset antilog',
+                'value' => 'user: lukasbecvar unset antilog',
                 'time' => '06.04.2024 07:28:51',
                 'ip_address' => '2a00:1028:838e:71a6:ec0a:1029:dc19:fee1',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',

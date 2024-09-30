@@ -30,42 +30,42 @@ class ProjectFixtures extends Fixture
                 'name' => 'becvar-site',
                 'description' => 'My personal website app built with Symfony framework.',
                 'technology' => 'PHP',
-                'link' => 'https://github.com/lordbecvold/becvar-site',
+                'link' => 'https://github.com/lukasbecvar/becvar-site',
                 'status' => 'open'
             ],
             [
                 'name' => 'becvold-core',
                 'description' => 'Basic survival core plugin',
                 'technology' => 'Java',
-                'link' => 'https://github.com/lordbecvold/becvold-core',
+                'link' => 'https://github.com/lukasbecvar/becvold-core',
                 'status' => 'closed'
             ],
             [
                 'name' => 'becwork',
                 'description' => 'PHP framework.',
                 'technology' => 'PHP',
-                'link' => 'https://github.com/lordbecvold/becwork',
+                'link' => 'https://github.com/lukasbecvar/becwork',
                 'status' => 'closed'
             ],
             [
                 'name' => 'discord-bot',
                 'description' => 'Java Discord bot base.',
                 'technology' => 'Java',
-                'link' => 'https://github.com/lordbecvold/discord-bot',
+                'link' => 'https://github.com/lukasbecvar/discord-bot',
                 'status' => 'closed'
             ],
             [
                 'name' => 'dubinek-bot',
                 'description' => 'My own discord bot.',
                 'technology' => 'Java',
-                'link' => 'https://github.com/lordbecvold/dubinek-bot',
+                'link' => 'https://github.com/lukasbecvar/dubinek-bot',
                 'status' => 'closed'
             ],
             [
                 'name' => 'file-share',
                 'description' => 'Simple file sharing app',
                 'technology' => 'PHP',
-                'link' => 'https://github.com/lordbecvold/file-share',
+                'link' => 'https://github.com/lukasbecvar/file-share',
                 'status' => 'closed'
             ]
         ];
