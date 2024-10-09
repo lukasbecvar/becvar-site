@@ -47,17 +47,20 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
+        // get the exception
+        $exception = $event->getThrowable();
+
         // get the error message
-        $message = $event->getThrowable()->getMessage();
+        $message = $exception->getMessage();
 
         // check if the event can be logged
         if ($this->canBeEventLogged($message)) {
-            // log the exception to database
+            // log the exception to database with the error code
             $this->logManager->log('exception', $message);
         }
 
-        // log the error message with monolog
-        $this->logger->critical($message);
+        // log the error message and code with monolog
+        $this->logger->error($message);
     }
 
     /**
