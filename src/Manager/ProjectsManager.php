@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Util\JsonUtil;
 use App\Entity\Project;
+use App\Util\CacheUtil;
 use App\Util\SecurityUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProjectsManager
 {
     private JsonUtil $jsonUtil;
+    private CacheUtil $cacheUtil;
     private LogManager $logManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
@@ -25,12 +27,14 @@ class ProjectsManager
 
     public function __construct(
         JsonUtil $jsonUtil,
+        CacheUtil $cacheUtil,
         LogManager $logManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
         EntityManagerInterface $entityManager
     ) {
         $this->jsonUtil = $jsonUtil;
+        $this->cacheUtil = $cacheUtil;
         $this->logManager = $logManager;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
@@ -113,6 +117,11 @@ class ProjectsManager
             }
         }
 
+        // delete projects list cache
+        $this->cacheUtil->deleteValue('projects-list-closed');
+        $this->cacheUtil->deleteValue('projects-list-open');
+        $this->cacheUtil->deleteValue('projects-count');
+
         // log process success
         $this->logManager->log('project-update', 'project list updated!');
     }
@@ -181,7 +190,20 @@ class ProjectsManager
     public function getProjectsList(string $status): ?array
     {
         try {
-            return $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
+            // check if projects list is cached
+            if ($this->cacheUtil->isCatched('projects-list-' . $status)) {
+                // get projects list from cache
+                $projectsList = $this->cacheUtil->getValue('projects-list-' . $status)->get();
+            } else {
+                // get projects list from database
+                $projectsList = $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
+
+                // cache projects list
+                $this->cacheUtil->setValue('projects-list-' . $status, $projectsList, 60 * 60 * 24 * 30);
+            }
+
+            // return projects list
+            return $projectsList;
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get projects list: ' . $e->getMessage(),
@@ -201,7 +223,18 @@ class ProjectsManager
     public function getProjectsCount(): ?int
     {
         try {
-            return $this->entityManager->getRepository(Project::class)->count([]);
+            if ($this->cacheUtil->isCatched('projects-count')) {
+                // get projects count from cache
+                $projectsCount = $this->cacheUtil->getValue('projects-count')->get();
+            } else {
+                // get projects count from database
+                $projectsCount = $this->entityManager->getRepository(Project::class)->count([]);
+
+                // cache projects count
+                $this->cacheUtil->setValue('projects-count', $projectsCount, 60 * 60 * 24 * 30);
+            }
+
+            return $projectsCount;
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get projects list: ' . $e->getMessage(),
