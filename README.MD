@@ -22,7 +22,7 @@ Personal website build with the Symfony framework & Bootstrap.
  - configure all values (mysql app secret etc)
  - install dependencies (scripts/install.sh)
  - migrate database structure (scripts/migrate.sh)
- - install opcache & acpu (optionally)
+ - install opcache (optionally)
 
 ## Deployment
 Deployment of the new version with GitHub Action when a new release is created.
