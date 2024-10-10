@@ -19,7 +19,6 @@ use App\Repository\UserRepository;
 #[ORM\Index(name: 'users_name_idx', columns: ['username'])]
 #[ORM\Index(name: 'users_ip_address_idx', columns: ['ip_address'])]
 #[ORM\Index(name: 'users_visitor_id_idx', columns: ['visitor_id'])]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE", region: "entity_cache")]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {

@@ -19,7 +19,6 @@ use App\Repository\MessageRepository;
 #[ORM\Index(name: 'inbox_messages_status_idx', columns: ['status'])]
 #[ORM\Index(name: 'inbox_messages_ip_address_idx', columns: ['ip_address'])]
 #[ORM\Index(name: 'inbox_messages_visitor_id_idx', columns: ['visitor_id'])]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE", region: "entity_cache")]
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {
