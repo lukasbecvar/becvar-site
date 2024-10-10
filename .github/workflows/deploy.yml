@@ -4,7 +4,7 @@ name: Deploy
 on:
   release:
     types: [created]
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
         script: |
           # go to the project directory
           cd /services/website/becvar-site
-          
+
           # enable maintenance mode
           php bin/console toggle:maintenance
 
@@ -55,15 +55,15 @@ jobs:
           php bin/console doctrine:database:create --if-not-exists
           php bin/console doctrine:migrations:migrate --no-interaction
 
-          # update projects database
-          php bin/console projects:list:update
-
           # fix storage permissions
           sudo chmod -R 777 var/
           sudo chown -R www-data:www-data var/
 
           # start web server
           sudo systemctl start apache2
+
+          # update projects database
+          php bin/console projects:list:update
 
           # disable maintenance mode
           php bin/console toggle:maintenance
