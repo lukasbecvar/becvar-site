@@ -3,3 +3,12 @@ framework:
         # file system cache (/var/cache)
         app: cache.adapter.filesystem
         system: cache.adapter.system
+        
+        pools:
+            # L2 doctrine cache pool
+            doctrine.file_cache_pool:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 3600
+            doctrine.system_cache_pool:
+                adapter: cache.adapter.filesystem
+                

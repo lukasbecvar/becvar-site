@@ -17,6 +17,7 @@ use App\Repository\LogRepository;
 #[ORM\Index(name: 'logs_name_idx', columns: ['name'])]
 #[ORM\Index(name: 'logs_status_idx', columns: ['status'])]
 #[ORM\Index(name: 'logs_ip_address_idx', columns: ['ip_address'])]
+#[ORM\Cache(usage: "NONSTRICT_READ_WRITE", region: "entity_cache")]
 #[ORM\Entity(repositoryClass: LogRepository::class)]
 class Log
 {
