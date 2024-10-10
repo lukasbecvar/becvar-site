@@ -20,7 +20,7 @@ class HomeController extends AbstractController
      *
      * @return Response The home page view response
      */
-    #[Route(['/', '/home'], methods: ['GET'], name: 'public_home')]
+    #[Route(path: '/', methods: ['GET'], name: 'public_home')]
     public function homePage(): Response
     {
         return $this->render('public/home.twig', [

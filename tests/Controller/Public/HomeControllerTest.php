@@ -31,20 +31,6 @@ class HomeControllerTest extends WebTestCase
     public function testHomePage(): void
     {
         // make get request
-        $this->client->request('GET', '/home');
-
-        // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    /**
-     * Test accessing the Home page using the default route
-     *
-     * @return void
-     */
-    public function testHomeDefaultRote(): void
-    {
-        // make get request
         $this->client->request('GET', '/');
 
         // assert response
