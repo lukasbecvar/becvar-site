@@ -1,19 +1,16 @@
 #!/bin/bash
 
-# clean app & cache
-php bin/console cache:clear
-
 # delete composer files
-rm -rf composer.lock
-rm -rf vendor/
+sudo rm -rf composer.lock
+sudo rm -rf vendor/
 
 # delete npm packages
-rm -rf package-lock.json
-rm -rf node_modules/
+sudo rm -rf package-lock.json
+sudo rm -rf node_modules/
 
 # delete builded assets
-rm -rf public/bundles/
-rm -rf public/build/
+sudo rm -rf public/bundles/
+sudo rm -rf public/build/
 
 # delete symfony cache folder
 sudo rm -rf var/

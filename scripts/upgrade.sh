@@ -16,11 +16,11 @@ sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
 sh scripts/install.sh
 
 # migrate database to latest version
-php bin/console doctrine:database:create --if-not-exists
-php bin/console doctrine:migrations:migrate --no-interaction
+docker-compose run php bin/console doctrine:database:create --if-not-exists
+docker-compose run php php bin/console doctrine:migrations:migrate --no-interaction
                     
 # run app commands
-php bin/console projects:list:update
+docker-compose run php php bin/console projects:list:update
 
 # fix storage permissions
 sudo chmod -R 777 var/

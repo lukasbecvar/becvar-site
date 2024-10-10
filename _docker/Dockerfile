@@ -21,6 +21,3 @@ RUN docker-php-ext-install opcache
 # install APCu
 RUN pecl install apcu \
     && docker-php-ext-enable apcu
-
-# enable apache rewrite module
-# RUN a2enmod rewrite

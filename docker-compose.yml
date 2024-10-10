@@ -1,13 +1,32 @@
-# this docker compose configuration defines local development services
-version: '3'
+# docker compose configuration defines local development stack
 
 # docker network config
 networks:
-    dev:
+    main:
         driver: bridge
 
 services:
-    # database container
+    # composer service for managing php dependencies
+    composer:
+        image: composer:latest
+        working_dir: /app
+        volumes:
+            - .:/app
+        networks:
+            - main
+        command: composer install
+    
+    # node service for building assets
+    node:
+        image: node:latest
+        working_dir: /app
+        volumes:
+            - .:/app
+        networks:
+            - main
+        command: npm run watch
+
+    # database service
     mysql:
         image: mysql:latest
         container_name: becvar_site_mysql
@@ -22,14 +41,14 @@ services:
         ports:
             - "3306:3306"
         networks:
-            - dev
+            - main
 
-    # web server container
-    apache_php:
+    # web server service
+    php:
         build:
             context: .
             dockerfile: ./_docker/Dockerfile
-        container_name: becvar_site_apache
+        container_name: becvar_site_website
         restart: always
         depends_on:
             - mysql
@@ -42,8 +61,8 @@ services:
             - ./_docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
             - ./_docker/services/log:/var/log
             - ./:/var/www
-        mem_limit: 2g
+        mem_limit: 1g
         ports:
             - "80:80"
         networks:
-            - dev
+            - main

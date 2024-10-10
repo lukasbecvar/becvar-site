@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # create new migration version
-php bin/console make:migration --no-interaction
+docker-compose run php php bin/console make:migration --no-interaction

@@ -5,5 +5,7 @@ sh scripts/drop-database.sh
 sh scripts/migrate.sh
 
 # load testing datafixtures
-php bin/console doctrine:fixtures:load --no-interaction 
-php bin/console doctrine:fixtures:load --no-interaction --env=test
+docker-compose run php bash -c "
+    php bin/console doctrine:fixtures:load --no-interaction &&
+    php bin/console doctrine:fixtures:load --no-interaction --env=test
+"
