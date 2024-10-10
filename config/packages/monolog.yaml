@@ -7,6 +7,12 @@ monolog:
             level: error
             channels: ['!event']
 
+        # stdout log handler
+        stdout:
+            type: stream
+            level: error
+            path: 'php://stdout'
+
         # exclude specific http codes from the exception log
         filtered:
             type: fingers_crossed
