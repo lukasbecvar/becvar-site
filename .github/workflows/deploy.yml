@@ -55,15 +55,15 @@ jobs:
           php bin/console doctrine:database:create --if-not-exists
           php bin/console doctrine:migrations:migrate --no-interaction
 
-          # fix storage permissions
-          sudo chmod -R 777 var/
-          sudo chown -R www-data:www-data var/
-
           # start web server
           sudo systemctl start apache2
 
           # update projects database
           php bin/console projects:list:update
+
+          # fix storage permissions
+          sudo chmod -R 777 var/
+          sudo chown -R www-data:www-data var/
 
           # disable maintenance mode
           php bin/console toggle:maintenance
