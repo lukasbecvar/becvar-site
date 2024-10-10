@@ -2,7 +2,7 @@
 
 namespace App\Tests\Middleware;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\SecurityCheckMiddleware;
@@ -21,18 +21,18 @@ class SecurityCheckMiddlewareTest extends TestCase
     /** tested middleware */
     private SecurityCheckMiddleware $middleware;
 
-    private SiteUtil & MockObject $siteUtilMock;
+    private AppUtil & MockObject $appUtillMock;
     private ErrorManager & MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
         // mock dependencies
-        $this->siteUtilMock = $this->createMock(SiteUtil::class);
+        $this->appUtillMock = $this->createMock(AppUtil::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
 
         // create instance of SecurityCheckMiddleware
         $this->middleware = new SecurityCheckMiddleware(
-            $this->siteUtilMock,
+            $this->appUtillMock,
             $this->errorManagerMock
         );
     }
@@ -45,10 +45,10 @@ class SecurityCheckMiddlewareTest extends TestCase
     public function testSslCheckPasses(): void
     {
         // mock SSL check enabled
-        $this->siteUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
+        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
 
         // mock SSL connection is secure
-        $this->siteUtilMock->expects($this->once())->method('isSsl')->willReturn(true);
+        $this->appUtillMock->expects($this->once())->method('isSsl')->willReturn(true);
 
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
@@ -65,10 +65,10 @@ class SecurityCheckMiddlewareTest extends TestCase
     public function testSslCheckFails(): void
     {
         // mock SSL check enabled
-        $this->siteUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
+        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
 
         // mock SSL connection is not secure
-        $this->siteUtilMock->expects($this->once())->method('isSsl')->willReturn(false);
+        $this->appUtillMock->expects($this->once())->method('isSsl')->willReturn(false);
 
         // expect error handling called with HTTP_UPGRADE_REQUIRED status
         $this->errorManagerMock->expects($this->once())
@@ -89,10 +89,10 @@ class SecurityCheckMiddlewareTest extends TestCase
     public function testSslCheckDisabled(): void
     {
         // mock SSL check disabled
-        $this->siteUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(false);
+        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(false);
 
         // expect no SSL check and no error handling called
-        $this->siteUtilMock->expects($this->never())->method('isSsl');
+        $this->appUtillMock->expects($this->never())->method('isSsl');
 
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');

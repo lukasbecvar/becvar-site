@@ -11,12 +11,12 @@ namespace App\Util;
  */
 class VisitorInfoUtil
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private JsonUtil $jsonUtil;
 
-    public function __construct(SiteUtil $siteUtil, JsonUtil $jsonUtil)
+    public function __construct(AppUtil $appUtil, JsonUtil $jsonUtil)
     {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->jsonUtil = $jsonUtil;
     }
 
@@ -243,7 +243,7 @@ class VisitorInfoUtil
     public function getLocation(string $ipAddress): ?array
     {
         // check if site is running on localhost
-        if ($this->siteUtil->isRunningLocalhost()) {
+        if ($this->appUtil->isRunningLocalhost()) {
             return ['city' => 'locale', 'country' => 'host'];
         }
 

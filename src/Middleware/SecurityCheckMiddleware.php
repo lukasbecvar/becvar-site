@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SecurityCheckMiddleware
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private ErrorManager $errorManager;
 
-    public function __construct(SiteUtil $siteUtil, ErrorManager $errorManager)
+    public function __construct(AppUtil $appUtil, ErrorManager $errorManager)
     {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->errorManager = $errorManager;
     }
 
@@ -32,7 +32,7 @@ class SecurityCheckMiddleware
     public function onKernelRequest(): void
     {
         // check if SSL check enabled
-        if ($this->siteUtil->isSSLOnly() && !$this->siteUtil->isSsl()) {
+        if ($this->appUtil->isSSLOnly() && !$this->appUtil->isSsl()) {
             $this->errorManager->handleError(
                 'SSL error: connection not running on ssl protocol',
                 Response::HTTP_UPGRADE_REQUIRED

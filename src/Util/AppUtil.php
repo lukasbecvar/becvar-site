@@ -3,21 +3,33 @@
 namespace App\Util;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * Class SiteUtil
+ * Class AppUtil
  *
- * SiteUtil provides basic site-related methods
+ * AppUtil provides basic site-related methods
  *
  * @package App\Util
  */
-class SiteUtil
+class AppUtil
 {
     private SecurityUtil $securityUtil;
+    private KernelInterface $kernelInterface;
 
-    public function __construct(SecurityUtil $securityUtil)
+    public function __construct(SecurityUtil $securityUtil, KernelInterface $kernelInterface)
     {
         $this->securityUtil = $securityUtil;
+        $this->kernelInterface = $kernelInterface;
+    }
+
+    /** Get the application root directory
+     *
+     * @return string The application root directory
+     */
+    public function getAppRootDir(): string
+    {
+        return $this->kernelInterface->getProjectDir();
     }
 
     /**

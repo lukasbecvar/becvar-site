@@ -2,7 +2,7 @@
 
 namespace App\Tests\Middleware;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use Psr\Log\LoggerInterface;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
@@ -23,20 +23,20 @@ class MaintenanceMiddlewareTest extends TestCase
     /** tested middleware */
     private MaintenanceMiddleware $middleware;
 
-    private SiteUtil & MockObject $siteUtilMock;
+    private AppUtil & MockObject $appUtillMock;
     private LoggerInterface & MockObject $loggerMock;
     private ErrorManager & MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
         // mock dependencies
-        $this->siteUtilMock = $this->createMock(SiteUtil::class);
+        $this->appUtillMock = $this->createMock(AppUtil::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
 
         // create instance of MaintenanceMiddleware
         $this->middleware = new MaintenanceMiddleware(
-            $this->siteUtilMock,
+            $this->appUtillMock,
             $this->loggerMock,
             $this->errorManagerMock
         );
@@ -50,7 +50,7 @@ class MaintenanceMiddlewareTest extends TestCase
     public function testRequestWhenMaintenanceModeEnabled(): void
     {
         // mock the site util
-        $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(true);
+        $this->appUtillMock->expects($this->once())->method('isMaintenance')->willReturn(true);
 
         // create a mock request event
         /** @var RequestEvent&MockObject $event */
@@ -81,7 +81,7 @@ class MaintenanceMiddlewareTest extends TestCase
     public function testRequestWhenMaintenanceModeDisabled(): void
     {
         // mock the site util
-        $this->siteUtilMock->expects($this->once())->method('isMaintenance')->willReturn(false);
+        $this->appUtillMock->expects($this->once())->method('isMaintenance')->willReturn(false);
 
         // create a mock request event
         /** @var RequestEvent&MockObject $event */

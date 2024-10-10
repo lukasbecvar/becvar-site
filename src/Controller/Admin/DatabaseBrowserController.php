@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Manager\AuthManager;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,16 +20,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DatabaseBrowserController extends AbstractController
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         AuthManager $authManager,
         DatabaseManager $databaseManager
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
     }
@@ -65,8 +65,8 @@ class DatabaseBrowserController extends AbstractController
     public function tableView(Request $request): Response
     {
         // get query parameters
-        $table = $this->siteUtil->getQueryString('table', $request);
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $table = $this->appUtil->getQueryString('table', $request);
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // render table view
         return $this->render('admin/database-browser.twig', [
@@ -107,9 +107,9 @@ class DatabaseBrowserController extends AbstractController
         $errorMsg = null;
 
         // get query parameters
-        $table = $this->siteUtil->getQueryString('table', $request);
-        $id = intval($this->siteUtil->getQueryString('id', $request));
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $table = $this->appUtil->getQueryString('table', $request);
+        $id = intval($this->appUtil->getQueryString('id', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
@@ -188,8 +188,8 @@ class DatabaseBrowserController extends AbstractController
         $errorMsg = null;
 
         // get query parameters
-        $table = $this->siteUtil->getQueryString('table', $request);
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $table = $this->appUtil->getQueryString('table', $request);
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get table columns
         $columns = $this->databaseManager->getTableColumns($table);
@@ -264,9 +264,9 @@ class DatabaseBrowserController extends AbstractController
     public function rowDelete(Request $request): Response
     {
         // get query parameters
-        $id = $this->siteUtil->getQueryString('id', $request);
-        $table = $this->siteUtil->getQueryString('table', $request);
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $id = $this->appUtil->getQueryString('id', $request);
+        $table = $this->appUtil->getQueryString('table', $request);
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // delete row
         $this->databaseManager->deleteRowFromTable($table, $id);

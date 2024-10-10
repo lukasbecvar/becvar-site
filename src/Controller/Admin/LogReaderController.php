@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
@@ -21,20 +21,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class LogReaderController extends AbstractController
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private LogManager $logManager;
     private AuthManager $authManager;
     private SecurityUtil $securityUtil;
     private DatabaseManager $databaseManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         LogManager $logManager,
         AuthManager $authManager,
         SecurityUtil $securityUtil,
         DatabaseManager $databaseManager
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
         $this->securityUtil = $securityUtil;
@@ -52,7 +52,7 @@ class LogReaderController extends AbstractController
     public function logsTable(Request $request): Response
     {
         // get page
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get logs data
         $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
@@ -88,8 +88,8 @@ class LogReaderController extends AbstractController
     public function logsWhereIp(Request $request): Response
     {
         // get query parameters
-        $ipAddress = $this->siteUtil->getQueryString('ip', $request);
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $ipAddress = $this->appUtil->getQueryString('ip', $request);
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get & escape ip
         $ipAddress = $this->securityUtil->escapeString($ipAddress);
@@ -128,7 +128,7 @@ class LogReaderController extends AbstractController
     public function deleteAllLogs(Request $request): Response
     {
         // get page from query string
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // render delete confirmation view
         return $this->render('admin/elements/confirmation/delete-logs-html.twig', [

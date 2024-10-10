@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Entity\Visitor;
 use App\Form\BanFormType;
 use App\Manager\BanManager;
@@ -23,20 +23,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class VisitorManagerController extends AbstractController
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private BanManager $banManager;
     private AuthManager $authManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         BanManager $banManager,
         AuthManager $authManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->banManager = $banManager;
         $this->authManager = $authManager;
         $this->visitorManager = $visitorManager;
@@ -54,10 +54,10 @@ class VisitorManagerController extends AbstractController
     public function visitorsTable(Request $request): Response
     {
         // get page int
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get filter value
-        $filter = $this->siteUtil->getQueryString('filter', $request);
+        $filter = $this->appUtil->getQueryString('filter', $request);
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
@@ -90,7 +90,7 @@ class VisitorManagerController extends AbstractController
     public function visitorIpInfo(Request $request): Response
     {
         // get ip address from query string
-        $ipAddress = $this->siteUtil->getQueryString('ip', $request);
+        $ipAddress = $this->appUtil->getQueryString('ip', $request);
 
         // check if ip parameter found
         if ($ipAddress == 1) {
@@ -129,7 +129,7 @@ class VisitorManagerController extends AbstractController
     public function deleteAllVisitors(Request $request): Response
     {
         // get page int
-        $page = $this->siteUtil->getQueryString('page', $request);
+        $page = $this->appUtil->getQueryString('page', $request);
 
         // return delete confirmation view
         return $this->render('admin/elements/confirmation/delete-visitors.twig', [
@@ -157,8 +157,8 @@ class VisitorManagerController extends AbstractController
         $visitor = new Visitor();
 
         // get query parameters
-        $page = intval($this->siteUtil->getQueryString('page', $request));
-        $id = intval($this->siteUtil->getQueryString('id', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
+        $id = intval($this->appUtil->getQueryString('id', $request));
 
         // create register form
         $form = $this->createForm(BanFormType::class, $visitor);
@@ -216,8 +216,8 @@ class VisitorManagerController extends AbstractController
     public function unbanVisitor(Request $request): Response
     {
         // get query parameters
-        $page = intval($this->siteUtil->getQueryString('page', $request));
-        $id = intval($this->siteUtil->getQueryString('id', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
+        $id = intval($this->appUtil->getQueryString('id', $request));
 
         // get visitor ip
         $ipAddress = $this->banManager->getVisitorIP($id);

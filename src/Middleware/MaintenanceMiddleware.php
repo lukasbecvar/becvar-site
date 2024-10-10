@@ -2,7 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use Psr\Log\LoggerInterface;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +17,16 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class MaintenanceMiddleware
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private LoggerInterface $logger;
     private ErrorManager $errorManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         LoggerInterface $loggerInterface,
         ErrorManager $errorManager
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->logger = $loggerInterface;
         $this->errorManager = $errorManager;
     }
@@ -41,9 +41,9 @@ class MaintenanceMiddleware
     public function onKernelRequest(RequestEvent $event): void
     {
         // check if MAINTENANCE_MODE enabled
-        if ($this->siteUtil->isMaintenance()) {
+        if ($this->appUtil->isMaintenance()) {
             // handle debug mode exception
-            if ($this->siteUtil->isDevMode()) {
+            if ($this->appUtil->isDevMode()) {
                 $this->errorManager->handleError(
                     msg: 'the application is under maintenance mode',
                     code: Response::HTTP_SERVICE_UNAVAILABLE

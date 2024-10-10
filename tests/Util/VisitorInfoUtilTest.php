@@ -2,7 +2,7 @@
 
 namespace App\Tests\Util;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Util\JsonUtil;
 use App\Util\VisitorInfoUtil;
 use PHPUnit\Framework\TestCase;
@@ -18,17 +18,17 @@ use PHPUnit\Framework\MockObject\MockObject;
 class VisitorInfoUtilTest extends TestCase
 {
     private VisitorInfoUtil $visitorInfoUtil;
-    private SiteUtil & MockObject $siteUtilMock;
+    private AppUtil & MockObject $appUtilMock;
     private JsonUtil & MockObject $jsonUtilMock;
 
     protected function setUp(): void
     {
         // mock dependencies
-        $this->siteUtilMock = $this->createMock(SiteUtil::class);
+        $this->appUtilMock = $this->createMock(AppUtil::class);
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
 
         // create instance of VisitorInfoUtil
-        $this->visitorInfoUtil = new VisitorInfoUtil($this->siteUtilMock, $this->jsonUtilMock);
+        $this->visitorInfoUtil = new VisitorInfoUtil($this->appUtilMock, $this->jsonUtilMock);
     }
 
     /**
@@ -121,7 +121,7 @@ class VisitorInfoUtilTest extends TestCase
     public function testGetLocation(): void
     {
         // mock site util
-        $this->siteUtilMock->method('isRunningLocalhost')->willReturn(true);
+        $this->appUtilMock->method('isRunningLocalhost')->willReturn(true);
 
         // assert result
         $this->assertEquals(['city' => 'locale', 'country' => 'host'], $this->visitorInfoUtil->getLocation('127.0.0.1'));

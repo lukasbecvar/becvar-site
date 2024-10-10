@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Manager\AuthManager;
 use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,16 +19,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class InboxController extends AbstractController
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         AuthManager $authManager,
         MessagesManager $messagesManager
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
     }
@@ -44,7 +44,7 @@ class InboxController extends AbstractController
     public function inbox(Request $request): Response
     {
         // get page from query string
-        $page = intval($this->siteUtil->getQueryString('page', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
 
         // get messages data
         $messages = $this->messagesManager->getMessages('open', $page);
@@ -75,8 +75,8 @@ class InboxController extends AbstractController
     public function close(Request $request): Response
     {
         // get query parameters
-        $page = intval($this->siteUtil->getQueryString('page', $request));
-        $id = intval($this->siteUtil->getQueryString('id', $request));
+        $page = intval($this->appUtil->getQueryString('page', $request));
+        $id = intval($this->appUtil->getQueryString('id', $request));
 
         // close message
         $this->messagesManager->closeMessage($id);

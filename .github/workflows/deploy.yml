@@ -24,11 +24,14 @@ jobs:
 
         # script to run on the server
         script: |
-          # stop web server
-          sudo systemctl stop apache2
-
           # go to the project directory
           cd /services/website/becvar-site
+          
+          # enable maintenance mode
+          php bin/console toggle:maintenance
+
+          # stop web server
+          sudo systemctl stop apache2
 
           # clear requirements & cache
           sudo sh scripts/clear.sh
@@ -61,3 +64,6 @@ jobs:
 
           # start web server
           sudo systemctl start apache2
+
+          # disable maintenance mode
+          php bin/console toggle:maintenance

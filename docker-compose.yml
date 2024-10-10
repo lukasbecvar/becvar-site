@@ -9,7 +9,9 @@ services:
     # composer service for managing php dependencies
     composer:
         image: composer:latest
+        container_name: composer
         working_dir: /app
+        restart: no
         volumes:
             - .:/app
         networks:
@@ -19,7 +21,9 @@ services:
     # node service for building assets
     node:
         image: node:latest
+        container_name: node
         working_dir: /app
+        restart: no
         volumes:
             - .:/app
         networks:

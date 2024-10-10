@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Log;
-use App\Util\SiteUtil;
+use App\Util\AppUtil;
 use App\Entity\Message;
 use App\Entity\Visitor;
 use App\Util\DashboardUtil;
@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DashboardController extends AbstractController
 {
-    private SiteUtil $siteUtil;
+    private AppUtil $appUtil;
     private BanManager $banManager;
     private LogManager $logManager;
     private AuthManager $authManager;
@@ -33,14 +33,14 @@ class DashboardController extends AbstractController
     private VisitorManager $visitorManager;
 
     public function __construct(
-        SiteUtil $siteUtil,
+        AppUtil $appUtil,
         BanManager $banManager,
         LogManager $logManager,
         AuthManager $authManager,
         DashboardUtil $dashboardUtil,
         VisitorManager $visitorManager
     ) {
-        $this->siteUtil = $siteUtil;
+        $this->appUtil = $appUtil;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
         $this->authManager = $authManager;
@@ -63,9 +63,9 @@ class DashboardController extends AbstractController
             'userPic' => $this->authManager->getUserProfilePic(),
 
             // warning box data
-            'isSsl' => $this->siteUtil->isSsl(),
-            'isDevMode' => $this->siteUtil->isDevMode(),
-            'isMaintenance' => $this->siteUtil->isMaintenance(),
+            'isSsl' => $this->appUtil->isSsl(),
+            'isDevMode' => $this->appUtil->isDevMode(),
+            'isMaintenance' => $this->appUtil->isMaintenance(),
             'antiLogEnabled' => $this->logManager->isEnabledAntiLog(),
             'isBrowserListExist' => $this->dashboardUtil->isBrowserListFound(),
 
