@@ -17,7 +17,3 @@ RUN docker-php-ext-install pdo_mysql intl
 
 # install OPCache
 RUN docker-php-ext-install opcache
-
-# install APCu
-RUN pecl install apcu \
-    && docker-php-ext-enable apcu

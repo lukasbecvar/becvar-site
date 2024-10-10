@@ -16,4 +16,4 @@ sudo rm -rf public/build/
 sudo rm -rf var/
 
 # delete docker services data
-sudo rm -rf _docker/services/
+sudo rm -rf .docker/services/

@@ -2,7 +2,7 @@
 .env.prod
 
 # docker env data
-/_docker/services/
+/.docker/services/
 
 # cache files
 /public/bundles/

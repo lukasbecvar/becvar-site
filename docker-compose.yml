@@ -36,9 +36,9 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=root
         volumes:
-            - ./_docker/configs/mysqld.conf:/etc/mysql/mysql.conf.d/mysqld.cnf
-            - ./_docker/services/mysql_database:/var/lib/mysql
-            - ./_docker/services/log:/var/log
+            - ./.docker/configs/mysqld.conf:/etc/mysql/mysql.conf.d/mysqld.cnf
+            - ./.docker/services/mysql_database:/var/lib/mysql
+            - ./.docker/services/log:/var/log
         mem_limit: 1g
         ports:
             - "3306:3306"
@@ -49,7 +49,7 @@ services:
     php:
         build:
             context: .
-            dockerfile: ./_docker/Dockerfile
+            dockerfile: ./.docker/Dockerfile
         container_name: becvar_site_website
         restart: always
         depends_on:
@@ -59,9 +59,9 @@ services:
             - DATABASE_HOST=mysql
             - DATABASE_PORT=3306
         volumes:
-            - ./_docker/configs/apache-site.conf:/etc/apache2/sites-available/000-default.conf
-            - ./_docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
-            - ./_docker/services/log:/var/log
+            - ./.docker/configs/apache-site.conf:/etc/apache2/sites-available/000-default.conf
+            - ./.docker/configs/php.ini:/usr/local/etc/php/php.ini:ro
+            - ./.docker/services/log:/var/log
             - ./:/var/www
         mem_limit: 1g
         ports:
