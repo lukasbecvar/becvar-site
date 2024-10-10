@@ -15,7 +15,6 @@ use App\Repository\ProjectRepository;
 #[ORM\Table(name: 'projects')]
 #[ORM\Index(name: 'projects_name_idx', columns: ['name'])]
 #[ORM\Index(name: 'projects_status_idx', columns: ['status'])]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE", region: "entity_cache")]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
 {

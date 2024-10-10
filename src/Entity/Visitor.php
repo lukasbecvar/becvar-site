@@ -16,7 +16,6 @@ use App\Repository\VisitorRepository;
 #[ORM\Index(name: 'visitors_email_idx', columns: ['email'])]
 #[ORM\Index(name: 'visitors_ip_address_idx', columns: ['ip_address'])]
 #[ORM\Index(name: 'visitors_banned_status_idx', columns: ['banned_status'])]
-#[ORM\Cache(usage: "NONSTRICT_READ_WRITE", region: "entity_cache")]
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
 class Visitor
 {
