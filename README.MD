@@ -20,8 +20,9 @@ Personal website build with the Symfony framework & Bootstrap.
  - for production use only APP_ENV=prod! (in .env)
  - configure app enviroment in .env.prod
  - configure all values (mysql app secret etc)
- - install dependencies (scripts/install.sh)
- - migrate database structure (scripts/migrate.sh)
+ - install dependencies `composer install && npm install && npm run build`
+ - create database `doctrine:database:create`
+ - migrate database structure `doctrine:migrations:migrate --no-interactio`
  - install opcache (optionally)
 
 ## Deployment
