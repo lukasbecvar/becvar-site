@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
         $manager->persist($testUser);
 
         // generate testing users
-        for ($i = 2; $i < 15; $i++) {
+        for ($i = 2; $i < 5; $i++) {
             $user = new User();
 
             // generate a random username

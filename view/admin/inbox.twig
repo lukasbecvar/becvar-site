@@ -16,9 +16,17 @@
                     <div class='card text-white mb-3 msg-box'>
                         <div class="card-body">
                             <a class='delete-link' href={{ path('admin_inbox_close', {'page': page, 'id':  message.id|e}) }}>X</a>
-                            <a class='delete-link text-warning' href={{ path('admin_visitor_ban', {'page': page, 'id':  message.visitor_id|e, 'referer': 'inbox'}) }}>
-                                BAN
-                            </a>
+                            
+                            {# BAN/UNBAN button #}
+                            {% if banManager.isVisitorBanned(message.ip_address) %}
+                                <a class='delete-link text-warning' href={{ path('admin_visitor_unban', {'page': page, 'id':  message.visitor_id|e, 'referer': 'inbox'}) }}>
+                                    UNBAN
+                                </a>
+                            {% else %}
+                                <a class='delete-link text-warning' href={{ path('admin_visitor_ban', {'page': page, 'id':  message.visitor_id|e, 'referer': 'inbox'}) }}>
+                                    BAN
+                                </a>
+                            {% endif %}
                             <h5 class="left-center card-title">{{ message.name|e }}
                                 <span class='text-success phone-none'>[{{ message.time|e }}]</span><span class="phone-none">, </span>
                                 <span class='text-warning phone-none'>[{{ message.ip_address|e }}]</span>

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Util\AppUtil;
+use App\Manager\BanManager;
 use App\Manager\AuthManager;
 use App\Manager\MessagesManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +21,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class InboxController extends AbstractController
 {
     private AppUtil $appUtil;
+    private BanManager $banManager;
     private AuthManager $authManager;
     private MessagesManager $messagesManager;
 
     public function __construct(
         AppUtil $appUtil,
+        BanManager $banManager,
         AuthManager $authManager,
         MessagesManager $messagesManager
     ) {
         $this->appUtil = $appUtil;
+        $this->banManager = $banManager;
         $this->authManager = $authManager;
         $this->messagesManager = $messagesManager;
     }
@@ -55,6 +59,9 @@ class InboxController extends AbstractController
             'userName' => $this->authManager->getUsername(),
             'userRole' => $this->authManager->getUserRole(),
             'userPic' => $this->authManager->getUserProfilePic(),
+
+            // ban manager instance
+            'banManager' => $this->banManager,
 
             // inbox data
             'page' => $page,

@@ -15,13 +15,8 @@ body {
 	zoom: 80%;
 }
 
-body.active .wrapper .sidebar {
-	left: -225px;
-}
-
-body.active .wrapper .section {
-	margin-left: 0;
-	width: 100%;
+a {
+	text-decoration: none;
 }
 
 a:hover {
@@ -40,6 +35,10 @@ textarea {
 	height: 150px;
 	line-height: 150%;
 	resize: none;
+}
+
+th {
+	background: #1b1b1b !important;
 }
 
 .green-text {
@@ -62,12 +61,17 @@ textarea {
 	display: none;
 }
 
-.highlight {
-	background-color: #a72e2e;	
-}
-
 .center {
 	text-align: center;
+}
+
+body.active .wrapper .sidebar {
+	left: -225px;
+}
+
+body.active .wrapper .section {
+	margin-left: 0;
+	width: 100%;
 }
 
 .wrapper .sidebar {
@@ -106,6 +110,10 @@ textarea {
 .wrapper .sidebar .profile p {
 	color: rgb(206, 240, 253);
 	font-size: 14px;
+}
+
+.wrapper .sidebar ul {
+	padding: 0 !important;
 }
 
 .wrapper .sidebar ul li a {
@@ -311,7 +319,7 @@ button {
 }
 
 .image-upload-form {
-	padding: 2%;
+	padding: 1%;
 	background: rgba(0, 0, 0, 0.596);
 	position: absolute;
 	top: 35%;
@@ -521,12 +529,14 @@ button {
 	background-color: #161616;
 	border-top: #242627 1px solid;
 	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	margin: 0;
 }
 
 .selector-button {
 	margin-left: 3px;
-	margin-right: 3px;
+	margin-right: 1px;
 	padding: 5px;
 	color: white;
 	border: 1px solid white;
@@ -540,7 +550,7 @@ button {
 .count-text-in-menu {
 	color: white;
 	position: absolute;
-	right: 1%;
+	right: 0.3%;
 }
 
 .page-button-box {
@@ -631,15 +641,6 @@ button {
 
 .websiteIN {
 	display: none;
-}
-
-.line-item {
-	border-top: 2px solid #242627;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
-}
-
-.line-item:hover {
-	background-color: rgba(87, 87, 87, 0.397);
 }
 
 .counter-card {

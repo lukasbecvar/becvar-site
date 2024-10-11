@@ -48,7 +48,7 @@
         <div class="table-responsive">
             <table class="table table-dark text-nowrap">
                 <thead>
-                    <tr class="line-item">  
+                    <tr>  
                         <th scope='col'>#</th>
                         <th scope='col'>name</th>
                         <th scope='col'>value</th>
@@ -61,7 +61,7 @@
                     </thead>
                     <tbody>
                         {% for row in logsData %}
-                            <tr class="line-item">
+                            <tr>
                                 {% if row.name == 'internal-error' or row.name == 'exception' or row.name == 'ban-system' or row.name == 'authenticator' or row.name == 'geolocate-error' or row.name == 'system-error' %}
                                     <th scope='row' class='text-red'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.name|e }}</th>
@@ -91,14 +91,14 @@
                                     <th scope='row'>{{ row.ipAddress|e }}</th>
                                     <th scope='row'>{{ row.browser|e }}</th>
                                 {% endif %}
-                                <td>
+                                <th>
                                     {% set result = row.visitorId / limitValue %}
                                     {% set visitorPage = result | round(0, 'ceil') %}
                                     <a class="db-delete-link text-warning" href="/admin/visitors?page={{ visitorPage }}#{{ row.visitorId|e }}">VISIT</a>
-                                </td>
-                                <td>
+                                </th>
+                                <th>
                                     <a class="db-delete-link" href={{ path('admin_database_delete', {'table': 'logs', 'page': readerPage, 'id': row.id|e, 'referer': 'log_reader'}) }}>X</a>
-                                </td>
+                                </th>
                             </tr>
                         {% endfor %} 
                     </tbody>

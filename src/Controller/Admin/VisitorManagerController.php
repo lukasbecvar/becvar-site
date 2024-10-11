@@ -228,6 +228,13 @@ class VisitorManagerController extends AbstractController
             $this->banManager->unbanVisitor($ipAddress);
         }
 
+        // check if unban init by inbox
+        if ($request->query->get('referer') == 'inbox') {
+            return $this->redirectToRoute('admin_inbox', [
+                'page' => $page
+            ]);
+        }
+
         // redirect back to visitor page
         return $this->redirectToRoute('admin_visitor_manager', [
             'page' => $page
