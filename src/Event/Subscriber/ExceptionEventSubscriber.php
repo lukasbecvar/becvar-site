@@ -2,10 +2,11 @@
 
 namespace App\Event\Subscriber;
 
-use App\Manager\LogManager;
+use App\Util\AppUtil;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -17,34 +18,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ExceptionEventSubscriber implements EventSubscriberInterface
 {
-    private LogManager $logManager;
+    private AppUtil $appUtil;
     private LoggerInterface $logger;
 
-    /**
-     * List of error patterns that exclude from database log
-     *
-     * @var array<string>
-     */
-    private array $databaseLogBlockPattern = [
-        'log-error:',
-        'Unknown database',
-        'Base table or view not found',
-        'An exception occurred in the driver'
-    ];
-
-    /**
-     * List of error patterns that exclude from exception log
-     *
-     * @var array<string>
-     */
-    private array $exceptionLogBlockPattern = [
-        'No route found'
-    ];
-
-    public function __construct(LogManager $logManager, LoggerInterface $logger)
+    public function __construct(AppUtil $appUtil, LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->logManager = $logManager;
+        $this->appUtil = $appUtil;
     }
 
     /**
@@ -74,41 +54,23 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         // get the error message
         $message = $exception->getMessage();
 
-        // check if the event can be logged
-        if ($this->canBeEventLogged($message, $this->databaseLogBlockPattern)) {
-            // log the exception to database with the error code
-            $this->logManager->log('exception', $message);
+        // define default exception code
+        $statusCode = 500;
+
+        // check if the object is valid exception
+        if ($exception instanceof HttpException) {
+            // get exception status code
+            $statusCode = $exception->getStatusCode();
         }
 
-        // check if the event can be logged
-        if ($this->canBeEventLogged($message, $this->exceptionLogBlockPattern)) {
+        // get error codes to be excluded
+        $config = $this->appUtil->getYamlConfig('packages/monolog.yaml');
+        $excludedHttpCodes = $config['monolog']['handlers']['filtered']['excluded_http_codes'];
+
+        // check if code is excluded from logging
+        if (!in_array($statusCode, $excludedHttpCodes)) {
             // log the error message to exception log
             $this->logger->error($message);
         }
-    }
-
-    /**
-     * Checks if an event can be logged based on the error message
-     *
-     * @param string $errorMessage The error message to be checked
-     * @param array<string> $blockPatterns The list of patterns that can't be logged
-     *
-     * @return bool Returns true if the event can be dispatched, otherwise false
-     */
-    public function canBeEventLogged(string $errorMessage, array $blockPatterns = null): bool
-    {
-        $blockPatterns = $blockPatterns ?? $this->databaseLogBlockPattern;
-
-        // loop through each blocked error pattern
-        foreach ($blockPatterns as $pattern) {
-            // check if the current pattern exists in the error message
-            if (strpos($errorMessage, $pattern) !== false) {
-                // if a blocked pattern is found, return false
-                return false;
-            }
-        }
-
-        // if no blocked patterns are found, return true
-        return true;
     }
 }

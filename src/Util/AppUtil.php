@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -139,5 +140,17 @@ class AppUtil
             // escape query string value (XSS Protection)
             return $this->securityUtil->escapeString($value);
         }
+    }
+
+    /**
+     * Get config from yaml file
+     *
+     * @param string $configFile The config file name
+     *
+     * @return mixed The config data
+     */
+    public function getYamlConfig(string $configFile): mixed
+    {
+        return Yaml::parseFile($this->getAppRootDir() . '/config/' . $configFile);
     }
 }
