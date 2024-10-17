@@ -2,8 +2,7 @@
 
 namespace App\Util;
 
-use App\Manager\ErrorManager;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class JsonUtil
@@ -14,11 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class JsonUtil
 {
-    private ErrorManager $errorManager;
+    private LoggerInterface $logger;
 
-    public function __construct(ErrorManager $errorManager)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->errorManager = $errorManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -56,11 +55,15 @@ class JsonUtil
             // decode & return json
             return json_decode($data, true);
         } catch (\Exception $e) {
-            $this->errorManager->handleError(
-                'error to get json: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-            // return null on any exception
+            $errorMsg = 'Error retrieving JSON data: ' . $e->getMessage();
+
+            // secure api token
+            $errorMsg = str_replace($_ENV['EXTERNAL_LOG_TOKEN'], '********', $errorMsg);
+
+            // log error
+            $this->logger->error($errorMsg);
+
+            // return null
             return null;
         }
     }

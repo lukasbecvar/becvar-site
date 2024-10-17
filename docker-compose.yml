@@ -15,7 +15,7 @@ services:
             - .:/app
         networks:
             - main
-        command: composer install
+        command: composer install --ignore-platform-reqs
     
     # node service for building assets
     node:

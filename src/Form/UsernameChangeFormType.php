@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class UsernameChangeFormType extends AbstractType
 {
     /**
-     * Builds the username change form
+     * Build the username change form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

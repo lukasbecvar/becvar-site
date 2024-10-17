@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 class RegisterFormType extends AbstractType
 {
     /**
-     * Builds the registration form
+     * Build the registration form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

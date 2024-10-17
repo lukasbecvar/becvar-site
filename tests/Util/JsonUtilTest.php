@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\Util;
 
-use Twig\Environment;
 use App\Util\JsonUtil;
-use App\Manager\ErrorManager;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class JsonUtilTest
@@ -18,17 +17,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class JsonUtilTest extends TestCase
 {
     private JsonUtil $jsonUtil;
-    private ErrorManager $errorManager;
+    private LoggerInterface & MockObject $logger;
 
     protected function setUp(): void
     {
         // mock dependencies
-        /** @var Environment $twigMock */
-        $twigMock = $this->createMock(Environment::class);
-        $this->errorManager = new ErrorManager($twigMock);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         // create instance of JsonUtil
-        $this->jsonUtil = new JsonUtil($this->errorManager);
+        $this->jsonUtil = new JsonUtil($this->logger);
     }
 
     /**
@@ -60,11 +57,11 @@ class JsonUtilTest extends TestCase
      */
     public function testGetJsonWithInvalidTarget(): void
     {
-        // set expect exception
-        $this->expectException(HttpException::class);
-
         // call the method
-        $this->jsonUtil->getJson('non_existent_file.json');
+        $result =  $this->jsonUtil->getJson('non_existent_file.json');
+
+        // assert result
+        $this->assertNull($result);
     }
 
     /**

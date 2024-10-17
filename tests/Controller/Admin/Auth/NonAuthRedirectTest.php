@@ -30,9 +30,9 @@ class NonAuthRedirectTest extends WebTestCase
         ],
         'database_browser' => [
             '/admin/database',
-            '/admin/database/table',
-            '/admin/database/edit',
             '/admin/database/add',
+            '/admin/database/edit',
+            '/admin/database/table',
             '/admin/database/delete'
         ],
         'admin_inbox' => [
@@ -41,15 +41,16 @@ class NonAuthRedirectTest extends WebTestCase
         ],
         'admin_logs' => [
             '/admin/logs',
-            '/admin/logs/whereip',
             '/admin/logs/delete',
+            '/admin/logs/whereip',
             '/admin/logs/readed/all'
         ],
         'admin_visitors' => [
             '/admin/visitors',
-            '/admin/visitors/delete',
             '/admin/visitors/ban',
-            '/admin/visitors/unban'
+            '/admin/visitors/unban',
+            '/admin/visitors/delete',
+            '/admin/visitors/download'
         ],
         'account_settings' => [
             '/admin/account/settings',

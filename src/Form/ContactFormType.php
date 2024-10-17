@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class ContactFormType extends AbstractType
 {
     /**
-     * Builds the form for contacting
+     * Build the form for contacting
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

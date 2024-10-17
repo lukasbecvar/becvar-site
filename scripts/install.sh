@@ -3,7 +3,7 @@
 # install composer packages
 if [ ! -d 'vendor/' ]
 then
-    docker-compose run composer
+    docker-compose run composer install --ignore-platform-reqs
 fi
 
 # install node-modules packages

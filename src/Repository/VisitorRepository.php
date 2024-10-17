@@ -38,4 +38,55 @@ class VisitorRepository extends ServiceEntityRepository
         // return id list
         return array_column($results, 'id');
     }
+
+    /**
+     * Finds visitors based on the specified time filter
+     *
+     * @param string $filter The filter for the time period
+     *
+     * @return array<mixed> An array of visitors filtered by the specified time range
+     *
+     * @throws \InvalidArgumentException If the filter is not valid
+     */
+    public function findByTimeFilter(string $filter): array
+    {
+        // load all records
+        $visitors = $this->findBy([]);
+
+        // current time
+        $now = new \DateTime();
+        $startDate = null;
+
+        // calculate startDate based on the filter
+        switch ($filter) {
+            case 'H':
+                $startDate = $now->sub(new \DateInterval('PT1H'));
+                break;
+            case 'D':
+                $startDate = $now->sub(new \DateInterval('P1D'));
+                break;
+            case 'W':
+                $startDate = $now->sub(new \DateInterval('P7D'));
+                break;
+            case 'M':
+                $startDate = $now->sub(new \DateInterval('P1M'));
+                break;
+            case 'Y':
+                $startDate = $now->sub(new \DateInterval('P1Y'));
+                break;
+            case 'ALL':
+                return $visitors;
+            default:
+                throw new \InvalidArgumentException("Invalid filter: $filter");
+        }
+
+        // filter results in PHP
+        return array_filter($visitors, function ($visitor) use ($startDate) {
+            // Cconvert first_visit string to DateTime object
+            $visitorDate = \DateTime::createFromFormat('d.m.Y H:i', $visitor->getFirstVisit());
+
+            // check if the date is valid and greater than or equal to startDate
+            return $visitorDate && $visitorDate >= $startDate;
+        });
+    }
 }

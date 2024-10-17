@@ -32,6 +32,14 @@
 			</a>
 		</li>
         <li>
+		    <a class="s-menu-button" href={{ path('admin_database_browser', {'table': 'projects'}) }}>
+				<span class="icon">
+					<i class="fas fa-folder"></i>
+				</span>
+				<span class="item">Projects list</span>
+			</a>
+		</li>
+        <li>
 			<a class="s-menu-button" href={{ path('admin_log_list', {'page': 1}) }}>
 			    <span class="icon"><i class="fas fa-file"></i></span>
 			    <span class="item">Logs</span>
@@ -51,7 +59,7 @@
 		</li>		
 		<li>
 			<a class="s-menu-button" href={{ path('admin_account_settings_table') }}>
-	    		<span class="icon"><i class="fas fa-user-cog"></i></span>
+	    		<span class="icon"><i class="fas fa-cog"></i></span>
 				<span class="item">Account settings</span>
 			</a>
 		</li>

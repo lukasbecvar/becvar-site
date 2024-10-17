@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class LoginFormType extends AbstractType
 {
     /**
-     * Builds the login form
+     * Build the login form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

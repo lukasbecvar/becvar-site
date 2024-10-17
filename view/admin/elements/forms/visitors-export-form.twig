@@ -1,0 +1,40 @@
+{% extends 'common/bases/admin-base.twig' %}
+
+{% block title %}
+    visitors export
+{% endblock %}
+
+{# VISITORS LIST EXPORT FORM #}
+{% block component %}
+<div class="admin-panel">
+    {% if userRole != 'Owner' and userRole != 'Admin' %}
+        <h2 class="page-title">Sorry you dont have permission to this page</h2>
+    {% else %}
+
+        {# FORM SUBMIT ERROR MESSAGE #}
+        {% if errorMsg != null %}
+            {% include "common/alerts/error-alert.twig" %}
+        {% endif %}
+
+        {# VISITORS DATA EXPORT FORM #}
+        <center>
+            <div class="image-upload-form dark-table">
+                <h2 class="form-title">Download visitors data</h2>
+                <div class="custom-file">
+                    {{ form_start(form) }}
+                        {{ form_row(form.filter, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
+                        {{ form_row(form.format, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
+
+                        {# SUBMIT BUTTON #}
+                        <div class="text-center mb-1 mt-3">
+                            <div class="right-position">
+                                <button class="input-button" type="submit">Export data</button>
+                            </div>
+                        </div>
+                    {{ form_end(form) }} 
+                </div>   
+            </div>
+        </center>
+    {% endif %}
+</div>
+{% endblock %}

@@ -148,17 +148,11 @@ class LogManager
         $externalLogUrl = $_ENV['EXTERNAL_LOG_URL'];
         $externalLogToken = $_ENV['EXTERNAL_LOG_TOKEN'];
 
-        try {
-            $this->jsonUtil->getJson(
-                target: $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
-                method: 'POST'
-            );
-        } catch (\Exception $e) {
-            $this->errorManager->handleError(
-                'external-log-error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
+        // make request to admin-suite log api
+        $this->jsonUtil->getJson(
+            target: $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
+            method: 'POST'
+        );
     }
 
     /**

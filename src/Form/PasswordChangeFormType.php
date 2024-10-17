@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 class PasswordChangeFormType extends AbstractType
 {
     /**
-     * Builds the password change form
+     * Build the password change form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

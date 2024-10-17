@@ -27,13 +27,21 @@
             </a>
         </li>
 
+        <li>
+            <a class="selector-button btn-small" href={{ path('admin_visitor_manager_download') }}>
+                <strong><i class="fa fa-download" aria-hidden="true"></i></strong>
+            </a>
+        </li>
+
+        {# LINK TO ONLINE VISITORS LIST #}
         {% if filter == 1 %}
             <li>
                 <a class="selector-button btn-small" href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>
-                    <strong><i class="fa fa-signal" aria-hidden="true"></i></strong>
+                    <strong><i class="fa fa-plug" aria-hidden="true"></i></strong>
                 </a>
             </li>
         {% endif %}
+
         <li class="count-text-in-menu">
             Online visitors: <strong>{{ onlineVisitors|length }}</strong>,
             Banned visitors: <strong>{{ bannedCount }}</strong>

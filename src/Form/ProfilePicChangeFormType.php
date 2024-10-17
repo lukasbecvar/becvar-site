@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class ProfilePicChangeFormType extends AbstractType
 {
     /**
-     * Builds the profile picture change form
+     * Build the profile picture change form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form

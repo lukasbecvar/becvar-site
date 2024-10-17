@@ -65,6 +65,12 @@ th {
 	text-align: center;
 }
 
+.export-filter {
+	color: white !important;
+	outline: none !important;
+	outline-color: none !important;
+}
+
 body.active .wrapper .sidebar {
 	left: -225px;
 }
@@ -671,7 +677,7 @@ button {
 }
 
 .project-update {
-	margin: 0;
+	margin-left: 0;
 }
 
 .email-line {
