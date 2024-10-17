@@ -26,7 +26,6 @@
                 <strong><i class="fa fa-trash" aria-hidden="true"></i></strong>
             </a>
         </li>
-
         <li>
             <a class="selector-button btn-small" href={{ path('admin_visitor_manager_download') }}>
                 <strong><i class="fa fa-download" aria-hidden="true"></i></strong>
@@ -64,7 +63,7 @@
         </div>
     {% else %}
         <div class="table-responsive center">
-            <table class="table table-dark text-nowrap">
+            <table class="table table-dark text-nowrap table-hover">
                 <thead>
                     <tr>  
                         <th scope='col'>#</th>
@@ -169,26 +168,23 @@
             <br>
         {% endif %}
     {% endif %}
+</div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var url = window.location.href;
+    // highlight row on page
+    document.addEventListener('DOMContentLoaded', function() {
         var hash = window.location.hash;
+        if (hash && hash.startsWith('#')) {
+            var id = hash.substring(1);
+            var row = document.getElementById(id);
 
-        if (hash) {
-            var elementId = hash.substring(1);
-            var targetElement = document.getElementById(elementId);
-
-            if (targetElement) {
-                // Nastavení barvy pozadí natvrdo
-                targetElement.style.backgroundColor = "red"; // nebo jinou barvu podle potřeby
-            }
-
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+            if (row) {
+                var thElements = row.getElementsByTagName('th');
+                for (var j = 0; j < thElements.length; j++) {
+                    thElements[j].classList.add('highlighter');
+                }
             }
         }
     });
 </script>
-
-</div>
 {% endblock %}

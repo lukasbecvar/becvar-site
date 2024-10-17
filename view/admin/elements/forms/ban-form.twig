@@ -7,14 +7,13 @@
 {# VISITOR BAN FORM #}
 {% block component %}
 <div class="admin-panel">
-    {% if userRole != 'Owner' and userRole != 'Admin' %}
+    {% if getUserRole() != 'Owner' and getUserRole() != 'Admin' %}
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
         <div class="ban-form">
             {{ form_start(banForm) }}
-
                 {{ form_widget(banForm) }}
-                    <button type="submit" class="input-button ban-button">Ban</button> 
+                <button type="submit" class="input-button ban-button">Ban</button> 
             {{ form_end(banForm) }}
         </div>
     {% endif %}

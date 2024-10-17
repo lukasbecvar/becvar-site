@@ -7,12 +7,6 @@ monolog:
             level: error
             channels: ['!event']
 
-        # stdout log handler
-        stdout:
-            type: stream
-            level: error
-            path: 'php://stdout'
-
         # exclude specific http codes from the exception log
         filtered:
             type: fingers_crossed
@@ -20,7 +14,13 @@ monolog:
             handler: exception
             excluded_http_codes: [403, 404, 405, 426, 503]
 
-# dev env log
+        # stdout log handler (container logs)
+        stdout:
+            type: stream
+            level: error
+            path: 'php://stdout'
+
+# debug log in dev mode
 when@dev:
     monolog:
         handlers:

@@ -62,8 +62,8 @@ class UpdateProjectsListCommandTest extends TestCase
     public function testProjectsListUpdateCommandFailure(): void
     {
         // mock the updateProjectList method to throw an exception
-        $this->projectsManagerMock->expects($this->once())
-            ->method('updateProjectList')->willThrowException(new \Exception('Something went wrong'));
+        $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
+            ->willThrowException(new \Exception('Something went wrong'));
 
         // create a symfony console
         $application = new Application();

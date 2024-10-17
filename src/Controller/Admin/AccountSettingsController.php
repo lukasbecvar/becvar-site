@@ -51,12 +51,6 @@ class AccountSettingsController extends AbstractController
     public function accountSettingsTable(): Response
     {
         return $this->render('admin/account-settings.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
-            // account settings froms data
             'profilePicChangeForm' => null,
             'usernameChangeForm' => null,
             'passwordChangeForm' => null,
@@ -93,9 +87,7 @@ class AccountSettingsController extends AbstractController
             // check if file is image
             if ($extension == 'jpg' or $extension == 'jpeg' or $extension == 'png') {
                 // get user repository
-                $userRepo = $this->authManager->getUserRepository(
-                    ['username' => $this->authManager->getUsername()]
-                );
+                $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
                 // get image content
                 $fileContents = file_get_contents($image);
@@ -123,12 +115,6 @@ class AccountSettingsController extends AbstractController
 
         // render profile pic change form view
         return $this->render('admin/account-settings.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
-            // account settings froms data
             'profilePicChangeForm' => $form->createView(),
             'usernameChangeForm' => null,
             'passwordChangeForm' => null,
@@ -162,9 +148,7 @@ class AccountSettingsController extends AbstractController
             $username = $form->get('username')->getData();
 
             // get user repository
-            $userRepo = $this->authManager->getUserRepository(
-                ['username' => $this->authManager->getUsername()]
-            );
+            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
             try { // update username
                 $userRepo->setUsername($username);
@@ -182,12 +166,6 @@ class AccountSettingsController extends AbstractController
 
         // render username change form
         return $this->render('admin/account-settings.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
-            // account settings froms data
             'profilePicChangeForm' => null,
             'passwordChangeForm' => null,
             'usernameChangeForm' => $form,
@@ -222,9 +200,7 @@ class AccountSettingsController extends AbstractController
             $rePassword = $form->get('repassword')->getData();
 
             // get user repository
-            $userRepo = $this->authManager->getUserRepository(
-                ['username' => $this->authManager->getUsername()]
-            );
+            $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
             // check if passwords match
             if ($password != $rePassword) {
@@ -240,6 +216,7 @@ class AccountSettingsController extends AbstractController
                     // flush user data
                     $this->entityManager->flush();
 
+                    // redirect back to account settings table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
                     return $this->errorManager->handleError(
@@ -252,12 +229,6 @@ class AccountSettingsController extends AbstractController
 
         // render password change form
         return $this->render('admin/account-settings.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
-            // account settings froms data
             'profilePicChangeForm' => null,
             'usernameChangeForm' => null,
             'passwordChangeForm' => $form,

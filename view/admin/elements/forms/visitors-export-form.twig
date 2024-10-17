@@ -7,7 +7,7 @@
 {# VISITORS LIST EXPORT FORM #}
 {% block component %}
 <div class="admin-panel">
-    {% if userRole != 'Owner' and userRole != 'Admin' %}
+    {% if getUserRole() != 'Owner' and getUserRole() != 'Admin' %}
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
 
@@ -24,7 +24,6 @@
                     {{ form_start(form) }}
                         {{ form_row(form.filter, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
                         {{ form_row(form.format, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
-
                         {# SUBMIT BUTTON #}
                         <div class="text-center mb-1 mt-3">
                             <div class="right-position">

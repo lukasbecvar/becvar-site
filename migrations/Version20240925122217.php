@@ -8,18 +8,33 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Class Version20240925122217
+ * 
+ * The schema for create indexes
+ * 
+ * @package DoctrineMigrations
  */
 final class Version20240925122217 extends AbstractMigration
 {
+    /**
+     * Get the description of this migration
+     * 
+     * @return string
+     */
     public function getDescription(): string
     {
-        return '';
+        return 'Create indexes';
     }
 
+    /**
+     * Execute the migration
+     * 
+     * @param Schema $schema
+     * 
+     * @return void
+     */
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE INDEX inbox_messages_name_idx ON inbox_messages (name)');
         $this->addSql('CREATE INDEX inbox_messages_email_idx ON inbox_messages (email)');
         $this->addSql('CREATE INDEX inbox_messages_status_idx ON inbox_messages (status)');
@@ -40,9 +55,15 @@ final class Version20240925122217 extends AbstractMigration
         $this->addSql('CREATE INDEX visitors_email_idx ON visitors (email)');
     }
 
+    /**
+     * Undo the migration
+     *
+     * @param Schema $schema
+     * 
+     * @return void
+     */
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP INDEX users_role_idx ON users');
         $this->addSql('DROP INDEX users_token_idx ON users');
         $this->addSql('DROP INDEX users_name_idx ON users');

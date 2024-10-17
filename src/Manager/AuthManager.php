@@ -344,11 +344,6 @@ class AuthManager
         if ($user != null) {
             $pic = $user->getProfilePic();
 
-            // check if pic is default
-            if ($pic == 'non-pic') {
-                return base64_encode(file_get_contents('build/images/default-profile.jpg'));
-            }
-
             return $pic;
         }
 

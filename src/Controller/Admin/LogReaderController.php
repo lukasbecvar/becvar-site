@@ -59,11 +59,6 @@ class LogReaderController extends AbstractController
 
         // render log reader view
         return $this->render('admin/log-reader.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // log reader data
             'whereIp' => null,
             'logsData' => $logs,
@@ -99,11 +94,6 @@ class LogReaderController extends AbstractController
 
         // render log reader view
         return $this->render('admin/log-reader.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // log reader data
             'logsData' => $logs,
             'readerPage' => $page,
@@ -132,11 +122,6 @@ class LogReaderController extends AbstractController
 
         // render delete confirmation view
         return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // delete confirmation data
             'page' => $page
         ]);

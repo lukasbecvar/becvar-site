@@ -100,8 +100,11 @@ class LoginController extends AbstractController
 
         // render login view
         return $this->render('admin/auth/login.twig', [
-            'errorMsg' => $errorMsg,
+            // check if user list empty
             'isUsersEmpty' => $this->authManager->isRegisterPageAllowed(),
+
+            // user login form data
+            'errorMsg' => $errorMsg,
             'loginForm' => $form->createView()
         ]);
     }

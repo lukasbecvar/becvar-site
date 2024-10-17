@@ -82,7 +82,7 @@ class VisitorRepository extends ServiceEntityRepository
 
         // filter results in PHP
         return array_filter($visitors, function ($visitor) use ($startDate) {
-            // Cconvert first_visit string to DateTime object
+            // convert first_visit string to DateTime object
             $visitorDate = \DateTime::createFromFormat('d.m.Y H:i', $visitor->getFirstVisit());
 
             // check if the date is valid and greater than or equal to startDate

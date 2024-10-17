@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Class VisitorInfoUtil
  *
@@ -13,9 +15,11 @@ class VisitorInfoUtil
 {
     private AppUtil $appUtil;
     private JsonUtil $jsonUtil;
+    private LoggerInterface $logger;
 
-    public function __construct(AppUtil $appUtil, JsonUtil $jsonUtil)
+    public function __construct(AppUtil $appUtil, JsonUtil $jsonUtil, LoggerInterface $logger)
     {
+        $this->logger = $logger;
         $this->appUtil = $appUtil;
         $this->jsonUtil = $jsonUtil;
     }
@@ -229,6 +233,7 @@ class VisitorInfoUtil
             // decode response & return data
             return json_decode($response);
         } catch (\Exception $e) {
+            $this->logger->error('error to get geolocation data: ' . $e->getMessage());
             return null;
         }
     }
@@ -268,6 +273,7 @@ class VisitorInfoUtil
             // return data
             return ['city' => $city, 'country' => $country];
         } catch (\Exception $e) {
+            $this->logger->error('error to get geolocation data: ' . $e->getMessage());
             return ['city' => 'Unknown', 'country' => 'Unknown'];
         }
     }

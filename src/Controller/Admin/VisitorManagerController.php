@@ -8,7 +8,6 @@ use App\Util\AppUtil;
 use App\Entity\Visitor;
 use App\Form\BanFormType;
 use App\Manager\BanManager;
-use App\Manager\AuthManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\VisitorManager;
 use App\Form\VisitorListExportType;
@@ -30,20 +29,17 @@ class VisitorManagerController extends AbstractController
 {
     private AppUtil $appUtil;
     private BanManager $banManager;
-    private AuthManager $authManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
 
     public function __construct(
         AppUtil $appUtil,
         BanManager $banManager,
-        AuthManager $authManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil
     ) {
         $this->appUtil = $appUtil;
         $this->banManager = $banManager;
-        $this->authManager = $authManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
     }
@@ -66,11 +62,6 @@ class VisitorManagerController extends AbstractController
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // visitor manager data
             'page' => $page,
             'filter' => $filter,
@@ -108,11 +99,6 @@ class VisitorManagerController extends AbstractController
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // visitor manager data
             'page' => 1,
             'filter' => 1,
@@ -138,11 +124,6 @@ class VisitorManagerController extends AbstractController
 
         // return delete confirmation view
         return $this->render('admin/elements/confirmation/delete-visitors.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // delete confirmation data
             'page' => $page
         ]);
@@ -200,11 +181,6 @@ class VisitorManagerController extends AbstractController
 
         // render ban form
         return $this->render('admin/elements/forms/ban-form.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // ban form data
             'banForm' => $form
         ]);
@@ -280,11 +256,16 @@ class VisitorManagerController extends AbstractController
                 $errorMsg = 'Please select a valid format';
             }
 
+            // get visitors list
+            $visitorsList = $this->visitorManager->getVisitorsByFilter($filter);
+
+            // check if visitors list is empty
+            if ($visitorsList == null) {
+                $errorMsg = 'no visitors found in selected time period';
+            }
+
             // check if error found
             if ($errorMsg == null) {
-                // get visitors list
-                $visitorsList = $this->visitorManager->getVisitorsByFilter($filter);
-
                 // export data with valid method
                 if ($format === 'EXCEL') {
                     return $this->exportVisitorsListToExcel($visitorsList);
@@ -298,11 +279,6 @@ class VisitorManagerController extends AbstractController
         }
 
         return $this->render('admin/elements/forms/visitors-export-form.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             'form' => $form->createView(),
             'errorMsg' => $errorMsg
         ]);
@@ -488,6 +464,8 @@ class VisitorManagerController extends AbstractController
 
         $html .= '<h1>Visitors List</h1>';
         $html .= '<table>';
+
+        // table columns list
         $html .= '<tr>
             <th>ID</th>
             <th>First Visit</th>
@@ -499,6 +477,7 @@ class VisitorManagerController extends AbstractController
             <th>IP Address</th>
         </tr>';
 
+        // add visitor to table
         foreach ($visitorsList as $visitor) {
             $html .= '<tr>';
             $html .= '<td>' . $visitor->getId() . '</td>';

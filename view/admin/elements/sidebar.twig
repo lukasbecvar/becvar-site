@@ -1,14 +1,23 @@
 <div class="sidebar">
     <div class="profile">
-		<img src="data:image/jpeg;base64,{{ userPic|e }}" alt="profile_picture">
-        <h3>{{ userName|e }}</h3>
+		{# PROFILE IMAGE SECTION #}
+        {% if getUserPic() == 'non-pic' %}
+			<img src={{ asset('/build/images/default-profile.jpg') }} alt="profile_picture">
+		{% else %}
+			<img src="data:image/jpeg;base64,{{ getUserPic() }}" alt="profile_picture">
+		{% endif %}
+		
+		{# USERNAME SECTION #}
+		<h3>{{ getUsername()|e }}</h3>
+
+		{# USER ROLE SECTION #}
         <span class="role-line">
-			{% if userRole == 'Owner' or userRole == 'Admin' %}
-				<span class="text-red">{{ userRole|e }}</span>
-			{% elseif userRole == 'User' %}
-				<span class="green-text">{{ userRole|e }}</span>
+			{% if getUserRole() == 'Owner' or getUserRole() == 'Admin' %}
+				<span class="text-red">{{ getUserRole()|e }}</span>
+			{% elseif getUserRole() == 'User' %}
+				<span class="green-text">{{ getUserRole()|e }}</span>
 			{% else %}
-				{{ userRole|e }}
+				{{ getUserRole()|e }}
 			{% endif %}
 		</span>
     </div>

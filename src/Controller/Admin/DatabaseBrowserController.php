@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Util\AppUtil;
-use App\Manager\AuthManager;
 use App\Manager\DatabaseManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,16 +20,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DatabaseBrowserController extends AbstractController
 {
     private AppUtil $appUtil;
-    private AuthManager $authManager;
     private DatabaseManager $databaseManager;
 
     public function __construct(
         AppUtil $appUtil,
-        AuthManager $authManager,
         DatabaseManager $databaseManager
     ) {
         $this->appUtil = $appUtil;
-        $this->authManager = $authManager;
         $this->databaseManager = $databaseManager;
     }
 
@@ -44,11 +40,6 @@ class DatabaseBrowserController extends AbstractController
     {
         // return database tables list
         return $this->render('admin/database-browser.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // tables list data
             'tables' => $this->databaseManager->getTables()
         ]);
@@ -70,11 +61,6 @@ class DatabaseBrowserController extends AbstractController
 
         // render table view
         return $this->render('admin/database-browser.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // disable not used components
             'tables' => null,
             'editorTable' => null,
@@ -153,11 +139,6 @@ class DatabaseBrowserController extends AbstractController
 
         // render row editor view
         return $this->render('admin/database-browser.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // disable not used components
             'tables' => null,
             'tableName' => null,
@@ -235,11 +216,6 @@ class DatabaseBrowserController extends AbstractController
 
         // render new row view
         return $this->render('admin/database-browser.twig', [
-            // user data
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // disable not used components
             'tables' => null,
             'tableName' => null,

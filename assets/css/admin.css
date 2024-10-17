@@ -41,6 +41,10 @@ th {
 	background: #1b1b1b !important;
 }
 
+.highlighter {
+	background: rgb(24, 24, 83) !important;
+}
+
 .green-text {
 	color: #35ee3b !important;
 }
@@ -68,7 +72,12 @@ th {
 .export-filter {
 	color: white !important;
 	outline: none !important;
+	outline-offset: none !important;
 	outline-color: none !important;
+	outline-style: none !important;
+	outline-color: none !important;
+	background-color: #161616 !important;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 body.active .wrapper .sidebar {
@@ -199,7 +208,7 @@ body.active .wrapper .section {
 	position: fixed;
 	height: 100%;
 	width: 100%;
-	background: #040404 url(../img/bg.jpg) top right no-repeat;
+	background: #040404 url(../img/bg.webp) top right no-repeat;
 	background-size: cover;
 }
 
@@ -282,7 +291,7 @@ button {
 	position: fixed;
 	height: 100%;
 	width: 100%;
-	background: #000000 url(../img/bg.jpg) top right no-repeat;
+	background: #000000 url(../img/bg.webp) top right no-repeat;
 	background-size: cover;
 }
 
@@ -511,8 +520,6 @@ button {
 	position: relative;
 	font-size: 18px;
 	margin-bottom: 0px;
-	background-color: rgb(27, 27, 27);
-	color: white;
 }
 
 .dark-table {

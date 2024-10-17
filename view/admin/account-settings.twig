@@ -18,14 +18,12 @@
                 <h2 class="form-title">Change profile image</h2>
                 <div class="custom-file">
                     {{ form_start(profilePicChangeForm) }}
-    
                         {{ form_widget(profilePicChangeForm) }}                
                         <div class="text-center mb-3">
                             <div class="right-position">
                                 <button class="input-button" type="submit">Upload Image</button>
                             </div>
                         </div>
-                
                     {{ form_end(profilePicChangeForm) }}      
                 </div>   
             </div>
@@ -37,12 +35,10 @@
                 <h2 class="form-title">Change username</h2>
                 <div class="custom-file">
                     {{ form_start(usernameChangeForm) }}
-
                         {{ form_widget(usernameChangeForm) }}                
                         <div class="text-center mb-3">
                             <button class="input-button" type="submit">Change username</button>
                         </div>
-                
                     {{ form_end(usernameChangeForm) }}      
                 </div>   
             </div>
@@ -54,12 +50,10 @@
                 <h2 class="form-title">Change password</h2>
                 <div class="custom-file">
                     {{ form_start(passwordChangeForm) }}
-
                         {{ form_widget(passwordChangeForm) }}                
                         <div class="text-center mb-3">
                             <button class="input-button" type="submit">Change password</button>
                         </div>
-                
                     {{ form_end(passwordChangeForm) }}      
                 </div>   
             </div>
@@ -73,14 +67,18 @@
                     <tbody>
                         <tr>
                             <th scope='row'>profile-pic: 
-                                <img class="profile-pics-admin-settings" src="data:image/jpeg;base64,{{ userPic|e }}" alt="profile-pic">
+                                {% if getUserPic() == 'non-pic' %}
+                                    <img class="profile-pics-admin-settings" src={{ asset('/build/images/default-profile.jpg') }} alt="profile_picture">
+                                {% else %}
+                                    <img class="profile-pics-admin-settings" src="data:image/jpeg;base64,{{ getUserPic() }}" alt="profile_picture">
+                                {% endif %}
                             </th>
                             <th scope='row'>
                                 <a href={{ path('admin_account_settings_pic_change') }}>change</a>
                             </th>
                         </tr>
                         <tr>
-                            <th scope='row'>username: {{ userName|e }}</th>
+                            <th scope='row'>username: {{ getUsername()|e }}</th>
                             <th scope='row'>
                                 <a href={{ path('admin_account_settings_username_change') }}>change</a>
                             </th>

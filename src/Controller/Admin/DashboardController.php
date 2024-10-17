@@ -58,10 +58,6 @@ class DashboardController extends AbstractController
     {
         // return dashboard page view
         return $this->render('admin/dashboard.twig', [
-            'userName' => $this->authManager->getUsername(),
-            'userRole' => $this->authManager->getUserRole(),
-            'userPic' => $this->authManager->getUserProfilePic(),
-
             // warning box data
             'isSsl' => $this->appUtil->isSsl(),
             'isDevMode' => $this->appUtil->isDevMode(),
