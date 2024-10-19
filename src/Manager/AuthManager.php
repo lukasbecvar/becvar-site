@@ -70,7 +70,7 @@ class AuthManager
         $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
-        if ($this->getUserRepository(['token' => $loginToken]) != null) {
+        if ($this->userRepository->getUserByToken($loginToken) != null) {
             return true;
         }
 
@@ -132,7 +132,7 @@ class AuthManager
         // check if user logged in
         if ($this->isUserLogedin()) {
             // init user
-            $user = $this->getUserRepository(['token' => $this->getUserToken()]);
+            $user = $this->userRepository->getUserByToken($this->getUserToken());
 
             // log logout event
             $this->logManager->log('authenticator', 'user: ' . $user->getUsername() . ' logout');
@@ -266,7 +266,7 @@ class AuthManager
         $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
-        if ($this->getUserRepository(['token' => $loginToken]) != null) {
+        if ($this->userRepository->getUserByToken($loginToken) != null) {
             return $loginToken;
         }
 
@@ -288,7 +288,7 @@ class AuthManager
         }
 
         // user repository
-        $user = $this->getUserRepository(['token' => $token]);
+        $user = $this->userRepository->getUserByToken($token);
 
         // check if user repo found
         if ($user != null) {
@@ -313,7 +313,7 @@ class AuthManager
         }
 
         // user repository
-        $user = $this->getUserRepository(['token' => $token]);
+        $user = $this->userRepository->getUserByToken($token);
 
         // check if user repo found
         if ($user != null) {
@@ -338,7 +338,7 @@ class AuthManager
         }
 
         // user repository
-        $user = $this->getUserRepository(['token' => $token]);
+        $user = $this->userRepository->getUserByToken($token);
 
         // check if user repo found
         if ($user != null) {
@@ -357,10 +357,8 @@ class AuthManager
      */
     public function isUsersEmpty(): bool
     {
-        $repository = $this->entityManager->getRepository(User::class);
-
         // get users count
-        $count = $repository
+        $count = $this->userRepository
             ->createQueryBuilder('p')->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
 
         // check if count is zero
@@ -382,11 +380,9 @@ class AuthManager
      */
     public function getUserRepository(array $array): ?object
     {
-        $userRepository = $this->entityManager->getRepository(User::class);
-
         // try to find user in database
         try {
-            return $userRepository->findOneBy($array);
+            return $this->userRepository->findOneBy($array);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
@@ -403,7 +399,15 @@ class AuthManager
      */
     public function isAdmin(): bool
     {
+        // get self user token
         $token = $this->getUserToken();
+
+        // check if token found
+        if ($token == null) {
+            return false;
+        }
+
+        // get user role
         $role = $this->getUserRole($token);
 
         // check if user role is admin
@@ -437,11 +441,8 @@ class AuthManager
         // generate user token
         $token = ByteString::fromRandom(32)->toString();
 
-        // get users repository
-        $userRepo = $this->entityManager->getRepository(User::class);
-
         // check if user token is not already used
-        if ($userRepo->findOneBy(['token' => $token]) != null) {
+        if ($this->userRepository->getUserByToken($token) != null) {
             $this->generateUserToken();
         }
 
@@ -463,10 +464,10 @@ class AuthManager
         ];
 
         // get all users in database
-        $userRepo = $this->entityManager->getRepository(User::class)->findAll();
+        $users = $this->userRepository->findAll();
 
         // regenerate all users tokens
-        foreach ($userRepo as $user) {
+        foreach ($users as $user) {
             // regenerate new token
             $newToken = $this->generateUserToken();
 

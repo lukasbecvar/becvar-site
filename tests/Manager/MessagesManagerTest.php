@@ -7,6 +7,7 @@ use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
 use PHPUnit\Framework\TestCase;
 use App\Manager\MessagesManager;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -36,6 +37,9 @@ class MessagesManagerTest extends TestCase
         /** @var VisitorManager & MockObject $visitorManager */
         $visitorManager = $this->createMock(VisitorManager::class);
 
+        /** @var MessageRepository & MockObject $messageRepository */
+        $messageRepository = $this->createMock(MessageRepository::class);
+
         /** @var EntityManagerInterface & MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
@@ -54,6 +58,7 @@ class MessagesManagerTest extends TestCase
             $securityUtil,
             $errorManager,
             $visitorManager,
+            $messageRepository,
             $entityManager
         );
 

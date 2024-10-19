@@ -7,6 +7,7 @@ use App\Util\JsonUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
+use App\Repository\LogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +24,7 @@ class LogManager
     private CookieUtil $cookieUtil;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
+    private LogRepository $logRepository;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private EntityManagerInterface $entityManager;
@@ -32,6 +34,7 @@ class LogManager
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
+        LogRepository $logRepository,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
@@ -40,6 +43,7 @@ class LogManager
         $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
+        $this->logRepository = $logRepository;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -168,7 +172,6 @@ class LogManager
      */
     public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
     {
-        $repo = $this->entityManager->getRepository(Log::class);
         $per_page = $_ENV['ITEMS_PER_PAGE'];
 
         // calculate offset
@@ -176,14 +179,7 @@ class LogManager
 
         // get logs from database
         try {
-            $queryBuilder = $repo->createQueryBuilder('l')
-                ->where('l.ip_address = :ip_address')
-                ->orderBy('l.id', 'DESC')
-                ->setParameter('ip_address', $ipAddress)
-                ->setFirstResult($offset)
-                ->setMaxResults($per_page);
-
-                $logs = $queryBuilder->getQuery()->getResult();
+            $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
@@ -192,6 +188,7 @@ class LogManager
             $logs = [];
         }
 
+        // log action to database
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -217,7 +214,6 @@ class LogManager
      */
     public function getLogs(string $status, $username, int $page): ?array
     {
-        $repo = $this->entityManager->getRepository(Log::class);
         $perPage = $_ENV['ITEMS_PER_PAGE'];
 
         // calculate offset
@@ -225,14 +221,7 @@ class LogManager
 
         // get logs from database
         try {
-            $queryBuilder = $repo->createQueryBuilder('l')
-                ->where('l.status = :status')
-                ->orderBy('l.id', 'DESC')
-                ->setParameter('status', $status)
-                ->setFirstResult($offset)
-                ->setMaxResults($perPage);
-
-            $logs = $queryBuilder->getQuery()->getResult();
+            $logs = $this->logRepository->getLogsByStatus($status, $offset, $perPage);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
@@ -264,10 +253,8 @@ class LogManager
      */
     public function getLogsCount(string $status): ?int
     {
-        $repo = $this->entityManager->getRepository(Log::class);
-
         try {
-            return $repo->count(['status' => $status]);
+            return $this->logRepository->count(['status' => $status]);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
@@ -286,10 +273,8 @@ class LogManager
      */
     public function getLoginLogsCount(): ?int
     {
-        $repo = $this->entityManager->getRepository(Log::class);
-
         try {
-            return $repo->count(['name' => 'authenticator']);
+            return $this->logRepository->count(['name' => 'authenticator']);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
@@ -308,6 +293,7 @@ class LogManager
      */
     public function setReaded(): void
     {
+        // update all status to 'readed' query
         $dql = "UPDATE App\Entity\Log l SET l.status = 'readed'";
 
         try {

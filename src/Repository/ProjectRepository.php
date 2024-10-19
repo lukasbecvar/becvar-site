@@ -20,4 +20,20 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+
+    /**
+     * Get project list by status
+     *
+     * @param string $status The status of the projects
+     *
+     * @return array<mixed> An array of projects filtered by the specified status
+     */
+    public function getProjectsByStatus(string $status): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', $status);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

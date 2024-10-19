@@ -4,11 +4,11 @@
     confirmation
 {% endblock %}
 
-{# VISITORS DELETE CONFIRMATION PAGE COMPONENT #}
+{# VISITORS DELETE CONFIRMATION DIALOG COMPONENT #}
 {% block component %}
 <div class="admin-panel">
     <div class="confirmation dark-table">
-        <p class="form-title">Are you sure you want to delete visitors?</p>
+        <p class="form-title">Are you sure you want to delete all visitors?</p>
         <a class="confirmation-button" href={{ path('admin_database_delete', {'table': 'visitors', 'page': '1', 'id': 'all', 'referer': 'visitor_manager'}) }}>Yes</a>
         <a class="confirmation-button" href={{ path('admin_visitor_manager', {'page': page}) }}>No</a>
     </div>

@@ -53,7 +53,7 @@ class ContactFormType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control resize-disable mt-3',
+                    'class' => 'form-control resize-disable mt-3 msg-textarea',
                     'placeholder' => 'Message',
                     'maxlength' => 1024
                 ],

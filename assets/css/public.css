@@ -611,7 +611,7 @@ section .container {
     animation: animate-loading 1s linear infinite;
 }
 
-.contact .msg-from input, .contact .msg-from textarea {
+.contact .msg-from input, .contact .msg-from .msg-textarea {
     border-radius: 0;
     box-shadow: none;
     font-size: 14px;
@@ -621,16 +621,16 @@ section .container {
     color: #fff;
 }
 
-.contact .msg-from input:focus, .contact .msg-from textarea:focus {
+.contact .msg-from input:focus, .contact .msg-from .msg-textarea:focus {
     background-color: rgba(255, 255, 255, 0.11);
 }
 
-.contact .msg-from input::-moz-placeholder, .contact .msg-from textarea::-moz-placeholder {
+.contact .msg-from input::-moz-placeholder, .contact .msg-from .msg-textarea::-moz-placeholder {
     color: rgba(255, 255, 255, 0.3);
     opacity: 1;
 }
 
-.contact .msg-from input::placeholder, .contact .msg-from textarea::placeholder {
+.contact .msg-from input::placeholder, .contact .msg-from .msg-textarea::placeholder {
     color: rgba(255, 255, 255, 0.3);
     opacity: 1;
 }
@@ -639,7 +639,7 @@ section .container {
     padding: 10px 15px;
 }
 
-.contact .msg-from textarea {
+.contact .msg-from .msg-textarea {
     padding: 12px 15px;
 } 
 
@@ -661,13 +661,13 @@ section .container {
 }
 
 .contact input:-webkit-autofill, 
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-textarea:-webkit-autofill, 
-textarea:-webkit-autofill:hover, 
-textarea:-webkit-autofill:focus, 
-select:-webkit-autofill, 
-select:-webkit-autofill:hover, 
-select:-webkit-autofill:focus {
-    -webkit-text-fill-color: white;
+.contact input:-webkit-autofill:hover, 
+.contact input:-webkit-autofill:focus, 
+.contact textarea:-webkit-autofill, 
+.contact textarea:-webkit-autofill:hover, 
+.contact textarea:-webkit-autofill:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
 }

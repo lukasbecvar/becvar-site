@@ -72,7 +72,7 @@ class LogReaderControllerTest extends WebTestCase
         // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | confirmation');
-        $this->assertSelectorTextContains('body', 'Are you sure you want to delete logs?');
+        $this->assertSelectorTextContains('body', 'Are you sure you want to delete all logs?');
         $this->assertSelectorTextContains('body', 'Yes');
         $this->assertSelectorTextContains('body', 'No');
     }

@@ -4,7 +4,7 @@
     database
 {% endblock %}
 
-{# DATABASE BROWSER PAGE COMPONENT #}
+{# DATABASE BROWSER COMPONENT #}
 {% block component %}
 <div class="admin-panel">
     {% if getUserRole() != 'Owner' and getUserRole() != 'Admin' %}
@@ -23,7 +23,7 @@
         {% else %}
             {# ROW-EDITOR #}
             {% if editorTable != null %}
-            {% include "admin/elements/database-navigation.twig" %}
+            {% include "admin/element/navigation/database-navigation.twig" %}
             {% if errorMsg != null %}
                 {% include "common/alerts/error-alert.twig" %}
             {% endif %}
@@ -46,7 +46,7 @@
             {% else %}
                 {# NEW-ROW FORM #}
                 {% if newRowTable != null %}
-                    {% include "admin/elements/database-navigation.twig" %}
+                    {% include "admin/element/navigation/database-navigation.twig" %}
                     {% if errorMsg != null %}
                         {% include "common/alerts/error-alert.twig" %}
                     {% endif %}
@@ -65,7 +65,7 @@
                 {% else %}
                     {# TABLES-BROWSER #}
                     {% if tableName != null %}
-                        {% include "admin/elements/database-navigation.twig" %}
+                        {% include "admin/element/navigation/database-navigation.twig" %}
                         {% if tableDataCount == 0 %}
                             <h2 class="page-title">table: '{{ tableName }}' is empty</h2>
                         {% else %}

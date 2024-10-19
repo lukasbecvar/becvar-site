@@ -83,7 +83,7 @@ class AuthManagerTest extends TestCase
 
         // mock user repository
         $user = $this->createMock(User::class);
-        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
+        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
         // assert output
         $this->assertTrue($this->authManager->isUserLogedin());
@@ -118,7 +118,7 @@ class AuthManagerTest extends TestCase
 
         // mock user repository
         $user = $this->createMock(User::class);
-        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
+        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
         // assert output
         $this->assertEquals($token, $this->authManager->getUserToken());
@@ -153,7 +153,7 @@ class AuthManagerTest extends TestCase
         $user->method('getUsername')->willReturn($username);
 
         // mock user repository
-        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
+        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
         // assert output
         $this->assertEquals($username, $this->authManager->getUsername($token));
@@ -174,7 +174,7 @@ class AuthManagerTest extends TestCase
         $user->method('getRole')->willReturn($role);
 
         // mock user repository
-        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
+        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
         // assert output
         $this->assertEquals($role, $this->authManager->getUserRole($token));
@@ -199,7 +199,7 @@ class AuthManagerTest extends TestCase
         $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
         // mock user repository
-        $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
+        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
         // assert output
         $this->assertTrue($this->authManager->isAdmin());

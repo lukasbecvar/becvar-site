@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Message;
 use App\Util\SecurityUtil;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,18 +20,21 @@ class MessagesManager
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
     private VisitorManager $visitorManager;
+    private MessageRepository $messageRepository;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
         VisitorManager $visitorManager,
+        MessageRepository $messageRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
         $this->visitorManager = $visitorManager;
+        $this->messageRepository = $messageRepository;
     }
 
     /**
@@ -127,7 +131,6 @@ class MessagesManager
      */
     public function getMessages(string $status, int $page): ?array
     {
-        $repository = $this->entityManager->getRepository(Message::class);
         $limit = $_ENV['ITEMS_PER_PAGE'];
 
         // calculate offset
@@ -135,7 +138,7 @@ class MessagesManager
 
         // get messages entity from database
         try {
-            $inbox = $repository->findBy(['status' => $status], null, $limit, $offset);
+            $inbox = $this->messageRepository->getMessagesByStatus($status, $offset, $limit);
             $messages = [];
 
             foreach ($inbox as $inboxMessage) {
@@ -187,7 +190,7 @@ class MessagesManager
      */
     public function closeMessage(int $id): void
     {
-        $message = $this->entityManager->getRepository(Message::class)->find($id);
+        $message = $this->messageRepository->find($id);
 
         // check if message found
         if ($message !== null) {

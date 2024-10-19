@@ -22,6 +22,22 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get user by token
+     *
+     * @param string $token The user token
+     *
+     * @return User|null The user entity if found
+     */
+    public function getUserByToken(string $token): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.token = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * Retrieves a list of all users along with their associated visitor IDs
      *
      * @return array<array<string>> User list with associated visitor IDs

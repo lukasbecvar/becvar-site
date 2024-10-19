@@ -49,6 +49,8 @@ class ProjectsController extends AbstractController
             'telegramLink' => $_ENV['TELEGRAM_LINK'],
             "linkedInLink" => $_ENV['LINKEDIN_LINK'],
             'instagramLink' => $_ENV['INSTAGRAM_LINK'],
+
+            // projects data
             'projectsCount' => $this->projectsManager->getProjectsCount(),
             'openProjects' => $this->projectsManager->getProjectsList('open'),
             'closedProjects' => $this->projectsManager->getProjectsList('closed'),

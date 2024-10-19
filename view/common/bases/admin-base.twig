@@ -32,14 +32,13 @@
                     </a>
                 </div>
             </div>
-            {% include 'admin/elements/sidebar.twig' %}
+            {# <===== INCLUDE SIDEBAR NAVIGATION =====> #}
+            {% include 'admin/element/sidebar.twig' %}
 
             {# <===== MAIN ADMIN COMPONENT WRAPPER =====> #}
             {% block component %}{% endblock %}
 
-            {{ encore_entry_script_tags('page-loading-js') }}
             <script>
-
                 // toggle a class on the body element
                 function manipulate() {
                     document.querySelector("body").classList.toggle("active")
@@ -79,7 +78,7 @@
         </div>
     </div>
 </main>
+{{ encore_entry_script_tags('page-loading-js') }}
 {{ encore_entry_script_tags('update-visitor-status-js') }}
-{{ encore_entry_script_tags('bootstrap-js') }}
 </body>
 </html>

@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-    {# ROW EDITOR TOOLBAR #}
+    {# ROW EDITOR BACK BUTTON #}
     {% if editorTable != null %}
         <li>
             <a class="selector-button btn-small" href={{ path('admin_database_browser', {'table': editorTable, 'page': editorPage}) }}>
@@ -9,7 +9,7 @@
             </a>
         </li>
         <li class="count-text-in-menu">Row editor</li>
-    {# ROW ADD TOOLBAR #}
+    {# ROW ADD BACK BUTTON #}
     {% elseif newRowTable != null %}
         <li>
             <a class="selector-button btn-small" href={{ path('admin_database_browser', {'table': newRowTable, 'page': newRowPage}) }}>
@@ -45,7 +45,7 @@
             </li>
         {% endif %}
 
-        {# PROJECTS UPDATE BUTTON TOOLBAR #}
+        {# PROJECTS UPDATE BUTTON #}
         {% if tableName == 'projects' %}
             <li>
                 <a class="selector-button btn-small" href={{ path('public_projects_update') }}>
@@ -54,7 +54,7 @@
             </li>        
         {% endif %}
 
-        {# REGISTER NEW USER BUTTON TOOLBAR #}
+        {# REGISTER NEW USER BUTTON #}
         {% if tableName == 'users' %}
             <li>
                 <a class="selector-button btn-small" href={{ path('auth_register') }}>

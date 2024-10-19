@@ -123,13 +123,7 @@ class ContactController extends AbstractController
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
                     // save message & get return boolean
-                    $save = $this->messagesManager->saveMessage(
-                        $name,
-                        $email,
-                        $messageInput,
-                        $ipAddress,
-                        $visitorId
-                    );
+                    $save = $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitorId);
 
                     // check if message saved
                     if ($save) {

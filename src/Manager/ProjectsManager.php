@@ -6,6 +6,7 @@ use App\Util\JsonUtil;
 use App\Entity\Project;
 use App\Util\CacheUtil;
 use App\Util\SecurityUtil;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +24,7 @@ class ProjectsManager
     private LogManager $logManager;
     private ErrorManager $errorManager;
     private SecurityUtil $securityUtil;
+    private ProjectRepository $projectRepository;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
@@ -31,6 +33,7 @@ class ProjectsManager
         LogManager $logManager,
         ErrorManager $errorManager,
         SecurityUtil $securityUtil,
+        ProjectRepository $projectRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->jsonUtil = $jsonUtil;
@@ -39,6 +42,7 @@ class ProjectsManager
         $this->errorManager = $errorManager;
         $this->securityUtil = $securityUtil;
         $this->entityManager = $entityManager;
+        $this->projectRepository = $projectRepository;
     }
 
     /**
@@ -135,11 +139,8 @@ class ProjectsManager
      */
     public function dropProjects(): void
     {
-        // get projects repository
-        $repository = $this->entityManager->getRepository(Project::class);
-
         // get projects entitys
-        $data = $repository->findAll();
+        $data = $this->projectRepository->findAll();
 
         // delete all projects
         foreach ($data as $item) {
@@ -196,7 +197,7 @@ class ProjectsManager
                 $projectsList = $this->cacheUtil->getValue('projects-list-' . $status)->get();
             } else {
                 // get projects list from database
-                $projectsList = $this->entityManager->getRepository(Project::class)->findBy(['status' => $status]);
+                $projectsList = $this->projectRepository->getProjectsByStatus($status);
 
                 // cache projects list
                 $this->cacheUtil->setValue('projects-list-' . $status, $projectsList, 60 * 60 * 24 * 30);
@@ -228,7 +229,7 @@ class ProjectsManager
                 $projectsCount = $this->cacheUtil->getValue('projects-count')->get();
             } else {
                 // get projects count from database
-                $projectsCount = $this->entityManager->getRepository(Project::class)->count([]);
+                $projectsCount = $this->projectRepository->count([]);
 
                 // cache projects count
                 $this->cacheUtil->setValue('projects-count', $projectsCount, 60 * 60 * 24 * 30);

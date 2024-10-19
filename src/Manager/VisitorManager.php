@@ -49,12 +49,9 @@ class VisitorManager
      */
     public function getRepositoryByArray(array $search): ?object
     {
-        // get visitor repository
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
-
         // try to find visitor in database
         try {
-            return $visitorRepository->findOneBy($search);
+            return $this->visitorRepository->findOneBy($search);
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
@@ -123,7 +120,6 @@ class VisitorManager
      */
     public function getVisitors(int $page, string $filter = '1'): ?array
     {
-        $repo = $this->entityManager->getRepository(Visitor::class);
         $perPage = $_ENV['ITEMS_PER_PAGE'];
 
         // get online visitors list
@@ -134,7 +130,7 @@ class VisitorManager
 
         // get visitors from database
         try {
-            $queryBuilder = $repo->createQueryBuilder('l')
+            $queryBuilder = $this->visitorRepository->createQueryBuilder('l')
                 ->setFirstResult($offset)
                 ->setMaxResults($perPage);
 

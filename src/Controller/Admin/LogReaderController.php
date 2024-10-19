@@ -121,7 +121,7 @@ class LogReaderController extends AbstractController
         $page = intval($this->appUtil->getQueryString('page', $request));
 
         // render delete confirmation view
-        return $this->render('admin/elements/confirmation/delete-logs-html.twig', [
+        return $this->render('admin/element/confirmation/delete-logs-html.twig', [
             // delete confirmation data
             'page' => $page
         ]);
