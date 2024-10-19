@@ -13,6 +13,17 @@
     {{ encore_entry_link_tags('public-css') }}
 	<title>Lukáš Bečvář</title>
 </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDK5KN47R9"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SDK5KN47R9');
+</script>
+
 <body>
 <header id="header" class={% block header_class %}{% endblock %}>
     {% include "public/element/navigation.twig" %}
