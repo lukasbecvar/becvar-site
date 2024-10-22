@@ -49,28 +49,28 @@
                                     <th scope='row' class='text-red'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.name|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.value|e }}</th>
-                                    <th scope='row' class='text-red'>{{ row.time|e }}</th>
+                                    <th scope='row' class='text-red'>{{ row.time|date('Y-m-d H:i:s')|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.ipAddress|e }}</th>
                                     <th scope='row' class='text-red'>{{ row.browser|e }}</th>
                                 {% elseif row.name == 'database' or row.name == 'project-update' %}
                                     <th scope='row' class='text-primary'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.name|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.value|e }}</th>
-                                    <th scope='row' class='text-primary'>{{ row.time|e }}</th>
+                                    <th scope='row' class='text-primary'>{{ row.time|date('Y-m-d H:i:s')|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.ipAddress|e }}</th>
                                     <th scope='row' class='text-primary'>{{ row.browser|e }}</th>
                                 {% elseif row.name == 'message-sender' or row.name == 'anti-log' %}
                                     <th scope='row' class='text-warning'>{{ row.id|e }}</th>
                                     <th scope='row' class='text-warning'>{{ row.name|e }}</th>
                                     <th scope='row' class='text-warning'>{{ row.value|e }}</th>
-                                    <th scope='row' class='text-warning'>{{ row.time|e }}</th>
+                                    <th scope='row' class='text-warning'>{{ row.time|date('Y-m-d H:i:s')|e }}</th>
                                     <th scope='row' class='text-warning'>{{ row.ipAddress|e }}</th>
                                     <th scope='row' class='text-warning'>{{ row.browser|e }}</th>
                                 {% else %}
                                     <th scope='row'>{{ row.id|e }}</th>
                                     <th scope='row'>{{ row.name|e }}</th>
                                     <th scope='row'>{{ row.value|e }}</th>
-                                    <th scope='row'>{{ row.time|e }}</th>
+                                    <th scope='row'>{{ row.time|date('Y-m-d H:i:s')|e }}</th>
                                     <th scope='row'>{{ row.ipAddress|e }}</th>
                                     <th scope='row'>{{ row.browser|e }}</th>
                                 {% endif %}

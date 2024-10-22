@@ -60,8 +60,8 @@ class ExportUtil
         $row = 2; // start from the second row (under header row)
         foreach ($dataToExport as $visitor) {
             $sheet->setCellValue('A' . $row, $visitor->getId());
-            $sheet->setCellValue('B' . $row, $visitor->getFirstVisit());
-            $sheet->setCellValue('C' . $row, $visitor->getLastVisit());
+            $sheet->setCellValue('B' . $row, $visitor->getFirstVisit()->format('Y-m-d H:i:s'));
+            $sheet->setCellValue('C' . $row, $visitor->getLastVisit()->format('Y-m-d H:i:s'));
             $sheet->setCellValue('D' . $row, $this->visitorInfoUtil->getBrowserShortify($visitor->getBrowser()));
             $sheet->setCellValue('E' . $row, $visitor->getOs());
             $sheet->setCellValue('F' . $row, $visitor->getCity());
@@ -221,8 +221,8 @@ class ExportUtil
         foreach ($dataToExport as $visitor) {
             $html .= '<tr>';
             $html .= '<td>' . $visitor->getId() . '</td>';
-            $html .= '<td>' . $visitor->getFirstVisit() . '</td>';
-            $html .= '<td>' . $visitor->getLastVisit() . '</td>';
+            $html .= '<td>' . $visitor->getFirstVisit()->format('Y-m-d H:i:s') . '</td>';
+            $html .= '<td>' . $visitor->getLastVisit()->format('Y-m-d H:i:s') . '</td>';
             $html .= '<td>' . $this->visitorInfoUtil->getBrowserShortify($visitor->getBrowser()) . '</td>';
             $html .= '<td>' . $visitor->getOs() . '</td>';
             $html .= '<td>' . $visitor->getCity() . '</td>';

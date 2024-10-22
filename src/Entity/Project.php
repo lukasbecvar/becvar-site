@@ -38,16 +38,33 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    /**
+     * Get the project id
+     *
+     * @return int The project id
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Get the project name
+     *
+     * @return string The project name
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Set the project name
+     *
+     * @param string $name The project name
+     *
+     * @return static The project object
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -55,11 +72,23 @@ class Project
         return $this;
     }
 
+    /**
+     * Get the project description
+     *
+     * @return string The project description
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * Set the project description
+     *
+     * @param string $description The project description
+     *
+     * @return static The project object
+     */
     public function setDescription(string $description): static
     {
         $this->description = $description;
@@ -67,11 +96,23 @@ class Project
         return $this;
     }
 
+    /**
+     * Get the project technology
+     *
+     * @return string The project technology
+     */
     public function getTechnology(): ?string
     {
         return $this->technology;
     }
 
+    /**
+     * Set the project technology
+     *
+     * @param string $technology The project technology
+     *
+     * @return static The project object
+     */
     public function setTechnology(string $technology): static
     {
         $this->technology = $technology;
@@ -79,11 +120,23 @@ class Project
         return $this;
     }
 
+    /**
+     * Get the project link
+     *
+     * @return string The project link
+     */
     public function getLink(): ?string
     {
         return $this->link;
     }
 
+    /**
+     * Set the project link
+     *
+     * @param string $link The project link
+     *
+     * @return static The project object
+     */
     public function setLink(string $link): static
     {
         $this->link = $link;
@@ -91,11 +144,23 @@ class Project
         return $this;
     }
 
+    /**
+     * Get the project status
+     *
+     * @return string The project status
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
+    /**
+     * Set the project status
+     *
+     * @param string $status The project status
+     *
+     * @return static The project object
+     */
     public function setStatus(string $status): static
     {
         $this->status = $status;

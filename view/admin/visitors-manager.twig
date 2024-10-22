@@ -48,7 +48,7 @@
                                 {# <===== ID =====> #}
                                 <th scope='row'>{{ row.id|e }}</th>
                                 {# <===== LAST-VISIT-TIME =====> #}
-                                <th scope='row'>{{ row.lastVisit|e }}</th>
+                                <th scope='row'>{{ row.lastVisit|date('Y-m-d H:i:s')|e }}</th>
                                 {# <===== BROWSER =====> #}
                                 {% if row.browser == 'Unknown' %}
                                     <th scope='row' class='text-red'>{{ row.browser|e }}</th>
@@ -98,10 +98,10 @@
                                     <th scope='row' class='text-red'>offline</th>
                                 {% endif %}     
                                 {# <===== BANNED-STATUS =====> #}
-                                {% if row.bannedStatus == 'yes' %}
-                                    <th scope='row' class='text-red'>{{ row.bannedStatus|e }}</th>
+                                {% if row.bannedStatus %}
+                                    <th scope='row' class='text-red'>yes</th>
                                 {% else %}
-                                    <th scope='row' class='text-success'>{{ row.bannedStatus|e }}</th>
+                                    <th scope='row' class='text-success'>no</th>
                                 {% endif %}                        
                                 {# <===== BUTTONS =====> #}
                                 <th>

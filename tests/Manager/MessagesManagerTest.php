@@ -63,15 +63,12 @@ class MessagesManagerTest extends TestCase
         );
 
         // call saveMessage method with test data
-        $result = $messagesManager->saveMessage(
+        $messagesManager->saveMessage(
             name: 'John Doe',
             email: 'john@example.com',
             messageInput: 'Hello World',
             ipAddress: '127.0.0.1',
-            visitorId: '123'
+            visitorId: 123
         );
-
-        // assert that the method returns true upon successful save
-        $this->assertTrue($result);
     }
 }

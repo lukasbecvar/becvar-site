@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Admin\Auth;
 
 use App\Entity\User;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -41,10 +42,10 @@ class LoginControllerTest extends WebTestCase
             $user->setRole('Owner');
             $user->setIpAddress('127.0.0.1');
             $user->setToken('zbjNNyuudM3HQGWe6xqWwjyncbtZB22D');
-            $user->setRegistedTime('20.11.2023 14:13:06');
-            $user->setLastLoginTime('22.11.2023 11:42:40');
+            $user->setRegistedTime(new DateTime());
+            $user->setLastLoginTime(null);
             $user->setProfilePic('image');
-            $user->setVisitorId('1');
+            $user->setVisitorId(1);
 
             // persist and flush new user to the database
             $entityManager->persist($user);

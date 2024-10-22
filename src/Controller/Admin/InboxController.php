@@ -23,11 +23,8 @@ class InboxController extends AbstractController
     private BanManager $banManager;
     private MessagesManager $messagesManager;
 
-    public function __construct(
-        AppUtil $appUtil,
-        BanManager $banManager,
-        MessagesManager $messagesManager
-    ) {
+    public function __construct(AppUtil $appUtil, BanManager $banManager, MessagesManager $messagesManager)
+    {
         $this->appUtil = $appUtil;
         $this->banManager = $banManager;
         $this->messagesManager = $messagesManager;

@@ -29,7 +29,7 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * User registration page handler
+     * Handle user register page
      *
      * @param Request $request The request object
      *

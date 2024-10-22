@@ -24,7 +24,7 @@ class AdminController extends AbstractController
     #[Route('/admin', methods: ['GET'], name: 'admin_init')]
     public function admin(): Response
     {
-        // rediret to dashboard page
+        // redirect to dashboard page
         return $this->redirectToRoute('admin_dashboard');
     }
 }

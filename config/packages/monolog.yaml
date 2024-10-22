@@ -20,7 +20,7 @@ monolog:
             level: error
             path: 'php://stdout'
 
-# debug log in dev mode
+# debug dev log
 when@dev:
     monolog:
         handlers:

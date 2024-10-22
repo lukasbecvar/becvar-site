@@ -63,7 +63,7 @@ class AccountSettingsController extends AbstractController
      *
      * @param Request $request The request object
      *
-     * @throws \App\Exception\AppErrorException Error the profile picture upload
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the profile picture upload
      *
      * @return Response The picture change view
      */
@@ -103,7 +103,7 @@ class AccountSettingsController extends AbstractController
                     // redirect back to values table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError(
+                    $this->errorManager->handleError(
                         'error to upload profile pic: ' . $e->getMessage(),
                         Response::HTTP_INTERNAL_SERVER_ERROR
                     );
@@ -127,7 +127,7 @@ class AccountSettingsController extends AbstractController
      *
      * @param Request $request The request object
      *
-     * @throws \App\Exception\AppErrorException Error the username update
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the username update
      *
      * @return Response The username change view
      */
@@ -157,7 +157,7 @@ class AccountSettingsController extends AbstractController
                 // redirect back to values table
                 return $this->redirectToRoute('admin_account_settings_table');
             } catch (\Exception $e) {
-                return $this->errorManager->handleError(
+                $this->errorManager->handleError(
                     'error to upload profile pic: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
@@ -178,7 +178,7 @@ class AccountSettingsController extends AbstractController
      *
      * @param Request $request The request object
      *
-     * @throws \App\Exception\AppErrorException Error the password update
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the password update
      *
      * @return Response The password change view
      */
@@ -219,7 +219,7 @@ class AccountSettingsController extends AbstractController
                     // redirect back to account settings table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (\Exception $e) {
-                    return $this->errorManager->handleError(
+                    $this->errorManager->handleError(
                         'error to upload profile pic: ' . $e->getMessage(),
                         Response::HTTP_INTERNAL_SERVER_ERROR
                     );

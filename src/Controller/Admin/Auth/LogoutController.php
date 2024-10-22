@@ -28,9 +28,9 @@ class LogoutController extends AbstractController
     }
 
     /**
-     * User logout handler
+     * Handle user logout
      *
-     * @throws \App\Exception\AppErrorException Logout process error
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Logout process error
      *
      * @return Response The redirect to login page
      */
@@ -43,14 +43,15 @@ class LogoutController extends AbstractController
         }
 
         // verify user logout
-        if (!$this->authManager->isUserLogedin()) {
-            return $this->redirectToRoute('auth_login');
-        } else {
-            // handle logpout error
-            return $this->errorManager->handleError(
+        if ($this->authManager->isUserLogedin()) {
+            // handle logout error
+            $this->errorManager->handleError(
                 'logout error: unknown error in logout function',
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+
+        // redirect to login page
+        return $this->redirectToRoute('auth_login');
     }
 }

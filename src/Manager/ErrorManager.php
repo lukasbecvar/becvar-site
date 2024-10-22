@@ -29,7 +29,7 @@ class ErrorManager
      *
      * @throws HttpException
      *
-     * @return mixed
+     * @return never
      */
     public function handleError(string $msg, int $code): mixed
     {

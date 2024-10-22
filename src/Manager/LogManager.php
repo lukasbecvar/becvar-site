@@ -8,6 +8,7 @@ use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use App\Repository\LogRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -97,7 +98,7 @@ class LogManager
             $ipAddress = $this->visitorInfoUtil->getIP();
 
             // get visitor id
-            $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
+            $visitorId = $this->visitorManager->getVisitorID($ipAddress);
 
             // xss escape inputs
             $name = $this->securityUtil->escapeString($name);
@@ -111,7 +112,7 @@ class LogManager
             // set log entity values
             $LogEntity->setName($name)
                 ->setValue($value)
-                ->setTime($date)
+                ->setTime(new DateTime())
                 ->setIpAddress($ipAddress)
                 ->setBrowser($browser)
                 ->setStatus('unreaded')
@@ -185,7 +186,6 @@ class LogManager
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            $logs = [];
         }
 
         // log action to database
@@ -227,7 +227,6 @@ class LogManager
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            $logs = [];
         }
 
         $this->log('database', 'user: ' . $username . ' viewed logs');
@@ -249,9 +248,9 @@ class LogManager
      *
      * @throws \App\Exception\AppErrorException Error to get logs count
      *
-     * @return int|null $count The count of logs based on status
+     * @return int $count The count of logs based on status
      */
-    public function getLogsCount(string $status): ?int
+    public function getLogsCount(string $status): int
     {
         try {
             return $this->logRepository->count(['status' => $status]);
@@ -260,7 +259,6 @@ class LogManager
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 
@@ -280,7 +278,6 @@ class LogManager
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 

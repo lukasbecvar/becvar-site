@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Message;
 use App\Util\SecurityUtil;
 use App\Repository\MessageRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,18 +45,15 @@ class MessagesManager
      * @param string $email The email address of the sender
      * @param string $messageInput The message input
      * @param string $ipAddress The IP address of the sender
-     * @param string $visitorId The ID of the visitor associated with the sender
+     * @param int $visitorId The ID of the visitor associated with the sender
      *
      * @throws \App\Exception\AppErrorException Error to save message
      *
-     * @return bool True if the message is saved successfully, false otherwise
+     * @return void
      */
-    public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, string $visitorId): bool
+    public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, int $visitorId): void
     {
         $message = new Message();
-
-        // get data & time
-        $date = date('d.m.Y H:i:s');
 
         // update visitor email
         $this->visitorManager->updateVisitorEmail($ipAddress, $email);
@@ -67,7 +65,7 @@ class MessagesManager
         $message->setName($name)
             ->setEmail($email)
             ->setMessage($messageInput)
-            ->setTime($date)
+            ->setTime(new DateTime())
             ->setIpAddress($ipAddress)
             ->setStatus('open')
             ->setVisitorID($visitorId);
@@ -76,14 +74,11 @@ class MessagesManager
         try {
             $this->entityManager->persist($message);
             $this->entityManager->flush();
-
-            return true;
         } catch (\Exception $e) {
             $this->errorManager->handleError(
                 'error to save message: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return false;
         }
     }
 
@@ -115,7 +110,6 @@ class MessagesManager
                 'error to get messages count: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return 0;
         }
     }
 
@@ -175,7 +169,6 @@ class MessagesManager
                 'error to get messages: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 

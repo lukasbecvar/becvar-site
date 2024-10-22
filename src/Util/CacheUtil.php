@@ -40,7 +40,6 @@ class CacheUtil
                 'error to get cache value: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return false;
         }
     }
 
@@ -49,7 +48,7 @@ class CacheUtil
      *
      * @param mixed $key The key for which to retrieve the value
      *
-     * @return mixed|null The cached value associated with the key, or null if not found
+     * @return mixed The cached value associated with the key, or null if not found
      */
     public function getValue(mixed $key): mixed
     {
@@ -61,7 +60,6 @@ class CacheUtil
                 'error to get cache value: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 

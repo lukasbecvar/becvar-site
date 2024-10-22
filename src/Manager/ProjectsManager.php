@@ -186,9 +186,9 @@ class ProjectsManager
      *
      * @throws \App\Exception\AppErrorException Error to get projects list
      *
-     * @return Project[]|null The list of projects
+     * @return Project[] The list of projects
      */
-    public function getProjectsList(string $status): ?array
+    public function getProjectsList(string $status): array
     {
         try {
             // check if projects list is cached
@@ -210,7 +210,6 @@ class ProjectsManager
                 'error to get projects list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 
@@ -221,7 +220,7 @@ class ProjectsManager
      *
      * @return int The total count of projects
      */
-    public function getProjectsCount(): ?int
+    public function getProjectsCount(): int
     {
         try {
             if ($this->cacheUtil->isCatched('projects-count')) {
@@ -241,7 +240,6 @@ class ProjectsManager
                 'error to get projects list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 }

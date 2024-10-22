@@ -57,7 +57,6 @@ class VisitorManager
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 
@@ -145,7 +144,6 @@ class VisitorManager
                 'error to get visitors: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return [];
         }
 
         // replace browser with formated value for log reader

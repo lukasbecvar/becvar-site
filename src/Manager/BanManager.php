@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Visitor;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,18 +48,15 @@ class BanManager
      */
     public function banVisitor(string $ipAddress, string $reason): void
     {
-        // get current date
-        $date = date('d.m.Y H:i:s');
-
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // check if visitor found
         if ($visitor != null) {
             // update ban data
-            $visitor->setBannedStatus('yes')
+            $visitor->setBannedStatus(true)
                 ->setBanReason($reason)
-                ->setBannedTime($date);
+                ->setBannedTime(new DateTime());
 
             // log ban action
             $this->logManager->log(
@@ -103,7 +101,7 @@ class BanManager
         // check if visitor found
         if ($visitor != null) {
             // update ban status
-            $visitor->setBannedStatus('no');
+            $visitor->setBannedStatus(false);
 
             // log ban action
             $this->logManager->log(
@@ -170,7 +168,6 @@ class BanManager
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 

@@ -59,7 +59,7 @@ class BanManagerTest extends TestCase
 
         // mock visitor
         $visitor = $this->createMock(Visitor::class);
-        $visitor->expects($this->once())->method('setBannedStatus')->with('no')->willReturnSelf();
+        $visitor->expects($this->once())->method('setBannedStatus')->with(false)->willReturnSelf();
 
         // mock visitor manager
         $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
@@ -91,7 +91,7 @@ class BanManagerTest extends TestCase
 
         // mock visitor
         $visitor = $this->createMock(Visitor::class);
-        $visitor->method('getBannedStatus')->willReturn('yes');
+        $visitor->method('getBannedStatus')->willReturn(true);
 
         // mock visitor manager
         $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);

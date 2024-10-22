@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Message;
 use App\Util\SecurityUtil;
+use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -49,10 +50,10 @@ class MessageFixtures extends Fixture
             $message->setName('Lukáš Bečvář')
                 ->setEmail('becvarlukas99@gmail.com	')
                 ->setMessage($this->securityUtil->encryptAes($data['message']))
-                ->setTime('02.05.2024 12:21:39')
+                ->setTime(new DateTime())
                 ->setIpAddress('172.18.0.1')
                 ->setStatus('open')
-                ->setVisitorID('1');
+                ->setVisitorID(1);
 
             // persist message fixtures
             $manager->persist($message);

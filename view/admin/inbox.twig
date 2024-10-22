@@ -27,7 +27,7 @@
                                 </a>
                             {% endif %}
                             <h5 class="left-center card-title">{{ message.name|e }}
-                                <span class='text-success phone-none'>[{{ message.time|e }}]</span><span class="phone-none">, </span>
+                                <span class='text-success phone-none'>[{{ message.time|date('Y-m-d H:i:s')|e }}]</span><span class="phone-none">, </span>
                                 <span class='text-warning phone-none'>[{{ message.ip_address|e }}]</span>
                                 <p class="left-centers email-line text-warning">
                                     <span class="text-white">Email: </span>{{ message.email|e }}

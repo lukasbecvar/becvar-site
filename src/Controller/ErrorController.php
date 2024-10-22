@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Util\AppUtil;
 use App\Manager\ErrorManager;
-use App\Exception\AppErrorException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 
 /**
  * Class ErrorController
@@ -76,9 +76,11 @@ class ErrorController extends AbstractController
         $statusCode = $exception instanceof HttpException
             ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
 
-        // handle errors in dev mode
+        // handle error with symfony error handler in deb mode
         if ($this->appUtil->isDevMode()) {
-            throw new AppErrorException($statusCode, $exception->getMessage());
+            $errorRenderer = new HtmlErrorRenderer(true);
+            $errorContent = $errorRenderer->render($exception)->getAsString();
+            return new Response($errorContent, $statusCode);
         }
 
         // return error view

@@ -10,7 +10,6 @@ const select = (el, all = false) => {
 
 const on = (type, el, listener, all = false) => {
     let selectEl = select(el, all)
-
     if (selectEl) {
         if (all) {
             selectEl.forEach(e => e.addEventListener(type, listener))
@@ -21,10 +20,7 @@ const on = (type, el, listener, all = false) => {
 }
 
 const scrollto = () => {
-    window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-    })
+    window.scrollTo({top: 0, behavior: 'smooth'})
 }
 
 on('click', '.mobile-nav-toggle', function(e) {

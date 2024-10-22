@@ -110,7 +110,7 @@ class ContactController extends AbstractController
                 );
             } else {
                 // get others data
-                $visitorId = strval($this->visitorManager->getVisitorID($ipAddress));
+                $visitorId = $this->visitorManager->getVisitorID($ipAddress);
 
                 // check if user have unclosed messages
                 if ($this->messagesManager->getMessageCountByIpAddress($ipAddress) >= 5) {
@@ -122,15 +122,11 @@ class ContactController extends AbstractController
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
-                    // save message & get return boolean
-                    $save = $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitorId);
+                    // save message to database
+                    $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitorId);
 
-                    // check if message saved
-                    if ($save) {
-                        return $this->redirectToRoute('public_contact', ['status' => 'ok']);
-                    } else {
-                        return $this->redirectToRoute('public_contact', ['status' => 'ko']);
-                    }
+                    // redirect back to from & handle ok status
+                    return $this->redirectToRoute('public_contact', ['status' => 'ok']);
                 }
             }
         }

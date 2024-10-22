@@ -3,12 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-# handle not found error (in prod env)
-when@prod:
-    catch_all:
-        path: /{any}
-        controller: App\Controller\ErrorController::errorHandle404
-        methods: ['GET']
-        requirements:
-            any: .*

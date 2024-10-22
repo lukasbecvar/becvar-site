@@ -50,14 +50,10 @@ class VisitorRepository extends ServiceEntityRepository
      */
     public function findByTimeFilter(string $filter): array
     {
-        // load all records
-        $visitors = $this->findBy([]);
-
-        // current time
         $now = new \DateTime();
         $startDate = null;
 
-        // calculate startDate based on the filter
+        // calculate start date based on the filter
         switch ($filter) {
             case 'H':
                 $startDate = $now->sub(new \DateInterval('PT1H'));
@@ -75,18 +71,16 @@ class VisitorRepository extends ServiceEntityRepository
                 $startDate = $now->sub(new \DateInterval('P1Y'));
                 break;
             case 'ALL':
-                return $visitors;
+                return $this->findAll();
             default:
                 throw new \InvalidArgumentException("Invalid filter: $filter");
         }
 
-        // filter results in PHP
-        return array_filter($visitors, function ($visitor) use ($startDate) {
-            // convert first_visit string to DateTime object
-            $visitorDate = \DateTime::createFromFormat('d.m.Y H:i', $visitor->getFirstVisit());
+        // create a query builder
+        $qb = $this->createQueryBuilder('v');
+        $qb->where('v.first_visit >= :start_date')
+            ->setParameter('start_date', $startDate);
 
-            // check if the date is valid and greater than or equal to startDate
-            return $visitorDate && $visitorDate >= $startDate;
-        });
+        return $qb->getQuery()->getResult();
     }
 }

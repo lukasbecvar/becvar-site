@@ -23,11 +23,8 @@ class ProjectsController extends AbstractController
     private ErrorManager $errorManager;
     private ProjectsManager $projectsManager;
 
-    public function __construct(
-        AuthManager $authManager,
-        ErrorManager $errorManager,
-        ProjectsManager $projectsManager
-    ) {
+    public function __construct(AuthManager $authManager, ErrorManager $errorManager, ProjectsManager $projectsManager)
+    {
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->projectsManager = $projectsManager;
@@ -60,7 +57,7 @@ class ProjectsController extends AbstractController
     /**
      * Updates the projects list
      *
-     * @throws \App\Exception\AppErrorException Error the user is not logged in
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the user is not logged in
      *
      * @return Response The response for updating projects, redirects to the admin database browser
      */

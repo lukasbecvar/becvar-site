@@ -11,6 +11,7 @@ use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -134,16 +135,16 @@ class VisitorSystemMiddleware
         $visitorEntity = new Visitor();
 
         // set visitor data
-        $visitorEntity->setFirstVisit($date)
-            ->setLastVisit($date)
+        $visitorEntity->setFirstVisit(new DateTime())
+            ->setLastVisit(new DateTime())
             ->setBrowser($browser)
             ->setOs($os)
             ->setCity($location['city'])
             ->setCountry($location['country'])
             ->setIpAddress($ipAddress)
-            ->setBannedStatus('no')
+            ->setBannedStatus(false)
             ->setBanReason('non-banned')
-            ->setBannedTime(('non-banned'))
+            ->setBannedTime(null)
             ->setEmail('unknown');
 
         // try to insert new visitor
@@ -188,7 +189,7 @@ class VisitorSystemMiddleware
             );
         } else {
             // update values
-            $visitor->setLastVisit($date);
+            $visitor->setLastVisit(new DateTime());
             $visitor->setBrowser($browser);
             $visitor->setOs($os);
 

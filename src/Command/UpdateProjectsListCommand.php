@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class UpdateProjectsListCommand
  *
- * Command for update projects list
+ * Command for update projects repository list in database
  *
  * @package App\Command
  */

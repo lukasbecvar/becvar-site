@@ -31,8 +31,8 @@ class Log
     #[ORM\Column(type: Types::TEXT)]
     private ?string $value = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $time = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
@@ -45,18 +45,35 @@ class Log
 
     #[ORM\Column]
     #[ORM\JoinColumn(name: "visitors", referencedColumnName: "id")]
-    private ?string $visitor_id = null;
+    private ?int $visitor_id = null;
 
+    /**
+     * Get the log id
+     *
+     * @return int The log id
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Get the log name
+     *
+     * @return string The log name
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Set the log name
+     *
+     * @param string $name The log name
+     *
+     * @return static The log object
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -64,11 +81,23 @@ class Log
         return $this;
     }
 
+    /**
+     * Get the log value
+     *
+     * @return string The log value
+     */
     public function getValue(): ?string
     {
         return $this->value;
     }
 
+    /**
+     * Set the log value
+     *
+     * @param string $value The log value
+     *
+     * @return static The log object
+     */
     public function setValue(string $value): static
     {
         $this->value = $value;
@@ -76,23 +105,47 @@ class Log
         return $this;
     }
 
-    public function getTime(): ?string
+    /**
+     * Get the log time
+     *
+     * @return \DateTimeInterface|null The log time
+     */
+    public function getTime(): ?\DateTimeInterface
     {
         return $this->time;
     }
 
-    public function setTime(string $time): static
+    /**
+     * Set the log time
+     *
+     * @param \DateTimeInterface $time The log time
+     *
+     * @return static The log object
+     */
+    public function setTime(\DateTimeInterface $time): static
     {
         $this->time = $time;
 
         return $this;
     }
 
+    /**
+     * Get the log ip address
+     *
+     * @return string The log ip address
+     */
     public function getIpAddress(): ?string
     {
         return $this->ip_address;
     }
 
+    /**
+     * Set the log ip address
+     *
+     * @param string $ip_address The log ip address
+     *
+     * @return static The log object
+     */
     public function setIpAddress(string $ip_address): static
     {
         $this->ip_address = $ip_address;
@@ -100,11 +153,23 @@ class Log
         return $this;
     }
 
+    /**
+     * Get the log browser
+     *
+     * @return string The log browser
+     */
     public function getBrowser(): ?string
     {
         return $this->browser;
     }
 
+    /**
+     * Set the log browser
+     *
+     * @param string $browser The log browser
+     *
+     * @return static The log object
+     */
     public function setBrowser(string $browser): static
     {
         $this->browser = $browser;
@@ -112,11 +177,23 @@ class Log
         return $this;
     }
 
+    /**
+     * Get the log status
+     *
+     * @return string The log status
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
+    /**
+     * Set the log status
+     *
+     * @param string $status The log status
+     *
+     * @return static The log object
+     */
     public function setStatus(string $status): static
     {
         $this->status = $status;
@@ -124,12 +201,24 @@ class Log
         return $this;
     }
 
-    public function getVisitorId(): ?string
+    /**
+     * Get the visitor id
+     *
+     * @return int The visitor id
+     */
+    public function getVisitorId(): ?int
     {
         return $this->visitor_id;
     }
 
-    public function setVisitorId(string $visitor_id): static
+    /**
+     * Set the visitor id
+     *
+     * @param int $visitor_id The visitor id
+     *
+     * @return static The log object
+     */
+    public function setVisitorId(int $visitor_id): static
     {
         $this->visitor_id = $visitor_id;
 

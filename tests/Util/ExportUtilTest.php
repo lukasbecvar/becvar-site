@@ -5,6 +5,7 @@ namespace App\Tests\Util;
 use App\Entity\Visitor;
 use App\Util\ExportUtil;
 use App\Util\VisitorInfoUtil;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,8 +41,8 @@ class ExportUtilTest extends TestCase
         // mock visitor entity
         $visitorMock = $this->createMock(Visitor::class);
         $visitorMock->method('getId')->willReturn(1);
-        $visitorMock->method('getFirstVisit')->willReturn('2023-01-01');
-        $visitorMock->method('getLastVisit')->willReturn('2023-12-01');
+        $visitorMock->method('getFirstVisit')->willReturn(new DateTime('2023-12-01'));
+        $visitorMock->method('getLastVisit')->willReturn(new DateTime('2023-12-01'));
         $visitorMock->method('getBrowser')->willReturn('Firefox');
         $visitorMock->method('getOs')->willReturn('Linux');
         $visitorMock->method('getCity')->willReturn('Prague');
@@ -85,8 +86,8 @@ class ExportUtilTest extends TestCase
         // mock visitor entity
         $visitorMock = $this->createMock(Visitor::class);
         $visitorMock->method('getId')->willReturn(1);
-        $visitorMock->method('getFirstVisit')->willReturn('2023-01-01');
-        $visitorMock->method('getLastVisit')->willReturn('2023-12-01');
+        $visitorMock->method('getFirstVisit')->willReturn(new DateTime('2023-12-01'));
+        $visitorMock->method('getLastVisit')->willReturn(new DateTime('2023-12-01'));
         $visitorMock->method('getBrowser')->willReturn('Firefox');
         $visitorMock->method('getOs')->willReturn('Linux');
         $visitorMock->method('getCity')->willReturn('Prague');

@@ -22,10 +22,8 @@ class DatabaseBrowserController extends AbstractController
     private AppUtil $appUtil;
     private DatabaseManager $databaseManager;
 
-    public function __construct(
-        AppUtil $appUtil,
-        DatabaseManager $databaseManager
-    ) {
+    public function __construct(AppUtil $appUtil, DatabaseManager $databaseManager)
+    {
         $this->appUtil = $appUtil;
         $this->databaseManager = $databaseManager;
     }

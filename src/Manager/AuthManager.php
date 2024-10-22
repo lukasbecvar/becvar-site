@@ -8,6 +8,7 @@ use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Response;
@@ -154,9 +155,6 @@ class AuthManager
      */
     public function updateUserData(): void
     {
-        // get date & time
-        $date = date('d.m.Y H:i:s');
-
         // get current visitor ip address
         $ipAddress = $this->visitorInfoUtil->getIP();
 
@@ -169,7 +167,7 @@ class AuthManager
         // check if user repo found
         if ($user != null) {
             // update last login time
-            $user->setLastLoginTime($date);
+            $user->setLastLoginTime(new DateTime());
 
             // update visitor id
             $user->setVisitorId($visitorId);
@@ -201,9 +199,6 @@ class AuthManager
         // init user enity
         $user = new User();
 
-        // get current date
-        $date = date('d.m.Y H:i:s');
-
         // get user ip
         $ipAddress = $this->visitorInfoUtil->getIP();
 
@@ -225,10 +220,10 @@ class AuthManager
             ->setRole('Owner')
             ->setIpAddress($ipAddress)
             ->setToken($token)
-            ->setRegistedTime($date)
-            ->setLastLoginTime('not logged')
+            ->setRegistedTime(new DateTime())
+            ->setLastLoginTime(null)
             ->setProfilePic($imageBase64)
-            ->setVisitorId(strval($visitorId));
+            ->setVisitorId($visitorId);
 
         // insert new user
         try {
@@ -388,7 +383,6 @@ class AuthManager
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-            return null;
         }
     }
 
