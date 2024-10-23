@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use Exception;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +35,7 @@ class DatabaseManager
     /**
      * Retrieves a list of tables in the database
      *
-     * @throws \App\Exception\AppErrorException Error get tables list
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get tables list
      *
      * @return array<string> The list of tables if successful, otherwise null
      */
@@ -47,20 +48,20 @@ class DatabaseManager
             $platform = $this->connection->getDatabasePlatform();
             $sql = $platform->getListTablesSQL();
             $tables = $this->connection->executeQuery($sql)->fetchAllAssociative();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get tables list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
+        // log to database
+        $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
+
         // build tables list
         foreach ($tables as $value) {
             array_push($tablesList, $value['Tables_in_' . $_ENV['DATABASE_NAME']]);
         }
-
-        // log to database
-        $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
 
         return $tablesList;
     }
@@ -69,6 +70,8 @@ class DatabaseManager
      * Retrieves the columns of a specific table
      *
      * @param string $tableName The name of the table
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get table columns
      *
      * @return array<string> The list of column names
      */
@@ -81,7 +84,7 @@ class DatabaseManager
         // get data
         try {
             $table = $schema->getTable($tableName);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get columns from table: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_NOT_FOUND
@@ -100,7 +103,7 @@ class DatabaseManager
      *
      * @param string $tableName  The name of the table for which columns should be retrieved
      *
-     * @throws \App\Exception\AppErrorException Error get table data
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
      * @return array<mixed> The array of column names if successful
      */
@@ -114,7 +117,7 @@ class DatabaseManager
         // get data
         try {
             $data = $this->connection->executeQuery('SELECT * FROM ' . $tableName)->fetchAllAssociative();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_NOT_FOUND
@@ -140,7 +143,7 @@ class DatabaseManager
      * @param bool $log Indicates whether to log the action (default is true)
      * @param bool $raw Whether to return raw data without decryption. Default is false
      *
-     * @throws \App\Exception\AppErrorException Error get table data
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
      * @return array<mixed> The array of data from the specified table
      */
@@ -159,7 +162,7 @@ class DatabaseManager
         try {
             $query = 'SELECT * FROM ' . $tableName . ' LIMIT ' . $itemsPerPage . ' OFFSET ' . $offset;
             $data = $this->connection->executeQuery($query)->fetchAllAssociative();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_NOT_FOUND
@@ -207,7 +210,7 @@ class DatabaseManager
      * @param string $tableName The name of the table from which to retrieve data
      * @param int $id The unique identifier of the row
      *
-     * @throws \App\Exception\AppErrorException Error get row data
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get row data
      *
      * @return array<mixed> The array of data from the specified row
      */
@@ -224,7 +227,7 @@ class DatabaseManager
 
             $statement = $queryBuilder->execute();
             $data = $statement->fetchAllAssociative();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_NOT_FOUND
@@ -240,7 +243,7 @@ class DatabaseManager
      * @param array<string> $columns The array of column names for the new row
      * @param array<mixed> $values The array of values corresponding to the columns for the new row
      *
-     * @throws \App\Exception\AppErrorException Error insert new row
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error insert new row
      *
      * @return void
      */
@@ -257,13 +260,14 @@ class DatabaseManager
         try {
             // execute query
             $this->connection->executeQuery($sql, $values);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error insert new row into: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
+        // log row add
         $this->logManager->log(
             'database',
             $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName
@@ -305,7 +309,7 @@ class DatabaseManager
      * @param string $value The new value to be set
      * @param int $id The unique identifier of the row
      *
-     * @throws \App\Exception\AppErrorException Error update value
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error update value
      *
      * @return void
      */
@@ -319,7 +323,7 @@ class DatabaseManager
                 'value' => $value,
                 'id' => $id
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to update value: ' . $value . ' in: ' . $tableName . ' id: ' . $id . ', error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR

@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Exception;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -40,7 +41,7 @@ class ValidateVisitorsStructureCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            // get dublicate count
+            // get dublicate rows
             $duplicateCount = $this->doctrineConnection->fetchOne('
                 SELECT COUNT(*)
                 FROM visitors t1
@@ -49,8 +50,9 @@ class ValidateVisitorsStructureCommand extends Command
                 WHERE t1.id > t2.id;
             ');
 
-            // delete dublicate records
+            // check if duplicates exist
             if ($duplicateCount > 0) {
+                // delete dublicate records
                 $this->doctrineConnection->executeQuery('
                     DELETE t1
                     FROM visitors t1
@@ -69,21 +71,15 @@ class ValidateVisitorsStructureCommand extends Command
                 // set new auto increment value
                 $this->doctrineConnection->executeQuery('ALTER TABLE visitors AUTO_INCREMENT = ' . ($maxId + 1) . ';');
 
+                // print info message
                 $io->success("$duplicateCount duplicate record(s) have been deleted.");
-            } else {
-                $io->success("No duplicate records found.");
-            }
-
-            // check if database structure has been reorganized
-            if ($duplicateCount > 0) {
-                $io->success('Database structure has been validated and reorganized!');
             } else {
                 $io->success('No validation or reorganization needed.');
             }
 
             // return command status
             return Command::SUCCESS;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $io->error('Error to validate visitors structure: ' . $e->getMessage());
             return Command::FAILURE;
         }

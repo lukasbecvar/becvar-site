@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Throwable;
 use App\Util\AppUtil;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,11 +67,11 @@ class ErrorController extends AbstractController
     /**
      * Handles all errors (this is for error manager handler)
      *
-     * @param \Throwable $exception The thrown exception
+     * @param Throwable $exception The thrown exception
      *
      * @return Response The error page response
      */
-    public function show(\Throwable $exception): Response
+    public function show(Throwable $exception): Response
     {
         // get exception data
         $statusCode = $exception instanceof HttpException

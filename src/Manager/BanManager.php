@@ -2,8 +2,9 @@
 
 namespace App\Manager;
 
-use App\Entity\Visitor;
 use DateTime;
+use Exception;
+use App\Entity\Visitor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,7 +43,7 @@ class BanManager
      * @param string $ipAddress The IP address of the visitor to ban
      * @param string $reason The reason for banning the visitor
      *
-     * @throws \App\Exception\AppErrorException Error to ban visitor
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException to ban visitor
      *
      * @return void
      */
@@ -67,7 +68,7 @@ class BanManager
             try {
                 // update entity data
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -89,7 +90,7 @@ class BanManager
      *
      * @param string $ipAddress The IP address of the visitor to unban
      *
-     * @throws \App\Exception\AppErrorException Error to unban visitor
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to unban visitor
      *
      * @return void
      */
@@ -112,7 +113,7 @@ class BanManager
             try {
                 // update visitor data
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -152,7 +153,7 @@ class BanManager
     /**
      * Retrieves the count of banned visitors
      *
-    * @throws \App\Exception\AppErrorException Error get banned count
+    * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get banned count
      *
      * @return int|null The count of banned visitors or null if an error occurs
      */
@@ -163,7 +164,7 @@ class BanManager
         try {
             // count banned users
             return $repository->count(['banned_status' => 'yes']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -197,7 +198,7 @@ class BanManager
      *
      * @param string $ipAddress  The IP address of the visitor whose messages should be closed
      *
-     * @throws \App\Exception\AppErrorException Error close all visitor messages
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error close all visitor messages
      *
      * @return void
      */
@@ -217,7 +218,7 @@ class BanManager
 
             // execute query
             $query->execute();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to close all visitor messages: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR

@@ -1,4 +1,4 @@
-# run static analysis with PHPStan
+# run static analyse with PHPStan
 name: PHPStan
 
 on:
@@ -26,6 +26,6 @@ jobs:
     - name: Install dependencies
       run: composer install
 
-    # run PHPStan analysis
+    # run PHPStan analyse
     - name: Run PHPStan
       run: ./vendor/bin/phpstan analyse --configuration phpstan.neon

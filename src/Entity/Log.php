@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LogRepository;
@@ -32,7 +33,7 @@ class Log
     private ?string $value = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $time = null;
+    private ?DateTimeInterface $time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
@@ -50,7 +51,7 @@ class Log
     /**
      * Get the log id
      *
-     * @return int The log id
+     * @return int|null The log id
      */
     public function getId(): ?int
     {
@@ -60,7 +61,7 @@ class Log
     /**
      * Get the log name
      *
-     * @return string The log name
+     * @return string|null The log name
      */
     public function getName(): ?string
     {
@@ -84,7 +85,7 @@ class Log
     /**
      * Get the log value
      *
-     * @return string The log value
+     * @return string|null The log value
      */
     public function getValue(): ?string
     {
@@ -108,9 +109,9 @@ class Log
     /**
      * Get the log time
      *
-     * @return \DateTimeInterface|null The log time
+     * @return DateTimeInterface|null The log time
      */
-    public function getTime(): ?\DateTimeInterface
+    public function getTime(): ?DateTimeInterface
     {
         return $this->time;
     }
@@ -118,11 +119,11 @@ class Log
     /**
      * Set the log time
      *
-     * @param \DateTimeInterface $time The log time
+     * @param DateTimeInterface $time The log time
      *
      * @return static The log object
      */
-    public function setTime(\DateTimeInterface $time): static
+    public function setTime(DateTimeInterface $time): static
     {
         $this->time = $time;
 
@@ -132,7 +133,7 @@ class Log
     /**
      * Get the log ip address
      *
-     * @return string The log ip address
+     * @return string|null The log ip address
      */
     public function getIpAddress(): ?string
     {
@@ -156,7 +157,7 @@ class Log
     /**
      * Get the log browser
      *
-     * @return string The log browser
+     * @return string|null The log browser
      */
     public function getBrowser(): ?string
     {
@@ -180,7 +181,7 @@ class Log
     /**
      * Get the log status
      *
-     * @return string The log status
+     * @return string|null The log status
      */
     public function getStatus(): ?string
     {
@@ -204,7 +205,7 @@ class Log
     /**
      * Get the visitor id
      *
-     * @return int The visitor id
+     * @return int|null The visitor id
      */
     public function getVisitorId(): ?int
     {

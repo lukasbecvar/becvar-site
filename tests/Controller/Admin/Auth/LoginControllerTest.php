@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller\Admin\Auth;
 
-use App\Entity\User;
 use DateTime;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

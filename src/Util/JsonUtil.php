@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -26,7 +27,7 @@ class JsonUtil
      * @param string $target The file path or URL
      * @param string $method The HTTP method to use
      *
-     * @throws \App\Exception\AppErrorException Error get json content
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get json content
      *
      * @return array<mixed>|null The decoded JSON data as an associative array or null on failure
      */
@@ -54,7 +55,7 @@ class JsonUtil
 
             // decode & return json
             return json_decode($data, true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errorMsg = 'Error retrieving JSON data: ' . $e->getMessage();
 
             // secure api token

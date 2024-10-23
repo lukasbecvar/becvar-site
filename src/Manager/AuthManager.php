@@ -2,13 +2,14 @@
 
 namespace App\Manager;
 
+use DateTime;
+use Exception;
 use App\Entity\User;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use App\Repository\UserRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,7 +86,7 @@ class AuthManager
      * @param string $userToken The token of the user to log in
      * @param bool $remember Whether to remember the user's login
      *
-     * @throws \App\Exception\AppErrorException Error the login process
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If user is already logged in
      *
      * @return void
      */
@@ -116,7 +117,7 @@ class AuthManager
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
                 $this->errorManager->handleError(
-                    'error to login user with token: ' . $userToken,
+                    'error you are is already logged in: ' . $userToken,
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
@@ -149,7 +150,7 @@ class AuthManager
     /**
      * Updates user data
      *
-     * @throws \App\Exception\AppErrorException Error the flushing of the user data
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the flushing of the user data
      *
      * @return void
      */
@@ -175,7 +176,7 @@ class AuthManager
             // update user data
             try {
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'flush error: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -190,7 +191,7 @@ class AuthManager
      * @param string $username The username for the new user
      * @param string $password The password for the new user
      *
-     * @throws \App\Exception\AppErrorException Error the registration process
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the registration process
      *
      * @return void
      */
@@ -232,7 +233,7 @@ class AuthManager
 
             // log registration event
             $this->logManager->log('authenticator', 'registration new user: ' . $username . ' registred');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to register new user: ' . $e->getMessage(),
                 Response::HTTP_BAD_REQUEST
@@ -369,7 +370,7 @@ class AuthManager
      *
      * @param array<mixed> $array The criteria to search for in the repository
      *
-     * @throws \App\Exception\AppErrorException Error get user repository
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get user repository
      *
      * @return object|null The user entity or null if not found
      */
@@ -378,7 +379,7 @@ class AuthManager
         // try to find user in database
         try {
             return $this->userRepository->findOneBy($array);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -448,6 +449,8 @@ class AuthManager
      *
      * This method regenerates tokens for all users in the database, ensuring uniqueness for each token
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Token update fails
+     *
      * @return array<bool|null|string> Regenerate status and message
      */
     public function regenerateUsersTokens(): array
@@ -471,7 +474,7 @@ class AuthManager
             // flush data
             try {
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $state = [
                     'status' => false,
                     'message' => $e->getMessage()

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Command;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use App\Manager\ProjectsManager;
 use Symfony\Component\Console\Application;
@@ -29,7 +30,7 @@ class UpdateProjectsListCommandTest extends TestCase
     }
 
     /**
-     * Test the UpdateProjectsListCommand with success
+     * Test the update projects list with success
      *
      * @return void
      */
@@ -55,7 +56,7 @@ class UpdateProjectsListCommandTest extends TestCase
     }
 
     /**
-     * Test the UpdateProjectsListCommand with failure
+     * Test the update projects list with failure
      *
      * @return void
      */
@@ -63,7 +64,7 @@ class UpdateProjectsListCommandTest extends TestCase
     {
         // mock the updateProjectList method to throw an exception
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
-            ->willThrowException(new \Exception('Something went wrong'));
+            ->willThrowException(new Exception('Something went wrong'));
 
         // create a symfony console
         $application = new Application();

@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Types\Type;
 
 /**
  * Class User
@@ -44,10 +44,10 @@ class User
     private ?string $token = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $registed_time = null;
+    private ?DateTimeInterface $registed_time = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $last_login_time = null;
+    private ?DateTimeInterface $last_login_time = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $profile_pic = null;
@@ -59,7 +59,7 @@ class User
     /**
      * Get the user id
      *
-     * @return int The user id
+     * @return int|null The user id
      */
     public function getId(): ?int
     {
@@ -69,7 +69,7 @@ class User
     /**
      * Get the user username
      *
-     * @return string The user username
+     * @return string|null The user username
      */
     public function getUsername(): ?string
     {
@@ -93,7 +93,7 @@ class User
     /**
      * Get the user password
      *
-     * @return string The user password
+     * @return string|null The user password
      */
     public function getPassword(): ?string
     {
@@ -117,7 +117,7 @@ class User
     /**
      * Get the user role
      *
-     * @return string The user role
+     * @return string|null The user role
      */
     public function getRole(): ?string
     {
@@ -141,7 +141,7 @@ class User
     /**
      * Get the user ip address
      *
-     * @return string The user ip address
+     * @return string|null The user ip address
      */
     public function getIpAddress(): ?string
     {
@@ -165,7 +165,7 @@ class User
     /**
      * Get the user token
      *
-     * @return string The user token
+     * @return string|null The user token
      */
     public function getToken(): ?string
     {
@@ -189,9 +189,9 @@ class User
     /**
      * Get the user registed time
      *
-     * @return \DateTimeInterface|null The user registed time
+     * @return DateTimeInterface|null The user registed time
      */
-    public function getRegistedTime(): ?\DateTimeInterface
+    public function getRegistedTime(): ?DateTimeInterface
     {
         return $this->registed_time;
     }
@@ -199,11 +199,11 @@ class User
     /**
      * Set the user registed time
      *
-     * @param \DateTimeInterface $registed_time The user registed time
+     * @param DateTimeInterface $registed_time The user registed time
      *
      * @return static The user object
      */
-    public function setRegistedTime(\DateTimeInterface $registed_time): static
+    public function setRegistedTime(DateTimeInterface $registed_time): static
     {
         $this->registed_time = $registed_time;
 
@@ -213,9 +213,9 @@ class User
     /**
      * Get the user last login time
      *
-     * @return \DateTimeInterface|null The user last login time
+     * @return DateTimeInterface|null The user last login time
      */
-    public function getLastLoginTime(): ?\DateTimeInterface
+    public function getLastLoginTime(): ?DateTimeInterface
     {
         return $this->last_login_time;
     }
@@ -223,11 +223,11 @@ class User
     /**
      * Set the user last login time
      *
-     * @param \DateTimeInterface|null $last_login_time The user last login time
+     * @param DateTimeInterface|null $last_login_time The user last login time
      *
      * @return static The user object
      */
-    public function setLastLoginTime(?\DateTimeInterface $last_login_time): static
+    public function setLastLoginTime(?DateTimeInterface $last_login_time): static
     {
         $this->last_login_time = $last_login_time;
 
@@ -237,7 +237,7 @@ class User
     /**
      * Get the user profile picture (encoded in base64)
      *
-     * @return string The user profile picture
+     * @return string|null The user profile picture
      */
     public function getProfilePic(): ?string
     {
@@ -261,7 +261,7 @@ class User
     /**
      * Get the user visitor id
      *
-     * @return int The user visitor id
+     * @return int|null The user visitor id
      */
     public function getVisitorId(): ?int
     {

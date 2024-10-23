@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use Exception;
 use Twig\Environment;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -29,7 +30,7 @@ class ErrorManager
      *
      * @throws HttpException
      *
-     * @return never
+     * @return never Always throws exception
      */
     public function handleError(string $msg, int $code): mixed
     {
@@ -48,7 +49,7 @@ class ErrorManager
     {
         try {
             return $this->twig->render('errors/error-' . $code . '.twig');
-        } catch (\Exception) {
+        } catch (Exception) {
             return $this->twig->render('errors/error-unknown.twig');
         }
     }

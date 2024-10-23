@@ -20,11 +20,8 @@ class AutoLoginMiddleware
     private SessionUtil $sessionUtil;
     private AuthManager $authManager;
 
-    public function __construct(
-        CookieUtil $cookieUtil,
-        SessionUtil $sessionUtil,
-        AuthManager $authManager
-    ) {
+    public function __construct(CookieUtil $cookieUtil, SessionUtil $sessionUtil, AuthManager $authManager)
+    {
         $this->cookieUtil = $cookieUtil;
         $this->sessionUtil = $sessionUtil;
         $this->authManager = $authManager;

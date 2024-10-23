@@ -2,6 +2,7 @@
 
 namespace Tests\Middleware;
 
+use Exception;
 use App\Manager\ErrorManager;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
@@ -64,7 +65,7 @@ class DatabaseOnlineMiddlewareTest extends TestCase
         // mock database connection failure
         $exceptionMessage = 'Connection refused';
         $this->doctrineConnectionMock->expects($this->once())
-            ->method('executeQuery')->with('SELECT 1')->willThrowException(new \Exception($exceptionMessage));
+            ->method('executeQuery')->with('SELECT 1')->willThrowException(new Exception($exceptionMessage));
 
         // expect error handling called with HTTP_INTERNAL_SERVER_ERROR status
         $this->errorManagerMock->expects($this->once())

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
@@ -37,7 +38,7 @@ class Message
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $time = null;
+    private ?DateTimeInterface $time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
@@ -134,9 +135,9 @@ class Message
     /**
      * Get message time
      *
-     * @return \DateTimeInterface|null The message time
+     * @return DateTimeInterface|null The message time
      */
-    public function getTime(): ?\DateTimeInterface
+    public function getTime(): ?DateTimeInterface
     {
         return $this->time;
     }
@@ -144,11 +145,11 @@ class Message
     /**
      * Set message time
      *
-     * @param \DateTimeInterface $time The message time
+     * @param DateTimeInterface $time The message time
      *
      * @return static The message object
      */
-    public function setTime(\DateTimeInterface $time): static
+    public function setTime(DateTimeInterface $time): static
     {
         $this->time = $time;
 

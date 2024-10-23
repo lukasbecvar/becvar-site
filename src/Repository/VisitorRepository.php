@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use DateTime;
+use DateInterval;
 use App\Entity\Visitor;
+use InvalidArgumentException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -46,40 +49,39 @@ class VisitorRepository extends ServiceEntityRepository
      *
      * @return array<mixed> An array of visitors filtered by the specified time range
      *
-     * @throws \InvalidArgumentException If the filter is not valid
+     * @throws InvalidArgumentException If the filter is not valid
      */
     public function findByTimeFilter(string $filter): array
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $startDate = null;
 
         // calculate start date based on the filter
         switch ($filter) {
             case 'H':
-                $startDate = $now->sub(new \DateInterval('PT1H'));
+                $startDate = $now->sub(new DateInterval('PT1H'));
                 break;
             case 'D':
-                $startDate = $now->sub(new \DateInterval('P1D'));
+                $startDate = $now->sub(new DateInterval('P1D'));
                 break;
             case 'W':
-                $startDate = $now->sub(new \DateInterval('P7D'));
+                $startDate = $now->sub(new DateInterval('P7D'));
                 break;
             case 'M':
-                $startDate = $now->sub(new \DateInterval('P1M'));
+                $startDate = $now->sub(new DateInterval('P1M'));
                 break;
             case 'Y':
-                $startDate = $now->sub(new \DateInterval('P1Y'));
+                $startDate = $now->sub(new DateInterval('P1Y'));
                 break;
             case 'ALL':
                 return $this->findAll();
             default:
-                throw new \InvalidArgumentException("Invalid filter: $filter");
+                throw new InvalidArgumentException("Invalid filter: $filter");
         }
 
         // create a query builder
         $qb = $this->createQueryBuilder('v');
-        $qb->where('v.first_visit >= :start_date')
-            ->setParameter('start_date', $startDate);
+        $qb->where('v.first_visit >= :start_date')->setParameter('start_date', $startDate);
 
         return $qb->getQuery()->getResult();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Exception;
 use App\Manager\ProjectsManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -49,7 +50,7 @@ class UpdateProjectsListCommand extends Command
             // success message
             $io->success('Projects list updated!');
             return Command::SUCCESS;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $io->error('Process error: ' . $e->getMessage());
             return Command::FAILURE;
         }

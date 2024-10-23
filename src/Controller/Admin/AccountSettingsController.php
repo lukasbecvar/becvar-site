@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use Exception;
 use App\Entity\User;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
@@ -102,7 +103,7 @@ class AccountSettingsController extends AbstractController
 
                     // redirect back to values table
                     return $this->redirectToRoute('admin_account_settings_table');
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->errorManager->handleError(
                         'error to upload profile pic: ' . $e->getMessage(),
                         Response::HTTP_INTERNAL_SERVER_ERROR
@@ -156,7 +157,7 @@ class AccountSettingsController extends AbstractController
 
                 // redirect back to values table
                 return $this->redirectToRoute('admin_account_settings_table');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'error to upload profile pic: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -218,7 +219,7 @@ class AccountSettingsController extends AbstractController
 
                     // redirect back to account settings table
                     return $this->redirectToRoute('admin_account_settings_table');
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->errorManager->handleError(
                         'error to upload profile pic: ' . $e->getMessage(),
                         Response::HTTP_INTERNAL_SERVER_ERROR

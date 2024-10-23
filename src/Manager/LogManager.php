@@ -2,13 +2,14 @@
 
 namespace App\Manager;
 
+use DateTime;
+use Exception;
 use App\Entity\Log;
 use App\Util\JsonUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use App\Util\VisitorInfoUtil;
 use App\Repository\LogRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -57,7 +58,7 @@ class LogManager
      * @param string $value The value of the log
      * @param bool $bypassAntilog Bypass the anti-log cookie
      *
-     * @throws \App\Exception\AppErrorException Error to log message
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to log message
      *
      * @return void
      */
@@ -87,9 +88,6 @@ class LogManager
             if ($name == 'message-sender' && $level < 2) {
                 return;
             }
-
-            // get current date
-            $date = date('d.m.Y H:i:s');
 
             // get visitor browser agent
             $browser = $this->visitorInfoUtil->getUserAgent();
@@ -125,7 +123,7 @@ class LogManager
 
                 // send log to external log
                 $this->externalLog($value);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'log-error: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -139,7 +137,7 @@ class LogManager
      *
      * @param string $value The value of the log
      *
-     * @throws \App\Exception\AppErrorException Error to send log to external log
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to send log to external log
      *
      * @return void
      */
@@ -167,7 +165,7 @@ class LogManager
      * @param string $username The username of the user
      * @param int $page The page number
      *
-     * @throws \App\Exception\AppErrorException Error to get logs
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
      *
      * @return Log[]|null $logs The logs based on IP address
      */
@@ -181,7 +179,7 @@ class LogManager
         // get logs from database
         try {
             $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -208,7 +206,7 @@ class LogManager
      * @param string $username The username of the user
      * @param int $page The page number
      *
-     * @throws \App\Exception\AppErrorException Error to get logs
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
      *
      * @return Log[]|null $logs The logs based on status, paginated
      */
@@ -222,13 +220,14 @@ class LogManager
         // get logs from database
         try {
             $logs = $this->logRepository->getLogsByStatus($status, $offset, $perPage);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
+        // log view action
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -246,7 +245,7 @@ class LogManager
      *
      * @param string $status
      *
-     * @throws \App\Exception\AppErrorException Error to get logs count
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs count
      *
      * @return int $count The count of logs based on status
      */
@@ -254,7 +253,7 @@ class LogManager
     {
         try {
             return $this->logRepository->count(['status' => $status]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -265,7 +264,7 @@ class LogManager
     /**
      * Get the count of login logs
      *
-     * @throws \App\Exception\AppErrorException Error to get login logs count
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get login logs count
      *
      * @return int|null $count The count of login logs
      */
@@ -273,7 +272,7 @@ class LogManager
     {
         try {
             return $this->logRepository->count(['name' => 'authenticator']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -284,7 +283,7 @@ class LogManager
     /**
      * Sets the status of all logs to 'readed'
      *
-     * @throws \App\Exception\AppErrorException Error to set logs status
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to set logs status
      *
      * @return void
      */
@@ -295,7 +294,7 @@ class LogManager
 
         try {
             $this->entityManager->createQuery($dql)->execute();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to set readed logs: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR

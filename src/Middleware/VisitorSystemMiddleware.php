@@ -2,6 +2,8 @@
 
 namespace App\Middleware;
 
+use DateTime;
+use Exception;
 use Twig\Environment;
 use App\Entity\Visitor;
 use App\Util\CacheUtil;
@@ -11,7 +13,6 @@ use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\ErrorManager;
 use App\Manager\VisitorManager;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -112,7 +113,7 @@ class VisitorSystemMiddleware
      * @param string $browser The browser used by the visitor
      * @param string $os The operating system of the visitor
      *
-     * @throws \App\Exception\AppErrorException If an error occurs during the database flush
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If an error occurs during the database flush
      *
      * @return void
      */
@@ -151,7 +152,7 @@ class VisitorSystemMiddleware
         try {
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'flush error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -167,7 +168,7 @@ class VisitorSystemMiddleware
      * @param string $browser The updated browser used by the visitor
      * @param string $os The updated operating system of the visitor
      *
-     * @throws \App\Exception\AppErrorException If an error occurs during the database flush
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If an error occurs during the database flush
      *
      * @return void
      */
@@ -196,7 +197,7 @@ class VisitorSystemMiddleware
             // try to update data
             try {
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'flush error: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR

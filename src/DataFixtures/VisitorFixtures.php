@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use App\Entity\Visitor;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -75,8 +76,8 @@ class VisitorFixtures extends Fixture
             $visitor = new Visitor();
 
             // set visitor entity data
-            $visitor->setFirstVisit(new \DateTime('2023-12-01 16:33:55'))
-                ->setLastVisit(new \DateTime('2023-12-01 16:33:55'))
+            $visitor->setFirstVisit(new DateTime('2023-12-01 16:33:55'))
+                ->setLastVisit(new DateTime('2023-12-01 16:33:55'))
                 ->setBrowser($this->browsers[array_rand($this->browsers)])
                 ->setOs($this->os[array_rand($this->os)])
                 ->setCity($this->city[array_rand($this->city)])

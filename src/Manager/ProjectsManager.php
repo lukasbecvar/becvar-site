@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use Exception;
 use App\Util\JsonUtil;
 use App\Entity\Project;
 use App\Util\CacheUtil;
@@ -48,7 +49,7 @@ class ProjectsManager
     /**
      * Updates the project list from a GitHub user's repositories
      *
-     * @throws \App\Exception\AppErrorException Error to update project list
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to update project list
      *
      * @return void
      */
@@ -110,7 +111,7 @@ class ProjectsManager
                     try {
                         $this->entityManager->persist($project);
                         $this->entityManager->flush();
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         $this->logManager->log('project-update', 'error to update project list');
                         $this->errorManager->handleError(
                             'error to save project: ' . $e->getMessage(),
@@ -133,7 +134,7 @@ class ProjectsManager
     /**
      * Drops all projects from the database
      *
-     * @throws \App\Exception\AppErrorException Error to drop projects
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to drop projects
      *
      * @return void
      */
@@ -150,7 +151,7 @@ class ProjectsManager
         // update table
         try {
             $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to delete projects list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -161,7 +162,7 @@ class ProjectsManager
     /**
      * Resets the AUTO_INCREMENT value for the projects table
      *
-     * @throws \App\Exception\AppErrorException Error to reset projects index
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to reset projects index
      *
      * @return void
      */
@@ -171,7 +172,7 @@ class ProjectsManager
         $sql = 'ALTER TABLE ' . $tableName . ' AUTO_INCREMENT = 0';
         try {
             $this->entityManager->getConnection()->executeQuery($sql);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to reset projects index: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -184,7 +185,7 @@ class ProjectsManager
      *
      * @param string $status The status of the projects to get
      *
-     * @throws \App\Exception\AppErrorException Error to get projects list
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get projects list
      *
      * @return Project[] The list of projects
      */
@@ -205,7 +206,7 @@ class ProjectsManager
 
             // return projects list
             return $projectsList;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get projects list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -216,7 +217,7 @@ class ProjectsManager
     /**
      * Gets the total count of projects
      *
-     * @throws \App\Exception\AppErrorException Error to get projects count
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get projects count
      *
      * @return int The total count of projects
      */
@@ -235,7 +236,7 @@ class ProjectsManager
             }
 
             return $projectsCount;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get projects list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR

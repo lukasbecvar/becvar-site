@@ -5,13 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Lukáš Bečvář personal website" name="description">
     <meta content="developer, php, web, website, programator, css, designer, java, coder, projects, lukas, becvar, lukasbecvar, lukas becvar, lukáš bečvář, lukáš, bečvář" name="keywords">
-	<link rel="icon" href={{ asset('build/images/favicon.png') }} type="image/x-icon"/> 
-
-	<script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/e825bafd619c2.js" data-cmp-host="d.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="16"></script>	
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2999029660980193"
-     crossorigin="anonymous"></script>
-
+	<link rel="icon" href={{ asset('build/images/favicon.png') }} type="image/x-icon"/>
+    {# INCLUDE CSS ASSETS #}
     {{ encore_entry_link_tags('scrollbar-css') }}
     {{ encore_entry_link_tags('bootstrap-css') }}
     {{ encore_entry_link_tags('bootstrap-icons-css') }}
@@ -19,26 +14,16 @@
     {{ encore_entry_link_tags('public-css') }}
 	<title>Lukáš Bečvář</title>
 </head>
-
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SDK5KN47R9"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-SDK5KN47R9');
-</script>
-
 <body>
 <header id="header" class={% block header_class %}{% endblock %}>
     {% include "public/element/navigation.twig" %}
 </header>
-{% block body %}{% endblock %}
-{{ encore_entry_script_tags('update-visitor-status-js') }}
-{{ encore_entry_script_tags('bootstrap-js') }}
-{{ encore_entry_script_tags('public-js') }}
+    {# INCLUDE COMPONENT BLOCK #}
+    {% block body %}{% endblock %}
+
+    {# INCLUDE JAVASCRIPT ASSETS #}
+    {{ encore_entry_script_tags('update-visitor-status-js') }}
+    {{ encore_entry_script_tags('bootstrap-js') }}
+    {{ encore_entry_script_tags('public-js') }}
 </body>
 </html>

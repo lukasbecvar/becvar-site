@@ -29,7 +29,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
     }
 
     /**
-     * Test the RegenerateAuthTokensCommand with success
+     * Test the regenerate auth tokens with success response
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
     }
 
     /**
-     * Test the RegenerateAuthTokensCommand with failure
+     * Test the regenerate auth tokens with failure response
      *
      * @return void
      */

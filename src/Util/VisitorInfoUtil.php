@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -232,7 +233,7 @@ class VisitorInfoUtil
 
             // decode response & return data
             return json_decode($response);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('error to get geolocation data: ' . $e->getMessage());
             return null;
         }
@@ -272,7 +273,7 @@ class VisitorInfoUtil
 
             // return data
             return ['city' => $city, 'country' => $country];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('error to get geolocation data: ' . $e->getMessage());
             return ['city' => 'Unknown', 'country' => 'Unknown'];
         }

@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use App\Entity\User;
 use App\Util\SecurityUtil;
-use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\String\ByteString;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -41,7 +41,7 @@ class UserFixtures extends Fixture
             ->setRole('Owner')
             ->setIpAddress('127.0.0.1')
             ->setToken(ByteString::fromRandom(32)->toString())
-            ->setRegistedTime(new DateTime())
+            ->setRegistedTime(new DateTime('2023-03-22 12:00:00'))
             ->setLastLoginTime(null)
             ->setProfilePic('non-pic')
             ->setVisitorId(1);
@@ -62,7 +62,7 @@ class UserFixtures extends Fixture
                 ->setRole('User')
                 ->setIpAddress('127.0.0.1')
                 ->setToken(ByteString::fromRandom(32)->toString())
-                ->setRegistedTime(new DateTime())
+                ->setRegistedTime(new DateTime('23-06-14 13:55:41'))
                 ->setLastLoginTime(null)
                 ->setProfilePic('profile_pic')
                 ->setVisitorId($i);

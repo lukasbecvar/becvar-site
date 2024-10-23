@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Exception;
 use App\Util\CacheUtil;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
@@ -67,7 +68,7 @@ class VisitorApiController extends AbstractController
             return $this->json([
                 'status' => 'success'
             ], Response::HTTP_OK);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // log error
             $this->logManager->log(
                 name: 'system-error',

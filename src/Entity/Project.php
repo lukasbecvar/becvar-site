@@ -41,7 +41,7 @@ class Project
     /**
      * Get the project id
      *
-     * @return int The project id
+     * @return int|null The project id
      */
     public function getId(): ?int
     {
@@ -51,7 +51,7 @@ class Project
     /**
      * Get the project name
      *
-     * @return string The project name
+     * @return string|null The project name
      */
     public function getName(): ?string
     {
@@ -75,7 +75,7 @@ class Project
     /**
      * Get the project description
      *
-     * @return string The project description
+     * @return string|null The project description
      */
     public function getDescription(): ?string
     {
@@ -99,7 +99,7 @@ class Project
     /**
      * Get the project technology
      *
-     * @return string The project technology
+     * @return string|null The project technology
      */
     public function getTechnology(): ?string
     {
@@ -123,7 +123,7 @@ class Project
     /**
      * Get the project link
      *
-     * @return string The project link
+     * @return string|null The project link
      */
     public function getLink(): ?string
     {
@@ -147,7 +147,7 @@ class Project
     /**
      * Get the project status
      *
-     * @return string The project status
+     * @return string|null The project status
      */
     public function getStatus(): ?string
     {

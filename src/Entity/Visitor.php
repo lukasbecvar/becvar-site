@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VisitorRepository;
-use Doctrine\DBAL\Types\Types;
 
 /**
  * Class Visitor
@@ -26,10 +27,10 @@ class Visitor
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $first_visit = null;
+    private ?DateTimeInterface $first_visit = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $last_visit = null;
+    private ?DateTimeInterface $last_visit = null;
 
     #[ORM\Column(length: 255)]
     private ?string $browser = null;
@@ -53,7 +54,7 @@ class Visitor
     private ?string $ban_reason = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $banned_time = null;
+    private ?DateTimeInterface $banned_time = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -71,9 +72,9 @@ class Visitor
     /**
      * Get visitor first visit
      *
-     * @return \DateTimeInterface|null The first visit
+     * @return DateTimeInterface|null The first visit
      */
-    public function getFirstVisit(): ?\DateTimeInterface
+    public function getFirstVisit(): ?DateTimeInterface
     {
         return $this->first_visit;
     }
@@ -81,11 +82,11 @@ class Visitor
     /**
      * Set visitor first visit
      *
-     * @param \DateTimeInterface $first_visit The first visit
+     * @param DateTimeInterface $first_visit The first visit
      *
      * @return static The visitor object
      */
-    public function setFirstVisit(\DateTimeInterface $first_visit): static
+    public function setFirstVisit(DateTimeInterface $first_visit): static
     {
         $this->first_visit = $first_visit;
 
@@ -95,9 +96,9 @@ class Visitor
     /**
      * Get visitor last visit
      *
-     * @return \DateTimeInterface|null The last visit
+     * @return DateTimeInterface|null The last visit
      */
-    public function getLastVisit(): ?\DateTimeInterface
+    public function getLastVisit(): ?DateTimeInterface
     {
         return $this->last_visit;
     }
@@ -105,11 +106,11 @@ class Visitor
     /**
      * Set visitor last visit
      *
-     * @param \DateTimeInterface $last_visit The last visit
+     * @param DateTimeInterface $last_visit The last visit
      *
      * @return static The visitor object
      */
-    public function setLastVisit(\DateTimeInterface $last_visit): static
+    public function setLastVisit(DateTimeInterface $last_visit): static
     {
         $this->last_visit = $last_visit;
 
@@ -287,9 +288,9 @@ class Visitor
     /**
      * Get visitor banned time
      *
-     * @return \DateTimeInterface|null The banned time
+     * @return DateTimeInterface|null The banned time
      */
-    public function getBannedTime(): ?\DateTimeInterface
+    public function getBannedTime(): ?DateTimeInterface
     {
         return $this->banned_time;
     }
@@ -297,11 +298,11 @@ class Visitor
     /**
      * Set visitor banned time
      *
-     * @param \DateTimeInterface|null $banned_time The banned time
+     * @param DateTimeInterface|null $banned_time The banned time
      *
      * @return static The visitor object
      */
-    public function setBannedTime(?\DateTimeInterface $banned_time): static
+    public function setBannedTime(?DateTimeInterface $banned_time): static
     {
         $this->banned_time = $banned_time;
 

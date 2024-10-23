@@ -2,6 +2,7 @@
 
 namespace App\Tests\Util;
 
+use Exception;
 use App\Util\CacheUtil;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
@@ -129,7 +130,7 @@ class CacheUtilTest extends TestCase
 
         // set cache item mock expectations
         $this->cacheItemPoolMock->expects($this->once())
-            ->method('getItem')->with($key)->willThrowException(new \Exception('Test exception'));
+            ->method('getItem')->with($key)->willThrowException(new Exception('Test exception'));
 
         // set error manager mock expectations
         $this->errorManagerMock->expects($this->once())
@@ -151,7 +152,7 @@ class CacheUtilTest extends TestCase
 
         // set cache item mock expectations
         $this->cacheItemPoolMock->expects($this->once())
-            ->method('deleteItem')->with($key)->willThrowException(new \Exception('Test exception'));
+            ->method('deleteItem')->with($key)->willThrowException(new Exception('Test exception'));
 
         // set error manager mock expectations
         $this->errorManagerMock->expects($this->once())

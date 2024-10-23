@@ -92,7 +92,7 @@
                                                 {% for column in tableColumns %}
                                                     <th scope='row'>
                                                         {% set content = row[column] | slice(0, 200) %}
-                                                        {{ content ~ (row[column] | length > 200 ? '...' : '') }}
+                                                        {{ (row[column] is empty ? 'NULL' : content) ~ (row[column] | length > 200 ? '...' : '') }}
                                                     </th>
                                                 {% endfor %}
                                                 {% if tableName != 'inbox_messages' %} 

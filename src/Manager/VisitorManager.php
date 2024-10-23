@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use Exception;
 use App\Entity\Visitor;
 use App\Util\CacheUtil;
 use App\Util\VisitorInfoUtil;
@@ -43,7 +44,7 @@ class VisitorManager
      *
      * @param array<string,mixed> $search The search criteria
      *
-     * @throws \App\Exception\AppErrorException Error get visitor
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get visitor
      *
      * @return Visitor|null The visitor entity if found, null otherwise
      */
@@ -52,7 +53,7 @@ class VisitorManager
         // try to find visitor in database
         try {
             return $this->visitorRepository->findOneBy($search);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -85,7 +86,7 @@ class VisitorManager
      * @param string $ipAddress The IP address of the visitor
      * @param string $email The email address of the visitor
      *
-     * @throws \App\Exception\AppErrorException Error to update visitor email
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to update visitor email
      *
      * @return void
      */
@@ -100,7 +101,7 @@ class VisitorManager
             // try to update email
             try {
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'flush error: ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR
@@ -114,6 +115,8 @@ class VisitorManager
      *
      * @param int $page The page number
      * @param string $filter The filter value
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get visitors list
      *
      * @return Visitor[]|null The list of visitors if found, null otherwise
      */
@@ -139,7 +142,7 @@ class VisitorManager
             }
 
             $visitors = $queryBuilder->getQuery()->getResult();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get visitors: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR

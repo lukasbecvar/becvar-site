@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Exception;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -172,7 +173,7 @@ class AppUtil
      * @param string $key The environment variable key
      * @param string $value The new environment variable value
      *
-     * @throws \Exception If the environment value can't be updated
+     * @throws Exception If the environment value can't be updated
      */
     public function updateEnvValue(string $key, string $value): void
     {
@@ -181,20 +182,20 @@ class AppUtil
 
         // check if .env file exists
         if (!file_exists($mainEnvFile)) {
-            throw new \Exception('.env file not found');
+            throw new Exception('.env file not found');
         }
 
         // load base .env file content
         $mainEnvContent = file_get_contents($mainEnvFile);
         if ($mainEnvContent === false) {
-            throw new \Exception('Failed to read .env file');
+            throw new Exception('Failed to read .env file');
         }
 
         // load current environment name
         if (preg_match('/^APP_ENV=(\w+)$/m', $mainEnvContent, $matches)) {
             $env = $matches[1];
         } else {
-            throw new \Exception('APP_ENV not found in .env file');
+            throw new Exception('APP_ENV not found in .env file');
         }
 
         // get current environment file
@@ -202,7 +203,7 @@ class AppUtil
 
         // check if current environment file exists
         if (!file_exists($envFile)) {
-            throw new \Exception(".env.$env file not found");
+            throw new Exception(".env.$env file not found");
         }
 
         // get current environment content
@@ -210,7 +211,7 @@ class AppUtil
 
         // check if current environment loaded correctly
         if ($envContent === false) {
-            throw new \Exception("Failed to read .env.$env file");
+            throw new Exception("Failed to read .env.$env file");
         }
 
         try {
@@ -219,13 +220,13 @@ class AppUtil
 
                 // write new content to the environment file
                 if (file_put_contents($envFile, $newEnvContent) === false) {
-                    throw new \Exception('Failed to write to .env ' . $env . ' file');
+                    throw new Exception('Failed to write to .env ' . $env . ' file');
                 }
             } else {
-                throw new \Exception($key . ' not found in .env file');
+                throw new Exception($key . ' not found in .env file');
             }
-        } catch (\Exception $e) {
-            throw new \Exception('Error to update environment variable: ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception('Error to update environment variable: ' . $e->getMessage());
         }
     }
 }

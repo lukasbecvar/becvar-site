@@ -22,7 +22,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
 
-        # script to run on the server
+        # script for upgrade app on the server
         script: |
           # go to the project directory
           cd /services/website/becvar-site

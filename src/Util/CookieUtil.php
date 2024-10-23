@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Exception;
 use App\Util\SecurityUtil;
 
 /**
@@ -37,7 +38,7 @@ class CookieUtil
      * @param string $value The value to store in the cookie
      * @param int $expiration The expiration time for the cookie
      *
-     * @throws \App\Exception\AppErrorException If headers have already been sent
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If headers have already been sent
      *
      * @return void
      */
@@ -68,7 +69,7 @@ class CookieUtil
      *
      * @param string $name The name of the cookie
      *
-     * @throws \App\Exception\AppErrorException If the URI is invalid
+     * @throws Exception If the URI is invalid
      *
      * @return void
      */
@@ -81,7 +82,7 @@ class CookieUtil
             $uri = rtrim(explode('?', $uri)[0], '/');
 
             if ($uri && !filter_var('file://' . $uri, FILTER_VALIDATE_URL)) {
-                throw new \Exception('invalid uri: ' . $uri);
+                throw new Exception('invalid uri: ' . $uri);
             }
 
             $parts = explode('/', $uri);

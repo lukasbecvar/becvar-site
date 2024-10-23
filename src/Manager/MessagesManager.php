@@ -2,10 +2,11 @@
 
 namespace App\Manager;
 
+use DateTime;
+use Exception;
 use App\Entity\Message;
 use App\Util\SecurityUtil;
 use App\Repository\MessageRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,7 +48,7 @@ class MessagesManager
      * @param string $ipAddress The IP address of the sender
      * @param int $visitorId The ID of the visitor associated with the sender
      *
-     * @throws \App\Exception\AppErrorException Error to save message
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to save message
      *
      * @return void
      */
@@ -74,7 +75,7 @@ class MessagesManager
         try {
             $this->entityManager->persist($message);
             $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to save message: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -87,7 +88,7 @@ class MessagesManager
      *
      * @param string $ipAddress The IP address of the user
      *
-     * @throws \App\Exception\AppErrorException Error to get messages count
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get messages count
      *
      * @return int The count of open messages from the IP address
      */
@@ -105,7 +106,7 @@ class MessagesManager
         // execute query
         try {
             return $query->getSingleScalarResult();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get messages count: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -119,7 +120,7 @@ class MessagesManager
      * @param string $status The status of the messages
      * @param int $page The page number
      *
-     * @throws \App\Exception\AppErrorException Error to get messages
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get messages
      *
      * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs
      */
@@ -164,7 +165,7 @@ class MessagesManager
             }
 
             return $messages;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'error to get messages: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -177,7 +178,7 @@ class MessagesManager
      *
      * @param int $id The ID of the message to close
      *
-     * @throws \App\Exception\AppErrorException Error to close message
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to close message
      *
      * @return void
      */
@@ -191,7 +192,7 @@ class MessagesManager
                 // close message
                 $message->setStatus('closed');
                 $this->entityManager->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorManager->handleError(
                     'error to close message: ' . $id . ', ' . $e->getMessage(),
                     Response::HTTP_INTERNAL_SERVER_ERROR

@@ -2,6 +2,7 @@
 
 namespace App\Util;
 
+use Exception;
 use App\Manager\ErrorManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,7 @@ class DashboardUtil
      * @param object $entity The entity class
      * @param array<string,mixed>|null $search Additional search criteria
      *
-     * @throws \App\Exception\AppErrorException Error get database entity count
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get database entity count
      *
      * @return int The count of entities
      */
@@ -54,7 +55,7 @@ class DashboardUtil
             } else {
                 $result = $repository->findBy($search);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorManager->handleError(
                 'find error: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
