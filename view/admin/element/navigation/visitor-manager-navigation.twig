@@ -37,6 +37,13 @@
         </a>
     </li>
 
+    {# LINK TO VISITORS METRICS #}
+    <li>
+        <a class="selector-button btn-small" href={{ path('admin_visitor_manager_metrics') }}>
+            <strong><i class="fa fa-chart-bar" aria-hidden="true"></i></strong>
+        </a>
+    </li>
+
     {# STATS COUNTER #}
     <li class="count-text-in-menu">
         Online visitors: <strong>{{ onlineVisitors|length }}</strong>,

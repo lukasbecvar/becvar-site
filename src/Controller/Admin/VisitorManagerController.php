@@ -284,4 +284,17 @@ class VisitorManagerController extends AbstractController
             'errorMsg' => $errorMsg
         ]);
     }
+
+    /**
+     * Display the visitors metrics page
+     *
+     * @return Response The visitors metrics page view
+     */
+    #[Route('/admin/visitors/metrics', methods: ['GET', 'POST'], name: 'admin_visitor_manager_metrics')]
+    public function visitorsMetrics(): Response
+    {
+        //dd($this->visitorManager->getVisitorMetrics('last_week'));
+
+        return new Response('test');
+    }
 }

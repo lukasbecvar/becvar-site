@@ -53,6 +53,7 @@ class NonAuthRedirectTest extends WebTestCase
             '/admin/visitors/download'
         ],
         'account_settings' => [
+            '/admin/visitors/metrics',
             '/admin/account/settings',
             '/admin/account/settings/pic',
             '/admin/account/settings/username',

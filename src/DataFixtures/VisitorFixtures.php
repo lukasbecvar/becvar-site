@@ -71,19 +71,29 @@ class VisitorFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 20; $i++) {
+        $currentDate = new DateTime();
+        for ($i = 0; $i < 1000; $i++) {
             // build new visitor entity
             $visitor = new Visitor();
 
+            // randomize last visit and first visit within the last year
+            $randomDays = rand(0, 365);
+            $randomHours = rand(0, 23);
+            $randomMinutes = rand(0, 59);
+            $firstVisit = clone $currentDate;
+            $lastVisit = clone $currentDate;
+            $firstVisit->modify("-$randomDays days -$randomHours hours -$randomMinutes minutes");
+            $lastVisit->modify("-$randomDays days -$randomHours hours -$randomMinutes minutes");
+
             // set visitor entity data
-            $visitor->setFirstVisit(new DateTime('2023-12-01 16:33:55'))
-                ->setLastVisit(new DateTime('2023-12-01 16:33:55'))
+            $visitor->setFirstVisit($firstVisit)
+                ->setLastVisit($lastVisit)
                 ->setBrowser($this->browsers[array_rand($this->browsers)])
                 ->setOs($this->os[array_rand($this->os)])
                 ->setCity($this->city[array_rand($this->city)])
                 ->setCountry($this->county[array_rand($this->county)])
                 ->setIpAddress('192.168.1.' . $i)
-                ->setBannedStatus($i % 2 === 0 ? true : false)
+                ->setBannedStatus($i % 2 === 0)
                 ->setBanReason($i % 2 === 0 ? 'reason for ban' : 'non-banned')
                 ->setBannedTime(null)
                 ->setEmail($i % 2 === 0 ? 'unknown' : 'visitor' . $i . '@example.com');
