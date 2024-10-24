@@ -20,7 +20,6 @@ Personal website build with the Symfony framework & Bootstrap.
 - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
 - for production use only APP_ENV=prod! (in .env)
 - configure app enviroment in .env.prod
-- configure all values (mysql app secret etc)
 - install dependencies `composer install && npm install && npm run build`
 - create database `doctrine:database:create`
 - migrate database structure `doctrine:migrations:migrate --no-interaction`
