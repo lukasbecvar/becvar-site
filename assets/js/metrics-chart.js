@@ -4,15 +4,18 @@ import Chart from 'chart.js/auto'
 const visitorMetrics = window.visitorMetrics
 
 // visitors count chart
-const visitorsCountCtx = document.getElementById('visitorsCountChart').getContext('2d')
+const visitorsCountCtx = document.getElementById('visitorsCountChart').getContext('2d');
 const visitorsCountChart = new Chart(visitorsCountCtx, {
-    type: 'bar',
+    type: 'line', // Zůstavá jako 'line'
     data: {
         labels: Object.keys(visitorMetrics.visitorsCount),
         datasets: [{
             label: 'Visitors count',
             data: Object.values(visitorMetrics.visitorsCount),
-            backgroundColor: 'rgba(16, 151, 241, 0.5)',
+            borderColor: 'rgba(16, 151, 241, 1)', // Barva čáry
+            backgroundColor: 'rgba(16, 151, 241, 0.5)', // Barva pozadí pod čárou
+            fill: true, // Vyplnění oblasti pod čárou
+            tension: 0, // Nastaveno na 0 pro ostré hrany
         }]
     },
     options: {
@@ -31,67 +34,16 @@ const visitorsCountChart = new Chart(visitorsCountCtx, {
                     color: '#ffffff'
                 }
             }
-        }
-    }
-})
-
-// visitors browsers chart
-const visitorsBrowsersCtx = document.getElementById('visitorsBrowsersChart').getContext('2d')
-const visitorsBrowsersChart = new Chart(visitorsBrowsersCtx, {
-    type: 'pie',
-    data: {
-        labels: Object.keys(visitorMetrics.visitorsBrowsers),
-        datasets: [{
-            label: 'Browsers',
-            data: Object.values(visitorMetrics.visitorsBrowsers),
-        }]
-    },
-    options: {
-        plugins: {
-        legend: {
-            labels: {
-                color: "white",
-                    font: {
-                        size: 16
-                    }
-                },
-            },
-            title: {
-                display: true,
-                text: 'Browsers',
-                color: 'white',
-                font: {
-                    size: 20
-                }
-            }
-        }
-    }
-})
-
-// visitors country chart
-const visitorsCountryCtx = document.getElementById('visitorsCountryChart').getContext('2d')
-const visitorsCountryChart = new Chart(visitorsCountryCtx, {
-    type: 'pie',
-    data: {
-        labels: Object.keys(visitorMetrics.visitorsCountry),
-        datasets: [{
-            label: 'Country',
-            data: Object.values(visitorMetrics.visitorsCountry),
-        }]
-    },
-    options: {
+        },
         plugins: {
             legend: {
                 labels: {
-                    color: "white",
-                    font: {
-                        size: 16
-                    }
-                },
+                    color: "white" // Barva legendy
+                }
             },
             title: {
                 display: true,
-                text: 'Country',
+                text: 'Visitors Count',
                 color: 'white',
                 font: {
                     size: 20
@@ -99,37 +51,4 @@ const visitorsCountryChart = new Chart(visitorsCountryCtx, {
             }
         }
     }
-})
-
-// visitors city chart
-const visitorsCityCtx = document.getElementById('visitorsCityChart').getContext('2d')
-const visitorsCityChart = new Chart(visitorsCityCtx, {
-    type: 'pie',
-    data: {
-        labels: Object.keys(visitorMetrics.visitorsCity),
-        datasets: [{
-            label: 'City',
-            data: Object.values(visitorMetrics.visitorsCity),
-        }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                labels: {
-                    color: "white",
-                    font: {
-                        size: 16
-                    }
-                },
-            },
-            title: {
-                display: true,
-                text: 'City',
-                color: 'white',
-                font: {
-                    size: 20
-                }
-            }
-        }
-    }
-})
+});

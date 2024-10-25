@@ -291,39 +291,11 @@ class VisitorManager
         // get visitors count metrics
         $visitorsCount = $this->visitorRepository->getVisitorsCountByPeriod($countFilter);
 
-        // get visitors country metrics
-        $visitorsCountry = $this->visitorRepository->getVisitorsByCountry();
-
-        // get visitors city metrics
-        $visitorsCity = $this->visitorRepository->getVisitorsByCity();
-
-        // get visitors browser metrics
-        $visitorsBrowsers = $this->visitorRepository->getVisitorsUsedBrowsers();
-
-        // shotify browsers array
-        $visitorsBrowsersShortify = [];
-
-        foreach ($visitorsBrowsers as $browser => $count) {
-            // get short browser name
-            $browserShort = $this->visitorInfoUtil->getBrowserShortify($browser);
-
-            // merge browsers count
-            if (isset($visitorsBrowsersShortify[$browserShort])) {
-                $visitorsBrowsersShortify[$browserShort] += $count;
-            } else {
-                $visitorsBrowsersShortify[$browserShort] = $count;
-            }
-        }
-
         // sort visitors count order newest to oldest
         ksort($visitorsCount);
-        $visitorsCount = array_reverse($visitorsCount);
 
         return [
-            'visitorsCount' => $visitorsCount,
-            'visitorsCountry' => $visitorsCountry,
-            'visitorsCity' => $visitorsCity,
-            'visitorsBrowsers' => $visitorsBrowsersShortify
+            'visitorsCount' => $visitorsCount
         ];
     }
 }

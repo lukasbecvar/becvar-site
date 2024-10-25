@@ -92,10 +92,10 @@ class VisitorRepository extends ServiceEntityRepository
      * @param string $period The time period for which to retrieve the visitor count.
      *               Valid values are 'last_24_hours', 'last_week', 'last_month', 'last_year', and 'all_time'
      *
+     * @throws InvalidArgumentException If an invalid period is specified
+     *
      * @return array<string,int> An associative array where the key is the date (formatted based on the period)
      *               and the value is the count of visitors for that date
-     *
-     * @throws InvalidArgumentException If an invalid period is specified
      */
     public function getVisitorsCountByPeriod(string $period): array
     {
@@ -165,74 +165,5 @@ class VisitorRepository extends ServiceEntityRepository
         }
 
         return $visitorCounts;
-    }
-
-    /**
-     * Get list of countries and their count
-     *
-     * @return array<string,int> An associative array where the key is the country and the value is the count of visitors for that country
-     */
-    public function getVisitorsByCountry(): array
-    {
-        $results = $this->createQueryBuilder('v')
-            ->select('v.country AS country, COUNT(v.id) AS visitorCount')
-            ->groupBy('v.country')
-            ->orderBy('visitorCount', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        // convert results to associative array
-        $visitorsByCountry = [];
-        foreach ($results as $result) {
-            $visitorsByCountry[$result['country']] = $result['visitorCount'];
-        }
-
-        return $visitorsByCountry;
-    }
-
-    /**
-     * Get list of cities and their count
-     *
-     * @return array<string,int> An associative array where the key is the city and the value is the count of visitors for that city
-     */
-    public function getVisitorsByCity(): array
-    {
-        $results = $this->createQueryBuilder('v')
-            ->select('v.city AS city, COUNT(v.id) AS visitorCount')
-            ->groupBy('v.city')
-            ->orderBy('visitorCount', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        // convert results to associative array
-        $visitorsByCity = [];
-        foreach ($results as $result) {
-            $visitorsByCity[$result['city']] = $result['visitorCount'];
-        }
-
-        return $visitorsByCity;
-    }
-
-    /**
-     * Get list of used browsers and their count
-     *
-     * @return array<string,int> An associative array where the key is the browser and the value is the count of visitors for that browser
-     */
-    public function getVisitorsUsedBrowsers(): array
-    {
-        $results = $this->createQueryBuilder('v')
-            ->select('v.browser AS browser, COUNT(v.id) AS visitorCount')
-            ->groupBy('v.browser')
-            ->orderBy('visitorCount', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        // convert results to associative array
-        $visitorsByBrowser = [];
-        foreach ($results as $result) {
-            $visitorsByBrowser[$result['browser']] = $result['visitorCount'];
-        }
-
-        return $visitorsByBrowser;
     }
 }
