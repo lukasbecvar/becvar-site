@@ -65,6 +65,7 @@ class VisitorManagerController extends AbstractController
             // visitor manager data
             'page' => $page,
             'filter' => $filter,
+            'visitorMetrics' => null,
             'visitorInfoData' => null,
             'visitorsLimit' => $_ENV['ITEMS_PER_PAGE'],
             'currentIp' => $this->visitorInfoUtil->getIP(),
@@ -102,6 +103,7 @@ class VisitorManagerController extends AbstractController
             // visitor manager data
             'page' => 1,
             'filter' => 1,
+            'visitorMetrics' => null,
             'currentIp' => $ipAddress,
             'visitorInfoData' => $ipInfoData,
             'bannedCount' => $this->banManager->getBannedCount(),
@@ -293,8 +295,17 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/metrics', methods: ['GET', 'POST'], name: 'admin_visitor_manager_metrics')]
     public function visitorsMetrics(): Response
     {
-        //dd($this->visitorManager->getVisitorMetrics('last_week'));
+        // get visitor metrics
+        $metrics = $this->visitorManager->getVisitorMetrics('last_week');
 
-        return new Response('test');
+        // return visitor manager view
+        return $this->render('admin/visitors-manager.twig', [
+            'visitorMetrics' => $metrics,
+            'visitorInfoData' => null,
+            'onlineVisitors' => null,
+            'bannedCount' => null,
+            'filter' => null,
+            'page' => null
+        ]);
     }
 }

@@ -167,14 +167,14 @@ body.active .wrapper .section {
 	height: 40px;
 	display: flex;
 	align-items: center;
-	padding: 0 1%;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+	padding: 0 0.5%;
+	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
 }
 
 .wrapper .section .top-navbar {
 	position: fixed; 
 	z-index: 1000; 
-	width: calc(100% - 15px) !important;
+	width: 100% !important;
 }
 
 .wrapper .section .top-navbar .hamburger a {
@@ -456,7 +456,7 @@ button {
 
 .logout-link {
 	position: fixed;
-	right: 20px;
+	right: 10px;
 }
 
 .left-center {
@@ -540,9 +540,8 @@ button {
 
 .breadcrumb {
 	background-color: #161616;
-	border-top: #242627 1px solid;
 	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
-	padding-top: 5px;
+	padding-top: 6px;
 	padding-bottom: 5px;
 	margin: 0;
 }

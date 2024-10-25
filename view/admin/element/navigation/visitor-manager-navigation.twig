@@ -38,15 +38,19 @@
     </li>
 
     {# LINK TO VISITORS METRICS #}
-    <li>
-        <a class="selector-button btn-small" href={{ path('admin_visitor_manager_metrics') }}>
-            <strong><i class="fa fa-chart-bar" aria-hidden="true"></i></strong>
-        </a>
-    </li>
+    {% if visitorMetrics == null %}
+        <li>
+            <a class="selector-button btn-small" href={{ path('admin_visitor_manager_metrics') }}>
+                <strong><i class="fa fa-chart-bar" aria-hidden="true"></i></strong>
+            </a>
+        </li>
+    {% endif %}
 
     {# STATS COUNTER #}
-    <li class="count-text-in-menu">
-        Online visitors: <strong>{{ onlineVisitors|length }}</strong>,
-        Banned visitors: <strong>{{ bannedCount }}</strong>
-    </li>
+    {% if onlineVisitors != null %}
+        <li class="count-text-in-menu">
+            Online visitors: <strong>{{ onlineVisitors|length }}</strong>,
+            Banned visitors: <strong>{{ bannedCount }}</strong>
+        </li>
+    {% endif %}
 </ul>

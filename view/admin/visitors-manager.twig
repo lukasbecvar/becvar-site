@@ -24,6 +24,8 @@
                 </ul>
             </div>
         </div>
+    {% elseif visitorMetrics != null %}
+        <p>{{ dump(visitorMetrics) }}</P>
     {% else %}
         <div class="table-responsive center">
             <table class="table table-dark text-nowrap table-hover">
