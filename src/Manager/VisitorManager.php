@@ -291,9 +291,6 @@ class VisitorManager
         // get visitors count metrics
         $visitorsCount = $this->visitorRepository->getVisitorsCountByPeriod($countFilter);
 
-        // sort visitors count order newest to oldest
-        krsort($visitorsCount);
-
         // get visitors country metrics
         $visitorsCountry = $this->visitorRepository->getVisitorsByCountry();
 
@@ -317,6 +314,10 @@ class VisitorManager
                 $visitorsBrowsersShortify[$browserShort] = $count;
             }
         }
+
+        // sort visitors count order newest to oldest
+        ksort($visitorsCount);
+        $visitorsCount = array_reverse($visitorsCount);
 
         return [
             'visitorsCount' => $visitorsCount,

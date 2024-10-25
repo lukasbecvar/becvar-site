@@ -49,6 +49,8 @@ Deployment of the new version with GitHub Action when a new release is created.
    * [Website](https://fontawesome.com)
 * Purecounterjs
    * [Github](https://github.com/srexi/purecounterjs)
+* Chartjs
+   * [Github](https://github.com/chartjs/Chart.js)
 * PhpunitPrettyPrint
    * [Github](https://github.com/indentno/phpunit-pretty-print)
    

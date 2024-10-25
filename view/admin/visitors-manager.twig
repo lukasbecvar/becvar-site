@@ -25,7 +25,32 @@
             </div>
         </div>
     {% elseif visitorMetrics != null %}
-        <p>{{ dump(visitorMetrics) }}</P>
+        <center>
+            <div class="metrics-container">        
+                <div class="row chart-container">
+                    <div class="col-12 chart-box visitors-count-chart">
+                        <canvas id="visitorsCountChart"></canvas>
+                    </div>
+                </div>
+                <div class="row chart-container">
+                    <div class="col-12 col-md-4 chart-margin chart-box">
+                        <canvas id="visitorsBrowsersChart"></canvas>
+                    </div>
+                    <div class="col-12 col-md-4 chart-margin chart-box">
+                        <canvas id="visitorsCountryChart"></canvas>
+                    </div>
+                    <div class="col-12 col-md-4 chart-margin chart-box">
+                        <canvas id="visitorsCityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </center>
+
+        {# INCLUDE VISITOR METRICS CHARTS #}
+        <script>
+            window.visitorMetrics = {{ visitorMetrics|json_encode|raw }};
+        </script>
+        {{ encore_entry_script_tags('metrics-chart') }}
     {% else %}
         <div class="table-responsive center">
             <table class="table table-dark text-nowrap table-hover">

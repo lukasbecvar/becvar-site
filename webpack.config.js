@@ -42,7 +42,9 @@ Encore
 
     // visitor status updater
     .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')
-    
+
+    .addEntry('metrics-chart', './assets/js/metrics-chart.js')
+
     // copy static assets
     .copyFiles(
         {

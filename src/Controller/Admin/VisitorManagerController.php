@@ -296,7 +296,7 @@ class VisitorManagerController extends AbstractController
     public function visitorsMetrics(): Response
     {
         // get visitor metrics
-        $metrics = $this->visitorManager->getVisitorMetrics('last_week');
+        $metrics = $this->visitorManager->getVisitorMetrics('last_month');
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [

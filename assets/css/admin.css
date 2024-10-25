@@ -706,6 +706,29 @@ button {
 	border: 1px solid rgb(177, 177, 177);
 }
 
+canvas {
+	background-color: #1d1d1d;
+	color: white;
+}
+
+.metrics-container {
+	color: white;
+	background-color: #1d1d1d;
+}
+
+.chart-box {
+	height: 400px;
+}
+
+.visitors-count-chart {
+	height: 325px;
+}
+
+.chart-margin {
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	padding: 5px;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {
@@ -819,6 +842,9 @@ button {
 	}
 	.ban-form {
 		height: 62px;
+	}
+	.visitors-count-chart {
+		height: 250px !important;
 	}
 }
 
