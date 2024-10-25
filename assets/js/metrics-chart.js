@@ -6,16 +6,16 @@ const visitorMetrics = window.visitorMetrics
 // visitors count chart
 const visitorsCountCtx = document.getElementById('visitorsCountChart').getContext('2d');
 const visitorsCountChart = new Chart(visitorsCountCtx, {
-    type: 'line', // Zůstavá jako 'line'
+    type: 'line',
     data: {
         labels: Object.keys(visitorMetrics.visitorsCount),
         datasets: [{
             label: 'Visitors count',
             data: Object.values(visitorMetrics.visitorsCount),
-            borderColor: 'rgba(16, 151, 241, 1)', // Barva čáry
-            backgroundColor: 'rgba(16, 151, 241, 0.5)', // Barva pozadí pod čárou
-            fill: true, // Vyplnění oblasti pod čárou
-            tension: 0, // Nastaveno na 0 pro ostré hrany
+            borderColor: 'rgba(16, 151, 241, 1)',
+            backgroundColor: 'rgba(16, 151, 241, 0.5)',
+            fill: true,
+            tension: 0,
         }]
     },
     options: {
@@ -38,7 +38,7 @@ const visitorsCountChart = new Chart(visitorsCountCtx, {
         plugins: {
             legend: {
                 labels: {
-                    color: "white" // Barva legendy
+                    color: "white"
                 }
             },
             title: {
@@ -51,4 +51,4 @@ const visitorsCountChart = new Chart(visitorsCountCtx, {
             }
         }
     }
-});
+})
