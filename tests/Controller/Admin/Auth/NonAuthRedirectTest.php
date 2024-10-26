@@ -26,6 +26,7 @@ class NonAuthRedirectTest extends WebTestCase
     private const ROUTES = [
         'admin' => [
             '/admin',
+            'register',
             '/admin/dashboard'
         ],
         'database_browser' => [
@@ -50,10 +51,10 @@ class NonAuthRedirectTest extends WebTestCase
             '/admin/visitors/ban',
             '/admin/visitors/unban',
             '/admin/visitors/delete',
+            '/admin/visitors/metrics',
             '/admin/visitors/download'
         ],
         'account_settings' => [
-            '/admin/visitors/metrics',
             '/admin/account/settings',
             '/admin/account/settings/pic',
             '/admin/account/settings/username',

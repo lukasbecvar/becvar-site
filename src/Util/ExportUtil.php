@@ -126,7 +126,7 @@ class ExportUtil
         $spreadsheet->getActiveSheet()->getStyle('A1:H' . ($row - 1))->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                'startColor' => ['argb' => 'FF1F1F1F'], // sark background for entire sheet
+                'startColor' => ['argb' => 'FF1F1F1F'], // dark background for entire sheet
             ],
         ]);
 

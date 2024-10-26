@@ -22,11 +22,11 @@ var options = {
     stroke: {
         curve: 'straight',
         width: 3,
-        colors: ['#00ff00']
+        colors: ['#009900']
     },
     fill: {
         type: 'solid',
-        colors: ['#00ff00'],
+        colors: ['#009900'],
         opacity: 0.5
     },
     title: {

@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
             ->setPassword($this->securityUtil->generateHash('test'))
             ->setRole('Owner')
             ->setIpAddress('127.0.0.1')
-            ->setToken(ByteString::fromRandom(32)->toString())
+            ->setToken('zHKrsWUjWZGJfi2dkpAEKrkkEpW2LHn2')
             ->setRegistedTime(new DateTime('2023-03-22 12:00:00'))
             ->setLastLoginTime(null)
             ->setProfilePic('non-pic')
