@@ -759,6 +759,16 @@ button {
     padding: -10px;
 }
 
+.count-text-in-menu select {
+	background-color: #1e1e1e;
+	color: #ffffff;
+}
+
+.count-text-in-menu select:focus {
+	outline: none;
+	border-color: #79d5ec;
+}
+
 /* mobile devices style */
 @media screen and (max-width: 800px) { 
 	.account-settings-table {

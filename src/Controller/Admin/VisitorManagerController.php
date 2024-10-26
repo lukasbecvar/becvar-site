@@ -290,13 +290,23 @@ class VisitorManagerController extends AbstractController
     /**
      * Display the visitors metrics page
      *
+     * @param Request $request The request object
+     *
      * @return Response The visitors metrics page view
      */
     #[Route('/admin/visitors/metrics', methods: ['GET', 'POST'], name: 'admin_visitor_manager_metrics')]
-    public function visitorsMetrics(): Response
+    public function visitorsMetrics(Request $request): Response
     {
+        // get time period from query string
+        $timePeriod = $this->appUtil->getQueryString('time_period', $request);
+
+        // set default time period
+        if ($timePeriod == '1') {
+            $timePeriod = 'last_week';
+        }
+
         // get visitor metrics
-        $metrics = $this->visitorManager->getVisitorMetrics('last_month');
+        $metrics = $this->visitorManager->getVisitorMetrics($timePeriod);
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [

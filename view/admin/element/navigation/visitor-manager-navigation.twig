@@ -46,6 +46,43 @@
         </li>
     {% endif %}
 
+    {# METRICS TIME PERIOD SELECTOR #}
+    {% if visitorMetrics != null %}
+        <li class="count-text-in-menu">
+            <label for="time-period">Time period:</label>
+            <select id="time-period" onchange="updateTimePeriod()">
+                <option value="all_time">All time</option>
+                <option value="last_week" selected>Last week</option>
+                <option value="last_month">Last month</option>
+                <option value="last_year">Last year</option>
+            </select>
+
+            <script>
+                // update time period in url
+                function updateTimePeriod() {
+                    const select = document.getElementById('time-period');
+                    const selectedValue = select.value;
+                    window.location.search = `?time_period=${selectedValue}`;
+                }
+
+                // select selecton value from url
+                function setSelectedValue() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const timePeriod = urlParams.get('time_period');
+                    const select = document.getElementById('time-period');
+
+                    // set selected value
+                    if (timePeriod) {
+                        select.value = timePeriod;
+                    }
+                }
+
+                // init select value
+                window.onload = setSelectedValue;
+            </script>
+        </li>
+    {% endif %}
+
     {# STATS COUNTER #}
     {% if onlineVisitors != null %}
         <li class="count-text-in-menu">
