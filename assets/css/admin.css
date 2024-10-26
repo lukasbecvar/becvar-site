@@ -12,7 +12,6 @@ html {
 
 body {
 	background-color: #161616;
-	zoom: 80%;
 }
 
 a {
@@ -706,21 +705,58 @@ button {
 	border: 1px solid rgb(177, 177, 177);
 }
 
-canvas {
-	color: white;
-}
-
-.metrics-container {
-	color: white;
-}
-
-.chart-box {
-	height: 600px;
-}
-
-.chart-margin {
+.chart-container {
+	background-color: #1d1d1d;
 	border: 1px solid rgba(255, 255, 255, 0.24);
-	padding: 5px;
+	color: white;
+	margin: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 0;
+}
+
+.apexcharts-menu {
+	background: #333 !important;
+	color: white !important;
+}
+
+.apexcharts-menu .apexcharts-menu-item {
+	color: white !important;
+}
+
+.apexcharts-menu .apexcharts-menu-item:hover {
+	background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.apexcharts-tooltip {
+	background: #444;
+	color: white;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.apexcharts-tooltip .apexcharts-tooltip-title {
+	font-weight: bold;
+}
+
+.metrics-box-container {
+    margin-right: 12px;
+    margin-left: 12px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.metrics-card {
+    padding: 5px !important;
+    margin-bottom: -15px;
+}
+
+.card-statistic {
+    max-height: 315px;
+	min-height: 315px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: -10px;
 }
 
 /* mobile devices style */
@@ -836,9 +872,6 @@ canvas {
 	}
 	.ban-form {
 		height: 62px;
-	}
-	.visitors-count-chart {
-		height: 400px !important;
 	}
 }
 

@@ -25,21 +25,114 @@
             </div>
         </div>
     {% elseif visitorMetrics != null %}
-        <center>
-            <div class="metrics-container">        
-                <div class="row chart-container">
-                    <div class="chart-box visitors-count-chart">
-                        <canvas id="visitorsCountChart"></canvas>
+        {# VISITORS COUNT CHART #}
+        <div class="chart-container">
+            <div id="chart"></div>
+        </div>
+
+        {# METRICS BOXES #}
+        <div class="text-white metrics-box-container">
+            <div class="row no-gutters">
+                {# USED BROWSERS LIST #}
+                <div class="col-12 col-md-4 metrics-card"> 
+                    <div class="card l-bg-cherry counter-card">
+                        <div class="card-statistic p-0">
+                            <div class="card-header p-2">
+                                <h5 class="card-title mb-0 color-white">Used browsers</h5>
+                            </div>
+                            <div class="row align-items-center mb-0 d-flex">
+                                <div class="col-12 pt-1 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Browser</th>
+                                                <th>Visitors count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, row in visitorMetrics.visitorsBrowsers %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td class="text-primary">{{ row }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </center>
 
-        {# INCLUDE VISITOR METRICS CHARTS #}
+                {# VISITORS COUNTRY LIST #}
+                <div class="col-12 col-md-4 metrics-card"> 
+                    <div class="card l-bg-blue-dark counter-card">
+                        <div class="card-statistic p-0">
+                            <div class="card-header p-2">
+                                <h5 class="card-title mb-0 color-white">Visitors country</h5>
+                            </div>
+                            <div class="row align-items-center mb-0 d-flex">
+                                <div class="col-12 pt-1 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Country</th>
+                                                <th>Visitors count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, row in visitorMetrics.visitorsCountry %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td class="text-primary">{{ row }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+
+                {# VISITORS CITIES LIST #}
+                <div class="col-12 col-md-4 metrics-card"> 
+                    <div class="card l-bg-cyan-darker counter-card">
+                        <div class="card-statistic p-0">
+                            <div class="card-header p-2">
+                                <h5 class="card-title mb-0 color-white">Visitors cities</h5>
+                            </div>
+                            <div class="row align-items-center mb-0 d-flex">
+                                <div class="col-12 pt-1 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>City</th>
+                                                <th>Visitors count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, row in visitorMetrics.visitorsCity %}
+                                                <tr>
+                                                    <td>{{ key }}</td>
+                                                    <td class="text-primary">{{ row }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        {# INCLUDE VISITORS METRICS CHART SCRIPT #}
         <script>
-            window.visitorMetrics = {{ visitorMetrics|json_encode|raw }};
+            window.visitorMetrics = {{ visitorMetrics.visitorsCount|json_encode|raw }};
         </script>
-        {{ encore_entry_script_tags('metrics-chart') }}
+        {{ encore_entry_script_tags('visitors-metrics-js') }}
     {% else %}
         <div class="table-responsive center">
             <table class="table table-dark text-nowrap table-hover">
