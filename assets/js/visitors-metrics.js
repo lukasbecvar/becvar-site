@@ -10,7 +10,7 @@ var options = {
         data: Object.values(visitorMetrics)
     }],
     chart: {
-        height: 350,
+        height: 270,
         type: 'area',
         zoom: {
             enabled: false

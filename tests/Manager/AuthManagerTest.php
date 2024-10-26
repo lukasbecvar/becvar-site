@@ -50,9 +50,7 @@ class AuthManagerTest extends TestCase
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
         // mock user repository
-        $this->entityManager
-            ->method('getRepository')
-            ->willReturn($this->userRepository);
+        $this->entityManager->method('getRepository')->willReturn($this->userRepository);
 
         // create instance of AuthManager
         $this->authManager = new AuthManager(

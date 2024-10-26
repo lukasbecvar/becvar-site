@@ -318,10 +318,15 @@ class VisitorManager
         // sort visitors count order newest to oldest
         ksort($visitorsCount);
 
+        // sort counters decreasing order
+        arsort($visitorsCity);
+        arsort($visitorsCountry);
+        arsort($visitorsBrowsersShortify);
+
         return [
+            'visitorsCity' => $visitorsCity,
             'visitorsCount' => $visitorsCount,
             'visitorsCountry' => $visitorsCountry,
-            'visitorsCity' => $visitorsCity,
             'visitorsBrowsers' => $visitorsBrowsersShortify
         ];
     }

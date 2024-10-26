@@ -10,11 +10,11 @@
     {# WARNING BOX CARD #}
     {% include "admin/element/warning-box.twig" %}
     {# VISITORS INFO CARD #}
-    <div class="card-phone card text-white mb-3 dashbord-card">
-        <div class="card-header">
+    <div class="card-phone card text-white mb-2 dashbord-card">
+        <div class="card-header p-2">
             Visitors info <span>[<a href={{ path('admin_visitor_manager', {'page': 1}) }}>table</a>]</span>
         </div>
-        <div class="card-body">
+        <div class="card-body p-2-5">
             <p class="card-text">Count: {{ visitorsCount }}</p>
             <p class="card-text">Online: {{ onlinevisitorsCount }} / Users: {{ online_users_count|length }} <a href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>view</a></p>
             <p class="card-text">Banned: {{ banned_visitorsCount }}</p>
@@ -26,17 +26,17 @@
             {# LOGS COUNT #}
             <div class="col-xl-4 col-lg-6">
                 <div class="card l-bg-cherry counter-card">
-                    <div class="card-statistic-3 p-4">
-                        <div class="mb-2">
+                    <div class="card-statistic-3 p-3">
+                        <div class="mb-1">
                             <h5 class="card-title mb-0">
                                 <a class="card-link" href={{ path('admin_log_list', {'page': 1}) }} class="stats-link">Logs</a> <a href={{ path('antilog') }}>.</a>
                             </h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
-                                <h2 class="text-white d-flex align-items-center mb-0">
+                                <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ unreadedLogsCount }}
-                                </h2>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -45,17 +45,17 @@
             {# INBOX MESSAGES COUNT #}
             <div class="col-xl-4 col-lg-6">
                 <div class="card l-bg-blue-dark counter-card">
-                    <div class="card-statistic-3 p-4">
-                        <div class="mb-2">
+                    <div class="card-statistic-3 p-3">
+                        <div class="mb-1">
                             <h5 class="card-title mb-0">
                                 <a class="card-link" href={{ path('admin_inbox', {'page': 1}) }} class="stats-link">Messages</a>
                             </h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
-                                <h2 class="text-white d-flex align-items-center mb-0">
+                                <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ messagesCount }}
-                                </h2>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -64,17 +64,17 @@
             {# VISITORS COUNT #}
             <div class="col-xl-4 col-lg-6">
                 <div class="card l-bg-cyan-darker counter-card">
-                    <div class="card-statistic-3 p-4">
-                        <div class="mb-2">
+                    <div class="card-statistic-3 p-3">
+                        <div class="mb-1">
                             <h5 class="card-title mb-0">
                                 <a class="card-link" href={{ path('admin_visitor_manager', {'page': 1}) }} class="stats-link">Visitors</a>
                             </h5>
                         </div>
                         <div class="row align-items-center mb-0 d-flex">
                             <div class="col-8">
-                                <h2 class="text-white d-flex align-items-center mb-0">
+                                <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ visitorsCount }}
-                                </h2>
+                                </h4>
                             </div>
                         </div>
                     </div>

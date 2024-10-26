@@ -30,6 +30,10 @@ form {
 	color:white;
 }
 
+.p-2-5 {
+	padding: 12px !important;
+}
+
 textarea {
 	height: 150px;
 	line-height: 150%;
@@ -80,7 +84,7 @@ th {
 }
 
 body.active .wrapper .sidebar {
-	left: -225px;
+	left: -190px;
 }
 
 body.active .wrapper .section {
@@ -93,7 +97,7 @@ body.active .wrapper .section {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 225px;
+	width: 190px;
 	height: 100%;
 	padding: 5px 0;
 	transition: all 0.2s ease;
@@ -109,8 +113,8 @@ body.active .wrapper .section {
 
 .wrapper .sidebar .profile img {
 	display: block;
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	border-radius: 10%;
 	margin: 0 auto;
 }
@@ -118,12 +122,12 @@ body.active .wrapper .section {
 .wrapper .sidebar .profile h3 {
 	color: #ffffff;
 	margin: 5px 0 1px;
-	font-size: 25px;
+	font-size: 22px;
 }
 
 .wrapper .sidebar .profile p {
 	color: rgb(206, 240, 253);
-	font-size: 14px;
+	font-size: 10px;
 }
 
 .wrapper .sidebar ul {
@@ -132,10 +136,10 @@ body.active .wrapper .section {
 
 .wrapper .sidebar ul li a {
 	display: block;
-	padding: 2.5px 4px;
+	padding: 1px 2px;
 	border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
 	color: rgb(241, 237, 237);
-	font-size: 18px;
+	font-size: 15px;
 	position: relative;
 }
 
@@ -156,14 +160,14 @@ body.active .wrapper .section {
 }
 
 .wrapper .section {
-	width: calc(100% - 225px);
-	margin-left: 225px;
+	width: calc(100% - 190px);
+	margin-left: 190px;
 	transition: all 0.2s ease;
 }
 
 .wrapper .section .top-navbar {
 	background-color: #161616;
-	height: 40px;
+	height: 30px;
 	display: flex;
 	align-items: center;
 	padding: 0 0.5%;
@@ -177,7 +181,7 @@ body.active .wrapper .section {
 }
 
 .wrapper .section .top-navbar .hamburger a {
-	font-size: 28px;
+	font-size: 22px;
 	color: #f4fbff;
 	text-decoration: none;
 }
@@ -195,7 +199,7 @@ body.active .wrapper .section {
 }
 
 .role-line {
-	font-size: 18px;
+	font-size: 16px;
 	color: rgb(148, 255, 241);
 }
 
@@ -228,7 +232,7 @@ button {
 	border-radius: 5px;
 	line-height: 22px;
 	background-color: transparent;
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	transition: all 0.3s;
 	padding: 13px;
 	margin-bottom: 15px;
@@ -245,7 +249,7 @@ button {
 	height: 98%;
 	margin-top: -3.5px;
 	margin-left: -3.5px;
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 }
 
@@ -258,7 +262,7 @@ button {
 	width: 100%;
 	height: 60px;
 	transform: translate(-50%, -50%);
-	border: 2px solid rgba(255, 255, 255, 0.356);
+	border: 1px solid rgba(255, 255, 255, 0.356);
 }
 
 .ban-button {
@@ -273,16 +277,16 @@ button {
 .alert {
 	position: relative;
 	top: 20px;
-	width: 30%;
-	font-size: 18px;
-	padding: 8px;
+	width: 28%;
+	font-size: 16px;
+	padding: 6px;
 	z-index: 2;
 }
 
 .page-title {
 	text-align: center; 
 	color: white;
-	font-size: 30px;
+	font-size: 25px;
 	margin-top: 3%;
 }
 
@@ -296,19 +300,19 @@ button {
 
 .form {
 	margin-top: 4%;
-	padding: 0.5%;
+	padding: 0.3%;
 	background: rgba(0, 0, 0, 0.596);
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	min-width: 350px;
+	min-width: 320px;
 }
 
 .form .text-input:-webkit-autofill, 
 .form .text-input:-webkit-autofill:hover, 
 .form .text-input:-webkit-autofill:focus {
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	-webkit-text-fill-color: white;
 	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
 	transition: background-color 5000s ease-in-out 0s;
@@ -323,10 +327,10 @@ button {
 
 .db-edit-form {
 	text-align: center;
-	border: 2px solid rgba(255, 255, 255, 0.24);
-	padding: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	padding: 5px;
 	position: relative;
-	top: 50px;
+	top: 20px;
 	opacity: 0.8;
 	width: 40%;
 	background: rgba(0, 0, 0, 0.877);
@@ -339,7 +343,7 @@ button {
 	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .form-title {
@@ -348,13 +352,13 @@ button {
 }
 
 .text-input {
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 	text-align: center;
 	font-family: arial;
-	font-size: 17px;
-	margin: 3px;
-	padding: 4px;
+	font-size: 14px;
+	margin: 2px;
+	padding: 3px;
 	color: white;
 	transition: all 0.2s ease;
 	width: 98.5%;
@@ -363,7 +367,7 @@ button {
 .text-input:-webkit-autofill, 
 .text-input:-webkit-autofill:hover, 
 .text-input:-webkit-autofill:focus {
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	-webkit-text-fill-color: white;
 	background: rgba(255, 255, 255, 0.062);
 	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
@@ -397,11 +401,12 @@ button {
 	border: 1px solid white;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	padding: 10px;
-	width: 300px;
+	padding: 8px;
+	width: 260px;
 	text-align: center;
 	color: white;
-	margin-bottom: 3px;
+	margin-bottom: 0px;
+	font-size: 17px;
 }
 
 .db-browser-select-link:hover {
@@ -412,11 +417,11 @@ button {
 .input-button {
 	padding: 5px;
 	margin-top: 7px;
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	background: rgba(255, 255, 255, 0.062);
 	text-align: center;
 	font-family: arial;
-	font-size: 18px;
+	font-size: 15px;
 	color: white;
 	cursor: pointer;
 	transition: all 0.2s ease;
@@ -426,7 +431,7 @@ button {
 }
 
 .input-button:hover {
-	border: 2px solid rgba(255, 255, 255, 0.2419);
+	border: 1px solid rgba(255, 255, 255, 0.2419);
 	background: rgba(255, 255, 255, 0.103);
 }
 
@@ -435,7 +440,7 @@ button {
 }
 
 .checkbox { 
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	background: rgba(180, 38, 38, 0.062);
 	position: relative;
 	width: 25px;
@@ -455,6 +460,7 @@ button {
 
 .logout-link {
 	position: fixed;
+	top: -1px;
 	right: 10px;
 }
 
@@ -464,25 +470,32 @@ button {
 }
 
 .card-header {
+	padding-left: 13px !important;
+	font-size: 15px !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .card {
-	margin-top: 10px;
+	margin-top: 9px;
 	background-color: #1d1d1d;
 	border: 1px solid rgba(255, 255, 255, 0.24);
 	border-radius: 4px;
 	position: relative;
-	margin-bottom: 15px;
+	margin-bottom: 6px;
+}
+
+.card-title {
+	font-size: 15px !important;
 }
 
 .card-text {
-	margin-bottom: 5px;
+	margin-bottom: 2px;
+	font-size: 12px !important;
 }
 
 .dashbord-card {
-	margin-left: 13px; 
-	margin-right: 235px;
+	margin-left: 9px; 
+	margin-right: 196px;
 }
 
 .delete-link {
@@ -502,9 +515,9 @@ button {
 .admin-panel {
 	background-color: #161616;
 	width: 100%;
-	height: calc(100% - 40px);
+	height: calc(100% - 30px);
 	position: absolute;
-	top: 40px;
+	top: 30px;
 }
 
 .admin-page {
@@ -517,7 +530,7 @@ button {
 
 .table {
 	position: relative;
-	font-size: 18px;
+	font-size: 14px;
 	margin-bottom: 0px;
 }
 
@@ -528,7 +541,7 @@ button {
 .db-delete-link {
 	color: rgb(207, 28, 28);
 	text-decoration: none;
-	font-size: 22px;
+	font-size: 17px;
 	transition: all 0.2s ease;	
 }
 
@@ -540,17 +553,18 @@ button {
 .breadcrumb {
 	background-color: #161616;
 	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
-	padding-top: 6px;
-	padding-bottom: 5px;
+	padding-top: 3px;
+	padding-bottom: 4px;
 	margin: 0;
 }
 
 .selector-button {
 	margin-left: 3px;
 	margin-right: 1px;
-	padding: 5px;
+	padding: 4px;
 	color: white;
 	border: 1px solid white;
+	font-size: 13.5px;
 }
 
 .selector-button:hover {
@@ -572,8 +586,8 @@ button {
 .back-page-button {
 	color: white;
 	border: 1px solid white;
-	font-size: 25px;
-	padding: 8px;
+	font-size: 22px;
+	padding: 6px;
 }
 
 .back-page-button:hover {
@@ -594,7 +608,7 @@ button {
 
 .card-link {
 	color: white;
-	font-size: 26px;
+	font-size: 20px;
 	font-weight: bold;
 }
 
@@ -623,7 +637,7 @@ button {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: #161616;
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	text-align: center;
 	padding: 10px;
 	font-size: 20px;
@@ -632,7 +646,7 @@ button {
 .confirmation-button {
 	position: relative;
 	background-color: #161616;
-	border: 2px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	padding: 6px;
 	font-size: 23px;	
 	color: white;
@@ -752,8 +766,8 @@ button {
 }
 
 .card-statistic {
-    max-height: 315px;
-	min-height: 315px;
+    max-height: 255px;
+	min-height: 255px;
     overflow-y: auto;
     overflow-x: hidden;
     padding: -10px;
@@ -840,7 +854,7 @@ button {
 		font-size: 16px;
 	}
 	.db-browser-select-link {
-		width: 200px;
+		width: 190px;
 		margin-bottom: 3px;
 	}
 	.title {
