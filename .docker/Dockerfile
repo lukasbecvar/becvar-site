@@ -9,9 +9,9 @@ WORKDIR /var/www
 
 # update packages and install dependencies
 RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libfreetype6-dev \ 
     libjpeg62-turbo-dev \
+    libfreetype6-dev \ 
+    libicu-dev \
     libpng-dev \
     rpm
 

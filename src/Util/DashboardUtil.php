@@ -20,11 +20,8 @@ class DashboardUtil
     private ErrorManager $errorManager;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(
-        JsonUtil $jsonUtil,
-        ErrorManager $errorManager,
-        EntityManagerInterface $entityManager
-    ) {
+    public function __construct(JsonUtil $jsonUtil, ErrorManager $errorManager, EntityManagerInterface $entityManager)
+    {
         $this->jsonUtil = $jsonUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;

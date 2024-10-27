@@ -10,6 +10,7 @@
     {# SUB NAVIGATION #}
     {% include "admin/element/navigation/visitor-manager-navigation.twig" %}
 
+    {# VISITOR IP INFO COMPONENT #}
     {% if visitorInfoData != null %}
         {# IP INFO CARD #}
         <div class="card-phone card text-white m-3">
@@ -24,6 +25,7 @@
                 </ul>
             </div>
         </div>
+    {# VISITOR METRICS COMPONENT #}
     {% elseif visitorMetrics != null %}
         {# VISITORS COUNT CHART #}
         <div class="chart-container">

@@ -59,4 +59,43 @@ class VisitorManagerControllerTest extends WebTestCase
         $this->assertSelectorTextContains('body', 'Online visitors');
         $this->assertSelectorTextContains('body', 'Banned visitors');
     }
+
+    /**
+     * Test load visitors export form
+     *
+     * @return void
+     */
+    public function testVisitorManagerExport(): void
+    {
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+
+        // make post request to admin init controller
+        $this->client->request('GET', '/admin/visitors/download');
+
+        // assert response
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('title', 'Admin | visitors export');
+        $this->assertSelectorTextContains('body', 'Download visitors data');
+        $this->assertSelectorTextContains('body', 'Export data');
+    }
+
+    /**
+     * Test load visitors metrics page
+     *
+     * @return void
+     */
+    public function testVisitorManagerMetrics(): void
+    {
+        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+
+        // make post request to admin init controller
+        $this->client->request('GET', '/admin/visitors/metrics');
+
+        // assert response
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('title', 'Admin | visitors');
+        $this->assertSelectorTextContains('body', 'Used browsers');
+        $this->assertSelectorTextContains('body', 'Visitors country');
+        $this->assertSelectorTextContains('body', 'Visitors cities');
+    }
 }

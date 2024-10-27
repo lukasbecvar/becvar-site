@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class CacheUtil
  *
  * Manages caching operations using a cache item pool
+ * Cache config is config/packages/cache.yaml
  *
  * @package App\Util
  */
