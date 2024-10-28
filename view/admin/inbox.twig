@@ -14,7 +14,7 @@
             <center>
                 {% for message in inboxData %}
                     <div class='card text-white mb-3 msg-box'>
-                        <div class="card-body">
+                        <div class="card-header">
                             <a class='delete-link' href={{ path('admin_inbox_close', {'page': page, 'id':  message.id|e}) }}>X</a>
                             {# BAN/UNBAN button #}
                             {% if banManager.isVisitorBanned(message.ip_address) %}
@@ -33,6 +33,8 @@
                                     <span class="text-white">Email: </span>{{ message.email|e }}
                                 </p>
                             </h5>
+                        </div>
+                        <div class="card-body">
                             <p class="left-center card-text">{{message.message|linkify|raw}}</p>
                         </div>
                     </div>

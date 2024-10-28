@@ -94,8 +94,8 @@ class VisitorManagerControllerTest extends WebTestCase
         // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | visitors');
-        $this->assertSelectorTextContains('body', 'Used browsers');
-        $this->assertSelectorTextContains('body', 'Visitors country');
-        $this->assertSelectorTextContains('body', 'Visitors cities');
+        $this->assertSelectorTextContains('body', 'Browser');
+        $this->assertSelectorTextContains('body', 'Country');
+        $this->assertSelectorTextContains('body', 'City');
     }
 }

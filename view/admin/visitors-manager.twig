@@ -39,12 +39,9 @@
                 <div class="col-12 col-md-4 metrics-card"> 
                     <div class="card l-bg-cherry counter-card">
                         <div class="card-statistic p-0">
-                            <div class="card-header p-2">
-                                <h5 class="card-title mb-0 color-white">Used browsers</h5>
-                            </div>
                             <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pt-1 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover">
+                                <div class="col-12 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover custom-header">
                                         <thead>
                                             <tr>
                                                 <th>Browser</th>
@@ -70,12 +67,9 @@
                 <div class="col-12 col-md-4 metrics-card"> 
                     <div class="card l-bg-blue-dark counter-card">
                         <div class="card-statistic p-0">
-                            <div class="card-header p-2">
-                                <h5 class="card-title mb-0 color-white">Visitors country</h5>
-                            </div>
                             <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pt-1 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover">
+                                <div class="col-12 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover custom-header">
                                         <thead>
                                             <tr>
                                                 <th>Country</th>
@@ -101,13 +95,10 @@
                 <div class="col-12 col-md-4 metrics-card"> 
                     <div class="card l-bg-cyan-darker counter-card">
                         <div class="card-statistic p-0">
-                            <div class="card-header p-2">
-                                <h5 class="card-title mb-0 color-white">Visitors cities</h5>
-                            </div>
                             <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pt-1 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover">
-                                        <thead>
+                                <div class="col-12 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover custom-header">
+                                        <thead class="metrics-table-header">
                                             <tr>
                                                 <th>City</th>
                                                 <th>Visitors count</th>
@@ -137,7 +128,7 @@
         {{ encore_entry_script_tags('visitors-metrics-js') }}
     {% else %}
         <div class="table-responsive center">
-            <table class="table table-dark text-nowrap table-hover">
+            <table class="table table-dark text-nowrap table-hover custom-header">
                 <thead>
                     <tr>  
                         <th scope='col'>#</th>

@@ -228,6 +228,14 @@ button {
 	max-width: 95%;
 }
 
+.msg-box .card-header {
+	padding-bottom: 0px !important;
+}
+
+.msg-box .card-text {
+	font-size: 18px !important;
+}
+
 .ban-input {
 	color:white;
 	font-family: Helvetica, Arial, sans-serif;
@@ -687,8 +695,11 @@ button {
 }
 
 .log-reader-info-card {
+	border-radius: 0px !important;
 	margin: 0; 
-	border-top: 1px solid rgba(255, 255, 255, 0.24); 
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
@@ -787,6 +798,15 @@ button {
 .count-text-in-menu select:focus {
 	outline: none;
 	border-color: #79d5ec;
+}
+
+.custom-header thead th {
+    background-color: #222222 !important;
+    color: #fff !important;
+}
+
+.metrics-card thead th  {
+	background-color: #2e2e2e !important;
 }
 
 /* mobile devices style */
