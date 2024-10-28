@@ -1,21 +1,13 @@
 <ul class="breadcrumb">
-    {# ENABLE ONLINE FILTER #}
-    {% if filter == 1 %}
-        <li>
-            <a class="selector-button btn-small" href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>
-                <strong><i class="fa fa-plug" aria-hidden="true"></i></strong>
-            </a>
-        </li>
-    {% endif %}
-    
-    {# DISABLE FILTER #}
-    {% if filter != 1 %}
+    {# BACK TO VISITORS MANAGER #}
+    {% if filter != 1 or visitorMetrics != null %}
         <li>
             <a class="selector-button btn-small" href={{ path('admin_visitor_manager', {'page': page}) }}>
                 <strong><i class="fa fa-arrow-left" aria-hidden="true"></i></strong>
             </a>
         </li>  
     {% endif %}
+    
     {# VIEW UNFILTERED VISITORS #}
     <li>
         <a class="selector-button btn-small" href={{ path('admin_database_browser', {'table': 'visitors', 'page': page }) }}>
@@ -37,6 +29,15 @@
         </a>
     </li>
 
+    {# ENABLE ONLINE FILTER #}
+    {% if filter == 1 %}
+        <li>
+            <a class="selector-button btn-small" href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>
+                <strong><i class="fa fa-plug" aria-hidden="true"></i></strong>
+            </a>
+        </li>
+    {% endif %}
+
     {# LINK TO VISITORS METRICS #}
     {% if visitorMetrics == null %}
         <li>
@@ -48,7 +49,7 @@
 
     {# METRICS TIME PERIOD SELECTOR #}
     {% if visitorMetrics != null %}
-        <li class="count-text-in-menu">
+        <li class="count-text-in-menu time-period-select">
             <label for="time-period">Time period:</label>
             <select id="time-period" onchange="updateTimePeriod()">
                 <option value="all_time">All time</option>

@@ -9,7 +9,7 @@ services:
     # composer service for managing php dependencies
     composer:
         image: composer:latest
-        container_name: composer
+        container_name: becvar_site_composer
         working_dir: /app
         volumes:
             - .:/app
@@ -17,10 +17,10 @@ services:
             - main
         command: composer install --ignore-platform-reqs
     
-    # node service for building assets
+    # node service for frontend assets
     node:
         image: node:latest
-        container_name: node
+        container_name: becvar_site_node
         working_dir: /app
         volumes:
             - .:/app
@@ -50,7 +50,7 @@ services:
         build:
             context: .
             dockerfile: ./.docker/Dockerfile
-        container_name: becvar_site_website
+        container_name: becvar_site_webserver
         restart: always
         depends_on:
             - mysql
