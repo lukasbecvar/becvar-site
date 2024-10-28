@@ -2,6 +2,7 @@
 
 namespace App\Tests\Middleware;
 
+use DateTime;
 use Twig\Environment;
 use App\Util\CacheUtil;
 use App\Entity\Visitor;
@@ -76,7 +77,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         $ipAddress = '127.0.0.1';
         $browser = 'Test Browser';
         $os = 'Test OS';
-        $date = date('d.m.Y H:i');
+        $date = new DateTime();
 
         // mock location info
         $this->visitorInfoUtilMock->expects($this->once())
@@ -103,7 +104,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         $ipAddress = '127.0.0.1';
         $browser = 'Updated Browser';
         $os = 'Updated OS';
-        $date = date('d.m.Y H:i');
+        $date = new DateTime();
 
         // mock visitor entity
         $visitor = new Visitor();

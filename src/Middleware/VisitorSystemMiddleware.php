@@ -69,7 +69,7 @@ class VisitorSystemMiddleware
     public function onKernelRequest(): void
     {
         // get data to insert
-        $date = date('d.m.Y H:i');
+        $date = new DateTime();
         $os = $this->visitorInfoUtil->getOS();
         $ipAddress = $this->visitorInfoUtil->getIP();
         $browser = $this->visitorInfoUtil->getUserAgent();
@@ -108,7 +108,7 @@ class VisitorSystemMiddleware
     /**
      * Inserts a new visitor record into the database
      *
-     * @param string $date The date of the visit
+     * @param DateTime $date The date of the visit
      * @param string $ipAddress The IP address of the visitor
      * @param string $browser The browser used by the visitor
      * @param string $os The operating system of the visitor
@@ -117,7 +117,7 @@ class VisitorSystemMiddleware
      *
      * @return void
      */
-    public function insertNewVisitor(string $date, string $ipAddress, string $browser, string $os): void
+    public function insertNewVisitor(DateTime $date, string $ipAddress, string $browser, string $os): void
     {
         // get visitor ip address
         $location = $this->visitorInfoUtil->getLocation($ipAddress);
@@ -136,8 +136,8 @@ class VisitorSystemMiddleware
         $visitorEntity = new Visitor();
 
         // set visitor data
-        $visitorEntity->setFirstVisit(new DateTime())
-            ->setLastVisit(new DateTime())
+        $visitorEntity->setFirstVisit($date)
+            ->setLastVisit($date)
             ->setBrowser($browser)
             ->setOs($os)
             ->setCity($location['city'])
@@ -163,7 +163,7 @@ class VisitorSystemMiddleware
     /**
      * Updates an existing visitor record in the database
      *
-     * @param string $date The date of the visit
+     * @param DateTime $date The date of the visit
      * @param string $ipAddress The IP address of the visitor
      * @param string $browser The updated browser used by the visitor
      * @param string $os The updated operating system of the visitor
@@ -172,7 +172,7 @@ class VisitorSystemMiddleware
      *
      * @return void
      */
-    public function updateVisitor(string $date, string $ipAddress, string $browser, string $os): void
+    public function updateVisitor(DateTime $date, string $ipAddress, string $browser, string $os): void
     {
         // get visitor data
         $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
@@ -190,7 +190,7 @@ class VisitorSystemMiddleware
             );
         } else {
             // update values
-            $visitor->setLastVisit(new DateTime());
+            $visitor->setLastVisit($date);
             $visitor->setBrowser($browser);
             $visitor->setOs($os);
 
