@@ -164,6 +164,16 @@ class VisitorRepository extends ServiceEntityRepository
             $visitorCounts[$dateKey]++;
         }
 
+        // set not found visitors count to 0
+        if ($period === 'last_24_hours') {
+            $visitorsCountByHour = [];
+            for ($i = 0; $i < 24; $i++) {
+                $hourKey = (new DateTime("-{$i} hours"))->format('Y-m-d H');                
+                $visitorsCountByHour[$hourKey] = $visitorCounts[$hourKey] ?? 0;
+            }
+            return $visitorsCountByHour;
+        }
+
         return $visitorCounts;
     }
 
