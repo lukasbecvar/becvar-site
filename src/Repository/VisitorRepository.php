@@ -90,12 +90,12 @@ class VisitorRepository extends ServiceEntityRepository
      * Get the count of visitors grouped by date based on the specified time period
      *
      * @param string $period The time period for which to retrieve the visitor count.
-     *               Valid values are 'last_week', 'last_month', 'last_year', and 'all_time'
-     *
-     * @throws InvalidArgumentException If an invalid period is specified
+     *               Valid values are 'last_24_hours', 'last_week', 'last_month', 'last_year', and 'all_time'
      *
      * @return array<string,int> An associative array where the key is the date (formatted based on the period)
      *               and the value is the count of visitors for that date
+     *
+     * @throws InvalidArgumentException If an invalid period is specified
      */
     public function getVisitorsCountByPeriod(string $period): array
     {
@@ -103,6 +103,12 @@ class VisitorRepository extends ServiceEntityRepository
 
         // select data where period
         switch ($period) {
+            case 'last_24_hours':
+                $qb->select('v.last_visit AS visitDate')
+                   ->where('v.last_visit >= :startDate')
+                   ->setParameter('startDate', new DateTime('-24 hours'));
+                break;
+
             case 'last_week':
                 $qb->select('v.last_visit AS visitDate')
                    ->where('v.last_visit >= :startDate')
@@ -136,6 +142,9 @@ class VisitorRepository extends ServiceEntityRepository
         foreach ($results as $result) {
             $date = $result['visitDate'];
             switch ($period) {
+                case 'last_24_hours':
+                    $dateKey = $date->format('Y-m-d H');
+                    break;
                 case 'last_week':
                     $dateKey = $date->format('Y-m-d');
                     break;
