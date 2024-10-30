@@ -19,7 +19,7 @@ error.404.title: "Chyba: Stránka nenájdená"
 error.404.message: "Chyba, táto stránka nebola nájdená"
 # error 426
 error.426.title: "Chyba protokolu"
-error.426.message: "Váš prehliadač nepodporuje protokol HTTPS"
+error.426.message: "Váš prehliadač nepodporuje protokol HTTPS, alebo je zakázaný javascript"
 error.426.submessage: "Skúste použiť protokol HTTPS na prístup k tejto stránke"
 # error 429
 error.429.title: "Chyba: Príliš veľa požiadaviek"
