@@ -107,19 +107,22 @@ class ProjectsManager
                         ->setLink($htmlUrl)
                         ->setStatus($status);
 
-                    // try to insert project
-                    try {
-                        $this->entityManager->persist($project);
-                        $this->entityManager->flush();
-                    } catch (Exception $e) {
-                        $this->logManager->log('project-update', 'error to update project list');
-                        $this->errorManager->handleError(
-                            'error to save project: ' . $e->getMessage(),
-                            Response::HTTP_INTERNAL_SERVER_ERROR
-                        );
-                    }
+
+                    // persist project entity
+                    $this->entityManager->persist($project);
                 }
             }
+        }
+
+        // insert projects to database
+        try {
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            $this->logManager->log('project-update', 'error to update project list');
+            $this->errorManager->handleError(
+                'error to save project: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         // delete projects list cache

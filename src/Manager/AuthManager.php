@@ -470,16 +470,16 @@ class AuthManager
 
             // set new token
             $user->setToken($newToken);
+        }
 
-            // flush data
-            try {
-                $this->entityManager->flush();
-            } catch (Exception $e) {
-                $state = [
-                    'status' => false,
-                    'message' => $e->getMessage()
-                ];
-            }
+        // flush data
+        try {
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            $state = [
+                'status' => false,
+                'message' => $e->getMessage()
+            ];
         }
 
         return $state;
