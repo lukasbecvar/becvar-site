@@ -81,7 +81,7 @@ class ExportUtilTest extends TestCase
      *
      * @return void
      */
-    public function testExportVisitorsListToPDF(): void
+    public function testExportVisitorsListToPdf(): void
     {
         // mock visitor entity
         $visitorMock = $this->createMock(Visitor::class);

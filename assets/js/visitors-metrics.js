@@ -10,10 +10,13 @@ var options = {
         data: Object.values(visitorMetrics)
     }],
     chart: {
-        height: 270,
+        height: 275,
         type: 'area',
         zoom: {
             enabled: false
+        },
+        padding: {
+            right: 0
         }
     },
     dataLabels: {
@@ -56,9 +59,16 @@ var options = {
         labels: {
             style: {
                 colors: '#ffffff'
+            },
+            rotate: 0,
+            maxHeight: 50,
+            hideOverlappingLabels: true,
+            formatter: (value) => {
+                return value;
             }
-        }
-    },
+        },
+        tickAmount: 'dataPoints'
+    },          
     yaxis: {
         labels: {
             style: {

@@ -742,10 +742,9 @@ button {
 	color: white;
 	margin: 5px;
 	padding-top: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 1px;
 	padding-bottom: 0;
-	border-radius: 5px;
+	border-radius: 3px;
 }
 
 .apexcharts-menu {
@@ -807,6 +806,10 @@ button {
 
 .metrics-card thead th  {
 	background-color: #2e2e2e !important;
+}
+
+.time-period-select select {
+	width: 120px;
 }
 
 /* mobile devices style */
@@ -880,11 +883,14 @@ button {
 	.time-period-select {
 		display: block;
 	}
+	.time-period-select select {
+		width: 95px;
+	}
 	.selector-button {
-		margin-left: 3px;
+		margin-left: 1px;
 		margin-right: 3px;
-		padding: 3px;
-		font-size: 16px;
+		padding: 4px;
+		font-size: 15px;
 	}
 	.db-browser-select-link {
 		width: 190px;
@@ -929,6 +935,9 @@ button {
 	}
 	.ban-form {
 		height: 62px;
+	}
+	.apexcharts-toolbar {
+		display: none !important;
 	}
 }
 
