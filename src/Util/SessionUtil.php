@@ -4,6 +4,7 @@ namespace App\Util;
 
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class SessionUtil
@@ -14,11 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SessionUtil
 {
+    private RequestStack $requestStack;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
 
-    public function __construct(SecurityUtil $securityUtil, ErrorManager $errorManager)
+    public function __construct(RequestStack $requestStack, SecurityUtil $securityUtil, ErrorManager $errorManager)
     {
+        $this->requestStack = $requestStack;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
     }
@@ -30,8 +33,8 @@ class SessionUtil
      */
     public function startSession(): void
     {
-        if (session_status() == PHP_SESSION_NONE && (!headers_sent())) {
-            session_start();
+        if (!$this->requestStack->getSession()->isStarted()) {
+            $this->requestStack->getSession()->start();
         }
     }
 
@@ -42,8 +45,9 @@ class SessionUtil
      */
     public function destroySession(): void
     {
-        $this->startSession();
-        session_destroy();
+        if ($this->requestStack->getSession()->isStarted()) {
+            $this->requestStack->getSession()->invalidate();
+        }
     }
 
     /**
@@ -55,8 +59,7 @@ class SessionUtil
      */
     public function checkSession(string $sessionName): bool
     {
-        $this->startSession();
-        return isset($_SESSION[$sessionName]);
+        return $this->requestStack->getSession()->has($sessionName);
     }
 
     /**
@@ -70,7 +73,7 @@ class SessionUtil
     public function setSession(string $sessionName, string $sessionValue): void
     {
         $this->startSession();
-        $_SESSION[$sessionName] = $this->securityUtil->encryptAes($sessionValue);
+        $this->requestStack->getSession()->set($sessionName, $this->securityUtil->encryptAes($sessionValue));
     }
 
     /**
@@ -85,7 +88,7 @@ class SessionUtil
         $this->startSession();
 
         // decrypt session value
-        $value = $this->securityUtil->decryptAes($_SESSION[$sessionName]);
+        $value = $this->securityUtil->decryptAes($this->requestStack->getSession()->get($sessionName));
 
         // check if session data is decrypted
         if ($value == null) {

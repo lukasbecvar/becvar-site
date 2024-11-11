@@ -74,6 +74,9 @@ class AuthManager
         // check if token exist in database
         if ($this->userRepository->getUserByToken($loginToken) != null) {
             return true;
+        } else {
+            // destroy session if token not found in user database
+            $this->sessionUtil->destroySession();
         }
 
         return false;
