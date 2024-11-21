@@ -14,6 +14,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # exception event subscriber (error handling functionality)
+    App\Event\Subscriber\ExceptionEventSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
     # twig extensions
     # --------------------------------------------------------------------------------- #
     # linkify extension
@@ -26,17 +31,6 @@ services:
         arguments:
             $authManager: '@App\Manager\AuthManager'
         tags: [ 'twig.extension' ]
-
-    # error handeling controller for app exception
-    # --------------------------------------------------------------------------------- #
-    Symfony\Component\HttpKernel\EventListener\ErrorListener:
-        arguments:
-            $controller: 'App\Controller\ErrorController::show'
-
-    # exception event subscriber
-    App\Event\Subscriber\ExceptionEventSubscriber:
-        tags:
-            - { name: kernel.event_subscriber }
 
     # app middlewares
     # --------------------------------------------------------------------------------- #

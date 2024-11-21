@@ -2,10 +2,9 @@
 
 namespace App\Event\Subscriber;
 
-use Exception;
 use App\Util\AppUtil;
 use Psr\Log\LoggerInterface;
-use App\Manager\ErrorManager;
+use App\Controller\ErrorController;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -23,13 +22,13 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
 {
     private AppUtil $appUtil;
     private LoggerInterface $logger;
-    private ErrorManager $errorManager;
+    private ErrorController $errorController;
 
-    public function __construct(AppUtil $appUtil, LoggerInterface $logger, ErrorManager $errorManager)
+    public function __construct(AppUtil $appUtil, LoggerInterface $logger, ErrorController $errorController)
     {
         $this->logger = $logger;
         $this->appUtil = $appUtil;
-        $this->errorManager = $errorManager;
+        $this->errorController = $errorController;
     }
 
     /**
@@ -59,18 +58,6 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         // get the error message
         $message = $exception->getMessage();
 
-        // handle untrusted host exception
-        if (preg_match('/Untrusted Host|Invalid host/', $message)) {
-            if (!$this->appUtil->isDevMode()) {
-                $content = $this->errorManager->getErrorView('400');
-                $response = new Response($content, Response::HTTP_SERVICE_UNAVAILABLE);
-                $event->setResponse($response);
-                return;
-            } else {
-                throw new Exception($message);
-            }
-        }
-
         // define default exception code
         $statusCode = 500;
 
@@ -88,6 +75,12 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         if (!in_array($statusCode, $excludedHttpCodes)) {
             // log the error message to exception log
             $this->logger->error($message);
+        }
+
+        // call error controller to generate response
+        $response = $this->errorController->show($exception);
+        if ($response instanceof Response) {
+            $event->setResponse($response);
         }
     }
 }

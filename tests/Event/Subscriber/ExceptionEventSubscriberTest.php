@@ -4,8 +4,8 @@ namespace App\Tests\Event\Subscriber;
 
 use App\Util\AppUtil;
 use Psr\Log\LoggerInterface;
-use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
+use App\Controller\ErrorController;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,7 @@ class ExceptionEventSubscriberTest extends TestCase
     private AppUtil & MockObject $appUtil;
     private LoggerInterface & MockObject $logger;
     private ExceptionEventSubscriber $subscriber;
-    private ErrorManager & MockObject $errorManager;
+    private ErrorController & MockObject $errorController;
 
     protected function setUp(): void
     {
@@ -43,10 +43,10 @@ class ExceptionEventSubscriberTest extends TestCase
         ]);
 
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->errorManager = $this->createMock(ErrorManager::class);
+        $this->errorController = $this->createMock(ErrorController::class);
 
         // create instance of the ExceptionEventSubscriber
-        $this->subscriber = new ExceptionEventSubscriber($this->appUtil, $this->logger, $this->errorManager);
+        $this->subscriber = new ExceptionEventSubscriber($this->appUtil, $this->logger, $this->errorController);
     }
 
     /**
@@ -58,6 +58,9 @@ class ExceptionEventSubscriberTest extends TestCase
     {
         // expect that logger->error() will be called once
         $this->logger->expects($this->once())->method('error')->with('Test Exception Message');
+
+        // expect error controller to be called
+        $this->errorController->expects($this->once())->method('show');
 
         // create instance of HttpException
         $exception = new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, 'Test Exception Message');
@@ -81,6 +84,9 @@ class ExceptionEventSubscriberTest extends TestCase
     {
         // expect that logger->error() will NOT be called
         $this->logger->expects($this->never())->method('error');
+
+        // expect error controller to be called
+        $this->errorController->expects($this->once())->method('show');
 
         // create instance of HttpException
         $exception = new HttpException(404, 'Test Exception Message');
