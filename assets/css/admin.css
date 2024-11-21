@@ -39,9 +39,9 @@ form {
 }
 
 textarea {
+	resize: none;
 	height: 150px;
 	line-height: 150%;
-	resize: none;
 }
 
 th {
@@ -77,12 +77,12 @@ th {
 }
 
 .export-filter {
-	color: white !important;
 	outline: none !important;
-	outline-offset: none !important;
+	color: white !important;
 	outline-color: none !important;
 	outline-style: none !important;
 	outline-color: none !important;
+	outline-offset: none !important;
 	background-color: #161616 !important;
 	border: 1px solid rgba(255, 255, 255, 0.24);
 }
@@ -92,22 +92,22 @@ body.active .wrapper .sidebar {
 }
 
 body.active .wrapper .section {
-	margin-left: 0;
 	width: 100%;
+	margin-left: 0;
 }
 
 .wrapper .sidebar {
-	background-color: #161616;
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 1;
 	width: 190px;
 	height: 100%;
 	padding: 5px 0;
-	transition: all 0.2s ease;
-	z-index: 1;
-	border-right: 1px solid rgba(255, 255, 255, 0.24);
 	overflow-y: auto;
+	transition: all 0.2s ease;
+	background-color: #161616;
+	border-right: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .wrapper .sidebar .profile {
@@ -116,22 +116,22 @@ body.active .wrapper .section {
 }
 
 .wrapper .sidebar .profile img {
-	display: block;
 	width: 50px;
 	height: 50px;
-	border-radius: 10%;
+	display: block;
 	margin: 0 auto;
+	border-radius: 10%;
 }
 
 .wrapper .sidebar .profile h3 {
+	font-size: 22px;
 	color: #ffffff;
 	margin: 5px 0 1px;
-	font-size: 22px;
 }
 
 .wrapper .sidebar .profile p {
-	color: rgb(206, 240, 253);
 	font-size: 10px;
+	color: rgb(206, 240, 253);
 }
 
 .wrapper .sidebar ul {
@@ -140,23 +140,23 @@ body.active .wrapper .section {
 
 .wrapper .sidebar ul li a {
 	display: block;
-	padding: 1px 2px;
-	border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
-	color: rgb(241, 237, 237);
 	font-size: 15px;
+	padding: 1px 2px;
 	position: relative;
+	color: rgb(241, 237, 237);
+	border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
 }
 
 .wrapper .sidebar ul li a .icon {
-	color: #dee4ec;
 	width: 25px;
+	color: #dee4ec;
 	display: inline-block;
 }
 
 .wrapper .sidebar ul li a:hover, .wrapper .sidebar ul li a.active {
-	background-color: rgba(87, 87, 87, 0.397);
-	border-right: 2px solid rgb(33, 39, 43);
 	color: #79d5ec;
+	border-right: 2px solid rgb(33, 39, 43);
+	background-color: rgba(87, 87, 87, 0.397);
 }
 
 .wrapper .sidebar ul li a:hover:before, .wrapper .sidebar ul li a.active:before {
@@ -164,23 +164,23 @@ body.active .wrapper .section {
 }
 
 .wrapper .section {
-	width: calc(100% - 190px);
 	margin-left: 190px;
+	width: calc(100% - 190px);
 	transition: all 0.2s ease;
 }
 
 .wrapper .section .top-navbar {
-	background-color: #161616;
 	height: 30px;
 	display: flex;
-	align-items: center;
 	padding: 0 0.5%;
+	align-items: center;
+	background-color: #161616;
 	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
 }
 
 .wrapper .section .top-navbar {
-	position: fixed; 
 	z-index: 1000; 
+	position: fixed; 
 	width: 100% !important;
 }
 
@@ -197,9 +197,9 @@ body.active .wrapper .section {
 
 .wrapper .section .container {
 	margin: 30px;
-	background: #292e33;
 	padding: 50px;
 	line-height: 28px;
+	background: #292e33;
 }
 
 .role-line {
@@ -237,69 +237,69 @@ button {
 }
 
 .ban-input {
-	color:white;
-	font-family: Helvetica, Arial, sans-serif;
-	font-weight:500;
-	font-size: 18px;
-	border-radius: 5px;
-	line-height: 22px;
-	background-color: transparent;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	transition: all 0.3s;
-	padding: 13px;
-	margin-bottom: 15px;
+	outline: 0;
 	width: 100%;
+	padding: 13px;
+	color:white;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	transition: all 0.3s;
 	box-sizing: border-box;
-	outline:0;
+	background-color: transparent;
+	font-family: Helvetica, Arial, sans-serif;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .ban-area {
-	width: calc(100% - 6.5%);
 	color:white;
+	height: 98%;
 	padding: 4px;
 	padding-left: 10px;
-	height: 98%;
 	margin-top: -3.5px;
 	margin-left: -3.5px;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	width: calc(100% - 6.5%);
 	background: rgba(255, 255, 255, 0.062);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .ban-form {
-	padding: 5px;
-	background: rgba(0, 0, 0, 0.596);
-	position: relative; 
-	margin-top: 30px;
 	left: 50%;
 	width: 100%;
 	height: 60px;
+	padding: 5px;
+	margin-top: 30px;
+	position: relative; 
 	transform: translate(-50%, -50%);
+	background: rgba(0, 0, 0, 0.596);
 	border: 1px solid rgba(255, 255, 255, 0.356);
 }
 
 .ban-button {
-	position: absolute;
 	right: 1px;
 	margin: 2px;
 	top: -5.5px;
 	height: 95%;
 	width: 6.6%;
+	position: absolute;
 }
 
 .alert {
-	position: relative;
 	top: 20px;
 	width: 28%;
-	font-size: 16px;
-	padding: 6px;
 	z-index: 2;
+	padding: 6px;
+	font-size: 16px;
+	position: relative;
 }
 
 .page-title {
-	text-align: center; 
-	color: white;
-	font-size: 25px;
 	margin-top: 3%;
+	font-size: 25px;
+	color: white;
+	text-align: center; 
 }
 
 .login-page {
@@ -311,50 +311,50 @@ button {
 }
 
 .form {
-	margin-top: 4%;
-	padding: 0.3%;
-	background: rgba(0, 0, 0, 0.596);
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	position: absolute;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	padding: 0.3%;
+	margin-top: 4%;
 	min-width: 320px;
+	position: absolute;
+	background: rgba(0, 0, 0, 0.596);
+	transform: translate(-50%, -50%);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .form .text-input:-webkit-autofill, 
 .form .text-input:-webkit-autofill:hover, 
 .form .text-input:-webkit-autofill:focus {
 	border: 1px solid rgba(255, 255, 255, 0.24);
-	-webkit-text-fill-color: white;
-	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
 	transition: background-color 5000s ease-in-out 0s;
+	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
+	-webkit-text-fill-color: white;
 }
 
 .form-pos-y {
-	padding: 1%;
 	top: 27%;
 	left: 50%;
+	padding: 1%;
 	transform: translate(-50%, -50%);
 }
 
 .db-edit-form {
-	text-align: center;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	padding: 5px;
-	position: relative;
 	top: 20px;
-	opacity: 0.8;
 	width: 40%;
+	opacity: 0.8;
+	padding: 5px;
+	text-align: center;
+	position: relative;
 	background: rgba(0, 0, 0, 0.877);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .image-upload-form {
-	padding: 1%;
-	background: rgba(0, 0, 0, 0.596);
-	position: absolute;
 	top: 35%;
 	left: 50%;
+	padding: 1%;
+	position: absolute;
 	transform: translate(-50%, -50%);
+	background: rgba(0, 0, 0, 0.596);
 	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
@@ -364,26 +364,26 @@ button {
 }
 
 .text-input {
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	background: rgba(255, 255, 255, 0.062);
-	text-align: center;
-	font-family: arial;
-	font-size: 14px;
 	margin: 2px;
 	padding: 3px;
-	color: white;
-	transition: all 0.2s ease;
 	width: 98.5%;
+	color: white;
+	font-size: 14px;
+	text-align: center;
+	font-family: arial;
+	transition: all 0.2s ease;
+	background: rgba(255, 255, 255, 0.062);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .text-input:-webkit-autofill, 
 .text-input:-webkit-autofill:hover, 
 .text-input:-webkit-autofill:focus {
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	-webkit-text-fill-color: white;
 	background: rgba(255, 255, 255, 0.062);
-	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	transition: background-color 5000s ease-in-out 0s;
+	-webkit-text-fill-color: white;
+	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
 }
 
 .text-input-title {
@@ -410,15 +410,15 @@ button {
 
 .db-browser-select-link {
 	position: absolute;
-	border: 1px solid white;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	padding: 8px;
 	width: 260px;
-	text-align: center;
+	padding: 8px;
 	color: white;
-	margin-bottom: 0px;
 	font-size: 17px;
+	text-align: center;
+	margin-bottom: 0px;
+	border: 1px solid white;
+	transform: translate(-50%, -50%);
 }
 
 .db-browser-select-link:hover {
@@ -428,23 +428,23 @@ button {
 
 .input-button {
 	padding: 5px;
-	margin-top: 7px;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	background: rgba(255, 255, 255, 0.062);
-	text-align: center;
-	font-family: arial;
-	font-size: 15px;
 	color: white;
 	cursor: pointer;
-	transition: all 0.2s ease;
-	text-decoration: none;
+	margin-top: 7px;
+	font-size: 15px;
 	padding-left: 8px;
 	padding-right: 8px;
+	font-family: arial;
+	text-align: center;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	background: rgba(255, 255, 255, 0.062);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .input-button:hover {
-	border: 1px solid rgba(255, 255, 255, 0.2419);
 	background: rgba(255, 255, 255, 0.103);
+	border: 1px solid rgba(255, 255, 255, 0.2419);
 }
 
 .right-position {
@@ -452,18 +452,18 @@ button {
 }
 
 .checkbox { 
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	background: rgba(180, 38, 38, 0.062);
-	position: relative;
+	top: 5px;
 	width: 25px;
 	height: 20px;
-	top: 5px;
+	position: relative;
+	background: rgba(180, 38, 38, 0.062);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .checkbox-text { 
 	color: white;
-	font-family: arial;
 	font-size: 20px;
+	font-family: arial;
 }
 
 .s-menu-button {
@@ -472,8 +472,8 @@ button {
 
 .logout-link {
 	position: fixed;
-	top: -1px;
 	right: 10px;
+	top: -1px;
 }
 
 .left-center {
@@ -482,18 +482,18 @@ button {
 }
 
 .card-header {
-	padding-left: 13px !important;
 	font-size: 15px !important;
+	padding-left: 13px !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .card {
 	margin-top: 9px;
-	background-color: #1d1d1d;
-	border: 1px solid rgba(255, 255, 255, 0.24);
 	border-radius: 4px;
 	position: relative;
 	margin-bottom: 6px;
+	background-color: #1d1d1d;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .card-title {
@@ -512,38 +512,38 @@ button {
 
 .delete-link {
 	float: right;
-	color: rgb(207, 39, 39);
-	text-decoration: none;
 	font-size: 30px;
-	transition: all 0.2s ease;	
 	margin-right: 8px;
+	text-decoration: none;
+	transition: all 0.2s ease;	
+	color: rgb(207, 39, 39);
 }
 
 .delete-link:hover {
-	color: rgb(33, 248, 97);
 	text-decoration: none;
+	color: rgb(33, 248, 97);
 }
 
 .admin-panel {
-	background-color: #161616;
-	width: 100%;
-	height: calc(100% - 30px);
-	position: absolute;
 	top: 30px;
+	width: 100%;
+	position: absolute;
+	height: calc(100% - 30px);
+	background-color: #161616;
 }
 
 .admin-page {
-	position: absolute;
-	background-color: #161616;
 	width: 100%;
 	height: 100%;
+	position: absolute;
 	overflow-x: hidden;
+	background-color: #161616;
 }
 
 .table {
-	position: relative;
 	font-size: 14px;
 	margin-bottom: 0px;
+	position: relative;
 }
 
 .dark-table {
@@ -551,33 +551,33 @@ button {
 }
 
 .db-delete-link {
-	color: rgb(207, 28, 28);
-	text-decoration: none;
 	font-size: 17px;
+	text-decoration: none;
+	color: rgb(207, 28, 28);
 	transition: all 0.2s ease;	
 }
 
 .db-delete-link:hover {
-	color: rgb(33, 248, 97);
 	text-decoration: none;
+	color: rgb(33, 248, 97);
 }
 
 .breadcrumb {
-	background-color: #161616;
-	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
+	margin: 0;
 	padding-top: 3px;
 	padding-bottom: 4px;
-	margin: 0;
+	background-color: #161616;
+	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
 }
 
 .selector-button {
+	padding: 4px;
 	margin-left: 3px;
 	margin-right: 1px;
-	padding: 4px;
-	color: rgb(219, 219, 219);
-	border: 1px solid rgb(219, 219, 219);
 	font-size: 13.5px;
 	border-radius: 3px;
+	color: rgb(219, 219, 219);
+	border: 1px solid rgb(219, 219, 219);
 }
 
 .selector-button:hover {
@@ -586,9 +586,9 @@ button {
 }
 
 .count-text-in-menu {
+	right: 0.3%;
 	color: white;
 	position: absolute;
-	right: 0.3%;
 }
 
 .page-button-box {
@@ -597,11 +597,11 @@ button {
 }
 
 .back-page-button {
-	color: white;
-	border: 1px solid white;
-	font-size: 22px;
 	padding: 6px;
+	color: white;
+	font-size: 22px;
 	border-radius: 6px;
+	border: 1px solid white;
 }
 
 .back-page-button:hover {
@@ -631,14 +631,14 @@ button {
 }
 
 .card .card-statistic-3 .card-icon {
-	text-align: center;
+	top: 20px;
+	right: -5px;
+	opacity: 0.1;
+	color: #000;
 	line-height: 50px;
 	margin-left: 15px;
-	color: #000;
+	text-align: center;
 	position: absolute;
-	right: -5px;
-	top: 20px;
-	opacity: 0.1;
 }
 
 .stats-link {
@@ -646,25 +646,25 @@ button {
 }
 
 .confirmation {
-	position: absolute;
 	top: 30%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #161616;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	text-align: center;
 	padding: 10px;
 	font-size: 20px;
+	position: absolute;
+	text-align: center;
+	background-color: #161616;
+	transform: translate(-50%, -50%);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .confirmation-button {
 	position: relative;
-	background-color: #161616;
-	border: 1px solid rgba(255, 255, 255, 0.24);
 	padding: 6px;
-	font-size: 23px;	
 	color: white;
 	width: 100px;
+	font-size: 23px;	
+	background-color: #161616;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .confirmation-button:hover {
@@ -673,9 +673,9 @@ button {
 }
 
 .title {
-	font-weight: bold;
-	font-size: 20px;
 	color: white;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .websiteIN {
@@ -695,17 +695,17 @@ button {
 }
 
 .log-reader-info-card {
-	border-radius: 0px !important;
 	margin: 0; 
 	border-top: none !important;
 	border-left: none !important;
+	border-radius: 0px !important;
 	border-right: none !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .account-settings-table {
-	border: 1px solid rgba(255, 255, 255, 0.24);
 	max-width: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .profile-pics-admin-settings {
@@ -717,13 +717,13 @@ button {
 }
 
 .email-line {
-	margin-left: 0px;
 	margin-top: 4px;
+	margin-left: 0px;
 }
 
 .counter-container {
-	background: none;
 	border: none;
+	background: none;
 }
 
 .profile-pic-change {
@@ -737,19 +737,19 @@ button {
 }
 
 .chart-container {
-	background-color: #1d1d1d;
-	border: 1px solid rgba(255, 255, 255, 0.24);
-	color: white;
 	margin: 5px;
+	color: white;
 	padding-top: 5px;
 	padding-left: 1px;
 	padding-bottom: 0;
 	border-radius: 3px;
+	background-color: #1d1d1d;
+	border: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .apexcharts-menu {
-	background: #333 !important;
 	color: white !important;
+	background: #333 !important;
 }
 
 .apexcharts-menu .apexcharts-menu-item {
@@ -761,8 +761,8 @@ button {
 }
 
 .apexcharts-tooltip {
-	background: #444;
 	color: white;
+	background: #444;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -771,10 +771,10 @@ button {
 }
 
 .metrics-box-container {
-    margin-right: 12px;
-    margin-left: 12px;
     margin-top: 3px;
     margin-bottom: 0;
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 .metrics-card {
@@ -782,16 +782,16 @@ button {
 }
 
 .card-statistic {
+    padding: -10px;
     max-height: 255px;
 	min-height: 255px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: -10px;
 }
 
 .count-text-in-menu select {
-	background-color: #1e1e1e;
 	color: #ffffff;
+	background-color: #1e1e1e;
 }
 
 .count-text-in-menu select:focus {
@@ -800,8 +800,8 @@ button {
 }
 
 .custom-header thead th {
+	color: #fff !important;
     background-color: #222222 !important;
-    color: #fff !important;
 }
 
 .metrics-card thead th  {
@@ -834,15 +834,15 @@ button {
 		display: none;
 	}
 	.delete-link {
-		margin-bottom: 20px;
 		font-size: 18px;
+		margin-bottom: 20px;
 	}
 	.form-title {
 		font-size: 20px;
 	}
 	.ban-button {
-		position: absolute;
 		width: 18%;
+		position: absolute;
 	}	
 	.table {
 		font-size: 13px;
@@ -851,24 +851,24 @@ button {
 		font-size: 15px;
 	}
 	.alert {
-		top: 6%;
-		text-align: center;
-		left: 50%;
-		transform: translate(-50%, -50%);
 		position: absolute;
+		top: 6%;
+		left: 50%;
 		width: 90%;
-		font-size: 15px;
-		padding: 5px;
 		z-index: 2;
+		padding: 5px;
+		font-size: 15px;
+		text-align: center;
+		transform: translate(-50%, -50%);
 	}	
 	.back-page-button {
 		font-size: 17px;
 	}
 	.form {
-		margin-top: 18%;
-		padding: 0.5%;
 		left: 50%;
 		width: 90%;
+		padding: 0.5%;
+		margin-top: 18%;
 	}
 	.form-pos-y {
 		padding: 10px;
@@ -877,8 +877,8 @@ button {
 		padding-left: 3.5px;
 	}
 	.count-text-in-menu {
-		margin-right: 3px;
 		display: none;
+		margin-right: 3px;
 	}
 	.time-period-select {
 		display: block;
@@ -887,10 +887,10 @@ button {
 		width: 95px;
 	}
 	.selector-button {
-		margin-left: 1px;
-		margin-right: 3px;
 		padding: 4px;
 		font-size: 15px;
+		margin-left: 1px;
+		margin-right: 3px;
 	}
 	.db-browser-select-link {
 		width: 190px;
@@ -903,19 +903,19 @@ button {
 		font-size: 15px;
 	}
 	.image-upload-form {
-		padding: 4%;
 		top: 40%;
 		left: 50%;
 		width: 90%;
+		padding: 4%;
 	}
 	.card-phone {
-		margin-left: 10px;
 		width: 96%;
+		margin-left: 10px;
 	}
 	.ban-area {
-		width: calc(100% - 18%);
-		margin-top: -4px;
 		height: 56px;
+		margin-top: -4px;
+		width: calc(100% - 18%);
 	}
 	.log-reader-info {
 		font-size: 16px;
@@ -924,8 +924,8 @@ button {
 		margin-top: -7px;
 	}
 	.db-edit-form { 
-		width: 95%;
 		top: 30px;
+		width: 95%;
 	}
 	.logout-link {
 		right: 8px;

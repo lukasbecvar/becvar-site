@@ -1,13 +1,9 @@
-parameters:
-
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # automatically injects dependencies in your services.
-        autoconfigure: true # automatically registers your services as commands, event subscribers, etc.
+        autowire: true      # automatically injects dependencies
+        autoconfigure: true # automatically register services
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+    # define autowiring services for App namespace
     App\:
         resource: '../src/'
         exclude:
@@ -34,47 +30,47 @@ services:
 
     # app middlewares
     # --------------------------------------------------------------------------------- #
-    # resource build check middleware
+    # check if assets is builded
     App\Middleware\AssetsCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
 
-    # escape request data middleware
+    # escape request data (for security)
     App\Middleware\EscapeRequestDataMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
-    # check database online middleware
+    # check if database is online
     App\Middleware\DatabaseOnlineMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
 
-    # security check middleware
+    # check security rules
     App\Middleware\SecurityCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 
-    # handle maintenance mode middleware
+    # handle maintenance mode
     App\Middleware\MaintenanceMiddleware:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 5 }
 
-    # visitor system middleware
+    # visitor system handler
     App\Middleware\VisitorSystemMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
-    # set translations middleware
+    # set translations by visitor location
     App\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
-    # authentification check middleware
+    # check if user is authenticated
     App\Middleware\AuthentificatedCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
-    # handle auto-login middleware
+    # auto-login middleware for remember me feature
     App\Middleware\AutoLoginMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }

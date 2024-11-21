@@ -2,11 +2,11 @@
 
 /* ============== common style ============== */
 body {
-    font-family: "Courier", sans-serif;
-    background-color: #040404;
     color: #fff;
     position: relative;
     background: transparent;
+    background-color: #040404;
+    font-family: "Courier", sans-serif;
 }
 
 body::before {
@@ -42,19 +42,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header {
-    position: relative;
     height: 100vh;
     display: flex;
-    align-items: center;
     z-index: 997;
     overflow-y: auto;
+    position: relative;
+    align-items: center;
 }
 
 #header h1 {
-    font-size: 48px;
     margin: 0;
     padding: 0;
     line-height: 1;
+    font-size: 48px;
     font-weight: 700;
     font-family: "Poppins", sans-serif;
 }
@@ -73,8 +73,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #header h2 span {
     color: #fff;
-    border-bottom: 2px solid #ffd900;
     padding-bottom: 6px;
+    border-bottom: 2px solid #ffd900;
 }
 
 #header img {
@@ -83,22 +83,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header .social-links {
-    margin-top: 40px;
     display: flex;
+    margin-top: 40px;
 }
 
 #header .social-links a {
-    font-size: 16px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    line-height: 1;
-    margin-right: 8px;
-    border-radius: 50%;
     width: 40px;
     height: 40px;
+    color: #fff;
+    line-height: 1;
+    font-size: 16px;
+    margin-right: 8px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 #header .social-links a:hover {
@@ -118,17 +118,17 @@ h1, h2, h3, h4, h5, h6 {
     }
     #header .container {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
     }
 }
 
 #header.header-top {
-    height: 80px;
     position: fixed;
-    left: 0;
     top: 0;
+    left: 0;
     right: 0;
+    height: 80px;
     background: rgba(0, 0, 0);
 }
 
@@ -182,15 +182,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a, .navbar a:focus {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0;
-    font-family: "Poppins", sans-serif;
+    display: flex;
     font-size: 16px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
     white-space: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: "Poppins", sans-serif;
 }
 
 .navbar a i, .navbar a:focus i {
@@ -202,18 +202,18 @@ h1, h2, h3, h4, h5, h6 {
 .navbar a:before {
     content: "";
     position: absolute;
+    left: 0;
     width: 0;
+    width: 0px;
     height: 2px;
     bottom: -4px;
-    left: 0;
-    background-color: #ffd900;
     visibility: hidden; 
-    width: 0px;
+    background-color: #ffd900;
 }
 
 .navbar a:hover:before, .navbar li:hover > a:before, .navbar .active:before {
-    visibility: visible;
     width: 25px;
+    visibility: visible;
 }
 
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
@@ -221,21 +221,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav-toggle {
+    top: 15px;
+    right: 15px;
     color: #fff;
+    display: none;
     font-size: 28px;
     cursor: pointer;
-    display: none;
     line-height: 0;
     position: fixed;
-    right: 15px;
-    top: 15px;
 }
 
 @media (max-width: 991px) {
     .mobile-nav-toggle {
         display: block;
     }
-
     .navbar ul {
         display: none;
     }
@@ -245,13 +244,13 @@ h1, h2, h3, h4, h5, h6 {
     position: fixed;
     overflow: hidden;
     top: 0;
-    right: 0;
     left: 0;
+    right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
-    transition: 0.3s;
     z-index: 999;
     margin-top: 0;
+    transition: 0.3s;
+    background: rgba(0, 0, 0, 0.9);
 }
 
 .navbar-mobile .mobile-nav-toggle {
@@ -261,12 +260,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-mobile ul {
-    display: block;
     position: absolute;
+    display: block;
     top: 55px;
     right: 15px;
-    bottom: 45px;
     left: 15px;
+    bottom: 45px;
     padding: 10px 0;
     overflow-y: auto;
     transition: 0.3s;
@@ -287,26 +286,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 section {
-    overflow: hidden;
-    position: absolute;
     width: 100%;
     top: 140px;
-    bottom: 100%;
     opacity: 0;
-    transition: ease-in-out 0.4s;
     z-index: 2;
+    bottom: 100%;
+    overflow: hidden;
+    position: absolute;
+    transition: ease-in-out 0.4s;
 }
 
 section.section-show {
     top: 100px;
-    bottom: auto;
     opacity: 1;
+    bottom: auto;
     padding-bottom: 45px;
 }
 
 section .container {
-    background: rgba(0, 0, 0, 0.9);
     padding: 30px;
+    background: rgba(0, 0, 0, 0.9);
 }
 
 @media (max-width: 768px) {
@@ -319,14 +318,14 @@ section .container {
 }
 
 .section-title h2 {
+    padding: 0;
     font-size: 14px;
     font-weight: 500;
-    padding: 0;
     line-height: 1px;
+    color: #aaaaaa;
     margin: 0 0 20px 0;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #aaaaaa;
     font-family: "Poppins", sans-serif;
 }
 
@@ -334,19 +333,19 @@ section .container {
     content: "";
     width: 120px;
     height: 1px;
+    margin: 4px 10px;
     display: inline-block;
     background: #ffd900;
-    margin: 4px 10px;
 }
 
 .section-title p {
+    color: #fff;
     margin: 0;
-    margin: -15px 0 15px 0;
     font-size: 36px;
     font-weight: 700;
+    margin: -15px 0 15px 0;
     text-transform: uppercase;
     font-family: "Poppins", sans-serif;
-    color: #fff;
 }
 
 /* ============== about style ============== */
@@ -357,13 +356,13 @@ section .container {
 }
 
 .about-me .content ul {
-    list-style: none;
     padding: 0;
+    list-style: none;
 }
 
 .about-me .content ul li {
-    margin-bottom: 20px;
     display: flex;
+    margin-bottom: 20px;
     align-items: center;
 }
 
@@ -372,10 +371,10 @@ section .container {
 }
 
 .about-me .content ul i {
-    font-size: 16px;
-    margin-right: 5px;
-    color: #ffd900;
     line-height: 0;
+    font-size: 16px;
+    color: #ffd900;
+    margin-right: 5px;
 }
 
 .about-me .content p:last-child {
@@ -387,38 +386,38 @@ section .container {
 }
 
 .counts .count-box {
-    padding: 30px 30px 25px 30px;
     width: 100%;
     position: relative;
     text-align: center;
+    padding: 30px 30px 25px 30px;
     background: rgba(255, 255, 255, 0.08);
 }
 
 .counts .count-box i {
-    position: absolute;
-    top: -25px;
     left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-    background: rgba(255, 255, 255, 0.1);
+    top: -25px;
     padding: 12px;
-    color: #ffd900;
-    border-radius: 50px;
     line-height: 0;
+    font-size: 24px;
+    color: #ffd900;
+    position: absolute;
+    border-radius: 50px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .counts .count-box span {
-    font-size: 36px;
-    display: block;
-    font-weight: 600;
     color: #fff;
+    display: block;
+    font-size: 36px;
+    font-weight: 600;
 }
 
 .counts .count-box p {
-    padding: 0;
     margin: 0;
-    font-family: "Raleway", sans-serif;
+    padding: 0;
     font-size: 14px;
+    font-family: "Raleway", sans-serif;
 }
 
 .skills .progress {
@@ -429,13 +428,13 @@ section .container {
 }
 
 .skills .progress .skill {
-    padding: 10px 0;
     margin: 0;
-    text-transform: uppercase;
-    display: block;
-    font-weight: 600;
-    font-family: "Poppins", sans-serif;
     color: #fff;
+    display: block;
+    padding: 10px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
 }
 
 .skills .progress .skill .val {
@@ -456,37 +455,37 @@ section .container {
 
 /* ============== projects style ============== */
 .projects .projects-title {
+    color: #fff;
     font-size: 26px;
     font-weight: 700;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: #fff;
 }
 
 .projects .projects-item {
-    padding: 0 0 20px 20px;
     margin-top: -2px;
-    border-left: 2px solid rgba(255, 255, 255, 0.2);
     position: relative;
+    padding: 0 0 20px 20px;
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .projects .projects-item h4 {
-    line-height: 18px;
+    color: #ffd900;
     font-size: 18px;
     font-weight: 600;
+    line-height: 18px;
+    margin-bottom: 10px;
     text-transform: uppercase;
     font-family: "Poppins", sans-serif;
-    color: #ffd900;
-    margin-bottom: 10px;
 }
 
 .projects .projects-item h5 {
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 5px 15px;
-    display: inline-block;
     font-weight: 600;
+    padding: 5px 15px;
     margin-bottom: 10px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .projects .projects-item ul {
@@ -502,22 +501,22 @@ section .container {
 }
 
 .projects .projects-item::before {
-    content: "";
     position: absolute;
+    content: "";
+    top: 0;
+    left: -9px;
     width: 16px;
     height: 16px;
     border-radius: 50px;
-    left: -9px;
-    top: 0;
     background: #ffc400;
     border: 2px solid #ffc400;
 }
 
 /* ============== contact style ============== */
 .contact .info-box {
-    color: #444444;
-    padding: 20px;
     width: 100%;
+    padding: 20px;
+    color: #444444;
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -526,41 +525,41 @@ section .container {
 }
 
 .contact .info-box i.bx {
+    float: left;
+    padding: 14px;
     font-size: 24px;
     color: #ffd900;
     border-radius: 50%;
-    padding: 14px;
-    float: left;
     background: rgba(255, 255, 255, 0.1);
 }
 
 .contact .info-box h3 {
     font-size: 20px;
-    color: rgba(255, 255, 255, 0.5);
     font-weight: 700;
     margin: 10px 0 8px 68px;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .contact .info-box p {
     padding: 0;
     color: #fff;
-    line-height: 24px;
     font-size: 14px;
+    line-height: 24px;
     margin: 0 0 0 68px;
 }
 
 .contact .info-box .social-links {
-    margin: 5px 0 0 68px;
     display: flex;
+    margin: 5px 0 0 68px;
 }
 
 .contact .info-box .social-links a {
-    font-size: 18px;
-    display: inline-block;
     color: #fff;
     line-height: 1;
-    margin-right: 12px;
+    font-size: 18px;
     transition: 0.3s;
+    margin-right: 12px;
+    display: inline-block;
 }
 
 .contact .info-box .social-links a:hover {
@@ -573,11 +572,11 @@ section .container {
 }
 
 .contact .msg-from .error-message {
-    background: rgba(255, 255, 255, 0.08);
-    background: #a02f10;
-    text-align: center;
     padding: 15px;
     font-weight: 600;
+    text-align: center;
+    background: #a02f10;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .contact .msg-from .error-message br + br {
@@ -585,40 +584,40 @@ section .container {
 }
 
 .contact .msg-from .sent-message {
-    background: rgba(255, 255, 255, 0.08);
-    background: #665700;
-    text-align: center;
     padding: 15px;
     font-weight: 600;
+    text-align: center;
+    background: #665700;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .contact .msg-from .loading {
-    background: rgba(255, 255, 255, 0.08);
-    text-align: center;
     padding: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .contact .msg-from .loading:before {
     content: "";
-    display: inline-block;
-    border-radius: 50%;
     width: 24px;
     height: 24px;
+    border-radius: 50%;
     margin: 0 10px -6px 0;
-    border: 3px solid #ffd900;
+    display: inline-block;
     border-top-color: #eee;
-    -webkit-animation: animate-loading 1s linear infinite;
+    border: 3px solid #ffd900;
     animation: animate-loading 1s linear infinite;
+    -webkit-animation: animate-loading 1s linear infinite;
 }
 
 .contact .msg-from input, .contact .msg-from .msg-textarea {
-    border-radius: 0;
-    box-shadow: none;
-    font-size: 14px;
-    background: rgba(255, 255, 255, 0.08);
     border: 0;
-    transition: 0.3s;
     color: #fff;
+    font-size: 14px;
+    border-radius: 0;
+    transition: 0.3s;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .contact .msg-from input:focus, .contact .msg-from .msg-textarea:focus {
@@ -648,12 +647,12 @@ section .container {
 }
 
 .contact .msg-from button[type=submit] {
-    background: #665700;
     border: 0;
-    padding: 10px 30px;
     color: #fff;
     transition: 0.4s;
+    padding: 10px 30px;
     border-radius: 4px;
+    background: #665700;
 }
 
 .contact .msg-from button[type=submit]:hover {

@@ -7,7 +7,7 @@ monolog:
             level: error
             channels: ['!event']
 
-        # exclude specific http codes from the exception log
+        # exclude specific http codes from exception log
         filtered:
             type: fingers_crossed
             action_level: error

@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# install composer packages
+# install backend packages
 if [ ! -d 'vendor/' ]
 then
     docker-compose run composer install --ignore-platform-reqs
 fi
 
-# install node-modules packages
+# install frontend packages
 if [ ! -d 'node_modules/' ]
 then
     docker-compose run node npm install --loglevel=error
 fi
 
-# build assets
+# build frontend assets
 if [ ! -d 'public/build/' ]
 then
     docker-compose run node npm run build

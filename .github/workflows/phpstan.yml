@@ -1,10 +1,11 @@
-# run static analyse with PHPStan
+# static code analyse with phpstan
 name: PHPStan
 
 on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   phpstan:
@@ -15,17 +16,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # setup PHP environment
+    # setup php interpreter
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.3
         extensions: intl, pdo_mysql, gd
 
-    # install dependencies
-    - name: Install dependencies
+    # composer install
+    - name: Install backend dependencies
       run: composer install
 
-    # run PHPStan analyse
+    # phpstan process
     - name: Run PHPStan
       run: ./vendor/bin/phpstan analyse --configuration phpstan.neon

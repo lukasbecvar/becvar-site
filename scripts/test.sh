@@ -1,14 +1,9 @@
 #!/bin/bash
 
-# define colors
-yellow_echo () { echo "\033[33m\033[1m$1\033[0m"; }
-
-# clear console output
+# clear console history
 clear
 
-yellow_echo "Starting tests..."
-
-# run tests
+# run tests process
 docker-compose run php bash -c "
     php bin/console doctrine:fixtures:load --no-interaction --env=test &&
     php vendor/bin/phpcbf &&

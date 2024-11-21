@@ -9,10 +9,10 @@
 }
  
 ::-webkit-scrollbar-thumb {
-	background: #40444b;
-	-webkit-transition: all 0.2s ease;
-	transition: all 0.2s ease;
 	min-height: 80px;
+	background: #40444b;
+	transition: all 0.2s ease;
+	-webkit-transition: all 0.2s ease;
 } 
 
 ::-webkit-scrollbar-thumb:hover {

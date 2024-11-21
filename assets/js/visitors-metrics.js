@@ -23,18 +23,18 @@ var options = {
         enabled: false
     },
     stroke: {
-        curve: 'straight',
         width: 3,
+        curve: 'straight',
         colors: ['#009900']
     },
     fill: {
+        opacity: 0.5,
         type: 'solid',
-        colors: ['#009900'],
-        opacity: 0.5
+        colors: ['#009900']
     },
     title: {
-        text: 'Visitors count',
         align: 'left',
+        text: 'Visitors count',
         style: {
             color: '#ffffff',
             fontSize: '20px',
@@ -49,8 +49,8 @@ var options = {
     },
     grid: {
         row: {
-            colors: ['#1d1d1d', 'transparent'],
-            opacity: 0.5
+            opacity: 0.5,
+            colors: ['#1d1d1d', 'transparent']
         },
         borderColor: 'rgba(255, 255, 255, 0.24)'
     },

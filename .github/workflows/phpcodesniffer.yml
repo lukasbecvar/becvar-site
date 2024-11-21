@@ -1,13 +1,14 @@
-# run code analyse with PHP CodeSniffer
+# static code analyse with PHP CodeSniffer
 name: PHP-CodeSniffer
 
 on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
-  phpcs:
+  phpcodesniffer:
     name: PHP CodeSniffer
     runs-on: ubuntu-latest
 
@@ -15,17 +16,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # setup PHP environment
+    # setup php interpreter
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.3
         extensions: intl, pdo_mysql, gd
 
-    # install dependencies
-    - name: Install dependencies
+    # composer install
+    - name: Install backend dependencies
       run: composer install --no-interaction --no-progress --no-suggest
 
-    # check code with code sniffer
-    - name: Run PHP CodeSniffer
+    # codesniffer process
+    - name: Run PHP-CodeSniffer
       run: vendor/bin/phpcs

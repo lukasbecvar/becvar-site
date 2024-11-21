@@ -1,13 +1,13 @@
-# use basic apache with php_mod image
+# define base php-apache image
 FROM php:8.3-apache
 
-# set default apache working directory
+# set container working directory
 WORKDIR /var/www
 
 # copy project files to container
 # COPY . /var/www/
 
-# update packages and install dependencies
+# install required packages
 RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libfreetype6-dev \ 
@@ -18,9 +18,9 @@ RUN apt-get update && apt-get install -y \
 # install PHP extensions
 RUN docker-php-ext-install pdo_mysql intl
 
-# install phpGD
+# install phpGD extension
 RUN docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd
 
-# install OPCache
+# install OPCache extension
 RUN docker-php-ext-install opcache

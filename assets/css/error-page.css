@@ -9,16 +9,16 @@ body {
 
 .error-page-msg {
     position: absolute;
-    color: white;
-    opacity: 0.8;
-    font-size: 25px;
-    left: 50%;
     top: 35%;
+    left: 50%;
     width: 95%;
+    opacity: 0.8;
+    color: white;
+    font-size: 25px;
+    user-select: none;
     text-align: center;
     transform: translate(-50%, -50%);
     font-family: 'Maven Pro', sans-serif;
-    user-select: none;
 }
 
 @media screen and (max-width: 800px) { 

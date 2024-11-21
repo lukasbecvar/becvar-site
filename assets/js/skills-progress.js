@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var startWidth = 0
         var targetWidth = value
 
-        // step function to update the progress bar width over time
+        // update progress bar width over time
         function step(timestamp) {
             // initialize the start time if not already set
             if (!startTime) startTime = timestamp

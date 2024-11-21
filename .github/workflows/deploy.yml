@@ -1,4 +1,4 @@
-# deploy app to the production server
+# deploy app to production server
 name: Deploy
 
 on:
@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # deploy to the server using SSH
+    # deploy app with ssh action
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -22,9 +22,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
 
-        # script for upgrade app on the server
+        # run upgrade script on server 
         script: |
-          # go to the project directory
+          # go to project directory
           cd /services/website/becvar-site
 
           # enable maintenance mode
@@ -33,13 +33,13 @@ jobs:
           # stop web server
           sudo systemctl stop apache2
 
-          # clear requirements & cache
+          # clear cache & packages
           sudo sh scripts/clear.sh
 
-          # pull the latest changes
+          # pull latest changes
           git pull
 
-          # set the environment to production
+          # set environment to production
           sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
 
           # install dependencies with composer
