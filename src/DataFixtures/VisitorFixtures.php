@@ -65,7 +65,7 @@ class VisitorFixtures extends Fixture
     /**
      * Load visitor fixtures into the database
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager The entity manager
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class VisitorFixtures extends Fixture
     {
         $currentDate = new DateTime();
         for ($i = 0; $i < 1000; $i++) {
-            // build new visitor entity
+            // init visitor entity
             $visitor = new Visitor();
 
             // randomize last visit and first visit within the last year
@@ -98,11 +98,11 @@ class VisitorFixtures extends Fixture
                 ->setBannedTime(null)
                 ->setEmail($i % 2 === 0 ? 'unknown' : 'visitor' . $i . '@example.com');
 
-            // persist new visitor entity
+            // persist visitor entity
             $manager->persist($visitor);
         }
 
-        // flush testing visitors data
+        // flush all visitor objects to the database
         $manager->flush();
     }
 }

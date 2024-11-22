@@ -10,7 +10,7 @@ use App\Repository\VisitorRepository;
 /**
  * Class Visitor
  *
- * The Visitor entity represents a visitor table in the database
+ * The Visitor entity represents table in the database
  *
  * @package App\Entity
  */

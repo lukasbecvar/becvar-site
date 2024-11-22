@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class DatabaseBrowserController
  *
  * Database browser controller provides a database tables browser/editor
- * Database browser components: table list, table view, edit row, insert row, update projects list
  *
  * @package App\Controller\Admin
  */
@@ -29,22 +28,24 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Display the list of database tables
+     * Render database tables list selector page
      *
      * @return Response The database tables list view
      */
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
     {
+        // get tables list
+        $tables = $this->databaseManager->getTables();
+
         // return database tables list
         return $this->render('admin/database-browser.twig', [
-            // tables list data
-            'tables' => $this->databaseManager->getTables()
+            'tables' => $tables
         ]);
     }
 
     /**
-     * Display the view of a specific database table
+     * Render database table browser page
      *
      * @param Request $request The request object
      *
@@ -78,7 +79,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Edit a specific row in a database table
+     * Edit a specific database record
      *
      * @param Request $request The request object
      *
@@ -87,7 +88,7 @@ class DatabaseBrowserController extends AbstractController
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
-        // init default resources
+        // init error message variable
         $errorMsg = null;
 
         // get query parameters
@@ -135,7 +136,7 @@ class DatabaseBrowserController extends AbstractController
             }
         }
 
-        // render row editor view
+        // render record editor form view
         return $this->render('admin/database-browser.twig', [
             // disable not used components
             'tables' => null,
@@ -154,16 +155,16 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Add a new row to a database table
+     * Add a new record to database
      *
      * @param Request $request The request object
      *
-     * @return Response The new row view
+     * @return Response The new row form view
      */
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
-        // init default resources
+        // init error message variable
         $errorMsg = null;
 
         // get query parameters
@@ -178,7 +179,7 @@ class DatabaseBrowserController extends AbstractController
             // get form submit status
             $formSubmit = $request->request->get('submitSave');
 
-            // check if form submited
+            // check is form submited
             if (isset($formSubmit)) {
                 $columnsBuilder = [];
                 $valuesBuilder = [];
@@ -212,7 +213,7 @@ class DatabaseBrowserController extends AbstractController
             }
         }
 
-        // render new row view
+        // render new record form view
         return $this->render('admin/database-browser.twig', [
             // disable not used components
             'tables' => null,
@@ -228,7 +229,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Delete a row from a database table
+     * Delete record from database
      *
      * @param Request $request The request object
      *
@@ -242,36 +243,36 @@ class DatabaseBrowserController extends AbstractController
         $table = $this->appUtil->getQueryString('table', $request);
         $page = intval($this->appUtil->getQueryString('page', $request));
 
-        // delete row
+        // delete record
         $this->databaseManager->deleteRowFromTable($table, $id);
 
-        // check if deleted by log-reader
+        // check if record deleted by log-reader
         if ($request->query->get('referer') == 'log_reader') {
             return $this->redirectToRoute('admin_log_list', [
                 'page' => $page
             ]);
         }
 
-        // check if deleted by visitors-manager
+        // check if record deleted by visitors-manager
         if ($request->query->get('referer') == 'visitor_manager') {
             return $this->redirectToRoute('admin_visitor_manager', [
                 'page' => $page
             ]);
         }
 
-        // check if deleted by media-browser
+        // check if record deleted by media-browser
         if ($request->query->get('referer') == 'media_browser') {
             return $this->redirectToRoute('admin_media_browser', [
                 'page' => $page
             ]);
         }
 
-        // check if deleted by todo-manager
+        // check if record deleted by todo-manager
         if ($request->query->get('referer') == 'todo_manager') {
             return $this->redirectToRoute('admin_todos_completed');
         }
 
-        // redirect back to browser
+        // redirect back to table browser
         return $this->redirectToRoute('admin_database_browser', [
             'table' => $table,
             'page' => $page

@@ -43,7 +43,7 @@ class LoginController extends AbstractController
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response
     {
-        // check if user is already loggedin
+        // check if user is already logged in
         if ($this->authManager->isUserLogedin()) {
             return $this->redirectToRoute('admin_dashboard');
         }
@@ -74,14 +74,16 @@ class LoginController extends AbstractController
                 // check if password valid
                 if ($this->securityUtil->verifyPassword($password, $userPassword)) {
                     $this->authManager->login($username, $userData->getToken(), $remember);
-                } else { // invalid password error
+                } else {
+                    // invalid password error
                     $this->logManager->log(
                         name: 'authenticator',
                         value: 'trying to login with: ' . $username . ':' . $password
                     );
                     $errorMsg = 'Incorrect username or password.';
                 }
-            } else { // user not exist error
+            } else {
+                // user not exist error
                 $this->logManager->log(
                     name: 'authenticator',
                     value: 'trying to login with: ' . $username . ':' . $password
@@ -97,12 +99,9 @@ class LoginController extends AbstractController
 
         // render login view
         return $this->render('admin/auth/login.twig', [
-            // check if user list empty
             'isUsersEmpty' => $this->authManager->isRegisterPageAllowed(),
-
-            // user login form data
-            'errorMsg' => $errorMsg,
-            'loginForm' => $form->createView()
+            'loginForm' => $form->createView(),
+            'errorMsg' => $errorMsg
         ]);
     }
 }

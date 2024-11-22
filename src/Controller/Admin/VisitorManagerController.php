@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class VisitorManagerController
  *
- * Visitor manager controller provides view/ban/delete visitor
+ * Visitor manager controller provides view/ban/delete visitors
  *
  * @package App\Controller\Admin
  */
@@ -45,7 +45,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Display the table of visitors and their details
+     * Render visitors table page
      *
      * @param Request $request The request object
      *
@@ -62,7 +62,6 @@ class VisitorManagerController extends AbstractController
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
-            // visitor manager data
             'page' => $page,
             'filter' => $filter,
             'visitorMetrics' => null,
@@ -77,7 +76,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Provides IP information for a given IP address to the admin panel
+     * Render ip information for a given visitor ip address
      *
      * @param Request $request The request object
      *
@@ -100,7 +99,6 @@ class VisitorManagerController extends AbstractController
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
-            // visitor manager data
             'page' => 1,
             'filter' => 1,
             'visitorMetrics' => null,
@@ -112,7 +110,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Display the confirmation form for deleting all visitors
+     * Handle the confirmation form for deleting all visitors
      *
      * @param Request $request The request object
      *
@@ -126,13 +124,12 @@ class VisitorManagerController extends AbstractController
 
         // return delete confirmation view
         return $this->render('admin/element/confirmation/delete-visitors.twig', [
-            // delete confirmation data
             'page' => $page
         ]);
     }
 
     /**
-     * Ban a visitor
+     * Handle visitor ban form
      *
      * @param Request $request The request object
      *
@@ -141,7 +138,7 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
     {
-        // create user entity
+        // init visitor entity
         $visitor = new Visitor();
 
         // get query parameters
@@ -152,7 +149,7 @@ class VisitorManagerController extends AbstractController
         $form = $this->createForm(BanFormType::class, $visitor);
         $form->handleRequest($request);
 
-        // check form if submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get ban reason
             $banReason = $form->get('ban_reason')->getData();
@@ -181,15 +178,14 @@ class VisitorManagerController extends AbstractController
             ]);
         }
 
-        // render ban form
+        // render ban form view
         return $this->render('admin/element/form/ban-form.twig', [
-            // ban form data
             'banForm' => $form
         ]);
     }
 
     /**
-     * Unban a visitor
+     * Handle visitor unban functionality
      *
      * @param Request $request The request object
      *
@@ -205,7 +201,7 @@ class VisitorManagerController extends AbstractController
         // get visitor ip
         $ipAddress = $this->banManager->getVisitorIP($id);
 
-        // check if banned
+        // check if visitor is banned
         if ($this->banManager->isVisitorBanned($ipAddress)) {
             // unban visitor
             $this->banManager->unbanVisitor($ipAddress);
@@ -225,7 +221,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Export visitors list data to Excel or Pdf file
+     * Handle export visitors list data to Excel or Pdf file
      *
      * @param Request $request The request object
      *
@@ -234,13 +230,14 @@ class VisitorManagerController extends AbstractController
     #[Route('/admin/visitors/download', methods: ['GET', 'POST'], name: 'admin_visitor_manager_download')]
     public function downloadVisitorsList(Request $request): Response
     {
+        // init error message variable
         $errorMsg = null;
 
         // create form
         $form = $this->createForm(VisitorListExportType::class);
         $form->handleRequest($request);
 
-        // check if form is submitted
+        // check is form submitted
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
@@ -280,7 +277,7 @@ class VisitorManagerController extends AbstractController
             }
         }
 
-        // return visitors data export form
+        // return visitors data export form view
         return $this->render('admin/element/form/visitors-export-form.twig', [
             'form' => $form->createView(),
             'errorMsg' => $errorMsg
@@ -288,7 +285,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Display the visitors metrics page
+     * Display visitors metrics page
      *
      * @param Request $request The request object
      *
@@ -308,7 +305,7 @@ class VisitorManagerController extends AbstractController
         // get visitor metrics
         $metrics = $this->visitorManager->getVisitorMetrics($timePeriod);
 
-        // return visitor manager view
+        // return visitor metrics view
         return $this->render('admin/visitors-manager.twig', [
             'visitorMetrics' => $metrics,
             'visitorInfoData' => null,

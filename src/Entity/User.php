@@ -10,7 +10,7 @@ use App\Repository\UserRepository;
 /**
  * Class User
  *
- * The User entity represents a user table in the database
+ * The User entity represents table in the database
  *
  * @package App\Entity
  */

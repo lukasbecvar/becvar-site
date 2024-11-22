@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class ContactController
  *
  * Contact controller provides contact links & contact form
- * Page to display contact information and a form that stores messages in the database
  *
  * @package App\Controller\Public
 */
@@ -41,7 +40,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * Renders the public contact page
+     * Render contact page
      *
      * @param Request $request The request object
      *
@@ -50,7 +49,7 @@ class ContactController extends AbstractController
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response
     {
-        // init default resources
+        // init status messages variables
         $errorMsg = null;
         $successMsg = null;
 
@@ -77,11 +76,9 @@ class ContactController extends AbstractController
 
         // create register form
         $form = $this->createForm(ContactFormType::class, $message);
-
-        // processing an HTTP request
         $form->handleRequest($request);
 
-        // check form if submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get form data
             $name = $form->get('name')->getData();
@@ -131,7 +128,7 @@ class ContactController extends AbstractController
             }
         }
 
-        // render contact page
+        // render contact page view
         return $this->render('public/contact.twig', [
             // contact form data
             'errorMsg' => $errorMsg,

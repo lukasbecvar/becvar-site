@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class AccountSettingsController
  *
  * Account settings controller provides user account changes
- * Configurable properties: username, password, profile picture
+ * Configurable properties: username, password & profile picture
  *
  * @package App\Controller\Admin
  */
@@ -44,13 +44,14 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Display account settings table
+     * Render account settings table page
      *
      * @return Response The account settings table view
      */
     #[Route('/admin/account/settings', methods: ['GET'], name: 'admin_account_settings_table')]
     public function accountSettingsTable(): Response
     {
+        // return account settings table view
         return $this->render('admin/account-settings.twig', [
             'profilePicChangeForm' => null,
             'usernameChangeForm' => null,
@@ -60,26 +61,28 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Change of profile picture in the admin account settings
+     * Handle profile picture update form in the admin account settings
      *
      * @param Request $request The request object
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the profile picture upload
+     * @throws Exception Error to flush user data update to database
      *
      * @return Response The picture change view
      */
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
-        // init default resources
-        $user = new User();
+        // init error message variable
         $errorMsg = null;
 
-        // create pic form change
+        // init user entity
+        $user = new User();
+
+        // create picture update form
         $form = $this->createForm(ProfilePicChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check form if submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get image data
             $image = $form->get('profile-pic')->getData();
@@ -93,15 +96,17 @@ class AccountSettingsController extends AbstractController
                 // get image content
                 $fileContents = file_get_contents($image);
 
-                // encode image
+                // encode image to base64
                 $imageCode = base64_encode($fileContents);
 
+                // update profile picture
+                $userRepo->setProfilePic($imageCode);
+
                 try {
-                    // update profile pics
-                    $userRepo->setProfilePic($imageCode);
+                    // flush user data to database
                     $this->entityManager->flush();
 
-                    // redirect back to values table
+                    // redirect back to account settings table
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (Exception $e) {
                     $this->errorManager->handleError(
@@ -114,7 +119,7 @@ class AccountSettingsController extends AbstractController
             }
         }
 
-        // render profile pic change form view
+        // render profile picture update form view
         return $this->render('admin/account-settings.twig', [
             'profilePicChangeForm' => $form->createView(),
             'usernameChangeForm' => null,
@@ -124,26 +129,28 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Change of username in the admin account settings
+     * Handle change username form in the admin account settings
      *
      * @param Request $request The request object
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the username update
+     * @throws Exception Error to flush user data update to database
      *
      * @return Response The username change view
      */
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
-        // init default resources
-        $user = new User();
+        // init error message variable
         $errorMsg = null;
+
+        // init user entity
+        $user = new User();
 
         // create username form change
         $form = $this->createForm(UsernameChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check form if submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get username
             $username = $form->get('username')->getData();
@@ -151,8 +158,11 @@ class AccountSettingsController extends AbstractController
             // get user repository
             $userRepo = $this->authManager->getUserRepository(['username' => $this->authManager->getUsername()]);
 
-            try { // update username
-                $userRepo->setUsername($username);
+            // update username
+            $userRepo->setUsername($username);
+
+            try {
+                // flush user data to database
                 $this->entityManager->flush();
 
                 // redirect back to values table
@@ -165,7 +175,7 @@ class AccountSettingsController extends AbstractController
             }
         }
 
-        // render username change form
+        // render username change form view
         return $this->render('admin/account-settings.twig', [
             'profilePicChangeForm' => null,
             'passwordChangeForm' => null,
@@ -175,26 +185,28 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Change of password in the admin account settings
+     * Handle change password form in the admin account settings
      *
      * @param Request $request The request object
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the password update
+     * @throws Exception Error to flush user data update to database
      *
      * @return Response The password change view
      */
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
-        // init default resources
-        $user = new User();
+        // init error message variable
         $errorMsg = null;
+
+        // init user entity
+        $user = new User();
 
         // create username form change
         $form = $this->createForm(PasswordChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check form if submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get passwords
             $password = $form->get('password')->getData();
@@ -207,14 +219,14 @@ class AccountSettingsController extends AbstractController
             if ($password != $rePassword) {
                 $errorMsg = 'Your passwords is not match!';
             } else {
+                // hash password (Argon2)
+                $passwordHash = $this->securityUtil->generateHash($password);
+
+                // update password
+                $userRepo->setPassword($passwordHash);
+
                 try {
-                    // hash password (Argon2)
-                    $passwordHash = $this->securityUtil->generateHash($password);
-
-                    // update password
-                    $userRepo->setPassword($passwordHash);
-
-                    // flush user data
+                    // flush user data to database
                     $this->entityManager->flush();
 
                     // redirect back to account settings table
@@ -228,7 +240,7 @@ class AccountSettingsController extends AbstractController
             }
         }
 
-        // render password change form
+        // render password change form view
         return $this->render('admin/account-settings.twig', [
             'profilePicChangeForm' => null,
             'usernameChangeForm' => null,

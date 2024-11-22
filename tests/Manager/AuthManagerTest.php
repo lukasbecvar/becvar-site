@@ -67,7 +67,7 @@ class AuthManagerTest extends TestCase
     }
 
     /**
-     * Test if the isUserLoggedIn method returns true when the session exists
+     * Test if the isUserLogged In method returns true when the session exists
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class AuthManagerTest extends TestCase
     }
 
     /**
-     * Test if the isUserLoggedIn method returns false when the session does not exist
+     * Test if the isUserLogged In method returns false when the session does not exist
      *
      * @return void
      */

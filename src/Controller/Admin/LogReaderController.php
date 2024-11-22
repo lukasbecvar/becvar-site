@@ -42,7 +42,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Display logs from the database table
+     * Render log reader from the database table
      *
      * @param Request $request The request object
      *
@@ -59,7 +59,6 @@ class LogReaderController extends AbstractController
 
         // render log reader view
         return $this->render('admin/log-reader.twig', [
-            // log reader data
             'whereIp' => null,
             'logsData' => $logs,
             'readerPage' => $page,
@@ -73,7 +72,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Display logs filtered by IP address
+     * Render logs filtered by IP address
      *
      * @param Request $request The request object
      *
@@ -86,7 +85,7 @@ class LogReaderController extends AbstractController
         $ipAddress = $this->appUtil->getQueryString('ip', $request);
         $page = intval($this->appUtil->getQueryString('page', $request));
 
-        // get & escape ip
+        // escape ip address
         $ipAddress = $this->securityUtil->escapeString($ipAddress);
 
         // get logs data
@@ -94,7 +93,6 @@ class LogReaderController extends AbstractController
 
         // render log reader view
         return $this->render('admin/log-reader.twig', [
-            // log reader data
             'logsData' => $logs,
             'readerPage' => $page,
             'whereIp' => $ipAddress,
@@ -108,7 +106,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Display a confirmation page for deleting all logs
+     * Handle confirmation page for deleting all logs
      *
      * @param Request $request The request object
      *
@@ -122,20 +120,19 @@ class LogReaderController extends AbstractController
 
         // render delete confirmation view
         return $this->render('admin/element/confirmation/delete-logs-html.twig', [
-            // delete confirmation data
             'page' => $page
         ]);
     }
 
     /**
-     * Set all logs as read
+     * Set all logs status to readed
      *
      * @return Response The redirect back to dashboard
      */
     #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {
-        // set all logs as readed
+        // set all logs status to readed
         $this->logManager->setReaded();
 
         // redirect back to dashboard

@@ -31,7 +31,7 @@ class InboxController extends AbstractController
     }
 
     /**
-     * Display inbox messages
+     * Render inbox messages
      *
      * @param Request $request The request object
      *
@@ -60,7 +60,7 @@ class InboxController extends AbstractController
     }
 
     /**
-     * Close a message in the inbox
+     * Close message in the inbox
      *
      * @param Request $request The request object
      *

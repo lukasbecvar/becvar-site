@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class AdminController
  *
  * Admin controller provides initialization of the admin site
- * Controller redirects loggedin users to dashboard page
+ * Controller redirects logged in users to dashboard page
  *
  * @package App\Controller\Admin
  */

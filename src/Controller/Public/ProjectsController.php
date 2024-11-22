@@ -31,7 +31,7 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Displays the public projects page
+     * Render projects page
      *
      * @return Response The projects page view response
      */
@@ -55,16 +55,16 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Updates the projects list
+     * Update projects list with the latest data from the GitHub API
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the user is not logged in
+     * @throws \Exception Error the user is not logged in
      *
      * @return Response The response for updating projects, redirects to the admin database browser
      */
     #[Route('/projects/update', methods: ['GET'], name: 'public_projects_update')]
     public function projectsUpdate(): Response
     {
-        // check if user authorized
+        // check if user is logged in
         if (!$this->authManager->isUserLogedin()) {
             $this->errorManager->handleError(
                 'error to update project list: please login first',
@@ -75,10 +75,10 @@ class ProjectsController extends AbstractController
         // update projects list
         $this->projectsManager->updateProjectList();
 
-        // redirect to the admin database browser
+        // redirect to the database browser component
         return $this->redirectToRoute('admin_database_browser', [
-            'page' => 1,
-            'table' => 'projects'
+            'table' => 'projects',
+            'page' => 1
         ]);
     }
 }

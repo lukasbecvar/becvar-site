@@ -29,12 +29,12 @@ class ValidateVisitorsStructureCommand extends Command
     }
 
     /**
-     * Executes the command to validate and reorganize visitors database structure
+     * Execute command to validate and reorganize visitors database structure
      *
      * @param InputInterface $input The input interface
      * @param OutputInterface $output The output interface
      *
-     * @return int The exit code of the command
+     * @return int The command exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

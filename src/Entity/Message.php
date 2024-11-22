@@ -10,7 +10,7 @@ use App\Repository\MessageRepository;
 /**
  * Class Message
  *
- * The Message entity represents a message table in the database
+ * The Message entity represents table in the database
  *
  * @package App\Entity
  */

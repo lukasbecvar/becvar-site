@@ -8,7 +8,7 @@ use App\Repository\ProjectRepository;
 /**
  * Class Project
  *
- * The Project entity represents a project table in the database
+ * The Project entity represents table in the database
  *
  * @package App\Entity
  */

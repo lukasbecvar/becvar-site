@@ -15,8 +15,7 @@ use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 /**
  * Class ErrorController
  *
- * Error controller is a handler for visitors redirect
- * Main controller that shows error pages by error code
+ * This controller provides error pages by error code
  *
  * @package App\Controller
  */
@@ -32,7 +31,7 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles errors based on the provided error code
+     * Handle error page by code
      *
      * @param Request $request The request object
      *
@@ -54,7 +53,7 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles 404 error page
+     * Handle not found error page
      *
      * @return Response The error page response
      */
@@ -65,7 +64,7 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * Handles all errors (this is for error manager handler)
+     * Handle exception error page (call from exception event subscriber)
      *
      * @param Throwable $exception The thrown exception
      *

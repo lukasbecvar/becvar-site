@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class RegisterController
  *
  * Register controller provides user register functionality
- * Note: This functionality is enabled only if users table is empty or for owner users
  * Note: Login uses its own authenticator (not Symfony security)
+ * Note: This functionality is enabled only if users table is empty or for admin users
  *
  * @package App\Controller\Admin\Auth
  */
@@ -38,27 +38,29 @@ class RegisterController extends AbstractController
     #[Route('/register', methods: ['GET', 'POST'], name: 'auth_register')]
     public function register(Request $request): Response
     {
-        // check if user table is empty or if registrant is admin
+        // check if user table is empty or if user is admin
         if (!$this->authManager->isRegisterPageAllowed()) {
             return $this->redirectToRoute('auth_login');
         }
 
-        // init default resources
-        $user = new User();
+        // init error message variable
         $errorMsg = null;
+
+        // init user entity
+        $user = new User();
 
         // create register form
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
 
-        // check if form submited
+        // check is form submited
         if ($form->isSubmitted() && $form->isValid()) {
             // get form data
             $username = $form->get('username')->getData();
             $password = $form->get('password')->getData();
             $rePassword = $form->get('re-password')->getData();
 
-            // check if username used
+            // check if username already used
             if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                 $errorMsg = 'This username is already in use';
             } else {
@@ -75,8 +77,8 @@ class RegisterController extends AbstractController
 
         // render registration form view
         return $this->render('admin/auth/register.twig', [
-            'errorMsg' => $errorMsg,
-            'registrationForm' => $form->createView()
+            'registrationForm' => $form->createView(),
+            'errorMsg' => $errorMsg
         ]);
     }
 }

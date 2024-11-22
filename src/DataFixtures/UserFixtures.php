@@ -12,7 +12,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 /**
  * Class UserFixtures
  *
- * Fixture class to generate testing users
+ * UserFixtures loads sample users data into the database
  *
  * @package App\DataFixtures
  */
@@ -26,15 +26,15 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load user fixtures into the database
      *
-     * @param ObjectManager $manager The EntityManager instance
+     * @param ObjectManager $manager The entity manager
      *
      * @return void
      */
     public function load(ObjectManager $manager): void
     {
-        // add test user
+        // main test user entity
         $testUser = new User();
         $testUser->setUsername('test')
             ->setPassword($this->securityUtil->generateHash('test'))
@@ -46,7 +46,7 @@ class UserFixtures extends Fixture
             ->setProfilePic('non-pic')
             ->setVisitorId(1);
 
-        // persist the entity
+        // persist test user object
         $manager->persist($testUser);
 
         // generate testing users
@@ -67,11 +67,11 @@ class UserFixtures extends Fixture
                 ->setProfilePic('profile_pic')
                 ->setVisitorId($i);
 
-            // persist the entity
+            // persist user entity
             $manager->persist($user);
         }
 
-        // flush data to the database
+        // flush all user objects to the database
         $manager->flush();
     }
 }

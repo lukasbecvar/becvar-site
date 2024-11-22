@@ -9,14 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class HomeController
  *
- * Home controller is a main app controller for homepage
+ * Home controller provides main website homepage
  *
  * @package App\Controller\Public
 */
 class HomeController extends AbstractController
 {
     /**
-     * Renders the public home page
+     * Render home page
      *
      * @return Response The home page view response
      */

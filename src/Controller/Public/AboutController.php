@@ -9,15 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AboutController
  *
- * About controller provides basic public about page
- * Page with information about me
+ * About controller provides basic public about me page
  *
  * @package App\Controller\Public
 */
 class AboutController extends AbstractController
 {
     /**
-     * Renders the public about page
+     * Render about me page
      *
      * @return Response The about page view response
      */

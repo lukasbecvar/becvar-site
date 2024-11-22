@@ -26,7 +26,7 @@ class AuthentificatedCheckMiddleware
     }
 
     /**
-     * Cheeck if user is loggedin
+     * Cheeck if user is logged in
      *
      * @param RequestEvent $event The request event
      *
@@ -39,7 +39,7 @@ class AuthentificatedCheckMiddleware
 
         // check if route is admin
         if (is_string($pathInfo) && str_starts_with($pathInfo, '/admin')) {
-            // check if user is loggedin
+            // check if user is logged in
             if (!$this->authManager->isUserLogedin()) {
                 // get login page route url
                 $loginUrl = $this->urlGenerator->generate('auth_login');

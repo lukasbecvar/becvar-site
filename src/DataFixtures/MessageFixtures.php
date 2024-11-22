@@ -27,13 +27,13 @@ class MessageFixtures extends Fixture
     /**
      * Load inbox fixtures into the database
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager The entity manager
      *
      * @return void
      */
     public function load(ObjectManager $manager)
     {
-        // testing message data
+        // testing messages
         $messageData = [
             ['message' => 'test message 1'],
             ['message' => 'test message 2'],
@@ -46,7 +46,7 @@ class MessageFixtures extends Fixture
         foreach ($messageData as $data) {
             $message = new Message();
 
-            // set message data
+            // set message properties
             $message->setName('Lukáš Bečvář')
                 ->setEmail('becvarlukas99@gmail.com	')
                 ->setMessage($this->securityUtil->encryptAes($data['message']))
@@ -55,11 +55,11 @@ class MessageFixtures extends Fixture
                 ->setStatus('open')
                 ->setVisitorID(1);
 
-            // persist message fixtures
+            // persist message object
             $manager->persist($message);
         }
 
-        // flush database changes
+        // flush all message objects to the database
         $manager->flush();
     }
 }

@@ -19,7 +19,7 @@ class LogFixtures extends Fixture
     /**
      * Load log fixtures into the database
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager The entity manager
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class LogFixtures extends Fixture
         foreach ($logsData as $logData) {
             $log = new Log();
 
-            // set the object's properties
+            // set log properties
             $log->setName($logData['name'])
                 ->setValue($logData['value'])
                 ->setTime($logData['time'])
@@ -168,11 +168,11 @@ class LogFixtures extends Fixture
                 ->setStatus($logData['status'])
                 ->setVisitorId($logData['visitor_id']);
 
-            // persist the object
+            // persist the log object
             $manager->persist($log);
         }
 
-        // save all the objects to the database
+        // flush all log objects to the database
         $manager->flush();
     }
 }

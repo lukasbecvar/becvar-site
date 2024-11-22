@@ -10,7 +10,7 @@ use App\Repository\LogRepository;
 /**
  * Class Log
  *
- * The Log entity represents a log table in the database
+ * The Log entity represents table in the database
  *
  * @package App\Entity
  */

@@ -18,7 +18,7 @@ class ProjectFixtures extends Fixture
     /**
      * Load project fixtures into the database
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager The entity manager
      *
      * @return void
      */
@@ -74,18 +74,18 @@ class ProjectFixtures extends Fixture
         foreach ($projectsData as $projectData) {
             $project = new Project();
 
-            // set project data
+            // set project properties
             $project->setName($projectData['name'])
                 ->setDescription($projectData['description'])
                 ->setTechnology($projectData['technology'])
                 ->setLink($projectData['link'])
                 ->setStatus($projectData['status']);
 
-            // persist the project
+            // persist project object
             $manager->persist($project);
         }
 
-        // save all the projects
+        // flush all project objects to the database
         $manager->flush();
     }
 }
