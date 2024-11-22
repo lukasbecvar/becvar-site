@@ -40,7 +40,7 @@ class MessagesManager
     }
 
     /**
-     * Saves a new message to the database
+     * Saves new message to the database
      *
      * @param string $name The name of the sender
      * @param string $email The email address of the sender
@@ -71,8 +71,8 @@ class MessagesManager
             ->setStatus('open')
             ->setVisitorID($visitorId);
 
-        // insert new message
         try {
+            // insert new message to database
             $this->entityManager->persist($message);
             $this->entityManager->flush();
         } catch (Exception $e) {
@@ -84,7 +84,7 @@ class MessagesManager
     }
 
     /**
-     * Gets the count of open messages from a specific IP address
+     * Get count of open messages from a specific IP address
      *
      * @param string $ipAddress The IP address of the user
      *
@@ -115,7 +115,7 @@ class MessagesManager
     }
 
     /**
-     * Gets messages based on status and pagination
+     * Get messages based on status and pagination
      *
      * @param string $status The status of the messages
      * @param int $page The page number
@@ -174,7 +174,7 @@ class MessagesManager
     }
 
     /**
-     * Closes a message by updating its status to 'closed'
+     * Close message by updating its status to 'closed'
      *
      * @param int $id The ID of the message to close
      *
