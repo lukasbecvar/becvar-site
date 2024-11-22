@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * BanManager provides methods for banning and unbanning visitors
+ * BanManager provides visitor ban functionality
  *
  * @package App\Manager
  */
@@ -38,9 +38,9 @@ class BanManager
     }
 
     /**
-     * Bans a visitor by setting the banned status and reason
+     * Ban visitor by ip address
      *
-     * @param string $ipAddress The IP address of the visitor to ban
+     * @param string $ipAddress The IP address to ban
      * @param string $reason The reason for banning the visitor
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException to ban visitor
@@ -59,14 +59,14 @@ class BanManager
                 ->setBanReason($reason)
                 ->setBannedTime(new DateTime());
 
-            // log ban action
+            // log ban event
             $this->logManager->log(
                 name: 'ban-system',
                 value:'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername()
             );
 
             try {
-                // update entity data
+                // flush updated visitor data to database
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
@@ -86,7 +86,7 @@ class BanManager
     }
 
     /**
-     * Unbans a visitor by updating the banned status
+     * Unban visitor by ip address
      *
      * @param string $ipAddress The IP address of the visitor to unban
      *
@@ -104,14 +104,14 @@ class BanManager
             // update ban status
             $visitor->setBannedStatus(false);
 
-            // log ban action
+            // log ban event
             $this->logManager->log(
                 name: 'ban-system',
                 value: 'visitor with ip: ' . $ipAddress . ' unbanned by ' . $this->authManager->getUsername()
             );
 
             try {
-                // update visitor data
+                // flush updated visitor data to database
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
@@ -128,7 +128,7 @@ class BanManager
     }
 
     /**
-     * Checks if a visitor is banned
+     * Check if visitor is banned
      *
      * @param string $ipAddress The IP address of the visitor
      *
@@ -151,11 +151,11 @@ class BanManager
     }
 
     /**
-     * Retrieves the count of banned visitors
+     * Get count of banned visitors
      *
     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get banned count
      *
-     * @return int|null The count of banned visitors or null if an error occurs
+     * @return int|null The count of banned visitors
      */
     public function getBannedCount(): ?int
     {
@@ -173,11 +173,11 @@ class BanManager
     }
 
     /**
-     * Get the ban reason for a visitor
+     * Get ban reason for a visitor
      *
      * @param string $ipAddress The IP address of the visitor
      *
-     * @return string|null The ban reason or null if not found
+     * @return string|null The ban reason or null if not found or invalid
      */
     public function getBanReason(string $ipAddress): ?string
     {
@@ -194,9 +194,9 @@ class BanManager
     }
 
     /**
-     * Closes all messages associated with a specific visitor based on their IP address
+     * Close all messages associated with a specific visitor
      *
-     * @param string $ipAddress  The IP address of the visitor whose messages should be closed
+     * @param string $ipAddress The IP address of the visitor whose messages should be closed
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error close all visitor messages
      *
@@ -227,7 +227,7 @@ class BanManager
     }
 
     /**
-     * Get the IP address of a visitor by ID
+     * Get IP address of a visitor by ID
      *
      * @param int $id The ID of the visitor
      *
