@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 /**
  * Class PasswordChangeFormType
  *
- * PasswordChangeFormType provides a form for changing the password in the account settings
+ * PasswordChangeFormType provides changing user password in the account settings
  *
  * @see AbstractType
  *
@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 class PasswordChangeFormType extends AbstractType
 {
     /**
-     * Build the password change form
+     * Build password change form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form
@@ -76,7 +76,7 @@ class PasswordChangeFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form
+     * Configure options for password change form
      *
      * @param OptionsResolver $resolver The resolver for the form options
      *

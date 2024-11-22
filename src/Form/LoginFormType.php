@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 /**
  * Class LoginFormType
  *
- * Login form provides an admin accounts authenticator
+ * Login form provides admin accounts authenticator
  *
  * @see AbstractType
  *
@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class LoginFormType extends AbstractType
 {
     /**
-     * Build the login form
+     * Build user login form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form
@@ -79,7 +79,7 @@ class LoginFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form
+     * Configure options for this form
      *
      * @param OptionsResolver $resolver The resolver for the form options
      *

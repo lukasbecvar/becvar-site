@@ -52,7 +52,7 @@ class VisitorListExportType extends AbstractType
     }
 
     /**
-     * Configures the options for this form
+     * Configure options for visitor exporter form
      *
      * @param OptionsResolver $resolver The resolver for the form options
      *

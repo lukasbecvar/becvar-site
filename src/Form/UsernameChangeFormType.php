@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 /**
  * Class UsernameChangeFormType
  *
- * UsernameChangeFormType provides a form for changing the username in the account settings
+ * UsernameChangeFormType provides changing username in the account settings
  *
  * @see AbstractType
  *
@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class UsernameChangeFormType extends AbstractType
 {
     /**
-     * Build the username change form
+     * Build username change form
      *
      * @param FormBuilderInterface $builder The form builder
      * @param array<string> $options The options for building the form
@@ -56,7 +56,7 @@ class UsernameChangeFormType extends AbstractType
     }
 
     /**
-     * Configures the options for this form
+     * Configure options for username change form
      *
      * @param OptionsResolver $resolver The resolver for the form options
      *
