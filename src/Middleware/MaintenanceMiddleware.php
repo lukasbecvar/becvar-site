@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 /**
  * Class MaintenanceMiddleware
  *
- * The middleware for checking the maintenance mode
+ * Middleware for handling maintenance mode
  *
  * @package App\Middleware
  */
@@ -29,7 +29,7 @@ class MaintenanceMiddleware
     }
 
     /**
-     * Handle the maintenance mode check
+     * Handle maintenance mode check
      *
      * @param RequestEvent $event The request event
      *
@@ -37,7 +37,7 @@ class MaintenanceMiddleware
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        // check if MAINTENANCE_MODE enabled
+        // check if maintenance mode is enabled
         if ($this->appUtil->isMaintenance()) {
             // handle debug mode exception
             if ($this->appUtil->isDevMode()) {
@@ -49,7 +49,7 @@ class MaintenanceMiddleware
                 $this->logger->error('the application is under maintenance mode');
             }
 
-            // render the maintenance template
+            // render maintenance view
             $content = $this->errorManager->getErrorView('maintenance');
             $response = new Response($content, Response::HTTP_SERVICE_UNAVAILABLE);
             $event->setResponse($response);

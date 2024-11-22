@@ -8,7 +8,7 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 /**
  * Class TranslationsMiddleware
  *
- * This middleware sets translations based on the visitor's language
+ * Middleware for set locale by visitor location
  *
  * @package App\Middleware
  */
@@ -24,7 +24,7 @@ class TranslationsMiddleware
     }
 
     /**
-     * Set translations based on the visitor language
+     * Set translation based on visitor location
      *
      * @return void
      */

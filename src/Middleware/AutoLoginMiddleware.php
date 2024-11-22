@@ -10,7 +10,7 @@ use App\Manager\AuthManager;
 /**
  * Class AutoLoginMiddleware
  *
- * This middleware checks if the required auto-login function should be triggered
+ * Middleware for autologin remembered user functionality
  *
  * @package App\Middleware
  */
@@ -49,7 +49,7 @@ class AutoLoginMiddleware
                     // get user data
                     $user = $this->authManager->getUserRepository(['token' => $userToken]);
 
-                    // autologin user
+                    // login user
                     $this->authManager->login($user->getUsername(), $userToken, true);
                 } else {
                     $this->cookieUtil->unset('login-token-cookie');

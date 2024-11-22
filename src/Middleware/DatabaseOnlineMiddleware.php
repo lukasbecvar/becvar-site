@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class DatabaseOnlineMiddleware
  *
- * This middleware is used to check the availability of the database
+ * Middleware for checking if database is online
  *
  * @package App\Middleware
  */

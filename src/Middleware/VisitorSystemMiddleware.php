@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class VisitorSystemMiddleware
  *
- * Visitor system provides basic visitors managment
+ * Middleware for save and update visitor information
  *
  * @package App\Middleware
  */
@@ -60,9 +60,8 @@ class VisitorSystemMiddleware
     /**
      * Handle visitor system functionality
      *
-     * - Updates visitors' statistics
-     * - Retrieves and sanitizes visitor information
-     * - Checks if the visitor is in the database and takes appropriate actions
+     * Save visitor information
+     * Updates visitors statistics
      *
      * @return void
      */
@@ -74,7 +73,7 @@ class VisitorSystemMiddleware
         $ipAddress = $this->visitorInfoUtil->getIP();
         $browser = $this->visitorInfoUtil->getUserAgent();
 
-        // escape inputs
+        // escape visitor ip address
         $ipAddress = $this->securityUtil->escapeString($ipAddress);
 
         // get visitor data
@@ -106,7 +105,7 @@ class VisitorSystemMiddleware
     }
 
     /**
-     * Inserts a new visitor record into the database
+     * Insert new visitor record into the database
      *
      * @param DateTime $date The date of the visit
      * @param string $ipAddress The IP address of the visitor
@@ -134,8 +133,6 @@ class VisitorSystemMiddleware
 
         // create new visitor entity
         $visitorEntity = new Visitor();
-
-        // set visitor data
         $visitorEntity->setFirstVisit($date)
             ->setLastVisit($date)
             ->setBrowser($browser)
@@ -148,8 +145,8 @@ class VisitorSystemMiddleware
             ->setBannedTime(null)
             ->setEmail('unknown');
 
-        // try to insert new visitor
         try {
+            // flush new visitor to database
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
         } catch (Exception $e) {
@@ -161,7 +158,7 @@ class VisitorSystemMiddleware
     }
 
     /**
-     * Updates an existing visitor record in the database
+     * Update existing visitor record in the database
      *
      * @param DateTime $date The date of the visit
      * @param string $ipAddress The IP address of the visitor
@@ -189,13 +186,13 @@ class VisitorSystemMiddleware
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         } else {
-            // update values
+            // update visitor data
             $visitor->setLastVisit($date);
             $visitor->setBrowser($browser);
             $visitor->setOs($os);
 
-            // try to update data
             try {
+                // flush updated visitor data
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
@@ -205,7 +202,7 @@ class VisitorSystemMiddleware
             }
         }
 
-        // cache online visitor
+        // cache visitor to online list
         $this->cacheUtil->setValue('online_user_' . $visitor->getId(), 'online', 10);
     }
 }
