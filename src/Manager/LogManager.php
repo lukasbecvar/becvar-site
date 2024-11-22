@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * LogManager provides log functions for saving events to a database table
+ * LogManager provides log functionality for saving events to database table
  *
  * @package App\Manager
  */
@@ -52,10 +52,10 @@ class LogManager
     }
 
     /**
-     * Logs an event
+     * Log event to database table
      *
      * @param string $name The name of the log
-     * @param string $value The value of the log
+     * @param string $value The value (message) of the log
      * @param bool $bypassAntilog Bypass the anti-log cookie
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to log message
@@ -116,8 +116,8 @@ class LogManager
                 ->setStatus('unreaded')
                 ->setVisitorId($visitorId);
 
-            // try insert row
             try {
+                // insert log entity to database
                 $this->entityManager->persist($LogEntity);
                 $this->entityManager->flush();
 
@@ -133,9 +133,9 @@ class LogManager
     }
 
     /**
-     * Send log to external log
+     * Send log to external log (admin-suite)
      *
-     * @param string $value The value of the log
+     * @param string $value The value (message) of the log
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to send log to external log
      *
@@ -159,11 +159,11 @@ class LogManager
     }
 
     /**
-     * Get logs based on IP address
+     * Get logs by visitor ip address
      *
-     * @param string $ipAddress The IP address of the user
+     * @param string $ipAddress The IP address visitor
      * @param string $username The username of the user
-     * @param int $page The page number
+     * @param int $page The page number (pagination offset)
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
      *
@@ -176,8 +176,8 @@ class LogManager
         // calculate offset
         $offset = ($page - 1) * $per_page;
 
-        // get logs from database
         try {
+            // get logs from database
             $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
         } catch (Exception $e) {
             $this->errorManager->handleError(
@@ -186,7 +186,7 @@ class LogManager
             );
         }
 
-        // log action to database
+        // log view event
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -200,7 +200,7 @@ class LogManager
     }
 
     /**
-     * Get logs based on status, paginated
+     * Get logs based on status with pagination
      *
      * @param string $status The status of the logs
      * @param string $username The username of the user
@@ -208,7 +208,7 @@ class LogManager
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
      *
-     * @return Log[]|null $logs The logs based on status, paginated
+     * @return Log[]|null $logs The logs based on status
      */
     public function getLogs(string $status, $username, int $page): ?array
     {
@@ -227,7 +227,7 @@ class LogManager
             );
         }
 
-        // log view action
+        // log view event
         $this->log('database', 'user: ' . $username . ' viewed logs');
 
         // replace browser with formated value for log reader
@@ -241,7 +241,7 @@ class LogManager
     }
 
     /**
-     * Get the count of logs based on status
+     * Get count of logs based on status
      *
      * @param string $status
      *
@@ -262,7 +262,7 @@ class LogManager
     }
 
     /**
-     * Get the count of login logs
+     * Get count of login logs
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get login logs count
      *
@@ -281,7 +281,7 @@ class LogManager
     }
 
     /**
-     * Sets the status of all logs to 'readed'
+     * Set status of all logs to 'readed'
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to set logs status
      *
@@ -303,7 +303,7 @@ class LogManager
     }
 
     /**
-     * Checks if logs are enabled
+     * Check database logging is enabled
      *
      * @return bool $enabled True if logs are enabled, false otherwise
      */
@@ -318,7 +318,7 @@ class LogManager
     }
 
     /**
-     * Checks if the anti-log cookie is enabled
+     * Check if the anti-log cookie is enabled
      *
      * @return bool $enabled True if the anti-log cookie is enabled, false otherwise
      */
@@ -341,7 +341,7 @@ class LogManager
     }
 
     /**
-     * Sets the anti-log cookie
+     * Set anti-log cookie
      *
      * @return void
      */
@@ -355,7 +355,7 @@ class LogManager
     }
 
     /**
-     * Unsets the anti-log cookie
+     * Unset anti-log cookie
      *
      * @return void
      */
@@ -365,7 +365,7 @@ class LogManager
     }
 
     /**
-     * Retrieves the log level from the environment configuration
+     * Get log level from environment configuration
      *
      * @return int $level The log level from the environment configuration
      */
