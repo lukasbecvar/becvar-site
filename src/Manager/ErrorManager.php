@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 /**
  * Class ErrorManager
  *
- * ErrorManager provides error handling operations
+ * ErrorManager provides error handling
  *
  * @package App\Manager
  */
@@ -23,23 +23,22 @@ class ErrorManager
     }
 
     /**
-     * Handles errors based on the application's mode
+     * Handle error exception
      *
      * @param string $msg The error message
      * @param int $code The error code
      *
      * @throws HttpException
      *
-     * @return never Always throws exception
+     * @return never Always throws exception (HttpException)
      */
     public function handleError(string $msg, int $code): mixed
     {
-        // throw HttpException with JSON response
         throw new HttpException($code, $msg, null, [], $code);
     }
 
     /**
-     * Renders an error view based on the error code
+     * Render error view based on error code
      *
      * @param string|int $code The error code
      *
