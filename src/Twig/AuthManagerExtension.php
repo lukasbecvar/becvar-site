@@ -23,7 +23,11 @@ class AuthManagerExtension extends AbstractExtension
     }
 
     /**
-     * Get the twig functions
+     * Provide auth manager methods to twig
+     *
+     * getUserPic - Get user profile picture
+     * getUsername - Get user username
+     * getUserRole - Get user role
      *
      * @return TwigFunction[] An array of TwigFunction objects
      */

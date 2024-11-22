@@ -26,9 +26,9 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the client's IP address
+     * Get the visitor IP address
      *
-     * @return string|null The client's IP address
+     * @return string|null The visitor IP address
      */
     public function getIP(): ?string
     {
@@ -47,7 +47,7 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the user agent
+     * Get visitor browser user-agent
      *
      * @return string|null The user agent
      */
@@ -154,7 +154,7 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get the operating system
+     * Get visitor operating system
      *
      * @return string|null The operating system
      */
@@ -208,7 +208,7 @@ class VisitorInfoUtil
     }
 
     /**
-     * Retrieves information about an IP address using a geolocation API
+     * Get information about IP address using a geolocation API
      *
      * @param string $ipAddress The IP address to look up
      *
@@ -240,7 +240,7 @@ class VisitorInfoUtil
     }
 
     /**
-     * Retrieves the location (city and country) for a given IP address
+     * Get location (city and country) for a given IP address
      *
      * @param string $ipAddress The IP address to look up
      *

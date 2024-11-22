@@ -8,14 +8,14 @@ use Twig\Extension\AbstractExtension;
 /**
  * Class LinkifyExtension
  *
- * LinkifyExtension is a custom Twig extension for converting links in text to clickable HTML links
+ * Linkify extension for Twig to convert links in text to clickable HTML links
  *
  * @package App\Twig
  */
 class LinkifyExtension extends AbstractExtension
 {
     /**
-     * Get the filters provided by this extension
+     * Get filters provided by this extension
      *
      * @return array<TwigFilter> An array of Twig filters
      */

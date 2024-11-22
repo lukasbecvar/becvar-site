@@ -5,7 +5,7 @@ namespace App\Util;
 /**
  * Class SecurityUtil
  *
- * Utility class for security-related operations
+ * SecurityUtil provides methods for encryption and hashing
  *
  * @package App\Util
  */

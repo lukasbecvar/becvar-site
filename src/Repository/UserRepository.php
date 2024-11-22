@@ -38,7 +38,7 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieves a list of all users along with their associated visitor IDs
+     * Get list of all users associated with visitor IDs
      *
      * @return array<array<string>> User list with associated visitor IDs
      */

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class ExportUtil
  *
- * Data export utils methods
+ * ExportUtil provides methods for exporting visitor data from database
  *
  * @package App\Util
  */

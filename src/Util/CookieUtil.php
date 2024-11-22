@@ -8,7 +8,7 @@ use App\Util\SecurityUtil;
 /**
  * Class CookieUtil
  *
- * CookieUtil provides cookie management functionalities
+ * CookieUtil provides cookie management
  *
  * @package App\Util
  */

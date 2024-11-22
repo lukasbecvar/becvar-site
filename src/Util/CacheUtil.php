@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class CacheUtil
  *
- * Manages caching operations using a cache item pool
+ * Manage cache storage
  * Cache config is config/packages/cache.yaml
  *
  * @package App\Util
@@ -27,7 +27,7 @@ class CacheUtil
     }
 
     /**
-     * Checks if a key exists in the cache
+     * Check if key exists in cache storage
      *
      * @param mixed $key The key to check in the cache
      *
@@ -48,7 +48,7 @@ class CacheUtil
     }
 
     /**
-     * Retrieves the value associated with a given key from the cache
+     * Get value by key from cache storage
      *
      * @param mixed $key The key for which to retrieve the value
      *
@@ -70,7 +70,7 @@ class CacheUtil
     }
 
     /**
-     * Sets a value in the cache with the specified key and expiration time
+     * Save value to cache storage
      *
      * @param mixed $key The key under which to store the value in the cache
      * @param mixed $value The value to store in the cache
@@ -99,7 +99,7 @@ class CacheUtil
     }
 
     /**
-     * Deletes a value from the cache using the specified key
+     * Delete value from cache storage
      *
      * @param mixed $key The key of the value to delete from the cache
      *

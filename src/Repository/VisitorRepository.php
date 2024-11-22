@@ -25,7 +25,7 @@ class VisitorRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieves a list of all IDs from the database
+     * Get list of all IDs from the database
      *
      * @return array<int> An array containing all IDs from the database
      */
@@ -43,7 +43,7 @@ class VisitorRepository extends ServiceEntityRepository
     }
 
     /**
-     * Finds visitors based on the specified time filter
+     * Get visitors based on the specified time filter
      *
      * @param string $filter The filter for the time period
      *
@@ -87,7 +87,7 @@ class VisitorRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get the count of visitors grouped by date based on the specified time period
+     * Get count of visitors grouped by date based on the specified time period
      *
      * @param string $period The time period for which to retrieve the visitor count.
      *               Valid values are 'last_24_hours', 'last_week', 'last_month', 'last_year', and 'all_time'

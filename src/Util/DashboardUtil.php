@@ -28,7 +28,7 @@ class DashboardUtil
     }
 
     /**
-     * Get the count of entities in the database
+     * Get count of entities in the database
      *
      * @param object $entity The entity class
      * @param array<string,mixed>|null $search Additional search criteria

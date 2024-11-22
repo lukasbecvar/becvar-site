@@ -26,7 +26,7 @@ class AppUtil
     }
 
     /**
-     * Get the environment variable value
+     * Get environment variable value
      *
      * @param string $key The environment variable key
      *
@@ -37,7 +37,8 @@ class AppUtil
         return $_ENV[$key];
     }
 
-    /** Get the application root directory
+    /**
+     * Get application root directory
      *
      * @return string The application root directory
      */
@@ -47,7 +48,7 @@ class AppUtil
     }
 
     /**
-     * Get the HTTP host
+     * Get HTTP host
      *
      * @return string|null The HTTP host
      */
@@ -57,7 +58,7 @@ class AppUtil
     }
 
     /**
-     * Check if the application is running on localhost
+     * Check if application is running on localhost
      *
      * @return bool Whether the application is running on localhost
      */
@@ -90,7 +91,7 @@ class AppUtil
     }
 
     /**
-     * Check if the connection is secure (SSL)
+     * Check if connection is secure (SSL)
      *
      * @return bool Whether the connection is secure
      */
@@ -101,7 +102,7 @@ class AppUtil
     }
 
     /**
-     * Check if the application is in maintenance mode
+     * Check if application is in maintenance mode
      *
      * @return bool Whether the application is in maintenance mode
      */
@@ -111,7 +112,7 @@ class AppUtil
     }
 
     /**
-     * Check if the ssl only mode
+     * Check if ssl only mode
      *
      * @return bool Whether the application is under ssl only mode
      */
@@ -121,7 +122,7 @@ class AppUtil
     }
 
     /**
-     * Check if the application is in development mode
+     * Check if application is in development mode
      *
      * @return bool Whether the application is in development mode
      */
@@ -135,7 +136,7 @@ class AppUtil
     }
 
     /**
-     * Get the value of a query string parameter, with XSS protection
+     * Get value of a query string parameter, with XSS protection
      *
      * @param string $query The query string parameter name
      * @param Request $request The Symfony request object
@@ -168,7 +169,7 @@ class AppUtil
     }
 
     /**
-     * Update the environment variable value
+     * Update environment variable value
      *
      * @param string $key The environment variable key
      * @param string $value The new environment variable value
