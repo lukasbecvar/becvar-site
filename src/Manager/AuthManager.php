@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * AuthManager provides login/logout methods
- * Note: Login uses its own Authenticator, not Symfony security
+ * AuthManager provides login, logout & authorization functionality
+ * Note: Login uses its own Authenticator (not Symfony security)
  *
  * @package App\Manager
  */
@@ -57,7 +57,7 @@ class AuthManager
     }
 
     /**
-     * Checks if a user is logged in
+     * Check if user is logged in
      *
      * @return bool
      */
@@ -68,14 +68,14 @@ class AuthManager
             return false;
         }
 
-        // get login token form session
+        // get login token from session
         $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
         if ($this->userRepository->getUserByToken($loginToken) != null) {
             return true;
         } else {
-            // destroy session if token not found in user database
+            // destroy session if token not found in users database
             $this->sessionUtil->destroySession();
         }
 
@@ -83,7 +83,7 @@ class AuthManager
     }
 
     /**
-     * Logs in a user
+     * Login user into the system
      *
      * @param string $username The username of the user to log in
      * @param string $userToken The token of the user to log in
@@ -95,14 +95,14 @@ class AuthManager
      */
     public function login(string $username, string $userToken, bool $remember): void
     {
-        // check if user not logged in
+        // check if user is not logged in
         if (!$this->isUserLogedin()) {
             // check if user token is valid
             if (!empty($userToken)) {
                 // set login session
                 $this->sessionUtil->setSession('login-token', $userToken);
 
-                // check if remember set (autologin cookie)
+                // check if remember-me set (auto login cookie)
                 if ($remember) {
                     if (!isset($_COOKIE['login-token-cookie'])) {
                         $this->cookieUtil->set(
@@ -113,10 +113,10 @@ class AuthManager
                     }
                 }
 
-                // update last login time
+                // update user data (last login time, ip address, visitor id)
                 $this->updateUserData();
 
-                // log auth action
+                // log auth event
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
                 $this->errorManager->handleError(
@@ -128,7 +128,7 @@ class AuthManager
     }
 
     /**
-     * User logout action
+     * Logoout user with destroy user session and login cookie
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class AuthManager
     {
         // check if user logged in
         if ($this->isUserLogedin()) {
-            // init user
+            // get current user
             $user = $this->userRepository->getUserByToken($this->getUserToken());
 
             // log logout event
@@ -151,7 +151,7 @@ class AuthManager
     }
 
     /**
-     * Updates user data
+     * Update user data
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the flushing of the user data
      *
@@ -176,8 +176,8 @@ class AuthManager
             // update visitor id
             $user->setVisitorId($visitorId);
 
-            // update user data
             try {
+                // flush updated user data to database
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
@@ -189,7 +189,7 @@ class AuthManager
     }
 
     /**
-     * Registers a new user
+     * Register new user
      *
      * @param string $username The username for the new user
      * @param string $password The password for the new user
@@ -229,8 +229,8 @@ class AuthManager
             ->setProfilePic($imageBase64)
             ->setVisitorId($visitorId);
 
-        // insert new user
         try {
+            // insert new user to database
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
@@ -250,7 +250,7 @@ class AuthManager
     }
 
     /**
-     * Get the login token for the current user session
+     * Get login token from current user session
      *
      * @return string|null The login token or null if not found or invalid
      */
@@ -261,7 +261,7 @@ class AuthManager
             return null;
         }
 
-        // get login token form session
+        // get login token from session
         $loginToken = $this->sessionUtil->getSessionValue('login-token');
 
         // check if token exist in database
@@ -273,7 +273,7 @@ class AuthManager
     }
 
     /**
-     * Get the username associated with the given token
+     * Get username associated with the given token
      *
      * @param string $token The user token to retrieve the username for
      *
@@ -298,7 +298,7 @@ class AuthManager
     }
 
     /**
-     * Get the role associated with the given token
+     * Get role associated with the given token
      *
      * @param string $token The user token to retrieve the role for
      *
@@ -323,11 +323,11 @@ class AuthManager
     }
 
     /**
-     * Get the profile picture URL associated with the given token
+     * Get profile picture URL associated with given token
      *
-     * @param string $token The user token to retrieve the profile picture URL for
+     * @param string $token The user token
      *
-     * @return string|null The profile picture URL or null if not found
+     * @return string|null The profile picture in base64 or null if not found
      */
     public function getUserProfilePic(string $token = 'self'): ?string
     {
@@ -350,7 +350,7 @@ class AuthManager
     }
 
     /**
-     * Checks if the user repository is empty
+     * Check if user repository is empty
      *
      * @return bool True if the user repository is empty, false otherwise
      */
@@ -369,9 +369,9 @@ class AuthManager
     }
 
     /**
-     * Get user entity from the repository based on the provided criteria
+     * Get user entity from repository based on provided criteria
      *
-     * @param array<mixed> $array The criteria to search for in the repository
+     * @param array<mixed> $array The criteria to search
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get user repository
      *
@@ -391,7 +391,7 @@ class AuthManager
     }
 
     /**
-     * Checks if the user associated with the current session is an administrator
+     * Check if user associated with current session is an administrator
      *
      * @return bool True if the user is an administrator, false otherwise
      */
@@ -417,7 +417,7 @@ class AuthManager
     }
 
     /**
-     * Checks if the registration page is allowed based on the current system state
+     * Check if registration page is allowed based on the current system state
      *
      * @return bool True if the registration page is allowed, false otherwise
      */
@@ -439,7 +439,7 @@ class AuthManager
         // generate user token
         $token = ByteString::fromRandom(32)->toString();
 
-        // check if user token is not already used
+        // check if user token is not already taken
         if ($this->userRepository->getUserByToken($token) != null) {
             $this->generateUserToken();
         }
@@ -448,11 +448,9 @@ class AuthManager
     }
 
     /**
-     * Regenerate tokens for all users in the database
+     * Regenerate auth tokens for all users in the database
      *
      * This method regenerates tokens for all users in the database, ensuring uniqueness for each token
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Token update fails
      *
      * @return array<bool|null|string> Regenerate status and message
      */
@@ -475,8 +473,8 @@ class AuthManager
             $user->setToken($newToken);
         }
 
-        // flush data
         try {
+            // flush data to database
             $this->entityManager->flush();
         } catch (Exception $e) {
             $state = [
@@ -489,7 +487,7 @@ class AuthManager
     }
 
     /**
-     * Retrieves a list of all users along with their associated visitor IDs
+     * Get list of all online users
      *
      * @return array<array<string>> The online users list
      */
