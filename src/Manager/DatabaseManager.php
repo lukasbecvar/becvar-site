@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * DatabaseManager provides CRUD database methods
+ * DatabaseManager provides CRUD database operations
  *
  * @package App\Manager
  */
@@ -33,7 +33,7 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves a list of tables in the database
+     * Get list of tables in database
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get tables list
      *
@@ -55,7 +55,7 @@ class DatabaseManager
             );
         }
 
-        // log to database
+        // log table list view event
         $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
 
         // build tables list
@@ -67,7 +67,7 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves the columns of a specific table
+     * Get columns of a specific table
      *
      * @param string $tableName The name of the table
      *
@@ -99,13 +99,13 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves the columns of a specific database table
+     * Get data from a specific database table
      *
-     * @param string $tableName  The name of the table for which columns should be retrieved
+     * @param string $tableName The name of the table
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
-     * @return array<mixed> The array of column names if successful
+     * @return array<mixed> The array of table data
      */
     public function getTableData(string $tableName, bool $log = true): array
     {
@@ -124,7 +124,7 @@ class DatabaseManager
             );
         }
 
-        // log to database
+        // log table data view event
         if ($log) {
             $this->logManager->log(
                 name: 'database',
@@ -136,12 +136,12 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves data from a specific database table with pagination
+     * Get data from a specific database table with pagination
      *
-     * @param string $tableName The name of the table from which to retrieve data
+     * @param string $tableName The name of the database table
      * @param int $page The page number for pagination (default is 1)
      * @param bool $log Indicates whether to log the action (default is true)
-     * @param bool $raw Whether to return raw data without decryption. Default is false
+     * @param bool $raw Whether to return raw data without decryption (default is false)
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
@@ -169,7 +169,7 @@ class DatabaseManager
             );
         }
 
-        // log to database
+        // log table data view event
         if ($log) {
             $this->logManager->log(
                 'database',
@@ -205,10 +205,10 @@ class DatabaseManager
     }
 
     /**
-     * Retrieves data from a specific row of a database table
+     * Get data from a specific row of a database table
      *
-     * @param string $tableName The name of the table from which to retrieve data
-     * @param int $id The unique identifier of the row
+     * @param string $tableName The name of the table
+     * @param int $id The unique identifier of the record row
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get row data
      *
@@ -237,11 +237,11 @@ class DatabaseManager
     }
 
     /**
-     * Adds a new row to a specific database table
+     * Add new row to specific database table
      *
-     * @param string $tableName The name of the table to which the new row will be added
-     * @param array<string> $columns The array of column names for the new row
-     * @param array<mixed> $values The array of values corresponding to the columns for the new row
+     * @param string $tableName The name of the database table
+     * @param array<string> $columns The array of column names
+     * @param array<mixed> $values The array of values corresponding to the columns
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error insert new row
      *
@@ -267,7 +267,7 @@ class DatabaseManager
             );
         }
 
-        // log row add
+        // log row add event
         $this->logManager->log(
             'database',
             $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName
@@ -275,7 +275,7 @@ class DatabaseManager
     }
 
     /**
-     * Deletes a row from a table
+     * Delete row from table
      *
      * @param string $tableName The name of the table
      * @param string $id The ID of the row to delete
@@ -295,6 +295,8 @@ class DatabaseManager
             $params = ['id' => $id];
             $this->connection->executeStatement($sql, $params);
         }
+
+        // log row delete event
         $this->logManager->log(
             'database',
             $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $tableName
@@ -302,7 +304,7 @@ class DatabaseManager
     }
 
     /**
-     * Updates a specific value in a row of a database table
+     * Update specific value in record in database table
      *
      * @param string $tableName The name of the table in which the value will be updated
      * @param string $row The column name for which the value will be updated
@@ -329,6 +331,8 @@ class DatabaseManager
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+
+        // log row update event
         $this->logManager->log(
             'database',
             $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $tableName
@@ -336,11 +340,11 @@ class DatabaseManager
     }
 
     /**
-     * Counts the total number of rows in a table
+     * Get count total number of rows in table
      *
      * @param string $tableName The name of the table
      *
-     * @return int The total number of rows
+     * @return int The total number of records
      */
     public function countTableData(string $tableName): int
     {
@@ -348,7 +352,7 @@ class DatabaseManager
     }
 
     /**
-     * Counts the number of rows on a specific page of a table
+     * Get count number of rows on a specific page of a table
      *
      * @param string $tableName The name of the table
      * @param int $page The page number
