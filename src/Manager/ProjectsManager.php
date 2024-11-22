@@ -47,7 +47,7 @@ class ProjectsManager
     }
 
     /**
-     * Updates the project list from a GitHub user's repositories
+     * Update project list from a GitHub repositories
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to update project list
      *
@@ -114,8 +114,8 @@ class ProjectsManager
             }
         }
 
-        // insert projects to database
         try {
+            // insert projects to database
             $this->entityManager->flush();
         } catch (Exception $e) {
             $this->logManager->log('project-update', 'error to update project list');
@@ -130,12 +130,12 @@ class ProjectsManager
         $this->cacheUtil->deleteValue('projects-list-open');
         $this->cacheUtil->deleteValue('projects-count');
 
-        // log process success
+        // log process success event
         $this->logManager->log('project-update', 'project list updated!');
     }
 
     /**
-     * Drops all projects from the database
+     * Drop all projects from the database
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to drop projects
      *
@@ -151,8 +151,8 @@ class ProjectsManager
             $this->entityManager->remove($item);
         }
 
-        // update table
         try {
+            // flush changes to database
             $this->entityManager->flush();
         } catch (Exception $e) {
             $this->errorManager->handleError(
@@ -163,7 +163,7 @@ class ProjectsManager
     }
 
     /**
-     * Resets the AUTO_INCREMENT value for the projects table
+     * Reset AUTO_INCREMENT value for the projects table
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to reset projects index
      *
@@ -184,7 +184,7 @@ class ProjectsManager
     }
 
     /**
-     * Gets the list of projects based on their status
+     * Get list of projects based on their status
      *
      * @param string $status The status of the projects to get
      *
@@ -218,7 +218,7 @@ class ProjectsManager
     }
 
     /**
-     * Gets the total count of projects
+     * Get total count of projects
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get projects count
      *

@@ -40,7 +40,7 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by array search criteria
+     * Get visitor repository by array search criteria
      *
      * @param array<string,mixed> $search The search criteria
      *
@@ -62,7 +62,7 @@ class VisitorManager
     }
 
     /**
-     * Get the visitor ID by IP address
+     * Get visitor ID by IP address
      *
      * @param string $ipAddress The IP address of the visitor
      *
@@ -98,8 +98,8 @@ class VisitorManager
         if ($visitor !== null) {
             $visitor->setEmail($email);
 
-            // try to update email
             try {
+                // update email
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
@@ -111,7 +111,7 @@ class VisitorManager
     }
 
     /**
-     * Get a paginated list of visitors
+     * Get paginated list of visitors
      *
      * @param int $page The page number
      * @param string $filter The filter value
@@ -160,7 +160,7 @@ class VisitorManager
     }
 
     /**
-     * Get the visitor language based on IP address
+     * Get visitor language based on IP address
      *
      * @return string|null The language of the visitor
      */
@@ -177,7 +177,7 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by ID
+     * Get visitor repository by ID
      *
      * @param int $id The ID of the visitor
      *
@@ -189,7 +189,7 @@ class VisitorManager
     }
 
     /**
-     * Get a visitor repository by IP address
+     * Get visitor repository by IP address
      *
      * @param string $ipAddress The IP address of the visitor
      *
@@ -201,7 +201,7 @@ class VisitorManager
     }
 
     /**
-     * Get the count of visitors for a given page
+     * Get count of visitors for a given page
      *
      * @param int $page The page number
      *
@@ -213,7 +213,7 @@ class VisitorManager
     }
 
     /**
-     * Get the status of a visitor with the given ID
+     * Get status of a visitor with the given ID
      *
      * @param int $id The ID of the visitor.
      * @return string The status of the visitor ('online' if online, 'offline' if not found or offline)
@@ -234,7 +234,7 @@ class VisitorManager
     }
 
     /**
-     * Get an array of IDs of online visitors
+     * Get array with online visitors IDs
      *
      * @return array<int> An array containing IDs of visitors who are currently online
      */
@@ -323,6 +323,7 @@ class VisitorManager
         arsort($visitorsCountry);
         arsort($visitorsBrowsersShortify);
 
+        // build return metrics data
         return [
             'visitorsCity' => $visitorsCity,
             'visitorsCount' => $visitorsCount,
