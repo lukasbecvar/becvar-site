@@ -24,13 +24,13 @@ class CustomTestCase extends WebTestCase
      *
      * @return void
      */
-    public function simulateLogin(KernelBrowser $client): void
+    public function simulateLogin(KernelBrowser $client, string $role = 'Owner'): void
     {
         // create a mock user
         $user = new User();
         $user->setUsername('test_username');
         $user->setPassword(password_hash('test_password', PASSWORD_BCRYPT));
-        $user->setRole('Owner');
+        $user->setRole($role);
         $user->setIpAddress('127.0.0.1');
         $user->setToken('zbjNNyuudM3HQGWe6xqWwjyncbtZB22D');
         $user->setRegistedTime(new DateTime());
@@ -44,11 +44,14 @@ class CustomTestCase extends WebTestCase
         // configure the mock to return true for isUserLogedin
         $authManager->method('isUserLogedin')->willReturn(true);
 
+        // configure the mock to return the mock user for getUserRole
+        $authManager->method('getUserRole')->willReturn($role);
+
         // configure the mock to return the mock user for getLoggedUserRepository
         $authManager->method('getUserRepository')->willReturn($user);
 
         // replace the actual AuthManager service with the mock
-        $client->getContainer()->set('App\Manager\AuthManager', $authManager);
+        $client->getContainer()->set(AuthManager::class, $authManager);
     }
 
     /**

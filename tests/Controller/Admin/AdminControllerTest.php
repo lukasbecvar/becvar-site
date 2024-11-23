@@ -2,56 +2,56 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Manager\AuthManager;
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AdminControllerTest
  *
- * Admin init component test
+ * Test cases for admin init controller
  *
  * @package App\Tests\Admin
  */
-class AdminControllerTest extends WebTestCase
+class AdminControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
-     * Create a mock object for AuthManager
-     *
-     * @return object
-     */
-    private function createAuthManagerMock(): object
-    {
-        // create a mock of AuthManager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isUserLogedin')->willReturn(true);
-
-        return $authManagerMock;
-    }
-
-    /**
-     * Test if the admin init controller redirects to the dashboard
+     * Test redirect to dashboard page with user not logged in
      *
      * @return void
      */
-    public function testDashboardRedirect(): void
+    public function testRedirectToDashboardPageWithUserLoggedIn(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        // simulate login
+        $this->simulateLogin($this->client);
 
-        // make post request to admin init controller
+        // load admin init page
         $this->client->request('GET', '/admin');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
         $this->assertTrue($this->client->getResponse()->isRedirect('/admin/dashboard'));
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+    }
+
+    /**
+     * Test redirect to login page page with user is not logged in
+     *
+     * @return void
+     */
+    public function testRedirectToLoginPageWithUserLoggedIn(): void
+    {
+        // load admin init page
+        $this->client->request('GET', '/admin/database');
+
+        // assert response
+        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 }

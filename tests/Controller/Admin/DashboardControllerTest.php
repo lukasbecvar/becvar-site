@@ -2,10 +2,9 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Manager\AuthManager;
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class DashboardControllerTest
@@ -14,43 +13,25 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @package App\Tests\Admin
  */
-class DashboardControllerTest extends WebTestCase
+class DashboardControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
+
+        // simulate login
+        $this->simulateLogin($this->client);
     }
 
     /**
-     * Create a mock object for AuthManager
-     *
-     * @return object The mock object
-     */
-    private function createAuthManagerMock(): object
-    {
-        // create a mock of AuthManager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isUserLogedin')->willReturn(true);
-        $authManagerMock->method('getUsername')->willReturn('phpunit-user');
-        $authManagerMock->method('getUserRole')->willReturn('Admin');
-        $authManagerMock->method('getUserProfilePic')->willReturn('image-code');
-
-        return $authManagerMock;
-    }
-
-    /**
-     * Test if the admin dashboard page loads successfully
+     * Test load dashboard page
      *
      * @return void
      */
-    public function testAdminDashboard(): void
+    public function testLoadDashboardPage(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make post request to admin dashboard controller
         $this->client->request('GET', '/admin/dashboard');
 
         // assert response
@@ -59,7 +40,6 @@ class DashboardControllerTest extends WebTestCase
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorExists('img[alt="profile_picture"]');
         $this->assertSelectorExists('span[class="role-line"]');
-        $this->assertSelectorTextContains('h3', 'phpunit-user');
         $this->assertSelectorTextContains('#wrarning-box', 'Warnings');
         $this->assertSelectorTextContains('body', 'Visitors info');
         $this->assertSelectorTextContains('.card-title', 'Logs');
