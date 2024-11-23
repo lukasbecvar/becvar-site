@@ -2,18 +2,18 @@
 
 namespace App\Tests\Controller\Admin\Auth;
 
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class LogoutControllerTest
  *
- * Logout component test.
+ * Test cases for auth logout component
  *
  * @package App\Tests\Admin\Auth
  */
-class LogoutControllerTest extends WebTestCase
+class LogoutControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
@@ -24,17 +24,17 @@ class LogoutControllerTest extends WebTestCase
     }
 
     /**
-     * Test the logout functionality
+     * Test user logout redirect to login page
      *
      * @return void
      */
-    public function testLogout(): void
+    public function testUserLogoutRedirectToLoginPage(): void
     {
         $this->client->request('GET', '/logout');
 
         // assert response
-        $this->assertTrue($this->client->getResponse()->isRedirect('/login'));
+        $this->assertResponseRedirects('/login');
+        $this->assertBrowserNotHasCookie('login-token-cookie');
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
-        $this->assertResponseNotHasCookie('login-token-cookie');
     }
 }

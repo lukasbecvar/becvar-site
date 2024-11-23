@@ -2,81 +2,41 @@
 
 namespace App\Tests\Controller\Admin\Auth;
 
-use App\Entity\User;
-use App\Manager\AuthManager;
+use App\Tests\CustomTestCase;
+use Symfony\Component\String\ByteString;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class RegisterTest
+ * Class RegisterControllerTest
  *
- * Register component test
+ * Test cases for auth register component
  *
  * @package App\Tests\Admin\Auth
  */
-class RegisterTest extends WebTestCase
+class RegisterControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeFakeData();
-        parent::tearDown();
     }
 
     /**
-     * Remove fake user data after each test
+     * Test load register page with registration allowed
      *
      * @return void
      */
-    private function removeFakeData(): void
+    public function testLoadRegisterPageWithRegistrationAllowed(): void
     {
-        // get entity manager
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        // simulate allow registration
+        $this->allowRegistration($this->client);
 
-        // get user repository
-        $userRepository = $entityManager->getRepository(User::class);
-
-        // get fake user
-        $fakeUser = $userRepository->findOneBy(['username' => 'testing_username']);
-
-        // check if user exist
-        if ($fakeUser) {
-            $id = $fakeUser->getId();
-
-            $entityManager->remove($fakeUser);
-            $entityManager->flush();
-
-            // reset auto-increment values for the users table
-            $connection = $entityManager->getConnection();
-            $connection->executeStatement("ALTER TABLE users AUTO_INCREMENT = " . ($id - 1));
-        }
-    }
-
-    /**
-     * Test if the register page is loaded when registration is allowed
-     *
-     * @return void
-     */
-    public function testRegisterAllowedLoaded(): void
-    {
-        // mock auth manager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
-
-        // make get request to account settings admin component
+        // load register page
         $this->client->request('GET', '/register');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | Login');
         $this->assertSelectorTextContains('.form-title', 'Register admin account');
         $this->assertSelectorExists('form[name="register_form"]');
@@ -84,40 +44,38 @@ class RegisterTest extends WebTestCase
         $this->assertSelectorExists('input[name="register_form[password]"]');
         $this->assertSelectorExists('input[name="register_form[re-password]"]');
         $this->assertSelectorExists('button:contains("Register")');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test if the register page redirects when registration is not allowed
+     * Test load register page with registration not allowed
      *
      * @return void
      */
-    public function testRegisterNonAllowedLoaded(): void
+    public function testLoadRegisterPageWithRegistrationNotAllowed(): void
     {
-        // mock auth manager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isRegisterPageAllowed')->willReturn(false);
-        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+        // simulate not allow registration
+        $this->allowRegistration($this->client, false);
 
-        // make get request to account settings admin component
+        // load register page
         $this->client->request('GET', '/register');
 
         // assert response
+        $this->assertSelectorNotExists('.form-title');
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     /**
-     * Test if the register form handles empty submission correctly
+     * Test submit register form with empty fields
      *
      * @return void
      */
-    public function testRegisterEmptySubmit(): void
+    public function testSubmitRegisterFormWithEmptyFields(): void
     {
-        // mock auth manager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+        // simulate allow registration
+        $this->allowRegistration($this->client, true);
 
-        // build post request
+        // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
                 'username' => '',
@@ -127,25 +85,75 @@ class RegisterTest extends WebTestCase
         ]);
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorTextContains('li:contains("Please enter a password again")', 'Please enter a password again');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test if the register form handles passwords that do not match correctly
+     * Test submit register form with low length fields
      *
      * @return void
      */
-    public function testRegisterNotMatchPasswordsSubmit(): void
+    public function testSubmitRegisterFormWithLowLengthFields(): void
     {
-        // mock auth manager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isRegisterPageAllowed')->willReturn(true);
-        $this->client->getContainer()->set(AuthManager::class, $authManagerMock);
+        // simulate allow registration
+        $this->allowRegistration($this->client, true);
 
-        // build post request
+        // submit register form
+        $this->client->request('POST', '/register', [
+            'register_form' => [
+                'username' => 'a',
+                'password' => 'a',
+                're-password' => 'a'
+            ],
+        ]);
+
+        // assert response
+        $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
+        $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
+        $this->assertSelectorTextContains('li:contains("Your password again should be at least 8 characters")', 'Your password again should be at least 8 characters');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    /**
+     * Test submit register form with high length fields
+     *
+     * @return void
+     */
+    public function testSubmitRegisterFormWithHighLengthFields(): void
+    {
+        // simulate allow registration
+        $this->allowRegistration($this->client, true);
+
+        // submit register form
+        $this->client->request('POST', '/register', [
+            'register_form' => [
+                'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
+                'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
+                're-password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
+            ],
+        ]);
+
+        // assert response
+        $this->assertSelectorTextContains('li:contains("This value is too long. It should have 50 characters or less.")', 'This value is too long. It should have 50 characters or less.');
+        $this->assertSelectorTextContains('li:contains("This value is too long. It should have 80 characters or less.")', 'This value is too long. It should have 80 characters or less.');
+        $this->assertSelectorTextContains('li:contains("This value is too long. It should have 80 characters or less.")', 'This value is too long. It should have 80 characters or less.');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    /**
+     * Test submit register form with passwords that do not match
+     *
+     * @return void
+     */
+    public function testSubmitRegisterFormWithNotMatchPasswords(): void
+    {
+        // simulate allow registration
+        $this->allowRegistration($this->client, true);
+
+        // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
                 'username' => 'testing_username',
@@ -155,7 +163,31 @@ class RegisterTest extends WebTestCase
         ]);
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('body', 'Your passwords dont match');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    /**
+     * Test submit register form with success
+     *
+     * @return void
+     */
+    public function testSubmitRegisterFormWithSuccess(): void
+    {
+        // simulate allow registration
+        $this->allowRegistration($this->client, true);
+
+        // submit register form
+        $this->client->request('POST', '/register', [
+            'register_form' => [
+                'username' => ByteString::fromRandom(16)->toString(),
+                'password' => 'testing_password_1',
+                're-password' => 'testing_password_1'
+            ],
+        ]);
+
+        // assert response
+        $this->assertResponseRedirects('/admin/dashboard');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 }
