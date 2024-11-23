@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class ProjectsControllerTest
  *
- * Test cases for the Projects component
+ * Test cases for projects page
  *
  * @package App\Tests\Public
  */
@@ -20,17 +20,15 @@ class ProjectsControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
-     * Test accessing the Projects page
+     * Test load projects page
      *
      * @return void
      */
-    public function testProjectsPage(): void
+    public function testLoadProjectsPage(): void
     {
-        // make get request
         $this->client->request('GET', '/projects');
 
         // assert response

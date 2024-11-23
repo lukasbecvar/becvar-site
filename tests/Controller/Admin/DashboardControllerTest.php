@@ -35,7 +35,6 @@ class DashboardControllerTest extends CustomTestCase
         $this->client->request('GET', '/admin/dashboard');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | dashboard');
         $this->assertSelectorExists('main[class="admin-page"]');
         $this->assertSelectorExists('img[alt="profile_picture"]');
@@ -48,5 +47,6 @@ class DashboardControllerTest extends CustomTestCase
         $this->assertSelectorExists('a[class="logout-link"]');
         $this->assertSelectorExists('span[class="menu-text"]');
         $this->assertSelectorExists('div[class="sidebar"]');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

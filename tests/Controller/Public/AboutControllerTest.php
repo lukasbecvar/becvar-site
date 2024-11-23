@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class AboutControllerTest
  *
- * Test cases for the About page
+ * Test cases for about page
  *
  * @package App\Tests\Public
  */
@@ -20,17 +20,15 @@ class AboutControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
-     * Test accessing the About page
+     * Test load about page
      *
      * @return void
      */
-    public function testAboutPage(): void
+    public function testLoadAboutPage(): void
     {
-        // make get request
         $this->client->request('GET', '/about');
 
         // assert response

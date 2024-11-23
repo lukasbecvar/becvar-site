@@ -2,100 +2,75 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Manager\AuthManager;
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class VisitorManagerControllerTest
  *
- * Admin visitor manager component test
+ * Test cases for visitor manager component
  *
  * @package App\Tests\Admin
  */
-class VisitorManagerControllerTest extends WebTestCase
+class VisitorManagerControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
+
+        // simulate login
+        $this->simulateLogin($this->client);
     }
 
     /**
-     * Create a mock object for AuthManager
-     *
-     * @param string $role The role of the user
-     *
-     * @return object The mock object
-     */
-    private function createAuthManagerMock(string $role = 'Admin'): object
-    {
-        // create a mock of AuthManager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isUserLogedin')->willReturn(true);
-        $authManagerMock->method('getUserRole')->willReturn($role);
-
-        return $authManagerMock;
-    }
-
-    /**
-     * Test if the visitor manager page loads successfully
+     * Test load visitor manager page
      *
      * @return void
      */
-    public function testVisitorManager(): void
+    public function testLoadVisitorManagerPage(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make post request to admin init controller
         $this->client->request('GET', '/admin/visitors?page=1');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | visitors');
         $this->assertSelectorTextContains('body', 'Online visitors');
         $this->assertSelectorTextContains('body', 'Banned visitors');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test load visitors export form
+     * Test load visitor manager delete page
      *
      * @return void
      */
-    public function testVisitorManagerExport(): void
+    public function testLoadvisitorExportPage(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make post request to admin init controller
         $this->client->request('GET', '/admin/visitors/download');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | visitors export');
         $this->assertSelectorTextContains('body', 'Download visitors data');
         $this->assertSelectorTextContains('body', 'Export data');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test load visitors metrics page
+     * Test load visitor manager delete page
      *
      * @return void
      */
-    public function testVisitorManagerMetrics(): void
+    public function testLoadvisitorMetricsPage(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make post request to admin init controller
         $this->client->request('GET', '/admin/visitors/metrics');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | visitors');
         $this->assertSelectorTextContains('body', 'Browser');
         $this->assertSelectorTextContains('body', 'Country');
         $this->assertSelectorTextContains('body', 'City');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

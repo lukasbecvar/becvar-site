@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class VisitorApiControllerTest
  *
- * Visitor (status) API test
+ * Test cases for visitor status update api
  *
  * @package App\Tests\Api
  */
@@ -20,17 +20,15 @@ class VisitorApiControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
-     * Test the Visitor Status API
+     * Test update visitor activity status
      *
      * @return void
      */
-    public function testVisitorStatusAPI(): void
+    public function testUpdateVisitorActivityStatus(): void
     {
-        // make post request to admin init controller
         $this->client->request('GET', '/api/visitor/update/activity');
 
         // assert response

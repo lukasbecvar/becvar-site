@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class HomeControllerTest
  *
- * Test cases for the Home component
+ * Test cases for home page
  *
  * @package App\Tests\Public
  */
@@ -20,17 +20,15 @@ class HomeControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
-     * Test accessing the Home page
+     * Test load home page
      *
      * @return void
      */
-    public function testHomePage(): void
+    public function testLoadHomePage(): void
     {
-        // make get request
         $this->client->request('GET', '/');
 
         // assert response

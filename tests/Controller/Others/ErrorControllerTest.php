@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class ErrorControllerTest
  *
- * Test cases for handling different error scenarios
+ * Test cases for error handling
  *
  * @package App\Tests\Others
  */
@@ -24,51 +24,48 @@ class ErrorControllerTest extends WebTestCase
     }
 
     /**
-     * Test the default error page
+     * Test load default error page
      *
      * @return void
      */
-    public function testErrorDefault(): void
+    public function testLoadDefaultErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test error block for banned users
+     * Test load banned error page (block return unknown error)
      *
      * @return void
      */
-    public function testErrorBlockBanned(): void
+    public function testBlockBannedErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=banned');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test error block for maintenance mode
+     * Test load maintenance error page (block return unknown error)
      *
      * @return void
      */
-    public function testErrorBlockMaintenance(): void
+    public function testBlockMaintenanceErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=maintenance');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: unknown');
         $this->assertSelectorTextContains('.error-page-msg', 'Unknown error, please contact the service administrator');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -76,15 +73,14 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError400(): void
+    public function testLoad400ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=400');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Bad request');
         $this->assertSelectorTextContains('.error-page-msg', 'Request error');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -92,15 +88,14 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError401(): void
+    public function testLoad401ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=401');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Unauthorized');
         $this->assertSelectorTextContains('.error-page-msg', 'You do not have permission to access this page');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -108,15 +103,14 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError403(): void
+    public function testLoad403ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=403');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Forbidden');
         $this->assertSelectorTextContains('.error-page-msg', 'You do not have permission to access this page');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -124,15 +118,14 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError404(): void
+    public function testLoad404ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=404');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Page not found');
         $this->assertSelectorTextContains('.error-page-msg', 'Error this page was not found');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -140,16 +133,15 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError429(): void
+    public function testLoad429ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=429');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Too Many Requests');
         $this->assertSelectorTextContains('body', 'Too Many Requests');
         $this->assertSelectorTextContains('body', 'Please try to wait and try again later');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
@@ -157,14 +149,13 @@ class ErrorControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testError500(): void
+    public function testLoad500ErrorPage(): void
     {
-        // make get request
         $this->client->request('GET', '/error?code=500');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Error: Internal Server Error');
         $this->assertSelectorTextContains('.error-page-msg', 'The server encountered an unexpected condition that prevented it from fulfilling the reques');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }
