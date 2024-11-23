@@ -2,111 +2,86 @@
 
 namespace App\Tests\Controller\Admin;
 
-use App\Manager\AuthManager;
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AccountSettingsControllerTest
  *
- * Admin account settings test
+ * Test cases for account settings component
  *
  * @package App\Tests\Admin
  */
-class AccountSettingsControllerTest extends WebTestCase
+class AccountSettingsControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
+
+        // simulate login
+        $this->simulateLogin($this->client);
     }
 
     /**
-     * Create a mock object for AuthManager
-     *
-     * @return object
-     */
-    private function createAuthManagerMock(): object
-    {
-        // create a mock of AuthManager
-        $authManagerMock = $this->createMock(AuthManager::class);
-        $authManagerMock->method('isUserLogedin')->willReturn(true);
-
-        return $authManagerMock;
-    }
-
-    /**
-     * Test if the account settings table page is loaded successfully
+     * Test load account settings table page
      *
      * @return void
      */
-    public function testAccountSettingsTable(): void
+    public function testLoadAccountSettingsTable(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('h2', 'Account settings');
         $this->assertSelectorTextContains('body', 'profile-pic');
         $this->assertSelectorTextContains('body', 'username');
         $this->assertSelectorTextContains('body', 'password');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test if the account settings table page for changing the profile picture is loaded successfully
+     * Test load account settings change profile picture form
      *
      * @return void
      */
-    public function testAccountSettingsTableChangePicForm(): void
+    public function testLoadAccountSettingsChangePicForm(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/pic');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change profile image');
         $this->assertSelectorTextContains('button', 'Upload Image');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test if the account settings table page for changing the username is loaded successfully
+     * Test load account settings change username form
      *
      * @return void
      */
-    public function testAccountSettingsTableChangeUsernameForm(): void
+    public function testLoadAccountSettingsChangeUsernameForm(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // make get request to account settings admin component
         $this->client->request('GET', '/admin/account/settings/username');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test if the account settings table page handles an empty username change form submission correctly
+     * Test submit account settings change username form with empty username field
      *
      * @return void
      */
-    public function testAccountSettingsTableChangeUsernameEmptyForm(): void
+    public function testSubmitAccountSettingsChangeUsernameFormWithEmptyUsername(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // build post request
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => ''
@@ -120,15 +95,12 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page handles a short username change form submission correctly
+     * Test submit account settings change username form with short username field
      *
      * @return void
      */
-    public function testAccountSettingsTableChangeUsernameShortForm(): void
+    public function testSubmitAccountSettingsChangeUsernameFormWithShortUsername(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // build post request
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => 'a'
@@ -142,59 +114,66 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page for changing the password is loaded successfully
+     * Test submit account settings change username form with long username field
      *
      * @return void
      */
-    public function testAccountSettingsTableChangePasswordForm(): void
+    public function testSubmitAccountSettingsChangeUsernameFormWithLongUsername(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->request('POST', '/admin/account/settings/username', [
+            'username_change_form' => [
+                'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
+            ],
+        ]);
 
-        // make get request to account settings admin component
+        // assert response
+        $this->assertSelectorTextContains('li:contains("This value is too long. It should have 50 characters or less.")', 'This value is too long. It should have 50 characters or less.');
+    }
+
+    /**
+     * Test submit account settings change username form with success
+     *
+     * @return void
+     */
+    public function testSubmitAccountSettingsChangeUsernameFormWithSuccess(): void
+    {
+        $this->client->request('POST', '/admin/account/settings/username', [
+            'username_change_form' => [
+                'username' => 'testing_username',
+            ],
+        ]);
+
+        // assert response
+        $this->assertResponseRedirects('/admin/account/settings');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+    }
+
+    /**
+     * Test load account settings change password form
+     *
+     * @return void
+     */
+    public function testLoadAccountSettingsChangePasswordForm(): void
+    {
         $this->client->request('GET', '/admin/account/settings/password');
 
         // assert response
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.form-title', 'Change password');
         $this->assertSelectorExists('form[name="password_change_form"]');
         $this->assertSelectorExists('input[name="password_change_form[password]"]');
         $this->assertSelectorExists('input[name="password_change_form[repassword]"]');
         $this->assertSelectorExists('button:contains("Change password")');
-    }
-
-    /**
-     * Test account settings table page handles a password change form submission with no-matching passwords correctly
-     *
-     * @return void
-     */
-    public function testAccountSettingsTableChangePasswordNotMatchForm(): void
-    {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // build post request
-        $this->client->request('POST', '/admin/account/settings/password', [
-            'password_change_form' => [
-                'password' => 'testing_password_1',
-                'repassword' => 'testing_password_2'
-            ],
-        ]);
-
-        // assert response
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorTextContains('body', 'Your passwords is not match!');
     }
 
     /**
-     * Test if the account settings table page handles an empty password change form submission correctly
+     * Test submit account settings change password form with empty password field
      *
      * @return void
      */
-    public function testAccountSettingsTableChangePasswordEmptyForm(): void
+    public function testSubmitAccountSettingsChangePasswordFormWithEmptyPassword(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
-
-        // build post request
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
                 'password' => '',
@@ -210,14 +189,31 @@ class AccountSettingsControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the account settings table page handles a short password change form submission correctly
+     * Test submit account settings change password form with no-matching passwords
      *
      * @return void
      */
-    public function testAccountSettingsTableChangePasswordShortForm(): void
+    public function testSubmitAccountSettingsChangePasswordFormWithNoMatchPasswords(): void
     {
-        $this->client->getContainer()->set(AuthManager::class, $this->createAuthManagerMock());
+        $this->client->request('POST', '/admin/account/settings/password', [
+            'password_change_form' => [
+                'password' => 'testing_password_1',
+                'repassword' => 'testing_password_2'
+            ],
+        ]);
 
+        // assert response
+        $this->assertSelectorTextContains('body', 'Your passwords is not match!');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    /**
+     * Test submit account settings change password form with short password field
+     *
+     * @return void
+     */
+    public function testSubmitAccountSettingsChangePasswordFormWithShortPassword(): void
+    {
         // build post request
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
@@ -231,5 +227,42 @@ class AccountSettingsControllerTest extends WebTestCase
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
+    }
+
+    /**
+     * Test submit account settings change password form with long password field
+     *
+     * @return void
+     */
+    public function testSubmitAccountSettingsChangePasswordFormWithLongPassword(): void
+    {
+        $this->client->request('POST', '/admin/account/settings/password', [
+            'password_change_form' => [
+                'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
+                'repassword' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
+            ],
+        ]);
+
+        // assert response
+        $this->assertSelectorTextContains('li:contains("This value is too long. It should have 50 characters or less.")', 'This value is too long. It should have 50 characters or less.');
+    }
+
+    /**
+     * Test submit account settings change password form with success
+     *
+     * @return void
+     */
+    public function testSubmitAccountSettingsChangePasswordFormWithSuccess(): void
+    {
+        $this->client->request('POST', '/admin/account/settings/password', [
+            'password_change_form' => [
+                'password' => 'testing_password_1',
+                'repassword' => 'testing_password_1'
+            ],
+        ]);
+
+        // assert response
+        $this->assertResponseRedirects('/admin/account/settings');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 }
