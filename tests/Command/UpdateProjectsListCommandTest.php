@@ -5,80 +5,74 @@ namespace App\Tests\Command;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use App\Manager\ProjectsManager;
-use Symfony\Component\Console\Application;
 use App\Command\UpdateProjectsListCommand;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Class UpdateProjectsListCommandTest
  *
- * Test the UpdateProjectsListCommand class
+ * Test cases for update projects list command
  *
  * @package App\Tests\Command
  */
 class UpdateProjectsListCommandTest extends TestCase
 {
-    private ProjectsManager|MockObject $projectsManagerMock;
+    private CommandTester $commandTester;
+    private UpdateProjectsListCommand $command;
+    private ProjectsManager & MockObject $projectsManagerMock;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create a mock of ProjectsManager
+        // mock dependencies
         $this->projectsManagerMock = $this->createMock(ProjectsManager::class);
+
+        // instantiate command instance
+        $this->command = new UpdateProjectsListCommand($this->projectsManagerMock);
+        $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test the update projects list with success
+     * Test execute update projects list command with success response
      *
      * @return void
      */
-    public function testProjectsListUpdateCommandSuccess(): void
+    public function testExecuteUpdateProjectsListCommandWithSuccess(): void
     {
-        // mock the updateProjectList method to simulate success
+        // expect projects update call
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList');
 
-        // create a symfony console
-        $application = new Application();
-        $application->add(new UpdateProjectsListCommand($this->projectsManagerMock));
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
 
-        // create a CommandTester to execute the command
-        $command = $application->find('projects:list:update');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
+        // get command output
+        $output = $this->commandTester->getDisplay();
 
-        // get output
-        $output = $commandTester->getDisplay();
-
-        // assert the output
+        // assert command output
         $this->assertStringContainsString('Projects list updated!', $output);
+        $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test the update projects list with failure
+     * Test execute update projects list command with failure response
      *
      * @return void
      */
-    public function testProjectsListUpdateCommandFailure(): void
+    public function testExecuteUpdateProjectsListCommandWithFailure(): void
     {
-        // mock the updateProjectList method to throw an exception
+        // expect projects update call and sumulate failure response
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
             ->willThrowException(new Exception('Something went wrong'));
 
-        // create a symfony console
-        $application = new Application();
-        $application->add(new UpdateProjectsListCommand($this->projectsManagerMock));
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
 
-        // create a CommandTester to execute the command
-        $command = $application->find('projects:list:update');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
+        // get command output
+        $output = $this->commandTester->getDisplay();
 
-        // get output
-        $output = $commandTester->getDisplay();
-
-        // assert the output
+        // assert command output
         $this->assertStringContainsString('Process error: Something went wrong', $output);
+        $this->assertEquals(Command::FAILURE, $exitCode);
     }
 }

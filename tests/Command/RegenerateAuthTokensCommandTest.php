@@ -4,81 +4,75 @@ namespace App\Tests\Command;
 
 use App\Manager\AuthManager;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Application;
 use App\Command\RegenerateAuthTokensCommand;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Class RegenerateAuthTokensCommandTest
  *
- * Test the RegenerateAuthTokensCommand class
+ * Test cases for regenerate auth tokens command
  *
  * @package App\Tests\Command
  */
 class RegenerateAuthTokensCommandTest extends TestCase
 {
-    private AuthManager|MockObject $authManagerMock;
+    private CommandTester $commandTester;
+    private RegenerateAuthTokensCommand $command;
+    private AuthManager & MockObject $authManagerMock;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
-        // create a mock of AuthManager
+        // mock dependencies
         $this->authManagerMock = $this->createMock(AuthManager::class);
+
+        // instantiate command instance
+        $this->command = new RegenerateAuthTokensCommand($this->authManagerMock);
+        $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test the regenerate auth tokens with success response
+     * Test execute regenerate auth tokens command
      *
      * @return void
      */
-    public function testRegenerateAuthTokensCommandSuccess(): void
+    public function testExecuteRegenerateAuthTokensCommandWithSuccess(): void
     {
-        // mock the return value of regenerateUsersTokens to simulate success
+        // expect tokens regeneration call and sumulate success response
         $this->authManagerMock->expects($this->once())
             ->method('regenerateUsersTokens')->willReturn(['status' => true]);
 
-        // create a symfony console
-        $application = new Application();
-        $application->add(new RegenerateAuthTokensCommand($this->authManagerMock));
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
 
-        // create a CommandTester to execute the command
-        $command = $application->find('auth:tokens:regenerate');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
+        // get command output
+        $output = $this->commandTester->getDisplay();
 
-        // get output
-        $output = $commandTester->getDisplay();
-
-        // assert output
+        // assert command output
         $this->assertStringContainsString('All tokens is regenerated!', $output);
+        $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test the regenerate auth tokens with failure response
+     * Test execute regenerate auth tokens command with failure
      *
      * @return void
      */
-    public function testRegenerateAuthTokensCommandFailure(): void
+    public function testExecuteRegenerateAuthTokensCommandWithFailure(): void
     {
-        // mock the return value of regenerateUsersTokens to simulate failure
+        // expect tokens regeneration call and sumulate failure response
         $this->authManagerMock->expects($this->once())->method('regenerateUsersTokens')
             ->willReturn(['status' => false, 'message' => 'Error message']);
 
-        // create a symfony console
-        $application = new Application();
-        $application->add(new RegenerateAuthTokensCommand($this->authManagerMock));
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
 
-        // create a CommandTester to execute the command
-        $command = $application->find('auth:tokens:regenerate');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
+        // get command output
+        $output = $this->commandTester->getDisplay();
 
-        // get output
-        $output = $commandTester->getDisplay();
-
-        // assert the output
+        // assert command output
         $this->assertStringContainsString('Process error: Error message', $output);
+        $this->assertEquals(Command::FAILURE, $exitCode);
     }
 }
