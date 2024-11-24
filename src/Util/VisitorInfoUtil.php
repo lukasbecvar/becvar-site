@@ -72,7 +72,7 @@ class VisitorInfoUtil
      *
      * @return string|null The short browser name
      */
-    public function getBrowserShortify(string $userAgent = null): ?string
+    public function getBrowserShortify(?string $userAgent = null): ?string
     {
         // set useragent if not set
         if ($userAgent == null) {

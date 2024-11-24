@@ -37,7 +37,7 @@ class DashboardUtil
      *
      * @return int The count of entities
      */
-    public function getDatabaseEntityCount(object $entity, array $search = null): int
+    public function getDatabaseEntityCount(object $entity, ?array $search = null): int
     {
         $result = null;
 

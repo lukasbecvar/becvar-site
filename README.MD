@@ -33,7 +33,7 @@ Deployment of the new version with GitHub Action when a new release is created.
 
 ## Requirements
 - Apache / Nginx PHP compatible web server
-- PHP 8.3
+- PHP 8.4
 - PHP-PDO_MYSQL
 - PHP-INTL
 - PHP-GD
