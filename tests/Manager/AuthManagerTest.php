@@ -19,7 +19,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class AuthManagerTest
  *
- * AuthManagerTest tests the AuthManager class
+ * Test cases for auth manager component
  *
  * @package App\Tests\Manager
  */
@@ -52,7 +52,7 @@ class AuthManagerTest extends TestCase
         // mock user repository
         $this->entityManager->method('getRepository')->willReturn($this->userRepository);
 
-        // create instance of AuthManager
+        // create auth manager instance
         $this->authManager = new AuthManager(
             $this->logManager,
             $this->cookieUtil,
@@ -67,42 +67,227 @@ class AuthManagerTest extends TestCase
     }
 
     /**
-     * Test if the isUserLogged In method returns true when the session exists
+     * Test check if user logged in with no session available
      *
      * @return void
      */
-    public function testIsUserLoggedInWhenSessionExists(): void
+    public function testCheckIsUserLogedinWithNoSession(): void
     {
-        $token = 'valid-token';
+        // mock session check
+        $this->sessionUtil->expects($this->once())->method('checkSession')
+            ->with('login-token')->willReturn(false);
 
-        // mock session util
-        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
-        $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
+        // call test method
+        $result = $this->authManager->isUserLogedin();
 
-        // mock user repository
+        // assert result
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test check if user logged in with invalid token
+     *
+     * @return void
+     */
+    public function testCheckIsUserLogedinWithInvalidToken(): void
+    {
+        // mock session check
+        $this->sessionUtil->expects($this->once())->method('checkSession')
+            ->with('login-token')->willReturn(true);
+
+        // mock get session value
+        $this->sessionUtil->expects($this->once())->method('getSessionValue')
+            ->with('login-token')->willReturn('invalid-token');
+
+        // mock get user by token
+        $this->userRepository->expects($this->once())->method('getUserByToken')
+            ->with('invalid-token')->willReturn(null);
+
+        // expect destroy session
+        $this->sessionUtil->expects($this->once())->method('destroySession');
+
+        // call test method
+        $result = $this->authManager->isUserLogedin();
+
+        // assert result
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test check if user logged in with valid token
+     *
+     * @return void
+     */
+    public function testCheckIsUserLogedinWithValidToken(): void
+    {
+        // mock session check
+        $this->sessionUtil->expects($this->once())->method('checkSession')
+            ->with('login-token')->willReturn(true);
+
+        // mock get session value
+        $this->sessionUtil->expects($this->once())->method('getSessionValue')
+            ->with('login-token')->willReturn('valid-token');
+
+        // mock get user by token
+        $userMock = $this->createMock(User::class);
+        $this->userRepository->expects($this->once())->method('getUserByToken')
+            ->with('valid-token')->willReturn($userMock);
+
+        // call tested method
+        $result = $this->authManager->isUserLogedin();
+
+        // assert result
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Test set user login session and cookie
+     */
+    public function testUserLogin(): void
+    {
+        $remember = true;
+        $username = 'testUser';
+        $userToken = 'testToken';
+
+        // mock check login session
+        $this->sessionUtil->expects($this->exactly(2))->method('checkSession')
+            ->with('login-token')->willReturnOnConsecutiveCalls(false, true);
+
+        // mock login token from session
+        $this->sessionUtil->expects($this->any())->method('getSessionValue')
+            ->with('login-token')->willReturn($userToken);
+
+        // mock get user by token
+        $this->userRepository->expects($this->once())->method('getUserByToken')
+            ->with($userToken)->willReturn(new User());
+
+        // mock set login session
+        $this->sessionUtil->expects($this->once())->method('setSession')
+            ->with('login-token', $userToken);
+
+        // expect set cookie
+        $this->cookieUtil->expects($this->once())->method('set')->with(
+            $this->equalTo('login-token-cookie'),
+            $this->equalTo($userToken),
+            $this->greaterThan(time())
+        );
+
+        // expect log login event
+        $this->logManager->expects($this->once())->method('log')->with(
+            $this->equalTo('authenticator'),
+            $this->stringContains('testUser logged in')
+        );
+
+        // expect get visitor info
+        $this->visitorInfoUtil->expects($this->once())->method('getIP')->willReturn('127.0.0.1');
+        $this->visitorManager->expects($this->once())->method('getVisitorRepository')
+            ->willReturn(new class {
+                public function getID(): int
+                {
+                    return 1;
+                }
+            });
+        $this->userRepository->expects($this->once())->method('findOneBy')
+            ->with(['token' => $userToken])->willReturn(new User());
+
+        // expect flush updated user data to database
+        $this->entityManager->expects($this->once())->method('flush');
+
+        // call tested method
+        $this->authManager->login($username, $userToken, $remember);
+    }
+
+    /**
+     * Test user logout with session and cookie unset
+     *
+     * @return void
+     */
+    public function testUserLogout(): void
+    {
+        // mock logged-in user entity
         $user = $this->createMock(User::class);
-        $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
+        $user->method('getUsername')->willReturn('test_user');
 
-        // assert output
-        $this->assertTrue($this->authManager->isUserLogedin());
+        // mock session check to simulate logged-in user
+        $this->sessionUtil->expects($this->exactly(2))->method('checkSession')
+            ->with('login-token')->willReturn(true);
+        $this->sessionUtil->expects($this->exactly(2))->method('getSessionValue')
+            ->with('login-token')->willReturn('valid-token');
+
+        // mock user repository to return user by token
+        $this->userRepository->expects($this->exactly(3))->method('getUserByToken')
+            ->with('valid-token')->willReturn($user);
+
+        // mock log manager to verify logout event is logged
+        $this->logManager->expects($this->once())->method('log')
+            ->with('authenticator', 'user: test_user logout');
+
+        // mock cookie util to verify cookie is unset
+        $this->cookieUtil->expects($this->once())->method('unset')
+            ->with('login-token-cookie');
+
+        // mock session util to verify session is unset
+        $this->sessionUtil->expects($this->once())->method('destroySession');
+
+        // call tested method
+        $this->authManager->logout();
     }
 
     /**
-     * Test if the isUserLogged In method returns false when the session does not exist
+     * Test register new user to database
      *
      * @return void
      */
-    public function testIsUserLoggedInWhenSessionDoesNotExist(): void
+    public function testRegisterNewUser(): void
     {
-        // mock session util
-        $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(false);
+        // mock user data
+        $username = 'testuser';
+        $password = 'testpassword';
+        $hashedPassword = 'hashedpassword';
+        $ipAddress = '127.0.0.1';
+        $visitorId = 123;
 
-        // assert output
-        $this->assertFalse($this->authManager->isUserLogedin());
+        // mock visitor info data
+        $this->visitorInfoUtil->expects($this->exactly(2))->method('getIP')->willReturn('127.0.0.1');
+
+        // mock get visitor repository
+        $this->visitorManager->expects($this->once())->method('getVisitorRepository')
+            ->willReturn(new class {
+                public function getID(): int
+                {
+                    return 1;
+                }
+            });
+
+
+        // mock get visitor id
+        $this->visitorManager->expects($this->once())->method('getVisitorID')
+            ->with($ipAddress)->willReturn($visitorId);
+
+        // mock password hash
+        $this->securityUtil->expects($this->once())->method('generateHash')
+            ->with($password)->willReturn($hashedPassword);
+
+        // expect findOneBy for check if user exists
+        $this->userRepository->expects($this->once())
+            ->method('findOneBy')->willReturn(null);
+
+        // expect entity persist
+        $this->entityManager->expects($this->once())->method('persist')
+            ->with($this->isInstanceOf(User::class));
+
+        // expect flush data with entity manager
+        $this->entityManager->expects($this->once())->method('flush');
+
+        // expect event log call (2x because log registration and login)
+        $this->logManager->expects($this->exactly(2))->method('log');
+
+        // call test method
+        $this->authManager->registerNewUser($username, $password);
     }
 
     /**
-     * Test if the login method sets the login-token session
+     * Test get user token when session exists
      *
      * @return void
      */
@@ -110,34 +295,40 @@ class AuthManagerTest extends TestCase
     {
         $token = 'valid-token';
 
-        // mock session util
+        // mock session
         $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
         $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        // mock user repository
+        // mock get user by token
         $user = $this->createMock(User::class);
         $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
-        // assert output
-        $this->assertEquals($token, $this->authManager->getUserToken());
+        // call test method
+        $result = $this->authManager->getUserToken();
+
+        // assert result
+        $this->assertEquals($token, $result);
     }
 
     /**
-     * Test if the getUserToken method returns null when the session does not exist
+     * Test get user token when session does not exist
      *
      * @return void
      */
     public function testGetUserTokenWhenSessionDoesNotExist(): void
     {
-        // mock session util
+        // mock session
         $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(false);
 
-        // assert output
-        $this->assertNull($this->authManager->getUserToken());
+        // call test method
+        $result = $this->authManager->getUserToken();
+
+        // assert result
+        $this->assertNull($result);
     }
 
     /**
-     * Test if the getUsername method returns the correct username
+     * Test get username method
      *
      * @return void
      */
@@ -150,15 +341,18 @@ class AuthManagerTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getUsername')->willReturn($username);
 
-        // mock user repository
+        // mock get user by token
         $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
-        // assert output
-        $this->assertEquals($username, $this->authManager->getUsername($token));
+        // call test method
+        $result = $this->authManager->getUsername($token);
+
+        // assert result
+        $this->assertEquals($username, $result);
     }
 
     /**
-     * Test if the getUserRole method returns the correct role
+     * Test get user role method
      *
      * @return void
      */
@@ -171,15 +365,18 @@ class AuthManagerTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getRole')->willReturn($role);
 
-        // mock user repository
+        // mock get user by token
         $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
-        // assert output
-        $this->assertEquals($role, $this->authManager->getUserRole($token));
+        // call test method
+        $result = $this->authManager->getUserRole($token);
+
+        // assert result
+        $this->assertEquals($role, $result);
     }
 
     /**
-     * Test if the isAdmin method returns true when the user is an admin
+     * Test check if user is admin when user is admin
      *
      * @return void
      */
@@ -192,19 +389,22 @@ class AuthManagerTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getRole')->willReturn($role);
 
-        // mock session util
+        // mock session
         $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
         $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        // mock user repository
+        // mock get user by token
         $this->userRepository->method('getUserByToken')->with($token)->willReturn($user);
 
-        // assert output
-        $this->assertTrue($this->authManager->isAdmin());
+        // call test method
+        $result = $this->authManager->isAdmin();
+
+        // assert result
+        $this->assertTrue($result);
     }
 
     /**
-     * Test if the isAdmin method returns false when the user is not an admin
+     * Test check if user is admin when user is not admin
      *
      * @return void
      */
@@ -217,14 +417,45 @@ class AuthManagerTest extends TestCase
         $user = $this->createMock(User::class);
         $user->method('getRole')->willReturn($role);
 
-        // mock session util
+        // mock session
         $this->sessionUtil->method('checkSession')->with('login-token')->willReturn(true);
         $this->sessionUtil->method('getSessionValue')->with('login-token')->willReturn($token);
 
-        // mock user repository
+        // mock get user by token
         $this->userRepository->method('findOneBy')->with(['token' => $token])->willReturn($user);
 
-        // assert output
-        $this->assertFalse($this->authManager->isAdmin());
+        // call test method
+        $result = $this->authManager->isAdmin();
+
+        // assert result
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test generate user token string
+     *
+     * @return void
+     */
+    public function testGenerateUserToken(): void
+    {
+        // call test method
+        $result = $this->authManager->generateUserToken();
+
+        // assert result
+        $this->assertIsString($result);
+    }
+
+    /**
+     * Test get online users list method
+     *
+     * @return void
+     */
+    public function testGetOnlineList(): void
+    {
+        // call test method
+        $result = $this->authManager->getOnlineUsersList();
+
+        // assert result
+        $this->assertIsArray($result);
     }
 }

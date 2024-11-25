@@ -19,7 +19,6 @@ class LoginControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        // init kernel browser client instance
         $this->client = static::createClient();
     }
 
@@ -63,6 +62,7 @@ class LoginControllerTest extends WebTestCase
         // assert response
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
+        $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -85,6 +85,7 @@ class LoginControllerTest extends WebTestCase
 
         // assert response
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
+        $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -107,6 +108,7 @@ class LoginControllerTest extends WebTestCase
 
         // assert response
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
+        $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -129,6 +131,7 @@ class LoginControllerTest extends WebTestCase
 
         // assert response
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
+        $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 

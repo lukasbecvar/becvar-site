@@ -24,6 +24,24 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
+     * Test load register page with registration not allowed
+     *
+     * @return void
+     */
+    public function testLoadRegisterPageWithRegistrationNotAllowed(): void
+    {
+        // simulate not allow registration
+        $this->allowRegistration($this->client, false);
+
+        // load register page
+        $this->client->request('GET', '/register');
+
+        // assert response
+        $this->assertSelectorNotExists('.form-title');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+    }
+
+    /**
      * Test load register page with registration allowed
      *
      * @return void
@@ -45,24 +63,6 @@ class RegisterControllerTest extends CustomTestCase
         $this->assertSelectorExists('input[name="register_form[re-password]"]');
         $this->assertSelectorExists('button:contains("Register")');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    /**
-     * Test load register page with registration not allowed
-     *
-     * @return void
-     */
-    public function testLoadRegisterPageWithRegistrationNotAllowed(): void
-    {
-        // simulate not allow registration
-        $this->allowRegistration($this->client, false);
-
-        // load register page
-        $this->client->request('GET', '/register');
-
-        // assert response
-        $this->assertSelectorNotExists('.form-title');
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     /**

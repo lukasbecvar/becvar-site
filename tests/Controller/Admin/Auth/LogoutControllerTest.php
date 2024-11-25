@@ -20,7 +20,6 @@ class LogoutControllerTest extends CustomTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        parent::setUp();
     }
 
     /**
