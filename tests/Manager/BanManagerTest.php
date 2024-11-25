@@ -3,19 +3,21 @@
 namespace App\Tests\Manager;
 
 use App\Entity\Visitor;
+use Doctrine\ORM\Query;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use App\Manager\VisitorManager;
+use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class BanManagerTest
  *
- * BanManagerTest tests the BanManager class
+ * Test cases for ban manager component
  *
  * @package App\Tests\Manager
  */
@@ -37,7 +39,7 @@ class BanManagerTest extends TestCase
         $this->visitorManager = $this->createMock(VisitorManager::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
-        // create instance of BanManager
+        // create ban manager instance
         $this->banManager = new BanManager(
             $this->logManager,
             $this->authManager,
@@ -48,7 +50,56 @@ class BanManagerTest extends TestCase
     }
 
     /**
-     * Test if the unbanVisitor method updates the ban status and logs the action
+     * Test ban visitor
+     *
+     * @return void
+     */
+    public function testBanVisitor(): void
+    {
+        $ipAddress = '192.168.1.1';
+        $reason = 'Suspicious activity';
+
+        // mock visitor entity
+        $visitor = $this->createMock(Visitor::class);
+
+        // mock visitor repository to return visitor
+        $this->visitorManager->method('getVisitorRepository')
+            ->with($ipAddress)->willReturn($visitor);
+
+        // mock visitor methods
+        $visitor->expects($this->once())->method('setBannedStatus')->with(true)->willReturnSelf();
+        $visitor->expects($this->once())->method('setBanReason')->with($reason)->willReturnSelf();
+        $visitor->expects($this->once())->method('setBannedTime')->with($this->isInstanceOf(\DateTime::class))->willReturnSelf();
+
+        // mock get username (who is banning)
+        $this->authManager->method('getUsername')->willReturn('admin');
+
+        // expect ban event log
+        $this->logManager->expects($this->once())->method('log')->with(
+            $this->equalTo('ban-system'),
+            $this->stringContains('visitor with ip: 192.168.1.1 banned for reason: Suspicious activity by admin')
+        );
+
+        // mock query execute
+        $queryMock = $this->createMock(Query::class);
+        $queryMock->expects($this->exactly(2))->method('setParameter')->withConsecutive(
+            ['status', 'closed'],
+            ['ip_address', $ipAddress]
+        )->willReturnSelf();
+        $queryMock->expects($this->once())->method('execute');
+
+        // mock close all inbox messages return
+        $this->entityManager->method('createQuery')->willReturn($queryMock);
+
+        // expect entity manager flush call
+        $this->entityManager->expects($this->once())->method('flush');
+
+        // call tested method
+        $this->banManager->banVisitor($ipAddress, $reason);
+    }
+
+    /**
+     * Test unban banned visitor
      *
      * @return void
      */
@@ -61,27 +112,27 @@ class BanManagerTest extends TestCase
         $visitor = $this->createMock(Visitor::class);
         $visitor->expects($this->once())->method('setBannedStatus')->with(false)->willReturnSelf();
 
-        // mock visitor manager
+        // mock get visitor repository
         $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
-        // mock auth manager
+        // mock get admin username (who unbanning the visitor)
         $this->authManager->method('getUsername')->willReturn($username);
 
-        // mock log manager
+        // expect log call
         $this->logManager->expects($this->once())->method('log')->with(
             'ban-system',
             'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
         );
 
-        // mock entity manager
+        // expect flush call
         $this->entityManager->expects($this->once())->method('flush');
 
-        // call method
+        // call tested method
         $this->banManager->unbanVisitor($ipAddress);
     }
 
     /**
-     * Test if the isVisitorBanned method returns true when the visitor is banned
+     * Test check if visitor is banned
      *
      * @return void
      */
@@ -96,12 +147,38 @@ class BanManagerTest extends TestCase
         // mock visitor manager
         $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
-        // assert output
-        $this->assertTrue($this->banManager->isVisitorBanned($ipAddress));
+        // call tested method
+        $result = $this->banManager->isVisitorBanned($ipAddress);
+
+        // assert result
+        $this->assertTrue($result);
     }
 
     /**
-     * Test if the getBanReason method returns the correct ban reason
+     * Test get count of banned visitors
+     *
+     * @return void
+     */
+    public function testGetBannedCount(): void
+    {
+        $count = 10;
+
+        // mock repository
+        $repository = $this->createMock(VisitorRepository::class);
+        $repository->method('count')->with(['banned_status' => 'yes'])->willReturn($count);
+
+        // mock get visitor repository
+        $this->entityManager->method('getRepository')->willReturn($repository);
+
+        // call tested method
+        $result = $this->banManager->getBannedCount();
+
+        // assert result
+        $this->assertEquals($count, $result);
+    }
+
+    /**
+     * Test get ban reason for a visitor
      *
      * @return void
      */
@@ -114,10 +191,13 @@ class BanManagerTest extends TestCase
         $visitor = $this->createMock(Visitor::class);
         $visitor->method('getBanReason')->willReturn($reason);
 
-        // mock visitor manager
+        // mock get visitor repository
         $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
-        // assert output
-        $this->assertEquals($reason, $this->banManager->getBanReason($ipAddress));
+        // call tested method
+        $result = $this->banManager->getBanReason($ipAddress);
+
+        // assert result
+        $this->assertEquals($reason, $result);
     }
 }
