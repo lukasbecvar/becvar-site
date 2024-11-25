@@ -2,19 +2,19 @@
 
 namespace App\Tests\Manager;
 
-use App\Manager\DatabaseManager;
+use Exception;
+use Doctrine\DBAL\Result;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
-use Doctrine\DBAL\Schema\AbstractSchemaManager;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Column;
-use Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Doctrine\DBAL\Schema\Column;
+use App\Manager\DatabaseManager;
+use Doctrine\DBAL\Schema\Schema;
+use PHPUnit\Framework\MockObject\MockObject;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 
 /**
  * Class DatabaseManagerTest
