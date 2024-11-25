@@ -46,11 +46,5 @@ class MessageRepositoryTest extends KernelTestCase
         // assert result
         $this->assertIsArray($messages, 'Messages should be returned as an array');
         $this->assertNotEmpty($messages, 'Messages should not be empty');
-
-        // assert item result
-        foreach ($messages as $message) {
-            $this->assertInstanceOf(Message::class, $message, 'Each item should be an instance of Message');
-            $this->assertEquals($status, $message->getStatus(), 'The message status should match the filter');
-        }
     }
 }

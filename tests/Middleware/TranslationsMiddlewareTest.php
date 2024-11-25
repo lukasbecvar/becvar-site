@@ -8,11 +8,16 @@ use App\Middleware\TranslationsMiddleware;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
+/**
+ * Class TranslationsMiddlewareTest
+ *
+ * Test for translations middleware
+ *
+ * @package App\Tests\Middleware
+ */
 class TranslationsMiddlewareTest extends TestCase
 {
-    /** tested middleware */
     private TranslationsMiddleware $middleware;
-
     private VisitorManager & MockObject $visitorManagerMock;
     private LocaleAwareInterface & MockObject $translatorMock;
 
@@ -22,7 +27,7 @@ class TranslationsMiddlewareTest extends TestCase
         $this->visitorManagerMock = $this->createMock(VisitorManager::class);
         $this->translatorMock = $this->createMock(LocaleAwareInterface::class);
 
-        // create instance of TranslationsMiddleware
+        // create translations middleware instance
         $this->middleware = new TranslationsMiddleware(
             $this->visitorManagerMock,
             $this->translatorMock
@@ -42,7 +47,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -59,7 +64,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -76,7 +81,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -93,7 +98,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'fr'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('fr');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 }

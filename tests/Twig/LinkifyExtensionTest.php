@@ -18,7 +18,7 @@ class LinkifyExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        // create instance of LinkifyExtension
+        // create linkify extension instance
         $this->linkifyExtension = new LinkifyExtension();
     }
 

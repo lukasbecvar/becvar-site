@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class DashboardUtilTest
  *
- * Test cases for DashboardUtil class
+ * Test cases for dashboard util class
  *
  * @package App\Tests\Util
  */
@@ -52,7 +52,7 @@ class DashboardUtilTest extends TestCase
         $this->entityManager->expects($this->once())
             ->method('getRepository')->with(get_class($entity))->willReturn($repository);
 
-        // call the method
+        // call tested method
         $count = $this->dashboardUtil->getDatabaseEntityCount($entity);
 
         // assert result
@@ -77,7 +77,7 @@ class DashboardUtilTest extends TestCase
         $this->entityManager->expects($this->once())
             ->method('getRepository')->with(get_class($entity))->willReturn($repository);
 
-        // call the method
+        // call tested method
         $count = $this->dashboardUtil->getDatabaseEntityCount($entity, $searchCriteria);
 
         // assert result
@@ -95,7 +95,7 @@ class DashboardUtilTest extends TestCase
         $this->jsonUtil->expects($this->once())
             ->method('getJson')->with($this->stringContains('/../../config/browser-list.json'))->willReturn(['some', 'data']);
 
-        // call the method
+        // call tested method
         $result = $this->dashboardUtil->isBrowserListFound();
 
         // assert result
@@ -113,7 +113,7 @@ class DashboardUtilTest extends TestCase
         $this->jsonUtil->expects($this->once())
             ->method('getJson')->with($this->stringContains('/../../config/browser-list.json'))->willReturn(null);
 
-        // call the method
+        // call tested method
         $result = $this->dashboardUtil->isBrowserListFound();
 
         // assert result

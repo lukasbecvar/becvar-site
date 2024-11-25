@@ -32,6 +32,8 @@ class LogRepositoryTest extends KernelTestCase
 
     /**
      * Test get logs by status
+     *
+     * @return void
      */
     public function testGetLogsByStatus(): void
     {
@@ -41,6 +43,7 @@ class LogRepositoryTest extends KernelTestCase
         $status = 'unreaded';
         $logs = $logRepository->getLogsByStatus($status);
 
+        // assert result
         $this->assertIsArray($logs, 'Logs should be returned as an array');
         $this->assertNotEmpty($logs, 'Logs should not be empty');
         $this->assertInstanceOf(Log::class, $logs[0], 'Each item should be an instance of Log');
@@ -49,6 +52,8 @@ class LogRepositoryTest extends KernelTestCase
 
     /**
      * Test get logs by IP address
+     *
+     * @return void
      */
     public function testGetLogsByIpAddress(): void
     {

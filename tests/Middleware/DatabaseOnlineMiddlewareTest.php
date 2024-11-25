@@ -13,15 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class DatabaseOnlineMiddlewareTest
  *
- * Test cases for DatabaseOnlineMiddleware class
+ * Test for database online middleware
  *
  * @package App\Tests\Middleware
  */
 class DatabaseOnlineMiddlewareTest extends TestCase
 {
-    /** tested middleware */
     private DatabaseOnlineMiddleware $middleware;
-
     private ErrorManager & MockObject $errorManagerMock;
     private Connection & MockObject $doctrineConnectionMock;
 
@@ -31,7 +29,7 @@ class DatabaseOnlineMiddlewareTest extends TestCase
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->doctrineConnectionMock = $this->createMock(Connection::class);
 
-        // create instance of DatabaseOnlineMiddleware
+        // create database online middleware instance
         $this->middleware = new DatabaseOnlineMiddleware(
             $this->errorManagerMock,
             $this->doctrineConnectionMock
@@ -39,11 +37,11 @@ class DatabaseOnlineMiddlewareTest extends TestCase
     }
 
     /**
-     * Test database connection succeeds
+     * Test database connection success
      *
      * @return void
      */
-    public function testDatabaseConnectionSucceeds(): void
+    public function testDatabaseConnectionSuccess(): void
     {
         // mock successful database connection
         $this->doctrineConnectionMock->expects($this->once())->method('executeQuery')->with('SELECT 1');
@@ -51,16 +49,16 @@ class DatabaseOnlineMiddlewareTest extends TestCase
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
     /**
-     * Test database connection fails
+     * Test database connection fail
      *
      * @return void
      */
-    public function testDatabaseConnectionFails(): void
+    public function testDatabaseConnectionFail(): void
     {
         // mock database connection failure
         $exceptionMessage = 'Connection refused';
@@ -68,13 +66,12 @@ class DatabaseOnlineMiddlewareTest extends TestCase
             ->method('executeQuery')->with('SELECT 1')->willThrowException(new Exception($exceptionMessage));
 
         // expect error handling called with HTTP_INTERNAL_SERVER_ERROR status
-        $this->errorManagerMock->expects($this->once())
-            ->method('handleError')->with(
-                'database connection error: ' . $exceptionMessage,
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
+        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
+            'database connection error: ' . $exceptionMessage,
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 }

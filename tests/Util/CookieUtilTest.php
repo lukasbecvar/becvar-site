@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class CookieUtilTest
  *
- * Test the CookieUtil class
+ * Test cases for cookie util class
  *
  * @package App\Tests\Util
  */

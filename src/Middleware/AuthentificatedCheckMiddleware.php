@@ -8,13 +8,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class AuthentificatedCheckMiddleware
+ * Class AuthenticatedCheckMiddleware
  *
  * Middleware for checking authentication status before accessing admin routes
  *
  * @package App\Middleware
  */
-class AuthentificatedCheckMiddleware
+class AuthenticatedCheckMiddleware
 {
     private AuthManager $authManager;
     private UrlGeneratorInterface $urlGenerator;

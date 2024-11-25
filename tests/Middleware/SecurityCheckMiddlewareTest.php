@@ -12,16 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class SecurityCheckMiddlewareTest
  *
- * Test cases for SecurityCheckMiddleware class
+ * Test for security check middleware
  *
  * @package App\Tests\Middleware
  */
 class SecurityCheckMiddlewareTest extends TestCase
 {
-    /** tested middleware */
-    private SecurityCheckMiddleware $middleware;
-
     private AppUtil & MockObject $appUtillMock;
+    private SecurityCheckMiddleware $middleware;
     private ErrorManager & MockObject $errorManagerMock;
 
     protected function setUp(): void
@@ -30,7 +28,7 @@ class SecurityCheckMiddlewareTest extends TestCase
         $this->appUtillMock = $this->createMock(AppUtil::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
 
-        // create instance of SecurityCheckMiddleware
+        // create security check middleware instance
         $this->middleware = new SecurityCheckMiddleware(
             $this->appUtillMock,
             $this->errorManagerMock
@@ -53,16 +51,16 @@ class SecurityCheckMiddlewareTest extends TestCase
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
     /**
-     * Test SSL check fails
+     * Test SSL check fail
      *
      * @return void
      */
-    public function testSslCheckFails(): void
+    public function testSslCheckFail(): void
     {
         // mock SSL check enabled
         $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
@@ -71,13 +69,12 @@ class SecurityCheckMiddlewareTest extends TestCase
         $this->appUtillMock->expects($this->once())->method('isSsl')->willReturn(false);
 
         // expect error handling called with HTTP_UPGRADE_REQUIRED status
-        $this->errorManagerMock->expects($this->once())
-            ->method('handleError')->with(
-                'SSL error: connection not running on ssl protocol',
-                Response::HTTP_UPGRADE_REQUIRED
-            );
+        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
+            'SSL error: connection not running on ssl protocol',
+            Response::HTTP_UPGRADE_REQUIRED
+        );
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -97,7 +94,7 @@ class SecurityCheckMiddlewareTest extends TestCase
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // execute method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 }

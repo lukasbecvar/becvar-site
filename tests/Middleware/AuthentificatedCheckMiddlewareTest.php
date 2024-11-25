@@ -6,24 +6,22 @@ use App\Manager\AuthManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
-use App\Middleware\AuthentificatedCheckMiddleware;
+use App\Middleware\AuthenticatedCheckMiddleware;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class AuthentificatedCheckMiddlewareTest
+ * Class AuthenticatedCheckMiddlewareTest
  *
- * Test the authentificated middleware
+ * Test for authenticated check middleware
  *
  * @package App\Tests\Middleware
  */
-class AuthentificatedCheckMiddlewareTest extends TestCase
+class AuthenticatedCheckMiddlewareTest extends TestCase
 {
-    /** tested middleware */
-    private AuthentificatedCheckMiddleware $middleware;
-
+    private AuthenticatedCheckMiddleware $middleware;
     private AuthManager & MockObject $authManagerMock;
     private UrlGeneratorInterface & MockObject $urlGeneratorMock;
 
@@ -33,8 +31,8 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         $this->authManagerMock = $this->createMock(AuthManager::class);
         $this->urlGeneratorMock = $this->createMock(UrlGeneratorInterface::class);
 
-        // create instance of AuthentificatedCheckMiddleware
-        $this->middleware = new AuthentificatedCheckMiddleware(
+        // create authenticated check middleware instance
+        $this->middleware = new AuthenticatedCheckMiddleware(
             $this->authManagerMock,
             $this->urlGeneratorMock
         );
@@ -56,7 +54,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
     }
 
     /**
-     * Test already logged in user
+     * Test check already logged in user
      *
      * @return void
      */
@@ -80,7 +78,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
      *
      * @return void
      */
-    public function testRequestLoginPage(): void
+    public function testRequestToLoginPage(): void
     {
         // mock the auth manager
         $this->authManagerMock->expects($this->never())->method('isUserLogedin');
@@ -88,7 +86,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/login');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result
@@ -108,7 +106,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/register');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result
@@ -128,7 +126,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result
@@ -148,7 +146,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/error');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result
@@ -168,7 +166,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/_profiler');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result
@@ -193,7 +191,7 @@ class AuthentificatedCheckMiddlewareTest extends TestCase
         // create request event
         $event = $this->createRequestEvent('/admin');
 
-        // call the method under test
+        // call middleware
         $this->middleware->onKernelRequest($event);
 
         // assert the result

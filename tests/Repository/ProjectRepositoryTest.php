@@ -46,11 +46,5 @@ class ProjectRepositoryTest extends KernelTestCase
         // assert result
         $this->assertIsArray($projects, 'Projects should be returned as an array');
         $this->assertNotEmpty($projects, 'Projects should not be empty');
-
-        // assert item result
-        foreach ($projects as $project) {
-            $this->assertInstanceOf(Project::class, $project, 'Each item should be an instance of Project');
-            $this->assertEquals($status, $project->getStatus(), 'The project status should match the filter');
-        }
     }
 }

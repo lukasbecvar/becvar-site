@@ -66,7 +66,7 @@ services:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
     # check if user is authenticated
-    App\Middleware\AuthentificatedCheckMiddleware:
+    App\Middleware\AuthenticatedCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 

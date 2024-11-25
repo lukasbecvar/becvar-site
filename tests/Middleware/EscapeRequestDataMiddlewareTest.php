@@ -14,14 +14,14 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 /**
  * Class EscapeRequestDataMiddlewareTest
  *
- * Test cases for EscapeRequestDataMiddleware class
+ * Test for escape request data middleware
  *
  * @package App\Tests\Middleware
  */
 class EscapeRequestDataMiddlewareTest extends TestCase
 {
     /**
-     * Test the security escaping of request data
+     * Test escape request data (for security)
      *
      * @return void
      */
@@ -37,8 +37,8 @@ class EscapeRequestDataMiddlewareTest extends TestCase
         // create a request with unescaped data
         $requestData = [
             'name' => '<script>alert("XSS Attack!");</script>',
-            'email' => 'user@example.com',
-            'message' => '<p>Hello, World!</p>'
+            'message' => '<p>Hello, World!</p>',
+            'email' => 'user@example.com'
         ];
 
         // create a request event
@@ -56,13 +56,13 @@ class EscapeRequestDataMiddlewareTest extends TestCase
             HttpKernelInterface::MAIN_REQUEST
         );
 
-        // act
+        // call middleware
         $middleware = new EscapeRequestDataMiddleware($securityUtil);
         $middleware->onKernelRequest($event);
 
         // assert response
         $this->assertEquals('&lt;script&gt;alert(&quot;XSS Attack!&quot;);&lt;/script&gt;', $request->get('name'));
-        $this->assertEquals('user@example.com', $request->get('email'));
         $this->assertEquals('&lt;p&gt;Hello, World!&lt;/p&gt;', $request->get('message'));
+        $this->assertEquals('user@example.com', $request->get('email'));
     }
 }

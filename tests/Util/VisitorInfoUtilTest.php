@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class VisitorInfoUtilTest
  *
- * This class tests the VisitorInfoUtil class
+ * This cases for visitor info util class
  *
  * @package App\Tests\Util
  */

@@ -20,17 +20,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class VisitorSystemMiddlewareTest
  *
- * Test cases for VisitorSystemMiddleware class
+ * Test for visitor system middleware
  *
  * @package App\Tests\Middleware
  */
 class VisitorSystemMiddlewareTest extends TestCase
 {
-    /** tested middleware */
-    private VisitorSystemMiddleware $middleware;
-
     private CacheUtil & MockObject $cacheUtil;
     private Environment & MockObject $twigMock;
+    private VisitorSystemMiddleware $middleware;
     private BanManager & MockObject $banManagerMock;
     private LogManager & MockObject $logManagerMock;
     private ErrorManager & MockObject $errorManagerMock;
@@ -43,16 +41,16 @@ class VisitorSystemMiddlewareTest extends TestCase
     {
         // mock dependencies
         $this->cacheUtil = $this->createMock(CacheUtil::class);
-        $this->twigMock = $this->createMock(\Twig\Environment::class);
+        $this->twigMock = $this->createMock(Environment::class);
+        $this->banManagerMock = $this->createMock(BanManager::class);
+        $this->logManagerMock = $this->createMock(LogManager::class);
+        $this->securityUtilMock = $this->createMock(SecurityUtil::class);
+        $this->errorManagerMock = $this->createMock(ErrorManager::class);
+        $this->visitorManagerMock = $this->createMock(VisitorManager::class);
         $this->visitorInfoUtilMock = $this->createMock(VisitorInfoUtil::class);
-        $this->banManagerMock = $this->createMock(\App\Manager\BanManager::class);
-        $this->logManagerMock = $this->createMock(\App\Manager\LogManager::class);
-        $this->securityUtilMock = $this->createMock(\App\Util\SecurityUtil::class);
-        $this->errorManagerMock = $this->createMock(\App\Manager\ErrorManager::class);
-        $this->visitorManagerMock = $this->createMock(\App\Manager\VisitorManager::class);
-        $this->entityManagerMock = $this->createMock(\Doctrine\ORM\EntityManagerInterface::class);
+        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
 
-        // create instance of VisitorSystemMiddleware
+        // create visitor system middleware instance
         $this->middleware = new VisitorSystemMiddleware(
             $this->twigMock,
             $this->cacheUtil,
@@ -89,7 +87,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         $this->entityManagerMock->expects($this->once())->method('persist');
         $this->entityManagerMock->expects($this->once())->method('flush');
 
-        // execute method
+        // call middleware
         $this->middleware->insertNewVisitor($date, $ipAddress, $browser, $os);
     }
 
@@ -114,7 +112,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('flush');
 
-        // execute method
+        // call middleware
         $this->middleware->updateVisitor($date, $ipAddress, $browser, $os);
     }
 }

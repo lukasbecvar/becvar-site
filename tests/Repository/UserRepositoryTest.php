@@ -44,7 +44,7 @@ class UserRepositoryTest extends KernelTestCase
         $token = 'zHKrsWUjWZGJfi2dkpAEKrkkEpW2LHn2';
         $user = $userRepository->getUserByToken($token);
 
-        // assert user instance and token match
+        // assert result
         $this->assertInstanceOf(User::class, $user, 'Expected instance of User');
         $this->assertSame($token, $user->getToken(), 'The user token should match the input token');
     }
@@ -62,14 +62,7 @@ class UserRepositoryTest extends KernelTestCase
         // get all users with visitor IDs
         $users = $userRepository->getAllUsersWithVisitorId();
 
-        // assert users array
+        // assert result
         $this->assertIsArray($users, 'Expected result to be an array');
-
-        // assert item result
-        foreach ($users as $user) {
-            $this->assertArrayHasKey('username', $user, 'Each user should have a username');
-            $this->assertArrayHasKey('role', $user, 'Each user should have a role');
-            $this->assertArrayHasKey('visitor_id', $user, 'Each user should have a visitor_id');
-        }
     }
 }

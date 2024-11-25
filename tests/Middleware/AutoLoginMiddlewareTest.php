@@ -12,15 +12,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class AutoLoginMiddlewareTest
  *
- * Test the auto login middleware
+ * Test for auto login middleware
  *
  * @package App\Tests\Middleware
  */
 class AutoLoginMiddlewareTest extends TestCase
 {
-    /** tested middleware */
     private AutoLoginMiddleware $middleware;
-
     private CookieUtil & MockObject $cookieUtilMock;
     private SessionUtil & MockObject $sessionUtilMock;
     private AuthManager & MockObject $authManagerMock;
@@ -32,7 +30,7 @@ class AutoLoginMiddlewareTest extends TestCase
         $this->sessionUtilMock = $this->createMock(SessionUtil::class);
         $this->authManagerMock = $this->createMock(AuthManager::class);
 
-        // create instance of AutoLoginMiddleware
+        // create auto login middleware instance
         $this->middleware = new AutoLoginMiddleware(
             $this->cookieUtilMock,
             $this->sessionUtilMock,
@@ -53,7 +51,7 @@ class AutoLoginMiddlewareTest extends TestCase
         // mock the url generator
         $this->cookieUtilMock->expects($this->never())->method('get');
 
-        // call the middleware method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -73,7 +71,7 @@ class AutoLoginMiddlewareTest extends TestCase
         // mock the cookie util
         $this->cookieUtilMock->expects($this->never())->method('get');
 
-        // call the middleware method
+        // call middleware
         $this->middleware->onKernelRequest();
     }
 }

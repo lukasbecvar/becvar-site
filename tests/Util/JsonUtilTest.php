@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class JsonUtilTest
  *
- * Test cases for JsonUtil class
+ * Test cases for json util class
  *
  * @package Tests\Unit\Util
  */

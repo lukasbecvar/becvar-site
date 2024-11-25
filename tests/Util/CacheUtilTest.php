@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class CacheUtilTest
  *
- * Test the cache util class
+ * Test cases for the cache util class
  *
  * @package App\Tests\Util
  */
@@ -95,7 +95,7 @@ class CacheUtilTest extends TestCase
         $cacheItemMock->expects($this->once())->method('set')->with($value);
         $cacheItemMock->expects($this->once())->method('expiresAfter')->with($expiration);
 
-        // call the method
+        // call tested method
         $this->cacheUtil->setValue($key, $value, $expiration);
     }
 
@@ -112,7 +112,7 @@ class CacheUtilTest extends TestCase
         // set cache item mock expectations
         $this->cacheItemPoolMock->expects($this->once())->method('deleteItem')->with($key);
 
-        // call the method
+        // call tested method
         $this->cacheUtil->deleteValue($key);
     }
 
@@ -136,7 +136,7 @@ class CacheUtilTest extends TestCase
         $this->errorManagerMock->expects($this->once())
             ->method('handleError')->with('error to store cache value: Test exception', Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        // call the method
+        // call tested method
         $this->cacheUtil->setValue($key, $value, $expiration);
     }
 
@@ -158,7 +158,7 @@ class CacheUtilTest extends TestCase
         $this->errorManagerMock->expects($this->once())
             ->method('handleError')->with('error to delete cache value: Test exception', Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        // call the method
+        // call tested method
         $this->cacheUtil->deleteValue($key);
     }
 }

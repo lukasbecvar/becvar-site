@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class SecurityUtilTest
  *
- * This class tests the SecurityUtil class
+ * Test cases for security util class
  *
  * @package App\Tests\Util
  */

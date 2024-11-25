@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class CustomTestCase extends WebTestCase
 {
     /**
-     * Simulate a user login
+     * Simulate user login
      *
      * @param KernelBrowser $client The KernelBrowser instance
      *
@@ -41,13 +41,13 @@ class CustomTestCase extends WebTestCase
         // create a mock of AuthManager
         $authManager = $this->createMock(AuthManager::class);
 
-        // configure the mock to return true for isUserLogedin
+        // simulate user login
         $authManager->method('isUserLogedin')->willReturn(true);
 
-        // configure the mock to return the mock user for getUserRole
+        // simulate user role
         $authManager->method('getUserRole')->willReturn($role);
 
-        // configure the mock to return the mock user for getLoggedUserRepository
+        // mock test user repository
         $authManager->method('getUserRepository')->willReturn($user);
 
         // replace the actual AuthManager service with the mock
@@ -55,7 +55,7 @@ class CustomTestCase extends WebTestCase
     }
 
     /**
-     * Allow registration for the current test
+     * Allow registration component
      *
      * @param KernelBrowser $client The KernelBrowser instance
      * @param bool $allow The allow registration flag

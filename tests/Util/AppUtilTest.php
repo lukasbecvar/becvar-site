@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * Class AppUtilTest
  *
- * This class tests the AppUtil class
+ * Test cases for app util class
  *
  * @package App\Tests\Util
  */
