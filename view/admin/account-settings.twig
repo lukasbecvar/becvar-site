@@ -11,6 +11,7 @@
     {% if errorMsg != null %}
         {% include "common/alerts/error-alert.twig" %}
     {% endif %}
+    
     {# PROFILE PIC CHANGE FORM #}
     {% if profilePicChangeForm != null %}
         <center>
@@ -28,6 +29,7 @@
                 </div>   
             </div>
         </center>
+    
     {# USERNAME CHANGE FORM #}
     {% elseif usernameChangeForm != null %}
         <center>
@@ -43,6 +45,7 @@
                 </div>   
             </div>
         </center> 
+    
     {# PASSWORD CHANGE FORM #}
     {% elseif passwordChangeForm != null %}
         <center>
@@ -57,7 +60,8 @@
                     {{ form_end(passwordChangeForm) }}      
                 </div>   
             </div>
-        </center>         
+        </center>    
+         
     {# ACCOUNT SETTINGS TABLE #}
     {% else %}
         <center>

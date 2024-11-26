@@ -11,12 +11,14 @@
         <meta http-equiv="refresh" content="0; URL='{{ path('error_by_code', {code: '426'}) }}'" />
     </noscript>
 
-    {{ encore_entry_link_tags('scrollbar-css') }}
+    {# INCLUDE CSS ASSETS #} 
     {{ encore_entry_link_tags('page-loading-css') }}
-    {{ encore_entry_link_tags('bootstrap-css') }}
     {{ encore_entry_link_tags('fontawesome-css') }}
+    {{ encore_entry_link_tags('scrollbar-css') }}
+    {{ encore_entry_link_tags('bootstrap-css') }}
     {{ encore_entry_link_tags('admin-css') }}
-    {# <===== INIT COMPONENT ASSETS (if defined) =====> #}
+    
+    {# INIT COMPONENT ASSETS (if defined) #}
     {% block component_assets %}{% endblock %}
 	<title>Admin | {% block title %}{% endblock %}</title>
 </head>
@@ -35,10 +37,10 @@
                     </a>
                 </div>
             </div>
-            {# <===== INCLUDE SIDEBAR NAVIGATION =====> #}
+            {# INCLUDE SIDEBAR NAVIGATION #}
             {% include 'admin/element/sidebar.twig' %}
 
-            {# <===== MAIN ADMIN COMPONENT WRAPPER =====> #}
+            {# MAIN ADMIN COMPONENT WRAPPER #}
             {% block component %}{% endblock %}
 
             <script>
@@ -81,7 +83,8 @@
         </div>
     </div>
 </main>
-{{ encore_entry_script_tags('page-loading-js') }}
+{# INCLUDE JAVASCRIPT ASSETS #}
 {{ encore_entry_script_tags('update-visitor-status-js') }}
+{{ encore_entry_script_tags('page-loading-js') }}
 </body>
 </html>

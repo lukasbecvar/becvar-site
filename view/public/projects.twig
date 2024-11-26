@@ -11,7 +11,7 @@
         </div>
         {% if projectsCount != 0 %}
             <div class="row">
-                {# <===== OPEN-PROJECTS =====> #}
+                {# OPEN-PROJECTS #}
                 <div class="col-lg-6">
                     <h3 class="projects-title">{{ 'projects.open.title'|trans }}</h3>
                     {% for project in openProjects %}
@@ -26,7 +26,7 @@
                     {% endfor %}                    
                 </div>
 
-                {# <===== CLOSED-PROJECTS =====> #}
+                {# CLOSED-PROJECTS #}
                 <div class="col-lg-6">
                     <h3 class="projects-title">{{ 'projects.closed.title'|trans }}</h3>
                     {% for project in closedProjects %}

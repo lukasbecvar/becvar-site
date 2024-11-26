@@ -1,3 +1,4 @@
+/** frontend assets build configuration */
 const Encore = require('@symfony/webpack-encore');
 
 Encore

@@ -5,7 +5,7 @@
 
 {% block body %} 
 <section id="about" class="about section-show">
-    {# <===== ABOUT-ME-INFO =====> #}
+    {# ABOUT-ME-INFO #}
     <div class="about-me container">
         <div class="section-title">
             <h2>{{ 'about.title'|trans }}</h2>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        {# <===== COUNTERS =====> #}
+        {# COUNTERS #}
         <div class="counts container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        {# <===== SKILLS =====> #}
+        {# SKILLS #}
         <div class="skills container">
             <div class="section-title">
                 <h2>{{ 'about.my.skills.title'|trans }}</h2>
@@ -133,6 +133,7 @@
         </div>
     </div>
 </section>
-{{ encore_entry_script_tags('purecounter-js') }}
+{# INCLUDE JAVASCRIPT ASSETS #}
 {{ encore_entry_script_tags('skills-progress-js') }}
+{{ encore_entry_script_tags('purecounter-js') }}
 {% endblock %}

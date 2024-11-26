@@ -11,7 +11,7 @@ Personal website build with the Symfony framework & Bootstrap.
 - Warning system
 - Dashboard
 - Database browser
-- Inbox for contact form
+- Inbox for contact component
 - Advanced log system
 
 ## Installation (with mysql/apache)
@@ -26,7 +26,7 @@ Personal website build with the Symfony framework & Bootstrap.
 - install opcache (optionally)
 
 ## Development environment
-The complete stack for development is in Docker Compose, including PHP, Node, and Composer. You just need to run the docker-start script to launch it.
+The complete stack for development is in Docker Compose, including PHP, Node, and Composer. You just need to run the docker-start script.
 
 ## Deployment
 Deployment of the new version with GitHub Action when a new release is created.

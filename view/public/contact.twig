@@ -6,7 +6,7 @@
 {% block body %}
 <section id="contact" class="contact section-show">
     <div class="container">
-        {# <===== CONTACT-INFO =====> #}
+        {# CONTACT-INFO #}
         <div class="section-title">
             <h2>{{ 'contact.title'|trans }}</h2>
         </div>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        {# <===== CONTACT-FORM =====> #}
+        {# CONTACT-FORM #}
         <div class="msg-from mt-4">
             {{ form_start(contactForm) }}
 
@@ -60,7 +60,6 @@
                 <div class="text-center mt-3">
                     <button type="submit">{{ 'contact.form.submit.button'|trans }}</button>
                 </div>
-            
             {{ form_end(contactForm) }}      
         </div>
     </div>
