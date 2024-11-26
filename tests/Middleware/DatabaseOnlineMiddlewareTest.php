@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class DatabaseOnlineMiddlewareTest
  *
- * Test for database online middleware
+ * Test cases for database online middleware
  *
  * @package App\Tests\Middleware
  */
@@ -37,41 +37,41 @@ class DatabaseOnlineMiddlewareTest extends TestCase
     }
 
     /**
-     * Test database connection success
+     * Test check database connection when database is online
      *
      * @return void
      */
-    public function testDatabaseConnectionSuccess(): void
+    public function testCheckDatabaseConnectionWhenDatabaseIsOnline(): void
     {
-        // mock successful database connection
+        // expect query execute
         $this->doctrineConnectionMock->expects($this->once())->method('executeQuery')->with('SELECT 1');
 
-        // expect no error handling called
+        // expect error handling not to be called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
     /**
-     * Test database connection fail
+     * Test check database connection when database is offline
      *
      * @return void
      */
-    public function testDatabaseConnectionFail(): void
+    public function testCheckDatabaseConnectionWhenDatabaseIsOffline(): void
     {
-        // mock database connection failure
+        // mock connection exception
         $exceptionMessage = 'Connection refused';
         $this->doctrineConnectionMock->expects($this->once())
             ->method('executeQuery')->with('SELECT 1')->willThrowException(new Exception($exceptionMessage));
 
-        // expect error handling called with HTTP_INTERNAL_SERVER_ERROR status
+        // expect error handling call
         $this->errorManagerMock->expects($this->once())->method('handleError')->with(
             'database connection error: ' . $exceptionMessage,
             Response::HTTP_INTERNAL_SERVER_ERROR
         );
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 }

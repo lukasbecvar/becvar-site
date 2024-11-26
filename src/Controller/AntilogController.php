@@ -40,7 +40,7 @@ class AntilogController extends AbstractController
             return $this->json([
                 'status' => 'error',
                 'code' => Response::HTTP_UNAUTHORIZED,
-                'message' => 'error to set anti-log for non authentificated users!'
+                'message' => 'error to set anti-log for non authenticated users!'
             ], Response::HTTP_UNAUTHORIZED);
         }
 

@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * Class MessageRepositoryTest
  *
- * Test for doctrine entity repository class
+ * Test cases for doctrine message repository
  *
  * @package App\Tests\Repository
  */
@@ -21,13 +21,6 @@ class MessageRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
         $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 
     /**

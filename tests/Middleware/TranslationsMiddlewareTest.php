@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 /**
  * Class TranslationsMiddlewareTest
  *
- * Test for translations middleware
+ * Test cases for translations middleware
  *
  * @package App\Tests\Middleware
  */
@@ -47,7 +47,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -64,7 +64,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -81,7 +81,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'en'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
@@ -98,7 +98,7 @@ class TranslationsMiddlewareTest extends TestCase
         // expect setting locale to 'fr'
         $this->translatorMock->expects($this->once())->method('setLocale')->with('fr');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 }

@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class VisitorInfoUtilTest
  *
- * This cases for visitor info util class
+ * Test cases for visitor info util class
  *
  * @package App\Tests\Util
  */
@@ -41,13 +41,16 @@ class VisitorInfoUtilTest extends TestCase
      */
     public function testGetIp(): void
     {
+        // test get ip address from HTTP_CLIENT_IP
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.1';
         $this->assertEquals('192.168.1.1', $this->visitorInfoUtil->getIP());
 
+        // test get ip address from HTTP_X_FORWARDED_FOR
         unset($_SERVER['HTTP_CLIENT_IP']);
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '192.168.1.2';
         $this->assertEquals('192.168.1.2', $this->visitorInfoUtil->getIP());
 
+        // test get ip address from REMOTE_ADDR
         unset($_SERVER['HTTP_X_FORWARDED_FOR']);
         $_SERVER['REMOTE_ADDR'] = '192.168.1.3';
         $this->assertEquals('192.168.1.3', $this->visitorInfoUtil->getIP());
@@ -60,9 +63,11 @@ class VisitorInfoUtilTest extends TestCase
      */
     public function testGetBrowser(): void
     {
+        // test get user agent from HTTP_USER_AGENT
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0';
         $this->assertEquals('Mozilla/5.0', $this->visitorInfoUtil->getUserAgent());
 
+        // test get user agent with unknown HTTP_USER_AGENT
         unset($_SERVER['HTTP_USER_AGENT']);
         $this->assertEquals('Unknown', $this->visitorInfoUtil->getUserAgent());
     }
@@ -95,18 +100,21 @@ class VisitorInfoUtilTest extends TestCase
      */
     public function testGetOs(): void
     {
+        // test get windows OS
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0';
         $this->assertEquals('Windows', $this->visitorInfoUtil->getOS());
 
+        // test get mac OS
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15';
         $this->assertEquals('Mac OS X', $this->visitorInfoUtil->getOS());
 
+        // test get unknown OS
         $_SERVER['HTTP_USER_AGENT'] = 'Some Unknown User Agent';
         $this->assertEquals('Unknown OS', $this->visitorInfoUtil->getOS());
     }
 
     /**
-     * Test get visitor IP info
+     * Test get visitor ip info
      *
      * @return void
      */
@@ -126,7 +134,10 @@ class VisitorInfoUtilTest extends TestCase
         // mock site util
         $this->appUtilMock->method('isRunningLocalhost')->willReturn(true);
 
+        // call tested method
+        $result = $this->visitorInfoUtil->getLocation('127.0.0.1');
+
         // assert result
-        $this->assertEquals(['city' => 'locale', 'country' => 'host'], $this->visitorInfoUtil->getLocation('127.0.0.1'));
+        $this->assertEquals(['city' => 'locale', 'country' => 'host'], $result);
     }
 }

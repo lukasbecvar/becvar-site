@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * Class UserRepositoryTest
  *
- * Test for doctrine entity repository class
+ * Test cases for doctrine user repository
  *
  * @package App\Tests\Repository
  */
@@ -21,13 +21,6 @@ class UserRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
         $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 
     /**
@@ -50,7 +43,7 @@ class UserRepositoryTest extends KernelTestCase
     }
 
     /**
-     * Test get all users with visitor ID
+     * Test get all users with visitor id
      *
      * @return void
      */

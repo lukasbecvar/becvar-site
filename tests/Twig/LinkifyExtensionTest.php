@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class LinkifyExtensionTest
  *
- * Test cases for LinkifyExtension class
+ * Test cases for linkify twig extension
  *
  * @package App\Tests\Twig
  */

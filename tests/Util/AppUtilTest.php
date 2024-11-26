@@ -35,6 +35,36 @@ class AppUtilTest extends TestCase
     }
 
     /**
+     * Test get environment variable value from .env file
+     *
+     * @return void
+     */
+    public function testGetEnvValue(): void
+    {
+        $_ENV['TEST_ENV'] = 'testValue';
+
+        // call tested method
+        $result = $this->appUtil->getEnvValue('TEST_ENV');
+
+        // assert result
+        $this->assertEquals('testValue', $result);
+    }
+
+    /**
+     * Test get application root directory
+     *
+     * @return void
+     */
+    public function testGetAppRootDir(): void
+    {
+        // call tested method
+        $result = $this->appUtil->getAppRootDir();
+
+        // assert result
+        $this->assertIsString($result);
+    }
+
+    /**
      * Test get HTTP host
      *
      * @return void
@@ -42,15 +72,20 @@ class AppUtilTest extends TestCase
     public function testGetHttpHost(): void
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
-        $this->assertEquals('localhost', $this->appUtil->getHttpHost());
+
+        // call tested method
+        $result = $this->appUtil->getHttpHost();
+
+        // assert result
+        $this->assertEquals('localhost', $result);
     }
 
     /**
-     * Test is running localhost
+     * Test check if application is running on localhost
      *
      * @return void
      */
-    public function testIsRunningLocalhost(): void
+    public function testCheckIfApplicationIsRunningOnLocalhost(): void
     {
         $_SERVER['HTTP_HOST'] = 'localhost';
         $this->assertTrue($this->appUtil->isRunningLocalhost());
@@ -66,11 +101,11 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test is SSL
+     * Test check if connection is secure (SSL)
      *
      * @return void
      */
-    public function testIsSsl(): void
+    public function testCheckIsConnectionSecure(): void
     {
         $_SERVER['HTTPS'] = 'on';
         $this->assertTrue($this->appUtil->isSsl());
@@ -83,11 +118,11 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test is maintenance
+     * Test check if application is in maintenance mode
      *
      * @return void
      */
-    public function testIsMaintenance(): void
+    public function testCheckIsInMaintenanceMode(): void
     {
         $_ENV['MAINTENANCE_MODE'] = 'true';
         $this->assertTrue($this->appUtil->isMaintenance());
@@ -97,11 +132,11 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test is SSL only
+     * Test check if ssl only mode is enabled
      *
      * @return void
      */
-    public function testIsSslOnly(): void
+    public function testCheckIsSSLOnlyModeEnabled(): void
     {
         $_ENV['SSL_ONLY'] = 'true';
         $this->assertTrue($this->appUtil->isSSLOnly());
@@ -111,11 +146,11 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test is dev mode
+     * Test check if application is in development mode
      *
      * @return void
      */
-    public function testIsDevMode(): void
+    public function testCheckIfApplicationIsInDevelopmentMode(): void
     {
         $_ENV['APP_ENV'] = 'dev';
         $this->assertTrue($this->appUtil->isDevMode());
@@ -128,11 +163,11 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test get query string
+     * Test get value of a query string parameter, with XSS protection
      *
      * @return void
      */
-    public function testGetQueryString(): void
+    public function testGetValueOfAQueryStringParameterWithXSSProtection(): void
     {
         $query = 'test';
         $value = 'testValue';

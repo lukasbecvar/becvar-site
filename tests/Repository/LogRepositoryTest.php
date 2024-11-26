@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * Class LogRepositoryTest
  *
- * Test for doctrine entity repository class
+ * Test cases for doctrine log repository
  *
  * @package App\Tests\Repository
  */
@@ -21,13 +21,6 @@ class LogRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
         $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 
     /**
@@ -51,7 +44,7 @@ class LogRepositoryTest extends KernelTestCase
     }
 
     /**
-     * Test get logs by IP address
+     * Test get logs by ip address
      *
      * @return void
      */

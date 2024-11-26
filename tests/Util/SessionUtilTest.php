@@ -55,7 +55,7 @@ class SessionUtilTest extends TestCase
         $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
         $this->sessionInterfaceMock->expects($this->once())->method('start');
 
-        // call method to test
+        // call tested method
         $this->sessionUtil->startSession();
     }
 
@@ -70,7 +70,7 @@ class SessionUtilTest extends TestCase
         $this->sessionInterfaceMock->method('isStarted')->willReturn(true);
         $this->sessionInterfaceMock->expects($this->never())->method('start');
 
-        // call method to test
+        // call tested method
         $this->sessionUtil->startSession();
     }
 
@@ -85,7 +85,7 @@ class SessionUtilTest extends TestCase
         $this->sessionInterfaceMock->method('isStarted')->willReturn(true);
         $this->sessionInterfaceMock->expects($this->once())->method('invalidate');
 
-        // call method to test
+        // call tested method
         $this->sessionUtil->destroySession();
     }
 
@@ -100,7 +100,7 @@ class SessionUtilTest extends TestCase
         $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
         $this->sessionInterfaceMock->expects($this->never())->method('invalidate');
 
-        // call method to test
+        // call tested method
         $this->sessionUtil->destroySession();
     }
 
@@ -114,8 +114,10 @@ class SessionUtilTest extends TestCase
         // simulate session with specific name
         $this->sessionInterfaceMock->method('has')->with('testing-value')->willReturn(true);
 
-        // call method to test
+        // call tested method
         $result = $this->sessionUtil->checkSession('testing-value');
+
+        // assert result
         $this->assertTrue($result);
     }
 
@@ -129,8 +131,10 @@ class SessionUtilTest extends TestCase
         // simulate session without specific name
         $this->sessionInterfaceMock->method('has')->with('testing-value')->willReturn(false);
 
-        // call method to test
+        // call tested method
         $result = $this->sessionUtil->checkSession('testing-value');
+
+        // assert result
         $this->assertFalse($result);
     }
 
@@ -151,7 +155,7 @@ class SessionUtilTest extends TestCase
         // expect session to set the encrypted value
         $this->sessionInterfaceMock->expects($this->once())->method('set')->with($sessionName, $encryptedValue);
 
-        // call method to test
+        // call tested method
         $this->sessionUtil->setSession($sessionName, $sessionValue);
     }
 
@@ -172,7 +176,7 @@ class SessionUtilTest extends TestCase
         // mock session get
         $this->sessionInterfaceMock->method('get')->with($sessionName)->willReturn($encryptedValue);
 
-        // call method to test
+        // call tested method
         $result = $this->sessionUtil->getSessionValue($sessionName);
 
         // assert that the session was set
@@ -198,7 +202,7 @@ class SessionUtilTest extends TestCase
         // expect error handling to be called
         $this->errorManagerMock->expects($this->once())->method('handleError');
 
-        // call method to test
+        // call tested method
         $result = $this->sessionUtil->getSessionValue($sessionName);
 
         // assert null result

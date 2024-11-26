@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class AutoLoginMiddlewareTest
  *
- * Test for auto login middleware
+ * Test cases for auto login middleware
  *
  * @package App\Tests\Middleware
  */
@@ -39,13 +39,13 @@ class AutoLoginMiddlewareTest extends TestCase
     }
 
     /**
-     * Test already logged in user
+     * Test request when user is already logged in
      *
      * @return void
      */
-    public function testRequestUserAlreadyLoggedIn(): void
+    public function testRequestWhenUserIsAlreadyLoggedIn(): void
     {
-        // mock the auth manager
+        // mock logged in user (true)
         $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(true);
 
         // mock the url generator
@@ -56,22 +56,42 @@ class AutoLoginMiddlewareTest extends TestCase
     }
 
     /**
-     * Test cookie not set
+     * Test request when cookie is not set
      *
      * @return void
      */
-    public function testRequestCookieNotSet(): void
+    public function testRequestWhenCookieIsNotSet(): void
     {
-        // mock the auth manager
+        // mock logged in user (false)
         $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(false);
 
-        // unser cookie token
+        // unset user token cookie
         unset($_COOKIE['user-token']);
 
-        // mock the cookie util
+        // expect cookie get method not to be called
         $this->cookieUtilMock->expects($this->never())->method('get');
 
-        // call middleware
+        // call tested middleware
+        $this->middleware->onKernelRequest();
+    }
+
+    /**
+     * Test request when cookie is set
+     *
+     * @return void
+     */
+    public function testRequestWhenCookieIsSet(): void
+    {
+        // simulate cookie
+        $_COOKIE['login-token-cookie'] = 'test-token';
+
+        // mock logged in user (true)
+        $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(false);
+
+        // expect cookie get called
+        $this->cookieUtilMock->expects($this->once())->method('get')->with('login-token-cookie');
+
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 }

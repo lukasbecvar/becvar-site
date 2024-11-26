@@ -29,7 +29,7 @@ class JsonUtilTest extends TestCase
     }
 
     /**
-     * Test getJson method with different targets
+     * Test get json with different targets
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class JsonUtilTest extends TestCase
     }
 
     /**
-     * Test getJson method with different targets
+     * Test get json with invalid target
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class JsonUtilTest extends TestCase
     }
 
     /**
-     * Test getJson method with different targets
+     * Test get json with invalid data
      *
      * @return void
      */

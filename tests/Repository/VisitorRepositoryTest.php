@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * Class VisitorRepositoryTest
  *
- * Test for doctrine entity repository class
+ * Test cases for visitor repository
  *
  * @package App\Tests\Repository
  */
@@ -19,18 +19,8 @@ class VisitorRepositoryTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        // boot the Symfony kernel
         self::bootKernel();
-
-        // get the EntityManager from the service container
         $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 
     /**

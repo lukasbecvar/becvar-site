@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Class AuthenticatedCheckMiddlewareTest
  *
- * Test for authenticated check middleware
+ * Test cases for authenticated check middleware
  *
  * @package App\Tests\Middleware
  */
@@ -39,11 +39,13 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
     }
 
     /**
-     * Create request event
+     * Create RequestEvent instance for testing stuff with request uri
      *
-     * @param string $pathInfo
+     * Create mock HTTP kernel and a new Request object with the given path info
      *
-     * @return RequestEvent
+     * @param string $pathInfo The path information to set in the request
+     *
+     * @return RequestEvent The created RequestEvent instance
      */
     private function createRequestEvent(string $pathInfo): RequestEvent
     {
@@ -54,150 +56,107 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
     }
 
     /**
-     * Test check already logged in user
+     * Test access to admin route when user is logged in
      *
      * @return void
      */
-    public function testRequestUserAlreadyLoggedIn(): void
+    public function testAccessToAdminRouteWhenUserIsLoggedIn(): void
     {
-        // mock the auth manager
+        // mock logged in user
         $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(true);
 
-        // mock the url generator
+        // create testing request
         $event = $this->createRequestEvent('/admin');
 
-        // call the method under test
+        // call tested middleware
         $this->middleware->onKernelRequest($event);
 
-        // assert the result
+        // assert middleware response
         $this->assertNull($event->getResponse());
     }
 
     /**
-     * Test login page request
+     * Test access to admin route when user is not logged in
      *
      * @return void
      */
-    public function testRequestToLoginPage(): void
+    public function testAccessToAdminRouteWhenUserIsNotLoggedIn(): void
     {
-        // mock the auth manager
-        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
-
-        // create request event
-        $event = $this->createRequestEvent('/login');
-
-        // call middleware
-        $this->middleware->onKernelRequest($event);
-
-        // assert the result
-        $this->assertNull($event->getResponse());
-    }
-
-    /**
-     * Test register page request
-     *
-     * @return void
-     */
-    public function testRequestRegisterPage(): void
-    {
-        // mock the auth manager
-        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
-
-        // create request event
-        $event = $this->createRequestEvent('/register');
-
-        // call middleware
-        $this->middleware->onKernelRequest($event);
-
-        // assert the result
-        $this->assertNull($event->getResponse());
-    }
-
-    /**
-     * Test index component request
-     *
-     * @return void
-     */
-    public function testRequestRootPage(): void
-    {
-        // mock the auth manager
-        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
-
-        // create request event
-        $event = $this->createRequestEvent('/');
-
-        // call middleware
-        $this->middleware->onKernelRequest($event);
-
-        // assert the result
-        $this->assertNull($event->getResponse());
-    }
-
-    /**
-     * Test error page request
-     *
-     * @return void
-     */
-    public function testRequestErrorPage(): void
-    {
-        // mock the auth manager
-        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
-
-        // create request event
-        $event = $this->createRequestEvent('/error');
-
-        // call middleware
-        $this->middleware->onKernelRequest($event);
-
-        // assert the result
-        $this->assertNull($event->getResponse());
-    }
-
-    /**
-     * Test profiler page request
-     *
-     * @return void
-     */
-    public function testRequestProfilerPage(): void
-    {
-        // mock the auth manager
-        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
-
-        // create request event
-        $event = $this->createRequestEvent('/_profiler');
-
-        // call middleware
-        $this->middleware->onKernelRequest($event);
-
-        // assert the result
-        $this->assertNull($event->getResponse());
-    }
-
-    /**
-     * Test admin page (dashboard) request
-     *
-     * @return void
-     */
-    public function testRequestRedirectToLogin(): void
-    {
-        // mock the auth manager
+        // mock user is logged in
         $this->authManagerMock->expects($this->once())
             ->method('isUserLogedin')->willReturn(false);
 
-        // mock the url generator
+        // mock url generator
         $this->urlGeneratorMock->expects($this->once())
             ->method('generate')->with('auth_login')->willReturn('/login');
 
-        // create request event
+        // create testing request
         $event = $this->createRequestEvent('/admin');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest($event);
 
-        // assert the result
-        $response = $event->getResponse();
+        // assert middleware response
+        $this->assertInstanceOf(RedirectResponse::class, $event->getResponse());
+    }
 
-        // assert the result
-        $this->assertInstanceOf(RedirectResponse::class, $response);
+    /**
+     * Test access to index page
+     *
+     * @return void
+     */
+    public function testAccessIndexPage(): void
+    {
+        // expect check if user is logged check not to be called
+        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
+
+        // create testing request
+        $event = $this->createRequestEvent('/');
+
+        // call tested middleware
+        $this->middleware->onKernelRequest($event);
+
+        // assert middleware response
+        $this->assertNull($event->getResponse());
+    }
+
+    /**
+     * Test access to error page
+     *
+     * @return void
+     */
+    public function testAccessToErrorPage(): void
+    {
+        // expect check if user is logged check not to be called
+        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
+
+        // create testing request
+        $event = $this->createRequestEvent('/error');
+
+        // call tested middleware
+        $this->middleware->onKernelRequest($event);
+
+        // assert middleware response
+        $this->assertNull($event->getResponse());
+    }
+
+    /**
+     * Test access to profiler page
+     *
+     * @return void
+     */
+    public function testAccessToProfilerPage(): void
+    {
+        // expect check if user is logged check not to be called
+        $this->authManagerMock->expects($this->never())->method('isUserLogedin');
+
+        // create testing request
+        $event = $this->createRequestEvent('/_profiler');
+
+        // call tested middleware
+        $this->middleware->onKernelRequest($event);
+
+        // assert middleware response
+        $this->assertNull($event->getResponse());
     }
 }

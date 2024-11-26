@@ -20,7 +20,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class VisitorSystemMiddlewareTest
  *
- * Test for visitor system middleware
+ * Test cases for visitor system middleware
  *
  * @package App\Tests\Middleware
  */
@@ -87,7 +87,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         $this->entityManagerMock->expects($this->once())->method('persist');
         $this->entityManagerMock->expects($this->once())->method('flush');
 
-        // call middleware
+        // call tested middleware method
         $this->middleware->insertNewVisitor($date, $ipAddress, $browser, $os);
     }
 
@@ -112,7 +112,7 @@ class VisitorSystemMiddlewareTest extends TestCase
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('flush');
 
-        // call middleware
+        // call tested middleware method
         $this->middleware->updateVisitor($date, $ipAddress, $browser, $os);
     }
 }

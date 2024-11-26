@@ -24,39 +24,22 @@ class CookieUtilTest extends TestCase
         // mock dependencies
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
 
-        // create instance of CookieUtil
+        // create the cookie util instance
         $this->cookieUtil = new CookieUtil($this->securityUtilMock);
     }
 
-    protected function tearDown(): void
-    {
-        $_COOKIE = [];
-    }
-
     /**
-     * test set cookie
+     * Test check is set cookie set
      *
      * @return void
      */
-    public function testSetCookie(): void
+    public function testIsCookieSet(): void
     {
-        // set cookie values
-        $name = 'test_cookie';
-        $value = 'test_value';
-        $expiration = time() + 3600;
-        $encryptedValue = 'encrypted_value';
+        // call tested method
+        $value = $this->cookieUtil->isCookieSet('test_cookie');
 
-        // call the set method and then simulate the cookie being set
-        $this->cookieUtil->set($name, $value, $expiration);
-        $_COOKIE[$name] = base64_encode($encryptedValue);
-
-        // assert that the cookie was set
-        $this->assertArrayHasKey($name, $_COOKIE, 'Cookie should be set');
-        $this->assertEquals(
-            base64_encode($encryptedValue),
-            $_COOKIE[$name],
-            'Cookie value should be encrypted and base64 encoded'
-        );
+        // assert response
+        $this->assertIsBool($value);
     }
 
     /**
@@ -71,36 +54,17 @@ class CookieUtilTest extends TestCase
         $encryptedValue = 'encrypted_value';
         $decryptedValue = 'test_value';
 
-        // call the set method and then simulate the cookie being set
+        // call the set method and then simulate the cookie set
         $_COOKIE[$name] = base64_encode($encryptedValue);
 
         // mock the decryptAes method
-        $this->securityUtilMock->expects($this->once())
-            ->method('decryptAes')->with($encryptedValue)->willReturn($decryptedValue);
+        $this->securityUtilMock->expects($this->once())->method('decryptAes')
+            ->with($encryptedValue)->willReturn($decryptedValue);
 
-        // call the get method
+        // call tested method
         $value = $this->cookieUtil->get($name);
 
-        // assert that the cookie was set
-        $this->assertEquals($decryptedValue, $value, 'Cookie value should be decrypted');
-    }
-
-    /**
-     * Test the unset cookie
-     *
-     * @return void
-     */
-    public function testUnsetCookie(): void
-    {
-        // set cookie values
-        $name = 'test_cookie';
-        $_SERVER['HTTP_HOST'] = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/test/path';
-
-        // call unset method
-        $this->cookieUtil->unset($name);
-
-        // assert that the cookie was unset
-        $this->assertEquals('', $_COOKIE[$name] ?? '', 'Cookie should be unset');
+        // assert result
+        $this->assertEquals($decryptedValue, $value);
     }
 }

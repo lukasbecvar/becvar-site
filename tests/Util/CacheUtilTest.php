@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class CacheUtilTest
  *
- * Test cases for the cache util class
+ * Test cases for cache manager util
  *
  * @package App\Tests\Util
  */
@@ -39,7 +39,7 @@ class CacheUtilTest extends TestCase
      *
      * @return void
      */
-    public function testIsCatched(): void
+    public function testCheckIsKeyCatched(): void
     {
         $key = 'test_key';
         $cacheItemMock = $this->createMock(CacheItemInterface::class);
@@ -60,7 +60,7 @@ class CacheUtilTest extends TestCase
      *
      * @return void
      */
-    public function testGetValue(): void
+    public function testGetCachedValue(): void
     {
         // testing item key
         $key = 'test_key';
@@ -75,11 +75,11 @@ class CacheUtilTest extends TestCase
     }
 
     /**
-     * Test set value in cache
+     * Test store value to cache
      *
      * @return void
      */
-    public function testSetValue(): void
+    public function testStoreValueToCache(): void
     {
         // testing cache item
         $key = 'test_key';
@@ -100,11 +100,11 @@ class CacheUtilTest extends TestCase
     }
 
     /**
-     * Test delete value from cache
+     * Test delete value from cache storage
      *
      * @return void
      */
-    public function testDeleteValue(): void
+    public function testDeleteValueFromCacheStorage(): void
     {
         // testing cache item key
         $key = 'test_key';
@@ -117,11 +117,11 @@ class CacheUtilTest extends TestCase
     }
 
     /**
-     * Test the setValue exception
+     * Test set value to cache storage with exception throw
      *
      * @return void
      */
-    public function testSetValueException(): void
+    public function testSetValueToCacheStorageWithExceptionThrow(): void
     {
         // testing cache item data
         $key = 'test_key';
@@ -141,11 +141,11 @@ class CacheUtilTest extends TestCase
     }
 
     /**
-     * Test the deleteValue exception
+     * Test delete value from cache storage with exception throw
      *
      * @return void
      */
-    public function testDeleteValueException(): void
+    public function testDeleteValueFromCacheStorageWithExceptionThrow(): void
     {
         // testing cache item key
         $key = 'test_key';

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class SecurityCheckMiddlewareTest
  *
- * Test for security check middleware
+ * Test cases for security check middleware
  *
  * @package App\Tests\Middleware
  */
@@ -36,11 +36,11 @@ class SecurityCheckMiddlewareTest extends TestCase
     }
 
     /**
-     * Test SSL check passes
+     * Test check ssl with enabled ssl check and conection is over ssl
      *
      * @return void
      */
-    public function testSslCheckPasses(): void
+    public function testCheckSslWithEnabledSslCheckAndConectionIsOverSsl(): void
     {
         // mock SSL check enabled
         $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
@@ -51,16 +51,16 @@ class SecurityCheckMiddlewareTest extends TestCase
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
     /**
-     * Test SSL check fail
+     * Test check ssl with enabled ssl check and conection is not over ssl
      *
      * @return void
      */
-    public function testSslCheckFail(): void
+    public function testCheckSslWithEnabledSslCheckAndConectionIsNotOverSsl(): void
     {
         // mock SSL check enabled
         $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
@@ -74,16 +74,16 @@ class SecurityCheckMiddlewareTest extends TestCase
             Response::HTTP_UPGRADE_REQUIRED
         );
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 
     /**
-     * Test SSL check disabled
+     * Test check ssl with disabled ssl check
      *
      * @return void
      */
-    public function testSslCheckDisabled(): void
+    public function testCheckSslWithDisabledSslCheck(): void
     {
         // mock SSL check disabled
         $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(false);
@@ -94,7 +94,7 @@ class SecurityCheckMiddlewareTest extends TestCase
         // expect no error handling called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
-        // call middleware
+        // call tested middleware
         $this->middleware->onKernelRequest();
     }
 }

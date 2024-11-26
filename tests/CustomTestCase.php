@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * Class CustomTestCase
  *
- * Custom test case class
+ * Custom test case class that extends the WebTestCase class
  *
  * @package App\Tests
  */
@@ -50,7 +50,7 @@ class CustomTestCase extends WebTestCase
         // mock test user repository
         $authManager->method('getUserRepository')->willReturn($user);
 
-        // replace the actual AuthManager service with the mock
+        // replace actual auth manager with mocked
         $client->getContainer()->set(AuthManager::class, $authManager);
     }
 

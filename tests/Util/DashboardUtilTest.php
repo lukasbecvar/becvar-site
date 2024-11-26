@@ -45,12 +45,12 @@ class DashboardUtilTest extends TestCase
         $entity = new class {
         };
         $repository = $this->createMock(EntityRepository::class);
-        $repository->expects($this->once())
-            ->method('findAll')->willReturn(['entity1', 'entity2', 'entity3']);
+        $repository->expects($this->once())->method('findAll')
+            ->willReturn(['entity1', 'entity2', 'entity3']);
 
         // mock entity manager
-        $this->entityManager->expects($this->once())
-            ->method('getRepository')->with(get_class($entity))->willReturn($repository);
+        $this->entityManager->expects($this->once())->method('getRepository')->with(get_class($entity))
+            ->willReturn($repository);
 
         // call tested method
         $count = $this->dashboardUtil->getDatabaseEntityCount($entity);
@@ -70,8 +70,8 @@ class DashboardUtilTest extends TestCase
         };
         $searchCriteria = ['field' => 'value'];
         $repository = $this->createMock(EntityRepository::class);
-        $repository->expects($this->once())
-            ->method('findBy')->with($searchCriteria)->willReturn(['entity1', 'entity2']);
+        $repository->expects($this->once())->method('findBy')->with($searchCriteria)
+            ->willReturn(['entity1', 'entity2']);
 
         // mock entity manager
         $this->entityManager->expects($this->once())
@@ -92,8 +92,8 @@ class DashboardUtilTest extends TestCase
     public function testIsBrowserListFound(): void
     {
         // mock json util
-        $this->jsonUtil->expects($this->once())
-            ->method('getJson')->with($this->stringContains('/../../config/browser-list.json'))->willReturn(['some', 'data']);
+        $this->jsonUtil->expects($this->once())->method('getJson')
+            ->with($this->stringContains('/../../config/browser-list.json'))->willReturn(['some', 'data']);
 
         // call tested method
         $result = $this->dashboardUtil->isBrowserListFound();
