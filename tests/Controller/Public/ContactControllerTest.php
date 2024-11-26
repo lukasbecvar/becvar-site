@@ -32,6 +32,8 @@ class ContactControllerTest extends WebTestCase
         $this->client->request('GET', '/contact');
 
         // assert response
+        $this->assertSelectorExists('nav[id="navbar"]');
+        $this->assertSelectorExists('a[class="nav-link"]');
         $this->assertSelectorExists('form[name="contact_form"]');
         $this->assertSelectorExists('input[name="contact_form[name]"]');
         $this->assertSelectorExists('input[name="contact_form[email]"]');

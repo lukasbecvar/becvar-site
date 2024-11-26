@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller\Admin\Auth;
 
+use App\Tests\CustomTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class LoginControllerTest
@@ -13,13 +13,31 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @package App\Tests\Admin\Auth
  */
-class LoginControllerTest extends WebTestCase
+class LoginControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
+    }
+
+    /**
+     * Test load login page when user is already logged in
+     *
+     * @return void
+     */
+    public function testLoadLoginPageWhenUserIsAlreadyLoggedIn(): void
+    {
+        // simulate user login
+        $this->simulateLogin($this->client);
+
+        // send request to login page
+        $this->client->request('GET', '/login');
+
+        // assert response (redirect to dashboard)
+        $this->assertResponseRedirects('/admin/dashboard');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     /**

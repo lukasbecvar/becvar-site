@@ -32,6 +32,9 @@ class HomeControllerTest extends WebTestCase
         $this->client->request('GET', '/');
 
         // assert response
+        $this->assertSelectorExists('nav[id="navbar"]');
+        $this->assertSelectorExists('a[class="nav-link"]');
+        $this->assertSelectorExists('a[href="/admin"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

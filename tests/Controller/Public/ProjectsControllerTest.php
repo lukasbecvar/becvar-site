@@ -32,6 +32,9 @@ class ProjectsControllerTest extends WebTestCase
         $this->client->request('GET', '/projects');
 
         // assert response
+        $this->assertSelectorExists('nav[id="navbar"]');
+        $this->assertSelectorExists('a[class="nav-link"]');
+        $this->assertSelectorExists('section[id="projects"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

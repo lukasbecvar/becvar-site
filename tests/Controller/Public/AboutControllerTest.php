@@ -32,6 +32,12 @@ class AboutControllerTest extends WebTestCase
         $this->client->request('GET', '/about');
 
         // assert response
+        $this->assertSelectorExists('nav[id="navbar"]');
+        $this->assertSelectorExists('a[class="nav-link"]');
+        $this->assertSelectorExists('div[class="social-links"]');
+        $this->assertSelectorExists('section[id="about"]');
+        $this->assertSelectorExists('div[class="counts container"]');
+        $this->assertSelectorExists('div[class="skills container"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }
