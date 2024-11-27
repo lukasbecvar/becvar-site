@@ -4,8 +4,8 @@
     "description": "Admin site for my personal website",
     "start_url": "/admin/dashboard",
     "display": "standalone",
-    "background_color": "#383838",
-    "theme_color": "#383838",
+    "background_color": "#2e2e2e",
+    "theme_color": "#2e2e2e",
     "icons": [
         {
             "src": "/build/images/favicon.png",
