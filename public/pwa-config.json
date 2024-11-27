@@ -2,7 +2,7 @@
     "name": "Becvar-site admin",
     "short_name": "Becvar-site",
     "description": "Admin site for my personal website",
-    "start_url": "/",
+    "start_url": "/admin/dashboard",
     "display": "standalone",
     "background_color": "#383838",
     "theme_color": "#383838",
