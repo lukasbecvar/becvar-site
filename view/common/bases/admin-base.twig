@@ -11,6 +11,9 @@
         <meta http-equiv="refresh" content="0; URL='{{ path('error_by_code', {code: '426'}) }}'" />
     </noscript>
 
+    {# INCLUDE PWA CONFIG MANIFEST #}
+    <link rel="manifest" href={{ asset('pwa-config.json') }}>
+
     {# INCLUDE CSS ASSETS #} 
     {{ encore_entry_link_tags('page-loading-css') }}
     {{ encore_entry_link_tags('fontawesome-css') }}

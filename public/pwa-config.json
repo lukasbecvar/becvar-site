@@ -1,0 +1,16 @@
+{
+    "name": "Becvar-site admin",
+    "short_name": "Becvar-site",
+    "description": "Admin site for my personal website",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#383838",
+    "theme_color": "#383838",
+    "icons": [
+        {
+            "src": "/build/images/favicon.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        }
+    ]
+}
