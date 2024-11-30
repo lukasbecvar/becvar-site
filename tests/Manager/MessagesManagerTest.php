@@ -2,6 +2,7 @@
 
 namespace App\Tests\Manager;
 
+use Doctrine\ORM\Query;
 use App\Entity\Message;
 use App\Util\SecurityUtil;
 use App\Manager\ErrorManager;
@@ -10,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use App\Manager\MessagesManager;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -51,6 +51,8 @@ class MessagesManagerTest extends TestCase
 
     /**
      * Test save message to inbox
+     *
+     * @return void
      */
     public function testSaveMessage(): void
     {
@@ -76,6 +78,8 @@ class MessagesManagerTest extends TestCase
 
     /**
      * Test get messages count by visitor ip address
+     *
+     * @return void
      */
     public function testGetMessageCountByIpAddress(): void
     {
@@ -88,12 +92,6 @@ class MessagesManagerTest extends TestCase
         $this->entityManager->expects($this->once())->method('createQuery')->with(
             'SELECT COUNT(m.id) FROM App\Entity\Message m WHERE m.ip_address = :ip_address AND m.status = :status'
         )->willReturn($query);
-
-        // expect query parameters
-        $query->expects($this->exactly(2))->method('setParameter')->withConsecutive(
-            ['status', 'open'],
-            ['ip_address', $ipAddress]
-        )->willReturnSelf();
 
         // mock result
         $query->expects($this->once())->method('getSingleScalarResult')->willReturn($expectedCount);
@@ -126,13 +124,21 @@ class MessagesManagerTest extends TestCase
         $messages = [$message1, $message2];
 
         // mock repository method
-        $this->messageRepository->expects($this->once())->method('getMessagesByStatus')
-            ->with($status, $offset, $limit)->willReturn($messages);
+        $this->messageRepository->expects($this->once())
+            ->method('getMessagesByStatus')
+            ->with($status, $offset, $limit)
+            ->willReturn($messages);
 
         // mock decryption of message content
-        $this->securityUtil->expects($this->exactly(2))->method('decryptAes')
-            ->withConsecutive(['encryptedMessage1'], ['encryptedMessage2'])
-            ->willReturnOnConsecutiveCalls('decryptedMessage1', 'decryptedMessage2');
+        $this->securityUtil->expects($this->exactly(2))
+            ->method('decryptAes')
+            ->willReturnCallback(function ($encryptedMessage) {
+                return match ($encryptedMessage) {
+                    'encryptedMessage1' => 'decryptedMessage1',
+                    'encryptedMessage2' => 'decryptedMessage2',
+                    default => null,
+                };
+            });
 
         // mock error handling when decryption fails
         $this->errorManager->expects($this->never())

@@ -57,7 +57,7 @@ class EscapeRequestDataMiddlewareTest extends TestCase
         $requestStack->push($request);
 
         // create a request event
-        /** @var HttpKernelInterface $kernel */
+        /** @var HttpKernelInterface&MockObject $kernel */
         $kernel = $this->createMock(HttpKernelInterface::class);
         /** @var Request $request */
         $event = new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);

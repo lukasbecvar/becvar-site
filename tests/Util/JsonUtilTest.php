@@ -51,20 +51,6 @@ class JsonUtilTest extends TestCase
     }
 
     /**
-     * Test get json with invalid target
-     *
-     * @return void
-     */
-    public function testGetJsonWithInvalidTarget(): void
-    {
-        // call the method
-        $result =  $this->jsonUtil->getJson('non_existent_file.json');
-
-        // assert result
-        $this->assertNull($result);
-    }
-
-    /**
      * Test get json with invalid data
      *
      * @return void

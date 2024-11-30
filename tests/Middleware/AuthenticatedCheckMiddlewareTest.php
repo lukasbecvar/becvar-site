@@ -50,7 +50,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
     private function createRequestEvent(string $pathInfo): RequestEvent
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => $pathInfo]);
-        /** @var HttpKernelInterface $kernel */
+        /** @var HttpKernelInterface&MockObject $kernel */
         $kernel = $this->createMock(HttpKernelInterface::class);
         return new RequestEvent($kernel, $request, HttpKernelInterface::MAIN_REQUEST);
     }

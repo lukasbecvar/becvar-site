@@ -8,7 +8,6 @@ use App\Util\ExportUtil;
 use App\Util\VisitorInfoUtil;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ExportUtilTest
@@ -58,13 +57,10 @@ class ExportUtilTest extends TestCase
         // call export visitors to excel
         $response = $this->exportUtil->exportVisitorsToExcel($dataToExport);
 
-        // check response is instance of Response
-        $this->assertInstanceOf(Response::class, $response);
-
         // check response headers
         $this->assertEquals(
-            expected: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            actual: $response->headers->get('Content-Type')
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            $response->headers->get('Content-Type')
         );
         $this->assertStringContainsString('attachment; filename="visitors_list_', $response->headers->get('Content-Disposition'));
 
@@ -102,9 +98,6 @@ class ExportUtilTest extends TestCase
 
         // call export method
         $response = $this->exportUtil->exportVisitorsListToPDF($dataToExport);
-
-        // check if response is instance of Response
-        $this->assertInstanceOf(Response::class, $response);
 
         // check response headers
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));

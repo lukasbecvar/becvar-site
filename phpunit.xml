@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.0/phpunit.xsd"
-    colors="true"
-    verbose="true"
+<phpunit 
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.4/phpunit.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    bootstrap="tests/bootstrap.php"
     cacheResult="false"
-    printerClass="Sempro\PHPUnitPrettyPrinter\PrettyPrinterForPhpUnit9"
+    colors="true" 
 >
     <php>
-        <!-- server variables -->
         <server name="APP_ENV" value="test" force="true"/>
-        <server name="SHELL_VERBOSITY" value="-1"/>
-        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
-
-        <!-- environment variables -->
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>   
         <env name="KERNEL_CLASS" value="App\Kernel"/>
         <env name="REMOTE_ADDR" value="127.0.0.1"/>
-        <env name="HTTP_HOST" value="127.0.0.1"/>
         <env name="HTTP_USER_AGENT" value="test"/>
+        <env name="HTTP_HOST" value="127.0.0.1"/>
 
         <!-- disable deprecated warnings (because visitors exporting to PDF uses dompdf) -->
         <ini name="error_reporting" value="E_ALL &amp; ~E_DEPRECATED &amp; ~E_USER_DEPRECATED"/>
@@ -29,13 +20,20 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory suffix=".php">./tests</directory>
+            <exclude>./tests/bootstrap.php</exclude>
             <exclude>./tests/CustomTestCase.php</exclude>
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">src</directory>
         </include>
-    </coverage>
+    </source>
+
+    <!-- ENABLE BETTER OUTPUT FORMATER -->
+    <extensions>
+        <bootstrap class="RobinIngelbrecht\PHPUnitPrettyPrint\PhpUnitExtension">
+            </bootstrap>
+    </extensions>
 </phpunit>

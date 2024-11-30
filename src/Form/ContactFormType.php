@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
  *
  * Contact form provides a contact message form
  *
- * @see AbstractType
+ * @extends AbstractType<Message>
  *
  * @package App\Form
  */
@@ -24,7 +24,7 @@ class ContactFormType extends AbstractType
     /**
      * Build form for contacting
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param FormBuilderInterface<Message|null> $builder The form builder
      * @param array<string> $options The options for building the form
      *
      * @return void

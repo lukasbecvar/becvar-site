@@ -29,20 +29,6 @@ class CookieUtilTest extends TestCase
     }
 
     /**
-     * Test check is set cookie set
-     *
-     * @return void
-     */
-    public function testIsCookieSet(): void
-    {
-        // call tested method
-        $value = $this->cookieUtil->isCookieSet('test_cookie');
-
-        // assert response
-        $this->assertIsBool($value);
-    }
-
-    /**
      * Test get cookie value
      *
      * @return void

@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
  *
  * PasswordChangeFormType provides changing user password in the account settings
  *
- * @see AbstractType
+ * @extends AbstractType<User>
  *
  * @package App\Form
  */
@@ -24,7 +24,7 @@ class PasswordChangeFormType extends AbstractType
     /**
      * Build password change form
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param FormBuilderInterface<User|null> $builder The form builder
      * @param array<string> $options The options for building the form
      *
      * @return void

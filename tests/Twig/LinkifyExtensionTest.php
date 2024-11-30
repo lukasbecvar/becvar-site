@@ -4,6 +4,7 @@ namespace App\Tests\Twig;
 
 use App\Twig\LinkifyExtension;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Class LinkifyExtensionTest
@@ -18,7 +19,6 @@ class LinkifyExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        // create linkify extension instance
         $this->linkifyExtension = new LinkifyExtension();
     }
 
@@ -27,7 +27,7 @@ class LinkifyExtensionTest extends TestCase
      *
      * @return array<int, array<int, string>> The link data
      */
-    public function provideLinkifyTextData(): array
+    public static function provideLinkifyTextData(): array
     {
         return [
             [
@@ -64,6 +64,7 @@ class LinkifyExtensionTest extends TestCase
      */
     public function testGetFilters(): void
     {
+        // call tested method
         $filters = $this->linkifyExtension->getFilters();
 
         // assert result
@@ -75,10 +76,9 @@ class LinkifyExtensionTest extends TestCase
     /**
      * Test linkify text
      *
-     * @dataProvider provideLinkifyTextData
-     *
      * @return void
      */
+    #[DataProvider('provideLinkifyTextData')]
     public function testLinkifyText(string $input, string $expected): void
     {
         // assert result

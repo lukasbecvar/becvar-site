@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  *
  * Form for configure visitor export filter
  *
+ * @extends AbstractType<mixed>
+ *
  * @package App\Form
  */
 class VisitorListExportType extends AbstractType
@@ -19,7 +21,7 @@ class VisitorListExportType extends AbstractType
     /**
      * Build visitor exporter form
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param FormBuilderInterface<mixed> $builder The form builder
      * @param array<string> $options The options for building the form
      *
      * @return void

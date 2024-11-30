@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
  *
  * RegisterFormType provides registering new admin users
  *
- * @see AbstractType
+ * @extends AbstractType<User>
  *
  * @package App\Form
  */
@@ -25,7 +25,7 @@ class RegisterFormType extends AbstractType
     /**
      * Build registration form
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param FormBuilderInterface<User|null> $builder The form builder
      * @param array<string> $options The options for building the form
      *
      * @return void

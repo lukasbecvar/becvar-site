@@ -23,7 +23,7 @@ class LogFixtures extends Fixture
      *
      * @return void
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // testing data
         $logsData = [

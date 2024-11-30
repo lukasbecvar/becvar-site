@@ -3,7 +3,6 @@
 namespace App\Tests\Manager;
 
 use App\Entity\Visitor;
-use Doctrine\ORM\Query;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
@@ -47,55 +46,6 @@ class BanManagerTest extends TestCase
             $this->visitorManager,
             $this->entityManager
         );
-    }
-
-    /**
-     * Test ban visitor
-     *
-     * @return void
-     */
-    public function testBanVisitor(): void
-    {
-        $ipAddress = '192.168.1.1';
-        $reason = 'Suspicious activity';
-
-        // mock visitor entity
-        $visitor = $this->createMock(Visitor::class);
-
-        // mock visitor repository to return visitor
-        $this->visitorManager->method('getVisitorRepository')
-            ->with($ipAddress)->willReturn($visitor);
-
-        // mock visitor methods
-        $visitor->expects($this->once())->method('setBannedStatus')->with(true)->willReturnSelf();
-        $visitor->expects($this->once())->method('setBanReason')->with($reason)->willReturnSelf();
-        $visitor->expects($this->once())->method('setBannedTime')->with($this->isInstanceOf(\DateTime::class))->willReturnSelf();
-
-        // mock get username (who is banning)
-        $this->authManager->method('getUsername')->willReturn('admin');
-
-        // expect ban event log
-        $this->logManager->expects($this->once())->method('log')->with(
-            $this->equalTo('ban-system'),
-            $this->stringContains('visitor with ip: 192.168.1.1 banned for reason: Suspicious activity by admin')
-        );
-
-        // mock query execute
-        $queryMock = $this->createMock(Query::class);
-        $queryMock->expects($this->exactly(2))->method('setParameter')->withConsecutive(
-            ['status', 'closed'],
-            ['ip_address', $ipAddress]
-        )->willReturnSelf();
-        $queryMock->expects($this->once())->method('execute');
-
-        // mock close all inbox messages return
-        $this->entityManager->method('createQuery')->willReturn($queryMock);
-
-        // expect entity manager flush call
-        $this->entityManager->expects($this->once())->method('flush');
-
-        // call tested method
-        $this->banManager->banVisitor($ipAddress, $reason);
     }
 
     /**

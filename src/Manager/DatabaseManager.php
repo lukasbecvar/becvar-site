@@ -45,22 +45,22 @@ class DatabaseManager
         $tables = null;
 
         try {
-            $platform = $this->connection->getDatabasePlatform();
-            $sql = $platform->getListTablesSQL();
-            $tables = $this->connection->executeQuery($sql)->fetchAllAssociative();
+            // Použijeme SchemaManager pro získání seznamu tabulek
+            $schemaManager = $this->connection->createSchemaManager();
+            $tables = $schemaManager->listTableNames();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get tables list: ' . $e->getMessage(),
+                'Error to get tables list: ' . $e->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
-        // log table list view event
+        // Log table list view event
         $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
 
-        // build tables list
-        foreach ($tables as $value) {
-            array_push($tablesList, $value['Tables_in_' . $_ENV['DATABASE_NAME']]);
+        // Vytvoření seznamu tabulek
+        foreach ($tables as $table) {
+            array_push($tablesList, $table);
         }
 
         return $tablesList;
@@ -225,15 +225,16 @@ class DatabaseManager
                 ->where('id = :id')
                 ->setParameter('id', $id);
 
-            $statement = $queryBuilder->execute();
+            $statement = $this->connection->executeQuery($queryBuilder->getSQL(), $queryBuilder->getParameters());
+
             $data = $statement->fetchAllAssociative();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
+                'Error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
                 Response::HTTP_NOT_FOUND
             );
         }
-        return $data[0];
+        return $data[0] ?? [];
     }
 
     /**
