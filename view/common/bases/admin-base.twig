@@ -12,7 +12,9 @@
     </noscript>
 
     {# INCLUDE PWA CONFIG MANIFEST #}
-    <link rel="manifest" href={{ asset('pwa-config.json') }}>
+    {% if pwa_app_support == 'true' %}
+        <link rel="manifest" href={{ asset('pwa-config.json') }}>
+    {% endif %}
 
     {# INCLUDE CSS ASSETS #} 
     {{ encore_entry_link_tags('page-loading-css') }}

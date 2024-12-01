@@ -1,3 +1,6 @@
+parameters:
+    pwa_app_support: '%env(PWA_APP_SUPPORT)%'
+
 services:
     _defaults:
         autowire: true      # automatically injects dependencies
@@ -17,16 +20,16 @@ services:
 
     # twig extensions
     # --------------------------------------------------------------------------------- #
-    # linkify extension
-    App\Twig\LinkifyExtension:
-        tags:
-            - { name: 'twig.extension' }
-
     # auth manager extension
     App\Twig\AuthManagerExtension:
         arguments:
             $authManager: '@App\Manager\AuthManager'
         tags: [ 'twig.extension' ]
+    
+    # linkify extension
+    App\Twig\LinkifyExtension:
+        tags:
+            - { name: 'twig.extension' }
 
     # app middlewares
     # --------------------------------------------------------------------------------- #
