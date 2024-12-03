@@ -184,13 +184,14 @@ body.active .wrapper .section {
 	width: 100% !important;
 }
 
-.wrapper .section .top-navbar .hamburger a {
+.wrapper .section .top-navbar .hamburger .menu-button {
 	font-size: 22px;
 	color: #f4fbff;
 	text-decoration: none;
+	cursor: pointer;
 }
 
-.wrapper .section .top-navbar .hamburger a:hover {
+.wrapper .section .top-navbar .hamburger .menu-button:hover {
 	color: #79d5ec;
 	text-decoration: none;
 }
