@@ -101,10 +101,6 @@ class ContactController extends AbstractController
             // check if honeypot is empty
             } elseif (isset($honeypot)) {
                 $errorMsg = 'contact.error.blocked.message';
-                $this->logManager->log(
-                    name: 'message-sender',
-                    value: 'message by: ' . $email . ', has been blocked: honeypot used'
-                );
             } else {
                 // get others data
                 $visitorId = $this->visitorManager->getVisitorID($ipAddress);

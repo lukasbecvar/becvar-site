@@ -38,8 +38,7 @@ class MessageFixtures extends Fixture
             ['message' => 'test message 1'],
             ['message' => 'test message 2'],
             ['message' => 'test message 3'],
-            ['message' => 'test message 4'],
-            ['message' => 'test message 5']
+            ['message' => 'test message 4']
         ];
 
         // create message fixtures
