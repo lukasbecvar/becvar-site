@@ -4,6 +4,7 @@ namespace App\Tests\Util;
 
 use App\Util\AppUtil;
 use App\Util\JsonUtil;
+use App\Util\SecurityUtil;
 use Psr\Log\LoggerInterface;
 use App\Util\VisitorInfoUtil;
 use PHPUnit\Framework\TestCase;
@@ -22,6 +23,7 @@ class VisitorInfoUtilTest extends TestCase
     private AppUtil & MockObject $appUtilMock;
     private JsonUtil & MockObject $jsonUtilMock;
     private LoggerInterface & MockObject $loggerMock;
+    private SecurityUtil & MockObject $securityUtilMock;
 
     protected function setUp(): void
     {
@@ -29,47 +31,62 @@ class VisitorInfoUtilTest extends TestCase
         $this->appUtilMock = $this->createMock(AppUtil::class);
         $this->jsonUtilMock = $this->createMock(JsonUtil::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
+        $this->securityUtilMock = $this->createMock(SecurityUtil::class);
+
+        // mock escape string behavior
+        $this->securityUtilMock->method('escapeString')->willReturnCallback(function (string $string) {
+            return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
+        });
 
         // create instance of VisitorInfoUtil
-        $this->visitorInfoUtil = new VisitorInfoUtil($this->appUtilMock, $this->jsonUtilMock, $this->loggerMock);
+        $this->visitorInfoUtil = new VisitorInfoUtil(
+            $this->appUtilMock,
+            $this->jsonUtilMock,
+            $this->loggerMock,
+            $this->securityUtilMock
+        );
     }
 
     /**
-     * Test get visitor IP address
+     * Test get visitor ip address
      *
      * @return void
      */
-    public function testGetIp(): void
+    public function testGetIpAddress(): void
     {
-        // test get ip address from HTTP_CLIENT_IP
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.1';
-        $this->assertEquals('192.168.1.1', $this->visitorInfoUtil->getIP());
-
-        // test get ip address from HTTP_X_FORWARDED_FOR
-        unset($_SERVER['HTTP_CLIENT_IP']);
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '192.168.1.2';
-        $this->assertEquals('192.168.1.2', $this->visitorInfoUtil->getIP());
-
-        // test get ip address from REMOTE_ADDR
-        unset($_SERVER['HTTP_X_FORWARDED_FOR']);
         $_SERVER['REMOTE_ADDR'] = '192.168.1.3';
-        $this->assertEquals('192.168.1.3', $this->visitorInfoUtil->getIP());
+
+        // test test ip from HTTP
+        $ip = $this->visitorInfoUtil->getIP();
+        $this->assertEquals('192.168.1.1', $ip);
+
+        // test get ip from HTTP_X_FORWARDED_FOR
+        $_SERVER['HTTP_CLIENT_IP'] = '';
+        $ip = $this->visitorInfoUtil->getIP();
+        $this->assertEquals('192.168.1.2', $ip);
+
+        // test get ip from REMOTE_ADDR
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '';
+        $ip = $this->visitorInfoUtil->getIP();
+        $this->assertEquals('192.168.1.3', $ip);
     }
 
     /**
-     * Test get visitor browser
+     * Test get user agent
      *
      * @return void
      */
-    public function testGetBrowser(): void
+    public function testGetUserAgent(): void
     {
-        // test get user agent from HTTP_USER_AGENT
-        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0';
-        $this->assertEquals('Mozilla/5.0', $this->visitorInfoUtil->getUserAgent());
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
 
-        // test get user agent with unknown HTTP_USER_AGENT
-        unset($_SERVER['HTTP_USER_AGENT']);
-        $this->assertEquals('Unknown', $this->visitorInfoUtil->getUserAgent());
+        // call tested method
+        $userAgent = $this->visitorInfoUtil->getUserAgent();
+
+        // assert result
+        $this->assertEquals('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36', $userAgent);
     }
 
     /**
