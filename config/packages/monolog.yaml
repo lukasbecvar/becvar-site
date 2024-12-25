@@ -14,12 +14,6 @@ monolog:
             handler: exception
             excluded_http_codes: [403, 404, 405, 426, 503]
 
-        # stdout log handler (container logs)
-        stdout:
-            type: stream
-            level: error
-            path: 'php://stdout'
-
 # debug dev log
 when@dev:
     monolog:
