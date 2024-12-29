@@ -7,19 +7,19 @@ Encore
     .setPublicPath('/build')
 
     // common assets
-    .addEntry('scrollbar-css', './assets/css/scrollbar.css')
+    .addEntry('scrollbar-css', './assets/css/scrollbar.scss')
     .addEntry('page-loading-js', './assets/js/page-loading.js')
-    .addEntry('page-loading-css', './assets/css/page-loading.css')
+    .addEntry('page-loading-css', './assets/css/page-loading.scss')
 
     // public page assets
     .addEntry('public-js', './assets/js/public.js')
-    .addEntry('public-css', './assets/css/public.css')
+    .addEntry('public-css', './assets/css/public.scss')
 
     // admin page assets
-    .addEntry('admin-css', './assets/css/admin.css')
+    .addEntry('admin-css', './assets/css/admin.scss')
 
     // error page assets
-    .addEntry('error-page-css', './assets/css/error-page.css')
+    .addEntry('error-page-css', './assets/css/error-page.scss')
 
     // bootstrap
     .addEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')
@@ -54,6 +54,7 @@ Encore
 
     // other webpack configs
     .splitEntryChunks()
+    .enableSassLoader()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
