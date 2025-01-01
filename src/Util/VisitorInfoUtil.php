@@ -180,7 +180,7 @@ class VisitorInfoUtil
         $os = 'Unknown OS';
 
         // get browser agent
-        $agent = $this->getUserAgent();
+        $userAgent = $this->getUserAgent();
 
         // OS list
         $osArray = array (
@@ -213,11 +213,9 @@ class VisitorInfoUtil
 
         // find os
         foreach ($osArray as $regex => $value) {
-            // check if os found
-            if ($regex != null && $agent != null) {
-                if (preg_match($regex, $agent)) {
-                    $os = $value;
-                }
+            if ($userAgent !== null && preg_match($regex, $userAgent)) {
+                $os = $value;
+                break;
             }
         }
 

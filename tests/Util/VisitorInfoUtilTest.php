@@ -119,7 +119,7 @@ class VisitorInfoUtilTest extends TestCase
     {
         // test get windows OS
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0';
-        $this->assertEquals('Windows', $this->visitorInfoUtil->getOS());
+        $this->assertEquals('Windows 10', $this->visitorInfoUtil->getOS());
 
         // test get mac OS
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15';
