@@ -213,6 +213,16 @@ class VisitorManager
     }
 
     /**
+     * Get total count of visitors
+     *
+     * @return int The total count of visitors
+     */
+    public function getTotalVisitorsCount(): int
+    {
+        return $this->visitorRepository->count();
+    }
+
+    /**
      * Get status of a visitor with the given ID
      *
      * @param int $id The ID of the visitor.

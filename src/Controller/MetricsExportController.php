@@ -47,15 +47,9 @@ class MetricsExportController extends AbstractController
             return $this->json(['error' => 'Your IP is not allowed to access metrics.'], JsonResponse::HTTP_FORBIDDEN);
         }
 
-        // get visitor metrics
-        $visitorMetrics = $this->visitorManager->getVisitorMetrics('last_24_hours');
-
         // return metrics data
         return $this->json([
-            'visitors_cities' => $visitorMetrics['visitorsCity'],
-            'visitors_count' => $visitorMetrics['visitorsCount'],
-            'visitors_country' => $visitorMetrics['visitorsCountry'],
-            'visitors_browsers' => $visitorMetrics['visitorsBrowsers']
+            'visitors_count' => $this->visitorManager->getTotalVisitorsCount()
         ], JsonResponse::HTTP_OK);
     }
 }
