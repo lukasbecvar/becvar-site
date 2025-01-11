@@ -223,6 +223,18 @@ class VisitorManager
     }
 
     /**
+     * Get count of visitors by time period
+     *
+     * @param string $timePeriod The time period for which to retrieve the visitor count
+     *
+     * @return int The count of visitors for the specified time period
+     */
+    public function getVisitorsCountByTimePeriod(string $timePeriod): int
+    {
+        return count($this->visitorRepository->findByTimeFilter($timePeriod));
+    }
+
+    /**
      * Get status of a visitor with the given ID
      *
      * @param int $id The ID of the visitor.
