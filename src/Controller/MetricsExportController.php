@@ -54,7 +54,8 @@ class MetricsExportController extends AbstractController
 
         // return metrics data
         return $this->json([
-            'visitors_count' => $this->visitorManager->getVisitorsCountByTimePeriod($timePeriod)
+            'visitors_count' => $this->visitorManager->getVisitorsCountByTimePeriod($timePeriod),
+            'total_visitors_count' => $this->visitorManager->getTotalVisitorsCount()
         ], JsonResponse::HTTP_OK);
     }
 }

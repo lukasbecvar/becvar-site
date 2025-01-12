@@ -39,7 +39,9 @@ class MetricsExportControllerTest extends WebTestCase
 
         // assert response
         $this->assertArrayHasKey('visitors_count', $responseData);
+        $this->assertArrayHasKey('total_visitors_count', $responseData);
         $this->assertIsInt($responseData['visitors_count']);
+        $this->assertIsInt($responseData['total_visitors_count']);
         $this->assertResponseStatusCodeSame(JsonResponse::HTTP_OK);
     }
 
