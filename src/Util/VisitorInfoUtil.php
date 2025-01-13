@@ -64,6 +64,24 @@ class VisitorInfoUtil
     }
 
     /**
+     * Get referer from http header
+     *
+     * @return string The referer
+     */
+    public function getReferer(): string
+    {
+        // get referer
+        $referer = $_SERVER['HTTP_REFERER'] ?? null;
+
+        // escape referer
+        if ($referer !== null) {
+            $referer = $this->securityUtil->escapeString($referer);
+        }
+
+        return $referer ?? 'Unknown';
+    }
+
+    /**
      * Get user agent
      *
      * @return string|null The user agent

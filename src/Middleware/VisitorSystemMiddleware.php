@@ -121,6 +121,9 @@ class VisitorSystemMiddleware
         // get visitor ip address
         $location = $this->visitorInfoUtil->getLocation($ipAddress);
 
+        // get visitor referer
+        $referer = $this->visitorInfoUtil->getReferer();
+
         // log geolocate error
         if ($location['city'] == 'Unknown' || $location['country'] == 'Unknown') {
             $this->logManager->log('geolocate-error', 'error to geolocate ip: ' . $ipAddress);
@@ -137,6 +140,7 @@ class VisitorSystemMiddleware
             ->setLastVisit($date)
             ->setBrowser($browser)
             ->setOs($os)
+            ->setReferer($referer)
             ->setCity($location['city'])
             ->setCountry($location['country'])
             ->setIpAddress($ipAddress)
@@ -190,6 +194,12 @@ class VisitorSystemMiddleware
             $visitor->setLastVisit($date);
             $visitor->setBrowser($browser);
             $visitor->setOs($os);
+
+            // update visitor referer
+            if ($visitor->getReferer() != 'Unknown') {
+                $referer = $this->visitorInfoUtil->getReferer();
+                $visitor->setReferer($referer);
+            }
 
             try {
                 // flush updated visitor data

@@ -90,6 +90,7 @@ class VisitorFixtures extends Fixture
                 ->setLastVisit($lastVisit)
                 ->setBrowser($this->browsers[array_rand($this->browsers)])
                 ->setOs($this->os[array_rand($this->os)])
+                ->setReferer('https://www.google.com')
                 ->setCity($this->city[array_rand($this->city)])
                 ->setCountry($this->county[array_rand($this->county)])
                 ->setIpAddress('192.168.1.' . $i)

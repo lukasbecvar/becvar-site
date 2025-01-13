@@ -39,6 +39,9 @@ class Visitor
     private ?string $os = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $referer = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
@@ -161,6 +164,30 @@ class Visitor
     public function setOs(string $os): static
     {
         $this->os = $os;
+
+        return $this;
+    }
+
+    /**
+     * Get visitor referer
+     *
+     * @return string|null The referer
+     */
+    public function getReferer(): ?string
+    {
+        return $this->referer;
+    }
+
+    /**
+     * Set visitor referer
+     *
+     * @param string $referer The referer
+     *
+     * @return static The visitor object
+     */
+    public function setReferer(string $referer): static
+    {
+        $this->referer = $referer;
 
         return $this;
     }
