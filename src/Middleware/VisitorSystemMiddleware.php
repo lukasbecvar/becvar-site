@@ -196,7 +196,7 @@ class VisitorSystemMiddleware
             $visitor->setOs($os);
 
             // update visitor referer
-            if ($visitor->getReferer() != 'Unknown') {
+            if ($visitor->getReferer() == 'Unknown') {
                 $referer = $this->visitorInfoUtil->getReferer();
                 $visitor->setReferer($referer);
             }
