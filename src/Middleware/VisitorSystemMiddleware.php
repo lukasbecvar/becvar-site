@@ -4,6 +4,7 @@ namespace App\Middleware;
 
 use DateTime;
 use Exception;
+use App\Util\AppUtil;
 use Twig\Environment;
 use App\Entity\Visitor;
 use App\Util\CacheUtil;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class VisitorSystemMiddleware
 {
+    private AppUtil $appUtil;
     private Environment $twig;
     private CacheUtil $cacheUtil;
     private BanManager $banManager;
@@ -36,6 +38,7 @@ class VisitorSystemMiddleware
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        AppUtil $appUtil,
         Environment $twig,
         CacheUtil $cacheUtil,
         LogManager $logManager,
@@ -47,6 +50,7 @@ class VisitorSystemMiddleware
         EntityManagerInterface $entityManager
     ) {
         $this->twig = $twig;
+        $this->appUtil = $appUtil;
         $this->cacheUtil = $cacheUtil;
         $this->banManager = $banManager;
         $this->logManager = $logManager;
@@ -195,9 +199,9 @@ class VisitorSystemMiddleware
             $visitor->setBrowser($browser);
             $visitor->setOs($os);
 
-            // update visitor referer
-            if ($visitor->getReferer() == 'Unknown') {
-                $referer = $this->visitorInfoUtil->getReferer();
+            // update visitor referer (only if referer not in current host domain)
+            $referer = $this->visitorInfoUtil->getReferer();
+            if ($visitor->getReferer() == 'Unknown' && !str_contains($this->appUtil->getHttpHost(), $referer)) {
                 $visitor->setReferer($referer);
             }
 

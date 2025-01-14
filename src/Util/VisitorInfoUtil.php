@@ -64,7 +64,7 @@ class VisitorInfoUtil
     }
 
     /**
-     * Get referer from http header
+     * Get referer from http header (referer domain)
      *
      * @return string The referer
      */
@@ -76,6 +76,7 @@ class VisitorInfoUtil
         // escape referer
         if ($referer !== null) {
             $referer = $this->securityUtil->escapeString($referer);
+            $referer = parse_url($referer, PHP_URL_HOST) ?? 'Unknown';
         }
 
         return $referer ?? 'Unknown';
