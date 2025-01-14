@@ -117,7 +117,35 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div> 
+
+                {# VISITORS REFERERS #}
+                <div class="col-12 col-md-4 metrics-card"> 
+                    <div class="card l-bg-cyan-darker counter-card">
+                        <div class="card-statistic p-0">
+                            <div class="row align-items-center mb-0 d-flex">
+                                <div class="col-12 pb-0">
+                                    <table class="table table-dark text-nowrap table-hover custom-header">
+                                        <thead class="metrics-table-header">
+                                            <tr>
+                                                <th>Referer</th>
+                                                <th>Visitors count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, row in visitorMetrics.visitorsReferers %}
+                                                <tr>
+                                                    <th>{{ key|e }}</th>
+                                                    <th class="text-primary">{{ row|e }}</th>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

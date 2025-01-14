@@ -322,6 +322,9 @@ class VisitorManager
         // get visitors browser metrics
         $visitorsBrowsers = $this->visitorRepository->getVisitorsUsedBrowsers();
 
+        // get visitors referer metrics
+        $visitorsReferers = $this->visitorRepository->getVisitorsReferers();
+
         // shotify browsers array
         $visitorsBrowsersShortify = [];
 
@@ -350,7 +353,8 @@ class VisitorManager
             'visitorsCity' => $visitorsCity,
             'visitorsCount' => $visitorsCount,
             'visitorsCountry' => $visitorsCountry,
-            'visitorsBrowsers' => $visitorsBrowsersShortify
+            'visitorsBrowsers' => $visitorsBrowsersShortify,
+            'visitorsReferers' => $visitorsReferers
         ];
     }
 }

@@ -246,4 +246,27 @@ class VisitorRepository extends ServiceEntityRepository
 
         return $visitorsByBrowser;
     }
+
+    /**
+     * Get visitors referers
+     *
+     * @return array<string, int> referers and visitors count
+     */
+    public function getVisitorsReferers(): array
+    {
+        $results = $this->createQueryBuilder('v')
+            ->select('v.referer AS referer, COUNT(v.id) AS visitorCount')
+            ->groupBy('v.referer')
+            ->orderBy('visitorCount', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        // convert results to associative array
+        $visitorsReferers = [];
+        foreach ($results as $result) {
+            $visitorsReferers[$result['referer']] = $result['visitorCount'];
+        }
+
+        return $visitorsReferers;
+    }
 }
