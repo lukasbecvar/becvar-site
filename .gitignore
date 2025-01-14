@@ -20,5 +20,6 @@ package-lock.json
 # phpunit
 .phpunit.result.cache
 
-# php code sniffer
+# php codesniffer
+.php-cs-fixer.dist.php
 .phpcs-cache
