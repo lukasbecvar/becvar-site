@@ -43,7 +43,7 @@ jobs:
           sed -i 's/^\(APP_ENV=\)dev/\1prod/' .env
 
           # install dependencies with composer
-          composer install --no-interaction --no-progress --no-suggest
+          composer install --no-interaction --no-progress
 
           # install npm dependencies
           npm install --loglevel=error
