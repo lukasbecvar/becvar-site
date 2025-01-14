@@ -127,6 +127,9 @@ class VisitorSystemMiddleware
 
         // get visitor referer
         $referer = $this->visitorInfoUtil->getReferer();
+        if ($this->appUtil->getHttpHost() == $referer) {
+            $referer = 'Unknown';
+        }
 
         // log geolocate error
         if ($location['city'] == 'Unknown' || $location['country'] == 'Unknown') {
@@ -201,7 +204,7 @@ class VisitorSystemMiddleware
 
             // update visitor referer (only if referer not in current host domain)
             $referer = $this->visitorInfoUtil->getReferer();
-            if ($visitor->getReferer() == 'Unknown' || !str_contains($this->appUtil->getHttpHost(), $referer)) {
+            if ($visitor->getReferer() == 'Unknown' && ($this->appUtil->getHttpHost() != $referer)) {
                 $visitor->setReferer($referer);
             }
 
