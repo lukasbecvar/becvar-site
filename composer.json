@@ -78,7 +78,6 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7",
-        "friendsofphp/php-cs-fixer": "*",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-doctrine": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",

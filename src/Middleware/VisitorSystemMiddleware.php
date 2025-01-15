@@ -127,7 +127,7 @@ class VisitorSystemMiddleware
 
         // get visitor referer
         $referer = $this->visitorInfoUtil->getReferer();
-        if ($this->appUtil->getHttpHost() == $referer) {
+        if ($referer && str_contains($referer, $this->appUtil->getHttpHost() ?? 'Unknown')) {
             $referer = 'Unknown';
         }
 
@@ -154,7 +154,7 @@ class VisitorSystemMiddleware
             ->setBannedStatus(false)
             ->setBanReason('non-banned')
             ->setBannedTime(null)
-            ->setEmail('unknown');
+            ->setEmail('Unknown');
 
         try {
             // flush new visitor to database
@@ -204,7 +204,7 @@ class VisitorSystemMiddleware
 
             // update visitor referer (only if referer not in current host domain)
             $referer = $this->visitorInfoUtil->getReferer();
-            if ($visitor->getReferer() == 'Unknown' && ($this->appUtil->getHttpHost() != $referer)) {
+            if ($visitor->getReferer() == 'Unknown' && !str_contains($referer, $this->appUtil->getHttpHost() ?? 'Unknown')) {
                 $visitor->setReferer($referer);
             }
 

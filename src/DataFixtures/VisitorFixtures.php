@@ -97,7 +97,7 @@ class VisitorFixtures extends Fixture
                 ->setBannedStatus($i % 2 === 0)
                 ->setBanReason($i % 2 === 0 ? 'reason for ban' : 'non-banned')
                 ->setBannedTime(null)
-                ->setEmail($i % 2 === 0 ? 'unknown' : 'visitor' . $i . '@example.com');
+                ->setEmail($i % 2 === 0 ? 'Unknown' : 'visitor' . $i . '@example.com');
 
             // persist visitor entity
             $manager->persist($visitor);
