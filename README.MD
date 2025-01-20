@@ -16,20 +16,20 @@ Personal website build with the Symfony framework & Bootstrap.
 
 ## Installation (with mysql/apache)
 - install app [Requirements](#requirements)
-- clone repository to your /www dir
+- Clone the repository to your /www directory
 - configure apache config like [apache-site.conf](./docker/configs/apache-site.conf)
 - for production use only APP_ENV=prod! (in .env)
-- configure app enviroment in .env.prod
+- configure app environment in .env.prod
 - install dependencies `composer install && npm install && npm run build`
 - create database `doctrine:database:create`
 - migrate database structure `doctrine:migrations:migrate --no-interaction`
-- install opcache (optionally)
+- install opcache (optional)
 
 ## Development environment
 The complete stack for development is in Docker Compose, including PHP, Node, and Composer. You just need to run the docker-start script.
 
 ## Deployment
-Deployment of the new version with GitHub Action when a new release is created.
+The new version is deployed automatically using GitHub Actions when a new release is created.
 
 ## Requirements
 - Apache / Nginx PHP compatible web server
