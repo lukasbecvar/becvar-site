@@ -116,8 +116,6 @@ class VisitorSystemMiddleware
      * @param string $browser The browser used by the visitor
      * @param string $os The operating system of the visitor
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If an error occurs during the database flush
-     *
      * @return void
      */
     public function insertNewVisitor(DateTime $date, string $ipAddress, string $browser, string $os): void
@@ -175,8 +173,6 @@ class VisitorSystemMiddleware
      * @param string $ipAddress The IP address of the visitor
      * @param string $browser The updated browser used by the visitor
      * @param string $os The updated operating system of the visitor
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If an error occurs during the database flush
      *
      * @return void
      */

@@ -44,7 +44,7 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Render account settings table page
+     * Handle account settings table page
      *
      * @return Response The account settings table view
      */

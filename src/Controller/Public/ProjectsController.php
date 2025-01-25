@@ -12,8 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class ProjectsController
  *
- * Projects controller provides a public list of projects
- * The project page displays projects from the database that are downloaded from the GitHub API
+ * Projects controller provides list of public projects from the database
+ * The project page displays projects from the database that are downloaded from the GitHub repositories using API
  *
  * @package App\Controller\Public
  */
@@ -31,7 +31,7 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Render projects page
+     * Handle projects page
      *
      * @return Response The projects page view response
      */
@@ -55,9 +55,7 @@ class ProjectsController extends AbstractController
     }
 
     /**
-     * Update projects list with the latest data from the GitHub API
-     *
-     * @throws \Exception Error the user is not logged in
+     * Handle update projects list with the latest data from GitHub API
      *
      * @return Response The response for updating projects, redirects to the admin database browser
      */

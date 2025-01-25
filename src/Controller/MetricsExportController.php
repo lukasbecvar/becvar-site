@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class MetricsExportController
  *
- * Controller for exporting paste metrics
+ * This controller provides metrics exporter for external monitoring systems
  *
  * @package App\Controller
  */
@@ -31,9 +31,9 @@ class MetricsExportController extends AbstractController
     }
 
     /**
-     * Export paste metrics
+     * Export metrics data
      *
-     * @return JsonResponse The paste metrics
+     * @return JsonResponse The metrics data response
      */
     #[Route('/metrics/export', methods: ['GET'], name: 'metrics_export')]
     public function exportMetrics(Request $request): JsonResponse

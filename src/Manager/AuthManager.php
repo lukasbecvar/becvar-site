@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class AuthManager
  *
  * AuthManager provides login, logout & authorization functionality
- * Note: Login uses its own Authenticator (not Symfony security)
+ * Note: Login uses custom authenticator (not Symfony security)
  *
  * @package App\Manager
  */
@@ -89,8 +89,6 @@ class AuthManager
      * @param string $userToken The token of the user to log in
      * @param bool $remember Whether to remember the user's login
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If user is already logged in
-     *
      * @return void
      */
     public function login(string $username, string $userToken, bool $remember): void
@@ -128,7 +126,7 @@ class AuthManager
     }
 
     /**
-     * Logoout user with destroy user session and login cookie
+     * Logout user with destroy user session and login cookie
      *
      * @return void
      */
@@ -152,8 +150,6 @@ class AuthManager
 
     /**
      * Update user data
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the flushing of the user data
      *
      * @return void
      */
@@ -193,8 +189,6 @@ class AuthManager
      *
      * @param string $username The username for the new user
      * @param string $password The password for the new user
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error the registration process
      *
      * @return void
      */
@@ -372,8 +366,6 @@ class AuthManager
      * Get user entity from repository based on provided criteria
      *
      * @param array<mixed> $array The criteria to search
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get user repository
      *
      * @return object|null The user entity or null if not found
      */

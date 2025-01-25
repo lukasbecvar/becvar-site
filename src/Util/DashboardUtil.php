@@ -33,8 +33,6 @@ class DashboardUtil
      * @param object $entity The entity class
      * @param array<string,mixed>|null $search Additional search criteria
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get database entity count
-     *
      * @return int The count of entities
      */
     public function getDatabaseEntityCount(object $entity, ?array $search = null): int

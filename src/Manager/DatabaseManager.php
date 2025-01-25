@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * DatabaseManager provides CRUD database operations
+ * Manager for CRUD database operations
  *
  * @package App\Manager
  */
@@ -38,8 +38,6 @@ class DatabaseManager
 
     /**
      * Get list of tables in database
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get tables list
      *
      * @return array<string> The list of tables if successful, otherwise null
      */
@@ -75,8 +73,6 @@ class DatabaseManager
      *
      * @param string $tableName The name of the table
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get table columns
-     *
      * @return array<string> The list of column names
      */
     public function getTableColumns(string $tableName): array
@@ -106,8 +102,6 @@ class DatabaseManager
      * Get data from a specific database table
      *
      * @param string $tableName The name of the table
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
      * @return array<mixed> The array of table data
      */
@@ -146,8 +140,6 @@ class DatabaseManager
      * @param int $page The page number for pagination (default is 1)
      * @param bool $log Indicates whether to log the action (default is true)
      * @param bool $raw Whether to return raw data without decryption (default is false)
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get table data
      *
      * @return array<mixed> The array of data from the specified table
      */
@@ -214,8 +206,6 @@ class DatabaseManager
      * @param string $tableName The name of the table
      * @param int $id The unique identifier of the record row
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get row data
-     *
      * @return array<mixed> The array of data from the specified row
      */
     public function selectRowData(string $tableName, int $id): array
@@ -247,8 +237,6 @@ class DatabaseManager
      * @param string $tableName The name of the database table
      * @param array<string> $columns The array of column names
      * @param array<mixed> $values The array of values corresponding to the columns
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error insert new row
      *
      * @return void
      */
@@ -315,8 +303,6 @@ class DatabaseManager
      * @param string $row The column name for which the value will be updated
      * @param string $value The new value to be set
      * @param int $id The unique identifier of the row
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error update value
      *
      * @return void
      */
@@ -394,8 +380,6 @@ class DatabaseManager
      *
      * @param string $dbName The name of the database
      * @param string $tableName The name of the table
-     *
-     * @throws Exception Error truncating table
      *
      * @return void
      */

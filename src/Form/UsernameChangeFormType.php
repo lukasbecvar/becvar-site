@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 /**
  * Class UsernameChangeFormType
  *
- * UsernameChangeFormType provides changing username in the account settings
+ * Form provides changing username in the account settings
  *
  * @extends AbstractType<User>
  *

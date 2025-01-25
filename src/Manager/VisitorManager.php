@@ -44,8 +44,6 @@ class VisitorManager
      *
      * @param array<string,mixed> $search The search criteria
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get visitor
-     *
      * @return Visitor|null The visitor entity if found, null otherwise
      */
     public function getRepositoryByArray(array $search): ?object
@@ -86,8 +84,6 @@ class VisitorManager
      * @param string $ipAddress The IP address of the visitor
      * @param string $email The email address of the visitor
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to update visitor email
-     *
      * @return void
      */
     public function updateVisitorEmail(string $ipAddress, string $email): void
@@ -115,8 +111,6 @@ class VisitorManager
      *
      * @param int $page The page number
      * @param string $filter The filter value
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get visitors list
      *
      * @return Visitor[]|null The list of visitors if found, null otherwise
      */

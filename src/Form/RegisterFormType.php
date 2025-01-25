@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 /**
  * Class RegisterFormType
  *
- * RegisterFormType provides registering new admin users
+ * Form provides registering new admin users
  *
  * @extends AbstractType<User>
  *

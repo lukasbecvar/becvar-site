@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class LogReaderController
  *
- * Log reader controller provides read logs from the database table
+ * Log reader controller provides read logs from database
  *
  * @package App\Controller\Admin
  */
@@ -42,7 +42,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Render log reader from the database table
+     * Handle log reader page
      *
      * @param Request $request The request object
      *
@@ -72,7 +72,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Render logs filtered by IP address
+     * Handle logs filtered by IP address
      *
      * @param Request $request The request object
      *
@@ -125,7 +125,7 @@ class LogReaderController extends AbstractController
     }
 
     /**
-     * Set all logs status to readed
+     * Handle set all logs status to readed
      *
      * @return Response The redirect back to dashboard
      */

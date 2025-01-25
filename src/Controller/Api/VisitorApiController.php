@@ -45,7 +45,7 @@ class VisitorApiController extends AbstractController
     #[Route('/api/visitor/update/activity', methods: ['GET', 'POST'], name: 'api_visitor_status')]
     public function updateStatus(): Response
     {
-        // get user ip
+        // get visitor ip
         $ipAddress = $this->visitorInfoUtil->getIP();
 
         // get visitor repository

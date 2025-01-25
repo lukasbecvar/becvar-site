@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 /**
  * Class PasswordChangeFormType
  *
- * PasswordChangeFormType provides changing user password in the account settings
+ * Form provides changing user password in the account settings
  *
  * @extends AbstractType<User>
  *

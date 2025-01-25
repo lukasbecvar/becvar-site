@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 /**
  * Class ErrorManager
  *
- * ErrorManager provides error handling
+ * Manager for error handling
  *
  * @package App\Manager
  */
@@ -28,7 +28,7 @@ class ErrorManager
      * @param string $msg The error message
      * @param int $code The error code
      *
-     * @throws HttpException
+     * @throws HttpException The error exception
      *
      * @return never Always throws exception (HttpException)
      */
@@ -38,11 +38,11 @@ class ErrorManager
     }
 
     /**
-     * Render error view based on error code
+     * Render error view based by specific error code
      *
      * @param string|int $code The error code
      *
-     * @return string The rendered error view
+     * @return string The rendered error view or unknown error view if error code not found
      */
     public function getErrorView(string|int $code): string
     {

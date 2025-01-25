@@ -40,7 +40,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * Render contact page
+     * Handle contact page
      *
      * @param Request $request The request object
      *
@@ -78,7 +78,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactFormType::class, $message);
         $form->handleRequest($request);
 
-        // check is form submited
+        // check if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // get form data
             $name = $form->get('name')->getData();

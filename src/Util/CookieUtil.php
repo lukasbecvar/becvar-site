@@ -38,8 +38,6 @@ class CookieUtil
      * @param string $value The value to store in the cookie
      * @param int $expiration The expiration time for the cookie
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If headers have already been sent
-     *
      * @return void
      */
     public function set(string $name, string $value, int $expiration): void
@@ -47,7 +45,7 @@ class CookieUtil
         if (!headers_sent()) {
             $value = $this->securityUtil->encryptAes($value);
             $value = base64_encode($value);
-            setcookie($name, $value, $expiration, '/');
+            setcookie($name, $value, $expiration, '/', httponly: true);
         }
     }
 
@@ -91,9 +89,9 @@ class CookieUtil
             // unset the cookie for each part of the URI.
             foreach ($parts as $part) {
                 $cookiePath = '/' . ltrim($cookiePath . '/' . $part, '//');
-                setcookie($name, '', 1, $cookiePath);
+                setcookie($name, '', 1, $cookiePath, httponly: true);
                 do {
-                    setcookie($name, '', 1, $cookiePath, $domain);
+                    setcookie($name, '', 1, $cookiePath, $domain, httponly: true);
                 } while (strpos($domain, '.') !== false && $domain = substr($domain, 1 + strpos($domain, '.')));
             }
         }

@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AboutController extends AbstractController
 {
     /**
-     * Render about me page
+     * Handle about me page
      *
      * @return Response The about page view response
      */

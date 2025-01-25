@@ -45,7 +45,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Render visitors table page
+     * Handle visitors table page
      *
      * @param Request $request The request object
      *
@@ -76,7 +76,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Render ip information for a given visitor ip address
+     * Handle ip information for a given visitor ip address
      *
      * @param Request $request The request object
      *
@@ -110,7 +110,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Handle the confirmation form for deleting all visitors
+     * Handle confirmation form for deleting all visitors
      *
      * @param Request $request The request object
      *
@@ -285,7 +285,7 @@ class VisitorManagerController extends AbstractController
     }
 
     /**
-     * Display visitors metrics page
+     * Handle visitors metrics page
      *
      * @param Request $request The request object
      *

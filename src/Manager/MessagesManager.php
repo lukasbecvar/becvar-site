@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * Messages manager provides methods for managing inbox/contact system
+ * Manager for managing inbox/contact system
  *
  * @package App\Manager
 */
@@ -47,8 +47,6 @@ class MessagesManager
      * @param string $messageInput The message input
      * @param string $ipAddress The IP address of the sender
      * @param int $visitorId The ID of the visitor associated with the sender
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to save message
      *
      * @return void
      */
@@ -88,8 +86,6 @@ class MessagesManager
      *
      * @param string $ipAddress The IP address of the user
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get messages count
-     *
      * @return int The count of open messages from the IP address
      */
     public function getMessageCountByIpAddress(string $ipAddress): int
@@ -119,8 +115,6 @@ class MessagesManager
      *
      * @param string $status The status of the messages
      * @param int $page The page number
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get messages
      *
      * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs
      */
@@ -177,8 +171,6 @@ class MessagesManager
      * Close message by updating its status to 'closed'
      *
      * @param int $id The ID of the message to close
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to close message
      *
      * @return void
      */

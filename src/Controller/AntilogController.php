@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AntilogController
  *
- * Antilog controller provides a function to block database logging
+ * Antilog controller provides function to block database logging
  * Antilog for admin users disables logging with browser cookie
  *
  * @package App\Controller

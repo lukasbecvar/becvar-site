@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 /**
  * Class ContactFormType
  *
- * Contact form provides a contact message form
+ * Form provides a contact message form
  *
  * @extends AbstractType<Message>
  *

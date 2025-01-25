@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * BanManager provides visitor ban functionality
+ * Manager for visitor bans management
  *
  * @package App\Manager
  */
@@ -42,8 +42,6 @@ class BanManager
      *
      * @param string $ipAddress The IP address to ban
      * @param string $reason The reason for banning the visitor
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException to ban visitor
      *
      * @return void
      */
@@ -89,8 +87,6 @@ class BanManager
      * Unban visitor by ip address
      *
      * @param string $ipAddress The IP address of the visitor to unban
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to unban visitor
      *
      * @return void
      */
@@ -153,8 +149,6 @@ class BanManager
     /**
      * Get count of banned visitors
      *
-    * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get banned count
-     *
      * @return int|null The count of banned visitors
      */
     public function getBannedCount(): ?int
@@ -197,8 +191,6 @@ class BanManager
      * Close all messages associated with a specific visitor
      *
      * @param string $ipAddress The IP address of the visitor whose messages should be closed
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error close all visitor messages
      *
      * @return void
      */

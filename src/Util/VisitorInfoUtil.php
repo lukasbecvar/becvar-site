@@ -118,12 +118,12 @@ class VisitorInfoUtil
         $output = null;
 
         // identify shortify array [ID: str_contains, Value: replacement]
-        $browser_list = $this->jsonUtil->getJson(__DIR__ . '/../../config/browser-list.json');
+        $browserList = $this->jsonUtil->getJson(__DIR__ . '/../../config/browser-list.json');
 
         // check if browser list found
-        if ($browser_list != null) {
+        if ($browserList != null) {
             // check all user agents
-            foreach ($browser_list as $index => $value) {
+            foreach ($browserList as $index => $value) {
                 // check if index found in agent
                 if (str_contains($userAgent, $index)) {
                     $output = $index;

@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class DashboardController
  *
- * Dashboard controller provides the main of the admin site
+ * Dashboard controller provides main site dashboard
  * Dashboard components: warning box, server/database counters
  *
  * @package App\Controller\Admin
@@ -49,7 +49,7 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * Render the admin dashboard
+     * Handle dashboard page
      *
      * @return Response The dashboard page view
      */

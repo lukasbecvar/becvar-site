@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class AdminController
  *
- * Admin controller provides initialization of the admin site
+ * Admin controller provides initialization of admin site
  * Controller redirects logged in users to dashboard page
  *
  * @package App\Controller\Admin

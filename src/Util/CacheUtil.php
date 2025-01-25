@@ -31,8 +31,6 @@ class CacheUtil
      *
      * @param mixed $key The key to check in the cache
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If check failed
-     *
      * @return bool True if the key exists in the cache, otherwise false
      */
     public function isCatched(mixed $key): bool
@@ -51,8 +49,6 @@ class CacheUtil
      * Get value by key from cache storage
      *
      * @param mixed $key The key for which to retrieve the value
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If get failed
      *
      * @return mixed The cached value associated with the key, or null if not found
      */
@@ -75,8 +71,6 @@ class CacheUtil
      * @param mixed $key The key under which to store the value in the cache
      * @param mixed $value The value to store in the cache
      * @param int $expiration The expiration time in seconds for the cached value
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If set failed
      *
      * @return void
      */
@@ -102,8 +96,6 @@ class CacheUtil
      * Delete value from cache storage
      *
      * @param mixed $key The key of the value to delete from the cache
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If delete failed
      *
      * @return void
      */

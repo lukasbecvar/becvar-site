@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 /**
  * Class BanFormType
  *
- * Ban form provides visitor ban with a reason set
+ * Form provides visitor ban functionality
  *
  * @extends AbstractType<Visitor>
  *

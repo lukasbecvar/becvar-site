@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * Render home page
+     * Handle home page
      *
      * @return Response The home page view response
      */

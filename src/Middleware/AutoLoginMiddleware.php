@@ -2,7 +2,6 @@
 
 namespace App\Middleware;
 
-use App\Entity\User;
 use App\Util\CookieUtil;
 use App\Util\SessionUtil;
 use App\Manager\AuthManager;
@@ -10,7 +9,7 @@ use App\Manager\AuthManager;
 /**
  * Class AutoLoginMiddleware
  *
- * Middleware for autologin remembered user functionality
+ * Middleware for auto login remembered user functionality
  *
  * @package App\Middleware
  */
@@ -38,15 +37,12 @@ class AutoLoginMiddleware
         if (!$this->authManager->isUserLogedin()) {
             // check if cookie set
             if (isset($_COOKIE['login-token-cookie'])) {
-                // init user entity
-                $user = new User();
-
                 // get user token
                 $userToken = $this->cookieUtil->get('login-token-cookie');
 
                 // check if token exist in database
                 if ($this->authManager->getUserRepository(['token' => $userToken]) != null) {
-                    // get user data
+                    /** @var \App\Entity\User $user get user data */
                     $user = $this->authManager->getUserRepository(['token' => $userToken]);
 
                     // login user

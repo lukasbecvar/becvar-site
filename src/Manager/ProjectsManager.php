@@ -47,9 +47,7 @@ class ProjectsManager
     }
 
     /**
-     * Update project list from a GitHub repositories
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to update project list
+     * Update project list from GitHub repositories
      *
      * @return void
      */
@@ -137,8 +135,6 @@ class ProjectsManager
     /**
      * Drop all projects from the database
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to drop projects
-     *
      * @return void
      */
     public function dropProjects(): void
@@ -165,8 +161,6 @@ class ProjectsManager
     /**
      * Reset AUTO_INCREMENT value for the projects table
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to reset projects index
-     *
      * @return void
      */
     public function resetIndex(): void
@@ -187,8 +181,6 @@ class ProjectsManager
      * Get list of projects based on their status
      *
      * @param string $status The status of the projects to get
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get projects list
      *
      * @return Project[] The list of projects
      */
@@ -219,8 +211,6 @@ class ProjectsManager
 
     /**
      * Get total count of projects
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get projects count
      *
      * @return int The total count of projects
      */

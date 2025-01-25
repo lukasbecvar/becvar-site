@@ -4,8 +4,11 @@ namespace App\Util;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -49,7 +52,7 @@ class ExportUtil
                 'size' => 12, // larger font size
             ],
             'fill' => [
-                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FF1F1F1F'], // dark background
             ],
         ];
@@ -89,7 +92,7 @@ class ExportUtil
                 'size' => 12, // larger font size
             ],
             'fill' => [
-                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FF1E1E1E'], // darker background for data rows
             ],
         ];
@@ -105,7 +108,7 @@ class ExportUtil
         // center the ID column (column A)
         $sheet->getStyle('A2:A' . ($row - 1))->applyFromArray([
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
         ]);
 
@@ -113,7 +116,7 @@ class ExportUtil
         $borderStyle = [
             'borders' => [
                 'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'borderStyle' => Border::BORDER_THIN,
                     'color' => ['argb' => 'FF808080'], // gray border color
                 ],
             ],
@@ -125,7 +128,7 @@ class ExportUtil
         // set the background color of the entire sheet to dark
         $spreadsheet->getActiveSheet()->getStyle('A1:H' . ($row - 1))->applyFromArray([
             'fill' => [
-                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FF1F1F1F'], // dark background for entire sheet
             ],
         ]);

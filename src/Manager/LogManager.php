@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AuthManager
  *
- * LogManager provides log functionality for saving events to database table
+ * Manager for log management
  *
  * @package App\Manager
  */
@@ -52,13 +52,11 @@ class LogManager
     }
 
     /**
-     * Log event to database table
+     * Save event log to database
      *
      * @param string $name The name of the log
      * @param string $value The value (message) of the log
      * @param bool $bypassAntilog Bypass the anti-log cookie
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to log message
      *
      * @return void
      */
@@ -133,11 +131,9 @@ class LogManager
     }
 
     /**
-     * Send log to external log (admin-suite)
+     * Send log to external monitoring system (admin-suite)
      *
      * @param string $value The value (message) of the log
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to send log to external log
      *
      * @return void
      */
@@ -164,8 +160,6 @@ class LogManager
      * @param string $ipAddress The IP address visitor
      * @param string $username The username of the user
      * @param int $page The page number (pagination offset)
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
      *
      * @return Log[]|null $logs The logs based on IP address
      */
@@ -206,8 +200,6 @@ class LogManager
      * @param string $username The username of the user
      * @param int $page The page number
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs
-     *
      * @return Log[]|null $logs The logs based on status
      */
     public function getLogs(string $status, $username, int $page): ?array
@@ -245,8 +237,6 @@ class LogManager
      *
      * @param string $status
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get logs count
-     *
      * @return int $count The count of logs based on status
      */
     public function getLogsCount(string $status): int
@@ -264,8 +254,6 @@ class LogManager
     /**
      * Get count of login logs
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to get login logs count
-     *
      * @return int|null $count The count of login logs
      */
     public function getLoginLogsCount(): ?int
@@ -282,8 +270,6 @@ class LogManager
 
     /**
      * Set status of all logs to 'readed'
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error to set logs status
      *
      * @return void
      */

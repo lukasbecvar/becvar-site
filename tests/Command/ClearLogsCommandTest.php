@@ -15,7 +15,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * Class ClearLogsCommandTest
  *
- * Test cases for the ClearLogsCommand
+ * Test cases for clear logs command
  *
  * @package App\Tests\Command
  */

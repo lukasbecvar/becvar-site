@@ -27,8 +27,6 @@ class JsonUtil
      * @param string $target The file path or URL
      * @param string $method The HTTP method to use
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException Error get json content
-     *
      * @return array<mixed>|null The decoded JSON data as an associative array or null on failure
      */
     public function getJson(string $target, string $method = 'GET'): ?array

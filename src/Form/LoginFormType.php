@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 /**
  * Class LoginFormType
  *
- * Login form provides admin accounts authenticator
+ * Form provides admin accounts authenticator
  *
  * @extends AbstractType<User>
  *

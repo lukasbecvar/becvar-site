@@ -28,7 +28,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Render database tables list selector page
+     * Handle database table selector page
      *
      * @return Response The database tables list view
      */
@@ -45,7 +45,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Render database table browser page
+     * Handle database table browser page
      *
      * @param Request $request The request object
      *
@@ -79,7 +79,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Edit a specific database record
+     * Handle edit specific database record
      *
      * @param Request $request The request object
      *
@@ -155,7 +155,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Add a new record to database
+     * Handle add new record to database
      *
      * @param Request $request The request object
      *
@@ -229,7 +229,7 @@ class DatabaseBrowserController extends AbstractController
     }
 
     /**
-     * Delete record from database
+     * Handle delete record from database
      *
      * @param Request $request The request object
      *
