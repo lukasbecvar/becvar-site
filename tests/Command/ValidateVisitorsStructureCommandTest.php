@@ -47,7 +47,7 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert command output
-        $this->assertStringContainsString('No validation or reorganization needed.', $this->commandTester->getDisplay());
+        $this->assertStringContainsString('No validation or reorganization needed', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
@@ -68,7 +68,7 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert command output
-        $this->assertStringContainsString('5 duplicate record(s) have been deleted.', $this->commandTester->getDisplay());
+        $this->assertStringContainsString('5 duplicate record(s) have been deleted', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
@@ -86,7 +86,7 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert command output
-        $this->assertStringContainsString('Error to validate visitors structure: Database error', $this->commandTester->getDisplay());
+        $this->assertStringContainsString('Process error: Database error', $this->commandTester->getDisplay());
         $this->assertSame(Command::FAILURE, $exitCode);
     }
 }

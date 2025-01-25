@@ -50,7 +50,7 @@ class UpdateProjectsListCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert command output
-        $this->assertStringContainsString('Projects list updated!', $output);
+        $this->assertStringContainsString('Projects list updated', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 

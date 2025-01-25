@@ -44,13 +44,13 @@ class ClearLogsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // fix get CLI visitor info
+        // set server headers for cli console
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         $_SERVER['HTTP_USER_AGENT'] = 'console';
 
         // ask for confirmation
         if (!$io->confirm('Are you sure you want to clear all logs?', false)) {
-            $io->error('Clearing logs cancelled!');
+            $io->error('Clearing logs cancelled');
             return Command::FAILURE;
         }
 
@@ -61,10 +61,10 @@ class ClearLogsCommand extends Command
 
             // truncate logs table
             $this->databaseManager->tableTruncate($databaseName, $tableName);
-            $io->success('Logs cleared successfully!');
+            $io->success('Logs cleared successfully');
             return Command::SUCCESS;
         } catch (Exception $e) {
-            $io->error('Error while clearing logs: ' . $e->getMessage());
+            $io->error('Process error: ' . $e->getMessage());
             return Command::FAILURE;
         }
     }

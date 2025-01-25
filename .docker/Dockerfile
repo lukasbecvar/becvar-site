@@ -4,9 +4,6 @@ FROM php:8.4-apache
 # set container working directory
 WORKDIR /var/www
 
-# copy project files to container
-# COPY . /var/www/
-
 # install required packages
 RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \

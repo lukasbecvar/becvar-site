@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-    // send online status after 5 minutes
+    // send online status every 5 minutes
     setInterval(sendOnlineStatus, 300000)
 
-    // send online status on page load
+    // init function
     sendOnlineStatus()
 })

@@ -1,7 +1,7 @@
-/** visitors metrics charts script **/
+/** visitors metrics charts function */
 import ApexCharts from 'apexcharts'
 
-// get visitor metrics from window
+// get visitor metrics data from view
 const visitorMetrics = window.visitorMetrics
 
 // visitors count config

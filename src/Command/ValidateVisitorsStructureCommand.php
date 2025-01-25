@@ -72,15 +72,15 @@ class ValidateVisitorsStructureCommand extends Command
                 $this->doctrineConnection->executeQuery('ALTER TABLE visitors AUTO_INCREMENT = ' . ($maxId + 1) . ';');
 
                 // print info message
-                $io->success("$duplicateCount duplicate record(s) have been deleted.");
+                $io->success("$duplicateCount duplicate record(s) have been deleted");
             } else {
-                $io->success('No validation or reorganization needed.');
+                $io->success('No validation or reorganization needed');
             }
 
             // return command status
             return Command::SUCCESS;
         } catch (Exception $e) {
-            $io->error('Error to validate visitors structure: ' . $e->getMessage());
+            $io->error('Process error: ' . $e->getMessage());
             return Command::FAILURE;
         }
     }

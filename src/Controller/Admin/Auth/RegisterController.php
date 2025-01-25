@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class RegisterController
  *
  * Register controller provides user register functionality
- * Note: Login uses its own authenticator (not Symfony security)
- * Note: This functionality is enabled only if users table is empty or for admin users
+ * Note: Login uses custom authenticator (not Symfony security)
+ * Note: This functionality is enabled only if users table is empty or admin users
  *
  * @package App\Controller\Admin\Auth
  */
@@ -43,24 +43,22 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('auth_login');
         }
 
-        // init error message variable
+        // init default resources
         $errorMsg = null;
-
-        // init user entity
         $user = new User();
 
         // create register form
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
 
-        // check is form submited
+        // check if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // get form data
             $username = $form->get('username')->getData();
             $password = $form->get('password')->getData();
             $rePassword = $form->get('re-password')->getData();
 
-            // check if username already used
+            // check if username is already used
             if ($this->authManager->getUserRepository(['username' => $username]) != null) {
                 $errorMsg = 'This username is already in use';
             } else {

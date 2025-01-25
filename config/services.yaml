@@ -63,7 +63,7 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
 
-    # set translations by visitor location
+    # translation selector
     App\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
@@ -73,7 +73,7 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
 
-    # auto-login middleware for remember me feature
+    # auto-login for remember me feature
     App\Middleware\AutoLoginMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }

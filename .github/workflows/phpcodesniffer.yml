@@ -23,10 +23,10 @@ jobs:
         php-version: 8.4
         extensions: intl, pdo_mysql, gd
 
-    # composer install
+    # install backend dependencies with composer
     - name: Install backend dependencies
       run: composer install --no-interaction --no-progress
 
-    # codesniffer process
+    # run code analyse with codesniffer
     - name: Run PHP-CodeSniffer
       run: vendor/bin/phpcs

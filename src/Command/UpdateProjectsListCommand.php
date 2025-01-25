@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class UpdateProjectsListCommand
  *
- * Command for update projects repository list in database
+ * Command for update projects repositories list in database
  *
  * @package App\Command
  */
@@ -40,7 +40,7 @@ class UpdateProjectsListCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // fix get CLI visitor info
+        // set user ip address for cli console
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
         try {
@@ -48,7 +48,7 @@ class UpdateProjectsListCommand extends Command
             $this->projectsManager->updateProjectList();
 
             // success message
-            $io->success('Projects list updated!');
+            $io->success('Projects list updated');
             return Command::SUCCESS;
         } catch (Exception $e) {
             $io->error('Process error: ' . $e->getMessage());

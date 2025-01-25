@@ -10,14 +10,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Class Version20250113135246
  * 
- * Migration add referer to visitors table
+ * Migration for add referer column to visitors table
  * 
  * @package DoctrineMigrations
  */
 final class Version20250113135246 extends AbstractMigration
 {
     /**
-     * Get the description of this migration
+     * Get description of this migration
      *
      * @return string
      */

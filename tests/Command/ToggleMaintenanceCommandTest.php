@@ -92,7 +92,7 @@ class ToggleMaintenanceCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert command output
-        $this->assertStringContainsString('Error to toggle maintenance mode: Failed to get environment value', $this->commandTester->getDisplay());
+        $this->assertStringContainsString('Process error: Failed to get environment value', $this->commandTester->getDisplay());
         $this->assertSame(Command::FAILURE, $exitCode);
     }
 }

@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # deploy app with ssh action
+    # deploy app with ssh
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:

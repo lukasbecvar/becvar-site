@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loader-wrapper").style.display = "none"
 })
 
-/* loading component for click on links */
+/* show loading component on link click */
 document.addEventListener("DOMContentLoaded", function () {
     const loader = document.getElementById("loader-wrapper")
     document.body.addEventListener("click", function (event) {
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 })
 
-/* handle back/forward navigation */
+/* disable page loading for back/forward navigation */
 window.addEventListener("pageshow", function (event) {
-    if (event.persisted) { // checks if page was loaded from cache
+    if (event.persisted) { // check if page was loaded from cache
         const loader = document.getElementById("loader-wrapper")
         loader.style.display = "none" // hide loader when page is shown
     }

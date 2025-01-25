@@ -18,13 +18,11 @@ framework:
 when@test:
     framework:
         test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
         
         # cross-site request protection (disabled in test)
         csrf_protection: false
         form:
             csrf_protection:
                 enabled: false
-
-        # test session
-        session:
-            storage_factory_id: session.storage.factory.mock_file

@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class LogoutController
  *
  * Logout controller provides user logout functionality
- * Note: Login uses its own authenticator (not Symfony security)
+ * Note: Login uses custom authenticator (not Symfony security)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -30,21 +30,18 @@ class LogoutController extends AbstractController
     /**
      * Handle user logout
      *
-     * @throws \Exception with logout process (session or cookie is still active)
-     *
      * @return Response Redirect to login page
      */
     #[Route('/logout', methods: ['GET'], name: 'auth_logout')]
     public function logout(): Response
     {
-        // check if user logged in
+        // check if user is logged in
         if ($this->authManager->isUserLogedin()) {
             $this->authManager->logout();
         }
 
-        // verify if user logout successful
+        // verify if user logout is successful
         if (!$this->authManager->isUserLogedin()) {
-            // redirect to login page
             return $this->redirectToRoute('auth_login');
         }
 

@@ -50,7 +50,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert command output
-        $this->assertStringContainsString('All tokens is regenerated!', $output);
+        $this->assertStringContainsString('All tokens is regenerated', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 

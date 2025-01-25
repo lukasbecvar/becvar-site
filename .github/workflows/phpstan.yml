@@ -23,10 +23,10 @@ jobs:
         php-version: 8.4
         extensions: intl, pdo_mysql, gd
 
-    # composer install
+    # install backend dependencies with composer
     - name: Install backend dependencies
       run: composer install
 
-    # phpstan process
+    # run code analyse with phpstan
     - name: Run PHPStan
       run: ./vendor/bin/phpstan analyse --configuration phpstan.neon

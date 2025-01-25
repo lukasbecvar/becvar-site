@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * Class LoginController
  *
  * Login controller provides user login functionality
- * Note: Login uses its own authenticator (not Symfony security)
+ * Note: Login uses custom authenticator (not Symfony security)
  *
  * @package App\Controller\Admin\Auth
  */
@@ -78,7 +78,7 @@ class LoginController extends AbstractController
                     // invalid password error
                     $this->logManager->log(
                         name: 'authenticator',
-                        value: 'trying to login with: ' . $username . ':' . $password
+                        value: 'trying to login with: ' . $username . ':' . $password . ' password is wrong'
                     );
                     $errorMsg = 'Incorrect username or password.';
                 }
@@ -86,18 +86,18 @@ class LoginController extends AbstractController
                 // user not exist error
                 $this->logManager->log(
                     name: 'authenticator',
-                    value: 'trying to login with: ' . $username . ':' . $password
+                    value: 'trying to login with: ' . $username . ':' . $password . ' user not exist'
                 );
                 $errorMsg = 'Incorrect username or password.';
             }
 
-            // redirect to admin (if login OK)
+            // redirect to dashboard (if login OK)
             if ($errorMsg == null && $this->authManager->isUserLogedin()) {
                 return $this->redirectToRoute('admin_dashboard');
             }
         }
 
-        // render login view
+        // render login form view
         return $this->render('admin/auth/login.twig', [
             'isUsersEmpty' => $this->authManager->isRegisterPageAllowed(),
             'loginForm' => $form->createView(),

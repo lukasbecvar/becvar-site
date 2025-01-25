@@ -54,7 +54,7 @@ class ClearLogsCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert results
-        $this->assertStringContainsString('Clearing logs cancelled!', $output);
+        $this->assertStringContainsString('Clearing logs cancelled', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }
 
@@ -79,7 +79,7 @@ class ClearLogsCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert results
-        $this->assertStringContainsString('Logs cleared successfully!', $output);
+        $this->assertStringContainsString('Logs cleared successfully', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
@@ -104,7 +104,7 @@ class ClearLogsCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert results
-        $this->assertStringContainsString('Error while clearing logs: Database error', $output);
+        $this->assertStringContainsString('Process error: Database error', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }
 }

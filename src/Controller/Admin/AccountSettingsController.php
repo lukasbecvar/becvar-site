@@ -61,28 +61,24 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Handle profile picture update form in the admin account settings
+     * Handle profile picture update form
      *
      * @param Request $request The request object
-     *
-     * @throws Exception Error to flush user data update to database
      *
      * @return Response The picture change view
      */
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
-        // init error message variable
+        // init default resources
         $errorMsg = null;
-
-        // init user entity
         $user = new User();
 
         // create picture update form
         $form = $this->createForm(ProfilePicChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check is form submited
+        // check is form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // get image data
             $image = $form->get('profile-pic')->getData();
@@ -110,8 +106,8 @@ class AccountSettingsController extends AbstractController
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (Exception $e) {
                     $this->errorManager->handleError(
-                        'error to upload profile pic: ' . $e->getMessage(),
-                        Response::HTTP_INTERNAL_SERVER_ERROR
+                        msg: 'error to upload profile pic: ' . $e->getMessage(),
+                        code: Response::HTTP_INTERNAL_SERVER_ERROR
                     );
                 }
             } else {
@@ -129,28 +125,24 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Handle change username form in the admin account settings
+     * Handle change username form
      *
      * @param Request $request The request object
-     *
-     * @throws Exception Error to flush user data update to database
      *
      * @return Response The username change view
      */
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
-        // init error message variable
+        // init default resources
         $errorMsg = null;
-
-        // init user entity
         $user = new User();
 
         // create username form change
         $form = $this->createForm(UsernameChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check is form submited
+        // check is form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // get username
             $username = $form->get('username')->getData();
@@ -169,8 +161,8 @@ class AccountSettingsController extends AbstractController
                 return $this->redirectToRoute('admin_account_settings_table');
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'error to upload profile pic: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'error to upload profile pic: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -185,28 +177,24 @@ class AccountSettingsController extends AbstractController
     }
 
     /**
-     * Handle change password form in the admin account settings
+     * Handle change password form
      *
      * @param Request $request The request object
-     *
-     * @throws Exception Error to flush user data update to database
      *
      * @return Response The password change view
      */
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
-        // init error message variable
+        // init default resources
         $errorMsg = null;
-
-        // init user entity
         $user = new User();
 
         // create username form change
         $form = $this->createForm(PasswordChangeFormType::class, $user);
         $form->handleRequest($request);
 
-        // check is form submited
+        // check is form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // get passwords
             $password = $form->get('password')->getData();
@@ -233,8 +221,8 @@ class AccountSettingsController extends AbstractController
                     return $this->redirectToRoute('admin_account_settings_table');
                 } catch (Exception $e) {
                     $this->errorManager->handleError(
-                        'error to upload profile pic: ' . $e->getMessage(),
-                        Response::HTTP_INTERNAL_SERVER_ERROR
+                        msg: 'error to upload profile pic: ' . $e->getMessage(),
+                        code: Response::HTTP_INTERNAL_SERVER_ERROR
                     );
                 }
             }

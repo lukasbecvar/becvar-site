@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# install & build assets
+# install & build app requirements
 sh scripts/install.sh
 
-# build docker containers
+# build & start docker services
 docker-compose up --build

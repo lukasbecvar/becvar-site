@@ -58,7 +58,7 @@ class ToggleMaintenanceCommand extends Command
             $io->success("MAINTENANCE_MODE in .env has been set to true");
             return Command::SUCCESS;
         } catch (Exception $e) {
-            $io->error('Error to toggle maintenance mode: ' . $e->getMessage());
+            $io->error('Process error: ' . $e->getMessage());
             return Command::FAILURE;
         }
     }
