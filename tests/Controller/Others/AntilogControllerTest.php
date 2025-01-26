@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 /**
  * Class AntilogControllerTest
  *
- * Test cases for antilog functionality
+ * Test cases for antilog component
  *
  * @package App\Tests\Others
  */
@@ -26,7 +26,7 @@ class AntilogControllerTest extends CustomTestCase
     }
 
     /**
-     * Test setting AntiLog for an authenticated user
+     * Test enable antilog
      *
      * @return void
      */

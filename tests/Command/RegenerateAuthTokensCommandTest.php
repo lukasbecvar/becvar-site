@@ -27,19 +27,19 @@ class RegenerateAuthTokensCommandTest extends TestCase
         // mock dependencies
         $this->authManagerMock = $this->createMock(AuthManager::class);
 
-        // instantiate command instance
+        // create command instance
         $this->command = new RegenerateAuthTokensCommand($this->authManagerMock);
         $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test execute regenerate auth tokens command
+     * Test execute command when response is success
      *
      * @return void
      */
-    public function testExecuteRegenerateAuthTokensCommandWithSuccess(): void
+    public function testExecuteCommandWhenResponseIsSuccess(): void
     {
-        // expect tokens regeneration call and sumulate success response
+        // mock regenerate users tokens
         $this->authManagerMock->expects($this->once())
             ->method('regenerateUsersTokens')->willReturn(['status' => true]);
 
@@ -49,19 +49,19 @@ class RegenerateAuthTokensCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('All tokens is regenerated', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute regenerate auth tokens command with failure
+     * Test execute command when response is failure
      *
      * @return void
      */
-    public function testExecuteRegenerateAuthTokensCommandWithFailure(): void
+    public function testExecuteCommandWhenResponseIsFailure(): void
     {
-        // expect tokens regeneration call and sumulate failure response
+        // mock regenerate users tokens
         $this->authManagerMock->expects($this->once())->method('regenerateUsersTokens')
             ->willReturn(['status' => false, 'message' => 'Error message']);
 
@@ -71,7 +71,7 @@ class RegenerateAuthTokensCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('Process error: Error message', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }

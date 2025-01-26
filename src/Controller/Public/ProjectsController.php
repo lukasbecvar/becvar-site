@@ -65,8 +65,8 @@ class ProjectsController extends AbstractController
         // check if user is logged in
         if (!$this->authManager->isUserLogedin()) {
             $this->errorManager->handleError(
-                'error to update project list: please login first',
-                Response::HTTP_UNAUTHORIZED
+                msg: 'error to update project list: please login first',
+                code: Response::HTTP_UNAUTHORIZED
             );
         }
 

@@ -75,8 +75,8 @@ class MessagesManager
             $this->entityManager->flush();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to save message: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to save message: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -104,8 +104,8 @@ class MessagesManager
             return $query->getSingleScalarResult();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get messages count: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get messages count: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -137,8 +137,8 @@ class MessagesManager
                 // check if message data is decrypted
                 if ($messageDecrypted == null) {
                     $this->errorManager->handleError(
-                        'Error to decrypt aes message data',
-                        Response::HTTP_INTERNAL_SERVER_ERROR
+                        msg: 'error to decrypt aes message data',
+                        code: Response::HTTP_INTERNAL_SERVER_ERROR
                     );
                 }
 
@@ -161,8 +161,8 @@ class MessagesManager
             return $messages;
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get messages: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get messages: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -186,8 +186,8 @@ class MessagesManager
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'error to close message: ' . $id . ', ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'error to close message: ' . $id . ', ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }

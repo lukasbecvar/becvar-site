@@ -52,8 +52,8 @@ class DashboardUtil
             }
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'find error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 

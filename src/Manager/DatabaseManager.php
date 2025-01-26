@@ -52,8 +52,8 @@ class DatabaseManager
             $tables = $schemaManager->listTableNames();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'Error to get tables list: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get tables list: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
@@ -86,8 +86,8 @@ class DatabaseManager
             $table = $schema->getTable($tableName);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get columns from table: ' . $tableName . ', ' . $e->getMessage(),
-                Response::HTTP_NOT_FOUND
+                msg: 'error to get columns from table: ' . $tableName . ', ' . $e->getMessage(),
+                code: Response::HTTP_NOT_FOUND
             );
         }
 
@@ -117,8 +117,8 @@ class DatabaseManager
             $data = $this->connection->executeQuery('SELECT * FROM ' . $tableName)->fetchAllAssociative();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
-                Response::HTTP_NOT_FOUND
+                msg: 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
+                code: Response::HTTP_NOT_FOUND
             );
         }
 
@@ -160,16 +160,16 @@ class DatabaseManager
             $data = $this->connection->executeQuery($query)->fetchAllAssociative();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
-                Response::HTTP_NOT_FOUND
+                msg: 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
+                code: Response::HTTP_NOT_FOUND
             );
         }
 
         // log table data view event
         if ($log) {
             $this->logManager->log(
-                'database',
-                $this->authManager->getUsername() . ' viewed database table: ' . $tableName
+                name: 'database',
+                value: $this->authManager->getUsername() . ' viewed database table: ' . $tableName
             );
         }
 
@@ -188,6 +188,7 @@ class DatabaseManager
                         $arr[$key] = (
                             $key === 'message' ||
                             $key === 'profile_pic' ||
+                            $key === 'token' ||
                             $key === 'password'
                         ) ? '[encrypted-data]' : $val;
                     }
@@ -224,8 +225,8 @@ class DatabaseManager
             $data = $statement->fetchAllAssociative();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'Error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
-                Response::HTTP_NOT_FOUND
+                msg: 'error to get data from table: ' . $tableName . ', ' . $e->getMessage(),
+                code: Response::HTTP_NOT_FOUND
             );
         }
         return $data[0] ?? [];
@@ -255,15 +256,15 @@ class DatabaseManager
             $this->connection->executeQuery($sql, $values);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error insert new row into: ' . $tableName . ', ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error insert new row into: ' . $tableName . ', ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
         // log row add event
         $this->logManager->log(
-            'database',
-            $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName
+            name: 'database',
+            value: $this->authManager->getUsername() . ' inserted new row to table: ' . $tableName
         );
     }
 
@@ -291,8 +292,8 @@ class DatabaseManager
 
         // log row delete event
         $this->logManager->log(
-            'database',
-            $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $tableName
+            name: 'database',
+            value: $this->authManager->getUsername() . ' deleted row: ' . $id . ', table: ' . $tableName
         );
     }
 
@@ -318,15 +319,15 @@ class DatabaseManager
             ]);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to update value: ' . $value . ' in: ' . $tableName . ' id: ' . $id . ', error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to update value: ' . $value . ' in: ' . $tableName . ' id: ' . $id . ', error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
         // log row update event
         $this->logManager->log(
-            'database',
-            $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $tableName
+            name: 'database',
+            value: $this->authManager->getUsername() . ': edited ' . $row . ' -> ' . $value . ', in table: ' . $tableName
         );
     }
 

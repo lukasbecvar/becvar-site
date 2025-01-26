@@ -156,11 +156,11 @@ class MessagesManagerTest extends TestCase
     }
 
     /**
-     * Test get inbox messages - decryption error
+     * Test get inbox messages when decryption fails
      *
      * @return void
      */
-    public function testGetMessagesDecryptionError(): void
+    public function testGetMessagesWhenDecryptionFails(): void
     {
         // set testing data
         $status = 'open';
@@ -182,8 +182,10 @@ class MessagesManagerTest extends TestCase
             ->with('encryptedMessage1')->willReturn(null);
 
         // expect error manager call
-        $this->errorManager->expects($this->once())->method('handleError')
-            ->with('Error to decrypt aes message data', Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            msg: 'error to decrypt aes message data',
+            code: Response::HTTP_INTERNAL_SERVER_ERROR
+        );
 
         // call tested method
         $this->messagesManager->getMessages($status, $page);

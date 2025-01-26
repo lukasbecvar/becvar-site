@@ -160,8 +160,8 @@ class VisitorSystemMiddleware
             $this->entityManager->flush();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'flush error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'flush error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -189,8 +189,8 @@ class VisitorSystemMiddleware
         // check if visitor data found
         if (!$visitor != null) {
             $this->errorManager->handleError(
-                'unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure',
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure',
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         } else {
             // update visitor data
@@ -209,8 +209,8 @@ class VisitorSystemMiddleware
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'flush error: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'flush error: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }

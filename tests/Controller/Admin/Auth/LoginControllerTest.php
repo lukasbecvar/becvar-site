@@ -41,11 +41,11 @@ class LoginControllerTest extends CustomTestCase
     }
 
     /**
-     * Test render login page
+     * Test load login page
      *
      * @return void
      */
-    public function testRenderLoginPage(): void
+    public function testLoadLoginPage(): void
     {
         $this->client->request('GET', '/login');
 
@@ -108,7 +108,7 @@ class LoginControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit login form with an incorrect username
+     * Test submit login form with incorrect username
      *
      * @return void
      */
@@ -131,7 +131,7 @@ class LoginControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit login form with an incorrect password
+     * Test submit login form with incorrect password
      *
      * @return void
      */

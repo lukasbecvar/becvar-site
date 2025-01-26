@@ -118,8 +118,8 @@ class ProjectsManager
         } catch (Exception $e) {
             $this->logManager->log('project-update', 'error to update project list');
             $this->errorManager->handleError(
-                'error to save project: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to save project: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
@@ -152,8 +152,8 @@ class ProjectsManager
             $this->entityManager->flush();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to delete projects list: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to delete projects list: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -171,8 +171,8 @@ class ProjectsManager
             $this->entityManager->getConnection()->executeQuery($sql);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to reset projects index: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to reset projects index: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -203,8 +203,8 @@ class ProjectsManager
             return $projectsList;
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get projects list: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get projects list: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -231,8 +231,8 @@ class ProjectsManager
             return $projectsCount;
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get projects list: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get projects list: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

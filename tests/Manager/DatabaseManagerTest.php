@@ -83,11 +83,11 @@ class DatabaseManagerTest extends TestCase
     }
 
     /**
-     * Test get table data success
+     * Test get table data with success result
      *
      * @return void
      */
-    public function testGetTableDataSuccess(): void
+    public function testGetTableDataSuccessWithResult(): void
     {
         // mock fetch result
         $resultMock = $this->createMock(Result::class);
@@ -114,11 +114,11 @@ class DatabaseManagerTest extends TestCase
     }
 
     /**
-     * Test get table data error
+     * Test get table data when exception is thrown
      *
      * @return void
      */
-    public function testGetTableDataError(): void
+    public function testGetTableDataWhenExceptionIsThrown(): void
     {
         // mock for simulate exception
         $this->connection->method('executeQuery')->will($this->throwException(new Exception('Simulated error')));
@@ -147,8 +147,8 @@ class DatabaseManagerTest extends TestCase
 
         // expect log manager call
         $this->logManager->expects($this->once())->method('log')->with(
-            $this->equalTo('database'),
-            $this->stringContains('truncated table: test_table')
+            name: $this->equalTo('database'),
+            value: $this->stringContains('truncated table: test_table')
         );
 
         // call tested method
@@ -156,11 +156,11 @@ class DatabaseManagerTest extends TestCase
     }
 
     /**
-     * Test truncate table throws exception
+     * Test truncate table when exception is thrown
      *
      * @return void
      */
-    public function testTableTruncateThrowsException(): void
+    public function testTableTruncateWhenExceptionIsThrown(): void
     {
         // expect executeStatement call
         $this->connection->expects($this->once())->method('executeStatement')
@@ -168,8 +168,8 @@ class DatabaseManagerTest extends TestCase
 
         // expect handleError call
         $this->errorManager->expects($this->once())->method('handleError')->with(
-            $this->stringContains('error truncating table: Database error'),
-            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+            msg: $this->stringContains('error truncating table: Database error'),
+            code: $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
         );
 
         // call tested method

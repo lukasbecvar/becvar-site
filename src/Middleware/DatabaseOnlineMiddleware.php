@@ -38,8 +38,8 @@ class DatabaseOnlineMiddleware
         } catch (Exception $e) {
             // handle error if database not connected
             $this->errorManager->handleError(
-                'database connection error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'database connection error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

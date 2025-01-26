@@ -23,11 +23,11 @@ class AdminControllerTest extends CustomTestCase
     }
 
     /**
-     * Test redirect to dashboard page with user not logged in
+     * Test redirect to dashboard page when user is logged in
      *
      * @return void
      */
-    public function testRedirectToDashboardPageWithUserLoggedIn(): void
+    public function testRedirectToDashboardPageWhenUserIsLoggedIn(): void
     {
         // simulate login
         $this->simulateLogin($this->client);
@@ -41,11 +41,11 @@ class AdminControllerTest extends CustomTestCase
     }
 
     /**
-     * Test redirect to login page page with user is not logged in
+     * Test redirect to login page when user is not logged in
      *
      * @return void
      */
-    public function testRedirectToLoginPageWithUserLoggedIn(): void
+    public function testRedirectToLoginPageWhenUserIsNotLoggedIn(): void
     {
         // load admin init page
         $this->client->request('GET', '/admin/database');

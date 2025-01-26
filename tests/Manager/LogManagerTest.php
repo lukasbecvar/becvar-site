@@ -145,11 +145,11 @@ class LogManagerTest extends TestCase
     }
 
     /**
-     * Test check if logs are enabled
+     * Test check if logging is enabled
      *
      * @return void
      */
-    public function testCheckisLogsEnabled(): void
+    public function testCheckIfLoggingIsEnabled(): void
     {
         // set logs enabled
         $_ENV['LOGS_ENABLED'] = 'true';
@@ -162,7 +162,7 @@ class LogManagerTest extends TestCase
     }
 
     /**
-     * Test check if anti-log cookie is enabled
+     * Test check if anti-log enabled
      *
      * @return void
      */

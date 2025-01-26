@@ -30,7 +30,7 @@ class AccountSettingsControllerTest extends CustomTestCase
      *
      * @return void
      */
-    public function testLoadAccountSettingsTable(): void
+    public function testLoadAccountSettingsTablePage(): void
     {
         $this->client->request('GET', '/admin/account/settings');
 
@@ -131,11 +131,11 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change username form with success
+     * Test submit account settings change username form with correct username
      *
      * @return void
      */
-    public function testSubmitAccountSettingsChangeUsernameFormWithSuccess(): void
+    public function testSubmitAccountSettingsChangeUsernameFormWithCorrectUsername(): void
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
@@ -248,11 +248,11 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change password form with success
+     * Test submit account settings change password form with correct password
      *
      * @return void
      */
-    public function testSubmitAccountSettingsChangePasswordFormWithSuccess(): void
+    public function testSubmitAccountSettingsChangePasswordFormWithCorrectPassword(): void
     {
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [

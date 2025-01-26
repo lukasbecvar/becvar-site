@@ -4,8 +4,8 @@ namespace App\Tests\Command;
 
 use Exception;
 use App\Util\AppUtil;
-use App\Command\ToggleMaintenanceCommand;
 use PHPUnit\Framework\TestCase;
+use App\Command\ToggleMaintenanceCommand;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -28,19 +28,19 @@ class ToggleMaintenanceCommandTest extends TestCase
         // mock dependencies
         $this->appUtilMock = $this->createMock(AppUtil::class);
 
-        // init command instance
+        // create command instance
         $this->command = new ToggleMaintenanceCommand($this->appUtilMock);
         $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test execute toggle maintenance command with maintenance mode enabled
+     * Test execute command when maintenance mode is enabled
      *
      * @return void
      */
-    public function testExecuteToggleMaintenanceWithMaintenanceModeEnabled(): void
+    public function testExecuteCommandWhenMaintenanceModeIsEnabled(): void
     {
-        // mock getEnvValue to simulate maintenance mode is enabled
+        // simulate maintenance mode is enabled
         $this->appUtilMock->method('getEnvValue')->willReturn('true');
 
         // expect call updateEnvValue with 'false' value
@@ -50,19 +50,19 @@ class ToggleMaintenanceCommandTest extends TestCase
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString("MAINTENANCE_MODE in .env has been set to true", $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute toggle maintenance command with maintenance mode disabled
+     * Test execute command when maintenance mode is disabled
      *
      * @return void
      */
-    public function testExecuteToggleMaintenanceWithMaintenanceModeDisabled(): void
+    public function testExecuteCommandWhenMaintenanceModeIsDisabled(): void
     {
-        // mock getEnvValue to simulate maintenance mode is disabled
+        // simulate maintenance mode is disabled
         $this->appUtilMock->method('getEnvValue')->willReturn('false');
 
         // expect call updateEnvValue with 'true' value
@@ -72,26 +72,26 @@ class ToggleMaintenanceCommandTest extends TestCase
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString("MAINTENANCE_MODE in .env has been set to true", $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute toggle maintenance command with exception response
+     * Test execute command when exception is thrown
      *
      * @return void
      */
-    public function testExecuteToggleMaintenanceCommandWithException(): void
+    public function testExecuteCommandWhenExceptionIsThrown(): void
     {
-        // mock getEnvValue to throw an exception
+        // mock exception thrown
         $this->appUtilMock->method('getEnvValue')
             ->willThrowException(new Exception('Failed to get environment value'));
 
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('Process error: Failed to get environment value', $this->commandTester->getDisplay());
         $this->assertSame(Command::FAILURE, $exitCode);
     }

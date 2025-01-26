@@ -60,7 +60,7 @@ class BanManager
             // log ban event
             $this->logManager->log(
                 name: 'ban-system',
-                value:'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername()
+                value: 'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $this->authManager->getUsername()
             );
 
             try {
@@ -68,8 +68,8 @@ class BanManager
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
 
@@ -77,8 +77,8 @@ class BanManager
             $this->closeAllVisitorMessages($ipAddress);
         } else {
             $this->errorManager->handleError(
-                'error to ban visitor with ip: ' . $ipAddress . ', visitor not found in table',
-                Response::HTTP_BAD_REQUEST
+                msg: 'error to ban visitor with ip: ' . $ipAddress . ', visitor not found in table',
+                code: Response::HTTP_BAD_REQUEST
             );
         }
     }
@@ -111,14 +111,14 @@ class BanManager
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'error to update ban status of visitor-ip: ' . $ipAddress . ', message: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         } else {
             $this->errorManager->handleError(
-                'error to update ban status of visitor with ip: ' . $ipAddress . ', visitor not found in table',
-                Response::HTTP_BAD_REQUEST
+                msg: 'error to update ban status of visitor with ip: ' . $ipAddress . ', visitor not found in table',
+                code: Response::HTTP_BAD_REQUEST
             );
         }
     }
@@ -160,8 +160,8 @@ class BanManager
             return $repository->count(['banned_status' => 'yes']);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'find error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -212,8 +212,8 @@ class BanManager
             $query->execute();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to close all visitor messages: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to close all visitor messages: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

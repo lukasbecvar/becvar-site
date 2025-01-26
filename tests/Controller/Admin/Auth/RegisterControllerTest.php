@@ -24,13 +24,13 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
-     * Test load register page with registration not allowed
+     * Test load register page when registration is not allowed
      *
      * @return void
      */
-    public function testLoadRegisterPageWithRegistrationNotAllowed(): void
+    public function testLoadRegisterPageWhenRegistrationIsNotAllowed(): void
     {
-        // simulate not allow registration
+        // simulate registration not allowed
         $this->allowRegistration($this->client, false);
 
         // load register page
@@ -42,13 +42,13 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
-     * Test load register page with registration allowed
+     * Test load register page when registration is allowed
      *
      * @return void
      */
-    public function testLoadRegisterPageWithRegistrationAllowed(): void
+    public function testLoadRegisterPageWhenRegistrationIsAllowed(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client);
 
         // load register page
@@ -72,7 +72,7 @@ class RegisterControllerTest extends CustomTestCase
      */
     public function testSubmitRegisterFormWithEmptyFields(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client, true);
 
         // submit register form
@@ -98,7 +98,7 @@ class RegisterControllerTest extends CustomTestCase
      */
     public function testSubmitRegisterFormWithLowLengthFields(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client, true);
 
         // submit register form
@@ -124,7 +124,7 @@ class RegisterControllerTest extends CustomTestCase
      */
     public function testSubmitRegisterFormWithHighLengthFields(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client, true);
 
         // submit register form
@@ -150,7 +150,7 @@ class RegisterControllerTest extends CustomTestCase
      */
     public function testSubmitRegisterFormWithNotMatchPasswords(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client, true);
 
         // submit register form
@@ -168,13 +168,13 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit register form with success
+     * Test submit register form with correct credentials
      *
      * @return void
      */
-    public function testSubmitRegisterFormWithSuccess(): void
+    public function testSubmitRegisterFormWithCorrectCredentials(): void
     {
-        // simulate allow registration
+        // simulate registration allowed
         $this->allowRegistration($this->client, true);
 
         // submit register form

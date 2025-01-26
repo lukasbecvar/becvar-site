@@ -33,7 +33,7 @@ class CookieUtilTest extends TestCase
      *
      * @return void
      */
-    public function testGet(): void
+    public function testValueFromCookie(): void
     {
         // set cookie values
         $name = 'test_cookie';

@@ -118,8 +118,8 @@ class AuthManager
                 $this->logManager->log('authenticator', 'user: ' . $username . ' logged in');
             } else {
                 $this->errorManager->handleError(
-                    'error you are is already logged in: ' . $userToken,
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'error you are is already logged in: ' . $userToken,
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -177,8 +177,8 @@ class AuthManager
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'flush error: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'flush error: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -232,8 +232,8 @@ class AuthManager
             $this->logManager->log('authenticator', 'registration new user: ' . $username . ' registred');
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to register new user: ' . $e->getMessage(),
-                Response::HTTP_BAD_REQUEST
+                msg: 'error to register new user: ' . $e->getMessage(),
+                code: Response::HTTP_BAD_REQUEST
             );
         }
 
@@ -376,8 +376,8 @@ class AuthManager
             return $this->userRepository->findOneBy($array);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'find error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -424,12 +424,14 @@ class AuthManager
     /**
      * Generate a unique token for a user
      *
+     * @param int $length The length of the generated token
+     *
      * @return string The generated user token
      */
-    public function generateUserToken(): string
+    public function generateUserToken(int $length = 32): string
     {
         // generate user token
-        $token = ByteString::fromRandom(32)->toString();
+        $token = ByteString::fromRandom($length)->toString();
 
         // check if user token is not already taken
         if ($this->userRepository->getUserByToken($token) != null) {

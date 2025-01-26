@@ -28,17 +28,17 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         // mock dependencies
         $this->doctrineConnectionMock = $this->createMock(Connection::class);
 
-        // init command instance
+        // create command instance
         $this->command = new ValidateVisitorsStructureCommand($this->doctrineConnectionMock);
         $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test execute validate visitors structure command with no duplicates response
+     * Test execute command when no duplicates are found
      *
      * @return void
      */
-    public function testExecuteValidateStructutreCommandWithNoDuplicates(): void
+    public function testExecuteCommandWhenNoDuplicatesFound(): void
     {
         // mock fetchOne to simulate no duplicates
         $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(0);
@@ -46,17 +46,17 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('No validation or reorganization needed', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute validate visitors structure command with duplicates response
+     * Test execute command when duplicates are found
      *
      * @return void
      */
-    public function testExecuteValidateStructutreCommandWithDuplicates(): void
+    public function testExecuteCommandWhenDuplicatesFound(): void
     {
         // mock fetchOne to simulate duplicates and max id
         $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(5, 10);
@@ -67,17 +67,17 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('5 duplicate record(s) have been deleted', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute validate visitors structure command with exception response
+     * Test execute command when exception is thrown
      *
      * @return void
      */
-    public function testExecuteValidateStructutreCommandWithException(): void
+    public function testExecuteCommandWhenExceptionIsThrown(): void
     {
         // mock fetchOne to throw an exception
         $this->doctrineConnectionMock->method('fetchOne')->willThrowException(new Exception('Database error'));
@@ -85,7 +85,7 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         // execute command
         $exitCode = $this->commandTester->execute([]);
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('Process error: Database error', $this->commandTester->getDisplay());
         $this->assertSame(Command::FAILURE, $exitCode);
     }

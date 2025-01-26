@@ -28,17 +28,17 @@ class UpdateProjectsListCommandTest extends TestCase
         // mock dependencies
         $this->projectsManagerMock = $this->createMock(ProjectsManager::class);
 
-        // instantiate command instance
+        // create command instance
         $this->command = new UpdateProjectsListCommand($this->projectsManagerMock);
         $this->commandTester = new CommandTester($this->command);
     }
 
     /**
-     * Test execute update projects list command with success response
+     * Test execute command when response is success
      *
      * @return void
      */
-    public function testExecuteUpdateProjectsListCommandWithSuccess(): void
+    public function testExecuteCommandWhenResponseIsSuccess(): void
     {
         // expect projects update call
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList');
@@ -49,17 +49,17 @@ class UpdateProjectsListCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('Projects list updated', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute update projects list command with failure response
+     * Test execute command when response is failure
      *
      * @return void
      */
-    public function testExecuteUpdateProjectsListCommandWithFailure(): void
+    public function testExecuteCommandWhenResponseIsFailure(): void
     {
         // expect projects update call and sumulate failure response
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
@@ -71,7 +71,7 @@ class UpdateProjectsListCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert command output
+        // assert result
         $this->assertStringContainsString('Process error: Something went wrong', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }

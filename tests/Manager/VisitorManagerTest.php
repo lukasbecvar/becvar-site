@@ -26,15 +26,16 @@ class VisitorManagerTest extends TestCase
     private ErrorManager & MockObject $errorManager;
     private VisitorInfoUtil & MockObject $visitorInfoUtil;
     private VisitorRepository & MockObject $visitorRepository;
-    private EntityManagerInterface & MockObject $entityManager;
+    private EntityManagerInterface & MockObject $entityManagerMock;
 
     protected function setUp(): void
     {
+        // mock dependencies
         $this->cacheUtil = $this->createMock(CacheUtil::class);
         $this->errorManager = $this->createMock(ErrorManager::class);
         $this->visitorInfoUtil = $this->createMock(VisitorInfoUtil::class);
         $this->visitorRepository = $this->createMock(VisitorRepository::class);
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
 
         // create visitor manager instance
         $this->visitorManager = new VisitorManager(
@@ -42,7 +43,7 @@ class VisitorManagerTest extends TestCase
             $this->errorManager,
             $this->visitorInfoUtil,
             $this->visitorRepository,
-            $this->entityManager
+            $this->entityManagerMock
         );
     }
 
@@ -114,7 +115,7 @@ class VisitorManagerTest extends TestCase
             ->with(['ip_address' => $ipAddress])->willReturn($visitorMock);
 
         // expect entity manager flush
-        $this->entityManager->expects($this->once())->method('flush');
+        $this->entityManagerMock->expects($this->once())->method('flush');
 
         // call tested method
         $this->visitorManager->updateVisitorEmail($ipAddress, $newEmail);

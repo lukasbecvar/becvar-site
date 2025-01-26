@@ -38,11 +38,11 @@ class ClearLogsCommandTest extends TestCase
     }
 
     /**
-     * Test execute command with user declining the confirmation
+     * Test execute command when confirmation is declined
      *
      * @return void
      */
-    public function testExecuteConfirmationDeclined(): void
+    public function testExecuteCommandWhenConfirmationIsDeclined(): void
     {
         // mock command tester input
         $this->commandTester->setInputs(['no']);
@@ -53,19 +53,19 @@ class ClearLogsCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert results
+        // assert result
         $this->assertStringContainsString('Clearing logs cancelled', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }
 
     /**
-     * Test execute command with user confirming the action
+     * Test execute command when confirmation is accepted
      *
      * @return void
      */
-    public function testExecuteConfirmationAccepted(): void
+    public function testExecuteCommandWhenConfirmationIsAccepted(): void
     {
-        // mock AppUtil and DatabaseManager
+        // mock get database name and entity table name
         $this->appUtil->method('getEnvValue')->with('DATABASE_NAME')->willReturn('test_database');
         $this->databaseManager->method('getEntityTableName')->with(Log::class)->willReturn('log_table');
 
@@ -78,19 +78,19 @@ class ClearLogsCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert results
+        // assert result
         $this->assertStringContainsString('Logs cleared successfully', $output);
         $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * Test execute command when an exception is thrown
+     * Test execute command when exception is thrown
      *
      * @return void
      */
-    public function testExecuteWithException(): void
+    public function testExecuteCommandWhenExceptionIsThrown(): void
     {
-        // mock AppUtil and DatabaseManager
+        // mock get database name and entity table name
         $this->appUtil->method('getEnvValue')->willReturn('test_database');
         $this->databaseManager->method('getEntityTableName')->willThrowException(new Exception('Database error'));
 
@@ -103,7 +103,7 @@ class ClearLogsCommandTest extends TestCase
         // get command output
         $output = $this->commandTester->getDisplay();
 
-        // assert results
+        // assert result
         $this->assertStringContainsString('Process error: Database error', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }

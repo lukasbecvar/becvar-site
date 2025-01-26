@@ -42,11 +42,11 @@ class LogReaderControllerTest extends CustomTestCase
     }
 
     /**
-     * Test load log reader delete page
+     * Test load log delete confirmation
      *
      * @return void
      */
-    public function testLoadLogsDeletePage(): void
+    public function testLoadLogDeleteConfirmation(): void
     {
         $this->client->request('GET', '/admin/logs/delete');
 

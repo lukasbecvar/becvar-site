@@ -77,21 +77,21 @@ class NonAuthRedirectTest extends WebTestCase
         $urls = [];
         foreach (self::ROUTES as $category => $routes) {
             foreach ($routes as $route) {
-                $urls[] = [$route]; // Stačí přidat $route jako string
+                $urls[] = [$route];
             }
         }
         return $urls;
     }
 
     /**
-     * Test non-authenticated requests redirect to login
+     * Test non-authenticated requests to admin routes redirect to login page
      *
      * @param string $url The admin route URL
      *
      * @return void
      */
     #[DataProvider('provideAdminUrls')]
-    public function testNonAuthAdminRedirect(string $url): void
+    public function testNonAuthenticatedRequestsToAdminRoutesRedirectToLogin(string $url): void
     {
         $this->client->request('GET', $url);
 

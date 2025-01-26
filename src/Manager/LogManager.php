@@ -123,8 +123,8 @@ class LogManager
                 $this->externalLog($value);
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'log-error: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'log-error: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -175,8 +175,8 @@ class LogManager
             $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get logs: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
@@ -214,8 +214,8 @@ class LogManager
             $logs = $this->logRepository->getLogsByStatus($status, $offset, $perPage);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get logs: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 
@@ -245,8 +245,8 @@ class LogManager
             return $this->logRepository->count(['status' => $status]);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get logs: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -262,8 +262,8 @@ class LogManager
             return $this->logRepository->count(['name' => 'authenticator']);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get logs: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -282,8 +282,8 @@ class LogManager
             $this->entityManager->createQuery($dql)->execute();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to set readed logs: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to set readed logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

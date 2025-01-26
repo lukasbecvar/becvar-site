@@ -102,7 +102,6 @@ class ProjectsManagerTest extends TestCase
         $this->projectsManager->resetIndex();
     }
 
-
     /**
      * Test get list of projects based on their status
      *

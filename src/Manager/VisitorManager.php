@@ -53,8 +53,8 @@ class VisitorManager
             return $this->visitorRepository->findOneBy($search);
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'find error: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'find error: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -99,8 +99,8 @@ class VisitorManager
                 $this->entityManager->flush();
             } catch (Exception $e) {
                 $this->errorManager->handleError(
-                    'flush error: ' . $e->getMessage(),
-                    Response::HTTP_INTERNAL_SERVER_ERROR
+                    msg: 'flush error: ' . $e->getMessage(),
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -138,8 +138,8 @@ class VisitorManager
             $visitors = $queryBuilder->getQuery()->getResult();
         } catch (Exception $e) {
             $this->errorManager->handleError(
-                'error to get visitors: ' . $e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                msg: 'error to get visitors: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
 

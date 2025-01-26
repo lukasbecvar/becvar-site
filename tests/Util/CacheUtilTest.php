@@ -133,8 +133,10 @@ class CacheUtilTest extends TestCase
             ->method('getItem')->with($key)->willThrowException(new Exception('Test exception'));
 
         // set error manager mock expectations
-        $this->errorManagerMock->expects($this->once())
-            ->method('handleError')->with('error to store cache value: Test exception', Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
+            msg: 'error to store cache value: Test exception',
+            code: Response::HTTP_INTERNAL_SERVER_ERROR
+        );
 
         // call tested method
         $this->cacheUtil->setValue($key, $value, $expiration);
@@ -155,8 +157,10 @@ class CacheUtilTest extends TestCase
             ->method('deleteItem')->with($key)->willThrowException(new Exception('Test exception'));
 
         // set error manager mock expectations
-        $this->errorManagerMock->expects($this->once())
-            ->method('handleError')->with('error to delete cache value: Test exception', Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
+            msg: 'error to delete cache value: Test exception',
+            code: Response::HTTP_INTERNAL_SERVER_ERROR
+        );
 
         // call tested method
         $this->cacheUtil->deleteValue($key);
