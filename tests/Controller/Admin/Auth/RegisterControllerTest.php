@@ -144,7 +144,7 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit register form with passwords that do not match
+     * Test submit register form with passwords not match
      *
      * @return void
      */
@@ -168,11 +168,11 @@ class RegisterControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit register form with correct credentials
+     * Test submit register form with valid inputs
      *
      * @return void
      */
-    public function testSubmitRegisterFormWithCorrectCredentials(): void
+    public function testSubmitRegisterFormWithValidInputs(): void
     {
         // simulate registration allowed
         $this->allowRegistration($this->client, true);

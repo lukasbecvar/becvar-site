@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * Class AppUtilTest
  *
- * Test cases for app util class
+ * Test cases for app util
  *
  * @package App\Tests\Util
  */
@@ -57,6 +57,9 @@ class AppUtilTest extends TestCase
      */
     public function testGetAppRootDir(): void
     {
+        // expect get dir call
+        $this->kernelInterfaceMock->expects($this->once())->method('getProjectDir');
+
         // call tested method
         $result = $this->appUtil->getAppRootDir();
 
@@ -65,19 +68,34 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test get HTTP host
+     * Test check if request is secure when https is on
      *
      * @return void
      */
-    public function testGetHttpHost(): void
+    public function testCheckIfRequestIsSecureWithHttpsWhenHttpsIsOn(): void
     {
-        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['HTTPS'] = 1;
+        $this->assertTrue($this->appUtil->isSsl());
 
-        // call tested method
-        $result = $this->appUtil->getHttpHost();
+        $_SERVER['HTTPS'] = 'on';
+        $this->assertTrue($this->appUtil->isSsl());
+    }
 
-        // assert result
-        $this->assertEquals('localhost', $result);
+    /**
+     * Test check if request is secure when https is off
+     *
+     * @return void
+     */
+    public function testCheckIfRequestIsSecureWithHttpWhenHttpsIsOff(): void
+    {
+        $_SERVER['HTTPS'] = 0;
+        $this->assertFalse($this->appUtil->isSsl());
+
+        $_SERVER['HTTPS'] = 'off';
+        $this->assertFalse($this->appUtil->isSsl());
+
+        unset($_SERVER['HTTPS']);
+        $this->assertFalse($this->appUtil->isSsl());
     }
 
     /**
@@ -101,65 +119,111 @@ class AppUtilTest extends TestCase
     }
 
     /**
-     * Test check if connection is secure (SSL)
+     * Test check if maintenance mode is enabled when maintenance mode is on
      *
      * @return void
      */
-    public function testCheckIsConnectionSecure(): void
+    public function testCheckIfMaintenanceModeIsEnabledWhenMaintenanceModeIsOn(): void
     {
-        $_SERVER['HTTPS'] = 'on';
-        $this->assertTrue($this->appUtil->isSsl());
-
-        $_SERVER['HTTPS'] = '1';
-        $this->assertTrue($this->appUtil->isSsl());
-
-        unset($_SERVER['HTTPS']);
-        $this->assertFalse($this->appUtil->isSsl());
-    }
-
-    /**
-     * Test check if application is in maintenance mode
-     *
-     * @return void
-     */
-    public function testCheckIsInMaintenanceMode(): void
-    {
+        // simulate maintenance mode enabled
         $_ENV['MAINTENANCE_MODE'] = 'true';
-        $this->assertTrue($this->appUtil->isMaintenance());
 
+        // call tested method
+        $result = $this->appUtil->isMaintenance();
+
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Test check if maintenance mode is disabled when maintenance mode is off
+     *
+     * @return void
+     */
+    public function testCheckIfMaintenanceModeIsDisabledWhenMaintenanceModeIsOff(): void
+    {
+        // simulate maintenance mode disabled
         $_ENV['MAINTENANCE_MODE'] = 'false';
-        $this->assertFalse($this->appUtil->isMaintenance());
+
+        // call tested method
+        $result = $this->appUtil->isMaintenance();
+
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertFalse($result);
     }
 
     /**
-     * Test check if ssl only mode is enabled
+     * Test check if ssl only is enabled when ssl only is on
      *
      * @return void
      */
-    public function testCheckIsSSLOnlyModeEnabled(): void
+    public function testCheckIfSslOnlyIsEnabledWhenSslOnlyIsOn(): void
     {
+        // simulate ssl only enabled
         $_ENV['SSL_ONLY'] = 'true';
-        $this->assertTrue($this->appUtil->isSSLOnly());
 
-        $_ENV['SSL_ONLY'] = 'false';
-        $this->assertFalse($this->appUtil->isSSLOnly());
+        // call tested method
+        $result = $this->appUtil->isSslOnly();
+
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
     }
 
     /**
-     * Test check if application is in development mode
+     * Test check if ssl only is disabled when ssl only is off
      *
      * @return void
      */
-    public function testCheckIfApplicationIsInDevelopmentMode(): void
+    public function testCheckIfSslOnlyIsDisabledWhenSslOnlyIsOff(): void
     {
+        // simulate ssl only disabled
+        $_ENV['SSL_ONLY'] = 'false';
+
+        // call tested method
+        $result = $this->appUtil->isSslOnly();
+
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test check if dev mode is enabled when dev mode is on
+     *
+     * @return void
+     */
+    public function testCheckIfDevModeIsEnabledWhenDevModeIsOn(): void
+    {
+        // simulate dev mode enabled
         $_ENV['APP_ENV'] = 'dev';
-        $this->assertTrue($this->appUtil->isDevMode());
 
-        $_ENV['APP_ENV'] = 'test';
-        $this->assertTrue($this->appUtil->isDevMode());
+        // call tested method
+        $result = $this->appUtil->isDevMode();
 
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Test check if dev mode is disabled when dev mode is off
+     *
+     * @return void
+     */
+    public function testCheckIfDevModeIsDisabledWhenDevModeIsOff(): void
+    {
+        // simulate dev mode disabled
         $_ENV['APP_ENV'] = 'prod';
-        $this->assertFalse($this->appUtil->isDevMode());
+
+        // call tested method
+        $result = $this->appUtil->isDevMode();
+
+        // assert result
+        $this->assertIsBool($result);
+        $this->assertFalse($result);
     }
 
     /**

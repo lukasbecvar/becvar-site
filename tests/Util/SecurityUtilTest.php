@@ -25,32 +25,38 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
-     * Test escape XSS attacks
+     * Test escape XSS in string when string is insecure
      *
      * @return void
      */
-    public function testEscapeString(): void
+    public function testEscapeXssInStringWhenStringIsInsecure(): void
     {
-        $input = '<script>alert("xss")</script>';
-        $expectedOutput = '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;';
+        // arrange test data
+        $input = '<script>alert("XSS");</script>';
+        $expectedOutput = '&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;';
+
+        // call tested method
+        $result = $this->securityUtil->escapeString($input);
 
         // assert result
-        $this->assertEquals($expectedOutput, $this->securityUtil->escapeString($input));
+        $this->assertEquals($expectedOutput, $result);
     }
 
     /**
-     * Test verify password
+     * Test escape XSS in string when string is secure
      *
      * @return void
      */
-    public function testVerifyPassword(): void
+    public function testEscapeXssInStringWhenStringIsSecure(): void
     {
-        $password = 'password123';
-        $hash = password_hash($password, PASSWORD_ARGON2ID);
+        $input = 'Hello, World!';
+        $expectedOutput = 'Hello, World!';
+
+        // call the method
+        $result = $this->securityUtil->escapeString($input);
 
         // assert result
-        $this->assertTrue($this->securityUtil->verifyPassword($password, $hash));
-        $this->assertFalse($this->securityUtil->verifyPassword('wrongpassword', $hash));
+        $this->assertEquals($expectedOutput, $result);
     }
 
     /**
@@ -65,6 +71,42 @@ class SecurityUtilTest extends TestCase
 
         // assert result
         $this->assertTrue(password_verify($plainText, $hash));
+    }
+
+    /**
+     * Test verifying password when password is valid
+     *
+     * @return void
+     */
+    public function testVerifyPasswordWhenPasswordIsValid(): void
+    {
+        // generate hash
+        $password = 'testPassword123';
+        $hash = $this->securityUtil->generateHash($password);
+
+        // call tested method
+        $result = $this->securityUtil->verifyPassword($password, $hash);
+
+        // assert result
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Test verifying invalid when password is invalid
+     *
+     * @return void
+     */
+    public function testVerifyPasswordWhenPasswordIsInvalid(): void
+    {
+        // generate hash
+        $password = 'testPassword123';
+        $hash = $this->securityUtil->generateHash($password);
+
+        // call tested method
+        $result = $this->securityUtil->verifyPassword('wrongPassword123', $hash);
+
+        // assert result
+        $this->assertFalse($result);
     }
 
     /**

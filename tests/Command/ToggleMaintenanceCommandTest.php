@@ -51,7 +51,7 @@ class ToggleMaintenanceCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert result
-        $this->assertStringContainsString("MAINTENANCE_MODE in .env has been set to true", $this->commandTester->getDisplay());
+        $this->assertStringContainsString('MAINTENANCE_MODE in .env has been set to true', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 
@@ -73,7 +73,7 @@ class ToggleMaintenanceCommandTest extends TestCase
         $exitCode = $this->commandTester->execute([]);
 
         // assert result
-        $this->assertStringContainsString("MAINTENANCE_MODE in .env has been set to true", $this->commandTester->getDisplay());
+        $this->assertStringContainsString('MAINTENANCE_MODE in .env has been set to true', $this->commandTester->getDisplay());
         $this->assertSame(Command::SUCCESS, $exitCode);
     }
 

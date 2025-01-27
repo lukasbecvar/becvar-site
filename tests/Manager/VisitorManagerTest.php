@@ -146,6 +146,31 @@ class VisitorManagerTest extends TestCase
     }
 
     /**
+     * Test get visitor language
+     *
+     * @return void
+     */
+    public function testGetVisitorLanguage(): void
+    {
+        // mock get visitor ip address
+        $this->visitorInfoUtil->method('getIP')->willReturn('192.168.1.1');
+
+        // mock visitor
+        $visitorMock = $this->createMock(Visitor::class);
+        $visitorMock->method('getCountry')->willReturn('CZ');
+
+        // mock visitor repository
+        $this->visitorRepository->method('findOneBy')
+            ->with(['ip_address' => '192.168.1.1'])->willReturn($visitorMock);
+
+        // call tested method
+        $result = $this->visitorManager->getVisitorLanguage();
+
+        // assert result
+        $this->assertEquals('cz', $result);
+    }
+
+    /**
      * Test get visitors metrics
      *
      * @return void

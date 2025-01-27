@@ -47,7 +47,7 @@ class DatabaseManager
         $tables = null;
 
         try {
-            // Použijeme SchemaManager pro získání seznamu tabulek
+            // get tables list
             $schemaManager = $this->connection->createSchemaManager();
             $tables = $schemaManager->listTableNames();
         } catch (Exception $e) {
@@ -57,10 +57,10 @@ class DatabaseManager
             );
         }
 
-        // Log table list view event
+        // log table list view event
         $this->logManager->log('database', $this->authManager->getUsername() . ' viewed database list');
 
-        // Vytvoření seznamu tabulek
+        // create tables list
         foreach ($tables as $table) {
             array_push($tablesList, $table);
         }

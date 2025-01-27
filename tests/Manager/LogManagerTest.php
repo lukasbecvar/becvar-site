@@ -59,20 +59,20 @@ class LogManagerTest extends TestCase
     }
 
     /**
-     * Test save log to database
+     * Test log message to database
      *
      * @return void
      */
-    public function testSaveLog(): void
+    public function testLogMessageToDatabase(): void
     {
-        // expect entity manager persist and flush calls
-        $this->entityManager->expects($this->once())->method('persist');
-        $this->entityManager->expects($this->once())->method('flush');
-
         // expect get visitor info
         $this->visitorManager->expects($this->once())->method('getVisitorID')->willReturn(1);
         $this->visitorInfoUtil->expects($this->once())->method('getUserAgent')->willReturn('Mozilla/5.0');
         $this->visitorInfoUtil->expects($this->once())->method('getIP')->willReturn('127.0.0.1');
+
+        // expect entity manager persist and flush calls
+        $this->entityManager->expects($this->once())->method('persist');
+        $this->entityManager->expects($this->once())->method('flush');
 
         // expect escape log message
         $this->securityUtil->expects($this->exactly(4))->method('escapeString')->willReturnCallback(function ($value) {
@@ -84,11 +84,33 @@ class LogManagerTest extends TestCase
     }
 
     /**
-     * Test send log to external log api
+     * Test send log message to external log api when external log disabled
      *
      * @return void
      */
-    public function testExternalLog(): void
+    public function testSendLogMessageToExternalLogApiWhenExternalLogDisabled(): void
+    {
+        // set external log config
+        $_ENV['EXTERNAL_LOG_ENABLED'] = 'false';
+        $_ENV['EXTERNAL_LOG_URL'] = 'http://becvar.xyz/log';
+        $_ENV['EXTERNAL_LOG_TOKEN'] = 'test-token';
+
+        // log message
+        $value = 'This is a test log message';
+
+        // expect json util get json call
+        $this->jsonUtil->expects($this->never())->method('getJson');
+
+        // call tested method
+        $this->logManager->externalLog($value);
+    }
+
+    /**
+     * Test send log message to external log api when external log enabled
+     *
+     * @return void
+     */
+    public function testSendLogMessageToExternalLogApiWhenExternalLogEnabled(): void
     {
         // set external log config
         $_ENV['EXTERNAL_LOG_ENABLED'] = 'true';
@@ -100,12 +122,62 @@ class LogManagerTest extends TestCase
 
         // expect json util get json call
         $this->jsonUtil->expects($this->once())->method('getJson')->with(
-            $this->stringContains('http://becvar.xyz/log?token=test-token&name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
-            'POST'
+            target: $this->stringContains('http://becvar.xyz/log?token=test-token&name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
+            method: 'POST'
         );
 
         // call tested method
         $this->logManager->externalLog($value);
+    }
+
+    /**
+     * Test get logs by ip address
+     *
+     * @return void
+     */
+    public function testGetLogsByIpAddress(): void
+    {
+        // mock for action log
+        $this->visitorManager->expects($this->once())->method('getVisitorID')->willReturn(1);
+        $this->visitorInfoUtil->expects($this->once())->method('getUserAgent')->willReturn('Mozilla/5.0');
+        $this->visitorInfoUtil->expects($this->once())->method('getIP')->willReturn('127.0.0.1');
+        $this->securityUtil->expects($this->exactly(4))->method('escapeString')->willReturnCallback(function ($value) {
+            return htmlspecialchars($value, ENT_QUOTES);
+        });
+
+        // expect logs get call
+        $this->logRepository->expects($this->once())->method('getLogsByIpAddress');
+
+        // call tested method
+        $result = $this->logManager->getLogsWhereIP('127.0.0.1', 'test', 1);
+
+        // assert result
+        $this->assertIsArray($result);
+    }
+
+    /**
+     * Test get logs by status
+     *
+     * @return void
+     */
+    public function testGetLogs(): void
+    {
+        // mock for action log
+        $this->visitorManager->expects($this->once())->method('getVisitorID')->willReturn(1);
+        $this->visitorInfoUtil->expects($this->once())->method('getUserAgent')->willReturn('Mozilla/5.0');
+        $this->visitorInfoUtil->expects($this->once())->method('getIP')->willReturn('127.0.0.1');
+        $this->securityUtil->expects($this->exactly(4))->method('escapeString')->willReturnCallback(function ($value) {
+            return htmlspecialchars($value, ENT_QUOTES);
+        });
+
+        // expect logs get call
+        $this->logRepository->expects($this->once())->method('getLogsByStatus');
+
+        // call tested method
+        $result = $this->logManager->getLogs('UNREAD', 'test', 1);
+
+        // assert result
+        $this->assertIsArray($result);
     }
 
     /**
@@ -145,6 +217,20 @@ class LogManagerTest extends TestCase
     }
 
     /**
+     * Test set logs status readed
+     *
+     * @return void
+     */
+    public function testSetLogsStatusReaded(): void
+    {
+        // expect entity manager create query call
+        $this->entityManager->expects($this->once())->method('createQuery');
+
+        // call tested method
+        $this->logManager->setReaded();
+    }
+
+    /**
      * Test check if logging is enabled
      *
      * @return void
@@ -173,6 +259,34 @@ class LogManagerTest extends TestCase
 
         // assert result
         $this->assertIsBool($result);
+    }
+
+    /**
+     * Test set anti-log cookie
+     *
+     * @return void
+     */
+    public function testSetAntiLogCookie(): void
+    {
+        // expect cookie util set call
+        $this->cookieUtil->expects($this->once())->method('set');
+
+        // call tested method
+        $this->logManager->setAntiLogCookie();
+    }
+
+    /**
+     * Test unset anti-log cookie
+     *
+     * @return void
+     */
+    public function testUnsetAntiLogCookie(): void
+    {
+        // expect cookie util unset call
+        $this->cookieUtil->expects($this->once())->method('unset');
+
+        // call tested method
+        $this->logManager->unsetAntiLogCookie();
     }
 
     /**

@@ -76,7 +76,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change username form with empty username field
+     * Test submit account settings change username form with empty username
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change username form with short username field
+     * Test submit account settings change username form with short username
      *
      * @return void
      */
@@ -114,7 +114,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change username form with long username field
+     * Test submit account settings change username form with long username
      *
      * @return void
      */
@@ -168,7 +168,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change password form with empty password field
+     * Test submit account settings change password form with empty password
      *
      * @return void
      */
@@ -208,7 +208,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change password form with short password field
+     * Test submit account settings change password form with short password
      *
      * @return void
      */
@@ -230,7 +230,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     }
 
     /**
-     * Test submit account settings change password form with long password field
+     * Test submit account settings change password form with long password
      *
      * @return void
      */

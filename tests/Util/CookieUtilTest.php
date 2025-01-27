@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Class CookieUtilTest
  *
- * Test cases for cookie util class
+ * Test cases for CookieUtil class
  *
  * @package App\Tests\Util
  */
@@ -29,21 +29,35 @@ class CookieUtilTest extends TestCase
     }
 
     /**
-     * Test get cookie value
+     * Test check is cookie set
      *
      * @return void
      */
-    public function testValueFromCookie(): void
+    public function testCheckIsCookieSet(): void
+    {
+        // call tested method
+        $value = $this->cookieUtil->isCookieSet('test_cookie');
+
+        // assert response
+        $this->assertIsBool($value);
+    }
+
+    /**
+     * Test get value from cookie
+     *
+     * @return void
+     */
+    public function testGetValueFromCookie(): void
     {
         // set cookie values
         $name = 'test_cookie';
         $encryptedValue = 'encrypted_value';
         $decryptedValue = 'test_value';
 
-        // call the set method and then simulate the cookie set
+        // set value to cookie
         $_COOKIE[$name] = base64_encode($encryptedValue);
 
-        // mock the decryptAes method
+        // mock value decryption
         $this->securityUtilMock->expects($this->once())->method('decryptAes')
             ->with($encryptedValue)->willReturn($decryptedValue);
 

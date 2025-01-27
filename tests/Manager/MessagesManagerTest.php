@@ -124,14 +124,11 @@ class MessagesManagerTest extends TestCase
         $messages = [$message1, $message2];
 
         // mock repository method
-        $this->messageRepository->expects($this->once())
-            ->method('getMessagesByStatus')
-            ->with($status, $offset, $limit)
-            ->willReturn($messages);
+        $this->messageRepository->expects($this->once())->method('getMessagesByStatus')
+            ->with($status, $offset, $limit)->willReturn($messages);
 
         // mock decryption of message content
-        $this->securityUtil->expects($this->exactly(2))
-            ->method('decryptAes')
+        $this->securityUtil->expects($this->exactly(2))->method('decryptAes')
             ->willReturnCallback(function ($encryptedMessage) {
                 return match ($encryptedMessage) {
                     'encryptedMessage1' => 'decryptedMessage1',
@@ -141,8 +138,7 @@ class MessagesManagerTest extends TestCase
             });
 
         // mock error handling when decryption fails
-        $this->errorManager->expects($this->never())
-            ->method('handleError');
+        $this->errorManager->expects($this->never())->method('handleError');
 
         // call tested method
         $result = $this->messagesManager->getMessages($status, $page);

@@ -47,6 +47,7 @@ class DashboardControllerTest extends CustomTestCase
         $this->assertSelectorExists('a[class="logout-link menu-button"]');
         $this->assertSelectorExists('span[class="menu-text"]');
         $this->assertSelectorExists('div[class="sidebar"]');
+        $this->assertSelectorExists('a[class="s-menu-button"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

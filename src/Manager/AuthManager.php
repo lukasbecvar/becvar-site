@@ -271,9 +271,9 @@ class AuthManager
      *
      * @param string $token The user token to retrieve the username for
      *
-     * @return string|null The username or null if not found
+     * @return string The username or null if not found
      */
-    public function getUsername(string $token = 'self'): ?string
+    public function getUsername(string $token = 'self'): string
     {
         // get token
         if ($token == 'self') {
@@ -288,7 +288,7 @@ class AuthManager
             return $user->getUsername();
         }
 
-        return null;
+        return 'Unknown';
     }
 
     /**

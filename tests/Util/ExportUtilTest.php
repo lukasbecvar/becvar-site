@@ -58,10 +58,7 @@ class ExportUtilTest extends TestCase
         $response = $this->exportUtil->exportVisitorsToExcel($dataToExport);
 
         // check response headers
-        $this->assertEquals(
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            $response->headers->get('Content-Type')
-        );
+        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         $this->assertStringContainsString('attachment; filename="visitors_list_', $response->headers->get('Content-Disposition'));
 
         ob_start();

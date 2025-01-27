@@ -63,7 +63,7 @@ class UpdateProjectsListCommandTest extends TestCase
     {
         // expect projects update call and sumulate failure response
         $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
-            ->willThrowException(new Exception('Something went wrong'));
+            ->willThrowException(new Exception('Something wrong'));
 
         // execute command
         $exitCode = $this->commandTester->execute([]);
@@ -72,7 +72,7 @@ class UpdateProjectsListCommandTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         // assert result
-        $this->assertStringContainsString('Process error: Something went wrong', $output);
+        $this->assertStringContainsString('Process error: Something wrong', $output);
         $this->assertEquals(Command::FAILURE, $exitCode);
     }
 }

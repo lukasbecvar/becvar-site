@@ -202,7 +202,7 @@ class LogManager
      *
      * @return Log[]|null $logs The logs based on status
      */
-    public function getLogs(string $status, $username, int $page): ?array
+    public function getLogs(string $status, string $username, int $page): ?array
     {
         $perPage = $_ENV['ITEMS_PER_PAGE'];
 

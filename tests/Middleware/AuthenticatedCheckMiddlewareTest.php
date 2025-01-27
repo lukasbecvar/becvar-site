@@ -65,7 +65,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
         // mock logged in user
         $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(true);
 
-        // create testing request
+        // create testing request event
         $event = $this->createRequestEvent('/admin');
 
         // call tested middleware
@@ -90,7 +90,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
         $this->urlGeneratorMock->expects($this->once())
             ->method('generate')->with('auth_login')->willReturn('/login');
 
-        // create testing request
+        // create testing request event
         $event = $this->createRequestEvent('/admin');
 
         // call tested middleware
@@ -110,7 +110,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
         // expect check if user is logged check not to be called
         $this->authManagerMock->expects($this->never())->method('isUserLogedin');
 
-        // create testing request
+        // create testing request event
         $event = $this->createRequestEvent('/');
 
         // call tested middleware
@@ -130,7 +130,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
         // expect check if user is logged check not to be called
         $this->authManagerMock->expects($this->never())->method('isUserLogedin');
 
-        // create testing request
+        // create testing request event
         $event = $this->createRequestEvent('/error');
 
         // call tested middleware
@@ -150,7 +150,7 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
         // expect check if user is logged check not to be called
         $this->authManagerMock->expects($this->never())->method('isUserLogedin');
 
-        // create testing request
+        // create testing request event
         $event = $this->createRequestEvent('/_profiler');
 
         // call tested middleware

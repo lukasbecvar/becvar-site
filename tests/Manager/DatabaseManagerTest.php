@@ -54,6 +54,28 @@ class DatabaseManagerTest extends TestCase
     }
 
     /**
+     * Test get tables list
+     *
+     * @return void
+     */
+    public function testGetTables(): void
+    {
+        // mock schema manager
+        $schemaManagerMock = $this->createMock(AbstractSchemaManager::class);
+        $schemaManagerMock->method('listTableNames')->willReturn(['users', 'messages']);
+
+        // mock connection
+        $this->connection->method('createSchemaManager')->willReturn($schemaManagerMock);
+
+        // call tested method
+        $result = $this->databaseManager->getTables();
+
+        // assert result
+        $this->assertIsArray($result);
+        $this->assertEquals(['users', 'messages'], $result);
+    }
+
+    /**
      * Test get table culumns list
      *
      * @return void
@@ -128,6 +150,104 @@ class DatabaseManagerTest extends TestCase
 
         // call tested method
         $result = $this->databaseManager->getTableData('users');
+
+        // assert result
+        $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test get table data by page
+     *
+     * @return void
+     */
+    public function testGetTableDataByPage(): void
+    {
+        // mock fetch result
+        $resultMock = $this->createMock(Result::class);
+        $resultMock->method('fetchAllAssociative')->willReturn([
+            ['id' => 1, 'name' => 'John Doe'],
+            ['id' => 2, 'name' => 'Jane Doe'],
+        ]);
+
+        // mock execute query result
+        $this->connection->method('executeQuery')->willReturn($resultMock);
+
+        // expect log call
+        $this->authManager->method('getUsername')->willReturn('testUser');
+        $this->logManager->expects($this->once())->method('log');
+
+        // call tested method
+        $result = $this->databaseManager->getTableDataByPage('users', 1);
+
+        // assert result
+        $this->assertEquals([
+            ['id' => 1, 'name' => 'John Doe'],
+            ['id' => 2, 'name' => 'Jane Doe'],
+        ], $result);
+    }
+
+    /**
+     * Test get table data by page when exception is thrown
+     *
+     * @return void
+     */
+    public function testGetTableDataByPageWhenExceptionIsThrown(): void
+    {
+        // mock for simulate exception
+        $this->connection->method('executeQuery')->will($this->throwException(new Exception('Simulated error')));
+
+        // expect call error manager
+        $this->errorManager->expects($this->once())->method('handleError');
+
+        // call tested method
+        $result = $this->databaseManager->getTableDataByPage('users', 1);
+
+        // assert result
+        $this->assertEquals([], $result);
+    }
+
+    /**
+     * Test get row data
+     *
+     * @return void
+     */
+    public function testSelectRowData(): void
+    {
+        // mock fetch result
+        $resultMock = $this->createMock(Result::class);
+        $resultMock->method('fetchAllAssociative')->willReturn([
+            ['id' => 1, 'name' => 'John Doe'],
+            ['id' => 2, 'name' => 'Jane Doe'],
+        ]);
+
+        // mock execute query result
+        $this->connection->method('executeQuery')->willReturn($resultMock);
+
+        // call tested method
+        $result = $this->databaseManager->selectRowData('users', 1);
+
+        // assert result
+        $this->assertEquals([
+            'id' => 1,
+            'name' => 'John Doe',
+        ], $result);
+    }
+
+    /**
+     * Test select row data when exception is thrown
+     *
+     * @return void
+     */
+    public function testSelectRowDataWhenExceptionIsThrown(): void
+    {
+        // mock for simulate exception
+        $this->connection->method('executeQuery')->will($this->throwException(new Exception('Simulated error')));
+
+        // expect call error manager
+        $this->errorManager->expects($this->once())->method('handleError');
+
+        // call tested method
+        $result = $this->databaseManager->selectRowData('users', 1);
 
         // assert result
         $this->assertEquals([], $result);

@@ -38,15 +38,16 @@ class DatabaseBrowserControllerTest extends CustomTestCase
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('.page-title', 'Select table');
         $this->assertSelectorExists('a[class="db-browser-select-link"]');
+        $this->assertSelectorTextContains('body', 'users');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     /**
-     * Test load database table browser table browser
+     * Test load database table data browser
      *
      * @return void
      */
-    public function testLoadDatabaseTableBrowser(): void
+    public function testLoadDatabaseTableDataBrowser(): void
     {
         $this->client->request('GET', '/admin/database/table?table=users&page=1');
 
