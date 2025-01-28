@@ -53,6 +53,6 @@ The new version is deployed automatically using GitHub Actions when a new releas
    * [Github](https://github.com/apexcharts/apexcharts.js)
 * PhpunitPrettyPrint
    * [Github](https://github.com/indentno/phpunit-pretty-print)
-   
+
 ## License
-This software is licensed under the [MIT license](https://github.com/lukasbecvar/becvar-site/blob/main/LICENSE)
+This software is licensed under the [MIT license](LICENSE)
