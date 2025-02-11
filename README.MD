@@ -3,7 +3,7 @@ Personal website build with the Symfony framework & Bootstrap.
 
 ## Public site
 ![Homepage](.github/images/public-page.png)
-- Main components: about, projects list, contact, etc...
+- Main components: about me, projects list, contact, etc...
 
 ## Admin site
 ![Dashboard](.github/images/admin-dashboard.png)
