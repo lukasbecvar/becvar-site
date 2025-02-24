@@ -144,19 +144,19 @@ class VisitorRepository extends ServiceEntityRepository
             $date = $result['visitDate'];
             switch ($period) {
                 case 'last_24_hours':
-                    $dateKey = $date->format('Y-m-d H');
+                    $dateKey = $date->format('H');
                     break;
                 case 'last_week':
-                    $dateKey = $date->format('Y-m-d');
+                    $dateKey = $date->format('m/d');
                     break;
                 case 'last_month':
-                    $dateKey = $date->format('Y-m-d');
+                    $dateKey = $date->format('m/d');
                     break;
                 case 'last_year':
-                    $dateKey = $date->format('Y-m');
+                    $dateKey = $date->format('Y/m');
                     break;
                 case 'all_time':
-                    $dateKey = $date->format('Y-m');
+                    $dateKey = $date->format('Y/m');
                     break;
             }
             if (!isset($visitorCounts[$dateKey])) {
@@ -169,7 +169,7 @@ class VisitorRepository extends ServiceEntityRepository
         if ($period === 'last_24_hours') {
             $visitorsCountByHour = [];
             for ($i = 0; $i < 24; $i++) {
-                $hourKey = (new DateTime("-{$i} hours"))->format('Y-m-d H');
+                $hourKey = (new DateTime("-{$i} hours"))->format('H');
                 $visitorsCountByHour[$hourKey] = $visitorCounts[$hourKey] ?? 0;
             }
             return $visitorsCountByHour;
