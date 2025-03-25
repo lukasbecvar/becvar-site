@@ -267,8 +267,8 @@ class DatabaseManagerTest extends TestCase
 
         // expect log manager call
         $this->logManager->expects($this->once())->method('log')->with(
-            name: $this->equalTo('database'),
-            value: $this->stringContains('truncated table: test_table')
+            $this->equalTo('database'),
+            $this->stringContains('truncated table: test_table')
         );
 
         // call tested method
@@ -288,8 +288,8 @@ class DatabaseManagerTest extends TestCase
 
         // expect handleError call
         $this->errorManager->expects($this->once())->method('handleError')->with(
-            msg: $this->stringContains('error truncating table: Database error'),
-            code: $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+            $this->stringContains('error truncating table: Database error'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
         );
 
         // call tested method

@@ -164,15 +164,15 @@ class AuthManagerTest extends TestCase
 
         // expect cookie set
         $this->cookieUtil->expects($this->once())->method('set')->with(
-            name: 'login-token-cookie',
-            value: $userToken,
-            expiration: $this->greaterThan(time())
+            'login-token-cookie',
+            $userToken,
+            $this->greaterThan(time())
         );
 
         // expect log login event
         $this->logManager->expects($this->once())->method('log')->with(
-            name: $this->equalTo('authenticator'),
-            value: $this->stringContains('testUser logged in')
+            $this->equalTo('authenticator'),
+            $this->stringContains('testUser logged in')
         );
 
         // expect get visitor info
@@ -216,8 +216,8 @@ class AuthManagerTest extends TestCase
 
         // expect log event to database
         $this->logManager->expects($this->once())->method('log')->with(
-            name: 'authenticator',
-            value: 'user: test_user logout'
+            'authenticator',
+            'user: test_user logout'
         );
 
         // expect unset cookie and destroy session

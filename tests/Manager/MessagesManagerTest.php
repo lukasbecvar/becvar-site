@@ -179,8 +179,8 @@ class MessagesManagerTest extends TestCase
 
         // expect error manager call
         $this->errorManager->expects($this->once())->method('handleError')->with(
-            msg: 'error to decrypt aes message data',
-            code: Response::HTTP_INTERNAL_SERVER_ERROR
+            'error to decrypt aes message data',
+            Response::HTTP_INTERNAL_SERVER_ERROR
         );
 
         // call tested method

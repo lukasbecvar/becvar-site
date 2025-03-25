@@ -70,8 +70,8 @@ class SecurityCheckMiddlewareTest extends TestCase
 
         // expect error handling called with HTTP_UPGRADE_REQUIRED status
         $this->errorManagerMock->expects($this->once())->method('handleError')->with(
-            msg: 'SSL error: connection not running on ssl protocol',
-            code: Response::HTTP_UPGRADE_REQUIRED
+            'SSL error: connection not running on ssl protocol',
+            Response::HTTP_UPGRADE_REQUIRED
         );
 
         // call tested middleware

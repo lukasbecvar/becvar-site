@@ -72,8 +72,8 @@ class BanManagerTest extends TestCase
 
         // expect log call
         $this->logManager->expects($this->once())->method('log')->with(
-            name: 'ban-system',
-            value: 'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $username
+            'ban-system',
+            'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $username
         );
 
         // expect flush call
@@ -105,8 +105,8 @@ class BanManagerTest extends TestCase
 
         // expect log call
         $this->logManager->expects($this->once())->method('log')->with(
-            name: 'ban-system',
-            value: 'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
+            'ban-system',
+            'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
         );
 
         // expect flush call

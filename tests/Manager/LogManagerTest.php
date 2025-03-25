@@ -122,8 +122,8 @@ class LogManagerTest extends TestCase
 
         // expect json util get json call
         $this->jsonUtil->expects($this->once())->method('getJson')->with(
-            target: $this->stringContains('http://becvar.xyz/log?token=test-token&name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
-            method: 'POST'
+            $this->stringContains('http://becvar.xyz/log?token=test-token&name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
+            'POST'
         );
 
         // call tested method
