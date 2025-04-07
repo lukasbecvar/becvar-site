@@ -1,6 +1,16 @@
 <div class="container">
     <h1><a href={{ path('admin_init') }}>Lukáš Bečvář</a></h1>
-    <h2>{{ "home.im"|trans }} <span>{{ 'home.main.text'|trans }}</span></h2>
+
+    {# MAIN HOMEPAGE TEXT #}
+    <div class="home-page-text">
+        <h2>{{ "home.im"|trans }} 
+            <span id="typed-text-wrapper">
+                <span id="typed-text" data-text="{{ 'home.main.text'|trans }}"></span>
+            </span>
+            <span id="cursor"></span>
+        </h2>
+    </div>
+
     {# PUBLIC-PAGES-NAVIGATION #}
     <nav id="navbar" class="navbar">
         <ul>

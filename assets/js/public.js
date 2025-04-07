@@ -42,3 +42,28 @@ if (skilsContent) {
         }
     })
 }
+
+// home page text animation
+document.addEventListener("DOMContentLoaded", () => {
+    const textElement = document.getElementById("typed-text")
+    const fullText = textElement.dataset.text
+    const cursor = document.getElementById("cursor")
+
+    let index = 0
+    let typingSpeed = 200
+    let acceleration = 10
+    let minSpeed = 30
+
+    cursor.style.display = "inline-block"
+
+    function typeChar() {
+        if (index < fullText.length) {
+            textElement.textContent += fullText.charAt(index)
+            index++
+            typingSpeed = Math.max(minSpeed, typingSpeed - acceleration)
+            setTimeout(typeChar, typingSpeed)
+        }
+    }
+
+    typeChar()
+})

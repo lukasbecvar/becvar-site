@@ -159,6 +159,31 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* ============== homepage style ============== */
+.home-page-text #typed-text-wrapper {
+    color: #fff;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #ffd900;
+}
+
+.home-page-text #cursor {
+    display: none;
+    width: 1px;
+    height: 1em;
+    background-color: #ffd900;
+    margin-left: 2px;
+    animation: blink 0.8s step-start infinite;
+    vertical-align: bottom;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
 /* ============== navigation style ============== */
 .navbar {
     padding: 0;
@@ -518,6 +543,14 @@ section .container {
     padding: 20px;
     color: #444444;
     background: rgba(255, 255, 255, 0.08);
+}
+
+.contact .email {
+    color: white !important;
+}
+
+.contact .email:hover {
+    color: #ffd900 !important;
 }
 
 .contact .resize-disable {

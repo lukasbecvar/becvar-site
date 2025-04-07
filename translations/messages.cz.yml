@@ -49,18 +49,18 @@ navigation.paste.link: "Paste"
 
 # home
 home.im: "Jsem"
-home.main.text: "backend developer"
+home.main.text: "Backend developer"
 
 # about
 about.title: "O mně"
 about.description: "Backend developer"
-about.subdescription: "Jmenuji se Lukáš a zabývám se vývojem webových a hybridních aplikací. Zaměřuji se primárně na backend aplikací. Mám zkušenosti primárně s PHP frameworky Symfony a Laravel"
+about.subdescription: "Jmenuji se Lukáš a informatice se věnuji od dětství. Dnes se zabývám vývojem backendu aplikací všeho druhu (hlavně REST API). Kladu největší důraz na bezpečnost, čitelnost a jednoduchost kódu. Pracuji primárně v PHP a nejraději používám framework Symfony. Mám také zkušenosti s frontendem, kde využívám React, a jsem aktivním uživatelem a správcem Linuxu. V poslední době se intenzivně věnuji také DevOps, kontejnerizaci, nasazování aplikací a spravuji si vlastní Raspberry Pi cluster na kterém provozuji Kubernetes pro své side projekty"
 about.birthday: "Datum narození"
 about.may: "Květen"
 about.age: "Věk"
 about.nationality: "Národnost: Česká"
 about.projects.link.description: "Všechny mé veřejné projekty jsou dostupné"
-about.funfact: "Programování jsem se začal věnovat v roce 2012, a mými prvními programovacími jazyky byly Pascal a C++"
+about.funfact: "Programování jsem se začal věnovat v roce 2012 a mými prvními programovacími jazyky byly Pascal a C++, ale dlouho jsem u nich nezůstal"
 about.counter.clients: "Klienti"
 about.counter.projects: "Projekty"
 about.counter.code.lines: "Řádky kódu"

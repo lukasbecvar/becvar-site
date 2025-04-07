@@ -54,7 +54,7 @@ home.main.text: "backend developer"
 # about
 about.title: "O mne"
 about.description: "Backend Vývojár"
-about.subdescription: "Volám sa Lukáš a zaoberám sa vývojom webových a hybridných aplikácií. Zameriavam sa primárne na backend aplikácií. Mám skúsenosti primárne s PHP frameworkami Symfony a Laravel"
+about.subdescription: "Volám sa Lukáš a informatike sa venujem od detstva. Dnes sa zaoberám vývojom backendu aplikácií všetkého druhu (hlavne REST API). Kladiem najväčší dôraz na bezpečnosť, čitateľnosť a jednoduchosť kódu. Pracujem primárne v PHP a najradšej používam framework Symfony. Mám tiež skúsenosti s frontendom, kde využívam React, a som aktívnym používateľom a správcom Linuxu. V poslednej dobe sa intenzívne venujem aj DevOps, kontajnerizácii, nasadzovaniu aplikácií a spravujem si vlastný Raspberry Pi cluster, na ktorom prevádzkujem Kubernetes pre svoje vedľajšie projekty"
 about.birthday: "Dátum narodenia"
 about.may: "Máj"
 about.age: "Vek"
