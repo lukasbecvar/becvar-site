@@ -67,3 +67,6 @@ jobs:
 
           # disable maintenance mode
           php bin/console toggle:maintenance
+
+          # send push notifications to users
+          php /services/website/admin-suite/bin/console app:notifications:send "[Actions]: new becvar-site release deployed!"
