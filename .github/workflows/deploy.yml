@@ -24,6 +24,9 @@ jobs:
 
         # run upgrade script on server 
         script: |
+          # temporary disable monitoring
+          php /services/website/admin-suite/bin/console app:monitoring:temporary:disable "becvar.xyz" 5
+
           # go to project directory
           cd /services/website/becvar-site
 
