@@ -31,7 +31,7 @@ jobs:
           cd /services/website/becvar-site
 
           # enable maintenance mode
-          php bin/console toggle:maintenance
+          php bin/console toggle:maintenance true
 
           # stop web server
           sudo systemctl stop apache2
@@ -69,7 +69,7 @@ jobs:
           sudo chown -R www-data:www-data var/
 
           # disable maintenance mode
-          php bin/console toggle:maintenance
+          php bin/console toggle:maintenance false
 
           # send push notifications to users
           php /services/website/admin-suite/bin/console app:notifications:send "[Actions]: new becvar-site release deployed!"
