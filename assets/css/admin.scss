@@ -88,7 +88,7 @@ th {
 	outline-color: none !important;
 	outline-offset: none !important;
 	background-color: #161616 !important;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 body.active .wrapper .sidebar {
@@ -111,7 +111,7 @@ body.active .wrapper .section {
 	overflow-y: auto;
 	transition: all 0.2s ease;
 	background-color: #161616;
-	border-right: 1px solid rgba(255, 255, 255, 0.24);
+	border-right: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .wrapper .sidebar .profile {
@@ -148,7 +148,7 @@ body.active .wrapper .section {
 	padding: 1px 2px;
 	position: relative;
 	color: rgb(241, 237, 237);
-	border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
+	border-bottom: 0.5px solid rgba(255, 255, 255, 0.112);
 }
 
 .wrapper .sidebar ul li a .icon {
@@ -185,7 +185,7 @@ body.active .wrapper .section {
 	padding: 0 0.5%;
 	align-items: center;
 	background-color: #161616;
-	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
+	border-bottom: rgba(255, 255, 255, 0.112) 1px solid;
 }
 
 .wrapper .section .top-navbar {
@@ -261,7 +261,7 @@ button {
 	box-sizing: border-box;
 	background-color: transparent;
 	font-family: Helvetica, Arial, sans-serif;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .ban-area {
@@ -273,7 +273,7 @@ button {
 	margin-left: -3.5px;
 	width: calc(100% - 6.5%);
 	background: rgba(255, 255, 255, 0.062);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .ban-form {
@@ -285,7 +285,7 @@ button {
 	position: relative; 
 	transform: translate(-50%, -50%);
 	background: rgba(0, 0, 0, 0.596);
-	border: 1px solid rgba(255, 255, 255, 0.356);
+	border: 1px solid rgba(255, 255, 255, 0.169);
 }
 
 .ban-button {
@@ -329,13 +329,13 @@ button {
 	position: absolute;
 	background: rgba(0, 0, 0, 0.596);
 	transform: translate(-50%, -50%);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .form .text-input:-webkit-autofill, 
 .form .text-input:-webkit-autofill:hover, 
 .form .text-input:-webkit-autofill:focus {
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 	transition: background-color 5000s ease-in-out 0s;
 	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
 	-webkit-text-fill-color: white;
@@ -356,7 +356,7 @@ button {
 	text-align: center;
 	position: relative;
 	background: rgba(0, 0, 0, 0.877);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .image-upload-form {
@@ -366,7 +366,7 @@ button {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	background: rgba(0, 0, 0, 0.596);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .form-title {
@@ -384,14 +384,14 @@ button {
 	font-family: arial;
 	transition: all 0.2s ease;
 	background: rgba(255, 255, 255, 0.062);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .text-input:-webkit-autofill, 
 .text-input:-webkit-autofill:hover, 
 .text-input:-webkit-autofill:focus {
 	background: rgba(255, 255, 255, 0.062);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 	transition: background-color 5000s ease-in-out 0s;
 	-webkit-text-fill-color: white;
 	-webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.062) inset;
@@ -428,7 +428,7 @@ button {
 	font-size: 17px;
 	text-align: center;
 	margin-bottom: 0px;
-	border: 1px solid white;
+	border: 1px solid rgba(255, 255, 255, 0.443);
 	transform: translate(-50%, -50%);
 }
 
@@ -450,12 +450,12 @@ button {
 	text-decoration: none;
 	transition: all 0.2s ease;
 	background: rgba(255, 255, 255, 0.062);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .input-button:hover {
 	background: rgba(255, 255, 255, 0.103);
-	border: 1px solid rgba(255, 255, 255, 0.2419);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .right-position {
@@ -495,7 +495,7 @@ button {
 .card-header {
 	font-size: 15px !important;
 	padding-left: 13px !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .card {
@@ -504,7 +504,7 @@ button {
 	position: relative;
 	margin-bottom: 6px;
 	background-color: #1d1d1d;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .card-title {
@@ -578,7 +578,7 @@ button {
 	padding-top: 3px;
 	padding-bottom: 4px;
 	background-color: #161616;
-	border-bottom: rgba(255, 255, 255, 0.24) 1px solid;
+	border-bottom: rgba(255, 255, 255, 0.112) 1px solid;
 }
 
 .selector-button {
@@ -588,7 +588,7 @@ button {
 	font-size: 13.5px;
 	border-radius: 3px;
 	color: rgb(219, 219, 219);
-	border: 1px solid rgb(219, 219, 219);
+	border: 1px solid rgba(255, 255, 255, 0.264);
 }
 
 .selector-button:hover {
@@ -612,7 +612,7 @@ button {
 	color: white;
 	font-size: 22px;
 	border-radius: 6px;
-	border: 1px solid white;
+	border: 1px solid rgba(255, 255, 255, 0.46);
 }
 
 .back-page-button:hover {
@@ -665,7 +665,7 @@ button {
 	text-align: center;
 	background-color: #161616;
 	transform: translate(-50%, -50%);
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .confirmation-button {
@@ -675,7 +675,7 @@ button {
 	width: 100px;
 	font-size: 23px;	
 	background-color: #161616;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .confirmation-button:hover {
@@ -711,12 +711,12 @@ button {
 	border-left: none !important;
 	border-radius: 0px !important;
 	border-right: none !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .account-settings-table {
 	max-width: 50%;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .profile-pics-admin-settings {
@@ -755,7 +755,7 @@ button {
 	padding-bottom: 0;
 	border-radius: 3px;
 	background-color: #1d1d1d;
-	border: 1px solid rgba(255, 255, 255, 0.24);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .apexcharts-menu {
@@ -774,7 +774,7 @@ button {
 .apexcharts-tooltip {
 	color: white;
 	background: #444;
-	border: 1px solid rgba(255, 255, 255, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.112);
 }
 
 .apexcharts-tooltip .apexcharts-tooltip-title {
