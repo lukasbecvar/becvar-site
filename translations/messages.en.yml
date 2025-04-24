@@ -49,7 +49,7 @@ navigation.paste.link: "Paste"
 
 # home
 home.im : "I'm a"
-home.main.text: "backend developer"
+home.main.text: "Backend developer | System administrator | Software engineer"
 
 # about
 about.title: "About me"

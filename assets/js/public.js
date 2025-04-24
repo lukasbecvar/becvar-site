@@ -46,24 +46,46 @@ if (skilsContent) {
 // home page text animation
 document.addEventListener("DOMContentLoaded", () => {
     const textElement = document.getElementById("typed-text")
-    const fullText = textElement.dataset.text
     const cursor = document.getElementById("cursor")
-
-    let index = 0
-    let typingSpeed = 200
-    let acceleration = 10
-    let minSpeed = 30
+    const fullText = textElement.dataset.text
+    const texts = fullText.split("|").map(t => t.trim())
 
     cursor.style.display = "inline-block"
+    let currentTextIndex = 0
+    let charIndex = 0
+    let typing = true
 
-    function typeChar() {
-        if (index < fullText.length) {
-            textElement.textContent += fullText.charAt(index)
-            index++
-            typingSpeed = Math.max(minSpeed, typingSpeed - acceleration)
-            setTimeout(typeChar, typingSpeed)
+    const typingSpeedInitial = 200
+    let typingSpeed = typingSpeedInitial
+    const pauseAfterDeleting = 500
+    const pauseAfterTyping = 1000
+    const acceleration = 10
+    const minSpeed = 30
+
+    function typeLoop() {
+        const currentText = texts[currentTextIndex]
+        if (typing) {
+            if (charIndex < currentText.length) {
+                textElement.textContent += currentText.charAt(charIndex)
+                charIndex++
+                typingSpeed = Math.max(minSpeed, typingSpeed - acceleration)
+                setTimeout(typeLoop, typingSpeed)
+            } else {
+                typing = false
+                setTimeout(typeLoop, pauseAfterTyping)
+            }
+        } else {
+            if (charIndex > 0) {
+                textElement.textContent = currentText.slice(0, charIndex - 1)
+                charIndex--
+                setTimeout(typeLoop, 50)
+            } else {
+                typing = true
+                typingSpeed = typingSpeedInitial
+                currentTextIndex = (currentTextIndex + 1) % texts.length
+                setTimeout(typeLoop, pauseAfterDeleting)
+            }
         }
     }
-
-    typeChar()
+    typeLoop()
 })
