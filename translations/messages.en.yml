@@ -92,4 +92,4 @@ contact.error.characters.limit.reached: "Maximal message lenght is 2000 characte
 contact.error.ko.message: "Your message was not sent due to an error, please try again later, or check your message inputs"
 contact.error.blocked.message: "Your message has been blocked"
 contact.error.limit.reached.message: "error you have 5 unreaded messages, please wait for the response to the first messags"
-contact.success.message: "Your message has been sent, Lukáš replies within 24 hours at most"
+contact.success.message: "Your message has been sent. Lukáš typically replies within 24 hours"

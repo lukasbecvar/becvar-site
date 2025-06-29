@@ -29,19 +29,17 @@ class BanFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('ban_reason', TextareaType::class, [
-                'label' => false,
-                'attr' => [
-                    'class' => 'ban-area ban-input',
-                    'placeholder' => 'Reason',
-                    'maxlength' => 120
-                ],
-                'required' => false,
-                'mapped' => true,
-                'translation_domain' => false
-            ])
-        ;
+        $builder->add('ban_reason', TextareaType::class, [
+            'label' => false,
+            'attr' => [
+                'class' => 'ban-area ban-input',
+                'placeholder' => 'Reason',
+                'maxlength' => 120
+            ],
+            'required' => false,
+            'mapped' => true,
+            'translation_domain' => false
+        ]);
     }
 
     /**

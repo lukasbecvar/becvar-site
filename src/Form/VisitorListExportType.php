@@ -50,7 +50,8 @@ class VisitorListExportType extends AbstractType
                 'label' => 'Select export format: ',
                 'placeholder' => 'Select export format',
                 'required' => true,
-            ]);
+            ])
+        ;
     }
 
     /**
