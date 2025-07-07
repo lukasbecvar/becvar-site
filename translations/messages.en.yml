@@ -79,7 +79,7 @@ projects.repos.link.description: "All my public projects available on"
 # contact
 contact.title: "Contact me"
 contact.social.sites.title: "Social sites"
-contact.email.me.title: "Email Me"
+contact.email.me.title: "Mail me"
 contact.form.name.input: "Your name"
 contact.form.email.input: "Your email"
 contact.from.message.input: "Message"
