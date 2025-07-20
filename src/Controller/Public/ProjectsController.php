@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Util\AppUtil;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use App\Manager\ProjectsManager;
@@ -19,12 +20,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class ProjectsController extends AbstractController
 {
+    private AppUtil $appUtil;
     private AuthManager $authManager;
     private ErrorManager $errorManager;
     private ProjectsManager $projectsManager;
 
-    public function __construct(AuthManager $authManager, ErrorManager $errorManager, ProjectsManager $projectsManager)
-    {
+    public function __construct(
+        AppUtil $appUtil,
+        AuthManager $authManager,
+        ErrorManager $errorManager,
+        ProjectsManager $projectsManager
+    ) {
+        $this->appUtil = $appUtil;
         $this->authManager = $authManager;
         $this->errorManager = $errorManager;
         $this->projectsManager = $projectsManager;
@@ -40,6 +47,10 @@ class ProjectsController extends AbstractController
     {
         // render projects page
         return $this->render('public/projects.twig', [
+            // app util instance
+            'appUtil' => $this->appUtil,
+
+            // contact data
             'githubLink' => $_ENV['GITHUB_LINK'],
             'twitterLink' => $_ENV['TWITTER_LINK'],
             'contactEmail' => $_ENV['CONTACT_EMAIL'],

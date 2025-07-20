@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Util\AppUtil;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 */
 class AboutController extends AbstractController
 {
+    private AppUtil $appUtil;
+
+    public function __construct(AppUtil $appUtil)
+    {
+        $this->appUtil = $appUtil;
+    }
+
     /**
      * Handle about me page
      *
@@ -30,6 +38,7 @@ class AboutController extends AbstractController
         // render about page
         return $this->render('public/about.twig', [
             'age' => $age,
+            'appUtil' => $this->appUtil,
             'githubLink' => $_ENV['GITHUB_LINK'],
             'twitterLink' => $_ENV['TWITTER_LINK'],
             'telegramLink' => $_ENV['TELEGRAM_LINK'],

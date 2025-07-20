@@ -27,15 +27,17 @@
                 <a class="nav-link" href={{ path('public_contact') }}>{{ 'navigation.contact.link'|trans }}</a>
             </li>
             {# LINK TO CODE PASTE #}
-            <li>
-                {% set currentUrl = app.request.getSchemeAndHttpHost() %}
-                {% if currentUrl matches '/https/' %}
-                    {% set pasteLink = currentUrl|replace({'https://': 'https://paste.'}) %}
-                {% else %}
-                    {% set pasteLink = currentUrl|replace({'http://': 'http://paste.'}) %}
-                {% endif %}
-                <a class="nav-link" href={{ pasteLink }}>{{ 'navigation.paste.link'|trans }}</a>
-            </li>
+            {% if appUtil.getEnvValue('ENABLE_CODE_PASTE_LINK') == 'true' %}
+                <li>
+                    <a class="nav-link" href={{ appUtil.getEnvValue('CODE_PASTE_LINK') }}>Code paste</a>
+                </li>
+            {% endif %}
+            {# LINK TO PASSWORD AND HASH GENERATOR #}
+            {% if appUtil.getEnvValue('ENABLE_PASSWORD_AND_HASH_GENERATOR_LINK') == 'true' %}
+                <li>
+                    <a class="nav-link" href={{ appUtil.getEnvValue('PASSWORD_AND_HASH_GENERATOR_LINK') }}>Pass & Hash gen</a>
+                </li>
+            {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>

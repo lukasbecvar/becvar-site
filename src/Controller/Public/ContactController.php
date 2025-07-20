@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Util\AppUtil;
 use App\Entity\Message;
 use App\Manager\LogManager;
 use App\Util\VisitorInfoUtil;
@@ -22,17 +23,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 */
 class ContactController extends AbstractController
 {
+    private AppUtil $appUtil;
     private LogManager $logManager;
     private VisitorManager $visitorManager;
     private VisitorInfoUtil $visitorInfoUtil;
     private MessagesManager $messagesManager;
 
     public function __construct(
+        AppUtil $appUtil,
         LogManager $logManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
         MessagesManager $messagesManager,
     ) {
+        $this->appUtil = $appUtil;
         $this->logManager = $logManager;
         $this->visitorManager = $visitorManager;
         $this->visitorInfoUtil = $visitorInfoUtil;
@@ -126,6 +130,9 @@ class ContactController extends AbstractController
 
         // render contact page view
         return $this->render('public/contact.twig', [
+            // app util instance
+            'appUtil' => $this->appUtil,
+
             // contact form data
             'errorMsg' => $errorMsg,
             'successMsg' => $successMsg,
