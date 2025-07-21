@@ -54,7 +54,14 @@ class AppUtil
      */
     public function getHttpHost(): ?string
     {
-        return $_SERVER['HTTP_HOST'];
+        $host = $_SERVER['HTTP_HOST'];
+
+        // check if http host is set
+        if ($host == null) {
+            return null;
+        }
+
+        return $host;
     }
 
     /**
