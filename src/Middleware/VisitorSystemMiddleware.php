@@ -125,7 +125,7 @@ class VisitorSystemMiddleware
 
         // get visitor referer
         $referer = $this->visitorInfoUtil->getReferer();
-        if ($referer && str_contains($referer, $this->appUtil->getHttpHost() ?? 'Unknown')) {
+        if ($referer && str_contains($referer, $this->appUtil->getHttpHost())) {
             $referer = 'Unknown';
         }
 
@@ -200,7 +200,7 @@ class VisitorSystemMiddleware
 
             // update visitor referer (only if referer not in current host domain)
             $referer = $this->visitorInfoUtil->getReferer();
-            if ($visitor->getReferer() == 'Unknown' && !str_contains($referer, $this->appUtil->getHttpHost() ?? 'Unknown')) {
+            if ($visitor->getReferer() == 'Unknown' && !str_contains($referer, $this->appUtil->getHttpHost())) {
                 $visitor->setReferer($referer);
             }
 

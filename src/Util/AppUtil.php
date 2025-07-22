@@ -50,15 +50,15 @@ class AppUtil
     /**
      * Get HTTP host
      *
-     * @return string|null The HTTP host
+     * @return string The HTTP host
      */
-    public function getHttpHost(): ?string
+    public function getHttpHost(): string
     {
-        $host = $_SERVER['HTTP_HOST'];
+        $host = $_SERVER['HTTP_HOST'] ?? null;
 
         // check if http host is set
         if ($host == null) {
-            return null;
+            return 'Unknown';
         }
 
         return $host;
@@ -76,22 +76,19 @@ class AppUtil
         // get host url
         $host = $this->getHttpHost();
 
-        // check if output is string value
-        if (is_string($host)) {
-            // check if running on url localhost
-            if (str_starts_with($host, 'localhost')) {
-                $localhost = true;
-            }
+        // check if running on url localhost
+        if (str_starts_with($host, 'localhost')) {
+            $localhost = true;
+        }
 
-            // check if running on localhost ip
-            if (str_starts_with($host, '127.0.0.1')) {
-                $localhost = true;
-            }
+        // check if running on localhost ip
+        if (str_starts_with($host, '127.0.0.1')) {
+            $localhost = true;
+        }
 
-            // check if running on private ip
-            if (str_starts_with($host, '10.0.0.93')) {
-                $localhost = true;
-            }
+        // check if running on private ip
+        if (str_starts_with($host, '10.0.0.93')) {
+            $localhost = true;
         }
 
         return $localhost;
