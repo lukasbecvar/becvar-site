@@ -30,7 +30,7 @@ services:
 
     # database service
     mysql:
-        image: mysql:latest
+        image: mysql:8.0.43
         container_name: becvar_site_mysql
         restart: always
         environment:
