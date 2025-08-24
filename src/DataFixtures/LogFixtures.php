@@ -34,7 +34,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '2a00:1028:838e:71a6:bfd:3ae:61:cbbd',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 32,
+                'visitor_id' => 32
             ],
             [
                 'name' => 'message-sender',
@@ -43,7 +43,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '45.131.195.176',
                 'browser' => 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:114.0) Gecko/20100101 Firefox/114.0',
                 'status' => 'unreaded',
-                'visitor_id' => 82,
+                'visitor_id' => 82
             ],
             [
                 'name' => 'internal-error',
@@ -52,7 +52,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '34.148.220.118',
                 'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11.6; rv:92.0) Gecko/20100101 Firefox/92.0',
                 'status' => 'unreaded',
-                'visitor_id' => 193,
+                'visitor_id' => 193
             ],
             [
                 'name' => 'authenticator',
@@ -61,7 +61,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '2a00:1028:838e:71a6:ec0a:1029:dc19:fee1',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 283,
+                'visitor_id' => 283
             ],
             [
                 'name' => 'anti-log',
@@ -70,7 +70,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '2a00:1028:838e:71a6:ec0a:1029:dc19:fee1',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 283,
+                'visitor_id' => 283
             ],
             [
                 'name' => 'message-sender',
@@ -79,7 +79,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '163.5.241.114',
                 'browser' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Vivaldi/5.3.2679.68',
                 'status' => 'unreaded',
-                'visitor_id' => 305,
+                'visitor_id' => 305
             ],
             [
                 'name' => 'message-sender',
@@ -88,7 +88,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '64.64.108.41',
                 'browser' => 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 365,
+                'visitor_id' => 365
             ],
             [
                 'name' => 'message-sender',
@@ -97,7 +97,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '64.64.123.55',
                 'browser' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 389,
+                'visitor_id' => 389
             ],
             [
                 'name' => 'message-sender',
@@ -106,7 +106,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '103.163.220.52',
                 'browser' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 508,
+                'visitor_id' => 508
             ],
             [
                 'name' => 'message-sender',
@@ -115,7 +115,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '93.127.170.23',
                 'browser' => 'Mozilla/5.0 (Windows NT 10.0; WOW64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 OPR/89.0.4447.51',
                 'status' => 'unreaded',
-                'visitor_id' => 631,
+                'visitor_id' => 631
             ],
             [
                 'name' => 'message-sender',
@@ -124,7 +124,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '45.86.201.10',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 697,
+                'visitor_id' => 697
             ],
             [
                 'name' => 'message-sender',
@@ -133,7 +133,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '62.12.114.42',
                 'browser' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                 'status' => 'unreaded',
-                'visitor_id' => 703,
+                'visitor_id' => 703
             ],
             [
                 'name' => 'message-sender',
@@ -142,7 +142,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '185.132.187.97',
                 'browser' => 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:114.0) Gecko/20100101 Firefox/114.0',
                 'status' => 'unreaded',
-                'visitor_id' => 775,
+                'visitor_id' => 775
             ],
             [
                 'name' => 'message-sender',
@@ -151,7 +151,7 @@ class LogFixtures extends Fixture
                 'ip_address' => '173.244.55.12',
                 'browser' => 'Mozilla/5.0 (Linux x86_64; rv:114.0) Gecko/20100101 Firefox/114.0',
                 'status' => 'unreaded',
-                'visitor_id' => 814,
+                'visitor_id' => 814
             ]
         ];
 

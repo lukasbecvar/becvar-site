@@ -36,11 +36,11 @@ class VisitorListExportType extends AbstractType
                     'Last Week' => 'W',
                     'Last Month' => 'M',
                     'Last Year' => 'Y',
-                    'All Time' => 'ALL',
+                    'All Time' => 'ALL'
                 ],
                 'label' => 'Select Time Period: ',
                 'placeholder' => 'Select a time period',
-                'required' => true,
+                'required' => true
             ])
             ->add('format', ChoiceType::class, [
                 'choices' => [
@@ -49,7 +49,7 @@ class VisitorListExportType extends AbstractType
                 ],
                 'label' => 'Select export format: ',
                 'placeholder' => 'Select export format',
-                'required' => true,
+                'required' => true
             ])
         ;
     }
@@ -64,7 +64,7 @@ class VisitorListExportType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => null,
+            'data_class' => null
         ]);
     }
 }

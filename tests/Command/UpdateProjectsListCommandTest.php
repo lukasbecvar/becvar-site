@@ -62,8 +62,9 @@ class UpdateProjectsListCommandTest extends TestCase
     public function testExecuteCommandWhenResponseIsFailure(): void
     {
         // expect projects update call and sumulate failure response
-        $this->projectsManagerMock->expects($this->once())->method('updateProjectList')
-            ->willThrowException(new Exception('Something wrong'));
+        $this->projectsManagerMock->expects($this->once())->method('updateProjectList')->willThrowException(
+            new Exception('Something wrong')
+        );
 
         // execute command
         $exitCode = $this->commandTester->execute([]);

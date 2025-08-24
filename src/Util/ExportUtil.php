@@ -49,12 +49,12 @@ class ExportUtil
             'font' => [
                 'bold' => true,
                 'color' => ['argb' => 'FFFFFFFF'], // white text
-                'size' => 12, // larger font size
+                'size' => 12 // larger font size
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['argb' => 'FF1F1F1F'], // dark background
-            ],
+                'startColor' => ['argb' => 'FF1F1F1F'] // dark background
+            ]
         ];
 
         $sheet->getStyle('A1:H1')->applyFromArray($headerStyle);
@@ -78,8 +78,8 @@ class ExportUtil
             $sheet->getStyle($ipAddressCell)->applyFromArray([
                 'font' => [
                     'color' => ['argb' => 'FFFF00'], // yellow color for IP address
-                    'size' => 12, // larger font size
-                ],
+                    'size' => 12 // larger font size
+                ]
             ]);
 
             $row++;
@@ -89,12 +89,12 @@ class ExportUtil
         $dataStyle = [
             'font' => [
                 'color' => ['argb' => 'FFFFFFFF'], // white text
-                'size' => 12, // larger font size
+                'size' => 12 // larger font size
             ],
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['argb' => 'FF1E1E1E'], // darker background for data rows
-            ],
+                'startColor' => ['argb' => 'FF1E1E1E'] // darker background for data rows
+            ]
         ];
 
         // set style for data rows
@@ -108,8 +108,8 @@ class ExportUtil
         // center the ID column (column A)
         $sheet->getStyle('A2:A' . ($row - 1))->applyFromArray([
             'alignment' => [
-                'horizontal' => Alignment::HORIZONTAL_CENTER,
-            ],
+                'horizontal' => Alignment::HORIZONTAL_CENTER
+            ]
         ]);
 
         // add borders to all cells in the table
@@ -117,9 +117,9 @@ class ExportUtil
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => Border::BORDER_THIN,
-                    'color' => ['argb' => 'FF808080'], // gray border color
-                ],
-            ],
+                    'color' => ['argb' => 'FF808080'] // gray border color
+                ]
+            ]
         ];
 
         // apply the border style to the header and data rows
@@ -129,8 +129,8 @@ class ExportUtil
         $spreadsheet->getActiveSheet()->getStyle('A1:H' . ($row - 1))->applyFromArray([
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
-                'startColor' => ['argb' => 'FF1F1F1F'], // dark background for entire sheet
-            ],
+                'startColor' => ['argb' => 'FF1F1F1F'] // dark background for entire sheet
+            ]
         ]);
 
         // create a new Xlsx writer

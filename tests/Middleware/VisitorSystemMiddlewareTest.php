@@ -82,10 +82,9 @@ class VisitorSystemMiddlewareTest extends TestCase
         $date = new DateTime();
 
         // mock location info
-        $this->visitorInfoUtilMock->expects($this->once())
-            ->method('getLocation')->with($ipAddress)->willReturn(
-                ['city' => 'Test City', 'country' => 'Test Country']
-            );
+        $this->visitorInfoUtilMock->expects($this->once())->method('getLocation')->with($ipAddress)->willReturn(
+            ['city' => 'Test City', 'country' => 'Test Country']
+        );
 
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('persist');

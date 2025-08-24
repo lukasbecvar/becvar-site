@@ -81,7 +81,7 @@ class RegisterControllerTest extends CustomTestCase
                 'username' => '',
                 'password' => '',
                 're-password' => ''
-            ],
+            ]
         ]);
 
         // assert response
@@ -107,7 +107,7 @@ class RegisterControllerTest extends CustomTestCase
                 'username' => 'a',
                 'password' => 'a',
                 're-password' => 'a'
-            ],
+            ]
         ]);
 
         // assert response
@@ -133,7 +133,7 @@ class RegisterControllerTest extends CustomTestCase
                 'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 're-password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
-            ],
+            ]
         ]);
 
         // assert response
@@ -159,7 +159,7 @@ class RegisterControllerTest extends CustomTestCase
                 'username' => 'testing_username',
                 'password' => 'testing_password_1',
                 're-password' => 'testing_password_2'
-            ],
+            ]
         ]);
 
         // assert response
@@ -183,7 +183,7 @@ class RegisterControllerTest extends CustomTestCase
                 'username' => ByteString::fromRandom(16)->toString(),
                 'password' => 'testing_password_1',
                 're-password' => 'testing_password_1'
-            ],
+            ]
         ]);
 
         // assert response

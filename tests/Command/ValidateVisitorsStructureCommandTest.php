@@ -80,7 +80,9 @@ class ValidateVisitorsStructureCommandTest extends TestCase
     public function testExecuteCommandWhenExceptionIsThrown(): void
     {
         // mock fetchOne to throw an exception
-        $this->doctrineConnectionMock->method('fetchOne')->willThrowException(new Exception('Database error'));
+        $this->doctrineConnectionMock->method('fetchOne')->willThrowException(
+            new Exception('Database error')
+        );
 
         // execute command
         $exitCode = $this->commandTester->execute([]);

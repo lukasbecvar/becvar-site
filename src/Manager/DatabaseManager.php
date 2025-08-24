@@ -214,11 +214,8 @@ class DatabaseManager
         $data = [];
         try {
             $queryBuilder = $this->connection->createQueryBuilder();
-            $queryBuilder
-                ->select('*')
-                ->from($tableName)
-                ->where('id = :id')
-                ->setParameter('id', $id);
+            $queryBuilder->select('*')->from($tableName)
+                ->where('id = :id')->setParameter('id', $id);
 
             $statement = $this->connection->executeQuery($queryBuilder->getSQL(), $queryBuilder->getParameters());
 
@@ -396,7 +393,7 @@ class DatabaseManager
             // log truncate table event
             $this->logManager->log(
                 name: 'database',
-                value: "truncated table: $tableName in database: $dbName"
+                value: 'truncated table: ' . $tableName . ' in database:' . $dbName
             );
         } catch (Exception $e) {
             $this->errorManager->handleError(

@@ -85,7 +85,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => ''
-            ],
+            ]
         ]);
 
         // assert response
@@ -104,7 +104,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
                 'username' => 'a'
-            ],
+            ]
         ]);
 
         // assert response
@@ -122,8 +122,8 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
-                'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
-            ],
+                'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
+            ]
         ]);
 
         // assert response
@@ -139,8 +139,8 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
-                'username' => 'testing_username',
-            ],
+                'username' => 'testing_username'
+            ]
         ]);
 
         // assert response
@@ -178,7 +178,7 @@ class AccountSettingsControllerTest extends CustomTestCase
             'password_change_form' => [
                 'password' => '',
                 'repassword' => ''
-            ],
+            ]
         ]);
 
         // assert response
@@ -199,7 +199,7 @@ class AccountSettingsControllerTest extends CustomTestCase
             'password_change_form' => [
                 'password' => 'testing_password_1',
                 'repassword' => 'testing_password_2'
-            ],
+            ]
         ]);
 
         // assert response
@@ -219,7 +219,7 @@ class AccountSettingsControllerTest extends CustomTestCase
             'password_change_form' => [
                 'password' => 'a',
                 'repassword' => 'a'
-            ],
+            ]
         ]);
 
         // assert response
@@ -240,7 +240,7 @@ class AccountSettingsControllerTest extends CustomTestCase
             'password_change_form' => [
                 'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 'repassword' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
-            ],
+            ]
         ]);
 
         // assert response
@@ -258,7 +258,7 @@ class AccountSettingsControllerTest extends CustomTestCase
             'password_change_form' => [
                 'password' => 'testing_password_1',
                 'repassword' => 'testing_password_1'
-            ],
+            ]
         ]);
 
         // assert response

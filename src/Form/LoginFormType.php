@@ -61,7 +61,7 @@ class LoginFormType extends AbstractType
             ->add('remember', CheckboxType::class, [
                 'label' => 'Remember me',
                 'attr' => [
-                    'class' => 'checkbox',
+                    'class' => 'checkbox'
                 ],
                 'mapped' => false,
                 'required' => false,
@@ -80,7 +80,7 @@ class LoginFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

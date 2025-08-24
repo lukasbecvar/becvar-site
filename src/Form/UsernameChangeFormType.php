@@ -37,12 +37,12 @@ class UsernameChangeFormType extends AbstractType
             'attr' => [
                 'class' => 'text-input',
                 'autocomplete' => 'username',
-                'placeholder' => 'Username',
+                'placeholder' => 'Username'
             ],
             'mapped' => true,
             'constraints' => new Sequentially([
                 new NotBlank(message: 'Please enter a username'),
-                new Length(min: 4, minMessage: 'Your username should be at least {{ limit }} characters', max: 50),
+                new Length(min: 4, minMessage: 'Your username should be at least {{ limit }} characters', max: 50)
             ]),
             'translation_domain' => false
         ]);
@@ -58,7 +58,7 @@ class UsernameChangeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

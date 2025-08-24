@@ -311,8 +311,8 @@ class VisitorManagerController extends AbstractController
             'visitorInfoData' => null,
             'onlineVisitors' => null,
             'bannedCount' => null,
-            'filter' => 1,
-            'page' => null
+            'page' => null,
+            'filter' => 1
         ]);
     }
 }

@@ -115,7 +115,7 @@ class DatabaseManagerTest extends TestCase
         $resultMock = $this->createMock(Result::class);
         $resultMock->method('fetchAllAssociative')->willReturn([
             ['id' => 1, 'name' => 'John Doe'],
-            ['id' => 2, 'name' => 'Jane Doe'],
+            ['id' => 2, 'name' => 'Jane Doe']
         ]);
 
         // mock execute query result
@@ -131,7 +131,7 @@ class DatabaseManagerTest extends TestCase
         // assert result
         $this->assertEquals([
             ['id' => 1, 'name' => 'John Doe'],
-            ['id' => 2, 'name' => 'Jane Doe'],
+            ['id' => 2, 'name' => 'Jane Doe']
         ], $result);
     }
 
@@ -166,7 +166,7 @@ class DatabaseManagerTest extends TestCase
         $resultMock = $this->createMock(Result::class);
         $resultMock->method('fetchAllAssociative')->willReturn([
             ['id' => 1, 'name' => 'John Doe'],
-            ['id' => 2, 'name' => 'Jane Doe'],
+            ['id' => 2, 'name' => 'Jane Doe']
         ]);
 
         // mock execute query result
@@ -182,7 +182,7 @@ class DatabaseManagerTest extends TestCase
         // assert result
         $this->assertEquals([
             ['id' => 1, 'name' => 'John Doe'],
-            ['id' => 2, 'name' => 'Jane Doe'],
+            ['id' => 2, 'name' => 'Jane Doe']
         ], $result);
     }
 
@@ -217,7 +217,7 @@ class DatabaseManagerTest extends TestCase
         $resultMock = $this->createMock(Result::class);
         $resultMock->method('fetchAllAssociative')->willReturn([
             ['id' => 1, 'name' => 'John Doe'],
-            ['id' => 2, 'name' => 'Jane Doe'],
+            ['id' => 2, 'name' => 'Jane Doe']
         ]);
 
         // mock execute query result
@@ -229,7 +229,7 @@ class DatabaseManagerTest extends TestCase
         // assert result
         $this->assertEquals([
             'id' => 1,
-            'name' => 'John Doe',
+            'name' => 'John Doe'
         ], $result);
     }
 

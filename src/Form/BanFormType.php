@@ -52,7 +52,7 @@ class BanFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Visitor::class,
+            'data_class' => Visitor::class
         ]);
     }
 }

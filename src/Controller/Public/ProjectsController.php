@@ -61,7 +61,7 @@ class ProjectsController extends AbstractController
             // projects data
             'projectsCount' => $this->projectsManager->getProjectsCount(),
             'openProjects' => $this->projectsManager->getProjectsList('open'),
-            'closedProjects' => $this->projectsManager->getProjectsList('closed'),
+            'closedProjects' => $this->projectsManager->getProjectsList('closed')
         ]);
     }
 

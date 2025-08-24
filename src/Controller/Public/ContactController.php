@@ -34,7 +34,7 @@ class ContactController extends AbstractController
         LogManager $logManager,
         VisitorManager $visitorManager,
         VisitorInfoUtil $visitorInfoUtil,
-        MessagesManager $messagesManager,
+        MessagesManager $messagesManager
     ) {
         $this->appUtil = $appUtil;
         $this->logManager = $logManager;
@@ -144,7 +144,7 @@ class ContactController extends AbstractController
             'contactEmail' => $_ENV['CONTACT_EMAIL'],
             'telegramLink' => $_ENV['TELEGRAM_LINK'],
             "linkedInLink" => $_ENV['LINKEDIN_LINK'],
-            'instagramLink' => $_ENV['INSTAGRAM_LINK'],
+            'instagramLink' => $_ENV['INSTAGRAM_LINK']
         ]);
     }
 }

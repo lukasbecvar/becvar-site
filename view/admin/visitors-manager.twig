@@ -151,7 +151,7 @@
 
         {# INCLUDE VISITORS METRICS CHART SCRIPT #}
         <script>
-            window.visitorMetrics = {{ visitorMetrics.visitorsCount|json_encode|raw }};
+            window.visitorMetrics = {{ visitorMetrics.visitorsCount|json_encode|raw }}
         </script>
         {{ encore_entry_script_tags('visitors-metrics-js') }}
     {% else %}
@@ -262,18 +262,18 @@
 {# LINE SELECTOR HIGHLIGHT SCRIPT #}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var hash = window.location.hash;
+        var hash = window.location.hash
         if (hash && hash.startsWith('#')) {
-            var id = hash.substring(1);
-            var row = document.getElementById(id);
+            var id = hash.substring(1)
+            var row = document.getElementById(id)
 
             if (row) {
-                var thElements = row.getElementsByTagName('th');
+                var thElements = row.getElementsByTagName('th')
                 for (var j = 0; j < thElements.length; j++) {
-                    thElements[j].classList.add('highlighter');
+                    thElements[j].classList.add('highlighter')
                 }
             }
         }
-    });
+    })
 </script>
 {% endblock %}

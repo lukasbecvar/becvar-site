@@ -92,7 +92,9 @@ class ClearLogsCommandTest extends TestCase
     {
         // mock get database name and entity table name
         $this->appUtil->method('getEnvValue')->willReturn('test_database');
-        $this->databaseManager->method('getEntityTableName')->willThrowException(new Exception('Database error'));
+        $this->databaseManager->method('getEntityTableName')->willThrowException(
+            new Exception('Database error')
+        );
 
         // set inputs for confirmation
         $this->commandTester->setInputs(['yes']);

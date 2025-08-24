@@ -36,7 +36,7 @@ class ContactFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control mt-3',
-                    'placeholder' => 'Your name',
+                    'placeholder' => 'Your name'
                 ],
                 'mapped' => true,
                 'translation_domain' => false
@@ -45,7 +45,7 @@ class ContactFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control mt-3',
-                    'placeholder' => 'Your Email',
+                    'placeholder' => 'Your Email'
                 ],
                 'mapped' => true,
                 'translation_domain' => false
@@ -64,7 +64,7 @@ class ContactFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'websiteIN',
-                    'placeholder' => 'Website',
+                    'placeholder' => 'Website'
                 ],
                 'mapped' => false,
                 'required' => false,
@@ -83,7 +83,7 @@ class ContactFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Message::class,
+            'data_class' => Message::class
         ]);
     }
 }

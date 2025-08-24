@@ -133,7 +133,7 @@ class MessagesManagerTest extends TestCase
                 return match ($encryptedMessage) {
                     'encryptedMessage1' => 'decryptedMessage1',
                     'encryptedMessage2' => 'decryptedMessage2',
-                    default => null,
+                    default => null
                 };
             });
 

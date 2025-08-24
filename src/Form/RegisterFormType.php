@@ -39,12 +39,12 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'class' => 'text-input',
                     'autocomplete' => 'username',
-                    'placeholder' => 'Username',
+                    'placeholder' => 'Username'
                 ],
                 'mapped' => true,
                 'constraints' => new Sequentially([
                     new NotBlank(message: 'Please enter a username'),
-                    new Length(min: 4, minMessage: 'Your username should be at least {{ limit }} characters', max: 50),
+                    new Length(min: 4, minMessage: 'Your username should be at least {{ limit }} characters', max: 50)
                 ]),
                 'translation_domain' => false
             ])
@@ -53,12 +53,12 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'class' => 'text-input',
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Password',
+                    'placeholder' => 'Password'
                 ],
                 'mapped' => true,
                 'constraints' => new Sequentially([
                     new NotBlank(message: 'Please enter a password'),
-                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 80),
+                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 80)
                 ]),
                 'translation_domain' => false
             ])
@@ -69,11 +69,11 @@ class RegisterFormType extends AbstractType
                     'type' => 'password',
                     'class' => 'text-input',
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Password again',
+                    'placeholder' => 'Password again'
                 ],
                 'constraints' => new Sequentially([
                     new NotBlank(message: 'Please enter a password again'),
-                    new Length(min: 8, minMessage: 'Your password again should be at least {{ limit }} characters', max: 80),
+                    new Length(min: 8, minMessage: 'Your password again should be at least {{ limit }} characters', max: 80)
                 ]),
                 'translation_domain' => false
             ])
@@ -90,7 +90,7 @@ class RegisterFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

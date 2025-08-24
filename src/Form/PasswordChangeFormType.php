@@ -38,12 +38,12 @@ class PasswordChangeFormType extends AbstractType
                 'attr' => [
                     'class' => 'text-input',
                     'autocomplete' => 'password',
-                    'placeholder' => 'password',
+                    'placeholder' => 'password'
                 ],
                 'mapped' => true,
                 'constraints' => new Sequentially([
                     new NotBlank(message: 'Please enter a password'),
-                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 50),
+                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 50)
                 ]),
                 'translation_domain' => false
             ])
@@ -52,12 +52,12 @@ class PasswordChangeFormType extends AbstractType
                 'attr' => [
                     'class' => 'text-input',
                     'autocomplete' => 'repassword',
-                    'placeholder' => 're password',
+                    'placeholder' => 're password'
                 ],
                 'mapped' => false,
                 'constraints' => new Sequentially([
                     new NotBlank(message: 'Please enter a repassword'),
-                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 50),
+                    new Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters', max: 50)
                 ]),
                 'translation_domain' => false
             ])
@@ -74,7 +74,7 @@ class PasswordChangeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }
