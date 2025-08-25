@@ -139,7 +139,7 @@ class ErrorControllerTest extends WebTestCase
         // assert response
         $this->assertSelectorTextContains('title', 'Error: Too Many Requests');
         $this->assertSelectorTextContains('body', 'Too Many Requests');
-        $this->assertSelectorTextContains('body', 'Please try to wait and try again later');
+        $this->assertSelectorTextContains('body', 'Please wait and try again later');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 

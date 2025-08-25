@@ -24,7 +24,7 @@ error.426.submessage: "Please try to use the HTTPS protocol to access this page"
 # error 429
 error.429.title: "Error: Too Many Requests"
 error.429.message: "Too Many Requests"
-error.429.submessage: "Please try to wait and try again later"
+error.429.submessage: "Please wait and try again later"
 # error 500
 error.500.title: "Error: Internal Server Error"
 error.500.message: "The server encountered an unexpected condition that prevented it from fulfilling the request"
