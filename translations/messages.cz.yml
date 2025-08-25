@@ -24,7 +24,7 @@ error.426.submessage: "Zkuste použít protokol HTTPS pro přístup k této str�
 # error 429
 error.429.title: "Chyba: Příliš mnoho požadků"
 error.429.message: "Příliš mnoho požadavků"
-error.429.submessage: "Zkuste počkat a zkuste to znovu později"
+error.429.submessage: "Počkejte a zkuste to znovu později"
 # chyba 500
 error.500.title: "Chyba: Interní serverová chyba"
 error.500.message: "Server narazil na neočekávanou chybu, která mu brání ve splnění požadavku"
