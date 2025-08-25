@@ -33,6 +33,11 @@ services:
 
     # app middlewares
     # --------------------------------------------------------------------------------- #
+    # rate limiter middleware
+    App\Middleware\RateLimitMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 10 }
+
     # check if assets is builded
     App\Middleware\AssetsCheckMiddleware:
         tags:
