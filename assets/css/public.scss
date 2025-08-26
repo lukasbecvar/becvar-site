@@ -21,6 +21,11 @@ body::before {
     z-index: -1;
 }
 
+/* fix profiler toolbar position */
+.sf-toolbar {
+	position: absolute !important;
+}
+
 @media (min-width: 1024px) {
     body::before {
         background-attachment: fixed;
