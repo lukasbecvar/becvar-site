@@ -37,7 +37,7 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->getAllIds();
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an array of IDs.");
+        $this->assertIsArray($visitors, 'The result should be an array of IDs.');
     }
 
     /**
@@ -54,7 +54,24 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->findByTimeFilter('H');
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an array of visitors.");
+        $this->assertIsArray($visitors, 'The result should be an array of visitors.');
+    }
+
+    /**
+     * Test find visitors by time filter as iterable
+     *
+     * @return void
+     */
+    public function testFindByTimeFilterIterable(): void
+    {
+        /** @var \App\Repository\VisitorRepository $visitorRepository */
+        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+
+        // get visitors
+        $visitors = $visitorRepository->findByTimeFilterIterable('H');
+
+        // assert result
+        $this->assertIsIterable($visitors, 'The result should be an iterable of visitors.');
     }
 
     /**
@@ -71,7 +88,7 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->getVisitorsCountByPeriod('last_week');
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an associative array of visitor counts.");
+        $this->assertIsArray($visitors, 'The result should be an associative array of visitor counts.');
     }
 
     /**
@@ -88,7 +105,7 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->getVisitorsByCountry();
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an associative array of country visitor counts.");
+        $this->assertIsArray($visitors, 'The result should be an associative array of country visitor counts.');
     }
 
     /**
@@ -105,7 +122,7 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->getVisitorsByCity();
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an associative array of city visitor counts.");
+        $this->assertIsArray($visitors, 'The result should be an associative array of city visitor counts.');
     }
 
     /**
@@ -122,6 +139,6 @@ class VisitorRepositoryTest extends KernelTestCase
         $visitors = $visitorRepository->getVisitorsUsedBrowsers();
 
         // assert result
-        $this->assertIsArray($visitors, "The result should be an associative array of browser visitor counts.");
+        $this->assertIsArray($visitors, 'The result should be an associative array of browser visitor counts.');
     }
 }

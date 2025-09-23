@@ -256,10 +256,16 @@ class VisitorManagerController extends AbstractController
             }
 
             // get visitors list
-            $visitorsList = $this->visitorManager->getVisitorsByFilter($filter);
+            $visitorsList = iterator_to_array($this->visitorManager->getVisitorsByFilterIterable($filter));
+            if (empty($visitorsList)) {
+                $errorMsg = 'no visitors found in selected time period';
+            }
 
-            // check if visitors list is empty
-            if ($visitorsList == null) {
+            // get visitors list as array
+            $visitorsList = iterator_to_array($this->visitorManager->getVisitorsByFilterIterable($filter));
+
+            // check if empty
+            if (empty($visitorsList)) {
                 $errorMsg = 'no visitors found in selected time period';
             }
 
@@ -269,7 +275,7 @@ class VisitorManagerController extends AbstractController
                 if ($format === 'EXCEL') {
                     return $this->exportUtil->exportVisitorsToExcel($visitorsList);
                 } elseif ($format === 'PDF') {
-                    return $this->exportUtil->exportVisitorsListToPDF($visitorsList);
+                    return $this->exportUtil->exportVisitorsListToFPDF($visitorsList);
                 }
 
                 // redirect back to export page

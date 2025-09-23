@@ -88,6 +88,50 @@ class VisitorRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get visitors based on the specified time filter as an iterable result
+     *
+     * @param string $filter The filter for the time period
+     *
+     * @return iterable<Visitor> An iterable of visitors filtered by the specified time range
+     *
+     * @throws InvalidArgumentException If the filter is not valid
+     */
+    public function findByTimeFilterIterable(string $filter): iterable
+    {
+        $now = new DateTime();
+        $startDate = null;
+
+        // calculate start date based on the filter
+        switch ($filter) {
+            case 'H':
+                $startDate = $now->sub(new DateInterval('PT1H'));
+                break;
+            case 'D':
+                $startDate = $now->sub(new DateInterval('P1D'));
+                break;
+            case 'W':
+                $startDate = $now->sub(new DateInterval('P7D'));
+                break;
+            case 'M':
+                $startDate = $now->sub(new DateInterval('P1M'));
+                break;
+            case 'Y':
+                $startDate = $now->sub(new DateInterval('P1Y'));
+                break;
+            case 'ALL':
+                return $this->createQueryBuilder('v')->getQuery()->toIterable();
+            default:
+                throw new InvalidArgumentException("Invalid filter: $filter");
+        }
+
+        // create a query builder
+        $qb = $this->createQueryBuilder('v');
+        $qb->where('v.first_visit >= :start_date')->setParameter('start_date', $startDate);
+
+        return $qb->getQuery()->toIterable();
+    }
+
+    /**
      * Get count of visitors grouped by date based on the specified time period
      *
      * @param string $period The time period for which to retrieve the visitor count.

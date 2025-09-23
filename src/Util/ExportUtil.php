@@ -2,9 +2,8 @@
 
 namespace App\Util;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use App\Util\Export\VisitorListPdfHeader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -34,7 +33,7 @@ class ExportUtil
      *
      * @return Response The Excel file response
      */
-    public function exportVisitorsToExcel(array $dataToExport): Response
+    public function exportVisitorsToExcel(iterable $dataToExport): Response
     {
         // create a new Spreadsheet object
         $spreadsheet = new Spreadsheet();
@@ -154,98 +153,42 @@ class ExportUtil
     }
 
     /**
-     * Export visitors list data to PDF file
+     * Export visitors list data to PDF file using FPDF
      *
-     * @param array<mixed> $dataToExport The visitors list data
+     * @param iterable<mixed> $dataToExport The visitors list data
      *
      * @return Response The PDF file response
      */
-    public function exportVisitorsListToPDF(array $dataToExport): Response
+    public function exportVisitorsListToFPDF(iterable $dataToExport): Response
     {
-        // initialize Dompdf
-        $options = new Options();
-        $options->set('defaultFont', 'Arial');
-        $dompdf = new Dompdf($options);
+        $pdf = new VisitorListPdfHeader('L', 'mm', 'A4');
+        $pdf->AddPage();
 
-        // prepare HTML content for PDF with dark theme styling
-        $html = '
-        <style>
-            @page {
-                margin: 0px; /* Remove page margins */
-            }
-            body {
-                margin: 0px; /* Remove body margins */
-                padding: 0px;
-                background-color: #121212;
-                color: #E0E0E0;
-                font-family: Arial, sans-serif;
-            }
-            h1 {
-                text-align: center;
-                color: ;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            th, td {
-                border: 1px solid #E0E0E0;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #1F1F1F;
-                color: #BB86FC;
-            }
-            tr:nth-child(even) {
-                background-color: #2C2C2C;
-            }
-            tr:nth-child(odd) {
-                background-color: #1E1E1E;
-            }
-        </style>';
-
-        $html .= '<h1>Visitors List</h1>';
-        $html .= '<table>';
-
-        // table columns list
-        $html .= '<tr>
-            <th>ID</th>
-            <th>First Visit</th>
-            <th>Last Visit</th>
-            <th>Browser</th>
-            <th>OS</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>IP Address</th>
-        </tr>';
-
-        // add visitor to table
+        // data
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetTextColor(224, 224, 224);
+        $fill = false;
+        $w = [15, 40, 40, 30, 30, 40, 40, 40];
         foreach ($dataToExport as $visitor) {
-            $html .= '<tr>';
-            $html .= '<td>' . $visitor->getId() . '</td>';
-            $html .= '<td>' . $visitor->getFirstVisit()->format('Y-m-d H:i:s') . '</td>';
-            $html .= '<td>' . $visitor->getLastVisit()->format('Y-m-d H:i:s') . '</td>';
-            $html .= '<td>' . $this->visitorInfoUtil->getBrowserShortify($visitor->getBrowser()) . '</td>';
-            $html .= '<td>' . $visitor->getOs() . '</td>';
-            $html .= '<td>' . $visitor->getCity() . '</td>';
-            $html .= '<td>' . $visitor->getCountry() . '</td>';
-            $html .= '<td>' . $visitor->getIpAddress() . '</td>';
-            $html .= '</tr>';
+            // set alternating row color
+            $pdf->SetFillColor($fill ? 44 : 30, $fill ? 44 : 30, $fill ? 44 : 30);
+            $pdf->Cell($w[0], 6, $visitor->getId(), 1, 0, 'C', true);
+            $pdf->Cell($w[1], 6, $visitor->getFirstVisit()->format('Y-m-d H:i:s'), 1, 0, 'L', true);
+            $pdf->Cell($w[2], 6, $visitor->getLastVisit()->format('Y-m-d H:i:s'), 1, 0, 'L', true);
+            $pdf->Cell($w[3], 6, $this->visitorInfoUtil->getBrowserShortify($visitor->getBrowser()), 1, 0, 'L', true);
+            $pdf->Cell($w[4], 6, $visitor->getOs(), 1, 0, 'L', true);
+            $pdf->Cell($w[5], 6, $visitor->getCity(), 1, 0, 'L', true);
+            $pdf->Cell($w[6], 6, $visitor->getCountry(), 1, 0, 'L', true);
+            $pdf->Cell($w[7], 6, $visitor->getIpAddress(), 1, 0, 'L', true);
+            $pdf->Ln();
+            $fill = !$fill;
         }
-        $html .= '</table>';
 
-        // load HTML content to Dompdf
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->render();
-
-        // prepare the response
-        $response = new Response();
+        // output
+        $output = $pdf->Output('S');
+        $response = new Response($output);
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'attachment; filename="visitors-list_' . date('Y-m-d') . '.pdf"');
-        $response->setContent($dompdf->output());
-
         return $response;
     }
 }

@@ -70,17 +70,17 @@ class ExportUtilTest extends TestCase
     }
 
     /**
-     * Test for export visitors list to PDF
+     * Test for export visitors to PDF using FPDF
      *
      * @return void
      */
-    public function testExportVisitorsListToPdf(): void
+    public function testExportVisitorsListToFPDF(): void
     {
         // mock visitor entity
         $visitorMock = $this->createMock(Visitor::class);
         $visitorMock->method('getId')->willReturn(1);
-        $visitorMock->method('getFirstVisit')->willReturn(new DateTime('2023-12-01'));
-        $visitorMock->method('getLastVisit')->willReturn(new DateTime('2023-12-01'));
+        $visitorMock->method('getFirstVisit')->willReturn(new DateTime('2023-12-01 10:00:00'));
+        $visitorMock->method('getLastVisit')->willReturn(new DateTime('2023-12-01 12:00:00'));
         $visitorMock->method('getBrowser')->willReturn('Firefox');
         $visitorMock->method('getOs')->willReturn('Linux');
         $visitorMock->method('getCity')->willReturn('Prague');
@@ -90,18 +90,21 @@ class ExportUtilTest extends TestCase
         // mock metody getBrowserShortify
         $this->visitorInfoUtilMock->method('getBrowserShortify')->with('Firefox')->willReturn('FF');
 
-        // mock export data
         $dataToExport = [$visitorMock];
 
-        // call export method
-        $response = $this->exportUtil->exportVisitorsListToPDF($dataToExport);
+        // call export to PDF
+        $response = $this->exportUtil->exportVisitorsListToFPDF($dataToExport);
 
         // check response headers
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
         $this->assertStringContainsString('attachment; filename="visitors-list_', $response->headers->get('Content-Disposition'));
 
-        // check response data
-        $output = $response->getContent();
+        // capture PDF content
+        ob_start();
+        $response->sendContent();
+        $output = ob_get_clean();
+
+        // check that PDF output is not empty
         $this->assertNotEmpty($output);
     }
 }

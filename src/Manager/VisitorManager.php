@@ -296,6 +296,27 @@ class VisitorManager
     }
 
     /**
+     * The mirror for filter method in VisitorRepository (iterable)
+     *
+     * This method retrieves all visitors from the database and filters them based on the given time period
+     * The filter can be one of the following:
+     * - 'H' for the last hour
+     * - 'D' for the last day
+     * - 'W' for the last week
+     * - 'M' for the last month
+     * - 'Y' for the last year
+     * - 'ALL' to retrieve all visitors
+     *
+     * @param string $filter The filter for the time period
+     *
+     * @return iterable<Visitor> An iterable of visitors filtered by the specified time range
+     */
+    public function getVisitorsByFilterIterable(string $filter): iterable
+    {
+        return $this->visitorRepository->findByTimeFilterIterable($filter);
+    }
+
+    /**
      * Get the visitor metrics based on the specified count filter
      *
      * @param string $countFilter The count filter for the visitors
