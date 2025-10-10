@@ -4,6 +4,7 @@ namespace App\Tests\Util;
 
 use App\Util\AppUtil;
 use App\Util\SecurityUtil;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,35 @@ class AppUtilTest extends TestCase
 
         // create instance of AppUtil
         $this->appUtil = new AppUtil($this->securityUtilMock, $this->kernelInterfaceMock);
+    }
+
+    /**
+     * Test generate key with invalid length
+     *
+     * @return void
+     */
+    public function testGenerateKeyWithInvalidLength(): void
+    {
+        // expect exception
+        $this->expectException(InvalidArgumentException::class);
+
+        // call tested method
+        $this->appUtil->generateKey(0);
+    }
+
+    /**
+     * Test generate key with valid length
+     *
+     * @return void
+     */
+    public function testGenerateKeyWithValidLength(): void
+    {
+        // call tested method
+        $result = $this->appUtil->generateKey(16);
+
+        // assert result
+        $this->assertIsString($result);
+        $this->assertEquals(32, strlen($result));
     }
 
     /**

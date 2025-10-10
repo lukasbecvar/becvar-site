@@ -192,4 +192,47 @@ class MessagesManager
             }
         }
     }
+
+    /**
+     * Re-encrypt all messages in the database
+     *
+     * @param string $oldKey The old encryption key
+     * @param string $newKey The new encryption key
+     *
+     * @return void
+     */
+    public function reEncryptMessages(string $oldKey, string $newKey): void
+    {
+        // get all messages
+        $messages = $this->messageRepository->findAll();
+
+        // re-encrypt messages
+        foreach ($messages as $message) {
+            // get message data
+            $encryptedData = $message->getMessage();
+            if ($encryptedData == null) {
+                continue;
+            }
+
+            // decrypt message
+            $messageDecrypted = $this->securityUtil->decryptAes(encryptedData: $encryptedData, key: $oldKey);
+
+            // check if message data is decrypted
+            if ($messageDecrypted == null) {
+                $this->errorManager->handleError(
+                    msg: 'error to decrypt aes message data',
+                    code: Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+
+            // re-encrypt message
+            $message->setMessage($this->securityUtil->encryptAes(plainText: $messageDecrypted, key: $newKey));
+
+            // persist message object
+            $this->entityManager->persist($message);
+        }
+
+        // flush all message objects to the database
+        $this->entityManager->flush();
+    }
 }

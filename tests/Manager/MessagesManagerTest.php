@@ -210,4 +210,38 @@ class MessagesManagerTest extends TestCase
         // call tested method
         $this->messagesManager->closeMessage($id);
     }
+
+    /**
+     * Test re-encrypt messages process
+     *
+     * @return void
+     */
+    public function testReEncryptMessages(): void
+    {
+        // prepare mock messages
+        $message1 = $this->createMock(Message::class);
+        $message1->method('getMessage')->willReturn('oldEnc1');
+        $message2 = $this->createMock(Message::class);
+        $message2->method('getMessage')->willReturn('oldEnc2');
+        $messages = [$message1, $message2];
+
+        // mock repository
+        $this->messageRepository->expects($this->once())->method('findAll')->willReturn($messages);
+
+        // mock decrypt/encrypt
+        $this->securityUtil->expects($this->exactly(2))->method('decryptAes')
+            ->willReturnOnConsecutiveCalls('plain1', 'plain2');
+        $this->securityUtil->expects($this->exactly(2))->method('encryptAes')
+            ->willReturnOnConsecutiveCalls('newEnc1', 'newEnc2');
+
+        // expect setMessage calls
+        $message1->expects($this->once())->method('setMessage')->with('newEnc1');
+        $message2->expects($this->once())->method('setMessage')->with('newEnc2');
+
+        // expect flush after re-encryption
+        $this->entityManager->expects($this->once())->method('flush');
+
+        // call tested method
+        $this->messagesManager->reEncryptMessages('oldKey', 'newKey');
+    }
 }
