@@ -430,6 +430,7 @@ button {
 	margin-bottom: 0px;
 	border: 1px solid rgba(255, 255, 255, 0.443);
 	transform: translate(-50%, -50%);
+	border-radius: 5px;
 }
 
 .db-browser-select-link:hover {
@@ -586,7 +587,7 @@ button {
 	margin-left: 3px;
 	margin-right: 1px;
 	font-size: 13.5px;
-	border-radius: 3px;
+	border-radius: 4px;
 	color: rgb(219, 219, 219);
 	border: 1px solid rgba(255, 255, 255, 0.264);
 }
@@ -728,7 +729,7 @@ button {
 }
 
 .email-line {
-	margin-top: 4px;
+	margin-top: 5px;
 	margin-left: 0px;
 }
 
