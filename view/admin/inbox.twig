@@ -11,7 +11,7 @@
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
         {% if inboxData != null %}
-            <center>
+            <center class="mt-3">
                 {% for message in inboxData %}
                     <div class='card text-white mb-3 msg-box'>
                         <div class="card-header">
@@ -40,7 +40,7 @@
                     </div>
                 {% endfor %}
             </center>
-            <div class="page-button-box">
+            <div class="page-button-box mt-3">
                 {% if page != 1 %}
                     <a class="back-page-button" href={{ path('admin_inbox', {'page': page - 1}) }}>Back</a>
                 {% endif %}

@@ -87,7 +87,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="page-button-box">
+            <div class="page-button-box mt-3">
                 {% if readerPage != 1 %}
                     {% if whereIp != null %}
                         <a class="back-page-button" href={{ path('admin_log_list_whereIp', {'page': readerPage - 1, 'ip': whereIp}) }}>Back</a>

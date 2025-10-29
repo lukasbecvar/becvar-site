@@ -56,12 +56,12 @@ class RegisterControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | Login');
-        $this->assertSelectorTextContains('.form-title', 'Register admin account');
+        $this->assertSelectorTextContains('.login-card-title', 'Create administrator account');
         $this->assertSelectorExists('form[name="register_form"]');
         $this->assertSelectorExists('input[name="register_form[username]"]');
         $this->assertSelectorExists('input[name="register_form[password]"]');
         $this->assertSelectorExists('input[name="register_form[re-password]"]');
-        $this->assertSelectorExists('button:contains("Register")');
+        $this->assertSelectorExists('button:contains("Create account")');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 

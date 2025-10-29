@@ -28,121 +28,185 @@
     {# VISITOR METRICS COMPONENT #}
     {% elseif visitorMetrics != null %}
         {# VISITORS COUNT CHART #}
-        <div class="chart-container">
-            <div id="chart"></div>
+        <div class="col-12 metrics-card metrics-chart">
+            <div class="card dashbord-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Visitors Chart</h5>
+                    <select id="time-period" class="custom-select" onchange="updateTimePeriod()">
+                        <option value="last_24_hours">Last 24 hours</option>
+                        <option value="last_week">Last week</option>
+                        <option value="last_month">Last month</option>
+                        <option value="last_year">Last year</option>
+                        <option value="all_time">All time</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div id="chart"></div>
+                </div>
+            </div>
         </div>
+
+        <script>
+            // update time period in url
+            function updateTimePeriod() {
+                const select = document.getElementById('time-period')
+                const selectedValue = select.value
+                window.location.href = `/admin/visitors/metrics?time_period=${selectedValue}`
+            }
+
+            // select selecton value from url
+            function setSelectedValue() {
+                const urlParams = new URLSearchParams(window.location.search)
+                const timePeriod = urlParams.get('time_period')
+                const select = document.getElementById('time-period')
+
+                // set selected value
+                if (timePeriod) {
+                    select.value = timePeriod
+                } else {
+                    select.value = 'last_week'
+                }
+            }
+
+            // init select value
+            window.onload = setSelectedValue
+        </script>
 
         {# METRICS BOXES #}
         <div class="text-white metrics-box-container">
-            <div class="row no-gutters">
-                {# USED BROWSERS LIST #}
-                <div class="col-12 col-md-4 metrics-card"> 
-                    <div class="card l-bg-cherry counter-card">
-                        <div class="card-statistic p-0">
-                            <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover custom-header">
-                                        <thead>
-                                            <tr>
-                                                <th>Browser</th>
-                                                <th>Visitors count</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for key, row in visitorMetrics.visitorsBrowsers %}
-                                                <tr>
-                                                    <th>{{ key|e }}</th>
-                                                    <th class="text-primary">{{ row|e }}</th>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="row no-gutters metrics-row">
                 {# VISITORS COUNTRY LIST #}
-                <div class="col-12 col-md-4 metrics-card"> 
-                    <div class="card l-bg-blue-dark counter-card">
-                        <div class="card-statistic p-0">
-                            <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover custom-header">
+                <div class="col-12 col-md-6 col-xl-3 metrics-card"> 
+                    <div class="metrics-table-card">
+                        <div class="metrics-table-card-header">
+                            <span class="metrics-table-card-title">Top countries</span>
+                            <span class="metrics-table-card-meta">{{ visitorMetrics.visitorsCountry|length }} total</span>
+                        </div>
+                        <div class="metrics-table-card-body">
+                            {% if visitorMetrics.visitorsCountry is not empty %}
+                                <div class="table-responsive">
+                                    <table class="table table-dark text-nowrap table-hover custom-header metrics-table-card-table">
                                         <thead>
                                             <tr>
-                                                <th>Country</th>
-                                                <th>Visitors count</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col" class="text-end pe-2">Visitors</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for key, row in visitorMetrics.visitorsCountry %}
                                                 <tr>
-                                                    <th>{{ key|e }}</th>
-                                                    <th class="text-primary">{{ row|e }}</th>
+                                                    <td class="metrics-table-card-label">{{ key|e }}</td>
+                                                    <td class="metrics-table-card-value text-primary">{{ row|e }}</td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            {% else %}
+                                <p class="metrics-table-card-empty">No visitor country data yet.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>  
 
                 {# VISITORS CITIES LIST #}
-                <div class="col-12 col-md-4 metrics-card"> 
-                    <div class="card l-bg-cyan-darker counter-card">
-                        <div class="card-statistic p-0">
-                            <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover custom-header">
+                <div class="col-12 col-md-6 col-xl-3 metrics-card"> 
+                    <div class="metrics-table-card">
+                        <div class="metrics-table-card-header">
+                            <span class="metrics-table-card-title">Top cities</span>
+                            <span class="metrics-table-card-meta">{{ visitorMetrics.visitorsCity|length }} tracked</span>
+                        </div>
+                        <div class="metrics-table-card-body">
+                            {% if visitorMetrics.visitorsCity is not empty %}
+                                <div class="table-responsive">
+                                    <table class="table table-dark text-nowrap table-hover custom-header metrics-table-card-table">
                                         <thead class="metrics-table-header">
                                             <tr>
-                                                <th>City</th>
-                                                <th>Visitors count</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col" class="text-end pe-2">Visitors</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for key, row in visitorMetrics.visitorsCity %}
                                                 <tr>
-                                                    <th>{{ key|e }}</th>
-                                                    <th class="text-primary">{{ row|e }}</th>
+                                                    <td class="metrics-table-card-label">{{ key|e }}</td>
+                                                    <td class="metrics-table-card-value text-primary">{{ row|e }}</td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            {% else %}
+                                <p class="metrics-table-card-empty">No visitor city data yet.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div> 
 
+                {# USED BROWSERS LIST #}
+                <div class="col-12 col-md-6 col-xl-3 metrics-card"> 
+                    <div class="metrics-table-card">
+                        <div class="metrics-table-card-header">
+                            <span class="metrics-table-card-title">Top browsers</span>
+                            <span class="metrics-table-card-meta">{{ visitorMetrics.visitorsBrowsers|length }} types</span>
+                        </div>
+                        <div class="metrics-table-card-body">
+                            {% if visitorMetrics.visitorsBrowsers is not empty %}
+                                <div class="table-responsive">
+                                    <table class="table table-dark text-nowrap table-hover custom-header metrics-table-card-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Browser</th>
+                                                <th scope="col" class="text-end pe-2">Visitors</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, row in visitorMetrics.visitorsBrowsers %}
+                                                <tr>
+                                                    <td class="metrics-table-card-label">{{ key|e }}</td>
+                                                    <td class="metrics-table-card-value text-primary">{{ row|e }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <p class="metrics-table-card-empty">No visitor browser data yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 {# VISITORS REFERERS #}
-                <div class="col-12 col-md-4 metrics-card"> 
-                    <div class="card l-bg-cyan-darker counter-card">
-                        <div class="card-statistic p-0">
-                            <div class="row align-items-center mb-0 d-flex">
-                                <div class="col-12 pb-0">
-                                    <table class="table table-dark text-nowrap table-hover custom-header">
+                <div class="col-12 col-md-6 col-xl-3 metrics-card"> 
+                    <div class="metrics-table-card">
+                        <div class="metrics-table-card-header">
+                            <span class="metrics-table-card-title">Top referers</span>
+                            <span class="metrics-table-card-meta">{{ visitorMetrics.visitorsReferers|length }} sources</span>
+                        </div>
+                        <div class="metrics-table-card-body">
+                            {% if visitorMetrics.visitorsReferers is not empty %}
+                                <div class="table-responsive">
+                                    <table class="table table-dark text-nowrap table-hover custom-header metrics-table-card-table">
                                         <thead class="metrics-table-header">
                                             <tr>
-                                                <th>Referer</th>
-                                                <th>Visitors count</th>
+                                                <th scope="col">Referer</th>
+                                                <th scope="col" class="text-end pe-2">Visitors</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for key, row in visitorMetrics.visitorsReferers %}
                                                 <tr>
-                                                    <th>{{ key|e }}</th>
-                                                    <th class="text-primary">{{ row|e }}</th>
+                                                    <td class="metrics-table-card-label">{{ key|e }}</td>
+                                                    <td class="metrics-table-card-value text-primary">{{ row|e }}</td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            {% else %}
+                                <p class="metrics-table-card-empty">No referer data yet.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -245,7 +309,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="page-button-box">
+            <div class="page-button-box mt-3">
                 {% if page != 1 %}
                     <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page - 1}) }}>Back</a>
                 {% endif %}

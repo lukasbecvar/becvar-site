@@ -36,7 +36,7 @@ class DatabaseBrowserControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | database');
-        $this->assertSelectorTextContains('.page-title', 'Select table');
+        $this->assertSelectorTextContains('.database-section-title', 'Select table');
         $this->assertSelectorExists('a[class="db-browser-select-link"]');
         $this->assertSelectorTextContains('body', 'users');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -85,7 +85,7 @@ class DatabaseBrowserControllerTest extends CustomTestCase
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('body', 'New row');
-        $this->assertSelectorTextContains('.title', 'Add new: users');
+        $this->assertSelectorTextContains('.card-header', 'Add new: users');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -101,7 +101,7 @@ class DatabaseBrowserControllerTest extends CustomTestCase
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | database');
         $this->assertSelectorTextContains('body', 'Row editor');
-        $this->assertSelectorTextContains('.title', 'Edit users, row: 1');
+        $this->assertSelectorTextContains('.card-header', 'Edit users · Row 1');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 }

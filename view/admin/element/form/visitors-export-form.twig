@@ -4,33 +4,36 @@
     visitors export
 {% endblock %}
 
-{# VISITORS LIST EXPORT FORM #}
 {% block component %}
-<div class="admin-panel">
+<div class="admin-panel database-panel">
     {% if getUserRole() != 'Owner' and getUserRole() != 'Admin' %}
         <h2 class="page-title">Sorry you dont have permission to this page</h2>
     {% else %}
-        {# FORM SUBMIT ERROR MESSAGE BOX #}
+        {# ERROR MESSAGE BOX #}
         {% if errorMsg != null %}
             {% include "common/alerts/error-alert.twig" %}
         {% endif %}
 
-        {# VISITORS DATA EXPORT FORM #}
         <center>
-            <div class="image-upload-form dark-table">
-                <h3 class="form-title">Download visitors data</h3>
-                <div class="custom-file">
-                    {{ form_start(form) }}
-                        {{ form_row(form.filter, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
-                        {{ form_row(form.format, {'attr': {'class': 'form-control bg-dark export-filter'}}) }}
-                        {# SUBMIT BUTTON #}
-                        <div class="text-center mb-1 mt-3">
-                            <div class="right-position">
-                                <button class="input-button" type="submit">Export data</button>
-                            </div>
+            <div class="card dashbord-card database-card visitors-export-form-card">
+                <div class="card-header">
+                    Download visitors data
+                </div>
+                <div class="card-body database-form-body">
+                    {{ form_start(form, {'attr': {'class': 'visitors-export-form'}}) }}
+                        <div class="form-group">
+                            <span class="form-field-label">Time period:</span>
+                            {{ form_widget(form.filter, {'attr': {'class': 'custom-select'}}) }}
+                            {{ form_errors(form.filter) }}
                         </div>
-                    {{ form_end(form) }} 
-                </div>   
+                        <div class="form-group">
+                            <span class="form-field-label">Export format:</span>
+                            {{ form_widget(form.format, {'attr': {'class': 'custom-select'}}) }}
+                            {{ form_errors(form.format) }}
+                        </div>
+                        <button class="input-button" type="submit">Export data</button>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </center>
     {% endif %}

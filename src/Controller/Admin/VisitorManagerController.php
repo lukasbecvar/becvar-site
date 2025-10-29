@@ -180,7 +180,8 @@ class VisitorManagerController extends AbstractController
 
         // render ban form view
         return $this->render('admin/element/form/ban-form.twig', [
-            'banForm' => $form
+            'banForm' => $form,
+            'page' => $page
         ]);
     }
 

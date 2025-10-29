@@ -32,8 +32,7 @@ class BanFormType extends AbstractType
         $builder->add('ban_reason', TextareaType::class, [
             'label' => false,
             'attr' => [
-                'class' => 'ban-area ban-input',
-                'placeholder' => 'Reason',
+                'class' => 'text-input',
                 'maxlength' => 120
             ],
             'required' => false,

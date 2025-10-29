@@ -36,10 +36,10 @@ class AccountSettingsControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | settings');
-        $this->assertSelectorTextContains('h2', 'Account settings');
-        $this->assertSelectorTextContains('body', 'profile-pic');
-        $this->assertSelectorTextContains('body', 'username');
-        $this->assertSelectorTextContains('body', 'password');
+        $this->assertSelectorTextContains('.card-header', 'Account settings');
+        $this->assertSelectorTextContains('body', 'Profile Picture');
+        $this->assertSelectorTextContains('body', 'Username');
+        $this->assertSelectorTextContains('body', 'Password');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -54,8 +54,8 @@ class AccountSettingsControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | settings');
-        $this->assertSelectorTextContains('.form-title', 'Change profile image');
-        $this->assertSelectorTextContains('button', 'Upload Image');
+        $this->assertSelectorTextContains('.card-header', 'Change profile image');
+        $this->assertSelectorTextContains('.input-button', 'Save picture');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -70,7 +70,7 @@ class AccountSettingsControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | settings');
-        $this->assertSelectorTextContains('.form-title', 'Change username');
+        $this->assertSelectorTextContains('.card-header', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
@@ -89,7 +89,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.form-title', 'Change username');
+        $this->assertSelectorTextContains('.card-header', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
     }
@@ -108,7 +108,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.form-title', 'Change username');
+        $this->assertSelectorTextContains('.card-header', 'Change username');
         $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
     }
@@ -159,7 +159,7 @@ class AccountSettingsControllerTest extends CustomTestCase
 
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | settings');
-        $this->assertSelectorTextContains('.form-title', 'Change password');
+        $this->assertSelectorTextContains('.card-header', 'Change password');
         $this->assertSelectorExists('form[name="password_change_form"]');
         $this->assertSelectorExists('input[name="password_change_form[password]"]');
         $this->assertSelectorExists('input[name="password_change_form[repassword]"]');
@@ -182,7 +182,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.form-title', 'Change password');
+        $this->assertSelectorTextContains('.card-header', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorTextContains('li:contains("Please enter a repassword")', 'Please enter a repassword');
@@ -223,7 +223,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.form-title', 'Change password');
+        $this->assertSelectorTextContains('.card-header', 'Change password');
         $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');

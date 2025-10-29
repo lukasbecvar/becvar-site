@@ -1,4 +1,4 @@
-/** visitors metrics charts function */
+/* visitors metrics charts function */
 // import apexcharts library
 import ApexCharts from 'apexcharts'
 document.addEventListener("DOMContentLoaded", function () {
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // configuration for chart with integer-only y-axis ticks and background grid
     const options = {
         series: [{
+            name: 'Visitors',
             data: dataValues
         }],
         chart: {
@@ -21,53 +22,53 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             background: 'transparent',
             toolbar: {
-                show: false // hide toolbar
+                show: false
             }
         },
         dataLabels: {
             enabled: false
         },
         stroke: {
-            width: 3,
+            width: 2,
             curve: 'smooth',
-            colors: ['#009900']
+            colors: ['#818cf8']
         },
         markers: {
-            size: 5,
-            colors: ['#009900'],
-            strokeColors: '#ffffff',
+            size: 4,
+            colors: ['#818cf8'],
+            strokeColors: '#1a202c',
             strokeWidth: 2,
             hover: {
-                size: 7
+                size: 6
             }
         },
         fill: {
             type: 'gradient',
             gradient: {
-                shade: 'light',
+                shade: 'dark',
                 type: 'vertical',
-                shadeIntensity: 0.3,
-                gradientToColors: ['#009900'],
-                inverseColors: false,
-                opacityFrom: 0.6,
-                opacityTo: 0.1,
-                stops: [0, 90, 100]
+                shadeIntensity: 0.5,
+                gradientToColors: ['#818cf8'],
+                inverseColors: true,
+                opacityFrom: 0.4,
+                opacityTo: 0.05,
+                stops: [0, 100]
             }
         },
         title: {
             align: 'left',
-            text: 'Visitors count',
             style: {
-                color: '#ffffff',
-                fontSize: '22px',
-                fontWeight: 'bold',
-                fontFamily: 'Helvetica, Arial, sans-serif'
+                color: '#e2e8f0',
+                fontSize: '18px',
+                fontWeight: '600',
+                fontFamily: 'Verdana, sans-serif'
             }
         },
         tooltip: {
             theme: 'dark',
             style: {
-                fontSize: '12px'
+                fontSize: '12px',
+                fontFamily: 'Verdana, sans-serif'
             },
             x: {
                 show: false
@@ -77,49 +78,59 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             y: {
                 formatter: function(value) {
-                    return Math.round(value)
+                    return Math.round(value) + ' visitors'
+                },
+                title: {
+                    formatter: () => ''
                 }
             }
         },
         grid: {
             show: true,
-            borderColor: 'rgba(255, 255, 255, 0.2)',
-            strokeDashArray: 0,
+            borderColor: 'rgba(100, 116, 139, 0.2)',
+            strokeDashArray: 4,
             xaxis: {
                 lines: {
-                    show: true
+                    show: false
                 }
             },
             yaxis: {
                 lines: {
                     show: true
                 }
-            },
-            row: {
-                colors: ['#1d1d1d', 'transparent'],
-                opacity: 0.3
             }
         },
         xaxis: {
             categories: Object.keys(visitorMetrics),
             labels: {
                 style: {
-                    colors: '#ffffff',
-                    fontFamily: 'Helvetica, Arial, sans-serif'
+                    colors: '#94a3b8',
+                    fontFamily: 'Verdana, sans-serif',
+                    fontSize: '12px'
                 },
                 rotate: 0,
                 maxHeight: 50,
-                hideOverlappingLabels: true,
-                formatter: (value) => value
+                hideOverlappingLabels: true
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
             },
             tickAmount: 'dataPoints'
         },
         yaxis: {
             labels: {
                 style: {
-                    colors: '#ffffff'
-                }
-            }
+                    colors: '#94a3b8',
+                    fontFamily: 'Verdana, sans-serif',
+                    fontSize: '12px'
+                },
+                formatter: (value) => Math.round(value)
+            },
+            min: 0,
+            forceNiceScale: true
         }
     }
 

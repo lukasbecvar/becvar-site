@@ -27,7 +27,9 @@
     {% block component_assets %}{% endblock %}
 	<title>Admin | {% block title %}{% endblock %}</title>
 </head>
-<body>
+{% set current_path = app.request is defined ? app.request.pathinfo : '' %}
+{% set is_dashboard_page = current_path starts with '/admin/dashboard' %}
+<body class="{% if not is_dashboard_page %}active{% endif %}" data-sidebar-default="{{ is_dashboard_page ? 'open' : 'closed' }}">
 <div id="loader-wrapper">
     <div id="loader"></div>
 </div>
@@ -49,41 +51,38 @@
             {% block component %}{% endblock %}
 
             <script>
-                // toggle a class on the body element
-                function manipulate() {
-                    document.querySelector("body").classList.toggle("active")
-                }
-            
-                // initialize the sidebar
-                function sidebarInit() {
-                    var body = document.querySelector("body")
-                    var hamburger = document.querySelector(".hamburger")
-            
-                    // adjust classes and event listener based on window width
-                    if (window.innerWidth <= 1024) {
-                        body.classList.add("active")
-                        hamburger.addEventListener("click", manipulate)
-                    } else {
-                        body.classList.remove("active")
-                        hamburger.removeEventListener("click", manipulate)
+                (function () {
+                    const body = document.body
+                    const hamburger = document.querySelector(".hamburger")
+                    const defaultState = body.dataset.sidebarDefault || "closed"
+
+                    if (!hamburger) {
+                        return
                     }
-            
-                    // additional condition for specific URL and window width
-                    if (window.innerWidth > 1024) {
-                        if (!window.location.href.includes("/admin/dashboard") || window.location.href.includes("/admin/dashboard/emergency/shutdown")) {
-                            manipulate()
-                            hamburger.addEventListener("click", manipulate)
+
+                    const toggleSidebar = () => {
+                        body.classList.toggle("active")
+                    }
+
+                    const syncSidebar = () => {
+                        hamburger.removeEventListener("click", toggleSidebar)
+                        hamburger.addEventListener("click", toggleSidebar)
+
+                        if (window.innerWidth <= 1024) {
+                            body.classList.add("active")
+                            return
+                        }
+
+                        if (defaultState === "open") {
+                            body.classList.remove("active")
+                        } else {
+                            body.classList.add("active")
                         }
                     }
-                }
 
-                // initial call to sidebarInit
-                sidebarInit();
-        
-                // event listener for window resize
-                window.addEventListener('resize', function() {
-                    sidebarInit()
-                })
+                    syncSidebar()
+                    window.addEventListener("resize", syncSidebar)
+                })()
             </script>
         </div>
     </div>

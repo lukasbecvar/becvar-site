@@ -6,11 +6,11 @@
 
 {# DASHBOARD PAGE COMPONENT #}
 {% block component %}
-<div class="admin-panel">
+<div class="admin-panel dashboard-panel">
     {# WARNING BOX CARD #}
-    <div class="card-phone card text-white mb-1 dashbord-card" id="wrarning-box">
+    <div class="card-phone card text-white mb-2-5 dashbord-card" id="wrarning-box">
         <div class="card-header p-2">Warnings</div>
-        <div class="card-body p-2-5" id="wraning-elements"> 
+        <div class="card-body" id="wraning-elements"> 
             {# SSL CHECK #}
             {% if isSsl == false %}
                 <p class="card-text">
@@ -79,24 +79,24 @@
         </div>
         <div class="card-body p-2-5">
             <p class="card-text">Count: {{ visitorsCount }}</p>
-            <p class="card-text">Online: {{ onlinevisitorsCount }} / Users: {{ online_users_count|length }} <a href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>view</a></p>
             <p class="card-text">Banned: {{ banned_visitorsCount }}</p>
+            <p class="card-text">Online: {{ onlinevisitorsCount }} / Users: {{ online_users_count|length }} <a href={{ path('admin_visitor_manager', {'page': 1, 'filter': 'online'}) }}>view</a></p>
         </div>
     </div>
     
     {# COUNTER CARDS #}
-    <div class="card-phone card text-white mb-3 dashbord-card counter-container">
+    <div class="card-phone card text-white dashbord-card counter-container">
         <div class="row no-gutters">
             {# LOGS COUNT #}
-            <div class="col-lg-4 mb-2">
-                <div class="card l-bg-cherry counter-card">
+            <div class="col-lg-4">
+                <div class="card counter-card">
                     <div class="card-statistic-3 p-3">
                         <div class="mb-1">
                             <h5 class="card-title mb-0">
-                                <a class="card-link" href={{ path('admin_log_list', {'page': 1}) }} class="stats-link">Logs</a> <a href={{ path('antilog') }}>.</a>
+                                <a class="card-link stats-link" href={{ path('admin_log_list', {'page': 1}) }}>Logs</a> <a href={{ path('antilog') }}>.</a>
                             </h5>
                         </div>
-                        <div class="row align-items-center mb-0 d-flex">
+                        <div class="align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ unreadedLogsCount }}
@@ -108,15 +108,15 @@
             </div>
             
             {# INBOX MESSAGES COUNT #}
-            <div class="col-lg-4 mb-2">
-                <div class="card l-bg-blue-dark counter-card">
+            <div class="col-lg-4">
+                <div class="card counter-card">
                     <div class="card-statistic-3 p-3">
                         <div class="mb-1">
                             <h5 class="card-title mb-0">
-                                <a class="card-link" href={{ path('admin_inbox', {'page': 1}) }} class="stats-link">Messages</a>
+                                <a class="card-link stats-link" href={{ path('admin_inbox', {'page': 1}) }}>Messages</a>
                             </h5>
                         </div>
-                        <div class="row align-items-center mb-0 d-flex">
+                        <div class="align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ messagesCount }}
@@ -128,15 +128,15 @@
             </div>  
             
             {# VISITORS COUNT #}
-            <div class="col-lg-4 mb-2"> 
-                <div class="card l-bg-cyan-darker counter-card">
+            <div class="col-lg-4"> 
+                <div class="card counter-card">
                     <div class="card-statistic-3 p-3">
                         <div class="mb-1">
                             <h5 class="card-title mb-0">
-                                <a class="card-link" href={{ path('admin_visitor_manager', {'page': 1}) }} class="stats-link">Visitors</a>
+                                <a class="card-link stats-link" href={{ path('admin_visitor_manager', {'page': 1}) }}>Visitors</a>
                             </h5>
                         </div>
-                        <div class="row align-items-center mb-0 d-flex">
+                        <div class=" align-items-center mb-0 d-flex">
                             <div class="col-8">
                                 <h4 class="text-white d-flex align-items-center mb-0">
                                     {{ visitorsCount }}
