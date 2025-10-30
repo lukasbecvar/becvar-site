@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util\Export;
+namespace App\Util\Header;
 
 use FPDF;
 

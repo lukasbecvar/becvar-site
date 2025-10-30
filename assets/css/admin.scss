@@ -6,21 +6,18 @@
 	font-family: Verdana, sans-serif;
 }
 
+/* define css variables */
+:root {
+	--sidebar-width: 210px;
+	--main-background-color: #111317;
+}
+
 html {
 	scroll-behavior: smooth;
 }
 
 body {
-	background-color: #111317;
-}
-
-:root {
-	--sidebar-width: 210px;
-}
-
-/* fix profiler toolbar position */
-.sf-toolbar {
-	position: absolute !important;
+	background-color: var(--main-background-color);
 }
 
 a {
@@ -44,6 +41,21 @@ button {
 	outline: 0;
 }
 
+textarea {
+	resize: none;
+	height: 150px;
+	line-height: 150%;
+}
+
+th {
+	background: #1d222a !important;
+}
+
+/* fix profiler toolbar position */
+.sf-toolbar {
+	position: absolute !important;
+}
+
 .p-2-5 {
 	padding: 12px !important;
 }
@@ -54,16 +66,6 @@ button {
 
 .mb-2-5 {
 	margin-bottom: 13.5px !important;
-}
-
-textarea {
-	resize: none;
-	height: 150px;
-	line-height: 150%;
-}
-
-th {
-	background: #1d222a !important;
 }
 
 .highlighter {
@@ -187,7 +189,7 @@ body.active .wrapper .section {
 	flex-direction: column;
 	transition: all 0.2s ease;
 	border-right: 1px solid rgba(122, 132, 144, 0.32);
-	background: linear-gradient(180deg, #181c22 0%, #111317 70%);
+	background: linear-gradient(180deg, #181c22 0%, var(--main-background-color) 70%);
 }
 
 .wrapper .sidebar .profile {
@@ -314,7 +316,7 @@ body.active .wrapper .section {
 	transition: left 0.2s ease, width 0.2s ease;
 	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 	border-bottom: 1px solid rgba(122, 132, 144, 0.32);
-	background: linear-gradient(90deg, #191d24 0%, #111317 85%);
+	background: linear-gradient(90deg, #191d24 0%, var(--main-background-color) 85%);
 }
 
 .wrapper .section .top-navbar {
@@ -951,7 +953,7 @@ body.active .wrapper .section .top-navbar {
 .admin-panel {
 	padding: 0;
 	position: relative;
-	background-color: #111317;
+	background-color: var(--main-background-color);
 }
 
 .dashboard-panel {
@@ -1002,8 +1004,8 @@ body.active .wrapper .section .top-navbar {
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
-	max-width: 960px;
 	margin: 40px auto 0;
+	max-width: 960px;
     padding: 0 24px;
 	display: flex;
 	gap: 14px;
@@ -1185,7 +1187,7 @@ body.active .wrapper .section .top-navbar {
 	height: calc(100% - 45px);
 	position: absolute;
 	overflow-x: hidden;
-	background-color: #111317;
+	background-color: var(--main-background-color);
 }
 
 .table {
@@ -1214,7 +1216,7 @@ body.active .wrapper .section .top-navbar {
 	margin: 0;
 	padding-top: 3px;
 	padding-bottom: 4px;
-	background-color: #111317;
+	background-color: var(--main-background-color);
 	border-bottom: rgba(122, 132, 144, 0.32) 1px solid;
 }
 
@@ -1318,7 +1320,7 @@ body.active .wrapper .section .top-navbar {
 	font-size: 20px;
 	text-align: center;
     border-radius: 12px;
-	background-color: #111317;
+	background-color: var(--main-background-color);
 	border: 1px solid rgba(122, 132, 144, 0.32);
 }
 
@@ -1813,7 +1815,7 @@ body.active .wrapper .section .top-navbar {
     line-height: 24px;
     border-radius: 50%;
     text-align: center;
-    background: #111317;
+    background: var(--main-background-color);
     transition: all 0.2s ease;
     border: 2px solid rgba(122, 132, 144, 0.5);
 }
@@ -1836,6 +1838,9 @@ body.active .wrapper .section .top-navbar {
 	}
 }
 @media screen and (max-width: 450px) { 
+	body {
+		zoom: 100%;
+	}
 	::-webkit-scrollbar {
 		width: 10px;
 		height: 10px;
@@ -1847,9 +1852,6 @@ body.active .wrapper .section .top-navbar {
 		width: 99%;
 		margin-top: 5px;
 		margin-bottom: 5px;
-	}
-	body {
-		zoom: 100%;
 	}
 	.phone-none {
 		display: none;

@@ -110,7 +110,7 @@ class DatabaseManager
         $data = [];
 
         // escape name from sql query
-        $tableName = $this->connection->quoteIdentifier($tableName);
+        $tableName = $this->connection->getDatabasePlatform()->quoteSingleIdentifier($tableName);
 
         // get data
         try {
@@ -149,7 +149,7 @@ class DatabaseManager
         $itemsPerPage = $_ENV['ITEMS_PER_PAGE'];
 
         // escape name from sql query
-        $tableName = $this->connection->quoteIdentifier($tableName);
+        $tableName = $this->connection->getDatabasePlatform()->quoteSingleIdentifier($tableName);
 
         // calculate the offset based on the page number
         $offset = ($page - 1) * $itemsPerPage;

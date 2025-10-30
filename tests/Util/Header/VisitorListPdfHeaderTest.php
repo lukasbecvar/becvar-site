@@ -3,7 +3,7 @@
 namespace App\Tests\Util\Export;
 
 use PHPUnit\Framework\TestCase;
-use App\Util\Export\VisitorListPdfHeader;
+use App\Util\Header\VisitorListPdfHeader;
 
 /**
  * Class VisitorListPdfHeaderTest

@@ -14,11 +14,11 @@ body::before {
     position: fixed;
     background: #040404 url("../img/bg.webp") top right no-repeat;
     background-size: cover;
+    top: 0;
     left: 0;
     right: 0;
-    top: 0;
-    height: 100vh;
     z-index: -1;
+    height: 100vh;
 }
 
 /* fix profiler toolbar position */
@@ -47,9 +47,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header {
+    z-index: 997;
     height: 100vh;
     display: flex;
-    z-index: 997;
     overflow-y: auto;
     position: relative;
     align-items: center;
@@ -175,12 +175,12 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
     width: 1px;
     height: 1em;
-    background-color: #ffd900;
     margin-left: 2px;
-    animation: blink 0.8s step-start infinite;
-    vertical-align: bottom;
-    border-bottom: none;
     padding-bottom: 0;
+    border-bottom: none;
+    vertical-align: bottom;
+    background-color: #ffd900;
+    animation: blink 0.8s step-start infinite;
 }
 
 @keyframes blink {
@@ -224,8 +224,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a i, .navbar a:focus i {
-    font-size: 12px;
     line-height: 0;
+    font-size: 12px;
     margin-left: 5px;
 }
 
@@ -255,9 +255,9 @@ h1, h2, h3, h4, h5, h6 {
     right: 15px;
     color: #fff;
     display: none;
+    line-height: 0;
     font-size: 28px;
     cursor: pointer;
-    line-height: 0;
     position: fixed;
 }
 
@@ -293,8 +293,8 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     display: block;
     top: 55px;
-    right: 15px;
     left: 15px;
+    right: 15px;
     bottom: 45px;
     padding: 10px 0;
     overflow-y: auto;

@@ -3,7 +3,7 @@
 namespace App\Util;
 
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use App\Util\Export\VisitorListPdfHeader;
+use App\Util\Header\VisitorListPdfHeader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Border;
