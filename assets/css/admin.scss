@@ -1102,7 +1102,7 @@ body.active .wrapper .section .top-navbar {
 .database-breadcrumb li {
 	display: flex;
 	align-items: center;
-	margin-right: 3px;
+	margin-right: 1px;
 }
 
 .database-breadcrumb .selector-button {
@@ -1545,6 +1545,10 @@ body.active .wrapper .section .top-navbar {
 .metrics-table-card-body {
 	flex: 1;
 	display: flex;
+	overflow-y: auto;
+	max-height: 265px;
+	margin-right: -17px;
+	padding-right: 17px;
 	flex-direction: column;
 }
 
