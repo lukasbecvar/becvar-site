@@ -543,10 +543,24 @@ class AuthManagerTest extends TestCase
      */
     public function testGetOnlineList(): void
     {
+        // mock online visitor IDs
+        $onlineVisitorIds = [1, 2, 3];
+        $this->visitorManager->method('getOnlineVisitorIDs')->willReturn($onlineVisitorIds);
+
+        // mock users
+        $user1 = new User();
+        $user2 = new User();
+        $users = [$user1, $user2];
+
+        // mock findBy method
+        $this->userRepository->method('findBy')->with(['visitor_id' => $onlineVisitorIds])->willReturn($users);
+
         // call tested method
         $result = $this->authManager->getOnlineUsersList();
 
         // assert result
         $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertContainsOnlyInstancesOf(User::class, $result);
     }
 }

@@ -483,25 +483,19 @@ class AuthManager
     /**
      * Get list of all online users
      *
-     * @return array<array<string>> The online users list
+     * @return array<User> The online users list
      */
     public function getOnlineUsersList(): array
     {
-        $onlineVisitors = [];
+        // get online visitor IDs
+        $onlineVisitorIds = $this->visitorManager->getOnlineVisitorIDs();
 
-        // get all users list
-        $users = $this->userRepository->getAllUsersWithVisitorId();
-
-        foreach ($users as $user) {
-            // get visitor status
-            $status = $this->visitorManager->getVisitorStatus(intval($user['visitor_id']));
-
-            // check visitor status
-            if ($status == 'online') {
-                array_push($onlineVisitors, $user);
-            }
+        // return empty array if no online visitors
+        if (empty($onlineVisitorIds)) {
+            return [];
         }
 
-        return $onlineVisitors;
+        // get users associated with online visitor IDs
+        return $this->userRepository->findBy(['visitor_id' => $onlineVisitorIds]);
     }
 }
