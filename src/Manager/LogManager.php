@@ -145,11 +145,12 @@ class LogManager
 
         // get external log config
         $externalLogUrl = $_ENV['EXTERNAL_LOG_URL'];
-        $externalLogToken = $_ENV['EXTERNAL_LOG_TOKEN'];
+        $externalLogToken = $_ENV['EXTERNAL_LOG_API_TOKEN'];
 
         // make request to admin-suite log api
         $this->jsonUtil->getJson(
-            target: $externalLogUrl . '?token=' . $externalLogToken . '&name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
+            target: $externalLogUrl . '?name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
+            apiKey: $externalLogToken,
             method: 'POST'
         );
     }

@@ -26,17 +26,19 @@ class JsonUtil
      *
      * @param string $target The file path or URL
      * @param string $method The HTTP method to use
+     * @param string|null $apiKey The API key to use
      *
      * @return array<mixed>|null The decoded JSON data as an associative array or null on failure
      */
-    public function getJson(string $target, string $method = 'GET'): ?array
+    public function getJson(string $target, string $method = 'GET', ?string $apiKey = null): ?array
     {
         // request context
         $context = stream_context_create([
             'http' => [
                 'method' => $method,
                 'header' => [
-                    'User-Agent: becvar-site'
+                    'User-Agent: becvar-site',
+                    'API-KEY: ' . $apiKey
                 ],
                 'timeout' => 5
             ]
@@ -57,7 +59,7 @@ class JsonUtil
             $errorMsg = 'Error retrieving JSON data: ' . $e->getMessage();
 
             // secure api token
-            $errorMsg = str_replace($_ENV['EXTERNAL_LOG_TOKEN'], '********', $errorMsg);
+            $errorMsg = str_replace($_ENV['EXTERNAL_LOG_API_TOKEN'], '********', $errorMsg);
 
             // log error
             $this->logger->error($errorMsg);

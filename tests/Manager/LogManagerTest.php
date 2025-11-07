@@ -93,7 +93,7 @@ class LogManagerTest extends TestCase
         // set external log config
         $_ENV['EXTERNAL_LOG_ENABLED'] = 'false';
         $_ENV['EXTERNAL_LOG_URL'] = 'http://becvar.xyz/log';
-        $_ENV['EXTERNAL_LOG_TOKEN'] = 'test-token';
+        $_ENV['EXTERNAL_LOG_API_TOKEN'] = 'test-token';
 
         // log message
         $value = 'This is a test log message';
@@ -115,14 +115,14 @@ class LogManagerTest extends TestCase
         // set external log config
         $_ENV['EXTERNAL_LOG_ENABLED'] = 'true';
         $_ENV['EXTERNAL_LOG_URL'] = 'http://becvar.xyz/log';
-        $_ENV['EXTERNAL_LOG_TOKEN'] = 'test-token';
+        $_ENV['EXTERNAL_LOG_API_TOKEN'] = 'test-token';
 
         // log message
         $value = 'This is a test log message';
 
         // expect json util get json call
         $this->jsonUtil->expects($this->once())->method('getJson')->with(
-            $this->stringContains('http://becvar.xyz/log?token=test-token&name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
+            $this->stringContains('http://becvar.xyz/log?name=becvar-site%3A+log&message=becvar-site%3A+This+is+a+test+log+message&level=4'),
             'POST'
         );
 
