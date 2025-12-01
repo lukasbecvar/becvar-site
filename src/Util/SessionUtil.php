@@ -2,14 +2,17 @@
 
 namespace App\Util;
 
+use Exception;
 use App\Manager\ErrorManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 /**
  * Class SessionUtil
  *
- * SessionUtil provides session management functions
+ * Util for session management
  *
  * @package App\Util
  */
@@ -27,43 +30,64 @@ class SessionUtil
     }
 
     /**
-     * Start a new session if not already started
+     * Get the current session or null when no HTTP context is present
+     *
+     * @return SessionInterface|null
+     */
+    private function getSession(): ?SessionInterface
+    {
+        try {
+            return $this->requestStack->getSession();
+        } catch (SessionNotFoundException) {
+            return null;
+        }
+    }
+
+    /**
+     * Start new session if not already started
      *
      * @return void
      */
     public function startSession(): void
     {
-        if (!$this->requestStack->getSession()->isStarted()) {
-            $this->requestStack->getSession()->start();
+        $session = $this->getSession();
+        if ($session !== null && !$session->isStarted()) {
+            $session->start();
         }
     }
 
     /**
-     * Destroy the current session
+     * Destroy current session
      *
      * @return void
      */
     public function destroySession(): void
     {
-        if ($this->requestStack->getSession()->isStarted()) {
-            $this->requestStack->getSession()->invalidate();
+        $session = $this->getSession();
+        if ($session !== null && $session->isStarted()) {
+            $session->invalidate();
         }
     }
 
     /**
-     * Check if a session with the specified name exists
+     * Check if session with the specified name exists
      *
      * @param string $sessionName The name of the session to check
      *
-     * @return bool Whether the session exists
+     * @return bool Session exists status
      */
     public function checkSession(string $sessionName): bool
     {
-        return $this->requestStack->getSession()->has($sessionName);
+        $session = $this->getSession();
+        if ($session === null) {
+            return false;
+        }
+
+        return $session->has($sessionName);
     }
 
     /**
-     * Set a session value.
+     * Set session value
      *
      * @param string $sessionName The name of the session
      * @param string $sessionValue The value to set for the session
@@ -72,26 +96,56 @@ class SessionUtil
      */
     public function setSession(string $sessionName, string $sessionValue): void
     {
-        $this->startSession();
-        $this->requestStack->getSession()->set($sessionName, $this->securityUtil->encryptAes($sessionValue));
+        $session = $this->getSession();
+        if ($session === null) {
+            return;
+        }
+
+        if (!$session->isStarted()) {
+            $session->start();
+        }
+
+        $session->set($sessionName, $this->securityUtil->encryptAes($sessionValue));
     }
 
     /**
-     * Get the decrypted value of a session
+     * Get session value
      *
      * @param string $sessionName The name of the session
      *
      * @return mixed The decrypted session value
      */
-    public function getSessionValue(string $sessionName): mixed
+    public function getSessionValue(string $sessionName, mixed $default = null): mixed
     {
-        $this->startSession();
+        $session = $this->getSession();
+
+        if ($session === null) {
+            return $default;
+        }
+
+        $value = null;
+
+        try {
+            if (!$session->isStarted()) {
+                $session->start();
+            }
+
+            /** @var string $value */
+            $value = $session->get($sessionName);
+        } catch (Exception) {
+            return $default;
+        }
+
+        // check if session value get
+        if (!isset($value)) {
+            return $default;
+        }
 
         // decrypt session value
-        $value = $this->securityUtil->decryptAes($this->requestStack->getSession()->get($sessionName));
+        $value = $this->securityUtil->decryptAes($value);
 
         // check if session data is decrypted
-        if ($value == null) {
+        if ($value === null) {
             $this->destroySession();
             $this->errorManager->handleError(
                 msg: 'error to decrypt session data',
@@ -99,6 +153,38 @@ class SessionUtil
             );
         }
 
+        // return decrypted session value
         return $value;
+    }
+
+    /**
+     * Get session id
+     *
+     * @return string Session id
+     */
+    public function getSessionId(): string
+    {
+        return $this->getSession()?->getId() ?? '';
+    }
+
+    /**
+     * Regenerate the current session id to prevent fixation
+     *
+     * @return void
+     */
+    public function regenerateSession(): void
+    {
+        $session = $this->getSession();
+
+        if ($session === null) {
+            return;
+        }
+
+        if (!$session->isStarted()) {
+            $session->start();
+        }
+
+        // migrate session to invalidate previously issued id
+        $session->migrate(true);
     }
 }

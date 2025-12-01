@@ -97,6 +97,9 @@ class AuthManager
         if (!$this->isUserLogedin()) {
             // check if user token is valid
             if (!empty($userToken)) {
+                // regenerate session id before persisting login data
+                $this->sessionUtil->regenerateSession();
+
                 // set login session
                 $this->sessionUtil->setSession('login-token', $userToken);
 

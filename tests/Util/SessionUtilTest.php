@@ -7,6 +7,7 @@ use App\Util\SecurityUtil;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  *
  * @package App\Tests\Util
  */
+#[CoversClass(SessionUtil::class)]
 class SessionUtilTest extends TestCase
 {
     private SessionUtil $sessionUtil;
@@ -219,5 +221,35 @@ class SessionUtilTest extends TestCase
 
         // assert result
         $this->assertNull($result);
+    }
+
+    /**
+     * Test get session id
+     *
+     * @return void
+     */
+    public function testGetSessionId(): void
+    {
+        // call tested method
+        $result = $this->sessionUtil->getSessionId();
+
+        // assert result
+        $this->assertIsString($result);
+    }
+
+    /**
+     * Test regenerate session id
+     */
+    public function testRegenerateSession(): void
+    {
+        // ensure session is started before migration
+        $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
+
+        // expect session to be started and migrated
+        $this->sessionInterfaceMock->expects($this->once())->method('start');
+        $this->sessionInterfaceMock->expects($this->once())->method('migrate')->with(true);
+
+        // call tested method
+        $this->sessionUtil->regenerateSession();
     }
 }
