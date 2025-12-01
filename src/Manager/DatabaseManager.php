@@ -92,7 +92,7 @@ class DatabaseManager
         }
 
         foreach ($table->getColumns() as $column) {
-            $columns[] = $column->getName();
+            $columns[] = $column->getObjectName()->toString();
         }
 
         return $columns;

@@ -8,6 +8,7 @@ use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\Name;
 use Doctrine\DBAL\Schema\Table;
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Schema\Column;
@@ -85,7 +86,9 @@ class DatabaseManagerTest extends TestCase
         $schemaMock = $this->createMock(Schema::class);
         $tableMock = $this->createMock(Table::class);
         $columnMock = $this->createMock(Column::class);
-        $columnMock->method('getName')->willReturn('id');
+        $columnNameMock = $this->createMock(Name::class);
+        $columnNameMock->method('toString')->willReturn('id');
+        $columnMock->method('getObjectName')->willReturn($columnNameMock);
         $tableMock->method('getColumns')->willReturn([$columnMock]);
         $schemaMock->method('getTable')->willReturn($tableMock);
 
