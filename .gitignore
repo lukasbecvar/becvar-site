@@ -5,7 +5,7 @@
 /.docker/services/
 
 # cache files
-/config/reference.php
+config/reference.php
 /public/bundles/
 /var/
 
