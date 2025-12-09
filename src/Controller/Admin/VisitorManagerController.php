@@ -12,7 +12,7 @@ use App\Manager\VisitorManager;
 use App\Form\VisitorListExportType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -60,9 +60,15 @@ class VisitorManagerController extends AbstractController
         // get filter value
         $filter = $this->appUtil->getQueryString('filter', $request);
 
+        // get sort values
+        $sort = $this->appUtil->getQueryString('sort', $request, 'id');
+        $order = $this->appUtil->getQueryString('order', $request, 'asc');
+
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
             'page' => $page,
+            'sort' => $sort,
+            'order' => $order,
             'filter' => $filter,
             'visitorMetrics' => null,
             'visitorInfoData' => null,
@@ -70,8 +76,8 @@ class VisitorManagerController extends AbstractController
             'currentIp' => $this->visitorInfoUtil->getIP(),
             'bannedCount' => $this->banManager->getBannedCount(),
             'onlineVisitors' => $this->visitorManager->getOnlineVisitorIDs(),
-            'visitorsCount' => $this->visitorManager->getVisitorsCount($page),
-            'visitorsData' => $this->visitorManager->getVisitors($page, $filter)
+            'visitorsCount' => $this->visitorManager->getVisitorsCount($filter),
+            'visitorsData' => $this->visitorManager->getVisitors($page, $filter, $sort, $order)
         ]);
     }
 

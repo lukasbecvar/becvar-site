@@ -111,10 +111,12 @@ class VisitorManager
      *
      * @param int $page The page number
      * @param string $filter The filter value
+     * @param string $sort The sort value
+     * @param string $order The order value
      *
      * @return Visitor[]|null The list of visitors if found, null otherwise
      */
-    public function getVisitors(int $page, string $filter = '1'): ?array
+    public function getVisitors(int $page, string $filter = '1', string $sort = 'last_visit', string $order = 'desc'): ?array
     {
         $perPage = $_ENV['ITEMS_PER_PAGE'];
 
@@ -128,7 +130,8 @@ class VisitorManager
         try {
             $queryBuilder = $this->visitorRepository->createQueryBuilder('l')
                 ->setFirstResult($offset)
-                ->setMaxResults($perPage);
+                ->setMaxResults($perPage)
+                ->orderBy('l.' . $sort, $order);
 
             // filter online visitors
             if ($filter === 'online') {
@@ -136,19 +139,19 @@ class VisitorManager
             }
 
             $visitors = $queryBuilder->getQuery()->getResult();
+
+            // replace browser with formated value for log reader
+            array_walk($visitors, function ($visitor) {
+                $userAgent = $visitor->getBrowser();
+                $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
+                $visitor->setBrowser($formatedBrowser);
+            });
         } catch (Exception $e) {
             $this->errorManager->handleError(
                 msg: 'error to get visitors: ' . $e->getMessage(),
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
-
-        // replace browser with formated value for log reader
-        array_walk($visitors, function ($visitor) {
-            $userAgent = $visitor->getBrowser();
-            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
-            $visitor->setBrowser($formatedBrowser);
-        });
 
         return $visitors;
     }
@@ -195,15 +198,33 @@ class VisitorManager
     }
 
     /**
-     * Get count of visitors for a given page
+     * Get count of visitors
      *
-     * @param int $page The page number
+     * @param string $filter The filter for counting visitors ('online' or 'all')
      *
-     * @return int The count of visitors for the given page
+     * @return int The count of visitors
      */
-    public function getVisitorsCount(int $page): int
+    public function getVisitorsCount(string $filter = 'all'): int
     {
-        return count($this->getVisitors($page));
+        try {
+            $queryBuilder = $this->visitorRepository->createQueryBuilder('v')->select('COUNT(v.id)');
+
+            // filter online visitors
+            if ($filter === 'online') {
+                $onlineVisitors = $this->getOnlineVisitorIDs();
+                if (empty($onlineVisitors)) {
+                    return 0;
+                }
+                $queryBuilder->where('v.id IN (:onlineIds)')->setParameter('onlineIds', $onlineVisitors);
+            }
+
+            return $queryBuilder->getQuery()->getSingleScalarResult();
+        } catch (Exception $e) {
+            $this->errorManager->handleError(
+                msg: 'error getting visitor count: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     /**

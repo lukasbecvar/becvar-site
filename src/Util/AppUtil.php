@@ -162,16 +162,17 @@ class AppUtil
      *
      * @param string $query The query string parameter name
      * @param Request $request The Symfony request object
+     * @param string|null $default The default value to return if the parameter is not found
      *
      * @return string|null The sanitized value of the query string parameter
      */
-    public function getQueryString(string $query, Request $request): ?string
+    public function getQueryString(string $query, Request $request, ?string $default = '1'): ?string
     {
         // get query value
         $value = $request->query->get($query);
 
         if ($value == null) {
-            return '1';
+            return $default;
         } else {
             // escape query string value (XSS Protection)
             return $this->securityUtil->escapeString($value);

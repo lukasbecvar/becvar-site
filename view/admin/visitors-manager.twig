@@ -223,15 +223,37 @@
             <table class="table table-dark text-nowrap table-hover custom-header">
                 <thead>
                     <tr>  
-                        <th scope='col'>#</th>
-                        <th scope='col'>Visit(last)</th>
+                        <th scope='col'>
+                            <a href={{ path('admin_visitor_manager', {'page': page, 'filter': filter, 'sort': 'id', 'order': (order == 'desc') ? 'asc' : 'desc'}) }}>
+                                #
+                                {% if sort == 'id' %}
+                                    {% if order == 'desc' %}
+                                        <i class="fa fa-arrow-down"></i>
+                                    {% else %}
+                                        <i class="fa fa-arrow-up"></i>
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th scope='col'>
+                            <a href={{ path('admin_visitor_manager', {'page': page, 'filter': filter, 'sort': 'last_visit', 'order': (order == 'desc') ? 'asc' : 'desc'}) }}>
+                                Visit(last)
+                                {% if sort == 'last_visit' %}
+                                    {% if order == 'desc' %}
+                                        <i class="fa fa-arrow-down"></i>
+                                    {% else %}
+                                        <i class="fa fa-arrow-up"></i>
+                                    {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
                         <th scope='col'>First site</th>
                         <th scope='col'>Browser</th>
                         <th scope='col'>OS</th>
                         <th scope='col'>Location</th>
                         <th scope='col'>Address</th>
                         <th scope='col'>Referer</th>
-                        <th scope='col'>Status</th>
+                        <th scope-='col'>Status</th>
                         <th scope='col'>Banned</th>
                         <th scope='col'>BAN</th>
                         <th scope='col'>X</th>
@@ -314,10 +336,10 @@
             </div>
             <div class="page-button-box mt-3">
                 {% if page != 1 %}
-                    <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page - 1}) }}>Back</a>
+                    <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page - 1, 'filter': filter, 'sort': sort, 'order': order}) }}>Back</a>
                 {% endif %}
-                {% if visitorsLimit == visitorsCount and filter == 1 %}
-                    <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page + 1}) }}>Next</a>
+                {% if visitorsCount > page * visitorsLimit %}
+                    <a class="back-page-button" href={{ path('admin_visitor_manager', {'page': page + 1, 'filter': filter, 'sort': sort, 'order': order}) }}>Next</a>
                 {% endif %}
             </div>
         {% if page != 1 or visitorsLimit == visitorsCount %}

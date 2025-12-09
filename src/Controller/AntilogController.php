@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
