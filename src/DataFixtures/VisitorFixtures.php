@@ -88,6 +88,7 @@ class VisitorFixtures extends Fixture
             // set visitor entity data
             $visitor->setFirstVisit($firstVisit)
                 ->setLastVisit($lastVisit)
+                ->setFirstVisitSite('https://homepage.idk')
                 ->setBrowser($this->browsers[array_rand($this->browsers)])
                 ->setOs($this->os[array_rand($this->os)])
                 ->setReferer('google.com')

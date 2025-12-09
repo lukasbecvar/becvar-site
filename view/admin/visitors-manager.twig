@@ -225,6 +225,7 @@
                     <tr>  
                         <th scope='col'>#</th>
                         <th scope='col'>Visit(last)</th>
+                        <th scope='col'>First site</th>
                         <th scope='col'>Browser</th>
                         <th scope='col'>OS</th>
                         <th scope='col'>Location</th>
@@ -243,6 +244,8 @@
                                 <th scope='row'>{{ row.id|e }}</th>
                                 {# <===== LAST-VISIT-TIME =====> #}
                                 <th scope='row'>{{ row.lastVisit|date('Y-m-d H:i:s')|e }}</th>
+                                {# <===== FIRST-VISIT-SITE =====> #}
+                                <th scope='row'>{{ row.firstVisitSite|e }}</th>
                                 {# <===== BROWSER =====> #}
                                 {% if row.browser == 'Unknown' %}
                                     <th scope='row' class='text-red'>{{ row.browser|e }}</th>

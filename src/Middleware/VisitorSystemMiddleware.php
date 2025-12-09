@@ -139,10 +139,14 @@ class VisitorSystemMiddleware
             $browser = substr($browser, 0, 197) . "...";
         }
 
+        // get http host
+        $currentHttpHost = $this->appUtil->getHttpHost();
+
         // create new visitor entity
         $visitorEntity = new Visitor();
         $visitorEntity->setFirstVisit($date)
             ->setLastVisit($date)
+            ->setFirstVisitSite($currentHttpHost)
             ->setBrowser($browser)
             ->setOs($os)
             ->setReferer($referer)

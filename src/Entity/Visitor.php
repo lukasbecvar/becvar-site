@@ -33,6 +33,9 @@ class Visitor
     private ?DateTimeInterface $last_visit = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $first_visit_site = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $browser = null;
 
     #[ORM\Column(length: 255)]
@@ -116,6 +119,30 @@ class Visitor
     public function setLastVisit(DateTimeInterface $last_visit): static
     {
         $this->last_visit = $last_visit;
+
+        return $this;
+    }
+
+    /**
+     * Get visitor first visit site
+     *
+     * @return string|null The first visit site
+     */
+    public function getFirstVisitSite(): ?string
+    {
+        return $this->first_visit_site;
+    }
+
+    /**
+     * Set visitor first visit site
+     *
+     * @param string|null $first_visit_site The first visit site
+     *
+     * @return static The visitor object
+     */
+    public function setFirstVisitSite(?string $first_visit_site): static
+    {
+        $this->first_visit_site = $first_visit_site;
 
         return $this;
     }
