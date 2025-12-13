@@ -163,7 +163,7 @@ class VisitorSystemMiddleware
             $this->entityManager->persist($visitorEntity);
             $this->entityManager->flush();
         } catch (Exception $e) {
-            $this->errorManager->handleError(
+            $this->errorManager->logError(
                 msg: 'flush error: ' . $e->getMessage(),
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -192,7 +192,7 @@ class VisitorSystemMiddleware
 
         // check if visitor data found
         if (!$visitor != null) {
-            $this->errorManager->handleError(
+            $this->errorManager->logError(
                 msg: 'unexpected visitor with ip: ' . $ipAddress . ' update error, please check database structure',
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -212,7 +212,7 @@ class VisitorSystemMiddleware
                 // flush updated visitor data
                 $this->entityManager->flush();
             } catch (Exception $e) {
-                $this->errorManager->handleError(
+                $this->errorManager->logError(
                     msg: 'flush error: ' . $e->getMessage(),
                     code: Response::HTTP_INTERNAL_SERVER_ERROR
                 );

@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use Exception;
 use Twig\Environment;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -16,10 +17,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class ErrorManager
 {
     private Environment $twig;
+    private LoggerInterface $logger;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, LoggerInterface $logger)
     {
         $this->twig = $twig;
+        $this->logger = $logger;
     }
 
     /**
@@ -51,5 +54,18 @@ class ErrorManager
         } catch (Exception) {
             return $this->twig->render('errors/error-unknown.twig');
         }
+    }
+
+    /**
+     * Log error to exception log
+     *
+     * @param string $msg The error message
+     * @param int $code The error code
+     *
+     * @return void
+     */
+    public function logError(string $msg, int $code): void
+    {
+        $this->logger->error($msg, ['code' => $code]);
     }
 }
