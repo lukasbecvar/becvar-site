@@ -153,7 +153,7 @@ class LogManager
 
         // make request to admin-suite log api
         $this->jsonUtil->getJson(
-            target: $externalLogUrl . '?name=' . urlencode('website-app: log') . '&message=' . urlencode('website-app: ' . $message) . '&level=4',
+            target: $externalLogUrl . '?name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $message) . '&level=4',
             apiKey: $externalLogToken,
             method: 'POST'
         );

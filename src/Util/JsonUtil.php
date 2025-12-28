@@ -39,7 +39,7 @@ class JsonUtil
             'http' => [
                 'method' => $method,
                 'header' => [
-                    'User-Agent: website-app',
+                    'User-Agent: becvar-site',
                     'API-KEY: ' . $apiKey
                 ],
                 'timeout' => 5
