@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
+use App\Annotation\Authorization;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,8 @@ class AntilogController extends AbstractController
      *
      * @return Response Redirect back to the admin dashboard
      */
-    #[Route('/antilog/5369362536', methods: ['GET'], name: 'antilog')]
+    #[Authorization('ADMIN')]
+    #[Route('/antilog/5369362536', methods: ['POST'], name: 'antilog')]
     public function toggleAntiLog(): Response
     {
         // check if user is logged in
@@ -57,6 +59,6 @@ class AntilogController extends AbstractController
         }
 
         // redirect back to admin dashboard
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->redirectToRoute('admin_log_list');
     }
 }

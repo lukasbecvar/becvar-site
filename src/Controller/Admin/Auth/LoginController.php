@@ -7,6 +7,7 @@ use App\Util\SecurityUtil;
 use App\Form\LoginFormType;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
+use App\Annotation\CsrfProtection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -40,6 +41,7 @@ class LoginController extends AbstractController
      *
      * @return Response The login page view or login redirect
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/login', methods: ['GET', 'POST'], name: 'auth_login')]
     public function login(Request $request): Response
     {
@@ -78,7 +80,7 @@ class LoginController extends AbstractController
                     // invalid password error
                     $this->logManager->log(
                         name: 'authenticator',
-                        value: 'trying to login with: ' . $username . ':' . $password . ' password is wrong'
+                        message: 'trying to login with: ' . $username . ':' . $password . ' password is wrong'
                     );
                     $errorMsg = 'Incorrect username or password.';
                 }
@@ -86,7 +88,7 @@ class LoginController extends AbstractController
                 // user not exist error
                 $this->logManager->log(
                     name: 'authenticator',
-                    value: 'trying to login with: ' . $username . ':' . $password . ' user not exist'
+                    message: 'trying to login with: ' . $username . ':' . $password . ' user not exist'
                 );
                 $errorMsg = 'Incorrect username or password.';
             }

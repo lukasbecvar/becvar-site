@@ -44,7 +44,7 @@ class User
     private ?string $token = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?DateTimeInterface $registed_time = null;
+    private ?DateTimeInterface $registered_time = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $last_login_time = null;
@@ -52,18 +52,21 @@ class User
     #[ORM\Column(type: Types::TEXT)]
     private ?string $profile_pic = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(name: "visitors", referencedColumnName: "id")]
-    private ?int $visitor_id = null;
+    #[ORM\ManyToOne(targetEntity: Visitor::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(name: "visitor_id", referencedColumnName: "id", nullable: true)]
+    private ?Visitor $visitor = null;
 
     /**
-     * Get the user id
+     * Get visitor ID safely
      *
-     * @return int|null The user id
+     * @return int The visitor ID (0 if null)
      */
-    public function getId(): ?int
+    public function getVisitorIdSafe(): int
     {
-        return $this->id;
+        if ($this->visitor) {
+            return $this->visitor->getIdSafe();
+        }
+        return 0;
     }
 
     /**
@@ -187,25 +190,25 @@ class User
     }
 
     /**
-     * Get the user registed time
+     * Get the user registered time
      *
-     * @return DateTimeInterface|null The user registed time
+     * @return DateTimeInterface|null The user registered time
      */
-    public function getRegistedTime(): ?DateTimeInterface
+    public function getRegisteredTime(): ?DateTimeInterface
     {
-        return $this->registed_time;
+        return $this->registered_time;
     }
 
     /**
-     * Set the user registed time
+     * Set the user registered time
      *
-     * @param DateTimeInterface $registed_time The user registed time
+     * @param DateTimeInterface $registered_time The user registered time
      *
      * @return static The user object
      */
-    public function setRegistedTime(DateTimeInterface $registed_time): static
+    public function setRegisteredTime(DateTimeInterface $registered_time): static
     {
-        $this->registed_time = $registed_time;
+        $this->registered_time = $registered_time;
 
         return $this;
     }
@@ -259,25 +262,25 @@ class User
     }
 
     /**
-     * Get the user visitor id
+     * Get the user visitor
      *
-     * @return int|null The user visitor id
+     * @return Visitor|null The user visitor
      */
-    public function getVisitorId(): ?int
+    public function getVisitor(): ?Visitor
     {
-        return $this->visitor_id;
+        return $this->visitor;
     }
 
     /**
-     * Set the user visitor id
+     * Set the user visitor
      *
-     * @param int $visitor_id The user visitor id
+     * @param Visitor|null $visitor The user visitor
      *
      * @return static The user object
      */
-    public function setVisitorId(int $visitor_id): static
+    public function setVisitor(?Visitor $visitor): static
     {
-        $this->visitor_id = $visitor_id;
+        $this->visitor = $visitor;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Util\SecurityUtil;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
+use App\Annotation\CsrfProtection;
 use App\Form\PasswordChangeFormType;
 use App\Form\UsernameChangeFormType;
 use App\Form\ProfilePicChangeFormType;
@@ -67,10 +68,10 @@ class AccountSettingsController extends AbstractController
      *
      * @return Response The picture change view
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/account/settings/pic', methods: ['GET', 'POST'], name: 'admin_account_settings_pic_change')]
     public function accountSettingsPicChange(Request $request): Response
     {
-        // init default resources
         $errorMsg = null;
         $user = new User();
 
@@ -92,11 +93,19 @@ class AccountSettingsController extends AbstractController
                 // get image content
                 $fileContents = file_get_contents($image);
 
-                // encode image to base64
-                $imageCode = base64_encode($fileContents);
+                if ($fileContents === false) {
+                    $errorMsg = 'Failed to read image file';
+                } else {
+                    // encode image to base64
+                    $imageCode = base64_encode($fileContents);
 
-                // update profile picture
-                $userRepo->setProfilePic($imageCode);
+                    // update profile picture
+                    if ($userRepo !== null) {
+                        $userRepo->setProfilePic($imageCode);
+                    } else {
+                        $errorMsg = 'User not found';
+                    }
+                }
 
                 try {
                     // flush user data to database
@@ -131,10 +140,10 @@ class AccountSettingsController extends AbstractController
      *
      * @return Response The username change view
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/account/settings/username', methods: ['GET', 'POST'], name: 'admin_account_settings_username_change')]
     public function accountSettingsUsernameChange(Request $request): Response
     {
-        // init default resources
         $errorMsg = null;
         $user = new User();
 
@@ -183,10 +192,10 @@ class AccountSettingsController extends AbstractController
      *
      * @return Response The password change view
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/account/settings/password', methods: ['GET', 'POST'], name: 'admin_account_settings_password_change')]
     public function accountSettingsPasswordChange(Request $request): Response
     {
-        // init default resources
         $errorMsg = null;
         $user = new User();
 
@@ -235,5 +244,40 @@ class AccountSettingsController extends AbstractController
             'passwordChangeForm' => $form,
             'errorMsg' => $errorMsg
         ]);
+    }
+
+    /**
+     * Handle reset authentication token (hard logout from all devices)
+     *
+     * @return Response The account settings table view
+     */
+    #[Route('/admin/account/settings/reset-token', methods: ['POST'], name: 'admin_account_settings_reset_token')]
+    public function accountSettingsResetToken(): Response
+    {
+        // get current username
+        $username = $this->authManager->getUsername();
+
+        // regenerate user token
+        $resetState = $this->authManager->regenerateUserToken($username);
+
+        // check if reset is success
+        if ($resetState['status']) {
+            // force logout current user (session will be invalid)
+            $this->authManager->logout();
+
+            // add success flash message
+            $this->addFlash('success', 'Authentication token has been reset.');
+
+            // redirect to login page with token reset indicator
+            return $this->redirectToRoute('auth_login');
+        } else {
+            // render error message
+            return $this->render('admin/account-settings.twig', [
+                'errorMsg' => 'Failed to reset authentication token: ' . $resetState['message'],
+                'profilePicChangeForm' => null,
+                'usernameChangeForm' => null,
+                'passwordChangeForm' => null
+            ]);
+        }
     }
 }

@@ -4,8 +4,10 @@ namespace App\Tests\Controller\Admin\Auth;
 
 use App\Tests\CustomTestCase;
 use Symfony\Component\String\ByteString;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use App\Controller\Admin\Auth\RegisterController;
 
 /**
  * Class RegisterControllerTest
@@ -14,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin\Auth
  */
+#[CoversClass(RegisterController::class)]
 class RegisterControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
@@ -78,6 +81,7 @@ class RegisterControllerTest extends CustomTestCase
         // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'register_form'),
                 'username' => '',
                 'password' => '',
                 're-password' => ''
@@ -85,6 +89,7 @@ class RegisterControllerTest extends CustomTestCase
         ]);
 
         // assert response
+        $this->assertSelectorTextContains('.login-card-title', 'Create administrator account');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorTextContains('li:contains("Please enter a password again")', 'Please enter a password again');
@@ -104,6 +109,7 @@ class RegisterControllerTest extends CustomTestCase
         // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'register_form'),
                 'username' => 'a',
                 'password' => 'a',
                 're-password' => 'a'
@@ -111,6 +117,7 @@ class RegisterControllerTest extends CustomTestCase
         ]);
 
         // assert response
+        $this->assertSelectorTextContains('.login-card-title', 'Create administrator account');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
         $this->assertSelectorTextContains('li:contains("Your password again should be at least 8 characters")', 'Your password again should be at least 8 characters');
@@ -130,6 +137,7 @@ class RegisterControllerTest extends CustomTestCase
         // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'register_form'),
                 'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 're-password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
@@ -137,6 +145,7 @@ class RegisterControllerTest extends CustomTestCase
         ]);
 
         // assert response
+        $this->assertSelectorTextContains('.login-card-title', 'Create administrator account');
         $this->assertSelectorTextContains('li:contains("This value is too long. It should have 50 characters or less.")', 'This value is too long. It should have 50 characters or less.');
         $this->assertSelectorTextContains('li:contains("This value is too long. It should have 80 characters or less.")', 'This value is too long. It should have 80 characters or less.');
         $this->assertSelectorTextContains('li:contains("This value is too long. It should have 80 characters or less.")', 'This value is too long. It should have 80 characters or less.');
@@ -156,6 +165,7 @@ class RegisterControllerTest extends CustomTestCase
         // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'register_form'),
                 'username' => 'testing_username',
                 'password' => 'testing_password_1',
                 're-password' => 'testing_password_2'
@@ -163,6 +173,7 @@ class RegisterControllerTest extends CustomTestCase
         ]);
 
         // assert response
+        $this->assertSelectorTextContains('.login-card-title', 'Create administrator account');
         $this->assertSelectorTextContains('body', 'Your passwords dont match');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
@@ -180,6 +191,7 @@ class RegisterControllerTest extends CustomTestCase
         // submit register form
         $this->client->request('POST', '/register', [
             'register_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'register_form'),
                 'username' => ByteString::fromRandom(16)->toString(),
                 'password' => 'testing_password_1',
                 're-password' => 'testing_password_1'

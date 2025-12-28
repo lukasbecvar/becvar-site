@@ -40,6 +40,9 @@ error.banned.message: "您已在此网站被永久禁用"
 error.banned.message.reason: "您因以下原因被永久禁用"
 error.banned.unban.email: "请将解禁请求发送到"
 
+# inbox
+inbox.email.reply.subject: "回复您的消息"
+
 # main navigation
 navigation.home.link: "首页"
 navigation.about.link: "关于我"

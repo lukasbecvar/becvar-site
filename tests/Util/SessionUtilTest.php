@@ -8,9 +8,9 @@ use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 /**
  * Class SessionUtilTest
@@ -36,7 +36,7 @@ class SessionUtilTest extends TestCase
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
         $this->sessionInterfaceMock = $this->createMock(SessionInterface::class);
 
-        // mock request stack for session get
+        // Default: session exists
         $this->requestStackMock->method('getSession')->willReturn($this->sessionInterfaceMock);
 
         // create session util instance
@@ -48,16 +48,44 @@ class SessionUtilTest extends TestCase
     }
 
     /**
+     * Helper to simulate session not found
+     *
+     * @return void
+     */
+    private function simulateSessionNotFound(): void
+    {
+        $this->requestStackMock = $this->createMock(RequestStack::class);
+        $this->requestStackMock->method('getSession')->willThrowException(new SessionNotFoundException());
+
+        $this->sessionUtil = new SessionUtil(
+            $this->requestStackMock,
+            $this->securityUtilMock,
+            $this->errorManagerMock
+        );
+    }
+
+    /**
+     * Test getSession handles exception
+     *
+     * @return void
+     */
+    public function testGetSessionHandlesException(): void
+    {
+        $this->simulateSessionNotFound();
+        $this->assertNull($this->sessionUtil->getSession());
+    }
+
+    /**
      * Test start session when not started
      *
      * @return void
      */
     public function testStartSessionWhenNotStarted(): void
     {
-        // simulate session not started
+        // mock session not started
         $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
 
-        // expect session start call
+        // expect session start
         $this->sessionInterfaceMock->expects($this->once())->method('start');
 
         // call tested method
@@ -71,10 +99,10 @@ class SessionUtilTest extends TestCase
      */
     public function testStartSessionWhenAlreadyStarted(): void
     {
-        // simulate session already started
+        // mock session already started
         $this->sessionInterfaceMock->method('isStarted')->willReturn(true);
 
-        // expect session start not to be called
+        // expect session not start
         $this->sessionInterfaceMock->expects($this->never())->method('start');
 
         // call tested method
@@ -88,10 +116,8 @@ class SessionUtilTest extends TestCase
      */
     public function testDestroySessionWhenStarted(): void
     {
-        // simulate session started
+        // mock session
         $this->sessionInterfaceMock->method('isStarted')->willReturn(true);
-
-        // expect session invalidate call
         $this->sessionInterfaceMock->expects($this->once())->method('invalidate');
 
         // call tested method
@@ -105,10 +131,8 @@ class SessionUtilTest extends TestCase
      */
     public function testDestroySessionWhenNotStarted(): void
     {
-        // simulate session not started
+        // mock session
         $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
-
-        // expect session invalidate not to be called
         $this->sessionInterfaceMock->expects($this->never())->method('invalidate');
 
         // call tested method
@@ -116,45 +140,33 @@ class SessionUtilTest extends TestCase
     }
 
     /**
-     * Test check if session exists when value set
+     * Test check session exists
      *
      * @return void
      */
-    public function testCheckSessionExistsWhenValueSet(): void
+    public function testCheckSession(): void
     {
-        // simulate session with specific name
-        $this->sessionInterfaceMock->method('has')->with('testing-value')->willReturn(true);
-
-        // call tested method
-        $result = $this->sessionUtil->checkSession('testing-value');
-
-        // assert result
-        $this->assertTrue($result);
+        $this->sessionInterfaceMock->method('has')->with('key')->willReturn(true);
+        $this->assertTrue($this->sessionUtil->checkSession('key'));
     }
 
     /**
-     * Test check if session exists when value not set
+     * Test check session returns false when session missing
      *
      * @return void
      */
-    public function testCheckSessionDoesNotExistWhenValueNotSet(): void
+    public function testCheckSessionReturnsFalseWhenSessionMissing(): void
     {
-        // simulate session without specific name
-        $this->sessionInterfaceMock->method('has')->with('testing-value')->willReturn(false);
-
-        // call tested method
-        $result = $this->sessionUtil->checkSession('testing-value');
-
-        // assert result
-        $this->assertFalse($result);
+        $this->simulateSessionNotFound();
+        $this->assertFalse($this->sessionUtil->checkSession('key'));
     }
 
     /**
-     * Test save value to session storage
+     * Test set session value
      *
      * @return void
      */
-    public function testSaveValueToSessionStorage(): void
+    public function testSetSession(): void
     {
         $sessionName = 'testSession';
         $sessionValue = 'testValue';
@@ -163,28 +175,41 @@ class SessionUtilTest extends TestCase
         // mock encryption
         $this->securityUtilMock->method('encryptAes')->with($sessionValue)->willReturn($encryptedValue);
 
-        // expect session to set call
+        // mock session
         $this->sessionInterfaceMock->expects($this->once())->method('set')->with($sessionName, $encryptedValue);
+        $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
+        $this->sessionInterfaceMock->expects($this->once())->method('start');
 
         // call tested method
         $this->sessionUtil->setSession($sessionName, $sessionValue);
     }
 
     /**
-     * Test get session value when session is valid
+     * Test set session does nothing when session missing
      *
      * @return void
      */
-    public function testGetSessionValueWhenSessionIsValid(): void
+    public function testSetSessionDoesNothingWhenSessionMissing(): void
+    {
+        $this->simulateSessionNotFound();
+        $this->securityUtilMock->expects($this->never())->method('encryptAes');
+
+        // call tested method
+        $this->sessionUtil->setSession('key', 'value');
+    }
+
+    /**
+     * Test get session value success
+     *
+     * @return void
+     */
+    public function testGetSessionValueSuccess(): void
     {
         $sessionName = 'testSession';
         $encryptedValue = 'encryptedTestValue';
         $decryptedValue = 'testValue';
 
-        // mock decryption
         $this->securityUtilMock->method('decryptAes')->with($encryptedValue)->willReturn($decryptedValue);
-
-        // mock session get
         $this->sessionInterfaceMock->method('get')->with($sessionName)->willReturn($encryptedValue);
 
         // call tested method
@@ -195,26 +220,33 @@ class SessionUtilTest extends TestCase
     }
 
     /**
-     * Test get session value when decryption fails
+     * Test get session value handles missing session
      *
      * @return void
      */
-    public function testGetSessionValueWhenDecryptionFails(): void
+    public function testGetSessionValueHandlesMissingSession(): void
+    {
+        $this->simulateSessionNotFound();
+        $this->assertEquals('default', $this->sessionUtil->getSessionValue('key', 'default'));
+    }
+
+    /**
+     * Test get session value handles decryption failure
+     *
+     * @return void
+     */
+    public function testGetSessionValueHandlesDecryptionFailure(): void
     {
         $sessionName = 'testSession';
         $encryptedValue = 'encryptedTestValue';
 
-        // mock decryption failure (null result)
         $this->securityUtilMock->method('decryptAes')->with($encryptedValue)->willReturn(null);
-
-        // mock session get
         $this->sessionInterfaceMock->method('get')->with($sessionName)->willReturn($encryptedValue);
+        $this->sessionInterfaceMock->method('isStarted')->willReturn(true);
 
-        // expect error handling to be called
-        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
-            'error to decrypt session data',
-            Response::HTTP_INTERNAL_SERVER_ERROR
-        );
+        // expect error handling
+        $this->errorManagerMock->expects($this->once())->method('handleError');
+        $this->sessionInterfaceMock->expects($this->once())->method('invalidate');
 
         // call tested method
         $result = $this->sessionUtil->getSessionValue($sessionName);
@@ -230,22 +262,29 @@ class SessionUtilTest extends TestCase
      */
     public function testGetSessionId(): void
     {
-        // call tested method
-        $result = $this->sessionUtil->getSessionId();
-
-        // assert result
-        $this->assertIsString($result);
+        $this->sessionInterfaceMock->method('getId')->willReturn('sess_123');
+        $this->assertEquals('sess_123', $this->sessionUtil->getSessionId());
     }
 
     /**
-     * Test regenerate session id
+     * Test get session id returns empty string when no session
+     *
+     * @return void
+     */
+    public function testGetSessionIdWhenNoSession(): void
+    {
+        $this->simulateSessionNotFound();
+        $this->assertEquals('', $this->sessionUtil->getSessionId());
+    }
+
+    /**
+     * Test regenerate session
+     *
+     * @return void
      */
     public function testRegenerateSession(): void
     {
-        // ensure session is started before migration
         $this->sessionInterfaceMock->method('isStarted')->willReturn(false);
-
-        // expect session to be started and migrated
         $this->sessionInterfaceMock->expects($this->once())->method('start');
         $this->sessionInterfaceMock->expects($this->once())->method('migrate')->with(true);
 

@@ -30,56 +30,71 @@ services:
     App\Twig\LinkifyExtension:
         tags:
             - { name: 'twig.extension' }
+    
+    # database helper extension
+    App\Twig\DatabaseHelperExtension:
+        tags:
+            - { name: 'twig.extension' }
 
     # app middlewares
     # --------------------------------------------------------------------------------- #
     # escape request data (for security)
     App\Middleware\EscapeRequestDataMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 10 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 12 }
 
     # check security rules
     App\Middleware\SecurityCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 11 }
 
     # check if assets is builded
     App\Middleware\AssetsCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 10 }
 
     # translation selector
     App\Middleware\TranslationsMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
     
     # handle maintenance mode
     App\Middleware\MaintenanceMiddleware:
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 6 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 8 }
 
     # rate limiter middleware
     App\Middleware\RateLimitMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
 
     # visitor system handler
     App\Middleware\VisitorSystemMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 
     # check if database is online
     App\Middleware\DatabaseOnlineMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 5 }
 
     # check if user is authenticated
     App\Middleware\AuthenticatedCheckMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 4 }
+
+    # user authorization check
+    App\Middleware\AuthorizationMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 3 }
 
     # auto-login for remember me feature
     App\Middleware\AutoLoginMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 2 }
+
+    # validate CSRF token
+    App\Middleware\CsrfProtectionMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 1 }
     # --------------------------------------------------------------------------------- #

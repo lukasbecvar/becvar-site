@@ -161,19 +161,19 @@ class AuthManager
         // get current visitor ip address
         $ipAddress = $this->visitorInfoUtil->getIP();
 
-        // get visitor id
-        $visitorId = $this->visitorManager->getVisitorRepository($ipAddress)->getID();
-
         // get user data
         $user = $this->getUserRepository(['token' => $this->getUserToken()]);
 
+        // get visitor repository
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
+
         // check if user repo found
-        if ($user != null) {
+        if ($user instanceof User) {
             // update last login time
             $user->setLastLoginTime(new DateTime());
 
-            // update visitor id
-            $user->setVisitorId($visitorId);
+            // update visitor
+            $user->setVisitor($visitor);
 
             try {
                 // flush updated user data to database
@@ -206,8 +206,8 @@ class AuthManager
         // generate token
         $token = ByteString::fromRandom(32)->toString();
 
-        // get visitor id
-        $visitorId = $this->visitorManager->getVisitorID($ipAddress);
+        // get visitor repository
+        $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
         // password hash
         $hashedPassword = $this->securityUtil->generateHash($password);
@@ -221,10 +221,10 @@ class AuthManager
             ->setRole('Owner')
             ->setIpAddress($ipAddress)
             ->setToken($token)
-            ->setRegistedTime(new DateTime())
+            ->setRegisteredTime(new DateTime())
             ->setLastLoginTime(null)
             ->setProfilePic($imageBase64)
-            ->setVisitorId($visitorId);
+            ->setVisitor($visitor);
 
         try {
             // insert new user to database
@@ -370,13 +370,15 @@ class AuthManager
      *
      * @param array<mixed> $array The criteria to search
      *
-     * @return object|null The user entity or null if not found
+     * @return User|null The user entity or null if not found
      */
-    public function getUserRepository(array $array): ?object
+    public function getUserRepository(array $array): ?User
     {
         // try to find user in database
         try {
-            return $this->userRepository->findOneBy($array);
+            /** @var User|null $user */
+            $user = $this->userRepository->findOneBy($array);
+            return $user;
         } catch (Exception $e) {
             $this->errorManager->handleError(
                 msg: 'find error: ' . $e->getMessage(),
@@ -401,10 +403,11 @@ class AuthManager
         }
 
         // get user role
-        $role = $this->getUserRole($token);
+        $role = $this->getUserRole($token) ?? 'Unknown';
+        $role = strtolower($role);
 
         // check if user role is admin
-        if ($role == 'Owner' || $role == 'Admin') {
+        if ($role == 'owner' || $role == 'admin') {
             return true;
         }
 
@@ -484,6 +487,52 @@ class AuthManager
     }
 
     /**
+     * Regenerate auth token for specific user
+     *
+     * This method regenerates token for a specific user, forcing logout from all devices
+     *
+     * @param string $username The username to regenerate token for
+     *
+     * @return array<bool|null|string> Regenerate status and message
+     */
+    public function regenerateUserToken(string $username): array
+    {
+        $state = [
+            'status' => true,
+            'message' => null
+        ];
+
+        // get user by username
+        $user = $this->userRepository->findOneBy(['username' => $username]);
+
+        // check if user exists
+        if ($user === null) {
+            return [
+                'status' => false,
+                'message' => 'User not found'
+            ];
+        }
+
+        // generate new token
+        $newToken = $this->generateUserToken();
+
+        // set new token
+        $user->setToken($newToken);
+
+        try {
+            // flush data to database
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            $state = [
+                'status' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+
+        return $state;
+    }
+
+    /**
      * Get list of all online users
      *
      * @return array<User> The online users list
@@ -499,6 +548,6 @@ class AuthManager
         }
 
         // get users associated with online visitor IDs
-        return $this->userRepository->findBy(['visitor_id' => $onlineVisitorIds]);
+        return $this->userRepository->findBy(['visitor' => $onlineVisitorIds]);
     }
 }

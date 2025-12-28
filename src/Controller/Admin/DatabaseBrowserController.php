@@ -2,8 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use Exception;
 use App\Util\AppUtil;
+use App\Manager\ErrorManager;
 use App\Manager\DatabaseManager;
+use App\Annotation\Authorization;
+use App\Annotation\CsrfProtection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,11 +23,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DatabaseBrowserController extends AbstractController
 {
     private AppUtil $appUtil;
+    private ErrorManager $errorManager;
     private DatabaseManager $databaseManager;
 
-    public function __construct(AppUtil $appUtil, DatabaseManager $databaseManager)
+    public function __construct(AppUtil $appUtil, ErrorManager $errorManager, DatabaseManager $databaseManager)
     {
         $this->appUtil = $appUtil;
+        $this->errorManager = $errorManager;
         $this->databaseManager = $databaseManager;
     }
 
@@ -32,6 +38,7 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response The database tables list view
      */
+    #[Authorization('ADMIN')]
     #[Route('/admin/database', methods: ['GET'], name: 'admin_database_list')]
     public function databaseList(): Response
     {
@@ -40,7 +47,8 @@ class DatabaseBrowserController extends AbstractController
 
         // return database tables list
         return $this->render('admin/database-browser.twig', [
-            'tables' => $tables
+            'tables' => $tables,
+            'tableName' => null
         ]);
     }
 
@@ -51,6 +59,7 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response The database table view
      */
+    #[Authorization('ADMIN')]
     #[Route('/admin/database/table', methods: ['GET'], name: 'admin_database_browser')]
     public function tableView(Request $request): Response
     {
@@ -71,10 +80,12 @@ class DatabaseBrowserController extends AbstractController
             'tableDataCountAll' => $this->databaseManager->countTableData($table),
             'tableData' => $this->databaseManager->getTableDataByPage($table, $page),
             'tableDataCount' => $this->databaseManager->countTableDataByPage($table, $page),
+            'tableColumnsWithTypes' => $this->databaseManager->getTableColumnsWithTypes($table),
 
             // filter properties
             'page' => $page,
-            'limit' => $_ENV['ITEMS_PER_PAGE']
+            'limit' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE'),
+            'limitValue' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE')
         ]);
     }
 
@@ -85,10 +96,11 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response The row editor view
      */
+    #[Authorization('ADMIN')]
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/database/edit', methods: ['GET', 'POST'], name: 'admin_database_edit')]
     public function rowEdit(Request $request): Response
     {
-        // init error message variable
         $errorMsg = null;
 
         // get query parameters
@@ -96,8 +108,19 @@ class DatabaseBrowserController extends AbstractController
         $id = intval($this->appUtil->getQueryString('id', $request));
         $page = intval($this->appUtil->getQueryString('page', $request));
 
-        // get table columns
-        $columns = $this->databaseManager->getTableColumns($table);
+        // get table columns with types
+        $columnsWithTypes = $this->databaseManager->getTableColumnsWithTypes($table);
+
+        // check if row exists
+        if ($this->databaseManager->selectRowData($table, $id) == null) {
+            $this->errorManager->handleError(
+                msg: 'Row not found',
+                code: Response::HTTP_NOT_FOUND
+            );
+        }
+
+        // get current row data
+        $currentRowData = $this->databaseManager->selectRowData($table, $id);
 
         // get referer query string
         $referer = $request->query->get('referer');
@@ -110,30 +133,59 @@ class DatabaseBrowserController extends AbstractController
             // check if user submit edit form
             if (isset($formSubmit)) {
                 // update values
-                foreach ($columns as $row) {
-                    // check if form value is empty
-                    if (empty($_POST[$row])) {
-                        if ($row != 'id') {
+                $updatedValues = [];
+                foreach ($columnsWithTypes as $columnInfo) {
+                    $row = $columnInfo['name'];
+                    $type = $columnInfo['type'];
+                    $isNullable = $columnInfo['nullable'];
+
+                    // get value from POST data
+                    $value = $request->request->get($row);
+
+                    // check if form value is empty (special handling for nullable and TINYINT/BOOLEAN)
+                    if ($this->databaseManager->isEmptyValue($value, $type)) {
+                        // allow empty values for nullable fields (except id)
+                        if (!$isNullable && $row != 'id') {
                             $errorMsg = $row . ' is empty';
                             break;
                         }
-                    } else {
-                        // get value
-                        $value = $request->request->get($row);
+                        // for nullable fields, convert empty to null for database
+                        $value = null;
+                    }
 
-                        // update value
-                        $this->databaseManager->updateValue($table, $row, $value, $id);
+                    // validate data type (only if not null)
+                    if ($value !== null && !$this->databaseManager->validateDataType($value, $type)) {
+                        $errorMsg = 'Invalid data type for ' . $row . '. Expected: ' . $type;
+                        break;
+                    }
+
+                    // convert datetime-local format to MySQL DATETIME format
+                    $processedValue = $this->databaseManager->convertValueForDatabase($value, $type);
+
+                    // update value
+                    try {
+                        $this->databaseManager->updateValue($table, $row, $processedValue, $id);
+                    } catch (Exception $e) {
+                        $errorMsg = $e->getMessage();
+                        break;
                     }
                 }
-
-                // redirect back to browser
-                if ($errorMsg == null) {
-                    return $this->redirectToRoute('admin_database_browser', [
-                        'table' => $table,
-                        'page' => $page
-                    ]);
-                }
             }
+
+            // redirect back to browser
+            if ($errorMsg == null) {
+                return $this->redirectToRoute('admin_database_browser', [
+                    'table' => $table,
+                    'page' => $page
+                ]);
+            }
+        }
+
+        // merge current data with submitted data for form repopulation
+        if ($errorMsg && !empty($updatedValues)) {
+            $displayValues = array_merge($currentRowData, $updatedValues);
+        } else {
+            $displayValues = $this->databaseManager->selectRowData($table, $id);
         }
 
         // render record editor form view
@@ -148,9 +200,9 @@ class DatabaseBrowserController extends AbstractController
             'editorPage' => $page,
             'errorMsg' => $errorMsg,
             'editorTable' => $table,
-            'editorField' => $columns,
             'editorReferer' => $referer,
-            'editorValues' => $this->databaseManager->selectRowData($table, $id)
+            'editorField' => $columnsWithTypes,
+            'editorValues' => $displayValues
         ]);
     }
 
@@ -161,18 +213,47 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response The new row form view
      */
+    #[Authorization('ADMIN')]
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/database/add', methods: ['GET', 'POST'], name: 'admin_database_add')]
     public function rowAdd(Request $request): Response
     {
-        // init error message variable
         $errorMsg = null;
 
         // get query parameters
         $table = $this->appUtil->getQueryString('table', $request);
         $page = intval($this->appUtil->getQueryString('page', $request));
 
-        // get table columns
-        $columns = $this->databaseManager->getTableColumns($table);
+        // check if table is specified
+        if (empty($table)) {
+            $this->errorManager->handleError(
+                msg: 'Table parameter is missing for add form',
+                code: Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        // get table columns with types
+        try {
+            $columnsWithTypes = $this->databaseManager->getTableColumnsWithTypes($table);
+        } catch (Exception $e) {
+            $this->errorManager->handleError(
+                msg: 'Error getting columns for table: ' . $table . ', ' . $e->getMessage(),
+                code: Response::HTTP_NOT_FOUND
+            );
+        }
+
+        $columns = array_column($columnsWithTypes, 'name');
+
+        // init submitted values array - populate from POST if exists
+        $submittedValues = [];
+        if ($request->isMethod('POST') && !empty($columnsWithTypes)) {
+            foreach ($columnsWithTypes as $columnInfo) {
+                $column = $columnInfo['name'];
+                if ($column != 'id') {
+                    $submittedValues[$column] = $request->request->get($column);
+                }
+            }
+        }
 
         // check request is post
         if ($request->isMethod('POST')) {
@@ -184,23 +265,61 @@ class DatabaseBrowserController extends AbstractController
                 $columnsBuilder = [];
                 $valuesBuilder = [];
 
-                // build columns and values list
-                foreach ($columns as $column) {
-                    if ($column != 'id') {
-                        $columnValue = $request->request->get($column);
-                        if (!empty($columnValue)) {
-                            $columnsBuilder[] = $column;
-                            $valuesBuilder[] = $columnValue;
-                        } else {
-                            $errorMsg = 'value: ' . $column . ' is empty';
+                // get all POST data to work with actual submitted values
+                $allPostData = $request->request->all();
+
+                // build columns and values list from actual POST data
+                foreach ($allPostData as $column => $columnValue) {
+                    // skip non-form fields and id
+                    if ($column === 'id' || !in_array($column, $columns)) {
+                        continue;
+                    }
+
+                    // find column type and nullable info
+                    $columnType = null;
+                    $isNullable = false;
+                    foreach ($columnsWithTypes as $columnInfo) {
+                        if ($columnInfo['name'] === $column) {
+                            $columnType = $columnInfo['type'];
+                            $isNullable = $columnInfo['nullable'];
                             break;
                         }
                     }
+
+                    if ($columnType === null) {
+                        continue; // skip unknown columns
+                    }
+
+                    $submittedValues[$column] = $columnValue; // store submitted value
+
+                    // check if value is empty (special handling for nullable and boolean fields)
+                    if ($this->databaseManager->isEmptyValue($columnValue, $columnType)) {
+                        // allow empty values for nullable fields
+                        if (!$isNullable) {
+                            $errorMsg = 'value: ' . $column . ' is empty';
+                            break;
+                        }
+                        // for nullable fields, convert empty to null for the database
+                        $columnValue = null;
+                    }
+
+                    // validate data type (only if not null)
+                    if ($columnValue !== null && !$this->databaseManager->validateDataType($columnValue, $columnType)) {
+                        $errorMsg = 'Invalid data type for ' . $column . '. Expected: ' . $columnType;
+                        break;
+                    }
+
+                    $columnsBuilder[] = $column;
+                    $valuesBuilder[] = $columnValue;
                 }
 
                 // execute new row insert
                 if ($errorMsg == null) {
-                    $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
+                    try {
+                        $this->databaseManager->addNew($table, $columnsBuilder, $valuesBuilder);
+                    } catch (Exception $e) {
+                        $errorMsg = $e->getMessage();
+                    }
                 }
 
                 // redirect back to browser
@@ -224,7 +343,8 @@ class DatabaseBrowserController extends AbstractController
             'newRowPage' => $page,
             'errorMsg' => $errorMsg,
             'newRowTable' => $table,
-            'newRowColumns' => $columns
+            'newRowColumns' => $columnsWithTypes,
+            'submittedValues' => $submittedValues
         ]);
     }
 
@@ -235,13 +355,22 @@ class DatabaseBrowserController extends AbstractController
      *
      * @return Response The redirect to browser
      */
-    #[Route('/admin/database/delete', methods: ['GET'], name: 'admin_database_delete')]
+    #[Authorization('ADMIN')]
+    #[Route('/admin/database/delete', methods: ['POST'], name: 'admin_database_delete')]
     public function rowDelete(Request $request): Response
     {
         // get query parameters
         $id = $this->appUtil->getQueryString('id', $request);
         $table = $this->appUtil->getQueryString('table', $request);
         $page = intval($this->appUtil->getQueryString('page', $request));
+
+        // check if row exists
+        if ($id != 'all' && $this->databaseManager->selectRowData($table, intval($id)) == null) {
+            $this->errorManager->handleError(
+                msg: 'Row not found',
+                code: Response::HTTP_NOT_FOUND
+            );
+        }
 
         // delete record
         $this->databaseManager->deleteRowFromTable($table, $id);

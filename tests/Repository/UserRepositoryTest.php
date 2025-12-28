@@ -3,59 +3,108 @@
 namespace App\Tests\Repository;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use PHPUnit\Framework\TestCase;
+use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class UserRepositoryTest
  *
- * Test cases for doctrine user repository
+ * Test cases for UserRepository
  *
  * @package App\Tests\Repository
  */
-class UserRepositoryTest extends KernelTestCase
+class UserRepositoryTest extends TestCase
 {
-    private ?EntityManager $entityManager;
+    private UserRepository $userRepository;
+    private ManagerRegistry & MockObject $registry;
+    private EntityManagerInterface & MockObject $entityManager;
 
     protected function setUp(): void
     {
-        self::bootKernel();
-        $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        // mock dependencies
+        $this->registry = $this->createMock(ManagerRegistry::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+
+        // mock registry to return entity manager
+        $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
+
+        // mock class metadata
+        $metadata = $this->createMock(ClassMetadata::class);
+        $metadata->name = User::class;
+        $this->entityManager->method('getClassMetadata')->willReturn($metadata);
+
+        // init user repository instance
+        $this->userRepository = new UserRepository($this->registry);
     }
 
     /**
-     * Test get user by token
+     * Test getUserByToken
      *
      * @return void
      */
     public function testGetUserByToken(): void
     {
-        /** @var \App\Repository\UserRepository $userRepository */
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $token = 'test_token';
+        $user = new User();
 
-        // get user by token
-        $token = 'zHKrsWUjWZGJfi2dkpAEKrkkEpW2LHn2';
-        $user = $userRepository->getUserByToken($token);
+        // mock query builder chain
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $query = $this->createMock(Query::class);
+
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+
+        // serviceEntityRepository calls
+        $queryBuilder->expects($this->once())->method('select')->with('u')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('from')->with(User::class, 'u')->willReturnSelf();
+
+        // method specific calls
+        $queryBuilder->expects($this->once())->method('where')->with('u.token = :token')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('setParameter')->with('token', $token)->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+        $query->expects($this->once())->method('getOneOrNullResult')->willReturn($user);
+
+        // call tested method
+        $result = $this->userRepository->getUserByToken($token);
 
         // assert result
-        $this->assertInstanceOf(User::class, $user, 'Expected instance of User');
-        $this->assertSame($token, $user->getToken(), 'The user token should match the input token');
+        $this->assertSame($user, $result);
     }
 
     /**
-     * Test get all users with visitor id
+     * Test getAllUsersWithVisitorId
      *
      * @return void
      */
     public function testGetAllUsersWithVisitorId(): void
     {
-        /** @var \App\Repository\UserRepository $userRepository */
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $expectedResult = [['username' => 'test', 'visitor_id' => 1]];
 
-        // get all users with visitor IDs
-        $users = $userRepository->getAllUsersWithVisitorId();
+        // mock query builder chain
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $query = $this->createMock(Query::class);
+
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+
+        // serviceEntityRepository calls (initial select/from)
+        $queryBuilder->expects($this->exactly(2))->method('select')->willReturnCallback(function (...$args) use ($queryBuilder) {
+            return $queryBuilder;
+        });
+
+        $queryBuilder->expects($this->once())->method('from')->with(User::class, 'u')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('leftJoin')->with('u.visitor', 'v')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+        $query->expects($this->once())->method('getResult')->willReturn($expectedResult);
+
+        // call tested method
+        $result = $this->userRepository->getAllUsersWithVisitorId();
 
         // assert result
-        $this->assertIsArray($users, 'Expected result to be an array');
+        $this->assertSame($expectedResult, $result);
     }
 }

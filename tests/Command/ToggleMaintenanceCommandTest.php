@@ -7,6 +7,7 @@ use App\Util\AppUtil;
 use PHPUnit\Framework\TestCase;
 use App\Command\ToggleMaintenanceCommand;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -17,6 +18,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @package App\Tests\Command
  */
+#[CoversClass(ToggleMaintenanceCommand::class)]
 class ToggleMaintenanceCommandTest extends TestCase
 {
     private CommandTester $commandTester;
@@ -88,6 +90,27 @@ class ToggleMaintenanceCommandTest extends TestCase
     }
 
     /**
+     * Test execute command with exception
+     *
+     * @return void
+     */
+    public function testExecuteThrowsException(): void
+    {
+        // mock update env value
+        $this->appUtil->method('updateEnvValue')->willThrowException(new Exception('Something went wrong'));
+
+        // execute command
+        $exitCode = $this->commandTester->execute(['mode' => 'true']);
+
+        // get command output
+        $output = $this->commandTester->getDisplay();
+
+        // assert result
+        $this->assertStringContainsString('Process error: Something went wrong', $output);
+        $this->assertEquals(Command::FAILURE, $exitCode);
+    }
+
+    /**
      * Test execute command with valid mode
      *
      * @return void
@@ -95,10 +118,7 @@ class ToggleMaintenanceCommandTest extends TestCase
     public function testExecuteWithValidMode(): void
     {
         // mock update env value
-        $this->appUtil->expects($this->once())->method('updateEnvValue')->with(
-            'MAINTENANCE_MODE',
-            'true'
-        );
+        $this->appUtil->expects($this->once())->method('updateEnvValue')->with('MAINTENANCE_MODE', 'true');
 
         // execute command
         $exitCode = $this->commandTester->execute(['mode' => 'true']);
@@ -110,25 +130,21 @@ class ToggleMaintenanceCommandTest extends TestCase
     }
 
     /**
-     * Test execute command with exception
+     * Test execute command with valid mode false
      *
      * @return void
      */
-    public function testExecuteThrowsException(): void
+    public function testExecuteWithValidModeFalse(): void
     {
         // mock update env value
-        $this->appUtil->method('updateEnvValue')->willThrowException(
-            new Exception('Something went wrong')
-        );
+        $this->appUtil->expects($this->once())->method('updateEnvValue')->with('MAINTENANCE_MODE', 'false');
 
         // execute command
-        $exitCode = $this->commandTester->execute(['mode' => 'true']);
-
-        // get command output
+        $exitCode = $this->commandTester->execute(['mode' => 'false']);
         $output = $this->commandTester->getDisplay();
 
         // assert result
-        $this->assertStringContainsString('Process error: Something went wrong', $output);
-        $this->assertEquals(Command::FAILURE, $exitCode);
+        $this->assertStringContainsString('MAINTENANCE_MODE in .env has been set to: false', $output);
+        $this->assertEquals(Command::SUCCESS, $exitCode);
     }
 }

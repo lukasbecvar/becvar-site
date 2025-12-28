@@ -47,7 +47,7 @@
             {% if antiLogEnabled == false %}
                 <p class="card-text text-warning">
                     <strong>
-                        Logging for your browser is enabled you can disable <a href={{ path('antilog') }}>here</a>
+                        Logging for your browser is enabled you can disable <a href={{ path('admin_log_list') }}>here</a>
                     </strong>
                 </p>
             {% endif %}
@@ -93,7 +93,7 @@
                     <div class="card-statistic-3 p-3">
                         <div class="mb-1">
                             <h5 class="card-title mb-0">
-                                <a class="card-link stats-link" href={{ path('admin_log_list', {'page': 1}) }}>Logs</a> <a href={{ path('antilog') }}>.</a>
+                                <a class="card-link stats-link" href={{ path('admin_log_list', {'page': 1}) }}>Logs</a>
                             </h5>
                         </div>
                         <div class="align-items-center mb-0 d-flex">
@@ -149,15 +149,7 @@
         </div>
     </div>    
 </div>
-<script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const divElement = document.getElementById('wrarning-box')
-        const elements = document.getElementById('wraning-elements')
-        if (elements.innerHTML.trim() === '') {
-            divElement.style.display = 'none'
-        } else {
-            divElement.style.display = 'block'
-        }
-    })
-</script>
+
+{# IMPORT SELECTOR HIGHLIGHT SCRIPT #}
+{{ encore_entry_script_tags('dashboard-js') }}
 {% endblock %}

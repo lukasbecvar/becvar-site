@@ -24,12 +24,17 @@ class SecurityUtilTest extends TestCase
         $this->securityUtil = new SecurityUtil();
     }
 
+    protected function tearDown(): void
+    {
+        unset($_ENV['APP_SECRET']);
+    }
+
     /**
      * Test escape XSS in string when string is insecure
      *
      * @return void
      */
-    public function testEscapeXssInStringWhenStringIsInsecure(): void
+    public function testEscapeStringWithXss(): void
     {
         // arrange test data
         $input = '<script>alert("XSS");</script>';
@@ -47,7 +52,7 @@ class SecurityUtilTest extends TestCase
      *
      * @return void
      */
-    public function testEscapeXssInStringWhenStringIsSecure(): void
+    public function testEscapeStringClean(): void
     {
         $input = 'Hello, World!';
         $expectedOutput = 'Hello, World!';
@@ -70,6 +75,7 @@ class SecurityUtilTest extends TestCase
         $hash = $this->securityUtil->generateHash($plainText);
 
         // assert result
+        $this->assertNotEquals($plainText, $hash);
         $this->assertTrue(password_verify($plainText, $hash));
     }
 
@@ -78,7 +84,7 @@ class SecurityUtilTest extends TestCase
      *
      * @return void
      */
-    public function testVerifyPasswordWhenPasswordIsValid(): void
+    public function testVerifyPasswordValid(): void
     {
         // generate hash
         $password = 'testPassword123';
@@ -96,7 +102,7 @@ class SecurityUtilTest extends TestCase
      *
      * @return void
      */
-    public function testVerifyPasswordWhenPasswordIsInvalid(): void
+    public function testVerifyPasswordInvalid(): void
     {
         // generate hash
         $password = 'testPassword123';
@@ -110,31 +116,71 @@ class SecurityUtilTest extends TestCase
     }
 
     /**
-     * Test encrypt AES
+     * Test encrypt AES with default key
      *
      * @return void
      */
-    public function testEncryptAes(): void
+    public function testEncryptAesDefaultKey(): void
     {
         $plainText = 'my_secret_data';
         $encrypted = $this->securityUtil->encryptAes($plainText);
 
-        // assert result
+        $this->assertIsString($encrypted);
         $this->assertNotEquals($plainText, $encrypted);
+
+        // Decrypt to verify
+        $decrypted = $this->securityUtil->decryptAes($encrypted);
+        $this->assertEquals($plainText, $decrypted);
     }
 
     /**
-     * Test decrypt AES
+     * Test encrypt AES with custom key
      *
      * @return void
      */
-    public function testDecryptAes(): void
+    public function testEncryptAesCustomKey(): void
     {
-        $plainText = 'my_secret_data';
-        $encrypted = $this->securityUtil->encryptAes($plainText);
-        $decrypted = $this->securityUtil->decryptAes($encrypted);
+        $plainText = 'custom_secret';
+        $key = 'my_custom_key';
+
+        // call tested method
+        $encrypted = $this->securityUtil->encryptAes($plainText, $key);
 
         // assert result
-        $this->assertEquals($plainText, $decrypted);
+        $this->assertNull($this->securityUtil->decryptAes($encrypted));
+        $this->assertEquals($plainText, $this->securityUtil->decryptAes($encrypted, $key));
+    }
+
+    /**
+     * Test decrypt AES returns null for invalid data (too short/invalid base64)
+     *
+     * @return void
+     */
+    public function testDecryptAesInvalidData(): void
+    {
+        $this->assertNull($this->securityUtil->decryptAes('short'));
+        $this->assertNull($this->securityUtil->decryptAes('invalid_base64_@@@'));
+    }
+
+    /**
+     * Test decrypt AES returns null for tampered data (tag mismatch)
+     *
+     * @return void
+     */
+    public function testDecryptAesTamperedData(): void
+    {
+        $plainText = 'sensitive_data';
+        $encrypted = $this->securityUtil->encryptAes($plainText);
+        $decoded = base64_decode($encrypted);
+
+        // tamper with the last byte (part of ciphertext or tag)
+        $tampered = $decoded;
+        $tampered[strlen($tampered) - 1] = chr(ord($tampered[strlen($tampered) - 1]) ^ 1);
+
+        // call tested method
+        $result = $this->securityUtil->decryptAes(base64_encode($tampered));
+
+        // assert result
+        $this->assertNull($result);
     }
 }

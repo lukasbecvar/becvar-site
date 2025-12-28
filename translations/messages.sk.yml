@@ -40,6 +40,9 @@ error.banned.message: "Ste na tejto stránke trvale zablokovaný"
 error.banned.message.reason: "Ste na tejto stránke trvale zablokovaný z dôvodu"
 error.banned.unban.email: "Žiadosť o odblokovanie smerujte na"
 
+# inbox
+inbox.email.reply.subject: "Odpoveď na vašu správu"
+
 # main navigation
 navigation.home.link: "Domov"
 navigation.about.link: "O mne"

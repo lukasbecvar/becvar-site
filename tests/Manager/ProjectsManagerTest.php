@@ -12,8 +12,8 @@ use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use App\Manager\ProjectsManager;
 use App\Repository\ProjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -69,8 +69,7 @@ class ProjectsManagerTest extends TestCase
         $this->projectRepository->method('findAll')->willReturn([$project]);
 
         // expect remove projects
-        $this->entityManager->expects($this->once())->method('remove')
-            ->with($this->isInstanceOf(Project::class));
+        $this->entityManager->expects($this->once())->method('remove')->with($this->isInstanceOf(Project::class));
         $this->entityManager->expects($this->once())->method('flush');
 
         // call tested method
@@ -87,16 +86,14 @@ class ProjectsManagerTest extends TestCase
         // mock get table name
         $classMetadataMock = $this->createMock(ClassMetadata::class);
         $classMetadataMock->method('getTableName')->willReturn('projects');
-        $this->entityManager->method('getClassMetadata')
-            ->willReturn($classMetadataMock);
+        $this->entityManager->method('getClassMetadata')->willReturn($classMetadataMock);
 
         // mock database connection
         $connectionMock = $this->createMock(Connection::class);
         $this->entityManager->method('getConnection')->willReturn($connectionMock);
 
         // expect reset auto increment
-        $connectionMock->expects($this->once())->method('executeQuery')
-            ->with($this->stringContains('ALTER TABLE projects AUTO_INCREMENT = 0'));
+        $connectionMock->expects($this->once())->method('executeQuery')->with($this->stringContains('ALTER TABLE projects AUTO_INCREMENT = 0'));
 
         // call tested method
         $this->projectsManager->resetIndex();
@@ -117,8 +114,7 @@ class ProjectsManagerTest extends TestCase
         $this->projectRepository->method('getProjectsByStatus')->willReturn($projectsList);
 
         // mock cache saving
-        $this->cacheUtil->expects($this->once())->method('setValue')
-            ->with('projects-list-' . $status, $projectsList, 60 * 60 * 24 * 30);
+        $this->cacheUtil->expects($this->once())->method('setValue')->with('projects-list-' . $status, $projectsList, 60 * 60 * 24 * 30);
 
         // call tested method
         $result = $this->projectsManager->getProjectsList($status);
@@ -141,8 +137,7 @@ class ProjectsManagerTest extends TestCase
         $this->projectRepository->method('count')->willReturn($projectsCount);
 
         // mock cache saving
-        $this->cacheUtil->expects($this->once())->method('setValue')
-            ->with('projects-count', $projectsCount, 60 * 60 * 24 * 30);
+        $this->cacheUtil->expects($this->once())->method('setValue')->with('projects-count', $projectsCount, 60 * 60 * 24 * 30);
 
         // call tested method
         $result = $this->projectsManager->getProjectsCount();

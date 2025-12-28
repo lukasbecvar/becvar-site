@@ -93,13 +93,13 @@ class VisitorSystemMiddleware
                 $reason = $this->banManager->getBanReason($ipAddress);
                 $this->logManager->log(
                     name: 'ban-system',
-                    value: 'visitor with ip: ' . $ipAddress . ' trying to access page, but visitor banned for: ' . $reason
+                    message: 'visitor with ip: ' . $ipAddress . ' trying to access page, but visitor banned for: ' . $reason
                 );
 
                 // render banned page
                 die($this->twig->render('errors/error-banned.twig', [
                     'message' => $reason,
-                    'contactEmail' => $_ENV['CONTACT_EMAIL']
+                    'contactEmail' => $this->appUtil->getEnvValue('CONTACT_EMAIL')
                 ]));
             } else {
                 // update exist visitor

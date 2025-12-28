@@ -83,12 +83,10 @@ class AuthenticatedCheckMiddlewareTest extends TestCase
     public function testAccessToAdminRouteWhenUserIsNotLoggedIn(): void
     {
         // mock user is logged in
-        $this->authManagerMock->expects($this->once())
-            ->method('isUserLogedin')->willReturn(false);
+        $this->authManagerMock->expects($this->once())->method('isUserLogedin')->willReturn(false);
 
         // mock url generator
-        $this->urlGeneratorMock->expects($this->once())
-            ->method('generate')->with('auth_login')->willReturn('/login');
+        $this->urlGeneratorMock->expects($this->once())->method('generate')->with('auth_login')->willReturn('/login');
 
         // create testing request event
         $event = $this->createRequestEvent('/admin');

@@ -18,7 +18,7 @@
         <div class="card dashbord-card settings-form-card disable-phone-radius">
             <div class="card-header">Change profile image</div>
             <div class="card-body">
-                {{ form_start(profilePicChangeForm, {'attr': {'class': 'settings-form settings-form--pic-upload'}}) }}
+                {{ form_start(profilePicChangeForm, {'attr': {'class': 'settings-form settings-form-pic-upload', 'data-input-id': profilePicChangeForm['profile-pic'].vars.id}}) }}
                     
                     {# hidden file input #}
                     {{ form_widget(profilePicChangeForm['profile-pic']) }}
@@ -36,39 +36,6 @@
 
                     <button class="input-button" type="submit">Save picture</button>
                 {{ form_end(profilePicChangeForm) }}
-
-                <script>
-                    const picInput = document.getElementById('{{ profilePicChangeForm['profile-pic'].vars.id }}')
-                    const previewContainer = document.getElementById('pic-preview-container')
-                    const removeBtn = document.getElementById('pic-remove-btn')
-                    const picPreview = document.getElementById('pic-preview')
-                    const dropzone = document.getElementById('pic-dropzone')
-
-                    if (picInput && previewContainer && picPreview && removeBtn && dropzone) {
-                        
-                        // when a file is selected
-                        picInput.addEventListener('change', function(event) {
-                            const file = event.target.files[0]
-                            if (file) {
-                                const reader = new FileReader()
-                                reader.onload = function(e) {
-                                    picPreview.src = e.target.result
-                                    previewContainer.style.display = 'block'
-                                    dropzone.style.display = 'none'
-                                }
-                                reader.readAsDataURL(file)
-                            }
-                        })
-
-                        // when the remove button is clicked
-                        removeBtn.addEventListener('click', function() {
-                            picInput.value = '' // Clear the file input
-                            picPreview.src = '#'
-                            previewContainer.style.display = 'none'
-                            dropzone.style.display = 'flex'
-                        })
-                    }
-                </script>
             </div>
         </div>
 
@@ -166,7 +133,7 @@
             <div class="card-header">Account settings</div>
             <div class="card-body">
                 <ul class="settings-list">
-                    <li class="settings-item settings-item--profile">
+                    <li class="settings-item settings-item-profile">
                         <div class="settings-item-avatar">
                             {% if getUserPic() == 'non-pic' %}
                                 <img src={{ asset('/build/images/default-profile.jpg') }} alt="profile_picture">
@@ -200,9 +167,24 @@
                             <a class="settings-item-link" href={{ path('admin_account_settings_password_change') }}>Change</a>
                         </div>
                     </li>
+                    <li class="settings-item">
+                        <div class="settings-item-info">
+                            <span class="settings-item-label">Authentication Token</span>
+                            <span class="settings-item-description">Reset token to logout from all devices</span>
+                        </div>
+                        <div class="settings-item-action">
+                            <form method="POST" action={{ path('admin_account_settings_reset_token') }} onsubmit="return confirm('Are you sure you want to reset your authentication token? You will be logged out from all devices.')">
+                                <input type="hidden" name="csrf_token" value={{ csrf_token('internal-csrf-token') }}>
+                                <button type="submit" class="settings-item-link settings-item-link-danger">Reset Token</button>
+                            </form>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
     {% endif %}
 </div>
+
+{# INCLUDE ACCOUNT SETTINGS PAGE FUNCTIONALITY #}
+{{ encore_entry_script_tags('account-settings-js') }}
 {% endblock %}

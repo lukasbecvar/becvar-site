@@ -40,6 +40,9 @@ error.banned.message: "Sie sind dauerhaft von dieser Seite gesperrt"
 error.banned.message.reason: "Sie sind dauerhaft von dieser Seite gesperrt aus folgendem Grund"
 error.banned.unban.email: "Bitte senden Sie Anfragen zur Aufhebung der Sperre an"
 
+# inbox
+inbox.email.reply.subject: "Antwort auf Ihre Nachricht"
+
 # main navigation
 navigation.home.link: "Startseite"
 navigation.about.link: "Über mich"

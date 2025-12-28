@@ -9,6 +9,7 @@ use App\Util\VisitorInfoUtil;
 use App\Form\ContactFormType;
 use App\Manager\VisitorManager;
 use App\Manager\MessagesManager;
+use App\Annotation\CsrfProtection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -50,6 +51,7 @@ class ContactController extends AbstractController
      *
      * @return Response The contact page view response
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/contact', methods: ['GET', 'POST'], name: 'public_contact')]
     public function contactPage(Request $request): Response
     {
@@ -113,14 +115,17 @@ class ContactController extends AbstractController
                 if ($this->messagesManager->getMessageCountByIpAddress($ipAddress) >= 5) {
                     $this->logManager->log(
                         name: 'message-sender',
-                        value: 'visitor: ' . $visitorId . ' trying send new message but he has open messages'
+                        message: 'visitor: ' . $visitorId . ' trying send new message but he has open messages'
                     );
 
                     // redirect back to from & handle limit reached error status
                     return $this->redirectToRoute('public_contact', ['status' => 'reached']);
                 } else {
+                    // get visitor by id
+                    $visitor = $this->visitorManager->getVisitorRepositoryByID($visitorId);
+
                     // save message to database
-                    $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitorId);
+                    $this->messagesManager->saveMessage($name, $email, $messageInput, $ipAddress, $visitor);
 
                     // redirect back to from & handle ok status
                     return $this->redirectToRoute('public_contact', ['status' => 'ok']);
@@ -139,12 +144,12 @@ class ContactController extends AbstractController
             'contactForm' => $form->createView(),
 
             // contact data
-            'githubLink' => $_ENV['GITHUB_LINK'],
-            'twitterLink' => $_ENV['TWITTER_LINK'],
-            'contactEmail' => $_ENV['CONTACT_EMAIL'],
-            'telegramLink' => $_ENV['TELEGRAM_LINK'],
-            "linkedInLink" => $_ENV['LINKEDIN_LINK'],
-            'instagramLink' => $_ENV['INSTAGRAM_LINK']
+            'githubLink' => $this->appUtil->getEnvValue('GITHUB_LINK'),
+            'twitterLink' => $this->appUtil->getEnvValue('TWITTER_LINK'),
+            'contactEmail' => $this->appUtil->getEnvValue('CONTACT_EMAIL'),
+            'telegramLink' => $this->appUtil->getEnvValue('TELEGRAM_LINK'),
+            "linkedInLink" => $this->appUtil->getEnvValue('LINKEDIN_LINK'),
+            'instagramLink' => $this->appUtil->getEnvValue('INSTAGRAM_LINK')
         ]);
     }
 }

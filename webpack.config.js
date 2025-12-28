@@ -1,48 +1,35 @@
 /** frontend assets build configuration */
-const Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore')
 
 Encore
     // set build path
     .setOutputPath('public/build/')
     .setPublicPath('/build')
 
-    // common assets
-    .addEntry('scrollbar-css', './assets/css/scrollbar.scss')
-    .addEntry('page-loading-js', './assets/js/page-loading.js')
-    .addEntry('page-loading-css', './assets/css/page-loading.scss')
-
-    // public page assets
-    .addEntry('public-js', './assets/js/public.js')
-    .addEntry('public-css', './assets/css/public.scss')
-
-    // admin page assets
+    // register css assets
     .addEntry('admin-css', './assets/css/admin.scss')
-
-    // error page assets
+    .addEntry('public-css', './assets/css/public.scss')
+    .addEntry('scrollbar-css', './assets/css/scrollbar.scss')
     .addEntry('error-page-css', './assets/css/error-page.scss')
-
-    // bootstrap
+    .addEntry('page-loading-css', './assets/css/page-loading.scss')
     .addEntry('bootstrap-css', './node_modules/bootstrap/dist/css/bootstrap.css')
-    .addEntry('bootstrap-js', './node_modules/bootstrap/dist/js/bootstrap.bundle.js')
-    .addEntry('bootstrap-icons-css', './node_modules/bootstrap-icons/font/bootstrap-icons.css')
-
-    // boxicons
-    .addEntry('boxicons-css', './node_modules/boxicons/css/boxicons.css')
-
-    // fontawesome
     .addEntry('fontawesome-css', './node_modules/@fortawesome/fontawesome-free/css/all.css')
-
-    // purecounter
+    .addEntry('bootstrap-icons-css', './node_modules/bootstrap-icons/font/bootstrap-icons.css')
+    
+    // register js assets
+    .addEntry('public-js', './assets/js/public.js')
+    .addEntry('dashboard-js', './assets/js/dashboard.js')
     .addEntry('purecounter-js', './assets/js/purecounter.js')
-
-    // waypoints
+    .addEntry('page-loading-js', './assets/js/page-loading.js')
+    .addEntry('admin-sidebar-js', './assets/js/admin-sidebar.js')
     .addEntry('skills-progress-js', './assets/js/skills-progress.js')
-
-    // visitor status updater
-    .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')
-
-    // visitors metrics chart script
+    .addEntry('visitors-manager-js', './assets/js/visitors-manager.js')
+    .addEntry('account-settings-js', './assets/js/account-settings.js')
+    .addEntry('database-browser-js', './assets/js/database-browser.js')
     .addEntry('visitors-metrics-js', './assets/js/visitors-metrics.js')
+    .addEntry('boxicons-css', './node_modules/boxicons/css/boxicons.css')
+    .addEntry('update-visitor-status-js', './assets/js/update-visitor-status.js')
+    .addEntry('bootstrap-js', './node_modules/bootstrap/dist/js/bootstrap.bundle.js')
 
     // copy static assets
     .copyFiles(
@@ -61,9 +48,8 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
-        config.corejs = '3.23';
+        config.useBuiltIns = 'usage'
+        config.corejs = '3.23'
     })
-;
 
-module.exports = Encore.getWebpackConfig();
+module.exports = Encore.getWebpackConfig()

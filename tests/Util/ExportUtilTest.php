@@ -18,8 +18,8 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class ExportUtilTest extends TestCase
 {
-    private VisitorInfoUtil & MockObject $visitorInfoUtilMock;
     private ExportUtil $exportUtil;
+    private VisitorInfoUtil & MockObject $visitorInfoUtilMock;
 
     protected function setUp(): void
     {

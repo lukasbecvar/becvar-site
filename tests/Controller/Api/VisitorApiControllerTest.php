@@ -2,6 +2,8 @@
 
 namespace App\Tests\Controller\Api;
 
+use App\Controller\Api\VisitorApiController;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @package App\Tests\Api
  */
+#[CoversClass(VisitorApiController::class)]
 class VisitorApiControllerTest extends WebTestCase
 {
     private KernelBrowser $client;

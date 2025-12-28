@@ -54,14 +54,14 @@ class ProjectsManager
     public function updateProjectList(): void
     {
         // get github link
-        $githubLink = $_ENV['GITHUB_LINK'];
+        $githubLink = (string) $_ENV['GITHUB_LINK'];
 
         // strip link
         $githubUser = str_replace('https://github.com/', '', $githubLink);
         $githubUser = str_replace('/', '', $githubUser);
 
         // get repos form github
-        $repos = $this->jsonUtil->getJson('https://api.github.com/users/' . $githubUser . '/repos');
+        $repos = $this->jsonUtil->getJson('https://api.github.com/users/' . (string) $githubUser . '/repos');
 
         // delete all projects from table
         $this->dropProjects();

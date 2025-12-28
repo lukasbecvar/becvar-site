@@ -2,6 +2,8 @@
 
 namespace App\Tests\Controller;
 
+use App\Controller\MetricsExportController;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @package App\Tests
  */
+#[CoversClass(MetricsExportController::class)]
 class MetricsExportControllerTest extends WebTestCase
 {
     private KernelBrowser $client;

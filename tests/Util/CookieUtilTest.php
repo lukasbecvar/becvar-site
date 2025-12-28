@@ -2,6 +2,7 @@
 
 namespace App\Tests\Util;
 
+use App\Util\AppUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
 use PHPUnit\Framework\TestCase;
@@ -17,15 +18,23 @@ use PHPUnit\Framework\MockObject\MockObject;
 class CookieUtilTest extends TestCase
 {
     private CookieUtil $cookieUtil;
+    private AppUtil & MockObject $appUtilMock;
     private SecurityUtil & MockObject $securityUtilMock;
 
     protected function setUp(): void
     {
         // mock dependencies
+        $this->appUtilMock = $this->createMock(AppUtil::class);
         $this->securityUtilMock = $this->createMock(SecurityUtil::class);
 
         // create the cookie util instance
-        $this->cookieUtil = new CookieUtil($this->securityUtilMock);
+        $this->cookieUtil = new CookieUtil($this->appUtilMock, $this->securityUtilMock);
+    }
+
+    protected function tearDown(): void
+    {
+        unset($_SERVER['HTTP_HOST']);
+        unset($_SERVER['REQUEST_URI']);
     }
 
     /**
@@ -33,13 +42,12 @@ class CookieUtilTest extends TestCase
      *
      * @return void
      */
-    public function testCheckIsCookieSet(): void
+    public function testIsCookieSet(): void
     {
-        // call tested method
-        $value = $this->cookieUtil->isCookieSet('test_cookie');
+        $this->assertFalse($this->cookieUtil->isCookieSet('test_cookie'));
 
-        // assert response
-        $this->assertIsBool($value);
+        $_COOKIE['test_cookie'] = 'value';
+        $this->assertTrue($this->cookieUtil->isCookieSet('test_cookie'));
     }
 
     /**
@@ -47,7 +55,7 @@ class CookieUtilTest extends TestCase
      *
      * @return void
      */
-    public function testGetValueFromCookie(): void
+    public function testGet(): void
     {
         // set cookie values
         $name = 'test_cookie';
@@ -58,13 +66,33 @@ class CookieUtilTest extends TestCase
         $_COOKIE[$name] = base64_encode($encryptedValue);
 
         // mock value decryption
-        $this->securityUtilMock->expects($this->once())->method('decryptAes')
-            ->with($encryptedValue)->willReturn($decryptedValue);
+        $this->securityUtilMock->expects($this->once())->method('decryptAes')->with($encryptedValue)->willReturn($decryptedValue);
 
         // call tested method
         $value = $this->cookieUtil->get($name);
 
         // assert result
         $this->assertEquals($decryptedValue, $value);
+    }
+
+    /**
+     * Test set cookie
+     *
+     * @return void
+     */
+    public function testSet(): void
+    {
+        $name = 'test_cookie';
+        $value = 'my_value';
+        $expiration = time() + 3600;
+
+        // mock encryption
+        $this->securityUtilMock->expects($this->once())->method('encryptAes')->with($value)->willReturn('encrypted');
+
+        // mock ssl only check
+        $this->appUtilMock->method('isSSLOnly')->willReturn(true);
+
+        // call tested method
+        $this->cookieUtil->set($name, $value, $expiration);
     }
 }

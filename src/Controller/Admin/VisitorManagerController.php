@@ -9,6 +9,8 @@ use App\Form\BanFormType;
 use App\Manager\BanManager;
 use App\Util\VisitorInfoUtil;
 use App\Manager\VisitorManager;
+use App\Annotation\Authorization;
+use App\Annotation\CsrfProtection;
 use App\Form\VisitorListExportType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,9 +74,9 @@ class VisitorManagerController extends AbstractController
             'filter' => $filter,
             'visitorMetrics' => null,
             'visitorInfoData' => null,
-            'visitorsLimit' => $_ENV['ITEMS_PER_PAGE'],
             'currentIp' => $this->visitorInfoUtil->getIP(),
             'bannedCount' => $this->banManager->getBannedCount(),
+            'visitorsLimit' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE'),
             'onlineVisitors' => $this->visitorManager->getOnlineVisitorIDs(),
             'visitorsCount' => $this->visitorManager->getVisitorsCount($filter),
             'visitorsData' => $this->visitorManager->getVisitors($page, $filter, $sort, $order)
@@ -88,6 +90,7 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The IP information view
      */
+    #[Authorization('ADMIN')]
     #[Route('/admin/visitors/ipinfo', methods: ['GET'], name: 'admin_visitor_ipinfo')]
     public function visitorIpInfo(Request $request): Response
     {
@@ -101,7 +104,6 @@ class VisitorManagerController extends AbstractController
 
         // get ip info
         $ipInfoData = $this->visitorInfoUtil->getIpInfo($ipAddress);
-        $ipInfoData = json_decode(json_encode($ipInfoData), true);
 
         // return visitor manager view
         return $this->render('admin/visitors-manager.twig', [
@@ -122,6 +124,7 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The delete confirmation page view
      */
+    #[Authorization('ADMIN')]
     #[Route('/admin/visitors/delete', methods: ['GET'], name: 'admin_visitor_delete')]
     public function deleteAllVisitors(Request $request): Response
     {
@@ -141,6 +144,8 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The redirect back to visitor manager
      */
+    #[Authorization('ADMIN')]
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/visitors/ban', methods: ['GET', 'POST'], name: 'admin_visitor_ban')]
     public function banVisitor(Request $request): Response
     {
@@ -198,7 +203,8 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The redirect back to visitor manager
      */
-    #[Route('/admin/visitors/unban', methods: ['GET'], name: 'admin_visitor_unban')]
+    #[Authorization('ADMIN')]
+    #[Route('/admin/visitors/unban', methods: ['POST'], name: 'admin_visitor_unban')]
     public function unbanVisitor(Request $request): Response
     {
         // get query parameters
@@ -234,6 +240,7 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The export form view
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/visitors/download', methods: ['GET', 'POST'], name: 'admin_visitor_manager_download')]
     public function downloadVisitorsList(Request $request): Response
     {
@@ -304,6 +311,7 @@ class VisitorManagerController extends AbstractController
      *
      * @return Response The visitors metrics page view
      */
+    #[CsrfProtection(enabled: false)]
     #[Route('/admin/visitors/metrics', methods: ['GET', 'POST'], name: 'admin_visitor_manager_metrics')]
     public function visitorsMetrics(Request $request): Response
     {

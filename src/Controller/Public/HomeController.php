@@ -33,12 +33,12 @@ class HomeController extends AbstractController
     {
         return $this->render('public/home.twig', [
             'appUtil' => $this->appUtil,
-            'githubLink' => $_ENV['GITHUB_LINK'],
-            'twitterLink' => $_ENV['TWITTER_LINK'],
-            'telegramLink' => $_ENV['TELEGRAM_LINK'],
-            'contactEmail' => $_ENV['CONTACT_EMAIL'],
-            "linkedInLink" => $_ENV['LINKEDIN_LINK'],
-            'instagramLink' => $_ENV['INSTAGRAM_LINK']
+            'githubLink' => $this->appUtil->getEnvValue('GITHUB_LINK'),
+            'twitterLink' => $this->appUtil->getEnvValue('TWITTER_LINK'),
+            'contactEmail' => $this->appUtil->getEnvValue('CONTACT_EMAIL'),
+            'telegramLink' => $this->appUtil->getEnvValue('TELEGRAM_LINK'),
+            "linkedInLink" => $this->appUtil->getEnvValue('LINKEDIN_LINK'),
+            'instagramLink' => $this->appUtil->getEnvValue('INSTAGRAM_LINK')
         ]);
     }
 }

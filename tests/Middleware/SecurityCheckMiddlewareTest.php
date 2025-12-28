@@ -6,8 +6,10 @@ use App\Util\AppUtil;
 use App\Manager\ErrorManager;
 use PHPUnit\Framework\TestCase;
 use App\Middleware\SecurityCheckMiddleware;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Class SecurityCheckMiddlewareTest
@@ -16,85 +18,100 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package App\Tests\Middleware
  */
+#[CoversClass(SecurityCheckMiddleware::class)]
 class SecurityCheckMiddlewareTest extends TestCase
 {
-    private AppUtil & MockObject $appUtillMock;
+    private AppUtil & MockObject $appUtilMock;
     private SecurityCheckMiddleware $middleware;
     private ErrorManager & MockObject $errorManagerMock;
 
     protected function setUp(): void
     {
         // mock dependencies
-        $this->appUtillMock = $this->createMock(AppUtil::class);
+        $this->appUtilMock = $this->createMock(AppUtil::class);
         $this->errorManagerMock = $this->createMock(ErrorManager::class);
 
-        // create security check middleware instance
+        // create middleware instance
         $this->middleware = new SecurityCheckMiddleware(
-            $this->appUtillMock,
+            $this->appUtilMock,
             $this->errorManagerMock
         );
     }
 
     /**
-     * Test check ssl with enabled ssl check and conection is over ssl
+     * Test request when ssl is enabled and ssl is not detected
      *
      * @return void
      */
-    public function testCheckSslWithEnabledSslCheckAndConectionIsOverSsl(): void
+    public function testRequestWhenSslEnabledAndSslNotDetected(): void
     {
-        // mock SSL check enabled
-        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
+        /** @var RequestEvent & MockObject $event */
+        $event = $this->createMock(RequestEvent::class);
 
-        // mock SSL connection is secure
-        $this->appUtillMock->expects($this->once())->method('isSsl')->willReturn(true);
+        // simulate ssl only
+        $this->appUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
 
-        // expect no error handling called
-        $this->errorManagerMock->expects($this->never())->method('handleError');
+        // simulate ssl not detected
+        $this->appUtilMock->expects($this->once())->method('isSsl')->willReturn(false);
+
+        // expect get error view to be called
+        $this->errorManagerMock->expects($this->once())
+            ->method('getErrorView')->with(Response::HTTP_UPGRADE_REQUIRED)->willReturn('SSL Required Content');
+
+        // expect middleware response
+        $event->expects($this->once())->method('setResponse')
+            ->with(new Response('SSL Required Content', Response::HTTP_UPGRADE_REQUIRED));
 
         // call tested middleware
-        $this->middleware->onKernelRequest();
+        $this->middleware->onKernelRequest($event);
     }
 
     /**
-     * Test check ssl with enabled ssl check and conection is not over ssl
+     * Test request when ssl is enabled and ssl is detected
      *
      * @return void
      */
-    public function testCheckSslWithEnabledSslCheckAndConectionIsNotOverSsl(): void
+    public function testRequestWhenSslEnabledAndSslDetected(): void
     {
-        // mock SSL check enabled
-        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
+        /** @var RequestEvent & MockObject $event */
+        $event = $this->createMock(RequestEvent::class);
 
-        // mock SSL connection is not secure
-        $this->appUtillMock->expects($this->once())->method('isSsl')->willReturn(false);
+        // simulate ssl only enabled
+        $this->appUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(true);
 
-        // expect error handling called with HTTP_UPGRADE_REQUIRED status
-        $this->errorManagerMock->expects($this->once())->method('handleError')->with(
-            'SSL error: connection not running on ssl protocol',
-            Response::HTTP_UPGRADE_REQUIRED
-        );
+        // simulate ssl detected
+        $this->appUtilMock->expects($this->once())->method('isSsl')->willReturn(true);
+
+        // expect error handling to be called
+        $this->errorManagerMock->expects($this->never())->method('handleError');
+
+        // expect response not set
+        $event->expects($this->never())->method('setResponse');
 
         // call tested middleware
-        $this->middleware->onKernelRequest();
+        $this->middleware->onKernelRequest($event);
     }
 
     /**
-     * Test check ssl with disabled ssl check
+     * Test request when ssl only is not enabled
      *
      * @return void
      */
-    public function testCheckSslWithDisabledSslCheck(): void
+    public function testRequestWhenSslOnlyNotEnabled(): void
     {
-        // mock SSL check disabled
-        $this->appUtillMock->expects($this->once())->method('isSSLOnly')->willReturn(false);
+        /** @var RequestEvent & MockObject $event */
+        $event = $this->createMock(RequestEvent::class);
 
-        // expect no SSL check and no error handling called
-        $this->appUtillMock->expects($this->never())->method('isSsl');
+        // simulate ssl only not enabled
+        $this->appUtilMock->expects($this->once())->method('isSSLOnly')->willReturn(false);
 
-        // expect no error handling called
+        // expect handle error not called
         $this->errorManagerMock->expects($this->never())->method('handleError');
 
+        // expect response not set
+        $event->expects($this->never())->method('setResponse');
+
         // call tested middleware
-        $this->middleware->onKernelRequest();
+        $this->middleware->onKernelRequest($event);
     }
 }

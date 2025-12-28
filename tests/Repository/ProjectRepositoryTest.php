@@ -4,6 +4,7 @@ namespace App\Tests\Repository;
 
 use App\Entity\Project;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -15,12 +16,16 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class ProjectRepositoryTest extends KernelTestCase
 {
-    private ?EntityManager $entityManager;
+    private EntityManagerInterface $entityManager;
 
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        /** @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine */
+        $doctrine = self::$kernel->getContainer()->get('doctrine');
+        /** @var \Doctrine\ORM\EntityManagerInterface $localEntityManager */
+        $localEntityManager = $doctrine->getManager();
+        $this->entityManager = $localEntityManager;
     }
 
     /**

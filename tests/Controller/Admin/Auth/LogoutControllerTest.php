@@ -3,8 +3,9 @@
 namespace App\Tests\Controller\Admin\Auth;
 
 use App\Tests\CustomTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use App\Controller\Admin\Auth\LogoutController;
 
 /**
  * Class LogoutControllerTest
@@ -13,15 +14,9 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin\Auth
  */
+#[CoversClass(LogoutController::class)]
 class LogoutControllerTest extends CustomTestCase
 {
-    private KernelBrowser $client;
-
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-    }
-
     /**
      * Test user logout redirect to login page
      *
@@ -29,7 +24,12 @@ class LogoutControllerTest extends CustomTestCase
      */
     public function testUserLogoutRedirectToLoginPage(): void
     {
-        $this->client->request('GET', '/logout');
+        $client = static::createClient();
+
+        // logout request
+        $client->request('POST', '/logout', [
+            'csrf_token' => $this->getCsrfToken($client)
+        ]);
 
         // assert response
         $this->assertResponseRedirects('/login');

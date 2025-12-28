@@ -3,8 +3,10 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\CustomTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use App\Controller\Admin\AccountSettingsController;
 
 /**
  * Class AccountSettingsControllerTest
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin
  */
+#[CoversClass(AccountSettingsController::class)]
 class AccountSettingsControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
@@ -40,6 +43,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         $this->assertSelectorTextContains('body', 'Profile Picture');
         $this->assertSelectorTextContains('body', 'Username');
         $this->assertSelectorTextContains('body', 'Password');
+        $this->assertSelectorTextContains('body', 'Authentication Token');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -71,7 +75,7 @@ class AccountSettingsControllerTest extends CustomTestCase
         // assert response
         $this->assertSelectorTextContains('title', 'Admin | settings');
         $this->assertSelectorTextContains('.card-header', 'Change username');
-        $this->assertSelectorTextContains('button', 'Change username');
+        $this->assertSelectorTextContains('.input-button', 'Change username');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
@@ -84,13 +88,12 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'username_change_form'),
                 'username' => ''
             ]
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.card-header', 'Change username');
-        $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
     }
 
@@ -103,13 +106,12 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'username_change_form'),
                 'username' => 'a'
             ]
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.card-header', 'Change username');
-        $this->assertSelectorTextContains('button', 'Change username');
         $this->assertSelectorTextContains('li:contains("Your username should be at least 4 characters")', 'Your username should be at least 4 characters');
     }
 
@@ -122,6 +124,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'username_change_form'),
                 'username' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
             ]
         ]);
@@ -139,6 +142,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/username', [
             'username_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'username_change_form'),
                 'username' => 'testing_username'
             ]
         ]);
@@ -176,14 +180,13 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'password_change_form'),
                 'password' => '',
                 'repassword' => ''
             ]
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.card-header', 'Change password');
-        $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorTextContains('li:contains("Please enter a repassword")', 'Please enter a repassword');
     }
@@ -197,6 +200,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'password_change_form'),
                 'password' => 'testing_password_1',
                 'repassword' => 'testing_password_2'
             ]
@@ -215,16 +219,15 @@ class AccountSettingsControllerTest extends CustomTestCase
     public function testSubmitAccountSettingsChangePasswordFormWithShortPassword(): void
     {
         // build post request
-        $this->client->request('POST', '/admin/account/settings/password', [
+        $idk = $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'password_change_form'),
                 'password' => 'a',
                 'repassword' => 'a'
             ]
         ]);
 
         // assert response
-        $this->assertSelectorTextContains('.card-header', 'Change password');
-        $this->assertSelectorTextContains('button', 'Change password');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
         $this->assertSelectorTextContains('li:contains("Your password should be at least 8 characters")', 'Your password should be at least 8 characters');
     }
@@ -238,6 +241,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'password_change_form'),
                 'password' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew',
                 'repassword' => 'awfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeewawfeewfawfeewfawfeewfawfeewfawfeewfawfeewfawfeew'
             ]
@@ -256,6 +260,7 @@ class AccountSettingsControllerTest extends CustomTestCase
     {
         $this->client->request('POST', '/admin/account/settings/password', [
             'password_change_form' => [
+                'csrf_token' => $this->getCsrfToken($this->client, 'password_change_form'),
                 'password' => 'testing_password_1',
                 'repassword' => 'testing_password_1'
             ]

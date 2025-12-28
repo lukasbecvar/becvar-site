@@ -6,6 +6,7 @@ use Exception;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Console\Command\Command;
 use App\Command\ValidateVisitorsStructureCommand;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -17,6 +18,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @package App\Tests\Command
  */
+#[CoversClass(ValidateVisitorsStructureCommand::class)]
 class ValidateVisitorsStructureCommandTest extends TestCase
 {
     private CommandTester $commandTester;
@@ -40,8 +42,8 @@ class ValidateVisitorsStructureCommandTest extends TestCase
      */
     public function testExecuteCommandWhenNoDuplicatesFound(): void
     {
-        // mock fetchOne to simulate no duplicates
-        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(0);
+        // mock fetchOne to simulate no duplicates and valid structure
+        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(0, 1, 10, 10);
 
         // execute command
         $exitCode = $this->commandTester->execute([]);
@@ -58,11 +60,11 @@ class ValidateVisitorsStructureCommandTest extends TestCase
      */
     public function testExecuteCommandWhenDuplicatesFound(): void
     {
-        // mock fetchOne to simulate duplicates and max id
-        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(5, 10);
+        // mock fetchOne to simulate duplicates
+        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(5, 1, 10, 10, 10);
 
         // expect executeQuery calls
-        $this->doctrineConnectionMock->expects($this->exactly(4))->method('executeQuery');
+        $this->doctrineConnectionMock->expects($this->exactly(3))->method('executeQuery');
 
         // execute command
         $exitCode = $this->commandTester->execute([]);
@@ -80,9 +82,7 @@ class ValidateVisitorsStructureCommandTest extends TestCase
     public function testExecuteCommandWhenExceptionIsThrown(): void
     {
         // mock fetchOne to throw an exception
-        $this->doctrineConnectionMock->method('fetchOne')->willThrowException(
-            new Exception('Database error')
-        );
+        $this->doctrineConnectionMock->method('fetchOne')->willThrowException(new Exception('Database error'));
 
         // execute command
         $exitCode = $this->commandTester->execute([]);
@@ -90,5 +90,68 @@ class ValidateVisitorsStructureCommandTest extends TestCase
         // assert result
         $this->assertStringContainsString('Process error: Database error', $this->commandTester->getDisplay());
         $this->assertSame(Command::FAILURE, $exitCode);
+    }
+
+    /**
+     * Test execute command when reorganization is needed
+     *
+     * @return void
+     */
+    public function testExecuteCommandWhenReorganizationNeeded(): void
+    {
+        // mock fetchOne to simulate missing ids
+        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(0, 1, 3, 2, 2, 2);
+
+        // mock fetchAllAssociative for current visitors
+        $this->doctrineConnectionMock->method('fetchAllAssociative')->willReturn([
+            ['id' => 1],
+            ['id' => 3]
+        ]);
+
+        // expected executeQuery calls
+        $this->doctrineConnectionMock->expects($this->exactly(10))->method('executeQuery');
+
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
+
+        // get command output
+        $output = $this->commandTester->getDisplay();
+        $normalizedOutput = preg_replace('/\s+/', ' ', $output);
+
+        // assert command output
+        $this->assertStringContainsString('Missing IDs in sequence have been reorganized', $normalizedOutput);
+        $this->assertStringContainsString('Foreign keys updated in 1 records', $normalizedOutput);
+        $this->assertSame(Command::SUCCESS, $exitCode);
+    }
+
+    /**
+     * Test execute command when sequence does not start at 1
+     *
+     * @return void
+     */
+    public function testExecuteCommandWhenSequenceDoesNotStartAtOne(): void
+    {
+        // mock fetchOne to simulate missing ids
+        $this->doctrineConnectionMock->method('fetchOne')->willReturnOnConsecutiveCalls(0, 5, 6, 2, 6, 2);
+
+        // mock fetchAllAssociative for current visitors (ids 5 and 6)
+        $this->doctrineConnectionMock->method('fetchAllAssociative')->willReturn([
+            ['id' => 5],
+            ['id' => 6]
+        ]);
+
+        // expect executeQuery calls
+        $this->doctrineConnectionMock->expects($this->exactly(13))->method('executeQuery');
+
+        // execute command
+        $exitCode = $this->commandTester->execute([]);
+
+        // get command output
+        $output = $this->commandTester->getDisplay();
+        $normalizedOutput = preg_replace('/\s+/', ' ', $output);
+
+        // assert result
+        $this->assertStringContainsString('4 missing ID(s) at the beginning of sequence have been reorganized', $normalizedOutput);
+        $this->assertSame(Command::SUCCESS, $exitCode);
     }
 }

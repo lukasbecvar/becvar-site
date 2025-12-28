@@ -7,6 +7,7 @@ use App\Util\SecurityUtil;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\DatabaseManager;
+use App\Annotation\Authorization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -57,14 +58,18 @@ class LogReaderController extends AbstractController
         // get logs data
         $logs = $this->logManager->getLogs('unreaded', $this->authManager->getUsername(), $page);
 
+        // check if antilog is enabled
+        $antiLogStatus = $this->logManager->isEnabledAntiLog();
+
         // render log reader view
         return $this->render('admin/log-reader.twig', [
             'whereIp' => null,
             'logsData' => $logs,
             'readerPage' => $page,
             'logsCount' => count($logs),
-            'limitValue' => $_ENV['ITEMS_PER_PAGE'],
+            'antiLogStatus' => $antiLogStatus,
             'loginLogsCount' => $this->logManager->getLoginLogsCount(),
+            'limitValue' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE'),
             'unreeadedCount' => $this->logManager->getLogsCount('unreaded'),
             'logsAllCount' => $this->databaseManager->countTableData('logs'),
             'visitorData' => $this->databaseManager->getTableData('visitors', false)
@@ -91,14 +96,18 @@ class LogReaderController extends AbstractController
         // get logs data
         $logs = $this->logManager->getLogsWhereIP($ipAddress, $this->authManager->getUsername(), $page);
 
+        // check if antilog is enabled
+        $antiLogStatus = $this->logManager->isEnabledAntiLog();
+
         // render log reader view
         return $this->render('admin/log-reader.twig', [
             'logsData' => $logs,
             'readerPage' => $page,
             'whereIp' => $ipAddress,
             'logsCount' => count($logs),
-            'limitValue' => $_ENV['ITEMS_PER_PAGE'],
+            'antiLogStatus' => $antiLogStatus,
             'loginLogsCount' => $this->logManager->getLoginLogsCount(),
+            'limitValue' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE'),
             'unreeadedCount' => $this->logManager->getLogsCount('unreaded'),
             'logsAllCount' => $this->databaseManager->countTableData('logs'),
             'visitorData' => $this->databaseManager->getTableData('visitors', false)
@@ -112,6 +121,7 @@ class LogReaderController extends AbstractController
      *
      * @return Response The delete confirmation page view
      */
+    #[Authorization('ADMIN')]
     #[Route('/admin/logs/delete', methods: ['GET'], name: 'admin_log_delete')]
     public function deleteAllLogs(Request $request): Response
     {
@@ -129,7 +139,8 @@ class LogReaderController extends AbstractController
      *
      * @return Response The redirect back to dashboard
      */
-    #[Route('/admin/logs/readed/all', methods: ['GET'], name: 'admin_log_readed')]
+    #[Authorization('ADMIN')]
+    #[Route('/admin/logs/readed/all', methods: ['POST'], name: 'admin_log_readed')]
     public function setReadedAllLogs(): Response
     {
         // set all logs status to readed

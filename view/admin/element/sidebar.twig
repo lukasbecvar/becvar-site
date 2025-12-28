@@ -35,12 +35,6 @@
 			</a>
 		</li>
         <li>
-		    <a class="s-menu-button" href={{ path('admin_database_list') }}>
-				<span class="icon"><i class="fas fa-database ml-1"></i></span>
-				<span class="item">Database</span>
-			</a>
-		</li>
-        <li>
 		    <a class="s-menu-button" href={{ path('admin_database_browser', {'table': 'projects'}) }}>
 				<span class="icon">
 					<i class="fas fa-folder"></i>
@@ -54,18 +48,24 @@
 			    <span class="item">Logs</span>
 	    	</a>
 		</li>
+        <li>
+			<a class="s-menu-button" href={{ path('admin_inbox', {'page': 1}) }}>
+				<span class="icon"><i class="fas fa-envelope"></i></span>
+				<span class="item">Inbox</span>
+			</a>
+		</li>
+        <li>
+		    <a class="s-menu-button" href={{ path('admin_database_list') }}>
+				<span class="icon"><i class="fas fa-database ml-1"></i></span>
+				<span class="item">Database</span>
+			</a>
+		</li>			
 		<li>
 			<a class="s-menu-button" href={{ path('admin_visitor_manager', {'page': 1}) }}>
 			    <span class="icon"><i class="fas fa-user ml-1"></i></span>
 			    <span class="item">Visitors manager</span>
 	    	</a>
 		</li>
-        <li>
-			<a class="s-menu-button" href={{ path('admin_inbox', {'page': 1}) }}>
-				<span class="icon"><i class="fas fa-envelope"></i></span>
-				<span class="item">Inbox</span>
-			</a>
-		</li>		
 		<li>
 			<a class="s-menu-button" href={{ path('admin_account_settings_table') }}>
 	    		<span class="icon"><i class="fas fa-cog"></i></span>

@@ -5,6 +5,7 @@ namespace App\Manager;
 use DateTime;
 use Exception;
 use App\Entity\Log;
+use App\Util\AppUtil;
 use App\Util\JsonUtil;
 use App\Util\CookieUtil;
 use App\Util\SecurityUtil;
@@ -22,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LogManager
 {
+    private AppUtil $appUtil;
     private JsonUtil $jsonUtil;
     private CookieUtil $cookieUtil;
     private ErrorManager $errorManager;
@@ -32,6 +34,7 @@ class LogManager
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        AppUtil $appUtil,
         JsonUtil $jsonUtil,
         CookieUtil $cookieUtil,
         ErrorManager $errorManager,
@@ -41,6 +44,7 @@ class LogManager
         VisitorInfoUtil $visitorInfoUtil,
         EntityManagerInterface $entityManager
     ) {
+        $this->appUtil = $appUtil;
         $this->jsonUtil = $jsonUtil;
         $this->cookieUtil = $cookieUtil;
         $this->errorManager = $errorManager;
@@ -55,15 +59,15 @@ class LogManager
      * Save event log to database
      *
      * @param string $name The name of the log
-     * @param string $value The value (message) of the log
+     * @param string $message The log message
      * @param bool $bypassAntilog Bypass the anti-log cookie
      *
      * @return void
      */
-    public function log(string $name, string $value, bool $bypassAntilog = false): void
+    public function log(string $name, string $message, bool $bypassAntilog = false): void
     {
         // check if log can be saved
-        if (str_contains($value, 'Connection refused')) {
+        if (str_contains($message, 'Connection refused')) {
             return;
         }
 
@@ -72,9 +76,9 @@ class LogManager
             // get log level
             $level = $this->getLogLevel();
 
-            // value character shortifiy
-            if (mb_strlen($value) >= 512) {
-                $value = mb_substr($value, 0, 512) . '...';
+            // message character shortifiy
+            if (mb_strlen($message) >= 512) {
+                $message = mb_substr($message, 0, 512) . '...';
             }
 
             // disable database log for level 1 & 2
@@ -94,11 +98,11 @@ class LogManager
             $ipAddress = $this->visitorInfoUtil->getIP();
 
             // get visitor id
-            $visitorId = $this->visitorManager->getVisitorID($ipAddress);
+            $visitor = $this->visitorManager->getVisitorRepository($ipAddress);
 
             // xss escape inputs
             $name = $this->securityUtil->escapeString($name);
-            $value = $this->securityUtil->escapeString($value);
+            $message = $this->securityUtil->escapeString($message);
             $browser = $this->securityUtil->escapeString($browser);
             $ipAddress = $this->securityUtil->escapeString($ipAddress);
 
@@ -107,12 +111,12 @@ class LogManager
 
             // set log entity values
             $LogEntity->setName($name)
-                ->setValue($value)
+                ->setValue($message)
                 ->setTime(new DateTime())
                 ->setIpAddress($ipAddress)
                 ->setBrowser($browser)
                 ->setStatus('unreaded')
-                ->setVisitorId($visitorId);
+                ->setVisitor($visitor);
 
             try {
                 // insert log entity to database
@@ -120,7 +124,7 @@ class LogManager
                 $this->entityManager->flush();
 
                 // send log to external log
-                $this->externalLog($value);
+                $this->externalLog($message);
             } catch (Exception $e) {
                 $this->errorManager->handleError(
                     msg: 'log-error: ' . $e->getMessage(),
@@ -133,65 +137,26 @@ class LogManager
     /**
      * Send log to external monitoring system (admin-suite)
      *
-     * @param string $value The value (message) of the log
+     * @param string $message The log message
      *
      * @return void
      */
-    public function externalLog(string $value): void
+    public function externalLog(string $message): void
     {
-        if (!($_ENV['EXTERNAL_LOG_ENABLED'] == 'true')) {
+        if (!($this->appUtil->getEnvValue('EXTERNAL_LOG_ENABLED') == 'true')) {
             return;
         }
 
         // get external log config
-        $externalLogUrl = $_ENV['EXTERNAL_LOG_URL'];
-        $externalLogToken = $_ENV['EXTERNAL_LOG_API_TOKEN'];
+        $externalLogUrl = $this->appUtil->getEnvValue('EXTERNAL_LOG_URL');
+        $externalLogToken = $this->appUtil->getEnvValue('EXTERNAL_LOG_API_TOKEN');
 
         // make request to admin-suite log api
         $this->jsonUtil->getJson(
-            target: $externalLogUrl . '?name=' . urlencode('becvar-site: log') . '&message=' . urlencode('becvar-site: ' . $value) . '&level=4',
+            target: $externalLogUrl . '?name=' . urlencode('website-app: log') . '&message=' . urlencode('website-app: ' . $message) . '&level=4',
             apiKey: $externalLogToken,
             method: 'POST'
         );
-    }
-
-    /**
-     * Get logs by visitor ip address
-     *
-     * @param string $ipAddress The IP address visitor
-     * @param string $username The username of the user
-     * @param int $page The page number (pagination offset)
-     *
-     * @return Log[]|null $logs The logs based on IP address
-     */
-    public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
-    {
-        $per_page = $_ENV['ITEMS_PER_PAGE'];
-
-        // calculate offset
-        $offset = ($page - 1) * $per_page;
-
-        try {
-            // get logs from database
-            $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
-        } catch (Exception $e) {
-            $this->errorManager->handleError(
-                msg: 'error to get logs: ' . $e->getMessage(),
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
-
-        // log view event
-        $this->log('database', 'user: ' . $username . ' viewed logs');
-
-        // replace browser with formated value for log reader
-        foreach ($logs as $log) {
-            $userAgent = $log->getBrowser();
-            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
-            $log->setBrowser($formatedBrowser);
-        }
-
-        return $logs;
     }
 
     /**
@@ -205,7 +170,7 @@ class LogManager
      */
     public function getLogs(string $status, string $username, int $page): ?array
     {
-        $perPage = $_ENV['ITEMS_PER_PAGE'];
+        $perPage = (int) $this->appUtil->getEnvValue('ITEMS_PER_PAGE');
 
         // calculate offset
         $offset = ($page - 1) * $perPage;
@@ -270,6 +235,45 @@ class LogManager
     }
 
     /**
+     * Get logs by visitor ip address
+     *
+     * @param string $ipAddress The IP address visitor
+     * @param string $username The username of the user
+     * @param int $page The page number (pagination offset)
+     *
+     * @return Log[]|null $logs The logs based on IP address
+     */
+    public function getLogsWhereIP(string $ipAddress, string $username, int $page): ?array
+    {
+        $per_page = (int) $this->appUtil->getEnvValue('ITEMS_PER_PAGE');
+
+        // calculate offset
+        $offset = ($page - 1) * $per_page;
+
+        try {
+            // get logs from database
+            $logs = $this->logRepository->getLogsByIpAddress($ipAddress, $offset, $per_page);
+        } catch (Exception $e) {
+            $this->errorManager->handleError(
+                msg: 'error to get logs: ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+
+        // log view event
+        $this->log('database', 'user: ' . $username . ' viewed logs');
+
+        // replace browser with formated value for log reader
+        foreach ($logs as $log) {
+            $userAgent = $log->getBrowser();
+            $formatedBrowser = $this->visitorInfoUtil->getBrowserShortify($userAgent);
+            $log->setBrowser($formatedBrowser);
+        }
+
+        return $logs;
+    }
+
+    /**
      * Set status of all logs to 'readed'
      *
      * @return void
@@ -297,7 +301,7 @@ class LogManager
     public function isLogsEnabled(): bool
     {
         // check if logs enabled
-        if ($_ENV['LOGS_ENABLED'] == 'true') {
+        if ($this->appUtil->getEnvValue('LOGS_ENABLED') == 'true') {
             return true;
         } else {
             return false;
@@ -317,7 +321,7 @@ class LogManager
             $token = $this->cookieUtil->get('anti-log-cookie');
 
             // check if token is valid
-            if ($token == $_ENV['ANTI_LOG_COOKIE']) {
+            if ($token == $this->appUtil->getEnvValue('ANTI_LOG_COOKIE')) {
                 return true;
             } else {
                 return false;
@@ -336,7 +340,7 @@ class LogManager
     {
         $this->cookieUtil->set(
             name: 'anti-log-cookie',
-            value: $_ENV['ANTI_LOG_COOKIE'],
+            value: $this->appUtil->getEnvValue('ANTI_LOG_COOKIE'),
             expiration: time() + (60 * 60 * 24 * 7 * 365)
         );
     }
@@ -358,6 +362,6 @@ class LogManager
      */
     public function getLogLevel(): int
     {
-        return $_ENV['LOG_LEVEL'];
+        return (int) $this->appUtil->getEnvValue('LOG_LEVEL');
     }
 }

@@ -109,8 +109,7 @@ class VisitorSystemMiddlewareTest extends TestCase
 
         // mock visitor entity
         $visitor = new Visitor();
-        $this->visitorManagerMock->expects($this->once())
-            ->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
+        $this->visitorManagerMock->expects($this->once())->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
         // mock entity manager
         $this->entityManagerMock->expects($this->once())->method('flush');

@@ -2,143 +2,243 @@
 
 namespace App\Tests\Repository;
 
+use DateTime;
+use Exception;
 use App\Entity\Visitor;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Doctrine\ORM\Query;
+use Doctrine\DBAL\Result;
+use Doctrine\DBAL\Connection;
+use InvalidArgumentException;
+use Doctrine\ORM\QueryBuilder;
+use PHPUnit\Framework\TestCase;
+use App\Repository\VisitorRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\MockObject\MockObject;
+use Doctrine\DBAL\Exception as DBALException;
 
 /**
  * Class VisitorRepositoryTest
  *
- * Test cases for visitor repository
+ * Test cases for VisitorRepository
  *
  * @package App\Tests\Repository
  */
-class VisitorRepositoryTest extends KernelTestCase
+class VisitorRepositoryTest extends TestCase
 {
-    private ?EntityManager $entityManager;
+    private VisitorRepository $visitorRepository;
+    private ManagerRegistry & MockObject $registry;
+    private EntityManagerInterface & MockObject $entityManager;
 
     protected function setUp(): void
     {
-        self::bootKernel();
-        $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        // mock dependencies
+        $this->registry = $this->createMock(ManagerRegistry::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+
+        // mock registry to return entity manager
+        $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
+
+        // mock class metadata
+        $metadata = $this->createMock(ClassMetadata::class);
+        $metadata->name = Visitor::class;
+        $this->entityManager->method('getClassMetadata')->willReturn($metadata);
+
+        // init visitor repository instance
+        $this->visitorRepository = new VisitorRepository($this->registry);
     }
 
     /**
-     * Test get all IDs
+     * Test getAllIds
      *
      * @return void
      */
     public function testGetAllIds(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(\App\Entity\Visitor::class);
+        $expectedIds = [1, 2, 3];
+        $queryResult = [['id' => 1], ['id' => 2], ['id' => 3]];
 
-        // get visitors
-        $visitors = $visitorRepository->getAllIds();
+        $query = $this->createMock(Query::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+
+        // base setup & method specific
+        $queryBuilder->expects($this->exactly(2))->method('select')->willReturnCallback(function (...$args) use ($queryBuilder) {
+            return $queryBuilder;
+        });
+
+        $queryBuilder->expects($this->once())->method('from')->with(Visitor::class, 'v')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+        $query->expects($this->once())->method('getScalarResult')->willReturn($queryResult);
+
+        // call tested method
+        $result = $this->visitorRepository->getAllIds();
 
         // assert result
-        $this->assertIsArray($visitors, 'The result should be an array of IDs.');
+        $this->assertSame($expectedIds, $result);
     }
 
     /**
-     * Test find visitors by time filter
+     * Test findByTimeFilter with valid filter
      *
      * @return void
      */
     public function testFindByTimeFilter(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+        $filter = 'D'; // last day
+        $expectedResult = [new Visitor()];
 
-        // get visitors
-        $visitors = $visitorRepository->findByTimeFilter('H');
+        $query = $this->createMock(Query::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+
+        // base setup
+        $queryBuilder->expects($this->once())->method('select')->with('v')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('from')->with(Visitor::class, 'v')->willReturnSelf();
+
+        // method specific
+        $queryBuilder->expects($this->once())->method('where')->with('v.first_visit >= :start_date')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('setParameter')->with('start_date', $this->isInstanceOf(DateTime::class))->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+
+        // mock result
+        $query->expects($this->once())->method('getResult')->willReturn($expectedResult);
+
+        // call tested method
+        $result = $this->visitorRepository->findByTimeFilter($filter);
 
         // assert result
-        $this->assertIsArray($visitors, 'The result should be an array of visitors.');
+        $this->assertSame($expectedResult, $result);
     }
 
     /**
-     * Test find visitors by time filter as iterable
+     * Test findByTimeFilter with invalid filter
      *
      * @return void
      */
-    public function testFindByTimeFilterIterable(): void
+    public function testFindByTimeFilterInvalid(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+        $this->expectException(InvalidArgumentException::class);
 
-        // get visitors
-        $visitors = $visitorRepository->findByTimeFilterIterable('H');
-
-        // assert result
-        $this->assertIsIterable($visitors, 'The result should be an iterable of visitors.');
+        // call tested method
+        $this->visitorRepository->findByTimeFilter('INVALID');
     }
 
     /**
-     * Test get visitors count by period
+     * Test getVisitorsCountByPeriod (Native SQL)
      *
      * @return void
      */
     public function testGetVisitorsCountByPeriod(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+        $period = 'last_week';
 
-        // get visitors
-        $visitors = $visitorRepository->getVisitorsCountByPeriod('last_week');
+        // mock Connection
+        $connection = $this->createMock(Connection::class);
+        $this->entityManager->method('getConnection')->willReturn($connection);
+
+        $resultMock = $this->createMock(Result::class);
+        $resultMock->method('fetchAllAssociative')->willReturn([
+            ['visitDate' => '01/01', 'visitorCount' => 10],
+            ['visitDate' => '01/02', 'visitorCount' => 5],
+        ]);
+
+        $connection->expects($this->once())->method('executeQuery')
+            ->with($this->stringContains('SELECT DATE_FORMAT(last_visit'), $this->isArray())
+            ->willReturn($resultMock);
+
+        // call tested method
+        $result = $this->visitorRepository->getVisitorsCountByPeriod($period);
 
         // assert result
-        $this->assertIsArray($visitors, 'The result should be an associative array of visitor counts.');
+        $this->assertEquals(['01/01' => 10, '01/02' => 5], $result);
     }
 
     /**
-     * Test get visitors by country
+     * Test getVisitorsCountByPeriod Exception
+     *
+     * @return void
+     */
+    public function testGetVisitorsCountByPeriodException(): void
+    {
+        $connection = $this->createMock(Connection::class);
+        $this->entityManager->method('getConnection')->willReturn($connection);
+
+        // doctrine\DBAL\Exception seems to be an interface in this setup
+        $exception = new class ('DB Error') extends Exception implements DBALException {
+        };
+        $connection->method('executeQuery')->willThrowException($exception);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Database query failed: DB Error');
+
+        // call tested method
+        $this->visitorRepository->getVisitorsCountByPeriod('last_week');
+    }
+
+    /**
+     * Test getVisitorsByCountry
      *
      * @return void
      */
     public function testGetVisitorsByCountry(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+        $queryResult = [
+            ['country' => 'US', 'visitorCount' => 10],
+            ['country' => 'CZ', 'visitorCount' => 5]
+        ];
+        $expected = ['US' => 10, 'CZ' => 5];
 
-        // get visitors
-        $visitors = $visitorRepository->getVisitorsByCountry();
+        $query = $this->createMock(Query::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+        $queryBuilder->expects($this->exactly(2))->method('select')->willReturnCallback(fn() => $queryBuilder);
+        $queryBuilder->expects($this->once())->method('from')->with(Visitor::class, 'v')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('groupBy')->with('v.country')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('orderBy')->with('visitorCount', 'DESC')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+
+        // mock result
+        $query->expects($this->once())->method('getResult')->willReturn($queryResult);
+
+        // call tested method
+        $result = $this->visitorRepository->getVisitorsByCountry();
 
         // assert result
-        $this->assertIsArray($visitors, 'The result should be an associative array of country visitor counts.');
+        $this->assertEquals($expected, $result);
     }
 
     /**
-     * Test get visitors by city
+     * Test getVisitorsFirstVisitSite
      *
      * @return void
      */
-    public function testGetVisitorsByCity(): void
+    public function testGetVisitorsFirstVisitSite(): void
     {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
+        $queryResult = [
+            ['site' => 'example.com', 'visitorCount' => 20],
+            ['site' => 'google.com', 'visitorCount' => 15]
+        ];
+        $expected = ['example.com' => 20, 'google.com' => 15];
 
-        // get visitors
-        $visitors = $visitorRepository->getVisitorsByCity();
+        $query = $this->createMock(Query::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+
+        $this->entityManager->expects($this->once())->method('createQueryBuilder')->willReturn($queryBuilder);
+        $queryBuilder->expects($this->exactly(2))->method('select')->willReturnCallback(fn() => $queryBuilder);
+        $queryBuilder->expects($this->once())->method('from')->with(Visitor::class, 'v')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('groupBy')->with('v.first_visit_site')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('orderBy')->with('visitorCount', 'DESC')->willReturnSelf();
+        $queryBuilder->expects($this->once())->method('getQuery')->willReturn($query);
+
+        // mock result
+        $query->expects($this->once())->method('getResult')->willReturn($queryResult);
+
+        // call tested method
+        $result = $this->visitorRepository->getVisitorsFirstVisitSite();
 
         // assert result
-        $this->assertIsArray($visitors, 'The result should be an associative array of city visitor counts.');
-    }
-
-    /**
-     * Test get visitors used browsers
-     *
-     * @return void
-     */
-    public function testGetVisitorsUsedBrowsers(): void
-    {
-        /** @var \App\Repository\VisitorRepository $visitorRepository */
-        $visitorRepository = $this->entityManager->getRepository(Visitor::class);
-
-        // get visitors
-        $visitors = $visitorRepository->getVisitorsUsedBrowsers();
-
-        // assert result
-        $this->assertIsArray($visitors, 'The result should be an associative array of browser visitor counts.');
+        $this->assertEquals($expected, $result);
     }
 }

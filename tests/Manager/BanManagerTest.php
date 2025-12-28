@@ -2,21 +2,26 @@
 
 namespace App\Tests\Manager;
 
+use DateTime;
+use Exception;
+use RuntimeException;
 use App\Entity\Visitor;
+use Doctrine\ORM\Query;
 use App\Manager\BanManager;
 use App\Manager\LogManager;
 use App\Manager\AuthManager;
 use App\Manager\ErrorManager;
-use PHPUnit\Framework\TestCase;
 use App\Manager\VisitorManager;
-use App\Repository\VisitorRepository;
+use PHPUnit\Framework\TestCase;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class BanManagerTest
  *
- * Test cases for ban manager component
+ * Test cases for BanManager
  *
  * @package App\Tests\Manager
  */
@@ -38,7 +43,7 @@ class BanManagerTest extends TestCase
         $this->visitorManager = $this->createMock(VisitorManager::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
-        // create ban manager instance
+        // init ban manager instance
         $this->banManager = new BanManager(
             $this->logManager,
             $this->authManager,
@@ -49,201 +54,405 @@ class BanManagerTest extends TestCase
     }
 
     /**
-     * Test ban visitor
+     * Test banVisitor success
      *
      * @return void
      */
-    public function testBanVisitor(): void
+    public function testBanVisitorSuccess(): void
     {
-        $ipAddress = '127.0.0.1';
-        $username = 'admin';
-        $reason = 'Test ban reason';
+        // mock visitor
+        $visitor = new Visitor();
+        $ipAddress = '1.2.3.4';
+        $reason = 'spam';
+        $this->visitorManager->expects($this->once())->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
 
-        // mock visitor ban status
-        $visitor = $this->createMock(Visitor::class);
-        $visitor->expects($this->once())->method('setBannedStatus')->with(true)->willReturnSelf();
-        $visitor->expects($this->once())->method('setBanReason')->with($reason)->willReturnSelf();
+        // mock admin username
+        $this->authManager->method('getUsername')->willReturn('admin');
 
-        // mock get visitor repository
-        $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
-
-        // mock get admin username (who baning the visitor)
-        $this->authManager->method('getUsername')->willReturn($username);
-
-        // expect log call
+        // expect log event
         $this->logManager->expects($this->once())->method('log')->with(
             'ban-system',
-            'visitor with ip: ' . $ipAddress . ' banned for reason: ' . $reason . ' by ' . $username
+            $this->stringContains('banned for reason: spam')
         );
 
-        // expect flush call
+        // expect flush
         $this->entityManager->expects($this->once())->method('flush');
+
+        // mocking query execution for closeAllVisitorMessages
+        $query = $this->createMock(Query::class);
+        $this->entityManager->method('createQuery')->willReturn($query);
+        $query->expects($this->exactly(2))->method('setParameter')->willReturnSelf();
+        $query->expects($this->once())->method('execute');
 
         // call tested method
         $this->banManager->banVisitor($ipAddress, $reason);
+
+        // assert result
+        $this->assertTrue($visitor->getBannedStatus());
+        $this->assertEquals($reason, $visitor->getBanReason());
+        $this->assertInstanceOf(DateTime::class, $visitor->getBannedTime());
     }
 
     /**
-     * Test unban banned visitor
+     * Test banVisitor visitor not found
      *
      * @return void
      */
-    public function testUnbanVisitor(): void
+    public function testBanVisitorNotFound(): void
     {
-        $ipAddress = '127.0.0.1';
-        $username = 'admin';
+        // mock visitor
+        $this->visitorManager->method('getVisitorRepository')->willReturn(null);
 
-        // mock visitor ban status
-        $visitor = $this->createMock(Visitor::class);
-        $visitor->expects($this->once())->method('setBannedStatus')->with(false)->willReturnSelf();
-
-        // mock get visitor repository
-        $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
-
-        // mock get admin username (who unbanning the visitor)
-        $this->authManager->method('getUsername')->willReturn($username);
-
-        // expect log call
-        $this->logManager->expects($this->once())->method('log')->with(
-            'ban-system',
-            'visitor with ip: ' . $ipAddress . ' unbanned by ' . $username
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('visitor not found'),
+            $this->equalTo(Response::HTTP_BAD_REQUEST)
         );
 
-        // expect flush call
+        // call tested method
+        $this->banManager->banVisitor('1.2.3.4', 'spam');
+    }
+
+    /**
+     * Test banVisitor flush error
+     *
+     * @return void
+     */
+    public function testBanVisitorFlushError(): void
+    {
+        // mock visitor
+        $visitor = new Visitor();
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
+        $this->authManager->method('getUsername')->willReturn('admin');
+
+        // simulate db flush error
+        $this->entityManager->expects($this->once())->method('flush')->willThrowException(new Exception('DB Error'));
+
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('error to update ban status'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+        );
+
+        // mock query for closeAllVisitorMessages to avoid issues (it's called even if flush fails)
+        $query = $this->createMock(Query::class);
+        $this->entityManager->method('createQuery')->willReturn($query);
+
+        // call tested method
+        $this->banManager->banVisitor('1.2.3.4', 'reason');
+    }
+
+    /**
+     * Test banVisitor success but closing messages fails
+     *
+     * @return void
+     */
+    public function testBanVisitorAndCloseMessagesFails(): void
+    {
+        // mock visitor
+        $visitor = new Visitor();
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
+        $this->authManager->method('getUsername')->willReturn('admin');
+
+        // ban should be flushed
+        $this->entityManager->expects($this->once())->method('flush');
+
+        // mock query failure for closeAllVisitorMessages
+        $query = $this->createMock(Query::class);
+        $query->method('execute')->willThrowException(new Exception('Msg Close Error'));
+        $this->entityManager->method('createQuery')->willReturn($query);
+
+        // expect error handling for message closing failure
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('error to close all visitor messages'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+        );
+
+        // call tested method
+        $this->banManager->banVisitor('1.2.3.4', 'spam');
+
+        // verify visitor is still banned
+        $this->assertTrue($visitor->getBannedStatus());
+    }
+
+    /**
+     * Test unbanVisitor success
+     *
+     * @return void
+     */
+    public function testUnbanVisitorSuccess(): void
+    {
+        // mock visitor
+        $ipAddress = '1.2.3.4';
+        $visitor = new Visitor();
+        $visitor->setBannedStatus(true);
+        $this->visitorManager->expects($this->once())->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
+
+        // mock admin user
+        $this->authManager->method('getUsername')->willReturn('admin');
+
+        // expect log event
+        $this->logManager->expects($this->once())->method('log')->with(
+            'ban-system',
+            $this->stringContains('unbanned')
+        );
+
+        // expect flush
         $this->entityManager->expects($this->once())->method('flush');
 
         // call tested method
         $this->banManager->unbanVisitor($ipAddress);
+
+        // assert result
+        $this->assertFalse($visitor->getBannedStatus());
     }
 
     /**
-     * Test check if visitor is banned when visitor is banned
+     * Test unbanVisitor visitor not found
      *
      * @return void
      */
-    public function testCheckIfVisitorIsBannedWhenVisitorIsBanned(): void
+    public function testUnbanVisitorNotFound(): void
     {
-        $ipAddress = '127.0.0.1';
+        // mock visitor
+        $this->visitorManager->method('getVisitorRepository')->willReturn(null);
 
-        // mock visitor ban status
-        $visitor = $this->createMock(Visitor::class);
-        $visitor->method('getBannedStatus')->willReturn(true);
-
-        // mock visitor manager
-        $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('visitor not found'),
+            $this->equalTo(Response::HTTP_BAD_REQUEST)
+        );
 
         // call tested method
-        $result = $this->banManager->isVisitorBanned($ipAddress);
+        $this->banManager->unbanVisitor('1.2.3.4');
+    }
+
+    /**
+     * Test unbanVisitor flush error
+     *
+     * @return void
+     */
+    public function testUnbanVisitorFlushError(): void
+    {
+        // mock visitor
+        $visitor = new Visitor();
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
+
+        // simulate db flush error
+        $this->entityManager->expects($this->once())->method('flush')->willThrowException(new Exception('DB Error'));
+
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('error to update ban status'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+        );
+
+        // call tested method
+        $this->banManager->unbanVisitor('1.2.3.4');
+    }
+
+    /**
+     * Test isVisitorBanned returns true
+     *
+     * @return void
+     */
+    public function testIsVisitorBannedTrue(): void
+    {
+        // mock visitor
+        $visitor = $this->createMock(Visitor::class);
+        $visitor->method('getBannedStatus')->willReturn(true);
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
+
+        // call tested method
+        $result = $this->banManager->isVisitorBanned('1.2.3.4');
 
         // assert result
         $this->assertTrue($result);
     }
 
     /**
-     * Test check if visitor is banned when visitor is not banned
+     * Test isVisitorBanned returns false
      *
      * @return void
      */
-    public function testCheckIfVisitorIsBannedWhenVisitorIsNotBanned(): void
+    public function testIsVisitorBannedFalse(): void
     {
-        $ipAddress = '127.0.0.1';
-
-        // mock visitor ban status
+        // mock visitor
         $visitor = $this->createMock(Visitor::class);
         $visitor->method('getBannedStatus')->willReturn(false);
-
-        // mock visitor manager
-        $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
 
         // call tested method
-        $result = $this->banManager->isVisitorBanned($ipAddress);
+        $result = $this->banManager->isVisitorBanned('1.2.3.4');
 
         // assert result
         $this->assertFalse($result);
     }
 
     /**
-     * Test get count of banned visitors
+     * Test isVisitorBanned visitor not found
      *
      * @return void
      */
-    public function testGetBannedCount(): void
+    public function testIsVisitorBannedNotFound(): void
     {
-        $count = 10;
+        // mock visitor
+        $this->visitorManager->method('getVisitorRepository')->willReturn(null);
 
+        // call tested method
+        $result = $this->banManager->isVisitorBanned('1.2.3.4');
+
+        // assert result
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test getBannedCount success
+     *
+     * @return void
+     */
+    public function testGetBannedCountSuccess(): void
+    {
         // mock repository
-        $repository = $this->createMock(VisitorRepository::class);
-        $repository->method('count')->with(['banned_status' => 'yes'])->willReturn($count);
+        $repository = $this->createMock(EntityRepository::class);
+        $this->entityManager->method('getRepository')->with(Visitor::class)->willReturn($repository);
 
-        // mock get visitor repository
-        $this->entityManager->method('getRepository')->willReturn($repository);
+        // expect count query
+        $repository->expects($this->once())->method('count')->with(['banned_status' => 'yes'])->willReturn(5);
 
         // call tested method
         $result = $this->banManager->getBannedCount();
 
         // assert result
-        $this->assertEquals($count, $result);
+        $this->assertEquals(5, $result);
     }
 
     /**
-     * Test get ban reason of banned visitor
+     * Test getBannedCount exception
      *
      * @return void
      */
-    public function testGetBanReason(): void
+    public function testGetBannedCountException(): void
     {
-        $ipAddress = '127.0.0.1';
-        $reason = 'Test ban reason';
+        // mock repository
+        $repository = $this->createMock(EntityRepository::class);
+        $this->entityManager->method('getRepository')->willReturn($repository);
 
-        // mock visitor
-        $visitor = $this->createMock(Visitor::class);
-        $visitor->method('getBanReason')->willReturn($reason);
+        // simulate db error
+        $repository->method('count')->willThrowException(new Exception('DB Error'));
 
-        // mock get visitor repository
-        $this->visitorManager->method('getVisitorRepository')->with($ipAddress)->willReturn($visitor);
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('find error'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+        )->willThrowException(new RuntimeException('Expected handleError to terminate'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Expected handleError to terminate');
 
         // call tested method
-        $result = $this->banManager->getBanReason($ipAddress);
+        $this->banManager->getBannedCount();
+    }
+
+    /**
+     * Test getBanReason success
+     *
+     * @return void
+     */
+    public function testGetBanReasonSuccess(): void
+    {
+        // mock visitor
+        $visitor = new Visitor();
+        $visitor->setBanReason('spam');
+        $this->visitorManager->method('getVisitorRepository')->willReturn($visitor);
+
+        // call tested method
+        $result = $this->banManager->getBanReason('1.2.3.4');
 
         // assert result
-        $this->assertEquals($reason, $result);
+        $this->assertEquals('spam', $result);
     }
 
     /**
-     * Test close all messages associated with specific visitor
+     * Test getBanReason not found
      *
      * @return void
      */
-    public function testCloseAllVisitorMessages(): void
+    public function testGetBanReasonNotFound(): void
     {
-        // expect flush call
-        $this->entityManager->expects($this->once())->method('createQuery');
-
-        // call tested method
-        $this->banManager->closeAllVisitorMessages('127.0.0.1');
-    }
-
-    /**
-     * Test get IP address of visitor by ID
-     *
-     * @return void
-     */
-    public function testGetVisitorIp(): void
-    {
-        $id = 1;
-        $ipAddress = '127.0.0.1';
-
         // mock visitor
-        $visitor = $this->createMock(Visitor::class);
-        $visitor->method('getIpAddress')->willReturn($ipAddress);
-
-        // mock get visitor repository
-        $this->visitorManager->method('getVisitorRepositoryByID')->with($id)->willReturn($visitor);
+        $this->visitorManager->method('getVisitorRepository')->willReturn(null);
 
         // call tested method
-        $result = $this->banManager->getVisitorIP($id);
+        $result = $this->banManager->getBanReason('1.2.3.4');
 
         // assert result
-        $this->assertEquals($ipAddress, $result);
+        $this->assertNull($result);
+    }
+
+    /**
+     * Test closeAllVisitorMessages success
+     *
+     * @return void
+     */
+    public function testCloseAllVisitorMessagesSuccess(): void
+    {
+        // mock update query
+        $query = $this->createMock(Query::class);
+        $this->entityManager->expects($this->once())->method('createQuery')
+            ->with($this->stringContains('UPDATE App\Entity\Message'))
+            ->willReturn($query);
+
+        // expect setParameter calls
+        $query->expects($this->exactly(2))->method('setParameter')->willReturnSelf();
+
+        // expect execute call
+        $query->expects($this->once())->method('execute');
+
+        // call tested method
+        $this->banManager->closeAllVisitorMessages('1.2.3.4');
+    }
+
+    /**
+     * Test closeAllVisitorMessages exception
+     *
+     * @return void
+     */
+    public function testCloseAllVisitorMessagesException(): void
+    {
+        // mock query
+        $query = $this->createMock(Query::class);
+        $this->entityManager->method('createQuery')->willReturn($query);
+        $query->method('setParameter')->willReturnSelf();
+
+        // simulate query error
+        $query->method('execute')->willThrowException(new Exception('Query Fail'));
+
+        // expect error handling
+        $this->errorManager->expects($this->once())->method('handleError')->with(
+            $this->stringContains('error to close all visitor messages'),
+            $this->equalTo(Response::HTTP_INTERNAL_SERVER_ERROR)
+        );
+
+        // call tested method
+        $this->banManager->closeAllVisitorMessages('1.2.3.4');
+    }
+
+    /**
+     * Test getVisitorIP from repository
+     *
+     * @return void
+     */
+    public function testGetVisitorIP(): void
+    {
+        // mock visitor
+        $visitor = new Visitor();
+        $visitor->setIpAddress('1.2.3.4');
+        $this->visitorManager->expects($this->once())->method('getVisitorRepositoryByID')->with(123)->willReturn($visitor);
+
+        // call tested method
+        $result = $this->banManager->getVisitorIP(123);
+
+        // assert result
+        $this->assertEquals('1.2.3.4', $result);
     }
 }

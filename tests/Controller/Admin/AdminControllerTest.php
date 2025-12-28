@@ -3,6 +3,8 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\CustomTestCase;
+use App\Controller\Admin\AdminController;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin
  */
+#[CoversClass(AdminController::class)]
 class AdminControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;

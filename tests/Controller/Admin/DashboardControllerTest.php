@@ -3,6 +3,8 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\CustomTestCase;
+use App\Controller\Admin\DashboardController;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin
  */
+#[CoversClass(DashboardController::class)]
 class DashboardControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
@@ -44,7 +47,7 @@ class DashboardControllerTest extends CustomTestCase
         $this->assertSelectorTextContains('.card-title', 'Logs');
         $this->assertSelectorTextContains('body', 'Messages');
         $this->assertSelectorTextContains('body', 'Visitors');
-        $this->assertSelectorExists('a[class="logout-link menu-button"]');
+        $this->assertSelectorExists('span[id="menu-button"]');
         $this->assertSelectorExists('span[class="menu-text"]');
         $this->assertSelectorExists('div[class="sidebar"]');
         $this->assertSelectorExists('a[class="s-menu-button"]');

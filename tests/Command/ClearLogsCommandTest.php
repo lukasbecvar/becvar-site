@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use App\Manager\DatabaseManager;
 use App\Command\ClearLogsCommand;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -19,6 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @package App\Tests\Command
  */
+#[CoversClass(ClearLogsCommand::class)]
 class ClearLogsCommandTest extends TestCase
 {
     private ClearLogsCommand $command;
@@ -69,6 +71,9 @@ class ClearLogsCommandTest extends TestCase
         $this->appUtil->method('getEnvValue')->with('DATABASE_NAME')->willReturn('test_database');
         $this->databaseManager->method('getEntityTableName')->with(Log::class)->willReturn('log_table');
 
+        // expect tableTruncate to be called
+        $this->databaseManager->expects($this->once())->method('tableTruncate')->with('test_database', 'log_table');
+
         // set inputs for confirmation
         $this->commandTester->setInputs(['yes']);
 
@@ -90,11 +95,9 @@ class ClearLogsCommandTest extends TestCase
      */
     public function testExecuteCommandWhenExceptionIsThrown(): void
     {
-        // mock get database name and entity table name
+        // simulate exception
         $this->appUtil->method('getEnvValue')->willReturn('test_database');
-        $this->databaseManager->method('getEntityTableName')->willThrowException(
-            new Exception('Database error')
-        );
+        $this->databaseManager->method('getEntityTableName')->willThrowException(new Exception('Database error'));
 
         // set inputs for confirmation
         $this->commandTester->setInputs(['yes']);

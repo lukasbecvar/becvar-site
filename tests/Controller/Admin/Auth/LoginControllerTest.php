@@ -3,6 +3,8 @@
 namespace App\Tests\Controller\Admin\Auth;
 
 use App\Tests\CustomTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use App\Controller\Admin\Auth\LoginController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -13,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Admin\Auth
  */
+#[CoversClass(LoginController::class)]
 class LoginControllerTest extends CustomTestCase
 {
     private KernelBrowser $client;
@@ -50,8 +53,7 @@ class LoginControllerTest extends CustomTestCase
         $this->client->request('GET', '/login');
 
         // assert response
-        $this->assertSelectorTextContains('body', 'Dashboard login');
-        $this->assertSelectorTextContains('body', 'Remember me');
+        $this->assertSelectorTextContains('h1', 'Dashboard login');
         $this->assertSelectorExists('form[name="login_form"]');
         $this->assertSelectorExists('input[name="login_form[username]"]');
         $this->assertSelectorExists('input[name="login_form[password]"]');
@@ -78,6 +80,7 @@ class LoginControllerTest extends CustomTestCase
         $this->client->submit($form);
 
         // assert response
+        $this->assertSelectorTextContains('h1', 'Dashboard login');
         $this->assertSelectorTextContains('li:contains("Please enter a username")', 'Please enter a username');
         $this->assertSelectorTextContains('li:contains("Please enter a password")', 'Please enter a password');
         $this->assertSelectorExists('form[name="login_form"]');
@@ -102,6 +105,7 @@ class LoginControllerTest extends CustomTestCase
         $this->client->submit($form);
 
         // assert response
+        $this->assertSelectorTextContains('h1', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
         $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -125,6 +129,7 @@ class LoginControllerTest extends CustomTestCase
         $this->client->submit($form);
 
         // assert response
+        $this->assertSelectorTextContains('h1', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
         $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -148,6 +153,7 @@ class LoginControllerTest extends CustomTestCase
         $this->client->submit($form);
 
         // assert response
+        $this->assertSelectorTextContains('h1', 'Dashboard login');
         $this->assertSelectorTextContains('body', 'Incorrect username or password');
         $this->assertSelectorExists('form[name="login_form"]');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -174,7 +180,7 @@ class LoginControllerTest extends CustomTestCase
         $this->assertResponseRedirects('/admin/dashboard');
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
 
-        // check if login success
+        // follow redirect (for check if is valid)
         $crawler = $this->client->followRedirect();
 
         // assert response

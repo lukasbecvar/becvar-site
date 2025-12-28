@@ -4,10 +4,9 @@
 {% block component %}
 <main class="login-page color-white">
     <div class="login-page-content">
-
         {# EMPTY USERS TABLE ALERT #}
         {% if isUsersEmpty %}
-            <div class="admin-alert admin-alert--error login-page-alert" role="alert">
+            <div class="admin-alert admin-alert-error login-page-alert" role="alert">
                 <span class="admin-alert-message">
                     Users table is empty you can create first account
                     <a href={{ path('auth_register') }}>here</a>.
@@ -19,6 +18,9 @@
         {% if errorMsg != null %}
             {% include "common/alerts/error-alert.twig" %}
         {% endif %}
+
+        {# SUCCESS MESSAGE BOX #}
+        {% include "common/alerts/flash-alert.twig" %}
 
         <div class="login-card">
             <div class="login-card-header">
@@ -38,7 +40,9 @@
                     </div>
                 {% endif %}
 
+                {# INPUT FIELDS #}
                 <div class="auth-form-fields">
+                    {# USERNAME FIELD #}
                     {% set usernameErrors = loginForm.username.vars.errors %}
                     <div class="auth-form-field{{ usernameErrors|length ? ' has-error' }}">
                         {{ form_widget(loginForm.username, {'attr': {'autocomplete': 'username'}}) }}
@@ -51,6 +55,7 @@
                         {% endif %}
                     </div>
 
+                    {# PASSWORD FIELD #}
                     {% set passwordErrors = loginForm.password.vars.errors %}
                     <div class="auth-form-field{{ passwordErrors|length ? ' has-error' }}">
                         {{ form_widget(loginForm.password, {'attr': {'autocomplete': 'current-password'}}) }}
@@ -63,6 +68,8 @@
                         {% endif %}
                     </div>
                 </div>
+
+                {# FORM SUBMIT BUTTON #}
                 <div class="auth-form-footer">
                     <label class="auth-form-remember" for="{{ loginForm.remember.vars.id }}">
                         {{ form_widget(loginForm.remember) }}

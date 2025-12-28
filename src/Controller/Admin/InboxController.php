@@ -55,7 +55,7 @@ class InboxController extends AbstractController
             'page' => $page,
             'inboxData' => $messages,
             'messageCount' => count($messages),
-            'messageLimit' => $_ENV['ITEMS_PER_PAGE']
+            'messageLimit' => $this->appUtil->getEnvValue('ITEMS_PER_PAGE')
         ]);
     }
 
@@ -66,7 +66,7 @@ class InboxController extends AbstractController
      *
      * @return Response The redirect back to inbox
      */
-    #[Route('/admin/inbox/close', methods: ['GET'], name: 'admin_inbox_close')]
+    #[Route('/admin/inbox/close', methods: ['POST'], name: 'admin_inbox_close')]
     public function close(Request $request): Response
     {
         // get query parameters

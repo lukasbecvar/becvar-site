@@ -4,7 +4,9 @@ namespace App\Manager;
 
 use DateTime;
 use Exception;
+use App\Util\AppUtil;
 use App\Entity\Message;
+use App\Entity\Visitor;
 use App\Util\SecurityUtil;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class MessagesManager
 {
+    private AppUtil $appUtil;
     private SecurityUtil $securityUtil;
     private ErrorManager $errorManager;
     private VisitorManager $visitorManager;
@@ -26,12 +29,14 @@ class MessagesManager
     private EntityManagerInterface $entityManager;
 
     public function __construct(
+        AppUtil $appUtil,
         SecurityUtil $securityUtil,
         ErrorManager $errorManager,
         VisitorManager $visitorManager,
         MessageRepository $messageRepository,
         EntityManagerInterface $entityManager
     ) {
+        $this->appUtil = $appUtil;
         $this->securityUtil = $securityUtil;
         $this->errorManager = $errorManager;
         $this->entityManager = $entityManager;
@@ -40,17 +45,17 @@ class MessagesManager
     }
 
     /**
-     * Saves new message to the database
+     * Save message to inbox database
      *
      * @param string $name The name of the sender
-     * @param string $email The email address of the sender
+     * @param string $email The email of the sender
      * @param string $messageInput The message input
      * @param string $ipAddress The IP address of the sender
-     * @param int $visitorId The ID of the visitor associated with the sender
+     * @param Visitor $visitor The visitor associated with the sender
      *
      * @return void
      */
-    public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, int $visitorId): void
+    public function saveMessage(string $name, string $email, string $messageInput, string $ipAddress, Visitor $visitor): void
     {
         $message = new Message();
 
@@ -67,7 +72,7 @@ class MessagesManager
             ->setTime(new DateTime())
             ->setIpAddress($ipAddress)
             ->setStatus('open')
-            ->setVisitorID($visitorId);
+            ->setVisitor($visitor);
 
         try {
             // insert new message to database
@@ -101,7 +106,7 @@ class MessagesManager
 
         // execute query
         try {
-            return $query->getSingleScalarResult();
+            return (int) $query->getSingleScalarResult();
         } catch (Exception $e) {
             $this->errorManager->handleError(
                 msg: 'error to get messages count: ' . $e->getMessage(),
@@ -111,16 +116,16 @@ class MessagesManager
     }
 
     /**
-     * Get messages based on status and pagination
+     * Get messages by status
      *
-     * @param string $status The status of the messages
-     * @param int $page The page number
+     * @param string $status The status of messages to retrieve
+     * @param int $page The page number for pagination (default: 1)
      *
-     * @return array<array<int|string>>|null An array of messages if successful, or null if an error occurs
+     * @return list<array<string, mixed>>|null The list of messages filtered by status
      */
     public function getMessages(string $status, int $page): ?array
     {
-        $limit = $_ENV['ITEMS_PER_PAGE'];
+        $limit = (int) $this->appUtil->getEnvValue('ITEMS_PER_PAGE');
 
         // calculate offset
         $offset = ($page - 1) * $limit;
@@ -151,8 +156,14 @@ class MessagesManager
                     'time' => $inboxMessage->getTime(),
                     'ip_address' => $inboxMessage->getIpAddress(),
                     'status' => $inboxMessage->getStatus(),
-                    'visitor_id' => $inboxMessage->getVisitorId()
                 ];
+
+                // add visitor only if it exists
+                if ($inboxMessage->getVisitor()) {
+                    $message['visitor'] = [
+                        'id' => $inboxMessage->getVisitor()->getId()
+                    ];
+                }
 
                 // add message to final list
                 array_push($messages, $message);
@@ -178,18 +189,23 @@ class MessagesManager
     {
         $message = $this->messageRepository->find($id);
 
-        // check if message found
-        if ($message !== null) {
-            try {
-                // close message
-                $message->setStatus('closed');
-                $this->entityManager->flush();
-            } catch (Exception $e) {
-                $this->errorManager->handleError(
-                    msg: 'error to close message: ' . $id . ', ' . $e->getMessage(),
-                    code: Response::HTTP_INTERNAL_SERVER_ERROR
-                );
-            }
+        // check if message exists
+        if ($message == null) {
+            $this->errorManager->handleError(
+                msg: 'Message not found',
+                code: Response::HTTP_NOT_FOUND
+            );
+        }
+
+        try {
+            // close message
+            $message->setStatus('closed');
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            $this->errorManager->handleError(
+                msg: 'error to close message: ' . $id . ', ' . $e->getMessage(),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 
