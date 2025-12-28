@@ -1,12 +1,12 @@
 ## About becvar-site
-Personal website build with the Symfony framework & Bootstrap.
+Personal website build with the Symfony framework & Bootstrap based on [ssr-website-base](https://github.com/lukasbecvar/ssr-website-base).
 
 ## Public site
-![Homepage](.github/images/public-page.png)
+![Homepage](.github/assets/public-page.png)
 - Main components: about me, projects list, contact, etc...
 
 ## Admin site
-![Dashboard](.github/images/admin-dashboard.png)
+![Dashboard](.github/assets/admin-dashboard.png)
 - Account system with permissions
 - Warning system
 - Dashboard
