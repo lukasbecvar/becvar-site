@@ -78,7 +78,7 @@ class SecurityUtil
         $salt = random_bytes(16);
 
         // derive 256-bit key
-        $derivedKey = hash_pbkdf2(algo: 'sha256', password: $key, salt: $salt, iterations: 200_000, length: 32, binary: true);
+        $derivedKey = hash_pbkdf2(algo: 'sha256', password: $key, salt: $salt, iterations: 10_000, length: 32, binary: true);
         $iv = random_bytes(12);
         $tag = '';
 
@@ -122,10 +122,18 @@ class SecurityUtil
         $tag = substr($raw, 28, 16);
         $cipherText = substr($raw, 44);
 
-        // decrypt data
-        $derivedKey = hash_pbkdf2(algo: 'sha256', password: $key, salt: $salt, iterations: 200_000, length: 32, binary: true);
+        // decrypt data (try with new iterations count first - 10k)
+        $derivedKey = hash_pbkdf2(algo: 'sha256', password: $key, salt: $salt, iterations: 10_000, length: 32, binary: true);
         $plainText = openssl_decrypt(data: $cipherText, cipher_algo: $cipher, passphrase: $derivedKey, options: OPENSSL_RAW_DATA, iv: $iv, tag: $tag);
 
-        return $plainText === false ? null : $plainText;
+        if ($plainText !== false) {
+            return $plainText;
+        }
+
+        // fallback to old iterations count (200k) for backward compatibility
+        $derivedKeyLegacy = hash_pbkdf2(algo: 'sha256', password: $key, salt: $salt, iterations: 200_000, length: 32, binary: true);
+        $plainTextLegacy = openssl_decrypt(data: $cipherText, cipher_algo: $cipher, passphrase: $derivedKeyLegacy, options: OPENSSL_RAW_DATA, iv: $iv, tag: $tag);
+
+        return $plainTextLegacy === false ? null : $plainTextLegacy;
     }
 }
