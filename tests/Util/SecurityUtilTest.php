@@ -175,7 +175,7 @@ class SecurityUtilTest extends TestCase
 
         // tamper with the last byte (part of ciphertext or tag)
         $tampered = $decoded;
-        $tampered[strlen($tampered) - 1] = chr(ord($tampered[strlen($tampered) - 1]) ^ 1);
+        $tampered[strlen($tampered) - 1] = chr((ord($tampered[strlen($tampered) - 1]) ^ 1) & 0xFF);
 
         // call tested method
         $result = $this->securityUtil->decryptAes(base64_encode($tampered));
