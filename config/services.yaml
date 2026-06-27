@@ -52,24 +52,24 @@ services:
     App\Middleware\AssetsCheckMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 10 }
-
-    # translation selector
-    App\Middleware\TranslationsMiddleware:
-        tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 9 }
     
     # handle maintenance mode
     App\Middleware\MaintenanceMiddleware:
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 8 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 9 }
 
     # rate limiter middleware
     App\Middleware\RateLimitMiddleware:
         tags:
-            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 8 }
 
     # visitor system handler
     App\Middleware\VisitorSystemMiddleware:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', priority: 7 }
+
+    # translation selector
+    App\Middleware\TranslationsMiddleware:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', priority: 6 }
 

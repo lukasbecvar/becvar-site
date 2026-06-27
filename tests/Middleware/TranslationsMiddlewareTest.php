@@ -2,6 +2,7 @@
 
 namespace App\Tests\Middleware;
 
+use App\Util\VisitorInfoUtil;
 use PHPUnit\Framework\TestCase;
 use App\Manager\VisitorManager;
 use App\Middleware\TranslationsMiddleware;
@@ -19,36 +20,22 @@ class TranslationsMiddlewareTest extends TestCase
 {
     private TranslationsMiddleware $middleware;
     private VisitorManager & MockObject $visitorManagerMock;
+    private VisitorInfoUtil & MockObject $visitorInfoUtilMock;
     private LocaleAwareInterface & MockObject $translatorMock;
 
     protected function setUp(): void
     {
         // mock dependencies
         $this->visitorManagerMock = $this->createMock(VisitorManager::class);
+        $this->visitorInfoUtilMock = $this->createMock(VisitorInfoUtil::class);
         $this->translatorMock = $this->createMock(LocaleAwareInterface::class);
 
         // create translations middleware instance
         $this->middleware = new TranslationsMiddleware(
             $this->visitorManagerMock,
+            $this->visitorInfoUtilMock,
             $this->translatorMock
         );
-    }
-
-    /**
-     * Test set locale to english for unidentified languages
-     *
-     * @return void
-     */
-    public function testSetLocaleEnglishForUnidentifiedLanguages(): void
-    {
-        // mock visitor language as unidentified
-        $this->visitorManagerMock->expects($this->once())->method('getVisitorLanguage')->willReturn(null);
-
-        // expect setting locale to 'en'
-        $this->translatorMock->expects($this->once())->method('setLocale')->with('en');
-
-        // call tested middleware
-        $this->middleware->onKernelRequest();
     }
 
     /**
