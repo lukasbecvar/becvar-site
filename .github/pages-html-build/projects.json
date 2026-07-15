@@ -1,0 +1,34 @@
+{
+  "open": [
+    {"title": "admin-suite", "description": "Solution for Linux server administration and monitoring.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/admin-suite"},
+    {"title": "api-base", "description": "Base app template for creating REST API in the Symfony framework.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/api-base"},
+    {"title": "becvar-site", "description": "My personal website app builded with symfony framework.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/becvar-site"},
+    {"title": "file-probe", "description": "Basic utility for get information about files and directories", "language": "C++", "github_url": "https://github.com/lukasbecvar/file-probe"},
+    {"title": "internal-platform-base", "description": "Base app template for building internal applications on symfony framework.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/internal-platform-base"},
+    {"title": "react-app-base", "description": "Base react app template repository with docker-env, tailwind, router base, vite server and electorn app builder", "language": "JavaScript", "github_url": "https://github.com/lukasbecvar/react-app-base"},
+    {"title": "ssr-website-base", "description": "Basic website template for creating SSR websites with Symfony and Bootstrap.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/ssr-website-base"},
+    {"title": "useful-scripts", "description": "List of my useful scripts", "language": "Shell", "github_url": "https://github.com/lukasbecvar/useful-scripts"}
+  ],
+  "closed": [
+    {"title": "becvold-core", "description": "Basic survival core plugin", "language": "Java", "github_url": "https://github.com/lukasbecvar/becvold-core"},
+    {"title": "becwork", "description": "PHP framework.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/becwork"},
+    {"title": "becwork-utils", "description": "Useful utils for web applications", "language": "PHP", "github_url": "https://github.com/lukasbecvar/becwork-utils"},
+    {"title": "code-paste", "description": "Free webapp service for storing and sharing text and code snippets", "language": "PHP", "github_url": "https://github.com/lukasbecvar/code-paste"},
+    {"title": "discord-bot", "description": "Java Discord bot base.", "language": "Java", "github_url": "https://github.com/lukasbecvar/discord-bot"},
+    {"title": "dubinek-bot", "description": "My own discord bot.", "language": "Java", "github_url": "https://github.com/lukasbecvar/dubinek-bot"},
+    {"title": "engal", "description": "Self-hosted encrypted media gallery", "language": "PHP", "github_url": "https://github.com/lukasbecvar/engal"},
+    {"title": "file-share", "description": "Simple file sharing app", "language": "PHP", "github_url": "https://github.com/lukasbecvar/file-share"},
+    {"title": "gemini-cli-chat", "description": "Super simple dependency-free Python script for interacting with the Google Gemini API directly from your command line.", "language": "Python", "github_url": "https://github.com/lukasbecvar/gemini-cli-chat"},
+    {"title": "ghost-talk", "description": "The lightweight, anonymous chat application based on Laravel php framework", "language": "PHP", "github_url": "https://github.com/lukasbecvar/ghost-talk"},
+    {"title": "media-api", "description": "API for storing images, videos and gif on the web space.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/media-api"},
+    {"title": "mysql-ai-agent", "description": "AI agent designed to interact with MySQL databases. It leverages AI capabilities to understand and execute commands related to database operations.", "language": "Python", "github_url": "https://github.com/lukasbecvar/mysql-ai-agent"},
+    {"title": "ollama-api-reverse-proxy", "description": "A reverse proxy API that serves as a layer for the Ollama API, allowing to securely call Ollama from external applications while ensuring that requests are validated with API token.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/ollama-api-reverse-proxy"},
+    {"title": "password-and-hash-generator", "description": "Simple password generator and hasher app", "language": "JavaScript", "github_url": "https://github.com/lukasbecvar/password-and-hash-generator"},
+    {"title": "pooping-elephant-meme-page", "description": "Interactive elephant pooping simulator", "language": "JavaScript", "github_url": "https://github.com/lukasbecvar/pooping-elephant-meme-page"},
+    {"title": "product-vault", "description": "A modern and secure RESTful API system for product data management and simple e-shop integration.", "language": "PHP", "github_url": "https://github.com/lukasbecvar/product-vault"},
+    {"title": "speed-test", "description": "Simple website for testing internet speed", "language": "PHP", "github_url": "https://github.com/lukasbecvar/speed-test"},
+    {"title": "ssh-hammer", "description": "SSH dictionary attack tool ", "language": "Java", "github_url": "https://github.com/lukasbecvar/ssh-hammer"},
+    {"title": "system-scope", "description": "REST API for fetching information from Linux servers: metrics or data for dashboards", "language": "PHP", "github_url": "https://github.com/lukasbecvar/system-scope"},
+    {"title": "ultra-erp-presentation-page", "description": "Modern presentation page for ULTRA-ERP system built with webpack, Tailwind CSS, and Docker.", "language": "HTML", "github_url": "https://github.com/lukasbecvar/ultra-erp-presentation-page"}
+  ]
+}
